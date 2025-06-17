@@ -86,7 +86,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   protected HistoricFormField historicFormFieldMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     List<HistoricDetail> details = new ArrayList<>();
 
     historicUpdateBuilder = MockProvider.mockHistoricVariableUpdate();
@@ -109,7 +109,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("processInstanceId", queryKey)
@@ -121,7 +121,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     // GET
     expect()
       .statusCode(Status.OK.getStatusCode())
@@ -150,7 +150,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testNoParametersQueryDisableObjectDeserialization() {
+  void testNoParametersQueryDisableObjectDeserialization() {
     // GET
     given()
       .queryParam("deserializeValues", false)
@@ -184,7 +184,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySortingAsPost(
       OrderingBuilder.create()
@@ -218,13 +218,13 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("processInstanceId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
 
   @Test
-  public void testInvalidSecondarySortingOptions() {
+  void testInvalidSecondarySortingOptions() {
     executeAndVerifySortingAsPost(
       OrderingBuilder.create()
         .orderBy("processInstanceId").desc()
@@ -235,7 +235,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testMissingSecondarySortingOptions() {
+  void testMissingSecondarySortingOptions() {
     executeAndVerifySortingAsPost(
       OrderingBuilder.create()
         .orderBy("processInstanceId").desc()
@@ -272,7 +272,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
     .queryParam("sortOrder", "asc")
   .then()
@@ -286,7 +286,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("processInstanceId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessInstanceId();
@@ -369,7 +369,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -404,7 +404,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     // GET
@@ -436,7 +436,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     // GET
@@ -468,7 +468,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(2))
@@ -479,7 +479,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSimpleHistoricActivityQuery() {
+  void testSimpleHistoricActivityQuery() {
     // GET
     Response response = given()
       .then()
@@ -517,7 +517,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSimpleHistoricActivityQueryPost() {
+  void testSimpleHistoricActivityQueryPost() {
     // POST
     Response response = given()
         .contentType(POST_JSON_CONTENT_TYPE)
@@ -610,7 +610,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSerializableVariableInstanceRetrieval() {
+  void testSerializableVariableInstanceRetrieval() {
     ObjectValue serializedValue = Variables.serializedObjectValue("a serialized value").create();
     MockHistoricVariableUpdateBuilder builder = MockProvider.mockHistoricVariableUpdate()
         .typedValue(serializedValue);
@@ -656,7 +656,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSpinVariableInstanceRetrieval() {
+  void testSpinVariableInstanceRetrieval() {
     MockHistoricVariableUpdateBuilder builder = MockProvider.mockHistoricVariableUpdate()
         .typedValue(Variables
             .serializedObjectValue("aSerializedValue")
@@ -708,7 +708,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
     String processInstanceId = MockProvider.EXAMPLE_HISTORIC_VAR_UPDATE_PROC_INST_ID;
 
     // GET
@@ -742,7 +742,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByExecutionId() {
+  void testQueryByExecutionId() {
     String executionId = MockProvider.EXAMPLE_HISTORIC_VAR_UPDATE_EXEC_ID;
 
     // GET
@@ -776,7 +776,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByOperationId() {
+  void testQueryByOperationId() {
     String operationId = MockProvider.EXAMPLE_HISTORIC_VAR_UPDATE_OPERATION_ID;
 
     // GET
@@ -810,7 +810,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByActivityInstanceId() {
+  void testQueryByActivityInstanceId() {
     String activityInstanceId = MockProvider.EXAMPLE_HISTORIC_VAR_UPDATE_ACT_INST_ID;
 
     // GET
@@ -844,7 +844,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByTaskId() {
+  void testQueryByTaskId() {
     String taskId = MockProvider.EXAMPLE_HISTORIC_VAR_UPDATE_TASK_ID;
 
     // GET
@@ -878,7 +878,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByVariableInstanceId() {
+  void testQueryByVariableInstanceId() {
     String variableInstanceId = MockProvider.EXAMPLE_HISTORIC_VAR_UPDATE_ID;
 
     // GET
@@ -912,7 +912,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByVariableTypeIn() {
+  void testQueryByVariableTypeIn() {
     String aVariableType = "string";
     String anotherVariableType = "integer";
 
@@ -948,7 +948,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldQueryByVariableNameLike_GET() {
+  void shouldQueryByVariableNameLike_GET() {
     String variableNameLike = "foo%";
 
     // GET
@@ -964,7 +964,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldQueryByVariableNameLike_POST() {
+  void shouldQueryByVariableNameLike_POST() {
     String variableNameLike = "foo%";
 
     // POST
@@ -985,7 +985,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByFormFields() {
+  void testQueryByFormFields() {
     // GET
     given()
       .queryParam("formFields", "true")
@@ -1017,7 +1017,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByVariableUpdates() {
+  void testQueryByVariableUpdates() {
     // GET
     given()
       .queryParam("variableUpdates", "true")
@@ -1049,7 +1049,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByExcludeTaskDetails() {
+  void testQueryByExcludeTaskDetails() {
     // GET
     given()
       .queryParam("excludeTaskDetails", "true")
@@ -1081,7 +1081,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByCaseInstanceId() {
+  void testQueryByCaseInstanceId() {
     // GET
     given()
       .queryParam("caseInstanceId", MockProvider.EXAMPLE_CASE_INSTANCE_ID)
@@ -1112,7 +1112,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryByCaseExecutionId() {
+  void testQueryByCaseExecutionId() {
     // GET
     given()
       .queryParam("caseExecutionId", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
@@ -1144,7 +1144,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockedDetailsQuery(createMockHistoricDetailsTwoTenants());
 
     // GET
@@ -1192,7 +1192,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryWithoutTenantIdQueryParameter() {
+  void testQueryWithoutTenantIdQueryParameter() {
     // given
     List<HistoricDetail> details = new ArrayList<>();
 
@@ -1226,7 +1226,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryWithoutTenantIdPostParameter() {
+  void testQueryWithoutTenantIdPostParameter() {
     // given
     List<HistoricDetail> details = new ArrayList<>();
 
@@ -1277,8 +1277,8 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
     assertThat(returnedTenantId4).isEqualTo(MockProvider.ANOTHER_EXAMPLE_TENANT_ID);
   }
 
-   @Test
-  public void testByProcessInstanceIdIn () {
+  @Test
+  void testByProcessInstanceIdIn() {
     String aProcessInstanceId = "aProcessInstanceId";
     String anotherProcessInstanceId = "anotherProcessInstanceId";
 
@@ -1316,7 +1316,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testByOccurredBefore () {
+  void testByOccurredBefore() {
     // GET
     given()
       .queryParam("occurredBefore", MockProvider.EXAMPLE_HISTORIC_VAR_UPDATE_TIME)
@@ -1350,7 +1350,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testByOccurredAfter () {
+  void testByOccurredAfter() {
     // GET
     given()
       .queryParam("occurredAfter", MockProvider.EXAMPLE_HISTORIC_VAR_UPDATE_TIME)
@@ -1384,7 +1384,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testGetQueryWhereFileWasDeleted() {
+  void testGetQueryWhereFileWasDeleted() {
     doThrow(new IllegalArgumentException("Parameter 'filename' is null")).when(historicUpdateMock).getTypedValue();
 
     // GET
@@ -1399,7 +1399,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testPostQueryWhereFileWasDeleted() {
+  void testPostQueryWhereFileWasDeleted() {
     doThrow(new IllegalArgumentException("Parameter 'filename' is null")).when(historicUpdateMock).getTypedValue();
 
     given()

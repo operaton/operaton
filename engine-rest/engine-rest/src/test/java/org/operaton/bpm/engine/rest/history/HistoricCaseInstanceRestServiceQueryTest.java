@@ -72,7 +72,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   protected HistoricCaseInstanceQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricCaseInstanceQuery(MockProvider.createMockHistoricCaseInstances());
   }
 
@@ -87,7 +87,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("caseDefinitionKey", queryKey)
@@ -98,7 +98,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -109,7 +109,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testNoParametersQueryAsPost() {
+  void testNoParametersQueryAsPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -123,13 +123,13 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("definitionId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "definitionId")
     .then().expect()
@@ -142,7 +142,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
     .then().expect()
@@ -155,7 +155,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("instanceId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByCaseInstanceId();
@@ -228,7 +228,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
@@ -247,7 +247,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -263,7 +263,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -277,7 +277,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -291,7 +291,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -302,7 +302,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryCountForPost() {
+  void testQueryCountForPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -315,7 +315,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSimpleHistoricCaseQuery() {
+  void testSimpleHistoricCaseQuery() {
     String caseInstanceId = MockProvider.EXAMPLE_CASE_INSTANCE_ID;
 
     Response response = given()
@@ -370,7 +370,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testAdditionalParametersExcludingCases() {
+  void testAdditionalParametersExcludingCases() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()
@@ -384,7 +384,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testAdditionalParametersExcludingCasesAsPost() {
+  void testAdditionalParametersExcludingCasesAsPost() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()
@@ -399,7 +399,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoricBeforeAndAfterCreateTimeQuery() {
+  void testHistoricBeforeAndAfterCreateTimeQuery() {
     given()
       .queryParam("createdBefore", MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATED_BEFORE)
       .queryParam("createdAfter", MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATED_AFTER)
@@ -412,7 +412,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoricBeforeAndAfterCreateTimeQueryAsPost() {
+  void testHistoricBeforeAndAfterCreateTimeQueryAsPost() {
     Map<String, Date> parameters = getCompleteCreateDateQueryParameters();
 
     given()
@@ -427,7 +427,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoricBeforeAndAfterCreateTimeAsStringQueryAsPost() {
+  void testHistoricBeforeAndAfterCreateTimeAsStringQueryAsPost() {
     Map<String, String> parameters = getCompleteCreateDateAsStringQueryParameters();
 
     given()
@@ -442,7 +442,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoricAfterAndBeforeCloseTimeQuery() {
+  void testHistoricAfterAndBeforeCloseTimeQuery() {
     given()
       .queryParam("closedAfter", MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CLOSED_AFTER)
       .queryParam("closedBefore", MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CLOSED_BEFORE)
@@ -455,7 +455,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoricAfterAndBeforeCloseTimeQueryAsPost() {
+  void testHistoricAfterAndBeforeCloseTimeQueryAsPost() {
     Map<String, Date> parameters = getCompleteClosedDateQueryParameters();
 
     given()
@@ -470,7 +470,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoricAfterAndBeforeCloseTimeAsStringQueryAsPost() {
+  void testHistoricAfterAndBeforeCloseTimeAsStringQueryAsPost() {
     Map<String, String> parameters = getCompleteClosedDateAsStringQueryParameters();
 
     given()
@@ -485,7 +485,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseActiveClosed() {
+  void testCaseActiveClosed() {
     given()
       .queryParam("active", true)
     .then().expect()
@@ -499,7 +499,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseQueryActiveAsPost() {
+  void testCaseQueryActiveAsPost() {
     Map<String, Boolean> body = new HashMap<>();
     body.put("active", true);
 
@@ -517,7 +517,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseQueryCompleted() {
+  void testCaseQueryCompleted() {
     given()
       .queryParam("completed", true)
     .then().expect()
@@ -531,7 +531,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseQueryCompletedAsPost() {
+  void testCaseQueryCompletedAsPost() {
     Map<String, Boolean> body = new HashMap<>();
     body.put("completed", true);
 
@@ -549,7 +549,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseQueryTerminated() {
+  void testCaseQueryTerminated() {
     given()
       .queryParam("terminated", true)
     .then().expect()
@@ -563,7 +563,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseQueryTerminatedAsPost() {
+  void testCaseQueryTerminatedAsPost() {
     Map<String, Boolean> body = new HashMap<>();
     body.put("terminated", true);
 
@@ -581,7 +581,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseQueryClosed() {
+  void testCaseQueryClosed() {
     given()
       .queryParam("closed", true)
     .then().expect()
@@ -595,7 +595,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseQueryClosedAsPost() {
+  void testCaseQueryClosedAsPost() {
     Map<String, Boolean> body = new HashMap<>();
     body.put("closed", true);
 
@@ -613,7 +613,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseQueryNotClosed() {
+  void testCaseQueryNotClosed() {
     List<HistoricCaseInstance> mockedHistoricCaseInstances = MockProvider.createMockRunningHistoricCaseInstances();
     HistoricCaseInstanceQuery mockedHistoricCaseInstanceQuery = mock(HistoricCaseInstanceQuery.class);
     when(mockedHistoricCaseInstanceQuery.list()).thenReturn(mockedHistoricCaseInstances);
@@ -643,7 +643,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseQueryNotClosedAsPost() {
+  void testCaseQueryNotClosedAsPost() {
     List<HistoricCaseInstance> mockedHistoricCaseInstances = MockProvider.createMockRunningHistoricCaseInstances();
     HistoricCaseInstanceQuery mockedHistoricCaseInstanceQuery = mock(HistoricCaseInstanceQuery.class);
     when(mockedHistoricCaseInstanceQuery.list()).thenReturn(mockedHistoricCaseInstances);
@@ -677,7 +677,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseInstanceIds() {
+  void testQueryByCaseInstanceIds() {
     given()
       .queryParam("caseInstanceIds", "firstCaseInstanceId,secondCaseInstanceId")
     .then().expect()
@@ -689,7 +689,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseInstanceIdsAsPost() {
+  void testQueryByCaseInstanceIdsAsPost() {
     Map<String, Set<String>> parameters = getCompleteCaseInstanceIdSetQueryParameters();
 
     given()
@@ -704,7 +704,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseDefinitionKeyNotIn() {
+  void testQueryByCaseDefinitionKeyNotIn() {
     given()
       .queryParam("caseDefinitionKeyNotIn", "firstCaseInstanceKey,secondCaseInstanceKey")
     .then().expect()
@@ -716,7 +716,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseDefinitionKeyNotInAsPost() {
+  void testQueryByCaseDefinitionKeyNotInAsPost() {
     Map<String, List<String>> parameters = getCompleteCaseDefinitionKeyNotInListQueryParameters();
 
     given()
@@ -731,7 +731,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueEquals() {
+  void testVariableValueEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -742,7 +742,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueGreaterThan() {
+  void testVariableValueGreaterThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_gt_" + variableValue;
@@ -753,7 +753,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueGreaterThanEquals() {
+  void testVariableValueGreaterThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_gteq_" + variableValue;
@@ -764,7 +764,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueLessThan() {
+  void testVariableValueLessThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_lt_" + variableValue;
@@ -775,7 +775,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueLessThanEquals() {
+  void testVariableValueLessThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_lteq_" + variableValue;
@@ -786,7 +786,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueLike() {
+  void testVariableValueLike() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_like_" + variableValue;
@@ -797,7 +797,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueNotEquals() {
+  void testVariableValueNotEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -808,7 +808,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValuesEqualsIgnoreCase() {
+  void testVariableValuesEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -820,7 +820,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValuesNotEqualsIgnoreCase() {
+  void testVariableValuesNotEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -832,7 +832,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValuesLikeIgnoreCase() {
+  void testVariableValuesLikeIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_like_" + variableValue;
@@ -845,7 +845,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
 
   @Test
-  public void testVariableNamesEqualsIgnoreCase() {
+  void testVariableNamesEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -857,7 +857,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableNamesNotEqualsIgnoreCase() {
+  void testVariableNamesNotEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -869,7 +869,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueEqualsAsPost() {
+  void testVariableValueEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -894,7 +894,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueGreaterThanAsPost() {
+  void testVariableValueGreaterThanAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -919,7 +919,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueGreaterThanEqualsAsPost() {
+  void testVariableValueGreaterThanEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -944,7 +944,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueLessThanAsPost() {
+  void testVariableValueLessThanAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -969,7 +969,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueLessThanEqualsAsPost() {
+  void testVariableValueLessThanEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -994,7 +994,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueLikeAsPost() {
+  void testVariableValueLikeAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1019,7 +1019,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValueNotEqualsAsPost() {
+  void testVariableValueNotEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1044,7 +1044,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValuesEqualsIgnoreCaseAsPost() {
+  void testVariableValuesEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1071,7 +1071,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValuesNotEqualsIgnoreCaseAsPost() {
+  void testVariableValuesNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1098,7 +1098,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableValuesLikeIgnoreCaseAsPost() {
+  void testVariableValuesLikeIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1126,7 +1126,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
 
   @Test
-  public void testVariableNamesEqualsIgnoreCaseAsPost() {
+  void testVariableNamesEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1153,7 +1153,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testVariableNamesNotEqualsIgnoreCaseAsPost() {
+  void testVariableNamesNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1180,7 +1180,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testMultipleVariableParameters() {
+  void testMultipleVariableParameters() {
     String variableName1 = "varName";
     String variableValue1 = "varValue";
     String variableParameter1 = variableName1 + "_eq_" + variableValue1;
@@ -1203,7 +1203,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testMultipleVariableParametersAsPost() {
+  void testMultipleVariableParametersAsPost() {
     String variableName = "varName";
     String variableValue = "varValue";
     String anotherVariableName = "anotherVarName";
@@ -1239,7 +1239,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockHistoricCaseInstanceQuery(createMockHistoricCaseInstancesTwoTenants());
 
     Response response = given()
@@ -1264,7 +1264,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testTenantIdListPostParameter() {
+  void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricCaseInstanceQuery(createMockHistoricCaseInstancesTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -1293,7 +1293,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testWithoutTenantIdParameter() {
+  void testWithoutTenantIdParameter() {
     mockedQuery = setUpMockHistoricCaseInstanceQuery(Arrays.asList(MockProvider.createMockHistoricCaseInstance(null)));
 
     Response response = given()
@@ -1315,7 +1315,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testWithoutTenantIdPostParameter() {
+  void testWithoutTenantIdPostParameter() {
     mockedQuery = setUpMockHistoricCaseInstanceQuery(Arrays.asList(MockProvider.createMockHistoricCaseInstance(null)));
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -1347,7 +1347,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseActivityIdListParameter() {
+  void testCaseActivityIdListParameter() {
 
     Response response = given()
       .queryParam("caseActivityIdIn", MockProvider.EXAMPLE_CASE_ACTIVITY_ID_LIST)
@@ -1365,7 +1365,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseActivityIdListPostParameter() {
+  void testCaseActivityIdListPostParameter() {
 
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("caseActivityIdIn", MockProvider.EXAMPLE_CASE_ACTIVITY_ID_LIST.split(","));

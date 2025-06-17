@@ -113,7 +113,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   private CaseExecutionCommandBuilder caseExecutionCommandBuilderMock;
 
   @BeforeEach
-  public void setUpRuntime() {
+  void setUpRuntime() {
     CaseExecution mockCaseExecution = MockProvider.createMockCaseExecution();
 
     caseServiceMock = mock(CaseService.class);
@@ -153,7 +153,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCaseExecutionRetrieval() {
+  void testCaseExecutionRetrieval() {
     Map<String, String> params = new HashMap<>();
     params.put("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID);
     given()
@@ -183,7 +183,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStart() {
+  void testManualStart() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .contentType(ContentType.JSON)
@@ -199,7 +199,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testUnsuccessfulManualStart() {
+  void testUnsuccessfulManualStart() {
     doThrow(new NotValidException("expected exception")).when(caseExecutionCommandBuilderMock).manualStart();
 
     given()
@@ -219,7 +219,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithSetVariable() {
+  void testManualStartWithSetVariable() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -255,7 +255,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithSetVariableLocal() {
+  void testManualStartWithSetVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -291,7 +291,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithSetVariableAndVariableLocal() {
+  void testManualStartWithSetVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -327,7 +327,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithRemoveVariable() {
+  void testManualStartWithRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -359,7 +359,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithRemoveVariableLocal() {
+  void testManualStartWithRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -391,7 +391,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithRemoveVariableAndVariableLocal() {
+  void testManualStartWithRemoveVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -423,7 +423,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithSetVariableAndRemoveVariable() {
+  void testManualStartWithSetVariableAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -461,7 +461,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithSetVariableAndRemoveVariableLocal() {
+  void testManualStartWithSetVariableAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -499,7 +499,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithSetVariableLocalAndRemoveVariable() {
+  void testManualStartWithSetVariableLocalAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -537,7 +537,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testManualStartWithSetVariableLocalAndRemoveVariableLocal() {
+  void testManualStartWithSetVariableLocalAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -575,7 +575,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisable() {
+  void testDisable() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .contentType(ContentType.JSON)
@@ -591,7 +591,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testUnsuccessfulDisable() {
+  void testUnsuccessfulDisable() {
     doThrow(new NotValidException("expected exception")).when(caseExecutionCommandBuilderMock).disable();
 
     given()
@@ -611,7 +611,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithSetVariable() {
+  void testDisableWithSetVariable() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -647,7 +647,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithSetVariableLocal() {
+  void testDisableWithSetVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -683,7 +683,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithSetVariableAndVariableLocal() {
+  void testDisableWithSetVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -719,7 +719,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithRemoveVariable() {
+  void testDisableWithRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -751,7 +751,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithRemoveVariableLocal() {
+  void testDisableWithRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -783,7 +783,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithRemoveVariableAndVariableLocal() {
+  void testDisableWithRemoveVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -815,7 +815,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithSetVariableAndRemoveVariable() {
+  void testDisableWithSetVariableAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -853,7 +853,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithSetVariableAndRemoveVariableLocal() {
+  void testDisableWithSetVariableAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -891,7 +891,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithSetVariableLocalAndRemoveVariable() {
+  void testDisableWithSetVariableLocalAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -929,7 +929,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDisableWithSetVariableLocalAndRemoveVariableLocal() {
+  void testDisableWithSetVariableLocalAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -967,7 +967,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenable() {
+  void testReenable() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .contentType(ContentType.JSON)
@@ -983,7 +983,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testUnsuccessfulReenable() {
+  void testUnsuccessfulReenable() {
     doThrow(new NotValidException("expected exception")).when(caseExecutionCommandBuilderMock).reenable();
 
     given()
@@ -1003,7 +1003,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithSetVariable() {
+  void testReenableWithSetVariable() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -1039,7 +1039,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithSetVariableLocal() {
+  void testReenableWithSetVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -1075,7 +1075,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithSetVariableAndVariableLocal() {
+  void testReenableWithSetVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -1111,7 +1111,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithRemoveVariable() {
+  void testReenableWithRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -1143,7 +1143,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithRemoveVariableLocal() {
+  void testReenableWithRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -1175,7 +1175,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithRemoveVariableAndVariableLocal() {
+  void testReenableWithRemoveVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -1207,7 +1207,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithSetVariableAndRemoveVariable() {
+  void testReenableWithSetVariableAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -1245,7 +1245,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithSetVariableAndRemoveVariableLocal() {
+  void testReenableWithSetVariableAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -1283,7 +1283,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithSetVariableLocalAndRemoveVariable() {
+  void testReenableWithSetVariableLocalAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -1321,7 +1321,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testReenableWithSetVariableLocalAndRemoveVariableLocal() {
+  void testReenableWithSetVariableLocalAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -1359,7 +1359,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetLocalVariables() {
+  void testGetLocalVariables() {
     Response response = given()
         .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .then()
@@ -1377,7 +1377,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetVariables() {
+  void testGetVariables() {
     Response response = given()
         .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .then()
@@ -1396,7 +1396,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetLocalObjectVariables() {
+  void testGetLocalObjectVariables() {
     // given
     String variableKey = "aVariableId";
 
@@ -1427,7 +1427,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetLocalObjectVariablesSerialized() {
+  void testGetLocalObjectVariablesSerialized() {
     // given
     String variableKey = "aVariableId";
 
@@ -1457,7 +1457,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetLocalVariablesForNonExistingExecution() {
+  void testGetLocalVariablesForNonExistingExecution() {
     when(caseServiceMock.getVariablesLocalTyped(anyString(), anyBoolean())).thenThrow(new ProcessEngineException("expected exception"));
 
     given()
@@ -1475,7 +1475,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetVariablesForNonExistingExecution() {
+  void testGetVariablesForNonExistingExecution() {
     when(caseServiceMock.getVariablesTyped(anyString(), anyBoolean())).thenThrow(new ProcessEngineException("expected exception"));
 
     given()
@@ -1493,7 +1493,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetFileVariable() {
+  void testGetFileVariable() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -1517,7 +1517,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetNullFileVariable() {
+  void testGetNullFileVariable() {
     String variableKey = "aVariableKey";
     String filename = "test.txt";
     String mimeType = "text/plain";
@@ -1538,7 +1538,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetFileVariableDownloadWithType() {
+  void testGetFileVariableDownloadWithType() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -1559,7 +1559,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetFileVariableDownloadWithTypeAndEncoding() {
+  void testGetFileVariableDownloadWithTypeAndEncoding() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -1582,7 +1582,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetFileVariableDownloadWithoutType() {
+  void testGetFileVariableDownloadWithoutType() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -1604,7 +1604,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCannotDownloadVariableOtherThanFile() {
+  void testCannotDownloadVariableOtherThanFile() {
     String variableKey = "aVariableKey";
     BooleanValue variableValue = Variables.booleanValue(true);
 
@@ -1621,7 +1621,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testLocalVariableModification() {
+  void testLocalVariableModification() {
     Map<String, Object> messageBodyJson = new HashMap<>();
 
     String variableKey = "aKey";
@@ -1654,7 +1654,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testVariableModification() {
+  void testVariableModification() {
     Map<String, Object> messageBodyJson = new HashMap<>();
 
     String variableKey = "aKey";
@@ -1687,7 +1687,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testLocalVariableModificationForNonExistingExecution() {
+  void testLocalVariableModificationForNonExistingExecution() {
     when(caseServiceMock.withCaseExecution("aNonExistingExecutionId")).thenReturn(caseExecutionCommandBuilderMock);
 
     doThrow(new ProcessEngineException("expected exception"))
@@ -1727,7 +1727,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testVariableModificationForNonExistingExecution() {
+  void testVariableModificationForNonExistingExecution() {
     when(caseServiceMock.withCaseExecution("aNonExistingExecutionId")).thenReturn(caseExecutionCommandBuilderMock);
 
     doThrow(new ProcessEngineException("expected exception"))
@@ -1767,7 +1767,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testEmptyLocalVariableModification() {
+  void testEmptyLocalVariableModification() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .contentType(ContentType.JSON)
@@ -1785,7 +1785,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testEmptyVariableModification() {
+  void testEmptyVariableModification() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .contentType(ContentType.JSON)
@@ -1803,7 +1803,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetSingleLocalVariable() {
+  void testGetSingleLocalVariable() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .pathParam("varId", EXAMPLE_VARIABLE_KEY)
@@ -1819,7 +1819,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetSingleLocalVariableData() {
+  void testGetSingleLocalVariableData() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .pathParam("varId", EXAMPLE_BYTES_VARIABLE_KEY)
@@ -1834,7 +1834,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetSingleLocalVariableDataNonExisting() {
+  void testGetSingleLocalVariableDataNonExisting() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .pathParam("varId", "nonExisting")
@@ -1850,7 +1850,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetSingleLocalVariabledataNotBinary() {
+  void testGetSingleLocalVariabledataNotBinary() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .pathParam("varId", EXAMPLE_VARIABLE_KEY)
@@ -1864,7 +1864,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetSingleVariable() {
+  void testGetSingleVariable() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .pathParam("varId", EXAMPLE_VARIABLE_KEY)
@@ -1880,7 +1880,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetSingleLocalObjectVariable() {
+  void testGetSingleLocalObjectVariable() {
     // given
     String variableKey = "aVariableId";
 
@@ -1910,7 +1910,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetSingleLocalObjectVariableSerialized() {
+  void testGetSingleLocalObjectVariableSerialized() {
     // given
     String variableKey = "aVariableId";
 
@@ -1940,7 +1940,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testNonExistingLocalVariable() {
+  void testNonExistingLocalVariable() {
     when(caseServiceMock.getVariableLocalTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID, EXAMPLE_VARIABLE_KEY, true))
       .thenReturn(null);
 
@@ -1957,7 +1957,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testNonExistingVariable() {
+  void testNonExistingVariable() {
     when(caseServiceMock.getVariableTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID, EXAMPLE_VARIABLE_KEY, true))
       .thenReturn(null);
 
@@ -1974,7 +1974,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetLocalVariableForNonExistingExecution() {
+  void testGetLocalVariableForNonExistingExecution() {
     when(caseServiceMock.getVariableLocalTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID,
         EXAMPLE_VARIABLE_KEY, true))
       .thenThrow(new ProcessEngineException("expected exception"));
@@ -1992,7 +1992,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetVariableForNonExistingExecution() {
+  void testGetVariableForNonExistingExecution() {
     when(caseServiceMock.getVariableTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID, EXAMPLE_VARIABLE_KEY, true))
       .thenThrow(new ProcessEngineException("expected exception"));
 
@@ -2009,7 +2009,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariable() {
+  void testPutSingleLocalVariable() {
     Map<String, Object> variableJson = VariablesBuilder.getVariableValueMap(EXAMPLE_VARIABLE_VALUE.getValue(),
         EXAMPLE_VARIABLE_VALUE.getType().getName());
 
@@ -2030,7 +2030,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariable() {
+  void testPutSingleVariable() {
     Map<String, Object> variableJson = VariablesBuilder.getVariableValueMap(EXAMPLE_VARIABLE_VALUE.getValue(),
         EXAMPLE_VARIABLE_VALUE.getType().getName());
 
@@ -2051,7 +2051,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithTypeInteger() {
+  void testPutSingleLocalVariableWithTypeInteger() {
     String variableKey = "aVariableKey";
     Integer variableValue = 123;
     String type = "Integer";
@@ -2076,7 +2076,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithTypeInteger() {
+  void testPutSingleVariableWithTypeInteger() {
     String variableKey = "aVariableKey";
     Integer variableValue = 123;
     String type = "Integer";
@@ -2101,7 +2101,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithUnparseableInteger() {
+  void testPutSingleLocalVariableWithUnparseableInteger() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Integer";
@@ -2124,7 +2124,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableInteger() {
+  void testPutSingleVariableWithUnparseableInteger() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Integer";
@@ -2147,7 +2147,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithTypeShort() {
+  void testPutSingleLocalVariableWithTypeShort() {
     String variableKey = "aVariableKey";
     Short variableValue = 123;
     String type = "Short";
@@ -2172,7 +2172,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithTypeShort() {
+  void testPutSingleVariableWithTypeShort() {
     String variableKey = "aVariableKey";
     Short variableValue = 123;
     String type = "Short";
@@ -2197,7 +2197,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithUnparseableShort() {
+  void testPutSingleLocalVariableWithUnparseableShort() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Short";
@@ -2220,7 +2220,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableShort() {
+  void testPutSingleVariableWithUnparseableShort() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Short";
@@ -2243,7 +2243,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithTypeLong() {
+  void testPutSingleLocalVariableWithTypeLong() {
     String variableKey = "aVariableKey";
     Long variableValue = 123L;
     String type = "Long";
@@ -2268,7 +2268,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithTypeLong() {
+  void testPutSingleVariableWithTypeLong() {
     String variableKey = "aVariableKey";
     Long variableValue = 123L;
     String type = "Long";
@@ -2293,7 +2293,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableLong() {
+  void testPutSingleVariableWithUnparseableLong() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Long";
@@ -2316,7 +2316,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithTypeDouble() {
+  void testPutSingleLocalVariableWithTypeDouble() {
     String variableKey = "aVariableKey";
     Double variableValue = 123.456;
     String type = "Double";
@@ -2341,7 +2341,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithTypeDouble() {
+  void testPutSingleVariableWithTypeDouble() {
     String variableKey = "aVariableKey";
     Double variableValue = 123.456;
     String type = "Double";
@@ -2366,7 +2366,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithUnparseableDouble() {
+  void testPutSingleLocalVariableWithUnparseableDouble() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Double";
@@ -2389,7 +2389,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableDouble() {
+  void testPutSingleVariableWithUnparseableDouble() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Double";
@@ -2412,7 +2412,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithTypeBoolean() {
+  void testPutSingleLocalVariableWithTypeBoolean() {
     String variableKey = "aVariableKey";
     Boolean variableValue = true;
     String type = "Boolean";
@@ -2437,7 +2437,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithTypeBoolean() {
+  void testPutSingleVariableWithTypeBoolean() {
     String variableKey = "aVariableKey";
     Boolean variableValue = true;
     String type = "Boolean";
@@ -2462,7 +2462,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithTypeDate() throws Exception {
+  void testPutSingleLocalVariableWithTypeDate() throws Exception {
     Date now = new Date();
 
     String variableKey = "aVariableKey";
@@ -2491,7 +2491,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithTypeDate() throws Exception {
+  void testPutSingleVariableWithTypeDate() throws Exception {
     Date now = new Date();
 
     String variableKey = "aVariableKey";
@@ -2520,7 +2520,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithUnparseableDate() {
+  void testPutSingleLocalVariableWithUnparseableDate() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Date";
@@ -2543,7 +2543,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableDate() {
+  void testPutSingleVariableWithUnparseableDate() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Date";
@@ -2566,7 +2566,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithNotSupportedType() {
+  void testPutSingleLocalVariableWithNotSupportedType() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "X";
@@ -2588,7 +2588,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithNotSupportedType() {
+  void testPutSingleVariableWithNotSupportedType() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "X";
@@ -2610,7 +2610,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariable() {
+  void testPutSingleLocalBinaryVariable() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -2630,7 +2630,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleBinaryVariable() {
+  void testPutSingleBinaryVariable() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -2650,7 +2650,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariableWithValueType() {
+  void testPutSingleLocalBinaryVariableWithValueType() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -2671,7 +2671,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleBinaryVariableWithValueType() {
+  void testPutSingleBinaryVariableWithValueType() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -2692,7 +2692,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariableWithNoValue() {
+  void testPutSingleLocalBinaryVariableWithNoValue() {
     byte[] bytes = new byte[0];
 
     String variableKey = "aVariableKey";
@@ -2713,7 +2713,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleBinaryVariableWithNoValue() {
+  void testPutSingleBinaryVariableWithNoValue() {
     byte[] bytes = new byte[0];
 
     String variableKey = "aVariableKey";
@@ -2734,7 +2734,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalSerializableVariableFromJson() throws Exception {
+  void testPutSingleLocalSerializableVariableFromJson() throws Exception {
 
     ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
@@ -2762,7 +2762,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleSerializableVariableFormJson() throws Exception {
+  void testPutSingleSerializableVariableFormJson() throws Exception {
 
     ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
@@ -2790,7 +2790,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalSerializableVariableUnsupportedMediaType() throws Exception {
+  void testPutSingleLocalSerializableVariableUnsupportedMediaType() throws Exception {
 
     ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
@@ -2816,7 +2816,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleSerializableVariableUnsupportedMediaType() throws Exception {
+  void testPutSingleSerializableVariableUnsupportedMediaType() throws Exception {
 
     ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
@@ -2842,7 +2842,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithNoValue() {
+  void testPutSingleLocalVariableWithNoValue() {
     String variableKey = "aVariableKey";
 
     given()
@@ -2863,7 +2863,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleVariableWithNoValue() {
+  void testPutSingleVariableWithNoValue() {
     String variableKey = "aVariableKey";
 
     given()
@@ -2884,7 +2884,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutLocalVariableForNonExistingExecution() {
+  void testPutLocalVariableForNonExistingExecution() {
     String variableKey = "aVariableKey";
     String variableValue = "aVariableValue";
 
@@ -2907,7 +2907,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithEncodingAndMimeType() {
+  void testPostSingleLocalFileVariableWithEncodingAndMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -2937,7 +2937,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithMimeType() {
+  void testPostSingleLocalFileVariableWithMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -2966,7 +2966,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithEncoding() {
+  void testPostSingleLocalFileVariableWithEncoding() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -2986,7 +2986,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPostSingleLocalFileVariableOnlyFilename() throws Exception {
+  void testPostSingleLocalFileVariableOnlyFilename() throws Exception {
 
     String variableKey = "aVariableKey";
     String filename = "test.txt";
@@ -3013,7 +3013,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPostSingleFileVariable() {
+  void testPostSingleFileVariable() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -3043,7 +3043,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutVariableForNonExistingExecution() {
+  void testPutVariableForNonExistingExecution() {
     String variableKey = "aVariableKey";
     String variableValue = "aVariableValue";
 
@@ -3066,7 +3066,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDeleteSingleLocalVariable() {
+  void testDeleteSingleLocalVariable() {
     String variableKey = "aVariableKey";
 
     given()
@@ -3084,7 +3084,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDeleteSingleVariable() {
+  void testDeleteSingleVariable() {
     String variableKey = "aVariableKey";
 
     given()
@@ -3102,7 +3102,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDeleteLocalVariableForNonExistingExecution() {
+  void testDeleteLocalVariableForNonExistingExecution() {
     String variableKey = "aVariableKey";
 
     doThrow(new ProcessEngineException("expected exception"))
@@ -3122,7 +3122,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDeleteVariableForNonExistingExecution() {
+  void testDeleteVariableForNonExistingExecution() {
     String variableKey = "aVariableKey";
 
     doThrow(new ProcessEngineException("expected exception"))
@@ -3142,7 +3142,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testComplete() {
+  void testComplete() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .contentType(ContentType.JSON)
@@ -3158,7 +3158,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testUnsuccessfulComplete() {
+  void testUnsuccessfulComplete() {
     doThrow(new NotValidException("expected exception")).when(caseExecutionCommandBuilderMock).complete();
 
     given()
@@ -3178,7 +3178,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithSetVariable() {
+  void testCompleteWithSetVariable() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -3214,7 +3214,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithSetVariableLocal() {
+  void testCompleteWithSetVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -3250,7 +3250,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithSetVariableAndVariableLocal() {
+  void testCompleteWithSetVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -3286,7 +3286,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithRemoveVariable() {
+  void testCompleteWithRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -3318,7 +3318,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithRemoveVariableLocal() {
+  void testCompleteWithRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -3350,7 +3350,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithRemoveVariableAndVariableLocal() {
+  void testCompleteWithRemoveVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -3382,7 +3382,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithSetVariableAndRemoveVariable() {
+  void testCompleteWithSetVariableAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -3420,7 +3420,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithSetVariableAndRemoveVariableLocal() {
+  void testCompleteWithSetVariableAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -3458,7 +3458,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithSetVariableLocalAndRemoveVariable() {
+  void testCompleteWithSetVariableLocalAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -3496,7 +3496,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCompleteWithSetVariableLocalAndRemoveVariableLocal() {
+  void testCompleteWithSetVariableLocalAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -3535,7 +3535,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
   ///////////////////////////////////////////////////////////////
   @Test
-  public void testTerminate() {
+  void testTerminate() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
       .contentType(ContentType.JSON)
@@ -3551,7 +3551,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testUnsuccessfulTerminate() {
+  void testUnsuccessfulTerminate() {
     doThrow(new NotValidException("expected exception")).when(caseExecutionCommandBuilderMock).terminate();
 
     given()
@@ -3571,7 +3571,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTerminateWithSetVariable() {
+  void testTerminateWithSetVariable() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -3606,8 +3606,8 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     verify(caseExecutionCommandBuilderMock).terminate();
   }
 
- @Test
-  public void testTerminateWithSetVariableLocal() {
+  @Test
+  void testTerminateWithSetVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -3643,7 +3643,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTerminateWithSetVariableAndVariableLocal() {
+  void testTerminateWithSetVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     int aVariableValue = 123;
 
@@ -3679,7 +3679,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTerminateWithRemoveVariable() {
+  void testTerminateWithRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -3711,7 +3711,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTerminateWithRemoveVariableLocal() {
+  void testTerminateWithRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -3743,7 +3743,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTerminateWithRemoveVariableAndVariableLocal() {
+  void testTerminateWithRemoveVariableAndVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
@@ -3775,7 +3775,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTerminateWithSetVariableAndRemoveVariable() {
+  void testTerminateWithSetVariableAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -3813,7 +3813,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTerminateWithSetVariableAndRemoveVariableLocal() {
+  void testTerminateWithSetVariableAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -3851,7 +3851,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTerminateWithSetVariableLocalAndRemoveVariable() {
+  void testTerminateWithSetVariableLocalAndRemoveVariable() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
@@ -3889,7 +3889,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTerminateWithSetVariableLocalAndRemoveVariableLocal() {
+  void testTerminateWithSetVariableLocalAndRemoveVariableLocal() {
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";

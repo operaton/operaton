@@ -60,7 +60,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   protected BatchQuery queryMock;
 
   @BeforeEach
-  public void setUpBatchQueryMock() {
+  void setUpBatchQueryMock() {
     List<Batch> mockedBatches = MockProvider.createMockBatches();
     queryMock = mock(BatchQuery.class);
 
@@ -71,7 +71,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     Response response = given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -85,7 +85,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testUnknownQueryParameter() {
+  void testUnknownQueryParameter() {
     Response response = given()
       .queryParam("unknown", "unknown")
     .then().expect()
@@ -100,7 +100,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "batchId")
     .then().expect()
@@ -115,7 +115,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
     .then().expect()
@@ -130,7 +130,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testBatchQueryByBatchId() {
+  void testBatchQueryByBatchId() {
     Response response = given()
       .queryParam("batchId", MockProvider.EXAMPLE_BATCH_ID)
     .then().expect()
@@ -147,7 +147,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryActiveBatches() {
+  void testQueryActiveBatches() {
     Response response = given()
       .queryParam("suspended", false)
     .then().expect()
@@ -164,7 +164,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullBatchQuery() {
+  void testFullBatchQuery() {
     Response response = given()
         .queryParams(getCompleteQueryParameters())
       .then().expect()
@@ -180,7 +180,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -193,7 +193,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullQueryCount() {
+  void testFullQueryCount() {
     given()
       .params(getCompleteQueryParameters())
     .then().expect()
@@ -208,7 +208,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(queryMock);
     executeAndVerifySorting("batchId", "desc", Status.OK);
     inOrder.verify(queryMock).orderById();

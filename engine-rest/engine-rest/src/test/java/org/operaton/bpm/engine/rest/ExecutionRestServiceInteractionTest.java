@@ -105,7 +105,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   private RuntimeServiceImpl runtimeServiceMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     runtimeServiceMock = mock(RuntimeServiceImpl.class);
     when(runtimeServiceMock.getVariablesLocalTyped(MockProvider.EXAMPLE_EXECUTION_ID, true)).thenReturn(EXAMPLE_VARIABLES);
     mockEventSubscriptionQuery();
@@ -124,7 +124,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetSingleExecution() {
+  void testGetSingleExecution() {
     Execution mockExecution = MockProvider.createMockExecution();
     ExecutionQuery sampleExecutionQuery = mock(ExecutionQuery.class);
     when(runtimeServiceMock.createExecutionQuery()).thenReturn(sampleExecutionQuery);
@@ -141,7 +141,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetNonExistingExecution() {
+  void testGetNonExistingExecution() {
     ExecutionQuery sampleExecutionQuery = mock(ExecutionQuery.class);
     when(runtimeServiceMock.createExecutionQuery()).thenReturn(sampleExecutionQuery);
     when(sampleExecutionQuery.executionId(anyString())).thenReturn(sampleExecutionQuery);
@@ -157,7 +157,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalExecution() {
+  void testSignalExecution() {
     String variableKey = "aKey";
     int variableValue = 123;
 
@@ -176,7 +176,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalWithUnparseableIntegerVariable() {
+  void testSignalWithUnparseableIntegerVariable() {
     String variableKey = "aKey";
     String variableValue = "1abc";
     String variableType = "Integer";
@@ -195,7 +195,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalWithUnparseableShortVariable() {
+  void testSignalWithUnparseableShortVariable() {
     String variableKey = "aKey";
     String variableValue = "1abc";
     String variableType = "Short";
@@ -214,7 +214,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalWithUnparseableLongVariable() {
+  void testSignalWithUnparseableLongVariable() {
     String variableKey = "aKey";
     String variableValue = "1abc";
     String variableType = "Long";
@@ -232,7 +232,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalWithUnparseableDoubleVariable() {
+  void testSignalWithUnparseableDoubleVariable() {
     String variableKey = "aKey";
     String variableValue = "1abc";
     String variableType = "Double";
@@ -251,7 +251,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalWithUnparseableDateVariable() {
+  void testSignalWithUnparseableDateVariable() {
     String variableKey = "aKey";
     String variableValue = "1abc";
     String variableType = "Date";
@@ -269,7 +269,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalWithNotSupportedVariableType() {
+  void testSignalWithNotSupportedVariableType() {
     String variableKey = "aKey";
     String variableValue = "1abc";
     String variableType = "X";
@@ -287,7 +287,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalNonExistingExecution() {
+  void testSignalNonExistingExecution() {
     doThrow(new ProcessEngineException("expected exception")).when(runtimeServiceMock).signal(any(), any());
 
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(EMPTY_JSON_OBJECT)
@@ -298,7 +298,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalThrowsAuthorizationException() {
+  void testSignalThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(runtimeServiceMock).signal(any(), any());
 
@@ -316,7 +316,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetLocalVariables() {
+  void testGetLocalVariables() {
     Response response = given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID)
       .then().expect().statusCode(Status.OK.getStatusCode())
       .body(EXAMPLE_VARIABLE_KEY, notNullValue())
@@ -328,7 +328,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetLocalVariablesForNonExistingExecution() {
+  void testGetLocalVariablesForNonExistingExecution() {
     when(runtimeServiceMock.getVariablesLocalTyped(anyString(), eq(true))).thenThrow(new ProcessEngineException("expected exception"));
 
     given().pathParam("id", "aNonExistingExecutionId")
@@ -339,7 +339,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetLocalObjectVariables() {
+  void testGetLocalObjectVariables() {
     // given
     String variableKey = "aVariableId";
 
@@ -370,7 +370,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetLocalObjectVariablesSerialized() {
+  void testGetLocalObjectVariablesSerialized() {
     // given
     String variableKey = "aVariableId";
 
@@ -400,7 +400,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetLocalVariablesThrowsAuthorizationException() {
+  void testGetLocalVariablesThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(runtimeServiceMock).getVariablesLocalTyped(anyString(), anyBoolean());
 
@@ -416,7 +416,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testLocalVariableModification() {
+  void testLocalVariableModification() {
     Map<String, Object> messageBodyJson = new HashMap<>();
 
     String variableKey = "aKey";
@@ -440,7 +440,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testLocalVariableModificationForNonExistingExecution() {
+  void testLocalVariableModificationForNonExistingExecution() {
     doThrow(new ProcessEngineException("expected exception")).when(runtimeServiceMock).updateVariablesLocal(any(), any(), any());
 
     Map<String, Object> messageBodyJson = new HashMap<>();
@@ -458,14 +458,14 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testEmptyLocalVariableModification() {
+  void testEmptyLocalVariableModification() {
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(EMPTY_JSON_OBJECT)
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(EXECUTION_LOCAL_VARIABLES_URL);
   }
 
   @Test
-  public void testLocalVariableModificationThrowsAuthorizationException() {
+  void testLocalVariableModificationThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(runtimeServiceMock).updateVariablesLocal(any(), any(), any());
 
@@ -490,7 +490,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetSingleLocalVariable() {
+  void testGetSingleLocalVariable() {
     String variableKey = "aVariableKey";
     int variableValue = 123;
 
@@ -505,7 +505,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
 
 
   @Test
-  public void testGetSingleLocalVariableData() {
+  void testGetSingleLocalVariableData() {
 
     when(runtimeServiceMock.getVariableLocalTyped(anyString(), eq(EXAMPLE_BYTES_VARIABLE_KEY), eq(false))).thenReturn(EXAMPLE_VARIABLE_VALUE_BYTES);
 
@@ -523,7 +523,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetSingleLocalVariableDataNonExisting() {
+  void testGetSingleLocalVariableDataNonExisting() {
 
     when(runtimeServiceMock.getVariableLocalTyped(anyString(), eq("nonExisting"), eq(false))).thenReturn(null);
 
@@ -542,7 +542,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetSingleLocalVariabledataNotBinary() {
+  void testGetSingleLocalVariabledataNotBinary() {
 
     when(runtimeServiceMock.getVariableLocalTyped(anyString(), eq(EXAMPLE_VARIABLE_KEY), eq(false))).thenReturn(EXAMPLE_VARIABLE_VALUE);
 
@@ -559,7 +559,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetSingleLocalObjectVariable() {
+  void testGetSingleLocalObjectVariable() {
     // given
     String variableKey = "aVariableId";
 
@@ -589,7 +589,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetSingleLocalObjectVariableSerialized() {
+  void testGetSingleLocalObjectVariableSerialized() {
     // given
     String variableKey = "aVariableId";
 
@@ -619,7 +619,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testNonExistingLocalVariable() {
+  void testNonExistingLocalVariable() {
     String variableKey = "aVariableKey";
 
     when(runtimeServiceMock.getVariableLocal(MockProvider.EXAMPLE_EXECUTION_ID, variableKey)).thenReturn(null);
@@ -632,7 +632,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetLocalVariableForNonExistingExecution() {
+  void testGetLocalVariableForNonExistingExecution() {
     String variableKey = "aVariableKey";
 
     when(runtimeServiceMock.getVariableLocalTyped(MockProvider.EXAMPLE_EXECUTION_ID, variableKey, true))
@@ -646,7 +646,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetLocalVariableThrowsAuthorizationException() {
+  void testGetLocalVariableThrowsAuthorizationException() {
     String variableKey = "aVariableKey";
 
     String message = "expected exception";
@@ -665,7 +665,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetFileVariable() {
+  void testGetFileVariable() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -688,7 +688,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetNullFileVariable() {
+  void testGetNullFileVariable() {
     String variableKey = "aVariableKey";
     String filename = "test.txt";
     String mimeType = "text/plain";
@@ -709,7 +709,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetFileVariableDownloadWithType() {
+  void testGetFileVariableDownloadWithType() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -729,7 +729,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetFileVariableDownloadWithTypeAndEncoding() {
+  void testGetFileVariableDownloadWithTypeAndEncoding() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -751,7 +751,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetFileVariableDownloadWithoutType() {
+  void testGetFileVariableDownloadWithoutType() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -772,7 +772,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testCannotDownloadVariableOtherThanFile() {
+  void testCannotDownloadVariableOtherThanFile() {
     String variableKey = "aVariableKey";
     BooleanValue variableValue = Variables.booleanValue(true);
 
@@ -787,7 +787,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalVariable() {
+  void testPutSingleLocalVariable() {
     String variableKey = "aVariableKey";
     String variableValue = "aVariableValue";
 
@@ -803,7 +803,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithTypeInteger() {
+  void testPutSingleVariableWithTypeInteger() {
     String variableKey = "aVariableKey";
     Integer variableValue = 123;
     String type = "Integer";
@@ -820,7 +820,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableInteger() {
+  void testPutSingleVariableWithUnparseableInteger() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Integer";
@@ -837,7 +837,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithTypeShort() {
+  void testPutSingleVariableWithTypeShort() {
     String variableKey = "aVariableKey";
     Short variableValue = 123;
     String type = "Short";
@@ -854,7 +854,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableShort() {
+  void testPutSingleVariableWithUnparseableShort() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Short";
@@ -871,7 +871,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithTypeLong() {
+  void testPutSingleVariableWithTypeLong() {
     String variableKey = "aVariableKey";
     Long variableValue = 123L;
     String type = "Long";
@@ -888,7 +888,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableLong() {
+  void testPutSingleVariableWithUnparseableLong() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Long";
@@ -905,7 +905,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithTypeDouble() {
+  void testPutSingleVariableWithTypeDouble() {
     String variableKey = "aVariableKey";
     Double variableValue = 123.456;
     String type = "Double";
@@ -922,7 +922,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableDouble() {
+  void testPutSingleVariableWithUnparseableDouble() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Double";
@@ -939,7 +939,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithTypeBoolean() {
+  void testPutSingleVariableWithTypeBoolean() {
     String variableKey = "aVariableKey";
     Boolean variableValue = true;
     String type = "Boolean";
@@ -956,7 +956,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithTypeDate() throws Exception {
+  void testPutSingleVariableWithTypeDate() throws Exception {
     Date now = new Date();
 
     String variableKey = "aVariableKey";
@@ -977,7 +977,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableDate() {
+  void testPutSingleVariableWithUnparseableDate() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Date";
@@ -994,7 +994,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableWithNotSupportedType() {
+  void testPutSingleVariableWithNotSupportedType() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "X";
@@ -1010,7 +1010,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleVariableThrowsAuthorizationException() {
+  void testPutSingleVariableThrowsAuthorizationException() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "String";
@@ -1034,7 +1034,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariable() {
+  void testPutSingleLocalBinaryVariable() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -1053,7 +1053,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariableWithValueType() {
+  void testPutSingleLocalBinaryVariableWithValueType() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -1073,7 +1073,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariableWithUnknownValueType() {
+  void testPutSingleLocalBinaryVariableWithUnknownValueType() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -1093,7 +1093,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariableWithValueTypeOfWrongMimeType() {
+  void testPutSingleLocalBinaryVariableWithValueTypeOfWrongMimeType() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -1113,7 +1113,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariableWithNoValue() {
+  void testPutSingleLocalBinaryVariableWithNoValue() {
     byte[] bytes = new byte[0];
 
     String variableKey = "aVariableKey";
@@ -1132,7 +1132,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalSerializableVariableFromJson() throws Exception {
+  void testPutSingleLocalSerializableVariableFromJson() throws Exception {
 
     ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
@@ -1157,7 +1157,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testValidationOnPutSingleLocalSerializableVariableFromJson() throws Exception {
+  void testValidationOnPutSingleLocalSerializableVariableFromJson() throws Exception {
     boolean previousIsValidationEnabled = processEngine.getProcessEngineConfiguration().isDeserializationTypeValidationEnabled();
     DeserializationTypeValidator previousValidator = processEngine.getProcessEngineConfiguration().getDeserializationTypeValidator();
 
@@ -1194,7 +1194,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testFailingValidationOnPutSingleLocalSerializableVariableFromJson() throws Exception {
+  void testFailingValidationOnPutSingleLocalSerializableVariableFromJson() throws Exception {
     boolean previousIsValidationEnabled = processEngine.getProcessEngineConfiguration().isDeserializationTypeValidationEnabled();
     DeserializationTypeValidator previousValidator = processEngine.getProcessEngineConfiguration().getDeserializationTypeValidator();
 
@@ -1228,7 +1228,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalSerializableVariableUnsupportedMediaType() throws Exception {
+  void testPutSingleLocalSerializableVariableUnsupportedMediaType() throws Exception {
 
     ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
@@ -1254,7 +1254,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariableThrowsAuthorizationException() {
+  void testPutSingleLocalBinaryVariableThrowsAuthorizationException() {
     byte[] bytes = "someContent".getBytes();
     String variableKey = "aVariableKey";
 
@@ -1274,7 +1274,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalVariableFromSerialized() {
+  void testPutSingleLocalVariableFromSerialized() {
     String serializedValue = "{\"prop\" : \"value\"}";
     Map<String, Object> requestJson = VariablesBuilder
         .getObjectValueMap(serializedValue, ValueType.OBJECT.getName(), "aDataFormat", "aRootType");
@@ -1299,7 +1299,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalVariableFromInvalidSerialized() {
+  void testPutSingleLocalVariableFromInvalidSerialized() {
     String serializedValue = "{\"prop\" : \"value\"}";
 
     Map<String, Object> requestJson = VariablesBuilder
@@ -1320,7 +1320,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalVariableFromSerializedWithNoValue() {
+  void testPutSingleLocalVariableFromSerializedWithNoValue() {
     String variableKey = "aVariableKey";
 
     Map<String, Object> requestJson = VariablesBuilder
@@ -1340,7 +1340,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPutSingleLocalVariableWithNoValue() {
+  void testPutSingleLocalVariableWithNoValue() {
     String variableKey = "aVariableKey";
 
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).pathParam("varId", variableKey)
@@ -1354,7 +1354,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
 
 
   @Test
-  public void testPutLocalVariableForNonExistingExecution() {
+  void testPutLocalVariableForNonExistingExecution() {
     String variableKey = "aVariableKey";
     String variableValue = "aVariableValue";
 
@@ -1372,7 +1372,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testDeleteSingleLocalVariable() {
+  void testDeleteSingleLocalVariable() {
     String variableKey = "aVariableKey";
 
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).pathParam("varId", variableKey)
@@ -1383,7 +1383,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithEncodingAndMimeType() {
+  void testPostSingleLocalFileVariableWithEncodingAndMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -1412,7 +1412,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithMimeType() {
+  void testPostSingleLocalFileVariableWithMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -1440,7 +1440,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithEncoding() {
+  void testPostSingleLocalFileVariableWithEncoding() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -1460,7 +1460,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testPostSingleLocalFileVariableOnlyFilename() throws Exception {
+  void testPostSingleLocalFileVariableOnlyFilename() throws Exception {
 
     String variableKey = "aVariableKey";
     String filename = "test.txt";
@@ -1486,7 +1486,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testDeleteLocalVariableForNonExistingExecution() {
+  void testDeleteLocalVariableForNonExistingExecution() {
     String variableKey = "aVariableKey";
 
     doThrow(new ProcessEngineException("expected exception"))
@@ -1501,7 +1501,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testDeleteLocalVariableThrowsAuthorizationException() {
+  void testDeleteLocalVariableThrowsAuthorizationException() {
     String variableKey = "aVariableKey";
 
     String message = "expected exception";
@@ -1520,7 +1520,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetMessageEventSubscription() {
+  void testGetMessageEventSubscription() {
     String messageName = MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_NAME;
 
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).pathParam("messageName", messageName)
@@ -1537,7 +1537,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetNonExistingMessageEventSubscription() {
+  void testGetNonExistingMessageEventSubscription() {
     EventSubscriptionQuery sampleEventSubscriptionQuery = mock(EventSubscriptionQuery.class);
     when(runtimeServiceMock.createEventSubscriptionQuery()).thenReturn(sampleEventSubscriptionQuery);
     when(sampleEventSubscriptionQuery.executionId(anyString())).thenReturn(sampleEventSubscriptionQuery);
@@ -1556,7 +1556,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testMessageEventTriggering() {
+  void testMessageEventTriggering() {
     String messageName = "aMessageName";
     String variableKey1 = "aVarName";
     String variableValue1 = "aVarValue";
@@ -1584,7 +1584,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testMessageEventTriggeringWithoutVariables() {
+  void testMessageEventTriggeringWithoutVariables() {
     String messageName = "aMessageName";
 
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).pathParam("messageName", messageName)
@@ -1597,7 +1597,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testFailingMessageEventTriggering() {
+  void testFailingMessageEventTriggering() {
     String messageName = "someMessage";
     doThrow(new ProcessEngineException("expected exception"))
       .when(runtimeServiceMock).messageEventReceived(any(), any(), any());
@@ -1611,7 +1611,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testMessageEventTriggeringThrowsAuthorizationException() {
+  void testMessageEventTriggeringThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message))
       .when(runtimeServiceMock).messageEventReceived(any(), any(), any());
@@ -1630,7 +1630,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testCreateIncident() {
+  void testCreateIncident() {
     when(runtimeServiceMock.createIncident(anyString(), anyString(), anyString(), anyString())).thenReturn(mock(Incident.class));
     Map<String, Object> json = new HashMap<>();
     json.put("incidentType", "incidentType");
@@ -1644,7 +1644,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testCreateIncidentWithNullIncidentType() {
+  void testCreateIncidentWithNullIncidentType() {
     doThrow(new BadUserRequestException()).when(runtimeServiceMock).createIncident(any(), any(), any(), any());
     Map<String, Object> json = new HashMap<>();
     json.put("configuration", "configuration");

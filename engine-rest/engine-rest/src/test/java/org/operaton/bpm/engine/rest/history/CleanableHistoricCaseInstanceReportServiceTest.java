@@ -76,7 +76,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   private CleanableHistoricCaseInstanceReport historicCaseInstanceReport;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     setupHistoryReportMock();
   }
 
@@ -121,7 +121,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testGetReport() {
+  void testGetReport() {
     given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -134,7 +134,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testReportRetrieval() {
+  void testReportRetrieval() {
     Response response = given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -170,7 +170,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testMissingAuthorization() {
+  void testMissingAuthorization() {
     String message = "not authorized";
     when(historicCaseInstanceReport.list()).thenThrow(new AuthorizationException(message));
 
@@ -184,7 +184,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testQueryByDefinitionId() {
+  void testQueryByDefinitionId() {
     given()
       .queryParam("caseDefinitionIdIn",  EXAMPLE_CD_ID + "," + ANOTHER_EXAMPLE_CD_ID)
     .then()
@@ -200,7 +200,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testQueryByDefinitionKey() {
+  void testQueryByDefinitionKey() {
     given()
       .queryParam("caseDefinitionKeyIn", EXAMPLE_CD_KEY + "," + ANOTHER_EXAMPLE_CD_KEY)
     .then()
@@ -216,7 +216,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     given()
       .queryParam("tenantIdIn", EXAMPLE_TENANT_ID + "," + ANOTHER_EXAMPLE_TENANT_ID)
     .then()
@@ -232,7 +232,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testQueryWithoutTenantId() {
+  void testQueryWithoutTenantId() {
     given()
       .queryParam("withoutTenantId", true)
     .then()
@@ -248,7 +248,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testQueryCompact() {
+  void testQueryCompact() {
     given()
       .queryParam("compact", true)
     .then()
@@ -264,7 +264,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testFullQuery() {
+  void testFullQuery() {
     given()
       .params(getCompleteQueryParameters())
     .then()
@@ -279,7 +279,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(2))
@@ -291,7 +291,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testFullQueryCount() {
+  void testFullQueryCount() {
     given()
       .params(getCompleteQueryParameters())
     .then().expect()
@@ -305,7 +305,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testOrderByFinishedCaseInstanceAsc() {
+  void testOrderByFinishedCaseInstanceAsc() {
     given()
       .queryParam("sortBy", "finished")
       .queryParam("sortOrder", "asc")
@@ -321,7 +321,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testOrderByFinishedCaseInstanceDesc() {
+  void testOrderByFinishedCaseInstanceDesc() {
     given()
       .queryParam("sortBy", "finished")
       .queryParam("sortOrder", "desc")
@@ -337,7 +337,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
     .queryParam("sortOrder", "asc")
   .then()
@@ -351,7 +351,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("finished", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }

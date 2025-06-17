@@ -75,7 +75,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   private CleanableHistoricProcessInstanceReport historicProcessInstanceReport;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     setupHistoryReportMock();
   }
 
@@ -119,7 +119,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testGetReport() {
+  void testGetReport() {
     given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -132,7 +132,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testReportRetrieval() {
+  void testReportRetrieval() {
     Response response = given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -168,7 +168,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testMissingAuthorization() {
+  void testMissingAuthorization() {
     String message = "not authorized";
     when(historicProcessInstanceReport.list()).thenThrow(new AuthorizationException(message));
 
@@ -182,7 +182,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testQueryByDefinitionId() {
+  void testQueryByDefinitionId() {
     given()
       .queryParam("processDefinitionIdIn",  EXAMPLE_PROCESS_DEFINITION_ID + "," + ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
     .then()
@@ -198,7 +198,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testQueryByDefinitionKey() {
+  void testQueryByDefinitionKey() {
     given()
       .queryParam("processDefinitionKeyIn", EXAMPLE_PD_KEY + "," + ANOTHER_EXAMPLE_PD_KEY)
     .then()
@@ -214,7 +214,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     given()
       .queryParam("tenantIdIn", EXAMPLE_TENANT_ID + "," + ANOTHER_EXAMPLE_TENANT_ID)
     .then()
@@ -230,7 +230,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testQueryWithoutTenantId() {
+  void testQueryWithoutTenantId() {
     given()
       .queryParam("withoutTenantId", true)
     .then()
@@ -246,7 +246,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testQueryCompact() {
+  void testQueryCompact() {
     given()
       .queryParam("compact", true)
     .then()
@@ -262,7 +262,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testFullQuery() {
+  void testFullQuery() {
     given()
       .params(getCompleteQueryParameters())
     .then()
@@ -277,7 +277,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(2))
@@ -289,7 +289,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testFullQueryCount() {
+  void testFullQueryCount() {
     given()
       .params(getCompleteQueryParameters())
     .then().expect()
@@ -303,7 +303,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testOrderByFinishedProcessInstanceAsc() {
+  void testOrderByFinishedProcessInstanceAsc() {
     given()
       .queryParam("sortBy", "finished")
       .queryParam("sortOrder", "asc")
@@ -319,7 +319,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testOrderByFinishedProcessInstanceDesc() {
+  void testOrderByFinishedProcessInstanceDesc() {
     given()
       .queryParam("sortBy", "finished")
       .queryParam("sortOrder", "desc")
@@ -335,7 +335,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
     .queryParam("sortOrder", "asc")
     .then()
@@ -349,7 +349,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("finished", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }

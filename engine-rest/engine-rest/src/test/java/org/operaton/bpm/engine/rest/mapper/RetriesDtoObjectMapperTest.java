@@ -30,10 +30,10 @@ import org.operaton.bpm.engine.rest.dto.runtime.SetJobRetriesByProcessDto;
 import org.operaton.bpm.engine.rest.dto.runtime.SetJobRetriesDto;
 import org.junit.jupiter.api.Test;
 
-public class RetriesDtoObjectMapperTest {
+class RetriesDtoObjectMapperTest {
 
   @Test
-  public void shouldExcludeDueDateSetPropertyRetriesDto() throws JsonProcessingException {
+  void shouldExcludeDueDateSetPropertyRetriesDto() throws JsonProcessingException {
     // given
     RetriesDto dto = new RetriesDto();
     dto.setRetries(4);
@@ -49,7 +49,7 @@ public class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  public void shouldIncludeDueDateSetPropertyRetriesDto() throws JsonProcessingException {
+  void shouldIncludeDueDateSetPropertyRetriesDto() throws JsonProcessingException {
     // given
     String json = "{"
         + "\"retries\":4,"
@@ -66,7 +66,7 @@ public class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  public void shouldIgnoreDueDateSetPropertyRetriesDto() throws JsonProcessingException {
+  void shouldIgnoreDueDateSetPropertyRetriesDto() throws JsonProcessingException {
     // given
     String json = "{"
         + "\"retries\":4"
@@ -82,7 +82,7 @@ public class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  public void shouldExcludeDueDateSetPropertySetJobRetriesDto() throws JsonProcessingException {
+  void shouldExcludeDueDateSetPropertySetJobRetriesDto() throws JsonProcessingException {
     // given
     SetJobRetriesDto dto = new SetJobRetriesDto();
     dto.setRetries(4);
@@ -100,7 +100,7 @@ public class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  public void shouldIncludeDueDateSetPropertySetJobRetriesDto() throws JsonProcessingException {
+  void shouldIncludeDueDateSetPropertySetJobRetriesDto() throws JsonProcessingException {
     // given
     String json = "{"
         + "\"retries\":4,"
@@ -119,7 +119,7 @@ public class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  public void shouldIgnoreDueDateSetPropertySetJobRetriesDto() throws JsonProcessingException {
+  void shouldIgnoreDueDateSetPropertySetJobRetriesDto() throws JsonProcessingException {
     // given
     String json = "{"
         + "\"retries\":4,"
@@ -137,7 +137,7 @@ public class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  public void shouldExcludeDueDateSetPropertySetJobRetriesByProcessDto() throws JsonProcessingException {
+  void shouldExcludeDueDateSetPropertySetJobRetriesByProcessDto() throws JsonProcessingException {
     // given
     SetJobRetriesByProcessDto dto = new SetJobRetriesByProcessDto();
     dto.setRetries(4);
@@ -156,7 +156,7 @@ public class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  public void shouldIncludeDueDateSetPropertySetJobRetriesByProcessDto() throws JsonProcessingException {
+  void shouldIncludeDueDateSetPropertySetJobRetriesByProcessDto() throws JsonProcessingException {
     // given
     String json = "{"
         + "\"retries\":4,"
@@ -177,7 +177,7 @@ public class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  public void shouldIgnoreDueDateSetPropertySetJobRetriesByProcessDto() throws JsonProcessingException {
+  void shouldIgnoreDueDateSetPropertySetJobRetriesByProcessDto() throws JsonProcessingException {
     // given
     String json = "{\"retries\":4,\"jobIds\":null,\"jobQuery\":null,\"processInstances\":[],\"processInstanceQuery\":{\"deploymentId\":null,\"processDefinitionKey\":null,\"processDefinitionKeys\":null,\"processDefinitionKeyNotIn\":null,\"businessKey\":null,\"businessKeyLike\":null,\"caseInstanceId\":null,\"processDefinitionId\":null,\"superProcessInstance\":null,\"subProcessInstance\":null,\"superCaseInstance\":null,\"subCaseInstance\":null,\"active\":null,\"suspended\":null,\"processInstanceIds\":null,\"withIncident\":null,\"incidentId\":null,\"incidentType\":null,\"incidentMessage\":null,\"incidentMessageLike\":null,\"withoutTenantId\":null,\"activityIds\":null,\"rootProcessInstances\":null,\"leafProcessInstances\":null,\"variableNamesIgnoreCase\":null,\"variableValuesIgnoreCase\":null,\"variables\":null,\"orQueries\":null,\"processDefinitionWithoutTenantId\":null,\"tenantIdIn\":null,\"sorting\":null},\"historicProcessInstanceQuery\":{\"processDefinitionId\":null,\"incidentType\":null,\"orQueries\":null,\"sorting\":null}}";
 

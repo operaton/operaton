@@ -61,7 +61,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   private DeploymentQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockDeploymentQuery(MockProvider.createMockDeployments());
   }
 
@@ -74,14 +74,14 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     given()
       .then().expect().statusCode(Status.OK.getStatusCode())
       .when().get(DEPLOYMENT_QUERY_URL);
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifyFailingSorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST,
         InvalidRequestException.class.getSimpleName(), "Cannot set query parameter 'sortBy' to value 'anInvalidSortByOption'");
     executeAndVerifyFailingSorting("name", "anInvalidSortOrderOption", Status.BAD_REQUEST,
@@ -103,7 +103,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "name")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -112,7 +112,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -121,7 +121,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeploymentRetrieval() {
+  void testDeploymentRetrieval() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
 
     String queryKey = "Name";
@@ -150,7 +150,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode()).when().get(DEPLOYMENT_QUERY_URL);
 
     verify(mockedQuery).list();
@@ -158,7 +158,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAdditionalParameters() {
+  void testAdditionalParameters() {
     Map<String, String> queryParameters = getCompleteQueryParameters();
 
     given().queryParams(queryParameters)
@@ -174,7 +174,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testWithoutSourceParameter() {
+  void testWithoutSourceParameter() {
 
     given()
       .queryParam("withoutSource", true)
@@ -189,7 +189,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSourceAndWithoutSource() {
+  void testSourceAndWithoutSource() {
     given()
       .queryParam("withoutSource", true)
       .queryParam("source", "source")
@@ -203,7 +203,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeploymentBefore() {
+  void testDeploymentBefore() {
     given()
       .queryParam("before", MockProvider.EXAMPLE_DEPLOYMENT_TIME_BEFORE)
     .then().expect()
@@ -216,7 +216,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeploymentAfter() {
+  void testDeploymentAfter() {
     given()
       .queryParam("after", MockProvider.EXAMPLE_DEPLOYMENT_TIME_AFTER)
     .then().expect()
@@ -229,7 +229,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeploymentTenantIdList() {
+  void testDeploymentTenantIdList() {
     List<Deployment> deployments = Arrays.asList(
         MockProvider.createMockDeployment(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockDeployment(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
@@ -257,7 +257,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeploymentWithoutTenantId() {
+  void testDeploymentWithoutTenantId() {
     Deployment mockDeployment = MockProvider.createMockDeployment(null);
     mockedQuery = setUpMockDeploymentQuery(Collections.singletonList(mockDeployment));
 
@@ -280,7 +280,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeploymentTenantIdIncludeDefinitionsWithoutTenantid() {
+  void testDeploymentTenantIdIncludeDefinitionsWithoutTenantid() {
     List<Deployment> mockDeployments = Arrays.asList(
         MockProvider.createMockDeployment(null),
         MockProvider.createMockDeployment(MockProvider.EXAMPLE_TENANT_ID));
@@ -321,7 +321,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("id", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByDeploymentId();
@@ -364,7 +364,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
     given().queryParam("firstResult", firstResult).queryParam("maxResults", maxResults)
@@ -378,7 +378,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
    * If parameter "firstResult" is missing, we expect 0 as default.
    */
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
     given().queryParam("maxResults", maxResults)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -391,7 +391,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
    * If parameter "maxResults" is missing, we expect Integer.MAX_VALUE as default.
    */
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
     given().queryParam("firstResult", firstResult)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -401,7 +401,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
       .when().get(DEPLOYMENT_COUNT_QUERY_URL);

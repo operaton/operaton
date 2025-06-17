@@ -88,7 +88,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   private SetJobRetriesBuilder mockSetJobRetriesBuilder;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockManagementService = mock(ManagementService.class);
 
     namedProcessEngine = getProcessEngine(MockProvider.EXAMPLE_PROCESS_ENGINE_NAME);
@@ -131,7 +131,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSimpleJobDefinitionGet() {
+  void testSimpleJobDefinitionGet() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_JOB_DEFINITION_ID)
     .then()
@@ -156,7 +156,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testJobDefinitionGetNullJobPriority() {
+  void testJobDefinitionGetNullJobPriority() {
     // given
     JobDefinition mockJobDefinition = new MockJobDefinitionBuilder()
       .id(MockProvider.EXAMPLE_JOB_DEFINITION_ID)
@@ -177,7 +177,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testJobDefinitionGetIdDoesntExist() {
+  void testJobDefinitionGetIdDoesntExist() {
     JobDefinitionQuery invalidQueryNonExistingJobDefinition;
     invalidQueryNonExistingJobDefinition = mock(JobDefinitionQuery.class);
 
@@ -202,7 +202,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionExcludingInstances() {
+  void testActivateJobDefinitionExcludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", false);
@@ -222,7 +222,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedActivateJobDefinitionExcludingInstances() {
+  void testDelayedActivateJobDefinitionExcludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", false);
@@ -247,7 +247,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionIncludingInstances() {
+  void testActivateJobDefinitionIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -268,7 +268,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedActivateJobDefinitionIncludingInstances() {
+  void testDelayedActivateJobDefinitionIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -293,7 +293,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateThrowProcessEngineException() {
+  void testActivateThrowProcessEngineException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", false);
@@ -318,7 +318,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateNonParseableDateFormat() {
+  void testActivateNonParseableDateFormat() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", false);
@@ -341,7 +341,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByIdThrowsAuthorizationException() {
+  void testActivateJobDefinitionByIdThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", false);
@@ -366,7 +366,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionExcludingInstances() {
+  void testSuspendJobDefinitionExcludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", false);
@@ -387,7 +387,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedSuspendJobDefinitionExcludingInstances() {
+  void testDelayedSuspendJobDefinitionExcludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", false);
@@ -412,7 +412,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionIncludingInstances() {
+  void testSuspendJobDefinitionIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);
@@ -433,7 +433,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedSuspendJobDefinitionIncludingInstances() {
+  void testDelayedSuspendJobDefinitionIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);
@@ -458,7 +458,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendThrowsProcessEngineException() {
+  void testSuspendThrowsProcessEngineException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", false);
@@ -483,7 +483,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendNonParseableDateFormat() {
+  void testSuspendNonParseableDateFormat() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", false);
@@ -506,7 +506,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendWithMultipleByParameters() {
+  void testSuspendWithMultipleByParameters() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -528,7 +528,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByIdThrowsAuthorizationException() {
+  void testSuspendJobDefinitionByIdThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", false);
@@ -553,7 +553,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionKey() {
+  void testActivateJobDefinitionByProcessDefinitionKey() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -572,7 +572,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionKeyIncludingInstances() {
+  void testActivateJobDefinitionByProcessDefinitionKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -593,7 +593,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedActivateJobDefinitionByProcessDefinitionKey() {
+  void testDelayedActivateJobDefinitionByProcessDefinitionKey() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -616,7 +616,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedActivateJobDefinitionByProcessDefinitionKeyIncludingInstances() {
+  void testDelayedActivateJobDefinitionByProcessDefinitionKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -641,7 +641,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionKeyWithUnparseableDate() {
+  void testActivateJobDefinitionByProcessDefinitionKeyWithUnparseableDate() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -662,7 +662,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionKeyWithException() {
+  void testActivateJobDefinitionByProcessDefinitionKeyWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -685,7 +685,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionKeyWithAuthorizationException() {
+  void testActivateJobDefinitionByProcessDefinitionKeyWithAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -708,7 +708,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionKeyAndTenantId() {
+  void testActivateJobDefinitionByProcessDefinitionKeyAndTenantId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -729,7 +729,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionKeyWithoutTenantId() {
+  void testActivateJobDefinitionByProcessDefinitionKeyWithoutTenantId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -750,7 +750,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionKey() {
+  void testSuspendJobDefinitionByProcessDefinitionKey() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -769,7 +769,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionKeyIncludingInstances() {
+  void testSuspendJobDefinitionByProcessDefinitionKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);
@@ -790,7 +790,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedSuspendJobDefinitionByProcessDefinitionKey() {
+  void testDelayedSuspendJobDefinitionByProcessDefinitionKey() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -813,7 +813,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedSuspendJobDefinitionByProcessDefinitionKeyIncludingInstances() {
+  void testDelayedSuspendJobDefinitionByProcessDefinitionKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);
@@ -838,7 +838,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionKeyWithUnparseableDate() {
+  void testSuspendJobDefinitionByProcessDefinitionKeyWithUnparseableDate() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -859,7 +859,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionKeyWithException() {
+  void testSuspendJobDefinitionByProcessDefinitionKeyWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -882,7 +882,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionKeyWithAuthorizationException() {
+  void testSuspendJobDefinitionByProcessDefinitionKeyWithAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -905,7 +905,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionKeyAndTenantId() {
+  void testSuspendJobDefinitionByProcessDefinitionKeyAndTenantId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -926,7 +926,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionKeyWithoutTenantId() {
+  void testSuspendJobDefinitionByProcessDefinitionKeyWithoutTenantId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -947,7 +947,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionId() {
+  void testActivateJobDefinitionByProcessDefinitionId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -966,7 +966,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionIdIncludingInstances() {
+  void testActivateJobDefinitionByProcessDefinitionIdIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -987,7 +987,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedActivateJobDefinitionByProcessDefinitionId() {
+  void testDelayedActivateJobDefinitionByProcessDefinitionId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1010,7 +1010,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedActivateJobDefinitionByProcessDefinitionIdIncludingInstances() {
+  void testDelayedActivateJobDefinitionByProcessDefinitionIdIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -1035,7 +1035,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionIdWithUnparseableDate() {
+  void testActivateJobDefinitionByProcessDefinitionIdWithUnparseableDate() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1056,7 +1056,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionIdWithException() {
+  void testActivateJobDefinitionByProcessDefinitionIdWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1079,7 +1079,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionIdWithAuthorizationException() {
+  void testActivateJobDefinitionByProcessDefinitionIdWithAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1102,7 +1102,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionId() {
+  void testSuspendJobDefinitionByProcessDefinitionId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1121,7 +1121,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionIdIncludingInstances() {
+  void testSuspendJobDefinitionByProcessDefinitionIdIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);
@@ -1142,7 +1142,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedSuspendJobDefinitionByProcessDefinitionId() {
+  void testDelayedSuspendJobDefinitionByProcessDefinitionId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1165,7 +1165,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedSuspendJobDefinitionByProcessDefinitionIdIncludingInstances() {
+  void testDelayedSuspendJobDefinitionByProcessDefinitionIdIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);
@@ -1190,7 +1190,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionIdWithUnparseableDate() {
+  void testSuspendJobDefinitionByProcessDefinitionIdWithUnparseableDate() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1211,7 +1211,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionIdWithException() {
+  void testSuspendJobDefinitionByProcessDefinitionIdWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1234,7 +1234,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionIdWithAuthorizationException() {
+  void testSuspendJobDefinitionByProcessDefinitionIdWithAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1257,7 +1257,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByIdShouldThrowException() {
+  void testActivateJobDefinitionByIdShouldThrowException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("jobDefinitionId", MockProvider.EXAMPLE_JOB_DEFINITION_ID);
@@ -1277,7 +1277,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByIdShouldThrowException() {
+  void testSuspendJobDefinitionByIdShouldThrowException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("jobDefinitionId", MockProvider.EXAMPLE_JOB_DEFINITION_ID);
@@ -1297,7 +1297,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByNothing() {
+  void testSuspendJobDefinitionByNothing() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
 
@@ -1316,7 +1316,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobRetries() {
+  void testSetJobRetries() {
     Map<String, Object> retriesVariableJson = new HashMap<>();
     retriesVariableJson.put("retries", MockProvider.EXAMPLE_JOB_RETRIES);
 
@@ -1337,7 +1337,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobRetriesWithDueDate() {
+  void testSetJobRetriesWithDueDate() {
     Map<String, Object> retriesVariableJson = new HashMap<>();
     retriesVariableJson.put("retries", MockProvider.EXAMPLE_JOB_RETRIES);
     Date newDueDate = new Date(1675752840000L);
@@ -1361,7 +1361,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobRetriesWithNullDueDate() {
+  void testSetJobRetriesWithNullDueDate() {
     Map<String, Object> retriesVariableJson = new HashMap<>();
     retriesVariableJson.put("retries", MockProvider.EXAMPLE_JOB_RETRIES);
     retriesVariableJson.put("dueDate", null);
@@ -1384,7 +1384,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobRetriesExceptionExpected() {
+  void testSetJobRetriesExceptionExpected() {
     doThrow(new ProcessEngineException("job definition not found"))
       .when(mockSetJobRetriesBuilder).execute();
 
@@ -1410,7 +1410,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobRetriesAuthorizationException() {
+  void testSetJobRetriesAuthorizationException() {
     String expectedMessage = "expected exception message";
     doThrow(new AuthorizationException(expectedMessage)).when(mockSetJobRetriesBuilder).execute();
 
@@ -1436,7 +1436,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobPriority() {
+  void testSetJobPriority() {
     Map<String, Object> priorityJson = new HashMap<>();
     priorityJson.put("priority", MockProvider.EXAMPLE_JOB_DEFINITION_PRIORITY);
 
@@ -1455,7 +1455,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobPriorityToExtremeValue() {
+  void testSetJobPriorityToExtremeValue() {
     Map<String, Object> priorityJson = new HashMap<>();
     priorityJson.put("priority", Long.MAX_VALUE);
 
@@ -1474,7 +1474,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobPriorityIncludeExistingJobs() {
+  void testSetJobPriorityIncludeExistingJobs() {
     Map<String, Object> priorityJson = new HashMap<>();
     priorityJson.put("priority", MockProvider.EXAMPLE_JOB_DEFINITION_PRIORITY);
     priorityJson.put("includeJobs", true);
@@ -1494,7 +1494,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobPriorityExceptionExpected() {
+  void testSetJobPriorityExceptionExpected() {
     String expectedMessage = "expected exception message";
 
     doThrow(new ProcessEngineException(expectedMessage))
@@ -1522,7 +1522,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetNonExistingJobDefinitionPriority() {
+  void testSetNonExistingJobDefinitionPriority() {
     String expectedMessage = "expected exception message";
 
     doThrow(new NotFoundException(expectedMessage))
@@ -1547,7 +1547,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSetJobPriorityAuthorizationException() {
+  void testSetJobPriorityAuthorizationException() {
     String expectedMessage = "expected exception message";
     doThrow(new AuthorizationException(expectedMessage))
       .when(mockManagementService)
@@ -1571,7 +1571,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testResetJobPriority() {
+  void testResetJobPriority() {
     Map<String, Object> priorityJson = new HashMap<>();
     priorityJson.put("priority", null);
 
@@ -1589,7 +1589,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testResetJobPriorityIncludeJobsNotAllowed() {
+  void testResetJobPriorityIncludeJobsNotAllowed() {
     Map<String, Object> priorityJson = new HashMap<>();
     priorityJson.put("priority", null);
     priorityJson.put("includeJobs", true);
@@ -1609,7 +1609,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testResetJobPriorityExceptionExpected() {
+  void testResetJobPriorityExceptionExpected() {
     String expectedMessage = "expected exception message";
 
     doThrow(new ProcessEngineException(expectedMessage))
@@ -1632,7 +1632,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testResetNonExistingJobDefinitionPriority() {
+  void testResetNonExistingJobDefinitionPriority() {
     String expectedMessage = "expected exception message";
 
     doThrow(new NotFoundException(expectedMessage))
@@ -1655,7 +1655,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testResetJobPriorityAuthorizationException() {
+  void testResetJobPriorityAuthorizationException() {
     String expectedMessage = "expected exception message";
     doThrow(new AuthorizationException(expectedMessage))
     .when(mockManagementService).clearOverridingJobPriorityForJobDefinition(MockProvider.EXAMPLE_JOB_DEFINITION_ID);
@@ -1677,7 +1677,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockQuery = setUpMockJobDefinitionQuery(createMockJobDefinitionsTwoTenants());
 
     Response response = given()
@@ -1702,7 +1702,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testTenantIdListPostParameter() {
+  void testTenantIdListPostParameter() {
     mockQuery = setUpMockJobDefinitionQuery(createMockJobDefinitionsTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();

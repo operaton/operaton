@@ -55,7 +55,7 @@ public class NonPersistenceConnectionExceptionLoggingTest extends AbstractRestSe
       .watch(REST_API);
 
   @Test
-  public void shouldLogNonPersistenceExceptionOnWarning() {
+  void shouldLogNonPersistenceExceptionOnWarning() {
     stubFailingUserQuery(new SQLNonTransientConnectionException());
 
     String expectedMessage = PERSISTENCE_EXCEPTION_MESSAGE;

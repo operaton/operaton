@@ -94,7 +94,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   public static TestContainerExtension rule = new TestContainerExtension();
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     authorizationServiceMock = mock(AuthorizationServiceImpl.class);
     identityServiceMock = mock(IdentityServiceImpl.class);
     processEngineConfigurationMock = mock(ProcessEngineConfigurationImpl.class);
@@ -106,7 +106,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedTrue() {
+  void testIsUserAuthorizedTrue() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -133,7 +133,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedFalse() {
+  void testIsUserAuthorizedFalse() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -159,7 +159,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedBatchResource() {
+  void testIsUserAuthorizedBatchResource() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -187,7 +187,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedProcessDefinitionResource() {
+  void testIsUserAuthorizedProcessDefinitionResource() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -217,7 +217,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedProcessInstanceResource() {
+  void testIsUserAuthorizedProcessInstanceResource() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -247,7 +247,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedTaskResource() {
+  void testIsUserAuthorizedTaskResource() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -277,7 +277,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedWithUserIdTrue() {
+  void testIsUserAuthorizedWithUserIdTrue() {
 
     List<String> currentUserGroups = new ArrayList<>();
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, currentUserGroups);
@@ -309,7 +309,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedWithUserIdFalse() {
+  void testIsUserAuthorizedWithUserIdFalse() {
 
     List<String> currentUserGroups = new ArrayList<>();
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, currentUserGroups);
@@ -341,7 +341,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedWithUserIdNoReadPermission() {
+  void testIsUserAuthorizedWithUserIdNoReadPermission() {
 
     List<String> currentUserGroups = new ArrayList<>();
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, currentUserGroups);
@@ -370,7 +370,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedNotValidPermission() {
+  void testIsUserAuthorizedNotValidPermission() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -399,7 +399,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedResourceIdTrue() {
+  void testIsUserAuthorizedResourceIdTrue() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -427,7 +427,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testIsUserAuthorizedResourceIdFalse() {
+  void testIsUserAuthorizedResourceIdFalse() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -456,7 +456,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testIsUserAuthorizedNoAuthentication() {
+  void testIsUserAuthorizedNoAuthentication() {
 
     List<String> exampleGroups = new ArrayList<>();
 
@@ -481,7 +481,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testIsUserAuthorizedBadRequests() {
+  void testIsUserAuthorizedBadRequests() {
 
     given()
         .queryParam("permissionName", MockProvider.EXAMPLE_PERMISSION_NAME)
@@ -508,7 +508,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCreateGlobalAuthorization() {
+  void testCreateGlobalAuthorization() {
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
     when(authorizationServiceMock.createNewAuthorization(Authorization.AUTH_TYPE_GLOBAL)).thenReturn(authorization);
@@ -537,7 +537,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCreateGrantAuthorization() {
+  void testCreateGrantAuthorization() {
 
     Authorization authorization = MockProvider.createMockGrantAuthorization();
     when(authorizationServiceMock.createNewAuthorization(Authorization.AUTH_TYPE_GRANT)).thenReturn(authorization);
@@ -566,7 +566,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCreateRevokeAuthorization() {
+  void testCreateRevokeAuthorization() {
 
     Authorization authorization = MockProvider.createMockRevokeAuthorization();
     when(authorizationServiceMock.createNewAuthorization(Authorization.AUTH_TYPE_REVOKE)).thenReturn(authorization);
@@ -595,7 +595,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCreateAuthorizationThrowsAuthorizationException() {
+  void testCreateAuthorizationThrowsAuthorizationException() {
     String message = "expected authorization exception";
     when(authorizationServiceMock.createNewAuthorization(Authorization.AUTH_TYPE_GRANT)).thenThrow(new AuthorizationException(message));
 
@@ -615,7 +615,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testCreateAuthorizationNotValidPermission() {
+  void testCreateAuthorizationNotValidPermission() {
     Authorization authorization = MockProvider.createMockGrantAuthorization();
     when(authorizationServiceMock.createNewAuthorization(Authorization.AUTH_TYPE_GRANT)).thenReturn(authorization);
 
@@ -646,7 +646,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSaveAuthorizationThrowsAuthorizationException() {
+  void testSaveAuthorizationThrowsAuthorizationException() {
     String message = "expected authorization exception";
     when(authorizationServiceMock.saveAuthorization(any(Authorization.class))).thenThrow(new AuthorizationException(message));
 
@@ -667,7 +667,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDeleteAuthorization() {
+  void testDeleteAuthorization() {
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
 
@@ -689,7 +689,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDeleteNonExistingAuthorization() {
+  void testDeleteNonExistingAuthorization() {
 
     AuthorizationQuery authorizationQuery = mock(AuthorizationQuery.class);
     when(authorizationServiceMock.createAuthorizationQuery()).thenReturn(authorizationQuery);
@@ -709,7 +709,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDeleteAuthorizationThrowsAuthorizationException() {
+  void testDeleteAuthorizationThrowsAuthorizationException() {
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
 
     AuthorizationQuery authorizationQuery = mock(AuthorizationQuery.class);
@@ -732,7 +732,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testUpdateAuthorization() {
+  void testUpdateAuthorization() {
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
 
@@ -763,7 +763,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testUpdateNonExistingAuthorization() {
+  void testUpdateNonExistingAuthorization() {
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
 
@@ -788,7 +788,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testUpdateAuthorizationThrowsAuthorizationException() {
+  void testUpdateAuthorizationThrowsAuthorizationException() {
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
     AuthorizationDto dto = AuthorizationDto.fromAuthorization(authorization, processEngineConfigurationMock);
 
@@ -813,7 +813,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testUpdateAuthorizationNotValidPermission() {
+  void testUpdateAuthorizationNotValidPermission() {
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
     AuthorizationQuery authorizationQuery = mock(AuthorizationQuery.class);
     when(authorizationServiceMock.createAuthorizationQuery()).thenReturn(authorizationQuery);
@@ -845,7 +845,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetAuthorizationById() {
+  void testGetAuthorizationById() {
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
 
@@ -874,7 +874,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetNonExistingAuthorizationById() {
+  void testGetNonExistingAuthorizationById() {
 
     AuthorizationQuery authorizationQuery = mock(AuthorizationQuery.class);
     when(authorizationServiceMock.createAuthorizationQuery()).thenReturn(authorizationQuery);
@@ -892,7 +892,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testAuthenticationRestServiceOptions() {
+  void testAuthenticationRestServiceOptions() {
     String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
@@ -921,7 +921,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testAuthenticationRestServiceOptionsWithAuthorizationDisabled() {
+  void testAuthenticationRestServiceOptionsWithAuthorizationDisabled() {
     String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
@@ -949,7 +949,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testAuthorizationResourceOptions() {
+  void testAuthorizationResourceOptions() {
     String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
@@ -987,7 +987,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testAuthorizationResourceOptionsUnauthorized() {
+  void testAuthorizationResourceOptionsUnauthorized() {
     String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
@@ -1026,7 +1026,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testAuthorizationResourceOptionsUpdateUnauthorized() {
+  void testAuthorizationResourceOptionsUpdateUnauthorized() {
     String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
@@ -1068,7 +1068,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testAuthorizationResourceOptionsWithAuthorizationDisabled() {
+  void testAuthorizationResourceOptionsWithAuthorizationDisabled() {
     String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
 
     when(processEngine.getProcessEngineConfiguration().isAuthorizationEnabled()).thenReturn(false);

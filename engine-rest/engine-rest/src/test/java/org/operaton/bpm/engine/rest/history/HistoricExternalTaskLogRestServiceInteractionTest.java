@@ -56,7 +56,7 @@ public class HistoricExternalTaskLogRestServiceInteractionTest extends AbstractR
   protected HistoricExternalTaskLogQuery mockQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockQuery = mock(HistoricExternalTaskLogQuery.class);
 
     HistoricExternalTaskLog mockedHistoricExternalTaskLog = MockProvider.createMockHistoricExternalTaskLog();
@@ -72,7 +72,7 @@ public class HistoricExternalTaskLogRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testSimpleHistoricExternalTaskLogGet() {
+  void testSimpleHistoricExternalTaskLogGet() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ID)
     .then()
@@ -108,7 +108,7 @@ public class HistoricExternalTaskLogRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testHistoricExternalTaskLogGetIdDoesntExist() {
+  void testHistoricExternalTaskLogGetIdDoesntExist() {
     String id = "nonExistingId";
 
     HistoricExternalTaskLogQuery invalidQueryNonExistingHistoricExternalTaskLog = mock(HistoricExternalTaskLogQuery.class);
@@ -128,7 +128,7 @@ public class HistoricExternalTaskLogRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testGetErrorDetails() {
+  void testGetErrorDetails() {
     String errorDetails = "someErrorDetails";
     when(mockHistoryService.getHistoricExternalTaskLogErrorDetails(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ID)).thenReturn(errorDetails);
 
@@ -147,7 +147,7 @@ public class HistoricExternalTaskLogRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testGetErrorDetailsExternalTaskNotFound() {
+  void testGetErrorDetailsExternalTaskNotFound() {
     String exceptionMessage = "historic external task log not found";
     doThrow(new ProcessEngineException(exceptionMessage)).when(mockHistoryService).getHistoricExternalTaskLogErrorDetails(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ID);
 
@@ -163,7 +163,7 @@ public class HistoricExternalTaskLogRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testGetErrorDetailsThrowsAuthorizationException() {
+  void testGetErrorDetailsThrowsAuthorizationException() {
     String exceptionMessage = "expected exception";
     doThrow(new AuthorizationException(exceptionMessage)).when(mockHistoryService).getHistoricExternalTaskLogErrorDetails(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ID);
 

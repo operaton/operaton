@@ -64,7 +64,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   private List<ProcessInstance> processInstancesMock;
 
   @BeforeEach
-  public void setupMocks() {
+  void setupMocks() {
     runtimeServiceMock = mock(RuntimeService.class);
     when(processEngine.getRuntimeService()).thenReturn(runtimeServiceMock);
 
@@ -81,7 +81,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testConditionEvaluationOnlyVariables() {
+  void testConditionEvaluationOnlyVariables() {
     Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -111,7 +111,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testConditionEvaluationWithProcessDefinition() {
+  void testConditionEvaluationWithProcessDefinition() {
     Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -134,7 +134,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testConditionEvaluationWithBusinessKey() {
+  void testConditionEvaluationWithBusinessKey() {
     Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -156,7 +156,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testConditionEvaluationWithTenantId() {
+  void testConditionEvaluationWithTenantId() {
     Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -179,7 +179,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testConditionEvaluationWithoutTenantId() {
+  void testConditionEvaluationWithoutTenantId() {
     Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -202,7 +202,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testConditionEvaluationFailingInvalidTenantParameters() {
+  void testConditionEvaluationFailingInvalidTenantParameters() {
     Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -224,7 +224,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testConditionEvaluationThrowsAuthorizationException() {
+  void testConditionEvaluationThrowsAuthorizationException() {
     Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -247,7 +247,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldReturnErrorCode() {
+  void shouldReturnErrorCode() {
     Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()

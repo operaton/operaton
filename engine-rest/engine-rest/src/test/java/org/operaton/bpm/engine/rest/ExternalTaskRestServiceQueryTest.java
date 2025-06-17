@@ -70,7 +70,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   protected ExternalTaskQuery mockQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockQuery = setUpMockExternalTaskQuery(MockProvider.createMockExternalTasks());
   }
 
@@ -85,7 +85,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testInvalidDateParameter() {
+  void testInvalidDateParameter() {
     given().queryParams("lockExpirationBefore", "anInvalidDate")
       .header("accept", MediaType.APPLICATION_JSON)
       .expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
@@ -96,7 +96,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "processInstanceId")
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
@@ -106,7 +106,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -115,7 +115,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSimpleTaskQuery() {
+  void testSimpleTaskQuery() {
     Response response = given()
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -166,7 +166,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCompleteGETQuery() {
+  void testCompleteGETQuery() {
     Map<String, String> parameters = new HashMap<>();
 
     parameters.put("externalTaskId", "someExternalTaskId");
@@ -217,7 +217,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCompletePOSTQuery() {
+  void testCompletePOSTQuery() {
     Map<String, Object> parameters = new HashMap<>();
 
     parameters.put("externalTaskId", "someExternalTaskId");
@@ -267,7 +267,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGETQuerySorting() {
+  void testGETQuerySorting() {
     // desc
     InOrder inOrder = Mockito.inOrder(mockQuery);
     executeAndVerifyGETSorting("id", "desc", Status.OK);
@@ -348,7 +348,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testPOSTQuerySorting() {
+  void testPOSTQuerySorting() {
     InOrder inOrder = Mockito.inOrder(mockQuery);
     executeAndVerifyPOSTSorting(
       OrderingBuilder.create()
@@ -374,7 +374,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testPaginationGET() {
+  void testPaginationGET() {
     int firstResult = 0;
     int maxResults = 10;
     given().queryParam("firstResult", firstResult).queryParam("maxResults", maxResults)
@@ -386,7 +386,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testPaginationPOST() {
+  void testPaginationPOST() {
     int firstResult = 0;
     int maxResults = 10;
     given()
@@ -400,7 +400,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGETQueryCount() {
+  void testGETQueryCount() {
     given()
       .header("accept", MediaType.APPLICATION_JSON)
     .expect()
@@ -413,7 +413,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testPOSTQueryCount() {
+  void testPOSTQueryCount() {
     given().contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
     .header("accept", MediaType.APPLICATION_JSON)
     .expect().statusCode(Status.OK.getStatusCode())
@@ -424,7 +424,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByTenantIdListGet() {
+  void testQueryByTenantIdListGet() {
     mockQuery = setUpMockExternalTaskQuery(createMockExternalTasksTwoTenants());
 
     Response response = given()
@@ -449,7 +449,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByTenantIdListPost() {
+  void testQueryByTenantIdListPost() {
     mockQuery = setUpMockExternalTaskQuery(createMockExternalTasksTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -484,7 +484,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByActivityIdListGet() {
+  void testQueryByActivityIdListGet() {
     mockQuery = setUpMockExternalTaskQuery(createMockExternalTasksTwoActivityIds());
 
     Response response = given()
@@ -509,7 +509,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByActivityIdListPost() {
+  void testQueryByActivityIdListPost() {
     mockQuery = setUpMockExternalTaskQuery(createMockExternalTasksTwoActivityIds());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -544,7 +544,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByPriorityListGet() {
+  void testQueryByPriorityListGet() {
     mockQuery = setUpMockExternalTaskQuery(createMockedExternalTasksWithPriorities());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -574,7 +574,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByPriorityListPost() {
+  void testQueryByPriorityListPost() {
     mockQuery = setUpMockExternalTaskQuery(createMockedExternalTasksWithPriorities());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -611,7 +611,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByExternalTaskIdListGet() {
+  void testQueryByExternalTaskIdListGet() {
     mockQuery = setUpMockExternalTaskQuery(createMockExternalTasksTwoIds());
 
     Response response = given()
@@ -638,7 +638,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByExternalTaskIdListPost() {
+  void testQueryByExternalTaskIdListPost() {
     mockQuery = setUpMockExternalTaskQuery(createMockExternalTasksTwoIds());
 
     Map<String, Object> queryParameters = new HashMap<>();

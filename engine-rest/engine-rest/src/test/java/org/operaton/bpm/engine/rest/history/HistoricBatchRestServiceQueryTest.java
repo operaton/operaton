@@ -62,7 +62,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   protected HistoricBatchQuery queryMock;
 
   @BeforeEach
-  public void setUpHistoricBatchQueryMock() {
+  void setUpHistoricBatchQueryMock() {
     List<HistoricBatch> mockHistoricBatches = MockProvider.createMockHistoricBatches();
     queryMock = mock(HistoricBatchQuery.class);
 
@@ -73,7 +73,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     Response response = given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -87,7 +87,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testUnknownQueryParameter() {
+  void testUnknownQueryParameter() {
     Response response = given()
       .queryParam("unknown", "unknown")
     .then().expect()
@@ -102,7 +102,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "batchId")
     .then().expect()
@@ -117,7 +117,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
     .then().expect()
@@ -132,7 +132,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testHistoricBatchQueryByBatchId() {
+  void testHistoricBatchQueryByBatchId() {
     Response response = given()
       .queryParam("batchId", MockProvider.EXAMPLE_BATCH_ID)
     .then().expect()
@@ -149,7 +149,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testHistoricBatchQueryByCompleted() {
+  void testHistoricBatchQueryByCompleted() {
     Response response = given()
       .queryParam("completed", true)
     .then().expect()
@@ -166,7 +166,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testHistoricBatchQueryByNotCompleted() {
+  void testHistoricBatchQueryByNotCompleted() {
     Response response = given()
       .queryParam("completed", false)
     .then().expect()
@@ -183,7 +183,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullHistoricBatchQuery() {
+  void testFullHistoricBatchQuery() {
     Response response = given()
         .queryParams(getCompleteQueryParameters())
       .then().expect()
@@ -199,7 +199,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -212,7 +212,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullQueryCount() {
+  void testFullQueryCount() {
     given()
       .params(getCompleteQueryParameters())
     .then().expect()
@@ -227,7 +227,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(queryMock);
     executeAndVerifySorting("batchId", "desc", Status.OK);
     inOrder.verify(queryMock).orderById();

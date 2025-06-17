@@ -34,28 +34,28 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class DateConverterTest {
+class DateConverterTest {
   private DateConverter converter;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     converter = new DateConverter();
   }
 
   @Test
-  public void shouldFailForDoubleQuotedValue() {
+  void shouldFailForDoubleQuotedValue() {
     //when
     assertThrows(InvalidRequestException.class, () -> converter.convertQueryParameterToType("\"pizza\""));
   }
 
   @Test
-  public void shouldFailForSingleDoubleQuotedValue() {
+  void shouldFailForSingleDoubleQuotedValue() {
     //when
     assertThrows(InvalidRequestException.class, () -> converter.convertQueryParameterToType("2014-01-01T00:00:00+0200\""));
   }
 
   @Test
-  public void shouldConvertDate() throws JsonProcessingException {
+  void shouldConvertDate() throws JsonProcessingException {
     //given
     String value = "2014-01-01T00:00:00+0200";
     ObjectMapper mock = mock(ObjectMapper.class);

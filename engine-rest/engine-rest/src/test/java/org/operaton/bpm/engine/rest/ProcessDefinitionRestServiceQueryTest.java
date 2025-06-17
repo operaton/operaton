@@ -65,7 +65,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   private ProcessDefinitionQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockDefinitionQuery(MockProvider.createMockDefinitions());
   }
 
@@ -78,7 +78,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given().queryParam("keyLike", queryKey)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -86,7 +86,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testInvalidNumericParameter() {
+  void testInvalidNumericParameter() {
     String anInvalidIntegerQueryParam = "aString";
     given().queryParam("version", anInvalidIntegerQueryParam)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
@@ -97,7 +97,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testInvalidBooleanParameter() {
+  void testInvalidBooleanParameter() {
     String anInvalidBooleanQueryParam = "neitherTrueNorFalse";
     given().queryParam("active", anInvalidBooleanQueryParam)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
@@ -108,7 +108,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifyFailingSorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST,
         InvalidRequestException.class.getSimpleName(), "Cannot set query parameter 'sortBy' to value 'anInvalidSortByOption'");
     executeAndVerifyFailingSorting("category", "anInvalidSortOrderOption", Status.BAD_REQUEST,
@@ -130,7 +130,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "category")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -139,7 +139,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -148,7 +148,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testProcessDefinitionRetrieval() {
+  void testProcessDefinitionRetrieval() {
     InOrder inOrder = inOrder(mockedQuery);
 
     String queryKey = "Key";
@@ -191,7 +191,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testProcessDefinitionRetrievalByList() {
+  void testProcessDefinitionRetrievalByList() {
     mockedQuery = setUpMockDefinitionQuery(MockProvider.createMockTwoDefinitions());
 
     Response response = given()
@@ -218,7 +218,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testProcessDefinitionRetrievalByEmptyList() {
+  void testProcessDefinitionRetrievalByEmptyList() {
     mockedQuery = setUpMockDefinitionQuery(MockProvider.createMockTwoDefinitions());
 
     Response response = given()
@@ -245,7 +245,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testIncompleteProcessDefinition() {
+  void testIncompleteProcessDefinition() {
     setUpMockDefinitionQuery(createIncompleteMockDefinitions());
     Response response = expect().statusCode(Status.OK.getStatusCode())
         .when().get(PROCESS_DEFINITION_QUERY_URL);
@@ -272,7 +272,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode()).when().get(PROCESS_DEFINITION_QUERY_URL);
 
     verify(mockedQuery).list();
@@ -280,7 +280,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testAdditionalParameters() {
+  void testAdditionalParameters() {
     Map<String, String> queryParameters = getCompleteQueryParameters();
 
     given().queryParams(queryParameters)
@@ -343,7 +343,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testProcessDefinitionTenantIdList() {
+  void testProcessDefinitionTenantIdList() {
     List<ProcessDefinition> processDefinitions = Arrays.asList(
         MockProvider.mockDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.mockDefinition().id(MockProvider.ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID).tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).build());
@@ -371,7 +371,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testProcessDefinitionKeysList() {
+  void testProcessDefinitionKeysList() {
     List<ProcessDefinition> processDefinitions = Arrays.asList(
             MockProvider.mockDefinition().key(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY).build(),
             MockProvider.mockDefinition().key(MockProvider.ANOTHER_EXAMPLE_PROCESS_DEFINITION_KEY).build());
@@ -400,7 +400,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testProcessDefinitionWithoutTenantId() {
+  void testProcessDefinitionWithoutTenantId() {
     Response response = given()
       .queryParam("withoutTenantId", true)
     .then().expect()
@@ -420,7 +420,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testProcessDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
+  void testProcessDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
     List<ProcessDefinition> processDefinitions = Arrays.asList(
         MockProvider.mockDefinition().tenantId(null).build(),
         MockProvider.mockDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
@@ -450,7 +450,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testProcessDefinitionVersionTag() {
+  void testProcessDefinitionVersionTag() {
     List<ProcessDefinition> processDefinitions = Arrays.asList(
       MockProvider.mockDefinition().versionTag(MockProvider.EXAMPLE_VERSION_TAG).build(),
       MockProvider.mockDefinition().id(MockProvider.ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID).versionTag(MockProvider.ANOTHER_EXAMPLE_VERSION_TAG).build());
@@ -468,7 +468,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testProcessDefinitionWithoutVersionTag() {
+  void testProcessDefinitionWithoutVersionTag() {
     given()
       .queryParam("withoutVersionTag", true)
     .then().expect()
@@ -481,7 +481,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testNotStartableInTasklist() {
+  void testNotStartableInTasklist() {
     List<ProcessDefinition> processDefinitions = Arrays.asList(
       MockProvider.mockDefinition().isStartableInTasklist(false).build());
     mockedQuery = setUpMockDefinitionQuery(processDefinitions);
@@ -498,7 +498,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testStartableInTasklistPermissionCheck() {
+  void testStartableInTasklistPermissionCheck() {
     List<ProcessDefinition> processDefinitions = Arrays.asList(
       MockProvider.mockDefinition().isStartableInTasklist(false).build());
     mockedQuery = setUpMockDefinitionQuery(processDefinitions);
@@ -515,7 +515,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("category", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessDefinitionCategory();
@@ -573,7 +573,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
     given().queryParam("firstResult", firstResult).queryParam("maxResults", maxResults)
@@ -587,7 +587,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
    * If parameter "firstResult" is missing, we expect 0 as default.
    */
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
     given().queryParam("maxResults", maxResults)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -600,7 +600,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
    * If parameter "maxResults" is missing, we expect Integer.MAX_VALUE as default.
    */
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
     given().queryParam("firstResult", firstResult)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -610,7 +610,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
       .when().get(PROCESS_DEFINITION_COUNT_QUERY_URL);
@@ -619,7 +619,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testQueryByDeployTimeAfter() {
+  void testQueryByDeployTimeAfter() {
     String deployTime = withTimezone("2020-03-27T01:23:45");
     Date date = DateTimeUtil.parseDate(deployTime);
 
@@ -632,7 +632,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testQueryByDeployTimeAt() {
+  void testQueryByDeployTimeAt() {
     String deployTime = withTimezone("2020-03-27T05:43:21");
     Date date = DateTimeUtil.parseDate(deployTime);
 

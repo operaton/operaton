@@ -79,7 +79,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   protected TenantQuery mockQuery;
 
   @BeforeEach
-  public void setupData() {
+  void setupData() {
 
     identityServiceMock = mock(IdentityService.class);
     authorizationServiceMock = mock(AuthorizationService.class);
@@ -107,7 +107,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void getTenant() {
+  void getTenant() {
    given()
      .pathParam("id", MockProvider.EXAMPLE_TENANT_ID)
    .then().expect().statusCode(Status.OK.getStatusCode())
@@ -118,7 +118,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void getNonExistingTenant() {
+  void getNonExistingTenant() {
     when(mockQuery.singleResult()).thenReturn(null);
 
     given()
@@ -132,7 +132,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteTenant() {
+  void deleteTenant() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_TENANT_ID)
     .then().expect()
@@ -142,7 +142,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteNonExistingTenant() {
+  void deleteNonExistingTenant() {
     given().pathParam("id", "aNonExistingTenant")
     .then().expect()
       .statusCode(Status.NO_CONTENT.getStatusCode())
@@ -151,7 +151,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteTenantThrowsAuthorizationException() {
+  void deleteTenantThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(identityServiceMock).deleteTenant(MockProvider.EXAMPLE_TENANT_ID);
 
@@ -167,7 +167,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void updateTenant() {
+  void updateTenant() {
     Tenant updatedTenant = MockProvider.createMockTenant();
     when(updatedTenant.getName()).thenReturn("updatedName");
 
@@ -188,7 +188,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void updateNonExistingTenant() {
+  void updateNonExistingTenant() {
     Tenant updatedTenant = MockProvider.createMockTenant();
     when(updatedTenant.getName()).thenReturn("updatedName");
 
@@ -209,7 +209,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void updateTenantThrowsAuthorizationException() {
+  void updateTenantThrowsAuthorizationException() {
     Tenant updatedTenant = MockProvider.createMockTenant();
     when(updatedTenant.getName()).thenReturn("updatedName");
 
@@ -230,7 +230,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void createTenant() {
+  void createTenant() {
     Tenant newTenant = MockProvider.createMockTenant();
     when(identityServiceMock.newTenant(MockProvider.EXAMPLE_TENANT_ID)).thenReturn(newTenant);
 
@@ -247,7 +247,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void createExistingTenant() {
+  void createExistingTenant() {
     Tenant newTenant = MockProvider.createMockTenant();
     when(identityServiceMock.newTenant(MockProvider.EXAMPLE_TENANT_ID)).thenReturn(newTenant);
 
@@ -265,7 +265,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void createTenantThrowsAuthorizationException() {
+  void createTenantThrowsAuthorizationException() {
     Tenant newTenant = MockProvider.createMockTenant();
 
     String message = "exception expected";
@@ -284,7 +284,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void saveTenantThrowsAuthorizationException() {
+  void saveTenantThrowsAuthorizationException() {
     Tenant newTenant = MockProvider.createMockTenant();
     when(identityServiceMock.newTenant(MockProvider.EXAMPLE_TENANT_ID)).thenReturn(newTenant);
 
@@ -304,7 +304,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void userRestServiceOptionUnauthenticated() {
+  void userRestServiceOptionUnauthenticated() {
     String fullAuthorizationUrl = getFullAuthorizationUrl();
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
@@ -332,7 +332,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void userRestServiceOptionUnauthorized() {
+  void userRestServiceOptionUnauthorized() {
     String fullAuthorizationUrl = getFullAuthorizationUrl();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
@@ -362,7 +362,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void userRestServiceOptionAuthorized() {
+  void userRestServiceOptionAuthorized() {
     String fullAuthorizationUrl = getFullAuthorizationUrl();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
@@ -394,7 +394,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void userRestServiceOptionsWithAuthorizationDisabled() {
+  void userRestServiceOptionsWithAuthorizationDisabled() {
     String fullAuthorizationUrl = getFullAuthorizationUrl();
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
@@ -422,7 +422,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantResourceOptionsUnauthenticated() {
+  void tenantResourceOptionsUnauthenticated() {
     String fullTenantUrl = getFullAuthorizationTenantUrl();
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
@@ -450,7 +450,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantResourceOptionsUnauthorized() {
+  void tenantResourceOptionsUnauthorized() {
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
     when(authorizationServiceMock.isUserAuthorized(MockProvider.EXAMPLE_USER_ID, null, DELETE, TENANT, MockProvider.EXAMPLE_TENANT_ID)).thenReturn(false);
@@ -480,7 +480,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantResourceOptionsAuthorized() {
+  void tenantResourceOptionsAuthorized() {
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
     when(authorizationServiceMock.isUserAuthorized(MockProvider.EXAMPLE_USER_ID, null, DELETE, TENANT, MockProvider.EXAMPLE_TENANT_ID)).thenReturn(true);
@@ -513,7 +513,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantResourceOptionsWithAuthorizationDisabled() {
+  void tenantResourceOptionsWithAuthorizationDisabled() {
     String fullTenantUrl = getFullAuthorizationTenantUrl();
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
@@ -542,7 +542,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void createTenantUserMembership() {
+  void createTenantUserMembership() {
 
     given()
         .pathParam("id", MockProvider.EXAMPLE_TENANT_ID)
@@ -556,7 +556,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void createTenantGroupMembership() {
+  void createTenantGroupMembership() {
 
     given()
         .pathParam("id", MockProvider.EXAMPLE_TENANT_ID)
@@ -570,7 +570,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void createTenantUserMembershipThrowsAuthorizationException() {
+  void createTenantUserMembershipThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(identityServiceMock).createTenantUserMembership(MockProvider.EXAMPLE_TENANT_ID, MockProvider.EXAMPLE_USER_ID);
 
@@ -587,7 +587,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteTenantUserMembership() {
+  void deleteTenantUserMembership() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_TENANT_ID)
@@ -601,7 +601,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteTenantGroupMembership() {
+  void deleteTenantGroupMembership() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_TENANT_ID)
@@ -615,7 +615,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteTenantGroupMembershipThrowsAuthorizationException() {
+  void deleteTenantGroupMembershipThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(identityServiceMock).deleteTenantGroupMembership(MockProvider.EXAMPLE_TENANT_ID, MockProvider.EXAMPLE_GROUP_ID);
 
@@ -632,7 +632,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantUserMembershipResourceOptionsUnauthenticated() {
+  void tenantUserMembershipResourceOptionsUnauthenticated() {
     String fullMembersUrl = getFullAuthorizationTenantUrl() + "/user-members";
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
@@ -657,7 +657,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantUserMembershipResourceOptionsAuthorized() {
+  void tenantUserMembershipResourceOptionsAuthorized() {
     String fullMembersUrl = getFullAuthorizationTenantUrl() + "/user-members";
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
@@ -689,7 +689,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantGroupMembershipResourceOptionsAuthorized() {
+  void tenantGroupMembershipResourceOptionsAuthorized() {
     String fullMembersUrl = getFullAuthorizationTenantUrl() + "/group-members";
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
@@ -721,7 +721,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantUserMembershipResourceOptionsUnauthorized() {
+  void tenantUserMembershipResourceOptionsUnauthorized() {
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
     when(authorizationServiceMock.isUserAuthorized(MockProvider.EXAMPLE_USER_ID, null, DELETE, TENANT_MEMBERSHIP, MockProvider.EXAMPLE_TENANT_ID)).thenReturn(false);
@@ -747,7 +747,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantGroupMembershipResourceOptionsUnauthorized() {
+  void tenantGroupMembershipResourceOptionsUnauthorized() {
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
     when(authorizationServiceMock.isUserAuthorized(MockProvider.EXAMPLE_USER_ID, null, DELETE, TENANT_MEMBERSHIP, MockProvider.EXAMPLE_TENANT_ID)).thenReturn(false);
@@ -773,7 +773,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantUserMembershipResourceOptionsWithAuthorizationDisabled() {
+  void tenantUserMembershipResourceOptionsWithAuthorizationDisabled() {
     String fullMembersUrl = getFullAuthorizationTenantUrl() + "/user-members";
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
@@ -798,7 +798,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void failToCreateTenantForReadOnlyService() {
+  void failToCreateTenantForReadOnlyService() {
     Tenant newTenant = MockProvider.createMockTenant();
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
@@ -815,7 +815,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void failToUpdateTenantForReadOnlyService() {
+  void failToUpdateTenantForReadOnlyService() {
     Tenant updatedTenant = MockProvider.createMockTenant();
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
@@ -833,7 +833,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void failToDeleteTenantForReadOnlyService() {
+  void failToDeleteTenantForReadOnlyService() {
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
     given()
@@ -849,7 +849,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void failToCreateTenantUserMembershipForReadOnlyService() {
+  void failToCreateTenantUserMembershipForReadOnlyService() {
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
     given()
@@ -866,7 +866,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void failToCreateTenantGroupMembershipForReadOnlyService() {
+  void failToCreateTenantGroupMembershipForReadOnlyService() {
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
     given()
@@ -883,7 +883,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void failToDeleteTenantUserMembershipForReadOnlyService() {
+  void failToDeleteTenantUserMembershipForReadOnlyService() {
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
     given()
@@ -900,7 +900,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void failToDeleteTenantGroupMembershipForReadOnlyService() {
+  void failToDeleteTenantGroupMembershipForReadOnlyService() {
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
     given()

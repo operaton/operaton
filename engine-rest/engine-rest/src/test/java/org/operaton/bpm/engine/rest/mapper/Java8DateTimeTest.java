@@ -46,7 +46,7 @@ public class Java8DateTimeTest extends AbstractRestServiceTest {
   protected RuntimeServiceImpl runtimeServiceMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     runtimeServiceMock = mock(RuntimeServiceImpl.class);
 
     when(runtimeServiceMock.getVariableTyped(EXAMPLE_PROCESS_INSTANCE_ID, EXAMPLE_VARIABLE_KEY, true))
@@ -56,7 +56,7 @@ public class Java8DateTimeTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetVariable() {
+  void testGetVariable() {
     given()
         .pathParam("id", EXAMPLE_PROCESS_INSTANCE_ID)
         .pathParam("varId", EXAMPLE_VARIABLE_KEY)

@@ -66,7 +66,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   protected HistoricDetailQuery historicDetailQueryMock;
 
   @BeforeEach
-  public void setupTestData() {
+  void setupTestData() {
     historyServiceMock = mock(HistoryService.class);
     historicDetailQueryMock = mock(HistoricDetailQuery.class);
 
@@ -76,7 +76,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetSingleDetail() {
+  void testGetSingleDetail() {
     MockHistoricVariableUpdateBuilder builder = MockProvider.mockHistoricVariableUpdate();
 
     HistoricVariableUpdate detailMock = builder.build();
@@ -114,7 +114,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetSingleVariableUpdateDeserialized() {
+  void testGetSingleVariableUpdateDeserialized() {
     ObjectValue serializedValue = MockObjectValue.fromObjectValue(
         Variables.objectValue("a value").serializationDataFormat("aDataFormat").create())
         .objectTypeName("aTypeName");
@@ -159,7 +159,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetSingleVariableUpdateSerialized() {
+  void testGetSingleVariableUpdateSerialized() {
     ObjectValue serializedValue = Variables.serializedObjectValue("a serialized value")
         .serializationDataFormat("aDataFormat").objectTypeName("aTypeName").create();
 
@@ -205,7 +205,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetSingleVariableInstanceForBinaryVariable() {
+  void testGetSingleVariableInstanceForBinaryVariable() {
     MockHistoricVariableUpdateBuilder builder = MockProvider.mockHistoricVariableUpdate();
 
     HistoricVariableUpdate detailMock = builder
@@ -246,7 +246,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetNonExistingVariableInstance() {
+  void testGetNonExistingVariableInstance() {
 
     String nonExistingId = "nonExistingId";
 
@@ -265,7 +265,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testBinaryDataForBinaryVariable() {
+  void testBinaryDataForBinaryVariable() {
     final byte[] byteContent = "some bytes".getBytes();
 
     MockHistoricVariableUpdateBuilder builder = MockProvider.mockHistoricVariableUpdate();
@@ -291,7 +291,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testBinaryDataForFileVariable() {
+  void testBinaryDataForFileVariable() {
     String filename = "test.txt";
     byte[] byteContent = "test".getBytes();
     String encoding = UTF_8.name();
@@ -325,7 +325,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testBinaryDataForNonBinaryVariable() {
+  void testBinaryDataForNonBinaryVariable() {
     HistoricVariableUpdate detailMock =  MockProvider.createMockHistoricVariableUpdate();
 
     when(historicDetailQueryMock.detailId(detailMock.getId())).thenReturn(historicDetailQueryMock);
@@ -343,7 +343,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetBinaryDataForNonExistingVariableInstance() {
+  void testGetBinaryDataForNonExistingVariableInstance() {
 
     String nonExistingId = "nonExistingId";
 
@@ -361,7 +361,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetBinaryDataForNullFileVariable() {
+  void testGetBinaryDataForNullFileVariable() {
     String filename = "test.txt";
     byte[] byteContent = null;
     FileValue variableValue = Variables.fileValue(filename).file(byteContent).mimeType(ContentType.TEXT.toString()).create();

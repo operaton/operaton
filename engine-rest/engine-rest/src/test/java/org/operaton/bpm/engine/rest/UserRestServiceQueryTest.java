@@ -60,7 +60,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   private UserQuery mockQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockQuery = setUpMockUserQuery(MockProvider.createMockUsers());
   }
 
@@ -75,7 +75,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
 
     String queryKey = "";
     given().queryParam("name", queryKey)
@@ -85,7 +85,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "firstName")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -94,7 +94,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -103,7 +103,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode()).when().get(USER_QUERY_URL);
 
     verify(mockQuery).list();
@@ -111,7 +111,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSimpleUserQuery() {
+  void testSimpleUserQuery() {
     String queryFirstName = MockProvider.EXAMPLE_USER_FIRST_NAME;
 
     Response response = given().queryParam("firstName", queryFirstName)
@@ -126,7 +126,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCompleteGetParameters() {
+  void testCompleteGetParameters() {
 
     Map<String, String> queryParameters = getCompleteStringQueryParameters();
 
@@ -149,7 +149,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFirstNameLikeQuery() {
+  void testFirstNameLikeQuery() {
     String[] testQueries = new String[] {"first%", "%Name", "%stNa%"};
 
     for (String testQuery : testQueries) {
@@ -169,7 +169,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testLastNameLikeQuery() {
+  void testLastNameLikeQuery() {
     String[] testQueries = new String[] {"last%", "%Name", "%stNa%"};
 
     for (String testQuery : testQueries) {
@@ -189,7 +189,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmailLikeQuery() {
+  void testEmailLikeQuery() {
     String[] testQueries = new String[] {"test@%", "%example.org", "%@%"};
 
     for (String testQuery : testQueries) {
@@ -221,7 +221,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
       .when().get(USER_COUNT_QUERY_URL);
@@ -230,7 +230,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
     given().queryParam("firstResult", firstResult).queryParam("maxResults", maxResults)

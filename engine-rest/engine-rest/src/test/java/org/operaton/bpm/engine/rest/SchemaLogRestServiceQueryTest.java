@@ -63,7 +63,7 @@ public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
   private List<SchemaLogEntry> mockedSchemaLogEntries;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mockedQuery = Mockito.mock(SchemaLogQuery.class);
 
     mockedSchemaLogEntries = createMockedSchemaLogEntries();
@@ -85,7 +85,7 @@ public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetSchemaLog() {
+  void testGetSchemaLog() {
     given()
       .queryParam("version", SCHEMA_LOG_ENTRY_MOCK_VERSION)
       .queryParam("sortBy", "timestamp")
@@ -103,7 +103,7 @@ public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetSchemaLogAsPost() {
+  void testGetSchemaLogAsPost() {
     Map<String, Object> params = new HashMap<>();
     params.put("version", SCHEMA_LOG_ENTRY_MOCK_VERSION);
     params.put("sortBy", "timestamp");

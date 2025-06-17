@@ -36,14 +36,14 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-public class VariableDeserializationTypeValidationTest {
+class VariableDeserializationTypeValidationTest {
 
 
   protected AbstractVariablesResource variablesResourceSpy;
   protected DeserializationTypeValidator validator;
 
   @BeforeEach
-  public void setUpMocks() {
+  void setUpMocks() {
     validator = Mockito.mock(DeserializationTypeValidator.class);
 
     ProcessEngineConfiguration configurationMock = Mockito.mock(ProcessEngineConfiguration.class);
@@ -55,7 +55,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldValidateNothingForPrimitiveClass() {
+  void shouldValidateNothingForPrimitiveClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructType(int.class);
     setValidatorMockResult(true);
@@ -68,7 +68,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldValidateBaseTypeOnlyForSimpleClass() {
+  void shouldValidateBaseTypeOnlyForSimpleClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructType(String.class);
     setValidatorMockResult(true);
@@ -82,7 +82,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldValidateBaseTypeOnlyForComplexClass() {
+  void shouldValidateBaseTypeOnlyForComplexClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructType(Complex.class);
     setValidatorMockResult(true);
@@ -96,7 +96,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldValidateContentTypeOnlyForArrayClass() {
+  void shouldValidateContentTypeOnlyForArrayClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructType(Integer[].class);
     setValidatorMockResult(true);
@@ -110,7 +110,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldValidateCollectionAndContentTypeForCollectionClass() {
+  void shouldValidateCollectionAndContentTypeForCollectionClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.ArrayList<java.lang.String>");
     setValidatorMockResult(true);
@@ -125,7 +125,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldValidateCollectionAndContentTypeForNestedCollectionClass() {
+  void shouldValidateCollectionAndContentTypeForNestedCollectionClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.ArrayList<java.util.ArrayList<java.lang.String>>");
     setValidatorMockResult(true);
@@ -140,7 +140,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldValidateMapAndKeyAndContentTypeForMapClass() {
+  void shouldValidateMapAndKeyAndContentTypeForMapClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.Integer>");
     setValidatorMockResult(true);
@@ -156,7 +156,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldFailForSimpleClass() {
+  void shouldFailForSimpleClass() {
     JavaType type = TypeFactory.defaultInstance().constructType(String.class);
     setValidatorMockResult(false);
 
@@ -165,7 +165,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldFailForComplexClass() {
+  void shouldFailForComplexClass() {
     JavaType type = TypeFactory.defaultInstance().constructType(Complex.class);
     setValidatorMockResult(false);
 
@@ -174,7 +174,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldFailForArrayClass() {
+  void shouldFailForArrayClass() {
     JavaType type = TypeFactory.defaultInstance().constructType(Integer[].class);
     setValidatorMockResult(false);
 
@@ -183,7 +183,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldFailForCollectionClass() {
+  void shouldFailForCollectionClass() {
     JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.ArrayList<java.lang.String>");
     setValidatorMockResult(false);
 
@@ -192,7 +192,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldFailForMapClass() {
+  void shouldFailForMapClass() {
     JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.Integer>");
     setValidatorMockResult(false);
 
@@ -201,7 +201,7 @@ public class VariableDeserializationTypeValidationTest {
   }
 
   @Test
-  public void shouldFailOnceForMapClass() {
+  void shouldFailOnceForMapClass() {
     JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.String>");
     setValidatorMockResult(false);
 

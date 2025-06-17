@@ -59,7 +59,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   private DecisionRequirementsDefinitionQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntime() {
+  void setUpRuntime() {
     DecisionRequirementsDefinition mockDecisionRequirementsDefinition = MockProvider.createMockDecisionRequirementsDefinition();
     mockedQuery = createMockQuery(Collections.singletonList(mockDecisionRequirementsDefinition));
   }
@@ -75,7 +75,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     given()
       .then()
         .expect()
@@ -87,7 +87,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testInvalidNumericParameter() {
+  void testInvalidNumericParameter() {
     String anInvalidIntegerQueryParam = "aString";
 
     given()
@@ -104,7 +104,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testInvalidBooleanParameter() {
+  void testInvalidBooleanParameter() {
     String anInvalidBooleanQueryParam = "neitherTrueNorFalse";
 
     given().queryParam("latestVersion", anInvalidBooleanQueryParam)
@@ -116,13 +116,13 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("id", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "id")
       .then()
@@ -133,7 +133,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
       .then()
@@ -155,7 +155,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     // asc
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("id", "asc", Status.OK);
@@ -230,7 +230,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -250,7 +250,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
    * If parameter "firstResult" is missing, we expect 0 as default.
    */
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -268,7 +268,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
    * If parameter "maxResults" is missing, we expect Integer.MAX_VALUE as default.
    */
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -283,7 +283,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testDecisionRequirementsDefinitionRetrieval() {
+  void testDecisionRequirementsDefinitionRetrieval() {
     Response response = given()
         .then()
           .expect()
@@ -321,7 +321,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testDecisionRequirementsDefinitionRetrievalByList() {
+  void testDecisionRequirementsDefinitionRetrievalByList() {
     mockedQuery = createMockQuery(MockProvider.createMockTwoDecisionRequirementsDefinitions());
 
     Response response = given()
@@ -348,7 +348,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testDecisionRequirementsDefinitionRetrievalByEmptyList() {
+  void testDecisionRequirementsDefinitionRetrievalByEmptyList() {
     given()
       .queryParam("decisionRequirementsDefinitionIdIn", "")
       .then().expect()
@@ -363,7 +363,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testAdditionalParameters() {
+  void testAdditionalParameters() {
     Map<String, String> queryParameters = getCompleteQueryParameters();
 
     given()
@@ -390,7 +390,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testDecisionRequirementDefinitionTenantIdList() {
+  void testDecisionRequirementDefinitionTenantIdList() {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = Arrays.asList(
         MockProvider.mockDecisionRequirementsDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.createAnotherMockDecisionRequirementsDefinition());
@@ -418,7 +418,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testDecisionRequirementsDefinitionWithoutTenantId() {
+  void testDecisionRequirementsDefinitionWithoutTenantId() {
     Response response = given()
       .queryParam("withoutTenantId", true)
     .then().expect()
@@ -438,7 +438,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testDecisionRequirementsDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
+  void testDecisionRequirementsDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
     List<DecisionRequirementsDefinition> decisionDefinitions = Arrays.asList(
         MockProvider.mockDecisionRequirementsDefinition().tenantId(null).build(),
         MockProvider.mockDecisionRequirementsDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
@@ -468,7 +468,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
       .when().get(DECISION_REQUIREMENTS_DEFINITION_COUNT_QUERY_URL);

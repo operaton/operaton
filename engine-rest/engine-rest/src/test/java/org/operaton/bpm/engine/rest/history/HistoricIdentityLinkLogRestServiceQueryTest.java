@@ -70,7 +70,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   private HistoricIdentityLinkLogQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricIdentityLinkQuery(MockProvider.createMockHistoricIdentityLinks());
   }
 
@@ -86,13 +86,13 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given().queryParam("userId", queryKey).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
 
     verify(mockedQuery).list();
@@ -100,13 +100,13 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("processInstanceId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
 
   @Test
-  public void testQueryWithoutTenantIdQueryParameter() {
+  void testQueryWithoutTenantIdQueryParameter() {
     // given
     mockedQuery = setUpMockHistoricIdentityLinkQuery(Collections.singletonList(MockProvider.createMockHistoricIdentityLink(null)));
 
@@ -136,7 +136,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc").then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
         .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
         .body("message", containsString("Only a single sorting parameter specified. sortBy and sortOrder required")).when()
@@ -144,7 +144,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
 
     // assignerId
@@ -248,7 +248,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSimpleHistoricIdentityLinkQuery() {
+  void testSimpleHistoricIdentityLinkQuery() {
     Response response = given().then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
 
     InOrder inOrder = inOrder(mockedQuery);
@@ -287,7 +287,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     mockedQuery = setUpMockHistoricIdentityLinkQuery(Arrays.asList(
         MockProvider.createMockHistoricIdentityLink(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricIdentityLink(MockProvider.ANOTHER_EXAMPLE_TENANT_ID)));
@@ -314,7 +314,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -325,7 +325,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given().queryParam("maxResults", maxResults).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -334,7 +334,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given().queryParam("firstResult", firstResult).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -343,14 +343,14 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode()).body("count", equalTo(1)).when().get(HISTORY_IDENTITY_LINK_COUNT_QUERY_URL);
 
     verify(mockedQuery).count();
   }
 
   @Test
-  public void testQueryByAssignerId() {
+  void testQueryByAssignerId() {
     String assignerId = MockProvider.EXAMPLE_HIST_IDENTITY_LINK_ASSIGNER_ID;
 
     given().queryParam("assignerId", assignerId).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -359,7 +359,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByUserId() {
+  void testQueryByUserId() {
     String userId = MockProvider.EXAMPLE_HIST_IDENTITY_LINK_USER_ID;
 
     given().queryParam("userId", userId).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -368,7 +368,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByGroupId() {
+  void testQueryByGroupId() {
     String groupId = MockProvider.EXAMPLE_HIST_IDENTITY_LINK_GROUP_ID;
 
     given().queryParam("groupId", groupId).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -377,7 +377,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByTaskId() {
+  void testQueryByTaskId() {
     String taskId = MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TASK_ID;
 
     given().queryParam("taskId", taskId).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -386,7 +386,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessDefinitionId() {
+  void testQueryByProcessDefinitionId() {
     String processDefinitionId = MockProvider.EXAMPLE_HIST_IDENTITY_LINK_PROC_DEFINITION_ID;
 
     given().queryParam("processDefinitionId", processDefinitionId).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -395,7 +395,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessDefinitionKey() {
+  void testQueryByProcessDefinitionKey() {
     String processDefinitionKey = MockProvider.EXAMPLE_HIST_IDENTITY_LINK_PROC_DEFINITION_KEY;
 
     given().queryParam("processDefinitionKey", processDefinitionKey).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -404,7 +404,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByType() {
+  void testQueryByType() {
     String type = MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TYPE;
 
     given().queryParam("type", type).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -413,7 +413,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByOperationType() {
+  void testQueryByOperationType() {
     String operationType = MockProvider.EXAMPLE_HIST_IDENTITY_LINK_OPERATION_TYPE;
 
     given().queryParam("operationType", operationType).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -422,7 +422,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByDateBefore() {
+  void testQueryByDateBefore() {
     Date dateBefore = DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TIME);
     given().queryParam("dateBefore", MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TIME).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
 
@@ -430,7 +430,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByDateAfter() {
+  void testQueryByDateAfter() {
     Date dateAfter = DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TIME);
 
     given().queryParam("dateAfter", MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TIME).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -439,7 +439,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     String tenantId = MockProvider.EXAMPLE_TENANT_ID;
 
     given().queryParam("tenantIdIn", tenantId).then().expect().statusCode(Status.OK.getStatusCode()).when().get(HISTORY_IDENTITY_LINK_QUERY_URL);
@@ -448,7 +448,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testAdditionalParameters() {
+  void testAdditionalParameters() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()

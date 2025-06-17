@@ -58,7 +58,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   private JobDefinitionQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockDefinitionQuery(MockProvider.createMockJobDefinitions());
   }
 
@@ -73,7 +73,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryJobDefinitionId = "";
     given().queryParam("jobDefinitionId", queryJobDefinitionId).then().expect()
         .statusCode(Status.OK.getStatusCode())
@@ -83,7 +83,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQueryAsPost() {
+  void testEmptyQueryAsPost() {
     Map<String, String> params = new HashMap<>();
     params.put("jobDefinitionId", "");
 
@@ -95,7 +95,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode()).when().get(JOB_DEFINITION_QUERY_URL);
 
     verify(mockedQuery).list();
@@ -103,7 +103,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQueryAsPost() {
+  void testNoParametersQueryAsPost() {
     given().contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
       .expect().statusCode(Status.OK.getStatusCode())
       .when().post(JOB_DEFINITION_QUERY_URL);
@@ -113,7 +113,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("jobDefinitionId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -130,21 +130,21 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "jobDefinitionId")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
       .when().get(JOB_DEFINITION_QUERY_URL);
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
       .when().get(JOB_DEFINITION_QUERY_URL);
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     // asc
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("jobDefinitionId", "asc", Status.OK);
@@ -219,7 +219,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
@@ -238,7 +238,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
 
     int firstResult = 0;
     int maxResults = 10;
@@ -253,7 +253,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
    * If parameter "firstResult" is missing, we expect 0 as default.
    */
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
     given().queryParam("maxResults", maxResults)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -266,7 +266,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
    * If parameter "maxResults" is missing, we expect Integer.MAX_VALUE as default.
    */
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
     given().queryParam("firstResult", firstResult)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -276,7 +276,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testJobDefinitionRetrieval() {
+  void testJobDefinitionRetrieval() {
     String queryJobDefinitionId = "aJobDefId";
     Response response = given().queryParam("jobDefinitionId", queryJobDefinitionId)
         .then().expect().statusCode(Status.OK.getStatusCode())
@@ -315,7 +315,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testJobDefinitionRetrievalAsPost() {
+  void testJobDefinitionRetrievalAsPost() {
     String queryJobDefinitionId = "aJobDefId";
     Map<String, String> queryParameter = new HashMap<>();
     queryParameter.put("jobDefinitionId", queryJobDefinitionId);
@@ -355,7 +355,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleParameters() {
+  void testMultipleParameters() {
     Map<String, String> queryParameters = new HashMap<>();
 
     queryParameters.put("jobDefinitionId", "aJobDefId");
@@ -385,7 +385,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleParametersAsPost() {
+  void testMultipleParametersAsPost() {
     String aJobDefId = "aJobDefId";
     String aProcDefId = "aProcDefId";
     String aProcDefKey = "aProcDefKey";
@@ -427,7 +427,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
       .when().get(JOB_DEFINITION_COUNT_QUERY_URL);
@@ -436,7 +436,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCountAsPost() {
+  void testQueryCountAsPost() {
     given().contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
     .expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -446,7 +446,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockDefinitionQuery(createMockJobDefinitionsTwoTenants());
 
     Response response = given()
@@ -471,7 +471,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testWithoutTenantIdParameter() {
+  void testWithoutTenantIdParameter() {
     Response response = given()
       .queryParam("withoutTenantId", true)
     .then().expect()
@@ -491,7 +491,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testIncludeJobDefinitionsWithoutTenantIdParameter() {
+  void testIncludeJobDefinitionsWithoutTenantIdParameter() {
     List<JobDefinition> jobDefinitions = Arrays.asList(
         MockProvider.mockJobDefinition().tenantId(null).build(),
         MockProvider.mockJobDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
@@ -521,7 +521,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTenantIdListPostParameter() {
+  void testTenantIdListPostParameter() {
     mockedQuery = setUpMockDefinitionQuery(createMockJobDefinitionsTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -550,7 +550,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testWithoutTenantIdPostParameter() {
+  void testWithoutTenantIdPostParameter() {
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withoutTenantId", true);
 
@@ -574,7 +574,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testIncludeJobDefinitionsWithoutTenantIdPostParameter() {
+  void testIncludeJobDefinitionsWithoutTenantIdPostParameter() {
     List<JobDefinition> jobDefinitions = Arrays.asList(
         MockProvider.mockJobDefinition().tenantId(null).build(),
         MockProvider.mockJobDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());

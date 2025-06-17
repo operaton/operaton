@@ -60,7 +60,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   protected BatchQuery queryMock;
 
   @BeforeEach
-  public void setUpBatchQueryMock() {
+  void setUpBatchQueryMock() {
     Batch batchMock = MockProvider.createMockBatch();
 
     queryMock = mock(BatchQuery.class);
@@ -74,7 +74,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetBatch() {
+  void testGetBatch() {
     Response response = given()
         .pathParam("id", MockProvider.EXAMPLE_BATCH_ID)
       .then().expect()
@@ -91,7 +91,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetNonExistingBatch() {
+  void testGetNonExistingBatch() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
     BatchQuery batchQuery = mock(BatchQuery.class);
     when(batchQuery.batchId(nonExistingId)).thenReturn(batchQuery);
@@ -109,7 +109,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteBatch() {
+  void deleteBatch() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_BATCH_ID)
     .then().expect()
@@ -122,7 +122,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteBatchNotCascade() {
+  void deleteBatchNotCascade() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_BATCH_ID)
       .queryParam("cascade", false)
@@ -136,7 +136,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteBatchCascade() {
+  void deleteBatchCascade() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_BATCH_ID)
       .queryParam("cascade", true)
@@ -150,7 +150,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteNonExistingBatch() {
+  void deleteNonExistingBatch() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
@@ -167,7 +167,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteNonExistingBatchNotCascade() {
+  void deleteNonExistingBatchNotCascade() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
@@ -185,7 +185,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void deleteNonExistingBatchCascade() {
+  void deleteNonExistingBatchCascade() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
@@ -203,7 +203,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void suspendBatch() {
+  void suspendBatch() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_BATCH_ID)
       .contentType(ContentType.JSON)
@@ -218,7 +218,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void suspendNonExistingBatch() {
+  void suspendNonExistingBatch() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
@@ -237,7 +237,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void suspendBatchUnauthorized() {
+  void suspendBatchUnauthorized() {
     String batchId = MockProvider.EXAMPLE_BATCH_ID;
     String expectedMessage = "The user with id 'userId' does not have 'UPDATE' permission on resource '" + batchId + "' of type 'Batch'.";
 
@@ -258,7 +258,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void activateBatch() {
+  void activateBatch() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_BATCH_ID)
       .contentType(ContentType.JSON)
@@ -273,7 +273,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void activateNonExistingBatch() {
+  void activateNonExistingBatch() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
@@ -292,7 +292,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void activateBatchUnauthorized() {
+  void activateBatchUnauthorized() {
     String batchId = MockProvider.EXAMPLE_BATCH_ID;
     String expectedMessage = "The user with id 'userId' does not have 'UPDATE' permission on resource '" + batchId + "' of type 'Batch'.";
 

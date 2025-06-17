@@ -101,7 +101,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   private SetJobRetriesBuilder mockSetJobRetriesBuilder;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
 
     mockQuery = mock(JobQuery.class);
     Job mockedJob = new MockJobBuilder()
@@ -144,7 +144,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetries() {
+  void testSetRetries() {
     Map<String, Object> retriesVariableJson = new HashMap<>();
     retriesVariableJson.put("retries", MockProvider.EXAMPLE_JOB_RETRIES);
 
@@ -164,7 +164,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesWithDueDate() {
+  void testSetRetriesWithDueDate() {
     Map<String, Object> retriesVariableJson = new HashMap<>();
     retriesVariableJson.put("retries", MockProvider.EXAMPLE_JOB_RETRIES);
     Date newDueDate = new Date(1675752840000L);
@@ -186,7 +186,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesWithNullDueDate() {
+  void testSetRetriesWithNullDueDate() {
     Map<String, Object> retriesVariableJson = new HashMap<>();
     retriesVariableJson.put("retries", MockProvider.EXAMPLE_JOB_RETRIES);
     retriesVariableJson.put("dueDate", null);
@@ -207,7 +207,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesNonExistentJob() {
+  void testSetRetriesNonExistentJob() {
     String expectedMessage = "No job found with id '" + MockProvider.NON_EXISTING_JOB_ID + "'.";
 
     doThrow(new ProcessEngineException(expectedMessage)).when(mockSetJobRetriesBuilder).execute();
@@ -233,7 +233,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesNegativeRetries() {
+  void testSetRetriesNegativeRetries() {
 
     String expectedMessage = "The number of job retries must be a non-negative Integer, but '" + MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES
         + "' has been provided.";
@@ -259,7 +259,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesThrowsAuthorizationException() {
+  void testSetRetriesThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(mockManagementService).setJobRetries(anyInt());
 
@@ -281,7 +281,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSimpleJobGet() {
+  void testSimpleJobGet() {
     given().pathParam("id", MockProvider.EXAMPLE_JOB_ID)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -304,7 +304,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testJobGetIdDoesntExist() {
+  void testJobGetIdDoesntExist() {
     JobQuery invalidQueryNonExistingJob;
     invalidQueryNonExistingJob = mock(JobQuery.class);
     when(mockManagementService.createJobQuery().jobId(MockProvider.NON_EXISTING_JOB_ID)).thenReturn(invalidQueryNonExistingJob);
@@ -324,7 +324,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testExecuteJob() {
+  void testExecuteJob() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_JOB_ID)
     .then().expect()
@@ -336,7 +336,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testExecuteJobIdDoesntExist() {
+  void testExecuteJobIdDoesntExist() {
     String jobId = MockProvider.NON_EXISTING_JOB_ID;
 
     String expectedMessage = "No job found with id '" + jobId + "'";
@@ -350,7 +350,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testExecuteJobRuntimeException() {
+  void testExecuteJobRuntimeException() {
     String jobId = MockProvider.EXAMPLE_JOB_ID;
 
     doThrow(new RuntimeException("Runtime exception")).when(mockManagementService).executeJob(jobId);
@@ -362,7 +362,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testExecuteJobThrowsAuthorizationException() {
+  void testExecuteJobThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(mockManagementService).executeJob(anyString());
 
@@ -377,7 +377,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testGetStacktrace() {
+  void testGetStacktrace() {
     String stacktrace = "aStacktrace";
     when(mockManagementService.getJobExceptionStacktrace(MockProvider.EXAMPLE_JOB_ID)).thenReturn(stacktrace);
 
@@ -390,7 +390,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testGetStacktraceJobNotFound() {
+  void testGetStacktraceJobNotFound() {
     String exceptionMessage = "job not found";
     doThrow(new ProcessEngineException(exceptionMessage)).when(mockManagementService).getJobExceptionStacktrace(MockProvider.EXAMPLE_JOB_ID);
 
@@ -402,7 +402,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testGetStacktraceJobThrowsAuthorizationException() {
+  void testGetStacktraceJobThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(mockManagementService).getJobExceptionStacktrace(MockProvider.EXAMPLE_JOB_ID);
 
@@ -417,7 +417,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobDuedate() {
+  void testSetJobDuedate() {
     Date newDuedate = MockProvider.createMockDuedate();
     Map<String, Object> duedateVariableJson = new HashMap<>();
     duedateVariableJson.put("duedate", newDuedate);
@@ -435,7 +435,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobDuedateNull() {
+  void testSetJobDuedateNull() {
     Map<String, Object> duedateVariableJson = new HashMap<>();
     duedateVariableJson.put("duedate", null);
 
@@ -452,7 +452,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobDuedateCascade() {
+  void testSetJobDuedateCascade() {
     Date newDuedate = MockProvider.createMockDuedate();
     Map<String, Object> duedateVariableJson = new HashMap<>();
     duedateVariableJson.put("duedate", newDuedate);
@@ -471,7 +471,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobDuedateNullCascade() {
+  void testSetJobDuedateNullCascade() {
     Map<String, Object> duedateVariableJson = new HashMap<>();
     duedateVariableJson.put("duedate", null);
     duedateVariableJson.put("cascade", true);
@@ -489,7 +489,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobDuedateNonExistentJob() {
+  void testSetJobDuedateNonExistentJob() {
     Date newDuedate = MockProvider.createMockDuedate();
     String expectedMessage = "No job found with id '" + MockProvider.NON_EXISTING_JOB_ID + "'.";
 
@@ -510,7 +510,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobDuedateThrowsAuthorizationException() {
+  void testSetJobDuedateThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(mockManagementService).setJobDuedate(anyString(), any(Date.class), anyBoolean());
 
@@ -531,7 +531,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJob() {
+  void testActivateJob() {
     JobSuspensionStateDto dto = new JobSuspensionStateDto();
     dto.setSuspended(false);
 
@@ -550,7 +550,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateThrowsProcessEngineException() {
+  void testActivateThrowsProcessEngineException() {
     JobSuspensionStateDto dto = new JobSuspensionStateDto();
     dto.setSuspended(false);
 
@@ -574,7 +574,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateThrowsAuthorizationException() {
+  void testActivateThrowsAuthorizationException() {
     JobSuspensionStateDto dto = new JobSuspensionStateDto();
     dto.setSuspended(false);
 
@@ -598,7 +598,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJob() {
+  void testSuspendJob() {
     JobSuspensionStateDto dto = new JobSuspensionStateDto();
     dto.setSuspended(true);
 
@@ -617,7 +617,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendedThrowsProcessEngineException() {
+  void testSuspendedThrowsProcessEngineException() {
     JobSuspensionStateDto dto = new JobSuspensionStateDto();
     dto.setSuspended(true);
 
@@ -641,7 +641,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendWithMultipleByParameters() {
+  void testSuspendWithMultipleByParameters() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("jobDefinitionId", MockProvider.EXAMPLE_JOB_DEFINITION_ID);
@@ -665,7 +665,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendThrowsAuthorizationException() {
+  void testSuspendThrowsAuthorizationException() {
     JobSuspensionStateDto dto = new JobSuspensionStateDto();
     dto.setSuspended(true);
 
@@ -689,7 +689,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessDefinitionKey() {
+  void testActivateJobByProcessDefinitionKey() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -708,7 +708,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessDefinitionKeyWithException() {
+  void testActivateJobByProcessDefinitionKeyWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -731,7 +731,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessDefinitionKeyThrowsAuthorizationException() {
+  void testActivateJobByProcessDefinitionKeyThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -754,7 +754,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessDefinitionKey() {
+  void testSuspendJobByProcessDefinitionKey() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -773,7 +773,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessDefinitionKeyWithException() {
+  void testSuspendJobByProcessDefinitionKeyWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -796,7 +796,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessDefinitionKeyThrowsAuthorizationException() {
+  void testSuspendJobByProcessDefinitionKeyThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -819,7 +819,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessDefinitionKeyAndTenantId() {
+  void testActivateJobByProcessDefinitionKeyAndTenantId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -840,7 +840,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessDefinitionKeyWithoutTenantId() {
+  void testActivateJobByProcessDefinitionKeyWithoutTenantId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -861,7 +861,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessDefinitionKeyAndTenantId() {
+  void testSuspendJobByProcessDefinitionKeyAndTenantId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -882,7 +882,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessDefinitionKeyWithoutTenantId() {
+  void testSuspendJobByProcessDefinitionKeyWithoutTenantId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -903,7 +903,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessDefinitionId() {
+  void testActivateJobByProcessDefinitionId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -922,7 +922,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessDefinitionIdWithException() {
+  void testActivateJobByProcessDefinitionIdWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -945,7 +945,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessDefinitionIdThrowsAuthorizationException() {
+  void testActivateJobByProcessDefinitionIdThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -968,7 +968,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessDefinitionId() {
+  void testSuspendJobByProcessDefinitionId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -987,7 +987,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessDefinitionIdWithException() {
+  void testSuspendJobByProcessDefinitionIdWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1010,7 +1010,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessDefinitionIdThrowsAuthorizationException() {
+  void testSuspendJobByProcessDefinitionIdThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -1033,7 +1033,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessInstanceId() {
+  void testActivateJobByProcessInstanceId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processInstanceId", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
@@ -1052,7 +1052,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessInstanceIdWithException() {
+  void testActivateJobByProcessInstanceIdWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processInstanceId", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
@@ -1075,7 +1075,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByProcessInstanceIdThrowsAuthorizationException() {
+  void testActivateJobByProcessInstanceIdThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("processInstanceId", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
@@ -1098,7 +1098,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessInstanceId() {
+  void testSuspendJobByProcessInstanceId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processInstanceId", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
@@ -1117,7 +1117,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessInstanceIdWithException() {
+  void testSuspendJobByProcessInstanceIdWithException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processInstanceId", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
@@ -1140,7 +1140,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByProcessInstanceIdThrowsAuthorizationException() {
+  void testSuspendJobByProcessInstanceIdThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("processInstanceId", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
@@ -1163,7 +1163,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByJobDefinitionId() {
+  void testActivateJobByJobDefinitionId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("jobDefinitionId", MockProvider.EXAMPLE_JOB_DEFINITION_ID);
@@ -1182,7 +1182,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByJobDefinitionIdThrowsAuthorizationException() {
+  void testActivateJobByJobDefinitionIdThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("jobDefinitionId", MockProvider.EXAMPLE_JOB_DEFINITION_ID);
@@ -1205,7 +1205,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByJobDefinitionId() {
+  void testSuspendJobByJobDefinitionId() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("jobDefinitionId", MockProvider.EXAMPLE_JOB_DEFINITION_ID);
@@ -1224,7 +1224,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByJobDefinitionIdThrowsAuthorizationException() {
+  void testSuspendJobByJobDefinitionIdThrowsAuthorizationException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("jobDefinitionId", MockProvider.EXAMPLE_JOB_DEFINITION_ID);
@@ -1247,7 +1247,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testActivateJobByIdShouldThrowException() {
+  void testActivateJobByIdShouldThrowException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("jobId", MockProvider.EXAMPLE_JOB_ID);
@@ -1267,7 +1267,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByIdShouldThrowException() {
+  void testSuspendJobByIdShouldThrowException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("jobId", MockProvider.EXAMPLE_JOB_ID);
@@ -1287,7 +1287,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSuspendJobByNothing() {
+  void testSuspendJobByNothing() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
 
@@ -1306,7 +1306,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobPriority() {
+  void testSetJobPriority() {
     Map<String, Object> priorityJson = new HashMap<>();
     priorityJson.put("priority", MockProvider.EXAMPLE_JOB_PRIORITY);
 
@@ -1322,7 +1322,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobPriorityToExtremeValue() {
+  void testSetJobPriorityToExtremeValue() {
     Map<String, Object> priorityJson = new HashMap<>();
     priorityJson.put("priority", Long.MAX_VALUE);
 
@@ -1338,7 +1338,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobPriorityNonExistentJob() {
+  void testSetJobPriorityNonExistentJob() {
     String expectedMessage = "No job found with id '" + MockProvider.NON_EXISTING_JOB_ID + "'.";
 
     doThrow(new NotFoundException(expectedMessage))
@@ -1361,7 +1361,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobPriorityFailure() {
+  void testSetJobPriorityFailure() {
     String expectedMessage = "No job found with id '" + MockProvider.EXAMPLE_JOB_ID + "'.";
 
     doThrow(new ProcessEngineException(expectedMessage))
@@ -1384,7 +1384,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetNullJobPriorityFailure() {
+  void testSetNullJobPriorityFailure() {
     String expectedMessage = "Priority for job '" +  MockProvider.EXAMPLE_JOB_ID + "' cannot be null.";
 
     Map<String, Object> priorityJson = new HashMap<>();
@@ -1404,7 +1404,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetJobPriorityThrowsAuthorizationException() {
+  void testSetJobPriorityThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message))
       .when(mockManagementService).setJobPriority(any(), anyLong());
@@ -1425,7 +1425,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void deleteJob() {
+  void deleteJob() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_JOB_ID)
     .then().expect()
@@ -1438,7 +1438,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void deleteNotExistingJob() {
+  void deleteNotExistingJob() {
     String jobId = MockProvider.NON_EXISTING_JOB_ID;
 
     String expectedMessage = "No job found with id '" + jobId + "'.";
@@ -1460,7 +1460,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void deleteLockedJob() {
+  void deleteLockedJob() {
     String jobId = MockProvider.EXAMPLE_JOB_ID;
 
     String expectedMessage = "Cannot delete job when the job is being executed. Try again later.";
@@ -1482,7 +1482,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void deleteJobThrowAuthorizationException() {
+  void deleteJobThrowAuthorizationException() {
     String jobId = MockProvider.EXAMPLE_JOB_ID;
 
     String expectedMessage = "Missing permissions";
@@ -1504,7 +1504,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesByJobsAsync() {
+  void testSetRetriesByJobsAsync() {
     List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
 
     Map<String, Object> messageBodyJson = new HashMap<>();
@@ -1530,7 +1530,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesAsyncWithDueDate() {
+  void testSetRetriesAsyncWithDueDate() {
     List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
 
     Map<String, Object> messageBodyJson = new HashMap<>();
@@ -1559,7 +1559,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesAsyncWithNullDueDate() {
+  void testSetRetriesAsyncWithNullDueDate() {
     List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
 
     Map<String, Object> messageBodyJson = new HashMap<>();
@@ -1585,8 +1585,9 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
     verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).executeAsync();
     verifyNoMoreInteractions(mockSetJobRetriesByJobsAsyncBuilder);
   }
+
   @Test
-  public void testSetRetriesAsyncWithQuery() {
+  void testSetRetriesAsyncWithQuery() {
     Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put(RETRIES, 5);
     HistoricProcessInstanceQueryDto query = new HistoricProcessInstanceQueryDto();
@@ -1612,7 +1613,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
 
 
   @Test
-  public void testSetRetriesAsyncWithCreateTimesQuery() {
+  void testSetRetriesAsyncWithCreateTimesQuery() {
     Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put(RETRIES, 5);
     Map<String, Object> condition = new HashMap<>();
@@ -1639,7 +1640,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
 
 
   @Test
-  public void testSetRetriesAsyncWithDueDatesQuery() {
+  void testSetRetriesAsyncWithDueDatesQuery() {
       Map<String, Object> messageBodyJson = new HashMap<>();
       messageBodyJson.put(RETRIES, 5);
       Map<String, Object> condition = new HashMap<>();
@@ -1666,7 +1667,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
 
 
   @Test
-  public void testSetRetriesWithBadRequestQuery() {
+  void testSetRetriesWithBadRequestQuery() {
     doThrow(new BadUserRequestException("job ids are empty"))
         .when(mockSetJobRetriesByJobsAsyncBuilder).jobQuery((JobQuery) null);
 
@@ -1682,7 +1683,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesWithoutBody() {
+  void testSetRetriesWithoutBody() {
     given()
         .contentType(ContentType.JSON)
         .then().expect()
@@ -1693,7 +1694,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesWithNegativeRetries() {
+  void testSetRetriesWithNegativeRetries() {
     doThrow(new BadUserRequestException("retries are negative"))
         .when(mockManagementService).setJobRetriesByJobsAsync(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES);
 
@@ -1711,7 +1712,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testSetRetriesWithoutRetries() {
+  void testSetRetriesWithoutRetries() {
     Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put("jobIds", null);
 
@@ -1727,7 +1728,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testRecalculateDuedateWithoutDateBase() {
+  void testRecalculateDuedateWithoutDateBase() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_JOB_ID)
     .then().expect()
@@ -1738,7 +1739,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testRecalculateDuedateCreationDateBased() {
+  void testRecalculateDuedateCreationDateBased() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_JOB_ID)
       .queryParam("creationDateBased", true)
@@ -1750,7 +1751,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testRecalculateDuedateCurrentDateBased() {
+  void testRecalculateDuedateCurrentDateBased() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_JOB_ID)
       .queryParam("creationDateBased", false)
@@ -1762,7 +1763,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testRecalculateDuedateWithUnknownJobId() {
+  void testRecalculateDuedateWithUnknownJobId() {
     String jobId = MockProvider.NON_EXISTING_JOB_ID;
 
     String expectedMessage = "No job found with id '" + jobId + "'.";
@@ -1783,7 +1784,7 @@ import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteraction
   }
 
   @Test
-  public void testRecalculateDuedateUnauthorized() {
+  void testRecalculateDuedateUnauthorized() {
     String jobId = MockProvider.EXAMPLE_JOB_ID;
 
     String expectedMessage = "Missing permissions";

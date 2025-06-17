@@ -117,7 +117,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
   }
 
   @BeforeEach
-  public void setup() throws ServletException {
+  void setup() throws ServletException {
     currentEngine = getProcessEngine(engineName);
 
     authorizationServiceMock = mock(AuthorizationServiceImpl.class);

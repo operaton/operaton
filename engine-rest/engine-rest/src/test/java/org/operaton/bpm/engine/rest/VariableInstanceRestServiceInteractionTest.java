@@ -67,7 +67,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   protected VariableInstanceQuery variableInstanceQueryMock;
 
   @BeforeEach
-  public void setupTestData() {
+  void setupTestData() {
     runtimeServiceMock = mock(RuntimeService.class);
     variableInstanceQueryMock = mock(VariableInstanceQuery.class);
 
@@ -77,7 +77,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testGetSingleVariableInstance() {
+  void testGetSingleVariableInstance() {
 
     MockVariableInstanceBuilder builder = MockProvider.mockVariableInstance();
     VariableInstance variableInstanceMock = builder.build();
@@ -110,7 +110,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testGetSingleVariableInstanceDeserialized() {
+  void testGetSingleVariableInstanceDeserialized() {
     ObjectValue serializedValue = MockObjectValue.fromObjectValue(
         Variables.objectValue("a value").serializationDataFormat("aDataFormat").create())
         .objectTypeName("aTypeName");
@@ -148,7 +148,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testGetSingleVariableInstanceSerialized() {
+  void testGetSingleVariableInstanceSerialized() {
     ObjectValue serializedValue = Variables.serializedObjectValue("a serialized value")
         .serializationDataFormat("aDataFormat").objectTypeName("aTypeName").create();
 
@@ -188,7 +188,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testGetSingleVariableInstanceForBinaryVariable() {
+  void testGetSingleVariableInstanceForBinaryVariable() {
     MockVariableInstanceBuilder builder = MockProvider.mockVariableInstance();
     VariableInstance variableInstanceMock =
         builder
@@ -212,7 +212,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testGetNonExistingVariableInstance() {
+  void testGetNonExistingVariableInstance() {
 
     String nonExistingId = "nonExistingId";
 
@@ -230,7 +230,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testBinaryDataForBinaryVariable() {
+  void testBinaryDataForBinaryVariable() {
     final byte[] byteContent = "some bytes".getBytes();
 
     VariableInstance variableInstanceMock =
@@ -256,7 +256,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testBinaryDataForNonBinaryVariable() {
+  void testBinaryDataForNonBinaryVariable() {
     VariableInstance variableInstanceMock = MockProvider.createMockVariableInstance();
 
     when(variableInstanceQueryMock.variableId(variableInstanceMock.getId())).thenReturn(variableInstanceQueryMock);
@@ -275,7 +275,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testGetBinaryDataForNonExistingVariableInstance() {
+  void testGetBinaryDataForNonExistingVariableInstance() {
 
     String nonExistingId = "nonExistingId";
 
@@ -293,7 +293,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testGetBinaryDataForFileVariable() {
+  void testGetBinaryDataForFileVariable() {
     String filename = "test.txt";
     byte[] byteContent = "test".getBytes();
     String encoding = UTF_8.name();
@@ -325,7 +325,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
   }
 
   @Test
-  public void testGetBinaryDataForNullFileVariable() {
+  void testGetBinaryDataForNullFileVariable() {
     String filename = "test.txt";
     byte[] byteContent = null;
     FileValue variableValue = Variables.fileValue(filename).file(byteContent).mimeType(ContentType.TEXT.toString()).create();

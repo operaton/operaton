@@ -62,7 +62,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   private ProcessDefinitionQuery processDefinitionQueryMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     setupProcessDefinitionStatisticsMock();
     setupActivityStatisticsMock();
     setupProcessDefinitionMock();
@@ -98,7 +98,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testStatisticsRetrievalPerProcessDefinitionVersion() {
+  void testStatisticsRetrievalPerProcessDefinitionVersion() {
     given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -109,7 +109,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessDefinitionStatisticsRetrieval() {
+  void testProcessDefinitionStatisticsRetrieval() {
     given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -129,7 +129,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivityStatisticsRetrieval() {
+  void testActivityStatisticsRetrieval() {
     given().pathParam("id", "aDefinitionId")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -139,7 +139,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivityStatisticsRetrievalByKey() {
+  void testActivityStatisticsRetrievalByKey() {
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -149,7 +149,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAdditionalFailedJobsOption() {
+  void testAdditionalFailedJobsOption() {
     given().queryParam("failedJobs", "true")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -161,7 +161,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAdditionalIncidentsOption() {
+  void testAdditionalIncidentsOption() {
     given().queryParam("incidents", "true")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -173,7 +173,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAdditionalIncidentsForTypeOption() {
+  void testAdditionalIncidentsForTypeOption() {
     given().queryParam("incidentsForType", "failedJob")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -185,7 +185,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAdditionalIncidentsAndFailedJobsOption() {
+  void testAdditionalIncidentsAndFailedJobsOption() {
     given().queryParam("incidents", "true").queryParam("failedJobs", "true")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -198,7 +198,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAdditionalIncidentsForTypeAndFailedJobsOption() {
+  void testAdditionalIncidentsForTypeAndFailedJobsOption() {
     given().queryParam("incidentsForType", "failedJob").queryParam("failedJobs", "true")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -211,7 +211,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAdditionalIncidentsAndIncidentsForType() {
+  void testAdditionalIncidentsAndIncidentsForType() {
     given().queryParam("incidents", "true").queryParam("incidentsForType", "anIncidentTpye")
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
@@ -219,7 +219,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivityStatisticsWithFailedJobs() {
+  void testActivityStatisticsWithFailedJobs() {
     given().pathParam("id", "aDefinitionId").queryParam("failedJobs", "true")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -231,7 +231,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivityStatisticsWithFailedJobsByKey() {
+  void testActivityStatisticsWithFailedJobsByKey() {
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY).queryParam("failedJobs", "true")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -243,7 +243,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivityStatisticsWithIncidents() {
+  void testActivityStatisticsWithIncidents() {
     given().pathParam("id", "aDefinitionId").queryParam("incidents", "true")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -255,7 +255,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivityStatisticsWithIncidentsByKey() {
+  void testActivityStatisticsWithIncidentsByKey() {
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY).queryParam("incidents", "true")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -267,7 +267,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivityStatisticsIncidentsForTypeTypeOption() {
+  void testActivityStatisticsIncidentsForTypeTypeOption() {
     given().pathParam("id", "aDefinitionId").queryParam("incidentsForType", "failedJob")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -279,7 +279,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivityStatisticsIncidentsForTypeTypeOptionByKey() {
+  void testActivityStatisticsIncidentsForTypeTypeOptionByKey() {
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY).queryParam("incidentsForType", "failedJob")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -291,7 +291,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivtyStatisticsIncidentsAndFailedJobsOption() {
+  void testActivtyStatisticsIncidentsAndFailedJobsOption() {
     given().pathParam("id", "aDefinitionId")
     .queryParam("incidents", "true").queryParam("failedJobs", "true")
     .then().expect()
@@ -305,7 +305,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivtyStatisticsIncidentsAndFailedJobsOptionByKey() {
+  void testActivtyStatisticsIncidentsAndFailedJobsOptionByKey() {
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
     .queryParam("incidents", "true").queryParam("failedJobs", "true")
     .then().expect()
@@ -319,7 +319,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivtyStatisticsIncidentsForTypeAndFailedJobsOption() {
+  void testActivtyStatisticsIncidentsForTypeAndFailedJobsOption() {
     given().pathParam("id", "aDefinitionId")
     .queryParam("incidentsForType", "failedJob").queryParam("failedJobs", "true")
     .then().expect()
@@ -333,7 +333,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivtyStatisticsByIdThrowsAuthorizationException() {
+  void testActivtyStatisticsByIdThrowsAuthorizationException() {
     String message = "expected exception";
     when((activityQueryMock).unlimitedList()).thenThrow(new AuthorizationException(message));
 
@@ -348,7 +348,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivtyStatisticsIncidentsForTypeAndFailedJobsOptionByKey() {
+  void testActivtyStatisticsIncidentsForTypeAndFailedJobsOptionByKey() {
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
     .queryParam("incidentsForType", "failedJob").queryParam("failedJobs", "true")
     .then().expect()
@@ -362,7 +362,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivtyStatisticsIncidentsAndIncidentsForType() {
+  void testActivtyStatisticsIncidentsAndIncidentsForType() {
     given().pathParam("id", "aDefinitionId")
     .queryParam("incidents", "true").queryParam("incidentsForType", "anIncidentTpye")
     .then().expect()
@@ -371,7 +371,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivtyStatisticsIncidentsAndIncidentsForTypeByKey() {
+  void testActivtyStatisticsIncidentsAndIncidentsForTypeByKey() {
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
     .queryParam("incidents", "true").queryParam("incidentsForType", "anIncidentTpye")
     .then().expect()
@@ -380,7 +380,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testActivtyStatisticsByIdThrowsAuthorizationExceptionByKey() {
+  void testActivtyStatisticsByIdThrowsAuthorizationExceptionByKey() {
     String message = "expected exception";
     when((activityQueryMock).unlimitedList())
         .thenThrow(new AuthorizationException(message));
@@ -396,7 +396,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessDefinitionStatisticsWithRootIncidents() {
+  void testProcessDefinitionStatisticsWithRootIncidents() {
     given().queryParam("rootIncidents", "true")
     .then().expect()
       .statusCode(Status.OK.getStatusCode())

@@ -56,7 +56,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   private IncidentQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     List<Incident> incidents = MockProvider.createMockIncidents();
 
     mockedQuery = setupMockIncidentQuery(incidents);
@@ -76,7 +76,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testGetIncident() {
+  void testGetIncident() {
 
     given()
       .pathParam("id", EXAMPLE_INCIDENT_ID)
@@ -91,7 +91,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testGetUnexistingIncident() {
+  void testGetUnexistingIncident() {
     when(mockedQuery.singleResult()).thenReturn(null);
 
     given()
@@ -107,7 +107,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testResolveIncident() {
+  void testResolveIncident() {
 
     given()
       .pathParam("id", EXAMPLE_INCIDENT_ID)
@@ -120,7 +120,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testResolveUnexistingIncident() {
+  void testResolveUnexistingIncident() {
     doThrow(new NotFoundException()).when(mockRuntimeService).resolveIncident(anyString());
 
     given()
@@ -134,7 +134,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldSetAnnotation() {
+  void shouldSetAnnotation() {
     given()
       .pathParam("id", EXAMPLE_INCIDENT_ID)
       .contentType(MediaType.APPLICATION_JSON)
@@ -149,7 +149,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldThrowNotValidExceptionWhenSetAnnotation() {
+  void shouldThrowNotValidExceptionWhenSetAnnotation() {
     doThrow(new NotValidException("expected"))
       .when(mockRuntimeService)
       .setAnnotationForIncidentById(anyString(), anyString());
@@ -165,7 +165,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldThrowAuthorizationExceptionWhenSetAnnotation() {
+  void shouldThrowAuthorizationExceptionWhenSetAnnotation() {
     doThrow(new AuthorizationException("expected"))
       .when(mockRuntimeService)
       .setAnnotationForIncidentById(anyString(), anyString());
@@ -181,7 +181,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldThrowBadRequestExceptionWhenSetAnnotation() {
+  void shouldThrowBadRequestExceptionWhenSetAnnotation() {
     doThrow(new BadUserRequestException("expected"))
       .when(mockRuntimeService)
       .setAnnotationForIncidentById(anyString(), anyString());
@@ -197,7 +197,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldClearAnnotation() {
+  void shouldClearAnnotation() {
     given()
       .pathParam("id", EXAMPLE_INCIDENT_ID)
     .then().expect()
@@ -209,7 +209,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldThrowNotValidExceptionWhenClearAnnotation() {
+  void shouldThrowNotValidExceptionWhenClearAnnotation() {
     doThrow(new NotValidException("expected"))
       .when(mockRuntimeService)
       .clearAnnotationForIncidentById(anyString());
@@ -223,7 +223,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldThrowAuthorizationExceptionWhenClearAnnotation() {
+  void shouldThrowAuthorizationExceptionWhenClearAnnotation() {
     doThrow(new AuthorizationException("expected"))
       .when(mockRuntimeService)
       .clearAnnotationForIncidentById(anyString());
@@ -237,7 +237,7 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void shouldThrowBadRequestExceptionWhenClearAnnotation() {
+  void shouldThrowBadRequestExceptionWhenClearAnnotation() {
     doThrow(new BadUserRequestException("expected"))
       .when(mockRuntimeService)
       .clearAnnotationForIncidentById(anyString());

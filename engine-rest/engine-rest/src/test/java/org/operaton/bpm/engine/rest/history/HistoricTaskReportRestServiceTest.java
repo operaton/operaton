@@ -63,7 +63,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   protected HistoricTaskInstanceReport mockedReportQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedReportQuery = setUpMockReportQuery();
   }
 
@@ -91,7 +91,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountMissingAuthorization() {
+  void testTaskCountMissingAuthorization() {
     String message = "not authorized";
     when(mockedReportQuery.countByTaskName()).thenThrow(new AuthorizationException(message));
 
@@ -110,7 +110,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testTaskCountByProcDefMissingAuthorization() {
+  void testTaskCountByProcDefMissingAuthorization() {
     String message = "not authorized";
     when(mockedReportQuery.countByProcessDefinitionKey()).thenThrow(new AuthorizationException(message));
 
@@ -128,7 +128,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountReport() {
+  void testTaskCountReport() {
     given()
       .queryParam("reportType", "count")
       .queryParam("groupBy", "taskName")
@@ -150,7 +150,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountReportWithCompletedBefore() {
+  void testTaskCountReportWithCompletedBefore() {
     given()
       .queryParam("reportType", "count")
       .queryParam("groupBy", "taskName")
@@ -168,7 +168,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountReportWithCompletedAfter() {
+  void testTaskCountReportWithCompletedAfter() {
     given()
       .queryParam("reportType", "count")
       .queryParam("groupBy", "taskName")
@@ -186,7 +186,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountByProcDefReportWithCompletedBefore() {
+  void testTaskCountByProcDefReportWithCompletedBefore() {
     given()
       .queryParam("reportType", "count")
       .queryParam("completedBefore", EXAMPLE_HISTORIC_TASK_END_TIME)
@@ -204,7 +204,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountByProcDefReportWithCompletedAfter() {
+  void testTaskCountByProcDefReportWithCompletedAfter() {
     given()
       .queryParam("reportType", "count")
       .queryParam("completedAfter", EXAMPLE_HISTORIC_TASK_START_TIME)
@@ -222,7 +222,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountReportWithGroupByProcDef() {
+  void testTaskCountReportWithGroupByProcDef() {
     given()
       .queryParam("reportType", "count")
       .queryParam("groupBy", "processDefinition")
@@ -238,7 +238,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountReportWithGroupByTaskDef() {
+  void testTaskCountReportWithGroupByTaskDef() {
     given()
       .queryParam("reportType", "count")
       .queryParam("groupBy", "taskName")
@@ -254,7 +254,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountReportWithGroupByAnyDef() {
+  void testTaskCountReportWithGroupByAnyDef() {
     given()
       .queryParam("reportType", "count")
       .queryParam("groupBy", "anotherDefinition")
@@ -268,7 +268,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountWithAllParameters() {
+  void testTaskCountWithAllParameters() {
     given()
       .queryParam("reportType", "count")
       .queryParam("groupBy", "processDefinition")
@@ -294,7 +294,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountWithAllParametersGroupByTask() {
+  void testTaskCountWithAllParametersGroupByTask() {
     given()
       .queryParam("reportType", "count")
       .queryParam("groupBy", "taskName")
@@ -321,7 +321,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
 
   // TASK DURATION REPORT ///////////////////////////////////////////////////////
   @Test
-  public void testTaskDurationMonthMissingAuthorization() {
+  void testTaskDurationMonthMissingAuthorization() {
     String message = "not authorized";
     when(mockedReportQuery.duration(MONTH)).thenThrow(new AuthorizationException(message));
 
@@ -339,7 +339,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationQuarterMissingAuthorization() {
+  void testTaskDurationQuarterMissingAuthorization() {
     String message = "not authorized";
     when(mockedReportQuery.duration(QUARTER)).thenThrow(new AuthorizationException(message));
 
@@ -356,8 +356,8 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
       .get(TASK_REPORT_URL);
   }
 
-   @Test
-  public void testWrongReportType() {
+  @Test
+  void testWrongReportType() {
     given()
       .queryParam("reportType", "abc")
     .then()
@@ -370,7 +370,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationReportWithoutDurationParam() {
+  void testTaskDurationReportWithoutDurationParam() {
     given()
       .queryParam("periodUnit", "month")
       .then()
@@ -383,7 +383,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationQuarterReportWithoutDurationParam() {
+  void testTaskDurationQuarterReportWithoutDurationParam() {
     given()
       .queryParam("periodUnit", "quarter")
       .then()
@@ -396,7 +396,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationReportWithInvalidPeriodUnit() {
+  void testTaskDurationReportWithInvalidPeriodUnit() {
     given()
       .queryParam("periodUnit", "abc")
       .then()
@@ -410,7 +410,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationReportWithMissingPeriodUnit() {
+  void testTaskDurationReportWithMissingPeriodUnit() {
     given()
       .queryParam("reportType", "duration")
       .then()
@@ -424,7 +424,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationReportByMonth() {
+  void testTaskDurationReportByMonth() {
     given()
       .queryParam("periodUnit", "month")
       .queryParam("reportType", "duration")
@@ -445,7 +445,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationReportByQuarter() {
+  void testTaskDurationReportByQuarter() {
     given()
       .queryParam("periodUnit", "quarter")
       .queryParam("reportType", "duration")
@@ -466,7 +466,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationReportWithCompletedBeforeAndCompletedAfter() {
+  void testTaskDurationReportWithCompletedBeforeAndCompletedAfter() {
     given()
       .queryParam("periodUnit", "month")
       .queryParam("reportType", "duration")
@@ -485,7 +485,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationReportWithCompletedBefore() {
+  void testTaskDurationReportWithCompletedBefore() {
     given()
       .queryParam("periodUnit", "month")
       .queryParam("reportType", "duration")
@@ -503,7 +503,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationReportWithCompletedAfter() {
+  void testTaskDurationReportWithCompletedAfter() {
     given()
       .queryParam("periodUnit", "month")
       .queryParam("reportType", "duration")
@@ -522,7 +522,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testTaskDurationQuarterReportWithCompletedBeforeAndCompletedAfter() {
+  void testTaskDurationQuarterReportWithCompletedBeforeAndCompletedAfter() {
     given()
       .queryParam("periodUnit", "quarter")
       .queryParam("reportType", "duration")
@@ -541,7 +541,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationQuarterReportWithCompletedBefore() {
+  void testTaskDurationQuarterReportWithCompletedBefore() {
     given()
       .queryParam("periodUnit", "quarter")
       .queryParam("reportType", "duration")
@@ -559,7 +559,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskDurationQuarterReportWithCompletedAfter() {
+  void testTaskDurationQuarterReportWithCompletedAfter() {
     given()
       .queryParam("periodUnit", "quarter")
       .queryParam("reportType", "duration")

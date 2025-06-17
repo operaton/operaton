@@ -71,9 +71,6 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
 
-  public CaseExecutionImpl() {
-  }
-
   // case definition id ///////////////////////////////////////////////////////
 
   @Override

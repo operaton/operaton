@@ -241,9 +241,6 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   protected transient List<VariableInstanceLifecycleListener<VariableInstanceEntity>> registeredVariableListeners
     = new ArrayList<>();
 
-  public ExecutionEntity() {
-  }
-
   /**
    * creates a new execution. properties processDefinition, processInstance and
    * activity will be initialized.

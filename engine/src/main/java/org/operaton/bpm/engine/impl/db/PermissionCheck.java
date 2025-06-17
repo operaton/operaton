@@ -42,9 +42,6 @@ public class PermissionCheck {
 
   protected Long authorizationNotFoundReturnValue = null;
 
-  public PermissionCheck() {
-  }
-
   public Permission getPermission() {
     return permission;
   }

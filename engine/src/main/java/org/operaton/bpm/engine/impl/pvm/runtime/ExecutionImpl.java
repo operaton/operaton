@@ -85,9 +85,6 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   // lifecycle methods ////////////////////////////////////////////////////////
 
-  public ExecutionImpl() {
-  }
-
   /** creates a new execution. properties processDefinition, processInstance and activity will be initialized. */
   @Override
   public ExecutionImpl createExecution() {

@@ -29,9 +29,6 @@ public class HistoricFormPropertyEventEntity extends HistoricDetailEventEntity {
   protected String propertyId;
   protected String propertyValue;
 
-  public HistoricFormPropertyEventEntity() {
-  }
-
   public String getPropertyId() {
     return propertyId;
   }

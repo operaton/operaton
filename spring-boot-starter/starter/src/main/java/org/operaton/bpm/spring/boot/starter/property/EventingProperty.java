@@ -44,10 +44,6 @@ public class EventingProperty {
    */
   private Boolean skippable = Boolean.TRUE;
 
-  public EventingProperty() {
-
-  }
-
   public boolean isExecution() {
     return BooleanUtils.isTrue(execution);
   }

@@ -273,6 +273,7 @@ public class SpringTopicSubscriptionImpl
 
   @Override
   public void afterPropertiesSet() {
+    // no-op
   }
 
 }

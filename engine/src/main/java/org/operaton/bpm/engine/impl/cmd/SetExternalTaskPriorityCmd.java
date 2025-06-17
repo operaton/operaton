@@ -47,6 +47,7 @@ public class SetExternalTaskPriorityCmd extends ExternalTaskCmd {
 
   @Override
   protected void validateInput() {
+    // no input validation needed
   }
 
   @Override

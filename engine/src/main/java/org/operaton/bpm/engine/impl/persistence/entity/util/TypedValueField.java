@@ -298,6 +298,7 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
 
   @Override
   public void postLoad() {
+    // no-op
   }
 
   public void clear() {

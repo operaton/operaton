@@ -43,7 +43,7 @@ public class FooSpin extends Spin<FooSpin> {
 
   @Override
   public void writeToWriter(Writer writer) {
-
+    // no-op
   }
 
   @Override

@@ -68,12 +68,15 @@ class TestHelperTest {
   static class SomeTestClass {
 
     public void testSomethingWithPublicAccessor() {
+      // no-op
     }
 
     void testSomethingWithPackagePrivateAccessor() {
+      // no-op
     }
 
     protected void testSomethingWithProtected() {
+      // no-op
     }
 
   }

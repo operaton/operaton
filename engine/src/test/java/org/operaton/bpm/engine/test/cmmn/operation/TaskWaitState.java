@@ -27,6 +27,7 @@ public class TaskWaitState extends TaskActivityBehavior {
 
   @Override
   protected void performStart(CmmnActivityExecution execution) {
+    // nothing to do
   }
 
 }

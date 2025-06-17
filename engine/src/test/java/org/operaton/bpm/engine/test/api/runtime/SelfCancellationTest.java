@@ -308,6 +308,7 @@ public class SelfCancellationTest {
 
     @Override
     public void execute(ActivityExecution execution) throws Exception {
+      // no-op
     }
 
     @Override

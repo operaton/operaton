@@ -31,6 +31,7 @@ public class UnlockExternalTaskCmd extends ExternalTaskCmd {
 
   @Override
   protected void validateInput() {
+    // no input validation needed
   }
 
   @Override

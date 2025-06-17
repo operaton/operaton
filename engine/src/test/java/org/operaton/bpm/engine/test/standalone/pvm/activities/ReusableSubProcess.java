@@ -46,6 +46,7 @@ public class ReusableSubProcess implements SubProcessActivityBehavior {
 
   @Override
   public void passOutputVariables(ActivityExecution targetExecution, VariableScope calledElementInstance) {
+    // no-op
   }
 
   @Override

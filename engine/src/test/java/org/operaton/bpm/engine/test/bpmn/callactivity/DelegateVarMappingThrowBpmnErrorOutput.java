@@ -30,6 +30,7 @@ public class DelegateVarMappingThrowBpmnErrorOutput implements DelegateVariableM
 
   @Override
   public void mapInputVariables(DelegateExecution superExecution, VariableMap subVariables) {
+    // no-op
   }
 
   @Override

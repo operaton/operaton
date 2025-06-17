@@ -71,10 +71,12 @@ public class MigratingCompensationEventSubscriptionInstance extends MigratingPro
 
   @Override
   public void migrateDependentEntities() {
+    // No dependent entities to migrate for event subscriptions
   }
 
   @Override
   public void addMigratingDependentInstance(MigratingInstance migratingInstance) {
+    // No dependent instances to add for event subscriptions
   }
 
   @Override

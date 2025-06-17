@@ -551,6 +551,7 @@ class BpmnParseTest {
   @Deployment
   @Test
   void testParseDiagramInterchangeElementsForUnknownModelElements() {
+    // test behavior defined by @Deployment annotation
   }
 
   /**
@@ -559,13 +560,13 @@ class BpmnParseTest {
   @Test
   @Deployment
   void testParseDefinitionWithDeprecatedActivitiNamespace(){
-
+    // test behavior defined by @Deployment annotation
   }
 
   @Test
   @Deployment
   void testParseDefinitionWithOperatonNamespace(){
-
+    // test behavior defined by @Deployment annotation
   }
 
   @Deployment

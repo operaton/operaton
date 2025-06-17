@@ -46,6 +46,7 @@ public class MigratingUserTaskInstance implements MigratingInstance {
 
   @Override
   public void migrateDependentEntities() {
+    // nothing to do
   }
 
   @Override

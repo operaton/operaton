@@ -24,6 +24,7 @@ public class IdGeneratorDataSourceDoNothing implements ActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
+    // no-op
   }
 
 }

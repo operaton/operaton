@@ -26,7 +26,7 @@ public class HandlerClassAnnotationConfiguration implements ExternalTaskHandler 
 
   @Override
   public void execute(ExternalTask externalTask, ExternalTaskService externalTaskService) {
-
+    // no-op
   }
 
 }

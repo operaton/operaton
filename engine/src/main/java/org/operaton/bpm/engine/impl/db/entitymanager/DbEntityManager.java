@@ -625,11 +625,6 @@ public class DbEntityManager implements Session, EntityLoadListener {
     dbOperationManager.addOperation(dbOperation);
   }
 
-  @Override
-  public void close() {
-
-  }
-
   public boolean isDeleted(DbEntity object) {
     return dbEntityCache.isDeleted(object);
   }

@@ -267,14 +267,6 @@ public class DeploymentManager extends AbstractManager {
     return getDbEntityManager().selectList("selectDeploymentIdsByProcessInstances", processInstanceIds);
   }
 
-  @Override
-  public void close() {
-  }
-
-  @Override
-  public void flush() {
-  }
-
   // helper /////////////////////////////////////////////////
 
   protected void createDefaultAuthorizations(DeploymentEntity deployment) {

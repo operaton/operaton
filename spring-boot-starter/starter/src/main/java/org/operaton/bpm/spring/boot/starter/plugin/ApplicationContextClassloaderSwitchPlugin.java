@@ -39,10 +39,12 @@ public class ApplicationContextClassloaderSwitchPlugin implements ProcessEngineP
 
   @Override
   public void postInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
+    // nothing to do
   }
 
   @Override
   public void postProcessEngineBuild(ProcessEngine processEngine) {
+    // nothing to do
   }
 
   @Override

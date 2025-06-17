@@ -179,6 +179,7 @@ public class ClientFactory
 
   @Override
   public void afterPropertiesSet() {
+    // no-op
   }
 
   public ClientConfiguration getClientConfiguration() {

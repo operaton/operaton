@@ -118,7 +118,7 @@ class MigrationSignallableServiceTaskTest {
 
     @Override
     public void execute(ActivityExecution execution) throws Exception {
-
+      // no-op
     }
 
     @Override

@@ -23,12 +23,12 @@ public class TestService implements PlatformService<TestService>, TestServiceMBe
 
   @Override
   public void start(PlatformServiceContainer mBeanServiceContainer) {
-
+    // nothing to do
   }
 
   @Override
   public void stop(PlatformServiceContainer mBeanServiceContainer) {
-
+    // nothing to do
   }
 
   @Override

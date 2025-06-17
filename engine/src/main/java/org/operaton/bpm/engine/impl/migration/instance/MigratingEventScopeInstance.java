@@ -215,6 +215,7 @@ public class MigratingEventScopeInstance extends MigratingScopeInstance {
 
   @Override
   public void removeUnmappedDependentInstances() {
+    // nothing to do here, as this instance does not have any
   }
 
   public MigratingCompensationEventSubscriptionInstance getEventSubscription() {

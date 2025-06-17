@@ -51,11 +51,11 @@ public class SpringBootProcessEnginePlugin extends SpringProcessEnginePlugin {
   }
 
   public void preInit(SpringProcessEngineConfiguration processEngineConfiguration) {
-
+    // nothing to do
   }
 
   public void postInit(SpringProcessEngineConfiguration processEngineConfiguration) {
-
+    // nothing to do
   }
 
   public void postProcessEngineBuild(ProcessEngineImpl processEngine) {

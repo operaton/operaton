@@ -29,7 +29,7 @@ public class GroovyProcessEnginePlugin implements ProcessEnginePlugin {
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
-
+    // no pre-initialization logic needed
   }
 
   @Override
@@ -44,6 +44,6 @@ public class GroovyProcessEnginePlugin implements ProcessEnginePlugin {
 
   @Override
   public void postProcessEngineBuild(ProcessEngine processEngine) {
-
+    // no post-processing logic needed
   }
 }

@@ -50,6 +50,7 @@ public class MigrationIncidentTest {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+      // no-op
     }
   }
 

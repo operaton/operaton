@@ -44,8 +44,12 @@ public class OperatonJerseyResourceConfig extends ResourceConfig implements Init
     log.info("Finished configuring operaton rest api.");
   }
 
+  /**
+   * Override this method to register additional resources or features.
+   * This can be useful for adding custom exception mappers, filters, or other JAX-RS components.
+   */
   protected void registerAdditionalResources() {
-
+    // no-op
   }
 
 }

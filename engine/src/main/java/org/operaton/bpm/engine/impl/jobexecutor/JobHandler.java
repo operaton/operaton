@@ -38,6 +38,6 @@ public interface JobHandler<T extends JobHandlerConfiguration> {
    * @param configuration the job handler configuration
    * @param jobEntity the job entity to be deleted
    */
-  void onDelete(T configuration, JobEntity jobEntity);
+  default void onDelete(T configuration, JobEntity jobEntity) {}
 
 }

@@ -21,7 +21,6 @@ import org.operaton.bpm.engine.impl.cmd.AbstractSetProcessDefinitionStateCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerChangeProcessDefinitionSuspensionStateJobHandler.ProcessDefinitionSuspensionStateConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.repository.UpdateProcessDefinitionSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import com.google.gson.JsonObject;
@@ -166,11 +165,6 @@ public abstract class TimerChangeProcessDefinitionSuspensionStateJobHandler impl
     }
 
 
-  }
-
-  @Override
-  public void onDelete(ProcessDefinitionSuspensionStateConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
   }
 
 }

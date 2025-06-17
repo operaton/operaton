@@ -22,7 +22,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 
 
 /**
@@ -41,24 +40,14 @@ public class TweetNestedCommandExceptionHandler implements JobHandler<JobHandler
 
   @Override
   public void execute(JobHandlerConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
-    Context.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
-
-      @Override
-      public Void execute(CommandContext commandContext) {
-        throw new RuntimeException("nested command exception");
-      }
-
+    Context.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(ctx -> {
+      throw new RuntimeException("nested command exception");
     });
   }
 
   @Override
   public JobHandlerConfiguration newConfiguration(String canonicalString) {
     return () -> null;
-  }
-
-  @Override
-  public void onDelete(JobHandlerConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
   }
 
 }

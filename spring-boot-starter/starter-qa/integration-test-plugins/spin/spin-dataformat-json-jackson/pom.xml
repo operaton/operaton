@@ -12,7 +12,19 @@
   <artifactId>qa-plugins-spin-dataformat-json-jackson</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Plugins - Spin JSON Jackson</name>
 
+  <description>${project.name}</description>
+
   <dependencies>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-plugin-spin</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm.springboot</groupId>
@@ -35,11 +47,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-plugin-spin</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
     </dependency>
@@ -49,11 +56,6 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>
-
   </dependencies>
 
   <profiles>
@@ -61,7 +63,7 @@
       <id>integration-test-spring-boot-starter</id>
       <build>
         <plugins>
-            <plugin>
+          <plugin>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
             <configuration>
@@ -86,6 +88,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

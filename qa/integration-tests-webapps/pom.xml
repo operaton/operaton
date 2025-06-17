@@ -1,10 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
-  <name>Operaton - QA Integration Tests - Webapps Root</name>
-
-  <packaging>pom</packaging>
 
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
@@ -12,36 +8,44 @@
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
-  <properties>
-    <cargo.timeout>120000</cargo.timeout>
-    <cargo.deploy.timeout>60000</cargo.deploy.timeout>
+  <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
 
-    <!-- Needs to be adjusted with every WildFly update -->
-    <cargo.wildfly.container.id>wildfly36x</cargo.wildfly.container.id>
+  <packaging>pom</packaging>
+  <name>Operaton - QA Integration Tests - Webapps Root</name>
 
-    <redirect.test.output>true</redirect.test.output>
-
-    <http.ctx-path.webapp>operaton/</http.ctx-path.webapp>
-    <http.ctx-path.rest>engine-rest/</http.ctx-path.rest>
-
-    <version.chromedriver>112.0.5615.49</version.chromedriver>
-
-    <!-- default os -->
-    <os.type>linux64</os.type>
-  </properties>
+  <description>${project.name}</description>
 
   <modules>
     <module>integration-tests</module>
   </modules>
 
+  <properties>
+    <cargo.deploy.timeout>60000</cargo.deploy.timeout>
+    <cargo.timeout>120000</cargo.timeout>
+
+    <!-- Needs to be adjusted with every WildFly update -->
+    <cargo.wildfly.container.id>wildfly36x</cargo.wildfly.container.id>
+    <http.ctx-path.rest>engine-rest/</http.ctx-path.rest>
+
+    <http.ctx-path.webapp>operaton/</http.ctx-path.webapp>
+
+    <!-- default os -->
+    <os.type>linux64</os.type>
+
+    <redirect.test.output>true</redirect.test.output>
+
+    <version.chromedriver>112.0.5615.49</version.chromedriver>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
+
       <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
-        <version>${project.version}</version>
-        <scope>import</scope>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>${version.arquillian}</version>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>org.jboss.shrinkwrap.resolver</groupId>
@@ -50,24 +54,23 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
       <dependency>
-        <groupId>org.jboss.arquillian</groupId>
-        <artifactId>arquillian-bom</artifactId>
-        <version>${version.arquillian}</version>
-        <scope>import</scope>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
         <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.jersey.contribs</groupId>
+        <artifactId>jersey-apache-client4</artifactId>
+        <version>1.19.4</version>
       </dependency>
 
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
         <version>4.5.14</version>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.jersey.contribs</groupId>
-        <artifactId>jersey-apache-client4</artifactId>
-        <version>1.19.4</version>
       </dependency>
 
       <dependency>
@@ -79,19 +82,23 @@
   </dependencyManagement>
 
   <dependencies>
-    <!-- set shrinkwrap artifacts -->
+
     <dependency>
-      <groupId>org.jboss.shrinkwrap.resolver</groupId>
-      <artifactId>shrinkwrap-resolver-depchain</artifactId>
-      <exclusions>
-        <exclusion>
-          <!-- conflicts with the version pulled in transitively via selenium-java  -->
-          <groupId>com.google.guava</groupId>
-          <artifactId>guava</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
       <scope>test</scope>
-      <type>pom</type>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -104,34 +111,32 @@
       <artifactId>arquillian-protocol-servlet</artifactId>
       <scope>test</scope>
     </dependency>
-
+    <!-- set shrinkwrap artifacts -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-depchain</artifactId>
+      <type>pom</type>
       <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <!-- conflicts with the version pulled in transitively via selenium-java  -->
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest</artifactId>
+      <classifier>classes</classifier>
+      <type>jar</type>
       <scope>test</scope>
     </dependency>
 
@@ -144,13 +149,34 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest</artifactId>
-      <type>jar</type>
-      <classifier>classes</classifier>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.googlecode.maven-download-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>wget</goal>
+            </goals>
+            <phase>process-resources</phase>
+            <configuration>
+              <url>https://chromedriver.storage.googleapis.com/${version.chromedriver}/chromedriver_${os.type}.zip</url>
+              <outputFileName>chromedriver.zip</outputFileName>
+              <unpack>true</unpack>
+              <outputDirectory>${project.build.directory}/chromedriver</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
   <profiles>
     <profile>
@@ -197,29 +223,4 @@
       </properties>
     </profile>
   </profiles>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>com.googlecode.maven-download-plugin</groupId>
-        <artifactId>download-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>wget</goal>
-            </goals>
-            <configuration>
-              <url>https://chromedriver.storage.googleapis.com/${version.chromedriver}/chromedriver_${os.type}.zip</url>
-              <outputFileName>chromedriver.zip</outputFileName>
-              <unpack>true</unpack>
-              <outputDirectory>${project.build.directory}/chromedriver</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
-  <description>${project.name}</description>
 </project>

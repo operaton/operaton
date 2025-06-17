@@ -9,9 +9,11 @@
   </parent>
 
   <artifactId>operaton-bpm-run-assembly</artifactId>
-  <name>Operaton - Run - Assembly</name>
   <packaging>pom</packaging>
-  
+  <name>Operaton - Run - Assembly</name>
+
+  <description>${project.name}</description>
+
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
     Note: Every compile time dependency will end up in the license book. Please
@@ -26,13 +28,14 @@
         <groupId>org.apache.groovy</groupId>
         <artifactId>groovy-bom</artifactId>
         <version>${version.groovy}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
   <dependencies>
+    <?SORTPOM IGNORE?>
     <!-- make sure the assembly runs after the REST module -->
     <dependency>
       <groupId>org.operaton.bpm.run</groupId>
@@ -96,10 +99,23 @@
       <version>${project.version}</version>
       <type>zip</type>
     </dependency>
+    <?SORTPOM RESUME?>
 
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-datetime</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-dateutil</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-json</artifactId>
     </dependency>
 
     <dependency>
@@ -108,23 +124,11 @@
     </dependency>
     <dependency>
       <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-json</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-xml</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-templates</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-dateutil</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-datetime</artifactId>
+      <artifactId>groovy-xml</artifactId>
     </dependency>
 
   </dependencies>
@@ -143,10 +147,10 @@
         <executions>
           <execution>
             <id>assemble</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly.xml</descriptor>
@@ -158,6 +162,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

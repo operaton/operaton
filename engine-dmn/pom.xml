@@ -1,17 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <relativePath>../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../parent</relativePath>
   </parent>
 
   <groupId>org.operaton.bpm.dmn</groupId>
   <artifactId>operaton-engine-dmn-root</artifactId>
-  <name>Operaton - DMN - Engine - Root</name>
   <packaging>pom</packaging>
+  <name>Operaton - DMN - Engine - Root</name>
+
+  <description>${project.name}</description>
+
+  <modules>
+    <module>bom</module>
+    <module>engine</module>
+    <module>feel-api</module>
+    <module>feel-juel</module>
+    <module>feel-scala</module>
+  </modules>
 
   <properties>
     <version.juel>2.2.7</version.juel>
@@ -23,19 +34,11 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <modules>
-    <module>bom</module>
-    <module>engine</module>
-    <module>feel-api</module>
-    <module>feel-juel</module>
-    <module>feel-scala</module>
-  </modules>
 
   <dependencies>
     <dependency>
@@ -69,6 +72,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

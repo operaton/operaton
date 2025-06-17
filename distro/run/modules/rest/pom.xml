@@ -9,9 +9,11 @@
   </parent>
 
   <artifactId>operaton-bpm-run-modules-rest</artifactId>
-  <name>Operaton - Run - Module REST</name>
   <packaging>pom</packaging>
-  
+  <name>Operaton - Run - Module REST</name>
+
+  <description>${project.name}</description>
+
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
     Note: Every compile time dependency will end up in the license book. Please
@@ -36,6 +38,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

@@ -1,85 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <description>
-    Assembles the Operaton and makes it ready for qa.
-    The assembly is installed to maven later in the reactor, if the integration tests pass sucessfully
-  </description>
-
-  <artifactId>operaton-tomcat-assembly</artifactId>
-  <packaging>pom</packaging>
 
   <parent>
     <groupId>org.operaton.bpm.tomcat</groupId>
     <artifactId>operaton-tomcat</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-  
+
+  <artifactId>operaton-tomcat-assembly</artifactId>
+  <packaging>pom</packaging>
+
+  <name>Operaton - Tomcat - Assembly</name>
+
+  <description>Assembles the Operaton and makes it ready for qa.
+    The assembly is installed to maven later in the reactor, if the integration tests pass sucessfully</description>
+
   <properties>
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
 
-  <name>Operaton - Tomcat - Assembly</name>
-
   <dependencies>
+    <?SORTPOM IGNORE?>
     <dependency>
-      <groupId>org.apache.tomcat</groupId>
-      <artifactId>tomcat</artifactId>
-      <version>${version.tomcat}</version>
-      <type>tar.gz</type>
-    </dependency>
-
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.fasterxml.uuid</groupId>
-      <artifactId>java-uuid-generator</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-jsr223</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-json</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-xml</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-templates</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-dateutil</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-datetime</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js-scriptengine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>license-book</artifactId>
+      <version>${project.version}</version>
+      <type>zip</type>
     </dependency>
 
     <dependency>
@@ -103,13 +50,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm.identity</groupId>
-      <artifactId>operaton-identity-ldap</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.spin</groupId>
-      <artifactId>operaton-spin-core</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-plugin-connect</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -119,19 +62,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.spin</groupId>
-      <artifactId>operaton-spin-dataformat-all</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.connect</groupId>
-      <artifactId>operaton-connect-core</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-plugin-connect</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.operaton.bpm.identity</groupId>
+      <artifactId>operaton-identity-ldap</artifactId>
     </dependency>
 
     <dependency>
@@ -150,15 +82,83 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>license-book</artifactId>
-      <version>${project.version}</version>
-      <type>zip</type>
+      <groupId>org.operaton.connect</groupId>
+      <artifactId>operaton-connect-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.spin</groupId>
+      <artifactId>operaton-spin-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.spin</groupId>
+      <artifactId>operaton-spin-dataformat-all</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.template-engines</groupId>
       <artifactId>operaton-template-engines-freemarker</artifactId>
+    </dependency>
+    <?SORTPOM RESUME?>
+
+    <dependency>
+      <groupId>com.fasterxml.uuid</groupId>
+      <artifactId>java-uuid-generator</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-datetime</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-dateutil</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-jsr223</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-templates</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-xml</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat</artifactId>
+      <version>${version.tomcat}</version>
+      <type>tar.gz</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js-scriptengine</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
     </dependency>
 
     <dependency>
@@ -176,10 +176,10 @@
         <executions>
           <execution>
             <id>assemble</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly.xml</descriptor>

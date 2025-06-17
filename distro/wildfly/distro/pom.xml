@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -12,7 +13,11 @@
 
   <name>Operaton - Wildfly Distro</name>
 
+  <description>${project.name}</description>
+
   <dependencies>
+
+    <?SORTPOM IGNORE?>
     <dependency>
       <!-- this dependency is to make sure that we are executed after the
         integration tests have passed in the reactor -->
@@ -22,12 +27,14 @@
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
+    <?SORTPOM RESUME?>
 
     <dependency>
-      <groupId>org.operaton.bpm.wildfly</groupId>
-      <artifactId>operaton-wildfly-assembly</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest</artifactId>
       <version>${project.version}</version>
-      <type>tar.gz</type>
+      <classifier>wildfly</classifier>
+      <type>war</type>
     </dependency>
 
     <dependency>
@@ -38,10 +45,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest</artifactId>
+      <groupId>org.operaton.bpm.example</groupId>
+      <artifactId>operaton-example-invoice</artifactId>
       <version>${project.version}</version>
-      <classifier>wildfly</classifier>
       <type>war</type>
     </dependency>
 
@@ -53,10 +59,10 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm.example</groupId>
-      <artifactId>operaton-example-invoice</artifactId>
+      <groupId>org.operaton.bpm.wildfly</groupId>
+      <artifactId>operaton-wildfly-assembly</artifactId>
       <version>${project.version}</version>
-      <type>war</type>
+      <type>tar.gz</type>
     </dependency>
 
   </dependencies>
@@ -70,10 +76,10 @@
         <executions>
           <execution>
             <id>distro</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly.xml</descriptor>
@@ -90,6 +96,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

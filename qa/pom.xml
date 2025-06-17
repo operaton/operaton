@@ -1,20 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa</artifactId>
-  <groupId>org.operaton.bpm.qa</groupId>
-
-  <packaging>pom</packaging>
-  <name>Operaton - QA</name>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
-    <relativePath>../database</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../database</relativePath>
   </parent>
+  <groupId>org.operaton.bpm.qa</groupId>
+
+  <artifactId>operaton-qa</artifactId>
+
+  <packaging>pom</packaging>
+  <name>Operaton - QA</name>
+
+  <description>${project.name}</description>
+
+  <modules>
+    <module>ensure-clean-db-plugin</module>
+  </modules>
 
   <properties>
+    <?SORTPOM IGNORE?>
     <!--
       all maven properties used in QA/CI
     -->
@@ -43,6 +51,7 @@
     <tomcat.connector.ajp.redirectPort>48443</tomcat.connector.ajp.redirectPort>
     <tomcat.server.port>48005</tomcat.server.port>
     <tomcat.runtime.location>../tomcat-runtime/target/server/apache-tomcat-${version.tomcat}</tomcat.runtime.location>
+    <?SORTPOM RESUME?>
   </properties>
 
   <dependencyManagement>
@@ -51,15 +60,11 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <modules>
-    <module>ensure-clean-db-plugin</module>
-  </modules>
 
   <profiles>
 
@@ -69,14 +74,14 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
+        <module>integration-tests-engine</module>
         <!--module>test-db-util</module-->
         <!--module>test-db-instance-migration</module-->
         <!--module>test-db-rolling-update</module-->
         <!--module>test-old-engine</module-->
         <module>integration-tests-webapps</module>
-        <module>integration-tests-engine</module>
-        <module>performance-tests-engine</module>
         <module>large-data-tests</module>
+        <module>performance-tests-engine</module>
       </modules>
     </profile>
 
@@ -121,16 +126,16 @@
     <profile>
       <id>instance-migration</id>
       <modules>
-        <module>test-db-util</module>
         <module>test-db-instance-migration</module>
+        <module>test-db-util</module>
       </modules>
     </profile>
 
     <profile>
       <id>rolling-update</id>
       <modules>
-        <module>test-db-util</module>
         <module>test-db-rolling-update</module>
+        <module>test-db-util</module>
       </modules>
     </profile>
 
@@ -141,6 +146,4 @@
       </modules>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

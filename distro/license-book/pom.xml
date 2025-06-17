@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <relativePath>../../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../../parent</relativePath>
   </parent>
 
   <artifactId>license-book</artifactId>
@@ -13,14 +14,16 @@
 
   <name>Operaton - License Book</name>
 
+  <description>${project.name}</description>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -35,10 +38,10 @@
         <executions>
           <execution>
             <id>assemble</id>
-            <phase>prepare-package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>prepare-package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly.xml</descriptor>
@@ -60,15 +63,15 @@
         <executions>
           <execution>
             <id>copy-license-book</id>
-            <phase>prepare-package</phase>
             <goals>
               <goal>run</goal>
             </goals>
+            <phase>prepare-package</phase>
             <configuration>
               <target>
                 <copy todir="target/">
                   <fileset dir="src/main/resources">
-                    <include name="**/*.txt" />
+                    <include name="**/*.txt"/>
                   </fileset>
                 </copy>
               </target>
@@ -84,10 +87,10 @@
         <executions>
           <execution>
             <id>attach-artifacts</id>
-            <phase>package</phase>
             <goals>
               <goal>attach-artifact</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <artifacts>
                 <artifact>
@@ -102,6 +105,4 @@
 
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

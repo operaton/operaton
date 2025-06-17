@@ -1,20 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-engine-rest-core</artifactId>
-  <name>Operaton - Engine - REST</name>
-  <packaging>jar</packaging>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+  <artifactId>operaton-engine-rest-core</artifactId>
+  <packaging>jar</packaging>
+  <name>Operaton - Engine - REST</name>
+  <description>${project.name}</description>
 
   <properties>
     <!-- pin tomcat version for engine-rest -->
-    <version.tomcat>10.1.42</version.tomcat>
+    <version.tomcat>10.1.41</version.tomcat>
     <rest.http.port>38080</rest.http.port>
     <surefire.memArgs>-Xmx2g</surefire.memArgs>
+    <!-- pin tomcat version for engine-rest -->
+    <version.tomcat>10.1.42</version.tomcat>
   </properties>
 
   <dependencyManagement>
@@ -23,13 +27,29 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
+      <artifactId>jackson-jakarta-rs-json-provider</artifactId>
+      <version>2.19.0</version>
+    </dependency>
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
@@ -87,28 +107,28 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Tomcat for resteasy and wink -->
     <dependency>
-      <groupId>jakarta.ws.rs</groupId>
-      <artifactId>jakarta.ws.rs-api</artifactId>
-    </dependency>
-
-    <!--
-      needed for offline shrinkwrap (in particular CustomJacksonDateFormatTest),
-      BOMs must be installed before this module is built
-    -->
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bom</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-core-internal-dependencies</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -119,14 +139,16 @@
       <scope>test</scope>
     </dependency>
 
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter</artifactId>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-core</artifactId>
+      <version>${version.tomcat}</version>
       <scope>test</scope>
     </dependency>
 
@@ -153,16 +175,15 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.shrinkwrap.resolver</groupId>
-      <artifactId>shrinkwrap-resolver-depchain</artifactId>
-      <version>${version.shrinkwrap.resolvers}</version>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-logging-juli</artifactId>
+      <version>7.0.50</version>
       <scope>test</scope>
-      <type>pom</type>
     </dependency>
 
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -173,26 +194,65 @@
     </dependency>
 
     <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>rest-assured</artifactId>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-depchain</artifactId>
+      <version>${version.shrinkwrap.resolvers}</version>
+      <type>pom</type>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpcore</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!--
+      needed for offline shrinkwrap (in particular CustomJacksonDateFormatTest),
+      BOMs must be installed before this module is built
+    -->
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bom</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-core-internal-dependencies</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-testing</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -214,58 +274,13 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Tomcat for resteasy and wink -->
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-   <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <scope>test</scope>
-   </dependency>
-
-   <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jul-to-slf4j</artifactId>
-      <scope>test</scope>
-   </dependency>
-
-    <dependency>
-      <groupId>org.operaton.commons</groupId>
-      <artifactId>operaton-commons-testing</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.tomcat.embed</groupId>
-      <artifactId>tomcat-embed-core</artifactId>
-      <version>${version.tomcat}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.tomcat.embed</groupId>
-      <artifactId>tomcat-embed-logging-juli</artifactId>
-      <version>7.0.50</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-
   </dependencies>
 
   <build>
     <testResources>
       <testResource>
-        <directory>src/test/resources</directory>
         <filtering>true</filtering>
+        <directory>src/test/resources</directory>
       </testResource>
     </testResources>
 
@@ -365,6 +380,12 @@
 
       <dependencies>
         <dependency>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-all</artifactId>
+          <version>${version.netty}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
           <groupId>io.undertow</groupId>
           <artifactId>undertow-servlet</artifactId>
           <version>${version.undertow}</version>
@@ -377,18 +398,12 @@
         </dependency>
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-undertow</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.jboss.resteasy</groupId>
           <artifactId>resteasy-netty4</artifactId>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>io.netty</groupId>
-          <artifactId>netty-all</artifactId>
-          <version>${version.netty}</version>
+          <groupId>org.jboss.resteasy</groupId>
+          <artifactId>resteasy-undertow</artifactId>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -408,10 +423,10 @@
             <executions>
               <execution>
                 <id>add-jakarta-resteasy-test-source</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <sources>
                     <source>${basedir}/src/test/java-resteasy</source>
@@ -421,13 +436,15 @@
               </execution>
               <execution>
                 <id>add-jakarta-resteasy-test-resource</id>
-                <phase>generate-test-resources</phase>
                 <goals>
                   <goal>add-test-resource</goal>
                 </goals>
+                <phase>generate-test-resources</phase>
                 <configuration>
                   <resources>
-                    <resource><directory>${project.build.directory}/generated-test-resources/jakarta-resteasy</directory></resource>
+                    <resource>
+                      <directory>${project.build.directory}/generated-test-resources/jakarta-resteasy</directory>
+                    </resource>
                   </resources>
                 </configuration>
               </execution>
@@ -447,6 +464,10 @@
           <artifactId>jakarta.ws.rs-api</artifactId>
         </dependency>
         <dependency>
+          <groupId>jakarta.xml.bind</groupId>
+          <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+        <dependency>
           <groupId>org.glassfish.jersey.containers</groupId>
           <artifactId>jersey-container-grizzly2-http</artifactId>
           <version>${version.jersey3}</version>
@@ -457,10 +478,6 @@
           <artifactId>jersey-container-servlet</artifactId>
           <version>${version.jersey3}</version>
           <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>jakarta.xml.bind</groupId>
-          <artifactId>jakarta.xml.bind-api</artifactId>
         </dependency>
         <dependency>
           <groupId>org.glassfish.jersey.inject</groupId>
@@ -483,10 +500,10 @@
             <executions>
               <execution>
                 <id>encoding-test</id>
-                <phase>test</phase>
                 <goals>
                   <goal>test</goal>
                 </goals>
+                <phase>test</phase>
                 <configuration>
                   <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. CAM-6983) -->
                   <argLine>${surefire.argLine} -Dfile.encoding=ISO-8859-1</argLine>
@@ -504,10 +521,10 @@
             <executions>
               <execution>
                 <id>add-test-source</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <sources>
                     <source>src/test/java-jersey2</source>
@@ -516,10 +533,10 @@
               </execution>
               <execution>
                 <id>add-test-resource</id>
-                <phase>generate-test-resources</phase>
                 <goals>
                   <goal>add-test-resource</goal>
                 </goals>
+                <phase>generate-test-resources</phase>
                 <configuration>
                   <resources>
                     <resource>
@@ -537,14 +554,21 @@
     <profile>
       <id>wildfly-compatibility</id>
       <properties>
+        <version.netty>4.2.1.Final</version.netty>
         <!-- Test with Resteasy version used by the oldest
              Operaton-supported Wildfly/JBoss EAP version.
              Currently, this is JBoss EAP 7.2. -->
         <version.resteasy>3.6.1.SP2</version.resteasy>
-        <version.netty>4.2.1.Final</version.netty>
       </properties>
 
       <dependencies>
+
+        <dependency>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-all</artifactId>
+          <version>${version.netty}</version>
+          <scope>test</scope>
+        </dependency>
 
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
@@ -553,17 +577,10 @@
           <scope>test</scope>
           <exclusions>
             <exclusion>
-              <artifactId>httpclient</artifactId>
               <groupId>org.apache.httpcomponents</groupId>
+              <artifactId>httpclient</artifactId>
             </exclusion>
           </exclusions>
-        </dependency>
-
-        <dependency>
-          <groupId>io.netty</groupId>
-          <artifactId>netty-all</artifactId>
-          <version>${version.netty}</version>
-          <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -581,10 +598,10 @@
             <executions>
               <execution>
                 <id>encoding-test</id>
-                <phase>test</phase>
                 <goals>
                   <goal>test</goal>
                 </goals>
+                <phase>test</phase>
                 <configuration>
                   <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. CAM-6983) -->
                   <argLine>${surefire.argLine} -Dfile.encoding=ISO-8859-1</argLine>
@@ -602,10 +619,10 @@
             <executions>
               <execution>
                 <id>add-test-source</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <sources>
                     <source>src/test/java-resteasy</source>
@@ -614,16 +631,14 @@
               </execution>
               <execution>
                 <id>add-test-resource</id>
-                <phase>generate-test-resources</phase>
                 <goals>
                   <goal>add-test-resource</goal>
                 </goals>
+                <phase>generate-test-resources</phase>
                 <configuration>
                   <resources>
                     <resource>
-                      <directory>
-                        src/test/resources-resteasy
-                      </directory>
+                      <directory>src/test/resources-resteasy</directory>
                     </resource>
                   </resources>
                 </configuration>
@@ -635,5 +650,4 @@
     </profile>
 
   </profiles>
-  <description>${project.name}</description>
 </project>

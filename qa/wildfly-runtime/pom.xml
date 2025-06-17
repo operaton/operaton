@@ -1,10 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa-wildfly-runtime</artifactId>
-  <packaging>jar</packaging>
-
-  <name>Operaton - QA Wildfly Test Runtime</name>
 
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
@@ -12,6 +8,11 @@
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
+  <artifactId>operaton-qa-wildfly-runtime</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Operaton - QA Wildfly Test Runtime</name>
+  <description>${project.name}</description>
 
   <dependencyManagement>
     <dependencies>
@@ -19,8 +20,8 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
@@ -30,6 +31,18 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>org.jruby</groupId>
+      <artifactId>jruby-complete</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm.qa</groupId>
+      <artifactId>operaton-qa-ensure-clean-db</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
     <!--
       database drivers
       we deploy all and only activate one with a *-ds.xml database deployment
@@ -46,20 +59,8 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.jruby</groupId>
-      <artifactId>jruby-complete</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm.qa</groupId>
-      <artifactId>operaton-qa-ensure-clean-db</artifactId>
-      <version>${project.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <artifactId>spring-beans</artifactId>
       <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -67,23 +68,23 @@
   <build>
     <resources>
       <resource>
-        <directory>src/main/common/standalone/</directory>
         <filtering>true</filtering>
+        <directory>src/main/common/standalone/</directory>
         <includes>
           <include>deployments/${jboss.datasource.filename}</include>
         </includes>
       </resource>
       <!-- server specific -->
       <resource>
-        <directory>src/main/wildfly/standalone</directory>
         <filtering>true</filtering>
+        <directory>src/main/wildfly/standalone</directory>
         <includes>
           <include>**/*.xml</include>
         </includes>
       </resource>
       <resource>
-        <directory>src/main/wildfly/domain</directory>
         <filtering>true</filtering>
+        <directory>src/main/wildfly/domain</directory>
         <includes>
           <include>**/*.xml</include>
         </includes>
@@ -97,10 +98,10 @@
         <executions>
           <execution>
             <id>add-resources</id>
-            <phase>verify</phase>
             <goals>
               <goal>add-resource</goal>
             </goals>
+            <phase>verify</phase>
             <configuration>
               <resources>
                 <resource>
@@ -147,10 +148,10 @@
             <executions>
               <execution>
                 <id>unpack-server</id>
-                <phase>generate-resources</phase>
                 <goals>
                   <goal>unpack</goal>
                 </goals>
+                <phase>generate-resources</phase>
                 <inherited>false</inherited>
                 <configuration>
                   <artifactItems>
@@ -179,10 +180,10 @@
             <executions>
               <execution>
                 <id>copy-filtered-main-resources</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>resources</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <overwrite>true</overwrite>
                   <outputDirectory>${wildfly.runtime.location}/standalone</outputDirectory>
@@ -196,54 +197,54 @@
             <executions>
               <execution>
                 <id>copy-distro</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <target unless="maven.test.skip">
-                    <copy todir="${wildfly.runtime.location}/modules" overwrite="true">
-                      <fileset dir="src/main/common/modules" />
+                    <copy overwrite="true" todir="${wildfly.runtime.location}/modules">
+                      <fileset dir="src/main/common/modules"/>
                     </copy>
                   </target>
                 </configuration>
               </execution>
               <execution>
                 <id>copy-test-dependencies</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <target unless="maven.test.skip">
-                    <dependencyfilesets scopes="runtime" />
+                    <dependencyfilesets scopes="runtime"/>
 
                     <!-- copy modules -->
-                    <copy todir="${wildfly.runtime.location}/modules" flatten="false" overwrite="true">
-                      <fileset refid="maven.project.dependencies" />
-                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
+                    <copy flatten="false" overwrite="true" todir="${wildfly.runtime.location}/modules">
+                      <fileset refid="maven.project.dependencies"/>
+                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" handledirsep="yes" to="\1/main/\3"/>
                     </copy>
 
                     <delete>
-                      <fileset dir="${wildfly.runtime.location}/modules/org/operaton/bpm/qa" includes="**/*.jar" />
+                      <fileset dir="${wildfly.runtime.location}/modules/org/operaton/bpm/qa" includes="**/*.jar"/>
                     </delete>
                     <!-- copy all files again, but this only matches fox files and this treatment makes is maven 2/3 compatible => timestamped snapshot -->
-                    <copy todir="${wildfly.runtime.location}/modules" flatten="false" verbose="true">
-                      <fileset refid="maven.project.dependencies" />
+                    <copy flatten="false" todir="${wildfly.runtime.location}/modules" verbose="true">
+                      <fileset refid="maven.project.dependencies"/>
                       <mapper>
                         <chainedmapper>
-                          <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
-                          <regexpmapper from="^(org.operaton.bpm.qa.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                          <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" handledirsep="yes" to="\1/main/\3"/>
+                          <regexpmapper from="^(org.operaton.bpm.qa.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" handledirsep="yes" to="\1/\3${project.version}.jar"/>
                         </chainedmapper>
                       </mapper>
                     </copy>
 
                     <!-- replace database versions -->
                     <replace dir="${wildfly.runtime.location}/modules">
-                      <include name="**/module.xml" />
-                      <replacefilter token="@project.version@" value="${project.version}" />
-                      <replacefilter token="@version.postgresql@" value="${version.postgresql}" />
-                      <replacefilter token="@version.jython@" value="${version.jython}" />
+                      <include name="**/module.xml"/>
+                      <replacefilter token="@project.version@" value="${project.version}"/>
+                      <replacefilter token="@version.postgresql@" value="${version.postgresql}"/>
+                      <replacefilter token="@version.jython@" value="${version.jython}"/>
                     </replace>
 
                   </target>
@@ -277,10 +278,10 @@
             <executions>
               <execution>
                 <id>unpack-server</id>
-                <phase>generate-resources</phase>
                 <goals>
                   <goal>unpack</goal>
                 </goals>
+                <phase>generate-resources</phase>
                 <inherited>false</inherited>
                 <configuration>
                   <artifactItems>
@@ -309,10 +310,10 @@
             <executions>
               <execution>
                 <id>copy-filtered-main-resources</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>resources</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <overwrite>true</overwrite>
                   <outputDirectory>${wildfly.runtime.location}/domain</outputDirectory>
@@ -326,53 +327,53 @@
             <executions>
               <execution>
                 <id>copy-distro</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <target unless="maven.test.skip">
-                    <copy todir="${wildfly.runtime.location}/modules" overwrite="true">
-                      <fileset dir="src/main/common/modules" />
+                    <copy overwrite="true" todir="${wildfly.runtime.location}/modules">
+                      <fileset dir="src/main/common/modules"/>
                     </copy>
                   </target>
                 </configuration>
               </execution>
               <execution>
                 <id>copy-test-dependencies</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <target unless="maven.test.skip">
-                    <dependencyfilesets scopes="runtime" />
+                    <dependencyfilesets scopes="runtime"/>
 
                     <!-- copy modules -->
-                    <copy todir="${wildfly.runtime.location}/modules" flatten="false" overwrite="true">
-                      <fileset refid="maven.project.dependencies" />
-                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
+                    <copy flatten="false" overwrite="true" todir="${wildfly.runtime.location}/modules">
+                      <fileset refid="maven.project.dependencies"/>
+                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" handledirsep="yes" to="\1/main/\3"/>
                     </copy>
 
                     <delete>
-                      <fileset dir="${wildfly.runtime.location}/modules/org/operaton/bpm/qa" includes="**/*.jar" />
+                      <fileset dir="${wildfly.runtime.location}/modules/org/operaton/bpm/qa" includes="**/*.jar"/>
                     </delete>
                     <!-- copy all files again, but this only matches fox files and this treatment makes is maven 2/3 compatible => timestamped snapshot -->
-                    <copy todir="${wildfly.runtime.location}/modules" flatten="false" verbose="true">
-                      <fileset refid="maven.project.dependencies" />
+                    <copy flatten="false" todir="${wildfly.runtime.location}/modules" verbose="true">
+                      <fileset refid="maven.project.dependencies"/>
                       <mapper>
                         <chainedmapper>
-                          <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
-                          <regexpmapper from="^(org.operaton.bpm.qa.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                          <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" handledirsep="yes" to="\1/main/\3"/>
+                          <regexpmapper from="^(org.operaton.bpm.qa.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" handledirsep="yes" to="\1/\3${project.version}.jar"/>
                         </chainedmapper>
                       </mapper>
                     </copy>
 
                     <!-- replace database versions -->
                     <replace dir="${wildfly.runtime.location}/modules">
-                      <include name="**/module.xml" />
-                      <replacefilter token="@project.version@" value="${project.version}" />
-                      <replacefilter token="@version.postgresql@" value="${version.postgresql}" />
+                      <include name="**/module.xml"/>
+                      <replacefilter token="@project.version@" value="${project.version}"/>
+                      <replacefilter token="@version.postgresql@" value="${version.postgresql}"/>
                     </replace>
 
                   </target>
@@ -384,5 +385,4 @@
       </build>
     </profile>
   </profiles>
-  <description>${project.name}</description>
 </project>

@@ -1,14 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa-integration-tests-engine</artifactId>
-  <name>Operaton - QA Integration Tests - Engine</name>
 
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+
+  <artifactId>operaton-qa-integration-tests-engine</artifactId>
+  <name>Operaton - QA Integration Tests - Engine</name>
+  <description>${project.name}</description>
 
   <properties>
     <!-- Needs to be updated after a new WildFly release -->
@@ -30,14 +32,15 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
 
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
+    <?SORTPOM IGNORE?>
     <!-- set shrinkwrap artifacts -->
     <dependency>
       <groupId>org.jboss.shrinkwrap.resolver</groupId>
@@ -110,6 +113,16 @@
       <groupId>org.operaton.bpm.jakartaee</groupId>
       <artifactId>operaton-ejb-client</artifactId>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-beans</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -118,8 +131,8 @@
       <scope>provided</scope>
       <exclusions>
         <exclusion>
-          <artifactId>operaton-engine</artifactId>
           <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -177,6 +190,11 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>jakarta.persistence</groupId>
+      <artifactId>jakarta.persistence-api</artifactId>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
@@ -189,7 +207,6 @@
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-core</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
@@ -272,22 +289,23 @@
       <artifactId>groovy-jsr223</artifactId>
       <scope>test</scope>
     </dependency>
+    <?SORTPOM RESUME?>
 
   </dependencies>
 
   <build>
     <testResources>
       <testResource>
-        <directory>src/test/resources</directory>
         <filtering>true</filtering>
+        <directory>src/test/resources</directory>
         <includes>
           <include>**/*.xml</include>
           <include>**/*.properties</include>
         </includes>
       </testResource>
       <testResource>
-        <directory>src/test/resources</directory>
         <filtering>false</filtering>
+        <directory>src/test/resources</directory>
         <excludes>
           <exclude>**/*.xml</exclude>
           <exclude>**/*.properties</exclude>
@@ -302,10 +320,10 @@
           <!-- install enhanced artifact -->
           <execution>
             <id>create-test-jar</id>
-            <phase>package</phase>
             <goals>
               <goal>test-jar</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <forceCreation>true</forceCreation>
               <excludes>
@@ -322,10 +340,10 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <phase>initialize</phase>
             <goals>
               <goal>properties</goal>
             </goals>
+            <phase>initialize</phase>
           </execution>
         </executions>
       </plugin>
@@ -343,26 +361,31 @@
             <groupId>org.operaton.bpm</groupId>
             <artifactId>operaton-core-internal-dependencies</artifactId>
             <version>${project.version}</version>
-            <scope>import</scope>
             <type>pom</type>
+            <scope>import</scope>
           </dependency>
         </dependencies>
       </dependencyManagement>
 
       <dependencies>
+
+        <dependency>
+          <groupId>jakarta.xml.bind</groupId>
+          <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+
+        <!-- switch to use Jakarta Servlet 5.0 protocol -->
+        <dependency>
+          <groupId>org.jboss.arquillian.protocol</groupId>
+          <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
+        </dependency>
         <dependency>
           <!-- make sure this comes after runtime in the reactor build -->
           <groupId>org.operaton.bpm.qa</groupId>
           <artifactId>operaton-qa-tomcat-runtime</artifactId>
           <version>${project.version}</version>
-          <scope>provided</scope>
           <type>pom</type>
-        </dependency>
-
-        <dependency>
-          <groupId>org.jboss.weld.servlet</groupId>
-          <artifactId>weld-servlet-shaded</artifactId>
-          <scope>test</scope>
+          <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -372,12 +395,6 @@
           <scope>test</scope>
         </dependency>
 
-        <!-- switch to use Jakarta Servlet 5.0 protocol -->
-        <dependency>
-          <groupId>org.jboss.arquillian.protocol</groupId>
-          <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
-        </dependency>
-
         <dependency>
           <groupId>org.jboss.arquillian.junit</groupId>
           <artifactId>arquillian-junit-container</artifactId>
@@ -385,8 +402,9 @@
         </dependency>
 
         <dependency>
-          <groupId>jakarta.xml.bind</groupId>
-          <artifactId>jakarta.xml.bind-api</artifactId>
+          <groupId>org.jboss.weld.servlet</groupId>
+          <artifactId>weld-servlet-shaded</artifactId>
+          <scope>test</scope>
         </dependency>
 
       </dependencies>
@@ -394,8 +412,8 @@
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources-tomcat</directory>
             <filtering>true</filtering>
+            <directory>src/test/resources-tomcat</directory>
           </testResource>
         </testResources>
         <plugins>
@@ -405,10 +423,10 @@
             <executions>
               <execution>
                 <id>add-test-source</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <sources>
                     <source>src/test/java-tomcat</source>
@@ -430,13 +448,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <dependencies>
-              <dependency>
-                <groupId>org.apache.maven.surefire</groupId>
-                <artifactId>surefire-junit47</artifactId>
-                <version>3.5.2</version>
-              </dependency>
-            </dependencies>
             <configuration>
               <failIfNoTests>true</failIfNoTests>
               <excludes>
@@ -474,6 +485,13 @@
               </excludes>
               <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
             </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>org.apache.maven.surefire</groupId>
+                <artifactId>surefire-junit47</artifactId>
+                <version>3.5.2</version>
+              </dependency>
+            </dependencies>
           </plugin>
         </plugins>
       </build>
@@ -487,8 +505,8 @@
           <groupId>org.operaton.bpm.qa</groupId>
           <artifactId>operaton-qa-wildfly-runtime</artifactId>
           <version>${project.version}</version>
-          <scope>provided</scope>
           <type>pom</type>
+          <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>org.wildfly.arquillian</groupId>
@@ -506,8 +524,8 @@
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources-wildfly</directory>
             <filtering>true</filtering>
+            <directory>src/test/resources-wildfly</directory>
           </testResource>
         </testResources>
         <plugins>
@@ -517,10 +535,10 @@
             <executions>
               <execution>
                 <id>add-test-source</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <sources>
                     <source>src/test/java-wildfly</source>
@@ -543,6 +561,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
+              <failIfNoTests>true</failIfNoTests>
               <systemPropertyVariables>
                 <databaseType>${database.type}</databaseType>
               </systemPropertyVariables>
@@ -576,8 +595,8 @@
           <groupId>org.operaton.bpm.qa</groupId>
           <artifactId>operaton-qa-wildfly-runtime</artifactId>
           <version>${project.version}</version>
-          <scope>provided</scope>
           <type>pom</type>
+          <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>org.wildfly.arquillian</groupId>
@@ -595,8 +614,8 @@
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources-wildfly-domain</directory>
             <filtering>true</filtering>
+            <directory>src/test/resources-wildfly-domain</directory>
           </testResource>
         </testResources>
         <plugins>
@@ -606,10 +625,10 @@
             <executions>
               <execution>
                 <id>add-test-source</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <sources>
                     <source>src/test/java-wildfly</source>
@@ -652,10 +671,10 @@
             <executions>
               <execution>
                 <id>add-test-source</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <sources>
                     <source>src/test/java-wildfly-servlet</source>
@@ -711,10 +730,10 @@
             <executions>
               <execution>
                 <id>add-test-source</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <sources>
                     <source>src/test/java-wildfly</source>
@@ -723,10 +742,10 @@
               </execution>
               <execution>
                 <id>add-test-resource</id>
-                <phase>generate-test-resources</phase>
                 <goals>
                   <goal>add-test-resource</goal>
                 </goals>
+                <phase>generate-test-resources</phase>
                 <configuration>
                   <resources>
                     <resource>
@@ -779,10 +798,10 @@
             <executions>
               <execution>
                 <id>unpack-sql-scripts</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>unpack</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <artifactItems>
                     <artifactItem>
@@ -802,10 +821,10 @@
             <executions>
               <execution>
                 <id>drop-db-if-present</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>execute</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <srcFiles>
                     <!-- try dropping the DB if it exists. -->
@@ -827,5 +846,4 @@
       </build>
     </profile>
   </profiles>
-  <description>${project.name}</description>
 </project>

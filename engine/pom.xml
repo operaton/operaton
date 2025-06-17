@@ -1,16 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
-  <name>Operaton - Engine</name>
-  <artifactId>operaton-engine</artifactId>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
-    <relativePath>../database</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../database</relativePath>
   </parent>
+  <artifactId>operaton-engine</artifactId>
+
+  <name>Operaton - Engine</name>
+
+  <description>${project.name}</description>
+
+  <properties>
+    <authorizationCheckRevokes>auto</authorizationCheckRevokes>
+    <history.level>full</history.level>
+    <jdbcBatchProcessing>true</jdbcBatchProcessing>
+    <mail.server.port>5025</mail.server.port>
+
+    <operaton.artifact>org.operaton.bpm</operaton.artifact>
+    <operaton.osgi.export.pkg>!${operaton.artifact}.engine.variable.*,
+      ${operaton.artifact},
+      ${operaton.artifact}.application.*,
+      ${operaton.artifact}.container.*,
+      ${operaton.artifact}.engine.*</operaton.osgi.export.pkg>
+    <operaton.osgi.import.additional>!com.google.gson.*,
+      junit*;resolution:=optional,
+      org.junit*;resolution:=optional,
+      com.sun*;resolution:=optional,
+      javax.persistence*;resolution:=optional,
+      javax.servlet*;resolution:=optional,
+      javax.transaction*;resolution:=optional,
+      javax.ejb*;resolution:=optional,
+      javax.xml*;resolution:=optional,
+      javax.mail*;resolution:=optional,
+      org.apache.catalina*;resolution:=optional,
+      org.apache.commons.mail;resolution:=optional,
+      org.apache.tools.ant*;resolution:=optional,
+      org.apache.xerces*;resolution:=optional,
+      org.springframework*;resolution:=optional,
+      com.fasterxml*;resolution:=optional,
+      org.jboss.vfs*;resolution:=optional</operaton.osgi.import.additional>
+
+    <!-- We shade artifacts into the jar, so we need to generate a dependency BOM
+    for the license book -->
+    <skip-third-party-bom>false</skip-third-party-bom>
+    <skipTests.operaton-engine>false</skipTests.operaton-engine>
+    <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
+    <test.excludes>$.</test.excludes>
+    <test.includes/>
+  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -18,16 +60,15 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
-
+    <?SORTPOM IGNORE?>
     <!-- operaton dependencies -->
-
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-bpmn-model</artifactId>
@@ -36,11 +77,6 @@
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-cmmn-model</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm.juel</groupId>
-      <artifactId>operaton-juel</artifactId>
     </dependency>
 
     <dependency>
@@ -69,6 +105,11 @@
     </dependency>
 
     <dependency>
+      <groupId>org.operaton.bpm.juel</groupId>
+      <artifactId>operaton-juel</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-logging</artifactId>
     </dependency>
@@ -76,6 +117,17 @@
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-typed-values</artifactId>
+    </dependency>
+    <?SORTPOM RESUME?>
+
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
     </dependency>
 
     <dependency>
@@ -89,16 +141,75 @@
     </dependency>
 
     <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
+      <groupId>com.fasterxml.uuid</groupId>
+      <artifactId>java-uuid-generator</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
+      <groupId>jakarta.ejb</groupId>
+      <artifactId>jakarta.ejb-api</artifactId>
+      <scope>provided</scope>
     </dependency>
 
-	<!-- Test libraries on compile time for junit extensions -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>jakarta.transaction</groupId>
+      <artifactId>jakarta.transaction-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- provided dependencies -->
+
+    <dependency>
+      <groupId>org.apache.ant</groupId>
+      <artifactId>ant</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-email2-jakarta</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-catalina</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss</groupId>
+      <artifactId>jboss-vfs</artifactId>
+      <version>3.1.0.Final</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Test libraries on compile time for junit extensions -->
 
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -118,84 +229,10 @@
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
-    <dependency>
-      <groupId>org.junit-pioneer</groupId>
-      <artifactId>junit-pioneer</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>provided</scope>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- provided dependencies -->
 
     <dependency>
-      <groupId>org.apache.ant</groupId>
-      <artifactId>ant</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.fasterxml.uuid</groupId>
-      <artifactId>java-uuid-generator</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>jakarta.transaction</groupId>
-      <artifactId>jakarta.transaction-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>jakarta.ejb</groupId>
-      <artifactId>jakarta.ejb-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.tomcat</groupId>
-      <artifactId>tomcat-catalina</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jboss</groupId>
-      <artifactId>jboss-vfs</artifactId>
-      <version>3.1.0.Final</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-email2-jakarta</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- test dependencies  -->
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -212,12 +249,6 @@
     </dependency>
 
     <dependency>
-      <groupId>io.github.frshdn</groupId>
-      <artifactId>subethasmtp-java17</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <!-- required for DiagramQueryTest -->
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -225,8 +256,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
+      <groupId>io.github.frshdn</groupId>
+      <artifactId>subethasmtp-java17</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -237,57 +268,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.commons</groupId>
-      <artifactId>operaton-commons-testing</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-test-utils-testcontainers</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jul-to-slf4j</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.wiremock</groupId>
-      <artifactId>wiremock-standalone</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.python</groupId>
-      <artifactId>jython</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jruby</groupId>
-      <artifactId>jruby-complete</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -304,8 +286,31 @@
     </dependency>
 
     <dependency>
+      <groupId>org.jruby</groupId>
+      <artifactId>jruby-complete</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit-pioneer</groupId>
+      <artifactId>junit-pioneer</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-testkit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -323,57 +328,48 @@
     </dependency>
 
     <dependency>
-      <groupId>org.awaitility</groupId>
-      <artifactId>awaitility</artifactId>
-      <scope>provided</scope>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-test-utils-testcontainers</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-testing</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.python</groupId>
+      <artifactId>jython</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock-standalone</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
-
-
-  <properties>
-    <test.includes />
-    <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
-    <test.excludes>$.</test.excludes>
-    <skipTests.operaton-engine>false</skipTests.operaton-engine>
-    <history.level>full</history.level>
-    <mail.server.port>5025</mail.server.port>
-    <authorizationCheckRevokes>auto</authorizationCheckRevokes>
-    <jdbcBatchProcessing>true</jdbcBatchProcessing>
-
-    <!-- We shade artifacts into the jar, so we need to generate a dependency BOM
-    for the license book -->
-    <skip-third-party-bom>false</skip-third-party-bom>
-
-    <operaton.artifact>
-      org.operaton.bpm
-    </operaton.artifact>
-    <operaton.osgi.export.pkg>
-      !${operaton.artifact}.engine.variable.*,
-      ${operaton.artifact},
-      ${operaton.artifact}.application.*,
-      ${operaton.artifact}.container.*,
-      ${operaton.artifact}.engine.*
-    </operaton.osgi.export.pkg>
-    <operaton.osgi.import.additional>
-      !com.google.gson.*,
-      junit*;resolution:=optional,
-      org.junit*;resolution:=optional,
-      com.sun*;resolution:=optional,
-      javax.persistence*;resolution:=optional,
-      javax.servlet*;resolution:=optional,
-      javax.transaction*;resolution:=optional,
-      javax.ejb*;resolution:=optional,
-      javax.xml*;resolution:=optional,
-      javax.mail*;resolution:=optional,
-      org.apache.catalina*;resolution:=optional,
-      org.apache.commons.mail;resolution:=optional,
-      org.apache.tools.ant*;resolution:=optional,
-      org.apache.xerces*;resolution:=optional,
-      org.springframework*;resolution:=optional,
-      com.fasterxml*;resolution:=optional,
-      org.jboss.vfs*;resolution:=optional
-    </operaton.osgi.import.additional>
-  </properties>
 
   <build>
     <!-- filter test configurations to inject properties -->
@@ -382,8 +378,8 @@
         <directory>src/main/resources</directory>
       </resource>
       <resource>
-        <directory>src/main/resources</directory>
         <filtering>true</filtering>
+        <directory>src/main/resources</directory>
         <includes>
           <include>org/operaton/bpm/engine/product-info.properties</include>
         </includes>
@@ -394,8 +390,8 @@
         <directory>src/test/resources</directory>
       </testResource>
       <testResource>
-        <directory>src/test/resources</directory>
         <filtering>true</filtering>
+        <directory>src/test/resources</directory>
         <includes>
           <include>**/operaton.cfg.xml</include>
           <include>**/*operaton.cfg.xml</include>
@@ -406,6 +402,36 @@
         </includes>
       </testResource>
     </testResources>
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <versionRange>[2.1.0,)</versionRange>
+                    <goals>
+                      <goal>cleanVersions</goal>
+                      <goal>manifest</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore/>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
 
     <plugins>
       <plugin>
@@ -414,10 +440,10 @@
         <executions>
           <execution>
             <id>add-sources</id>
-            <phase>generate-sources</phase>
             <goals>
               <goal>add-source</goal>
             </goals>
+            <phase>generate-sources</phase>
             <configuration>
               <sources>
                 <source>src/main/junit-shared</source>
@@ -428,10 +454,10 @@
           </execution>
           <execution>
             <id>add-test-sources</id>
-            <phase>generate-test-sources</phase>
             <goals>
               <goal>add-test-source</goal>
             </goals>
+            <phase>generate-test-sources</phase>
             <configuration>
               <sources>
                 <source>src/test/junit5</source>
@@ -461,23 +487,23 @@
             <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
-        </plugin>
+      </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <executions>
           <execution>
-            <phase>generate-sources</phase>
             <goals>
               <goal>cleanVersions</goal>
             </goals>
+            <phase>generate-sources</phase>
           </execution>
           <execution>
             <id>bundle-manifest</id>
-            <phase>process-classes</phase>
             <goals>
               <goal>manifest</goal>
             </goals>
+            <phase>process-classes</phase>
           </execution>
         </executions>
       </plugin>
@@ -526,10 +552,10 @@
         <executions>
           <execution>
             <id>default-compile</id>
-            <phase>compile</phase>
             <goals>
               <goal>compile</goal>
             </goals>
+            <phase>compile</phase>
             <configuration>
               <compileSourceRoots>
                 <compileSourceRoot>${project.basedir}/src/main/java</compileSourceRoot>
@@ -537,14 +563,14 @@
                 <compileSourceRoot>${project.basedir}/src/main/junit4</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
               </compileSourceRoots>
-              </configuration>
+            </configuration>
           </execution>
           <execution>
             <id>default-testCompile</id>
-            <phase>test-compile</phase>
             <goals>
               <goal>testCompile</goal>
             </goals>
+            <phase>test-compile</phase>
             <configuration>
               <compileSourceRoots>
                 <compileSourceRoot>${project.basedir}/src/main/java</compileSourceRoot>
@@ -552,15 +578,16 @@
                 <compileSourceRoot>${project.basedir}/src/main/junit4</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/test/java</compileSourceRoot>
-                <compileSourceRoot>${project.basedir}/src/test/junit5</compileSourceRoot> </compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/test/junit5</compileSourceRoot>
+              </compileSourceRoots>
             </configuration>
           </execution>
           <execution>
             <id>junit4-Compile</id>
-            <phase>compile</phase>
             <goals>
               <goal>compile</goal>
             </goals>
+            <phase>compile</phase>
             <configuration>
               <compileSourceRoots>
                 <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
@@ -571,10 +598,10 @@
           </execution>
           <execution>
             <id>junit5-compile</id>
-            <phase>compile</phase>
             <goals>
               <goal>compile</goal>
             </goals>
+            <phase>compile</phase>
             <configuration>
               <compileSourceRoots>
                 <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
@@ -616,7 +643,7 @@
             </relocation>
           </relocations>
           <transformers>
-            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
           </transformers>
           <shadeTestJar>true</shadeTestJar>
         </configuration>
@@ -627,17 +654,17 @@
         <executions>
           <execution>
             <id>copy-upgrade-scripts-liquibase</id>
-            <phase>compile</phase>
             <goals>
               <goal>run</goal>
             </goals>
+            <phase>compile</phase>
             <configuration>
               <target>
 
                 <!-- copy all upgrade scripts after 7.15 -->
-                <mkdir dir="target/classes/org/operaton/bpm/engine/db/liquibase/upgrade" />
+                <mkdir dir="target/classes/org/operaton/bpm/engine/db/liquibase/upgrade"/>
                 <copy todir="target/classes/org/operaton/bpm/engine/db/liquibase/upgrade">
-                  <fileset dir="target/classes/org/operaton/bpm/engine/db/upgrade" excludes="*_6.*_*,*_7.0_*,*_7.1_*,*_7.2_*,*_7.3_*,*_7.4_*,*_7.5_*,*_7.6_*,*_7.7_*, *_7.8_*,*_7.9_*,*_7.10_*,*_7.11_*,*_7.12_*,*_7.13_*,*_7.14_*,*_7.15_*" />
+                  <fileset dir="target/classes/org/operaton/bpm/engine/db/upgrade" excludes="*_6.*_*,*_7.0_*,*_7.1_*,*_7.2_*,*_7.3_*,*_7.4_*,*_7.5_*,*_7.6_*,*_7.7_*, *_7.8_*,*_7.9_*,*_7.10_*,*_7.11_*,*_7.12_*,*_7.13_*,*_7.14_*,*_7.15_*"/>
                 </copy>
 
               </target>
@@ -646,40 +673,6 @@
         </executions>
       </plugin>
     </plugins>
-    <pluginManagement>
-      <plugins>
-        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>
-                      maven-bundle-plugin
-                    </artifactId>
-                    <versionRange>
-                      [2.1.0,)
-                    </versionRange>
-                    <goals>
-                      <goal>cleanVersions</goal>
-                      <goal>manifest</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
   </build>
 
   <profiles>
@@ -691,27 +684,27 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>database-test-drop-schema-before-test</id>
-                <phase>process-test-classes</phase>
-                <goals>
-                  <goal>java</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>database-test-drop-schema-after-test</id>
-                <phase>prepare-package</phase>
-                <goals>
-                  <goal>java</goal>
-                </goals>
-              </execution>
-            </executions>
             <configuration>
               <mainClass>org.operaton.bpm.engine.impl.db.DbSchemaDrop</mainClass>
               <classpathScope>test</classpathScope>
               <cleanupDaemonThreads>false</cleanupDaemonThreads>
             </configuration>
+            <executions>
+              <execution>
+                <id>database-test-drop-schema-before-test</id>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+                <phase>process-test-classes</phase>
+              </execution>
+              <execution>
+                <id>database-test-drop-schema-after-test</id>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+                <phase>prepare-package</phase>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
@@ -833,10 +826,10 @@
             <executions>
               <execution>
                 <id>all</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>check-no-fork</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
                   <failOnWarning>false</failOnWarning>
@@ -845,10 +838,10 @@
               </execution>
               <execution>
                 <id>restrictive</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>check-no-fork</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
                   <failOnWarning>true</failOnWarning>
@@ -866,15 +859,11 @@
       <dependencies>
         <dependency>
           <groupId>org.operaton.bpm</groupId>
-          <artifactId>operaton-engine-plugin-spin</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.operaton.spin</groupId>
-          <artifactId>operaton-spin-dataformat-all</artifactId>
+          <artifactId>operaton-engine-plugin-connect</artifactId>
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm</groupId>
-          <artifactId>operaton-engine-plugin-connect</artifactId>
+          <artifactId>operaton-engine-plugin-spin</artifactId>
         </dependency>
         <dependency>
           <groupId>org.operaton.connect</groupId>
@@ -890,6 +879,10 @@
             </exclusion>
           </exclusions>
         </dependency>
+        <dependency>
+          <groupId>org.operaton.spin</groupId>
+          <artifactId>operaton-spin-dataformat-all</artifactId>
+        </dependency>
       </dependencies>
       <build>
         <plugins>
@@ -898,14 +891,14 @@
             <executions>
               <execution>
                 <id>copy-operaton-cfg</id>
-                <phase>process-test-classes</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>process-test-classes</phase>
                 <configuration>
                   <target>
-                    <echo message="Copying operaton.cfg.plugins.xml to operaton.cfg.xml" />
-                    <copy file="target/test-classes/operaton.cfg.plugins.xml" tofile="target/test-classes/operaton.cfg.xml" overwrite="true" />
+                    <echo message="Copying operaton.cfg.plugins.xml to operaton.cfg.xml"/>
+                    <copy file="target/test-classes/operaton.cfg.plugins.xml" overwrite="true" tofile="target/test-classes/operaton.cfg.xml"/>
                   </target>
                 </configuration>
               </execution>
@@ -925,13 +918,13 @@
             <executions>
               <execution>
                 <id>database-test-create-schema</id>
-                <phase>process-test-classes</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>process-test-classes</phase>
                 <configuration>
                   <target>
-                    <copy file="target/test-classes/operaton.cfg.prefix.xml" tofile="target/test-classes/operaton.cfg.xml" overwrite="true" />
+                    <copy file="target/test-classes/operaton.cfg.prefix.xml" overwrite="true" tofile="target/test-classes/operaton.cfg.xml"/>
                   </target>
                 </configuration>
               </execution>
@@ -951,7 +944,7 @@
                      the same except for the whole unit test suite -->
                 <exclude>**/DatabaseTablePrefixTest.java</exclude>
                 <exclude>**/DeploymentTest.java</exclude>
-				<exclude>**/DeploymentAutoHistoryTest.java</exclude>
+                <exclude>**/DeploymentAutoHistoryTest.java</exclude>
                 <exclude>**/CustomHistoryLevelUserOperationLogTest.java</exclude>
                 <exclude>**/CustomHistoryLevelWithoutUserOperationLogTest.java</exclude>
                 <exclude>**/CustomHistoryLevelIncidentTest.java</exclude>
@@ -969,55 +962,53 @@
 
     <!-- test profiles -->
     <profile>
-     <id>testBpmn</id>
-     <properties>
-      <test.includes>bpmn</test.includes>
-     </properties>
+      <id>testBpmn</id>
+      <properties>
+        <test.includes>bpmn</test.includes>
+      </properties>
     </profile>
     <profile>
-     <id>testCmmn</id>
-     <properties>
-      <test.includes>cmmn</test.includes>
-     </properties>
+      <id>testCmmn</id>
+      <properties>
+        <test.includes>cmmn</test.includes>
+      </properties>
     </profile>
     <profile>
-     <id>testDmn</id>
-     <properties>
-      <test.includes>dmn</test.includes>
-     </properties>
+      <id>testDmn</id>
+      <properties>
+        <test.includes>dmn</test.includes>
+      </properties>
     </profile>
     <profile>
-     <id>testBpmnCmmn</id>
-     <properties>
-      <test.includes>bpmn|cmmn</test.includes>
-     </properties>
+      <id>testBpmnCmmn</id>
+      <properties>
+        <test.includes>bpmn|cmmn</test.includes>
+      </properties>
     </profile>
     <profile>
-     <id>testExceptBpmn</id>
-     <properties>
-      <test.excludes>bpmn</test.excludes>
-     </properties>
+      <id>testExceptBpmn</id>
+      <properties>
+        <test.excludes>bpmn</test.excludes>
+      </properties>
     </profile>
     <profile>
-     <id>testExceptCmmn</id>
-     <properties>
-      <test.excludes>cmmn</test.excludes>
-     </properties>
+      <id>testExceptCmmn</id>
+      <properties>
+        <test.excludes>cmmn</test.excludes>
+      </properties>
     </profile>
     <profile>
-     <id>testExceptDmn</id>
-     <properties>
-      <test.excludes>dmn</test.excludes>
-     </properties>
+      <id>testExceptDmn</id>
+      <properties>
+        <test.excludes>dmn</test.excludes>
+      </properties>
     </profile>
     <profile>
-     <id>testExceptBpmnCmmn</id>
-     <properties>
-      <test.excludes>bpmn|cmmn</test.excludes>
-     </properties>
+      <id>testExceptBpmnCmmn</id>
+      <properties>
+        <test.excludes>bpmn|cmmn</test.excludes>
+      </properties>
     </profile>
 
   </profiles>
-
-  <description>${project.name}</description>
 </project>

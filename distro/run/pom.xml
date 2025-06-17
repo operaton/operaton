@@ -11,9 +11,9 @@
 
   <groupId>org.operaton.bpm.run</groupId>
   <artifactId>operaton-bpm-run-root</artifactId>
+  <packaging>pom</packaging>
   <name>Operaton - Run - Root</name>
   <description>This is the root of Operaton Run</description>
-  <packaging>pom</packaging>
 
   <dependencyManagement>
     <dependencies>
@@ -22,8 +22,8 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
 
       <dependency>
@@ -48,14 +48,14 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
+        <module>assembly</module>
+        <module>core</module>
+        <module>distro</module>
         <module>modules</module>
+        <module>modules/example</module>
         <module>modules/oauth2</module>
         <module>modules/rest</module>
-        <module>modules/example</module>
         <module>modules/webapps</module>
-        <module>core</module>
-        <module>assembly</module>
-        <module>distro</module>
         <module>qa</module>
       </modules>
     </profile>

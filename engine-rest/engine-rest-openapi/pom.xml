@@ -1,28 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-engine-rest-openapi</artifactId>
-  <name>Operaton - Engine - REST - OpenAPI</name>
-  <packaging>jar</packaging>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+  <artifactId>operaton-engine-rest-openapi</artifactId>
+  <packaging>jar</packaging>
+  <name>Operaton - Engine - REST - OpenAPI</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <generated-directory>${project.build.directory}/generated-sources/openapi-json</generated-directory>
     <generated-file>openapi.json</generated-file>
-
-    <openapi.generator.version>7.11.0</openapi.generator.version>
     <!-- properties versions used by the openapi client -->
     <!-- update them during openapi.generator version update  -->
     <gson-fire-version>1.9.0</gson-fire-version>
-    <swagger-core-version>2.1.29</swagger-core-version>
-    <okhttp-version>4.12.0</okhttp-version>
     <gson-version>2.8.9</gson-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
+    <okhttp-version>4.12.0</okhttp-version>
+
+    <openapi.generator.version>7.11.0</openapi.generator.version>
     <surefire.forkCount>1</surefire.forkCount>
+    <swagger-core-version>2.1.29</swagger-core-version>
   </properties>
 
   <dependencyManagement>
@@ -36,32 +39,49 @@
   </dependencyManagement>
 
   <dependencies>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-openapi-generator</artifactId>
-      <scope>test</scope>
-      <version>${project.version}</version>
-    </dependency>
-
-    <!-- test dependencies -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-jdk14</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents.client5</groupId>
       <artifactId>httpclient5</artifactId>
     </dependency>
+    <!-- @Nullable annotation -->
     <dependency>
-      <groupId>org.wiremock</groupId>
-      <artifactId>wiremock-standalone</artifactId>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+      <version>0.2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>${gson-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>logging-interceptor</artifactId>
+      <version>${okhttp-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>${okhttp-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.gsonfire</groupId>
+      <artifactId>gson-fire</artifactId>
+      <version>${gson-fire-version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -73,56 +93,39 @@
       <version>${swagger-core-version}</version>
       <scope>test</scope>
     </dependency>
-    <!-- @Nullable annotation -->
-    <dependency>
-      <groupId>org.openapitools</groupId>
-      <artifactId>jackson-databind-nullable</artifactId>
-      <version>0.2.6</version>
-	</dependency>
-	<dependency>
-      <groupId>com.google.code.findbugs</groupId>
-      <artifactId>jsr305</artifactId>
-      <version>3.0.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.squareup.okhttp3</groupId>
-      <artifactId>okhttp</artifactId>
-      <version>${okhttp-version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.squareup.okhttp3</groupId>
-      <artifactId>logging-interceptor</artifactId>
-      <version>${okhttp-version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>${gson-version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.gsonfire</groupId>
-      <artifactId>gson-fire</artifactId>
-      <version>${gson-fire-version}</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>jakarta.annotation</groupId>
-      <artifactId>jakarta.annotation-api</artifactId>
-      <scope>provided</scope>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
     </dependency>
     <!-- test dependencies -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-openapi-generator</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- test dependencies -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock-standalone</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -135,10 +138,10 @@
         <executions>
           <execution>
             <id>generate-openapi-json</id>
-            <phase>generate-resources</phase>
             <goals>
               <goal>java</goal>
             </goals>
+            <phase>generate-resources</phase>
             <configuration>
               <classpathScope>test</classpathScope>
               <mainClass>org.operaton.bpm.engine.rest.openapi.generator.impl.TemplateParser</mainClass>
@@ -152,10 +155,10 @@
           </execution>
           <execution>
             <id>validate-openapi-json</id>
-            <phase>generate-resources</phase>
             <goals>
               <goal>java</goal>
             </goals>
+            <phase>generate-resources</phase>
             <configuration>
               <classpathScope>test</classpathScope>
               <mainClass>org.operaton.bpm.engine.rest.openapi.generator.impl.SchemaValidator</mainClass>
@@ -210,10 +213,10 @@
         <executions>
           <execution>
             <id>generate-java-client</id>
-            <phase>generate-test-sources</phase>
             <goals>
               <goal>generate</goal>
             </goals>
+            <phase>generate-test-sources</phase>
             <configuration>
               <inputSpec>${generated-directory}/${generated-file}</inputSpec>
               <output>${project.build.directory}/operaton-openapi-client</output>
@@ -243,7 +246,7 @@
               <skip>true</skip>
             </configuration>
           </plugin>
-          
+
           <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
             <executions>
@@ -260,6 +263,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

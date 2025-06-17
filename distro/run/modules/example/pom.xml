@@ -10,7 +10,9 @@
 
   <artifactId>operaton-bpm-run-modules-example-invoice</artifactId>
   <name>Operaton - Run - Module Example Invoice</name>
-  
+
+  <description>${project.name}</description>
+
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
     Note: Every compile time dependency will end up in the license book. Please
@@ -21,16 +23,16 @@
   <dependencies>
 
     <dependency>
-      <groupId>org.operaton.bpm.springboot</groupId>
-      <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.operaton.bpm.example</groupId>
       <artifactId>operaton-example-invoice</artifactId>
       <version>${project.version}</version>
       <classifier>classes</classifier>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm.springboot</groupId>
+      <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -44,10 +46,10 @@
         <executions>
           <execution>
             <id>unpack-invoice</id>
-            <phase>process-resources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
+            <phase>process-resources</phase>
             <configuration>
               <artifactItems>
                 <artifactItem>
@@ -56,13 +58,11 @@
                   <version>${project.version}</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
-                  <excludes>
-                    META-INF/**,WEB-INF/*.xml,WEB-INF
-                  </excludes>
+                  <excludes>META-INF/**,WEB-INF/*.xml,WEB-INF</excludes>
                   <fileMappers>
                     <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
-                       <pattern>^\QWEB-INF/classes/\E</pattern>
-                       <replacement>./</replacement>
+                      <pattern>^\QWEB-INF/classes/\E</pattern>
+                      <replacement>./</replacement>
                     </org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
                     <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
                       <pattern>^\Qindex.html\E</pattern>
@@ -81,6 +81,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

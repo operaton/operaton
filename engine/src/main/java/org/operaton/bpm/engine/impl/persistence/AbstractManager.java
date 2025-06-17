@@ -267,14 +267,6 @@ public abstract class AbstractManager implements Session {
     return getSession(TenantManager.class);
   }
 
-  @Override
-  public void close() {
-  }
-
-  @Override
-  public void flush() {
-  }
-
   // authorizations ///////////////////////////////////////
 
   protected CommandContext getCommandContext() {

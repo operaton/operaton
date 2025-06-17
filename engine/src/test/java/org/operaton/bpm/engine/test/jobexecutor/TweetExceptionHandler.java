@@ -56,11 +56,6 @@ public class TweetExceptionHandler implements JobHandler<JobHandlerConfiguration
     return () -> null;
   }
 
-  @Override
-  public void onDelete(JobHandlerConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
   public int getExceptionsRemaining() {
     return exceptionsRemaining.get();
   }

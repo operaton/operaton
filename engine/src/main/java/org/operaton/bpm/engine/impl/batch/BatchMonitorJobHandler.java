@@ -77,9 +77,4 @@ public class BatchMonitorJobHandler implements JobHandler<BatchMonitorJobConfigu
     }
   }
 
-  @Override
-  public void onDelete(BatchMonitorJobConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
 }

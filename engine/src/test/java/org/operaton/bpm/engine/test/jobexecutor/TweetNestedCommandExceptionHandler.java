@@ -56,9 +56,4 @@ public class TweetNestedCommandExceptionHandler implements JobHandler<JobHandler
     return () -> null;
   }
 
-  @Override
-  public void onDelete(JobHandlerConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
 }

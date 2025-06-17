@@ -166,8 +166,4 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
 
   }
 
-  @Override
-  public void onDelete(AsyncContinuationConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
 }

@@ -96,8 +96,4 @@ public class HistoryCleanupJobHandler implements JobHandler<HistoryCleanupJobHan
     return TYPE;
   }
 
-  @Override
-  public void onDelete(HistoryCleanupJobHandlerConfiguration configuration, JobEntity jobEntity) {
-  }
-
 }

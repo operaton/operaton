@@ -68,9 +68,4 @@ public class TweetHandler implements JobHandler<TweetJobConfiguration> {
     }
   }
 
-  @Override
-  public void onDelete(TweetJobConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
 }

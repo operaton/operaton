@@ -186,9 +186,4 @@ public abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implemen
 
   }
 
-  @Override
-  public void onDelete(JobDefinitionSuspensionStateConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
 }

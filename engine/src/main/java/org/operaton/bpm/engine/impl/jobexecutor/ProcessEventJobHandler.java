@@ -73,9 +73,4 @@ public class ProcessEventJobHandler implements JobHandler<EventSubscriptionJobCo
 
   }
 
-  @Override
-  public void onDelete(EventSubscriptionJobConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
 }

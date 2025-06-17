@@ -88,9 +88,4 @@ public class BatchSeedJobHandler implements JobHandler<BatchSeedJobConfiguration
     }
   }
 
-  @Override
-  public void onDelete(BatchSeedJobConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
-}
+ }

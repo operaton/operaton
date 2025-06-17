@@ -25,9 +25,9 @@ import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
  */
 public interface VariableInstanceLifecycleListener<T extends CoreVariableInstance> {
 
-  void onCreate(T variableInstance, AbstractVariableScope sourceScope);
+  default void onCreate(T variableInstance, AbstractVariableScope sourceScope) {}
 
-  void onDelete(T variableInstance, AbstractVariableScope sourceScope);
+  default void onDelete(T variableInstance, AbstractVariableScope sourceScope) {}
 
-  void onUpdate(T variableInstance, AbstractVariableScope sourceScope);
+  default void onUpdate(T variableInstance, AbstractVariableScope sourceScope) {}
 }

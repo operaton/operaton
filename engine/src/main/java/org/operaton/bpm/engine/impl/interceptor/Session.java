@@ -22,7 +22,7 @@ package org.operaton.bpm.engine.impl.interceptor;
  */
 public interface Session {
 
-  void flush();
+  default void flush() {}
 
-  void close();
+  default void close() {}
 }

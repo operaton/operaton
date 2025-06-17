@@ -27,11 +27,11 @@ import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 import org.operaton.bpm.engine.rest.util.DateTimeUtils;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.Job;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.given;
 import static org.mockito.Mockito.anyBoolean;
@@ -49,8 +49,8 @@ import java.util.List;
 
 public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String HISTORY_CLEANUP_URL = TEST_RESOURCE_ROOT_PATH + "/history/cleanup";
   protected static final String FIND_HISTORY_CLEANUP_JOB_URL = HISTORY_CLEANUP_URL + "/job";
@@ -59,7 +59,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
 
   private HistoryService historyServiceMock;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     historyServiceMock = mock(HistoryService.class);
     Job mockJob = MockProvider.createMockJob();

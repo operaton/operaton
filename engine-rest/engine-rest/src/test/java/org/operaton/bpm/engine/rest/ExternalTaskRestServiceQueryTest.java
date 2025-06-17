@@ -42,11 +42,11 @@ import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.OrderingBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -59,8 +59,8 @@ import io.restassured.response.Response;
  */
 public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String EXTERNAL_TASK_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/external-task";
   protected static final String EXTERNAL_TASK_COUNT_QUERY_URL = EXTERNAL_TASK_QUERY_URL + "/count";
@@ -69,7 +69,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
 
   protected ExternalTaskQuery mockQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockQuery = setUpMockExternalTaskQuery(MockProvider.createMockExternalTasks());
   }
@@ -124,8 +124,8 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     Mockito.verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> instances = from(content).getList("");
-    Assert.assertEquals("There should be one external task returned.", 1, instances.size());
+    List<Map<String, Object>> instances = from(content).getList("");
+    Assertions.assertEquals(1, instances.size(), "There should be one external task returned.");
     assertThat(instances.get(0)).as("The returned external task should not be null.").isNotNull();
 
     String activityId = from(content).getString("[0].activityId");
@@ -146,23 +146,23 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     long priority = from(content).getLong("[0].priority");
     String businessKey = from(content).getString("[0].businessKey");
 
-    Assert.assertEquals(MockProvider.EXAMPLE_ACTIVITY_ID, activityId);
-    Assert.assertEquals(MockProvider.EXAMPLE_ACTIVITY_INSTANCE_ID, activityInstanceId);
-    Assert.assertEquals(MockProvider.EXTERNAL_TASK_ERROR_MESSAGE, errorMessage);
-    Assert.assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, executionId);
-    Assert.assertEquals(MockProvider.EXTERNAL_TASK_ID, id);
-    Assert.assertEquals(MockProvider.EXTERNAL_TASK_LOCK_EXPIRATION_TIME, lockExpirationTime);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, processDefinitionId);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, processDefinitionKey);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION_TAG, processDefinitionVersionTag);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, processInstanceId);
-    Assert.assertEquals(MockProvider.EXTERNAL_TASK_RETRIES, retries);
-    Assert.assertEquals(MockProvider.EXTERNAL_TASK_SUSPENDED, suspended);
-    Assert.assertEquals(MockProvider.EXTERNAL_TASK_TOPIC_NAME, topicName);
-    Assert.assertEquals(MockProvider.EXTERNAL_TASK_WORKER_ID, workerId);
-    Assert.assertEquals(MockProvider.EXAMPLE_TENANT_ID, tenantId);
-    Assert.assertEquals(MockProvider.EXTERNAL_TASK_PRIORITY, priority);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY, businessKey);
+    Assertions.assertEquals(MockProvider.EXAMPLE_ACTIVITY_ID, activityId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_ACTIVITY_INSTANCE_ID, activityInstanceId);
+    Assertions.assertEquals(MockProvider.EXTERNAL_TASK_ERROR_MESSAGE, errorMessage);
+    Assertions.assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, executionId);
+    Assertions.assertEquals(MockProvider.EXTERNAL_TASK_ID, id);
+    Assertions.assertEquals(MockProvider.EXTERNAL_TASK_LOCK_EXPIRATION_TIME, lockExpirationTime);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, processDefinitionId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, processDefinitionKey);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION_TAG, processDefinitionVersionTag);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, processInstanceId);
+    Assertions.assertEquals(MockProvider.EXTERNAL_TASK_RETRIES, retries);
+    Assertions.assertEquals(MockProvider.EXTERNAL_TASK_SUSPENDED, suspended);
+    Assertions.assertEquals(MockProvider.EXTERNAL_TASK_TOPIC_NAME, topicName);
+    Assertions.assertEquals(MockProvider.EXTERNAL_TASK_WORKER_ID, workerId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, tenantId);
+    Assertions.assertEquals(MockProvider.EXTERNAL_TASK_PRIORITY, priority);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY, businessKey);
   }
 
   @Test
@@ -438,7 +438,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -467,7 +467,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -498,7 +498,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     String returnedActivityId1 = from(content).getString("[0].activityId");
@@ -527,7 +527,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     String returnedActivityId1 = from(content).getString("[0].activityId");
@@ -563,7 +563,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     long prio1 = from(content).getLong("[0].priority");
@@ -594,7 +594,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     long prio1 = from(content).getLong("[0].priority");
@@ -627,7 +627,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     String returnedId1 = from(content).getString("[0].id");
@@ -658,7 +658,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     String returnedId1 = from(content).getString("[0].id");

@@ -16,25 +16,25 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import io.restassured.response.Response;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import java.util.Map;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-import jakarta.ws.rs.core.MediaType;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.junit.Assert.assertEquals;
-import jakarta.ws.rs.core.Response.Status;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
-public class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTest {
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+import io.restassured.response.Response;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTest {
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String EXTERNAL_TASK_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/external-task";
   protected static final String GET_EXTERNAL_TASK_TOPIC_NAMES_URL = EXTERNAL_TASK_QUERY_URL + "/topic-names";
@@ -43,7 +43,7 @@ public class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTe
   protected static final String WITH_UNLOCKED_TASKS = "withUnlockedTasks";
   protected static final String WITH_RETRIES_LEFT = "withRetriesLeft";
 
-  @Before
+  @BeforeEach
   public void setupMocks(){
     when(processEngine.getExternalTaskService().getTopicNames(false,false,false)).thenReturn(Arrays.asList("allTopics"));
     when(processEngine.getExternalTaskService().getTopicNames(true,false,false)).thenReturn(Arrays.asList("lockedTasks"));
@@ -61,7 +61,7 @@ public class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTe
         .get(GET_EXTERNAL_TASK_TOPIC_NAMES_URL);
 
     String content = response.asString();
-    List<String> topicNames = from(content).getList("");
+    List<Map<String, Object>> topicNames = from(content).getList("");
 
     assertEquals("allTopics", topicNames.get(0));
   }
@@ -80,7 +80,7 @@ public class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTe
         .get(GET_EXTERNAL_TASK_TOPIC_NAMES_URL);
 
     String content = response.asString();
-    List<String> topicNames = from(content).getList("");
+    List<Map<String, Object>> topicNames = from(content).getList("");
 
     assertEquals("lockedTasks", topicNames.get(0));
   }
@@ -99,7 +99,7 @@ public class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTe
         .get(GET_EXTERNAL_TASK_TOPIC_NAMES_URL);
 
     String content = response.asString();
-    List<String> topicNames = from(content).getList("");
+    List<Map<String, Object>> topicNames = from(content).getList("");
 
     assertEquals("unlockedTasks", topicNames.get(0));
   }
@@ -118,7 +118,7 @@ public class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTe
         .get(GET_EXTERNAL_TASK_TOPIC_NAMES_URL);
 
     String content = response.asString();
-    List<String> topicNames = from(content).getList("");
+    List<Map<String, Object>> topicNames = from(content).getList("");
 
     assertEquals("withRetriesLeft", topicNames.get(0));
   }

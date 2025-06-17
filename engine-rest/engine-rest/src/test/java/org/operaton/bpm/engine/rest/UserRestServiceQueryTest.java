@@ -38,11 +38,11 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
 import io.restassured.http.ContentType;
@@ -51,15 +51,15 @@ import io.restassured.specification.RequestSpecification;
 
 public class UserRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String USER_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/user";
   protected static final String USER_COUNT_QUERY_URL = USER_QUERY_URL + "/count";
 
   private UserQuery mockQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockQuery = setUpMockUserQuery(MockProvider.createMockUsers());
   }
@@ -242,17 +242,17 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
 
   protected void verifyExampleUserResponse(Response response) {
     String content = response.asString();
-    List<String> instances = from(content).getList("");
-    Assert.assertEquals("There should be one user returned.", 1, instances.size());
+    List<Map<String, Object>> instances = from(content).getList("");
+    Assertions.assertEquals(1, instances.size(), "There should be one user returned.");
     assertThat(instances.get(0)).as("The returned user should not be null.").isNotNull();
 
     String returendLastName = from(content).getString("[0].lastName");
     String returnedFirstName = from(content).getString("[0].firstName");
     String returnedEmail = from(content).getString("[0].email");
 
-    Assert.assertEquals(MockProvider.EXAMPLE_USER_FIRST_NAME, returnedFirstName);
-    Assert.assertEquals(MockProvider.EXAMPLE_USER_LAST_NAME, returendLastName);
-    Assert.assertEquals(MockProvider.EXAMPLE_USER_EMAIL, returnedEmail);
+    Assertions.assertEquals(MockProvider.EXAMPLE_USER_FIRST_NAME, returnedFirstName);
+    Assertions.assertEquals(MockProvider.EXAMPLE_USER_LAST_NAME, returendLastName);
+    Assertions.assertEquals(MockProvider.EXAMPLE_USER_EMAIL, returnedEmail);
   }
 
 

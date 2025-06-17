@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.util.container;
 
-import org.junit.rules.TestRule;
+import org.junit.jupiter.api.extension.Extension;
 
 /**
  * @author Thorben Lindhauer
@@ -24,5 +24,5 @@ import org.junit.rules.TestRule;
  */
 public interface TestRuleFactory {
 
-  TestRule createTestRule();
+  Extension createExtension();
 }

@@ -56,12 +56,11 @@ import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
 import org.operaton.bpm.engine.rest.exception.ExceptionLogger;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import io.restassured.http.ContentType;
 
@@ -71,11 +70,11 @@ import io.restassured.http.ContentType;
  */
 public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
+  @RegisterExtension
+  public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
       .watch(ExceptionLogger.REST_API);
 
   protected static final String SERVICE_URL = TEST_RESOURCE_ROOT_PATH + "/user";
@@ -89,7 +88,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
   protected AuthorizationService authorizationServiceMock;
   protected ProcessEngineConfiguration processEngineConfigurationMock;
 
-  @Before
+  @BeforeEach
   public void setupUserData() {
 
     identityServiceMock = mock(IdentityService.class);

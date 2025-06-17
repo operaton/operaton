@@ -50,10 +50,10 @@ import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.rest.dto.identity.GroupDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import io.restassured.http.ContentType;
 
@@ -63,8 +63,8 @@ import io.restassured.http.ContentType;
  */
 public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String SERVICE_URL = TEST_RESOURCE_ROOT_PATH + "/group";
   protected static final String GROUP_URL = SERVICE_URL + "/{id}";
@@ -76,7 +76,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   protected AuthorizationService authorizationServiceMock;
   protected ProcessEngineConfiguration processEngineConfigurationMock;
 
-  @Before
+  @BeforeEach
   public void setupGroupData() {
 
     identityServiceMock = mock(IdentityService.class);

@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.repository.*;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 
@@ -38,9 +38,9 @@ import java.util.*;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -55,8 +55,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   protected static final String PROPERTY_DEPLOYED_CASE_DEFINITIONS = "deployedCaseDefinitions";
   protected static final String PROPERTY_DEPLOYED_DECISION_DEFINITIONS = "deployedDecisionDefinitions";
   protected static final String PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS = "deployedDecisionRequirementsDefinitions";
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/deployment";
   protected static final String DEPLOYMENT_URL = RESOURCE_URL + "/{id}";
@@ -75,7 +75,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   protected DeploymentBuilder mockDeploymentBuilder;
   protected Collection<String> resourceNames = new ArrayList<>();
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockRepositoryService = mock(RepositoryService.class);
     when(processEngine.getRepositoryService()).thenReturn(mockRepositoryService);
@@ -1429,7 +1429,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
                      .containsEntry("line", EXAMPLE_PROBLEM_LINE)
                      .containsEntry("message", message)
                      .containsEntry("mainElementId", EXAMPLE_PROBLEM_ELEMENT_ID)
-                     .containsEntry("еlementIds", EXAMPLE_ELEMENT_IDS);
+                     .containsEntry("elementIds", EXAMPLE_ELEMENT_IDS);
 
     List<HashMap<String, Object>> warnings = problems.get("warnings");
     HashMap<String, Object> warning = warnings.get(0);
@@ -1437,7 +1437,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
                        .containsEntry("line", EXAMPLE_PROBLEM_LINE_2)
                        .containsEntry("message", EXAMPLE_EXCEPTION_MESSAGE)
                        .containsEntry("mainElementId", EXAMPLE_PROBLEM_ELEMENT_ID_2)
-                       .containsEntry("еlementIds", EXAMPLE_ELEMENT_IDS);
+                       .containsEntry("elementIds", EXAMPLE_ELEMENT_IDS);
   }
 
   @Test

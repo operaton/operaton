@@ -21,11 +21,11 @@ import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatisticsQuery;
 import org.operaton.bpm.engine.impl.HistoricDecisionInstanceStatisticsQueryImpl;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import jakarta.ws.rs.core.Response;
@@ -43,20 +43,20 @@ import static org.mockito.Mockito.when;
  */
 public class HistoricDecisionStatisticsRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String HISTORY_URL = TEST_RESOURCE_ROOT_PATH + "/history";
   protected static final String HISTORIC_DECISION_STATISTICS_URL = HISTORY_URL + "/decision-requirements-definition/{id}/statistics";
 
   private HistoricDecisionInstanceStatisticsQuery historicDecisionInstanceStatisticsQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     setupHistoricDecisionStatisticsMock();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     Mockito.reset(processEngine.getHistoryService(), historicDecisionInstanceStatisticsQuery);
   }

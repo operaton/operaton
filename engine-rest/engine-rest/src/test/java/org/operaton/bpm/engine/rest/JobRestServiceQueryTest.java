@@ -45,13 +45,13 @@ import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.OrderingBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -60,8 +60,8 @@ import io.restassured.response.Response;
 
 public class JobRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String JOBS_RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/job";
   protected static final String JOBS_QUERY_COUNT_URL = JOBS_RESOURCE_URL + "/count";
@@ -72,7 +72,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   protected static final long JOB_QUERY_MAX_PRIORITY = Long.MAX_VALUE;
   protected static final long JOB_QUERY_MIN_PRIORITY = Long.MIN_VALUE;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockQuery = setUpMockJobQuery(MockProvider.createMockJobs());
   }
@@ -146,8 +146,8 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     inOrder.verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> instances = from(content).getList("");
-    Assert.assertEquals("There should be one job returned.", 1, instances.size());
+    List<Map<String, Object>> instances = from(content).getList("");
+    Assertions.assertEquals(1, instances.size(), "There should be one job returned.");
     assertThat(instances.get(0)).as("The returned job should not be null.").isNotNull();
 
     String returnedJobId = from(content).getString("[0].id");
@@ -166,21 +166,21 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     String returnedCreateTime = from(content).getString("[0].createTime");
     String returnedBatchId = from(content).getString("[0].batchId");
 
-    Assert.assertEquals(MockProvider.EXAMPLE_JOB_ID, returnedJobId);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedProcessDefinitionKey);
-    Assert.assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
-    Assert.assertEquals(MockProvider.EXAMPLE_JOB_NO_EXCEPTION_MESSAGE, returnedExceptionMessage);
-    Assert.assertEquals(MockProvider.EXAMPLE_JOB_FAILED_ACTIVITY_ID, returnedFailedActivityId);
-    Assert.assertEquals(MockProvider.EXAMPLE_JOB_RETRIES, returnedRetries);
-    Assert.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_DUE_DATE), returnedDueDate);
-    Assert.assertEquals(MockProvider.EXAMPLE_JOB_IS_SUSPENDED, returnedSuspended);
-    Assert.assertEquals(MockProvider.EXAMPLE_JOB_PRIORITY, returnedPriority);
-    Assert.assertEquals(MockProvider.EXAMPLE_JOB_DEFINITION_ID, returnedJobDefinitionId);
-    Assert.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
-    Assert.assertEquals(MockProvider.EXAMPLE_JOB_CREATE_TIME, returnedCreateTime);
-    Assert.assertEquals(MockProvider.EXAMPLE_BATCH_ID, returnedBatchId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_ID, returnedJobId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedProcessDefinitionKey);
+    Assertions.assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_NO_EXCEPTION_MESSAGE, returnedExceptionMessage);
+    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_FAILED_ACTIVITY_ID, returnedFailedActivityId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_RETRIES, returnedRetries);
+    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_DUE_DATE), returnedDueDate);
+    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_IS_SUSPENDED, returnedSuspended);
+    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_PRIORITY, returnedPriority);
+    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_DEFINITION_ID, returnedJobDefinitionId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_CREATE_TIME, returnedCreateTime);
+    Assertions.assertEquals(MockProvider.EXAMPLE_BATCH_ID, returnedBatchId);
   }
 
   private interface DateParameters {
@@ -676,7 +676,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> jobs = from(content).getList("");
+    List<Map<String, Object>> jobs = from(content).getList("");
     assertThat(jobs).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -702,7 +702,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> jobs = from(content).getList("");
+    List<Map<String, Object>> jobs = from(content).getList("");
     assertThat(jobs).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
@@ -729,7 +729,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -758,7 +758,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> jobs = from(content).getList("");
+    List<Map<String, Object>> jobs = from(content).getList("");
     assertThat(jobs).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -785,7 +785,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
       .post(JOBS_RESOURCE_URL);
 
     String content = response.asString();
-    List<String> jobs = from(content).getList("");
+    List<Map<String, Object>> jobs = from(content).getList("");
     assertThat(jobs).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
@@ -816,7 +816,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -849,7 +849,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> jobs = from(content).getList("");
+    List<Map<String, Object>> jobs = from(content).getList("");
     assertThat(jobs).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].processInstanceId");
@@ -880,7 +880,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> jobs = from(content).getList("");
+    List<Map<String, Object>> jobs = from(content).getList("");
     assertThat(jobs).hasSize(2);
 
     String returnedProcessInstaneId1 = from(content).getString("[0].processInstanceId");
@@ -913,7 +913,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> jobs = from(content).getList("");
+    List<Map<String, Object>> jobs = from(content).getList("");
     assertThat(jobs).hasSize(2);
 
     String returnedJobId1 = from(content).getString("[0].id");
@@ -944,7 +944,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> jobs = from(content).getList("");
+    List<Map<String, Object>> jobs = from(content).getList("");
     assertThat(jobs).hasSize(2);
 
     String returnedJobId1 = from(content).getString("[0].id");

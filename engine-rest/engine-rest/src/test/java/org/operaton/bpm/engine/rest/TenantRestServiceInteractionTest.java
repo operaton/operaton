@@ -51,17 +51,17 @@ import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.rest.dto.identity.TenantDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import io.restassured.http.ContentType;
 
 public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String SERVICE_URL = TEST_RESOURCE_ROOT_PATH + "/tenant";
   protected static final String TENANT_URL = SERVICE_URL + "/{id}";
@@ -78,7 +78,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   protected Tenant mockTenant;
   protected TenantQuery mockQuery;
 
-  @Before
+  @BeforeEach
   public void setupData() {
 
     identityServiceMock = mock(IdentityService.class);

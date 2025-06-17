@@ -18,10 +18,8 @@ package org.operaton.bpm.engine.rest.history;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_BATCH_ID;
-import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
@@ -29,10 +27,18 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_BATCH_ID;
+import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 
-import jakarta.ws.rs.core.Response.Status;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import io.restassured.http.ContentType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -47,23 +53,16 @@ import org.operaton.bpm.engine.rest.dto.history.batch.HistoricBatchDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.JsonPathUtil;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.InOrder;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import jakarta.ws.rs.core.Response.Status;
 
 public class HistoricBatchRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String HISTORIC_BATCH_RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/history/batch";
   protected static final String HISTORIC_SINGLE_BATCH_RESOURCE_URL = HISTORIC_BATCH_RESOURCE_URL + "/{id}";
@@ -72,7 +71,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   protected HistoryService historyServiceMock;
   protected HistoricBatchQuery queryMock;
 
-  @Before
+  @BeforeEach
   public void setUpHistoricBatchQueryMock() {
     HistoricBatch historicBatchMock = MockProvider.createMockHistoricBatch();
 

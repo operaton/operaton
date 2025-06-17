@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -34,14 +34,17 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import jakarta.ws.rs.core.Response.Status;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ManagementService;
@@ -63,20 +66,17 @@ import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockJobBuilder;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.JsonPathUtil;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.InOrder;
 
-public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import jakarta.ws.rs.core.Response.Status;public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
   private static final String RETRIES = "retries";
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String JOB_RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/job";
   protected static final String SINGLE_JOB_RESOURCE_URL = JOB_RESOURCE_URL + "/{id}";
@@ -100,7 +100,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
   private SetJobRetriesByJobsAsyncBuilder mockSetJobRetriesByJobsAsyncBuilder;
   private SetJobRetriesBuilder mockSetJobRetriesBuilder;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
 
     mockQuery = mock(JobQuery.class);
@@ -386,7 +386,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
     .when().get(JOB_RESOURCE_GET_STACKTRACE_URL);
 
     String content = response.asString();
-    Assert.assertEquals(stacktrace, content);
+    Assertions.assertEquals(stacktrace, content);
   }
 
   @Test

@@ -16,17 +16,40 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 import static org.operaton.bpm.engine.rest.impl.FetchAndLockHandlerImpl.BLOCKING_QUEUE_CAPACITY_PARAM_NAME;
 import static org.operaton.bpm.engine.rest.impl.FetchAndLockHandlerImpl.DEFAULT_BLOCKING_QUEUE_CAPACITY;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 import org.hamcrest.Matchers;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -40,26 +63,16 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 
-import jakarta.ws.rs.container.AsyncResponse;
-import jakarta.ws.rs.core.Response.Status;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.*;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
+import jakarta.ws.rs.container.AsyncResponse;
+import jakarta.ws.rs.core.Response.Status;
 
 /**
  * @author Tassilo Weidner
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FetchAndLockHandlerTest {
 
   @Mock
@@ -90,7 +103,7 @@ public class FetchAndLockHandlerTest {
 
   protected static final Date START_DATE = new Date(1457326800000L);
 
-  @Before
+  @BeforeEach
   public void initMocks() {
     when(fetchAndLockBuilder.workerId(anyString())).thenReturn(fetchAndLockBuilder);
     when(fetchAndLockBuilder.maxTasks(anyInt())).thenReturn(fetchAndLockBuilder);
@@ -115,17 +128,17 @@ public class FetchAndLockHandlerTest {
     handler.contextInitialized(servletContextEvent);
   }
 
-  @Before
+  @BeforeEach
   public void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
   }
 
-  @After
+  @AfterEach
   public void resetClock() {
     ClockUtil.reset();
   }
 
-  @After
+  @AfterEach
   public void resetUniqueWorkerRequestParam() {
     handler.parseUniqueWorkerRequestParam("false");
   }

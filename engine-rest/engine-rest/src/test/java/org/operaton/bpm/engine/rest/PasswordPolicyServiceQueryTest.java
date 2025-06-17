@@ -40,10 +40,10 @@ import org.operaton.bpm.engine.identity.PasswordPolicyRule;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.identity.PasswordPolicyDigitRuleImpl;
 import org.operaton.bpm.engine.impl.identity.PasswordPolicyLengthRuleImpl;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Miklas Boskamp
@@ -52,14 +52,14 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
 
   protected static final String QUERY_URL = TEST_RESOURCE_ROOT_PATH + IdentityRestService.PATH + "/password-policy";
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected ProcessEngineConfiguration processEngineConfigurationMock = mock(ProcessEngineConfiguration.class);
 
   protected IdentityService identityServiceMock;
 
-  @Before
+  @BeforeEach
   public void setUpMocks() {
     identityServiceMock = mock(IdentityService.class);
 

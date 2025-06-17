@@ -57,14 +57,14 @@ import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsUntypedValue;
 import org.operaton.bpm.engine.rest.sub.repository.impl.ProcessDefinitionResourceImpl;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.CaseInstanceBuilder;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -91,15 +91,15 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   protected static final String UPDATE_HISTORY_TIME_TO_LIVE_URL = SINGLE_CASE_DEFINITION_URL + "/history-time-to-live";
 
-  @ClassRule
-  public static final TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static final TestContainerExtension rule = new TestContainerExtension();
 
   private RepositoryService repositoryServiceMock;
   private CaseService caseServiceMock;
   private CaseDefinitionQuery caseDefinitionQueryMock;
   private CaseInstanceBuilder caseInstanceBuilder;
 
-  @Before
+  @BeforeEach
   public void setUpRuntime() {
     CaseDefinition mockCaseDefinition = MockProvider.createMockCaseDefinition();
 
@@ -623,14 +623,14 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   @Test
   public void testProcessDiagramMediaType() {
-    Assert.assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.png"));
-    Assert.assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.PNG"));
-    Assert.assertEquals("image/svg+xml", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.svg"));
-    Assert.assertEquals("image/jpeg", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpeg"));
-    Assert.assertEquals("image/jpeg", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpg"));
-    Assert.assertEquals("image/gif", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.gif"));
-    Assert.assertEquals("image/bmp", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.bmp"));
-    Assert.assertEquals("application/octet-stream", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.UNKNOWN"));
+    Assertions.assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.png"));
+    Assertions.assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.PNG"));
+    Assertions.assertEquals("image/svg+xml", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.svg"));
+    Assertions.assertEquals("image/jpeg", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpeg"));
+    Assertions.assertEquals("image/jpeg", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpg"));
+    Assertions.assertEquals("image/gif", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.gif"));
+    Assertions.assertEquals("image/bmp", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.bmp"));
+    Assertions.assertEquals("application/octet-stream", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.UNKNOWN"));
   }
 
   @Test

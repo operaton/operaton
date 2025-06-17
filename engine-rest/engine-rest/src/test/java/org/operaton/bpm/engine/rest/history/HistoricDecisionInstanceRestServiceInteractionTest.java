@@ -19,14 +19,12 @@ package org.operaton.bpm.engine.rest.history;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_DECISION_INSTANCE_ID;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyList;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
@@ -36,6 +34,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_DECISION_INSTANCE_ID;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,6 +44,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -57,21 +61,16 @@ import org.operaton.bpm.engine.rest.dto.history.HistoricDecisionInstanceQueryDto
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.JsonPathUtil;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.InOrder;
-
-import jakarta.ws.rs.core.Response.Status;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 public class HistoricDecisionInstanceRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String HISTORIC_DECISION_INSTANCE_URL = TEST_RESOURCE_ROOT_PATH + "/history/decision-instance";
   protected static final String HISTORIC_SINGLE_DECISION_INSTANCE_URL = HISTORIC_DECISION_INSTANCE_URL + "/{id}";
@@ -82,7 +81,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   protected HistoricDecisionInstance historicInstanceMock;
   protected HistoricDecisionInstanceQuery historicQueryMock;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     historyServiceMock = mock(HistoryService.class);
 

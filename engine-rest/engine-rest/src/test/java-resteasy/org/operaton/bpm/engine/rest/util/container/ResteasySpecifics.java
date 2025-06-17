@@ -16,12 +16,16 @@
  */
 package org.operaton.bpm.engine.rest.util.container;
 
-import io.undertow.servlet.Servlets;
-import io.undertow.servlet.api.DeploymentInfo;
-import jakarta.servlet.DispatcherType;
-import jakarta.ws.rs.core.Application;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.jboss.resteasy.plugins.server.servlet.FilterDispatcher;
+import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
+import org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.Extension;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.engine.rest.CustomJacksonDateFormatTest;
 import org.operaton.bpm.engine.rest.ExceptionHandlerTest;
 import org.operaton.bpm.engine.rest.application.TestCustomResourceApplication;
@@ -30,13 +34,11 @@ import org.operaton.bpm.engine.rest.standalone.NoServletAuthenticationFilterTest
 import org.operaton.bpm.engine.rest.standalone.NoServletEmptyBodyFilterTest;
 import org.operaton.bpm.engine.rest.standalone.ServletAuthenticationFilterTest;
 import org.operaton.bpm.engine.rest.standalone.ServletEmptyBodyFilterTest;
-import org.jboss.resteasy.plugins.server.servlet.FilterDispatcher;
-import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
-import org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap;
-import org.junit.rules.ExternalResource;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TemporaryFolder;
-import org.junit.rules.TestRule;
+
+import io.undertow.servlet.Servlets;
+import io.undertow.servlet.api.DeploymentInfo;
+import jakarta.servlet.DispatcherType;
+import jakarta.ws.rs.core.Application;
 
 /**
  * @author Thorben Lindhauer
@@ -125,14 +127,14 @@ public class ResteasySpecifics implements ContainerSpecifics {
   }
 
   @Override
-  public TestRule getTestRule(Class<?> testClass) {
+  public Extension getExtension(Class<?> testClass) {
     TestRuleFactory ruleFactory = DEFAULT_RULE_FACTORY;
 
     if (TEST_RULE_FACTORIES.containsKey(testClass)) {
       ruleFactory = TEST_RULE_FACTORIES.get(testClass);
     }
 
-    return ruleFactory.createTestRule();
+    return ruleFactory.createExtension();
   }
 
   public static class EmbeddedServerRuleFactory implements TestRuleFactory {
@@ -144,21 +146,8 @@ public class ResteasySpecifics implements ContainerSpecifics {
     }
 
     @Override
-    public TestRule createTestRule() {
-      return new ExternalResource() {
-
-        ResteasyServerBootstrap bootstrap = new ResteasyServerBootstrap(jaxRsApplication);
-
-        @Override
-        protected void before() {
-          bootstrap.start();
-        }
-
-        @Override
-        protected void after() {
-          bootstrap.stop();
-        }
-      };
+    public Extension createExtension() {
+      return new BeforeAfterExtension(new ResteasyServerBootstrap(jaxRsApplication));
     }
   }
 
@@ -171,25 +160,29 @@ public class ResteasySpecifics implements ContainerSpecifics {
     }
 
     @Override
-    public TestRule createTestRule() {
-      final TemporaryFolder tempFolder = new TemporaryFolder();
-
-      return RuleChain.outerRule(tempFolder).around(new ExternalResource() {
-
-        final AbstractServerBootstrap bootstrap = new ResteasyUndertowServerBootstrap(deploymentInfo);
-
-        @Override
-        protected void before() {
-          bootstrap.start();
-        }
-
-        @Override
-        protected void after() {
-          bootstrap.stop();
-        }
-      });
+    public Extension createExtension() {
+      return new BeforeAfterExtension(new ResteasyUndertowServerBootstrap(deploymentInfo));
     }
 
+  }
+
+  protected static class BeforeAfterExtension implements BeforeAllCallback, AfterAllCallback, Extension {
+
+    protected final AbstractServerBootstrap bootstrap;
+
+    protected BeforeAfterExtension(AbstractServerBootstrap bootstrap) {
+      this.bootstrap = bootstrap;
+    }
+
+    @Override
+    public void beforeAll(ExtensionContext context) throws Exception {
+      bootstrap.start();
+    }
+
+    @Override
+    public void afterAll(ExtensionContext context) throws Exception {
+      bootstrap.stop();
+    }
   }
 
 }

@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.rest.helper.variable.EqualsObjectValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsUntypedValue;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -48,10 +48,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import static io.restassured.RestAssured.given;
@@ -72,8 +72,8 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 public class TaskVariableLocalRestResourceInteractionTest extends
   AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String TASK_SERVICE_URL = TEST_RESOURCE_ROOT_PATH + "/task";
   protected static final String SINGLE_TASK_URL = TASK_SERVICE_URL + "/{id}";
@@ -87,7 +87,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
 
   protected TaskService taskServiceMock;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     taskServiceMock = mock(TaskService.class);
     when(processEngine.getTaskService()).thenReturn(taskServiceMock);
@@ -112,7 +112,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .body(EXAMPLE_VARIABLE_KEY + ".type", equalTo(VariableTypeHelper.toExpectedValueTypeName(EXAMPLE_VARIABLE_VALUE.getType())))
       .when().get(SINGLE_TASK_VARIABLES_URL);
 
-    Assert.assertEquals("Should return exactly one variable", 1, response.jsonPath().getMap("").size());
+    Assertions.assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
   }
 
   @Test

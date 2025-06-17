@@ -16,43 +16,53 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
-import jakarta.servlet.Filter;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.identity.*;
+import org.operaton.bpm.engine.identity.Group;
+import org.operaton.bpm.engine.identity.GroupQuery;
+import org.operaton.bpm.engine.identity.Tenant;
+import org.operaton.bpm.engine.identity.TenantQuery;
+import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.AuthorizationServiceImpl;
 import org.operaton.bpm.engine.impl.IdentityServiceImpl;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
 import org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider;
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.ws.rs.core.Response.Status;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import static org.mockito.Mockito.*;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.ws.rs.core.Response.Status;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTest {
 
   protected static final String SERVICE_PATH = TEST_RESOURCE_ROOT_PATH;
@@ -106,7 +116,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
     });
   }
 
-  @Before
+  @BeforeEach
   public void setup() throws ServletException {
     currentEngine = getProcessEngine(engineName);
 
@@ -171,7 +181,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
     authenticationFilter.doFilter(request, response, filterChain);
   }
 
-  @Test
+  @TestTemplate
   public void testHttpBasicAuthenticationCheck() throws IOException, ServletException {
     if (authenticationExpected) {
       when(identityServiceMock.checkPassword(MockProvider.EXAMPLE_USER_ID, MockProvider.EXAMPLE_USER_PASSWORD)).thenReturn(true);
@@ -184,7 +194,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
     request.setServletPath(servletPath);
     applyFilter(request, response, MockProvider.EXAMPLE_USER_ID, MockProvider.EXAMPLE_USER_PASSWORD);
 
-    Assert.assertEquals(Status.OK.getStatusCode(), response.getStatus());
+    Assertions.assertEquals(Status.OK.getStatusCode(), response.getStatus());
 
     if (authenticationExpected) {
       verify(identityServiceMock).setAuthentication(MockProvider.EXAMPLE_USER_ID, groupIds, tenantIds);

@@ -44,11 +44,11 @@ import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockDefinitionBuilder;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -57,14 +57,14 @@ import io.restassured.response.Response;
 
 public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String PROCESS_DEFINITION_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/process-definition";
   protected static final String PROCESS_DEFINITION_COUNT_QUERY_URL = PROCESS_DEFINITION_QUERY_URL + "/count";
   private ProcessDefinitionQuery mockedQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockedQuery = setUpMockDefinitionQuery(MockProvider.createMockDefinitions());
   }
@@ -161,8 +161,8 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     inOrder.verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
-    Assert.assertEquals("There should be one process definition returned.", 1, definitions.size());
+    List<Map<String, Object>> definitions = from(content).getList("");
+    Assertions.assertEquals(1, definitions.size(), "There should be one process definition returned.");
     assertThat(definitions.get(0)).as("There should be one process definition returned").isNotNull();
 
     String returnedDefinitionKey = from(content).getString("[0].key");
@@ -177,17 +177,17 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     Boolean returnedIsSuspended = from(content).getBoolean("[0].suspended");
     Boolean returnedIsStartedInTasklist = from(content).getBoolean("[0].startableInTasklist");
 
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedDefinitionId);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedDefinitionKey);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY, returnedCategory);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME, returnedDefinitionName);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION, returnedDescription);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION, returnedVersion);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME, returnedResourceName);
-    Assert.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, returnedDeploymentId);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME, returnedDiagramResourceName);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED, returnedIsSuspended);
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_STARTABLE, returnedIsStartedInTasklist);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedDefinitionId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedDefinitionKey);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY, returnedCategory);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME, returnedDefinitionName);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION, returnedDescription);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION, returnedVersion);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME, returnedResourceName);
+    Assertions.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, returnedDeploymentId);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME, returnedDiagramResourceName);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED, returnedIsSuspended);
+    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_STARTABLE, returnedIsStartedInTasklist);
   }
 
   @Test
@@ -207,7 +207,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     inOrder.verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedDefinitionId1 = from(content).getString("[0].id");
@@ -234,7 +234,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     inOrder.verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedDefinitionId1 = from(content).getString("[0].id");
@@ -360,7 +360,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -389,7 +389,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedKey1 = from(content).getString("[0].key");
@@ -412,7 +412,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -439,7 +439,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");

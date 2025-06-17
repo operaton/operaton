@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.query.PeriodUnit;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
 import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
@@ -36,9 +36,9 @@ import java.util.List;
 import java.util.Map;
 
 import io.restassured.http.ContentType;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -55,14 +55,14 @@ import static org.mockito.Mockito.when;
 public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
 
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String TASK_REPORT_URL = TEST_RESOURCE_ROOT_PATH + "/history/task/report";
 
   protected HistoricTaskInstanceReport mockedReportQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockedReportQuery = setUpMockReportQuery();
   }

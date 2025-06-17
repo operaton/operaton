@@ -19,15 +19,12 @@ package org.operaton.bpm.engine.rest.util.container;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.ws.rs.core.Application;
-
+import org.junit.jupiter.api.extension.Extension;
 import org.operaton.bpm.engine.rest.CustomJacksonDateFormatTest;
 import org.operaton.bpm.engine.rest.ExceptionHandlerTest;
 import org.operaton.bpm.engine.rest.application.TestCustomResourceApplication;
-import org.junit.rules.ExternalResource;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TemporaryFolder;
-import org.junit.rules.TestRule;
+
+import jakarta.ws.rs.core.Application;
 
 /**
  * @author Thorben Lindhauer
@@ -46,14 +43,14 @@ public class JerseySpecifics implements ContainerSpecifics {
   }
 
   @Override
-  public TestRule getTestRule(Class<?> testClass) {
+  public Extension getExtension(Class<?> testClass) {
     TestRuleFactory ruleFactory = DEFAULT_RULE_FACTORY;
 
     if (TEST_RULE_FACTORIES.containsKey(testClass)) {
       ruleFactory = TEST_RULE_FACTORIES.get(testClass);
     }
 
-    return ruleFactory.createTestRule();
+    return ruleFactory.createExtension();
   }
 
   public static class EmbeddedServerRuleFactory implements TestRuleFactory {
@@ -65,24 +62,9 @@ public class JerseySpecifics implements ContainerSpecifics {
     }
 
     @Override
-    public TestRule createTestRule() {
-      return new ExternalResource() {
-
-        JerseyServerBootstrap bootstrap = new JerseyServerBootstrap(jaxRsApplication);
-
-        protected void before() {
-          bootstrap.start();
-        }
-
-        protected void after() {
-          bootstrap.stop();
-        }
-      };
+    public Extension createExtension() {
+      return new BeforeAfterExtension(new JerseyServerBootstrap(jaxRsApplication));
     }
-  }
-
-  public TestRule getTestRule(String webXmlResource) {
-    throw new UnsupportedOperationException();
   }
 
   public static class ServletContainerRuleFactory implements TestRuleFactory {
@@ -94,24 +76,8 @@ public class JerseySpecifics implements ContainerSpecifics {
     }
 
     @Override
-    public TestRule createTestRule() {
-      final TemporaryFolder tempFolder = new TemporaryFolder();
-
-      return RuleChain
-        .outerRule(tempFolder)
-        .around(new ExternalResource() {
-
-          TomcatServerBootstrap bootstrap = new JerseyTomcatServerBootstrap(webXmlResource);
-
-          protected void before() {
-            bootstrap.setWorkingDir(tempFolder.getRoot().getAbsolutePath());
-            bootstrap.start();
-          }
-
-          protected void after() {
-            bootstrap.stop();
-          }
-        });
+    public Extension createExtension() {
+      return new TomcatExtension(new JerseyTomcatServerBootstrap(webXmlResource));
     }
 
   }

@@ -19,26 +19,26 @@ package org.operaton.bpm.engine.rest.history;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CLAIM;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_LOG_ID;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.anyString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CLAIM;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_LOG_ID;
 
 import java.util.Date;
 import java.util.List;
 
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
@@ -50,21 +50,20 @@ import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.dto.history.UserOperationLogEntryDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 /**
  * @author Danny Gräf
  */
 public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String USER_OPERATION_LOG_RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/history/user-operation";
 
@@ -82,7 +81,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
 
   protected HistoryService historyService;
 
-  @Before
+  @BeforeEach
   public void setUpMock() {
     List<UserOperationLogEntry> entries = MockProvider.createUserOperationLogEntries();
     queryMock = mock(UserOperationLogQuery.class);

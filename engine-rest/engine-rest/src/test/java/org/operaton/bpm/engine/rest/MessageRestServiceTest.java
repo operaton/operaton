@@ -16,20 +16,32 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import jakarta.ws.rs.core.Response.Status;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.Mockito;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -42,35 +54,21 @@ import org.operaton.bpm.engine.rest.helper.ErrorMessageHelper;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.helper.VariableTypeHelper;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.MessageCorrelationBuilder;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import java.util.ArrayList;
-import java.util.List;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResultWithVariables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 
-import static org.mockito.Mockito.when;
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 public class MessageRestServiceTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String MESSAGE_URL = TEST_RESOURCE_ROOT_PATH +  MessageRestService.PATH;
 
@@ -85,7 +83,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   private MessageCorrelationResultWithVariables executionResultWithVariables;
   private List<MessageCorrelationResultWithVariables> execResultWithVariablesList;
 
-  @Before
+  @BeforeEach
   public void setupMocks() {
     runtimeServiceMock = mock(RuntimeService.class);
     when(processEngine.getRuntimeService()).thenReturn(runtimeServiceMock);

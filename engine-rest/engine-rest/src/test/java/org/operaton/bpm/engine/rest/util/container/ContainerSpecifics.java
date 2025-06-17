@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.util.container;
 
-import org.junit.rules.TestRule;
+import org.junit.jupiter.api.extension.Extension;
 
 /**
  * @author Thorben Lindhauer
@@ -25,9 +25,9 @@ import org.junit.rules.TestRule;
 public interface ContainerSpecifics {
 
   /**
-   * Returns a test rule that is able to setup and tear down
+   * Returns an extension that is able to setup and tear down
    * a container for running the REST API tests
    */
-  TestRule getTestRule(Class<?> testClass);
+  Extension getExtension(Class<?> testClass);
 
 }

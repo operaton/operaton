@@ -41,19 +41,19 @@ import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.util.ModificationInstructionBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.ModificationBuilder;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import io.restassured.http.ContentType;
 
 public class ModificationRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String PROCESS_INSTANCE_URL = TEST_RESOURCE_ROOT_PATH + "/modification";
   protected static final String EXECUTE_MODIFICATION_SYNC_URL = PROCESS_INSTANCE_URL + "/execute";
@@ -63,7 +63,7 @@ public class ModificationRestServiceInteractionTest extends AbstractRestServiceT
   protected HistoryService historyServiceMock;
   protected ModificationBuilder modificationBuilderMock;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     runtimeServiceMock = mock(RuntimeService.class);
     when(processEngine.getRuntimeService()).thenReturn(runtimeServiceMock);

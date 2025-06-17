@@ -32,16 +32,16 @@ import static org.mockito.Mockito.when;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import jakarta.ws.rs.core.Response.Status;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.rest.helper.MockObjectValue;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.helper.MockVariableInstanceBuilder;
 import org.operaton.bpm.engine.rest.helper.VariableTypeHelper;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.variable.Variables;
@@ -55,8 +55,8 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
  */
 public class VariableInstanceRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String SERVICE_URL = TEST_RESOURCE_ROOT_PATH + "/variable-instance";
   protected static final String VARIABLE_INSTANCE_URL = SERVICE_URL + "/{id}";
@@ -66,7 +66,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
 
   protected VariableInstanceQuery variableInstanceQueryMock;
 
-  @Before
+  @BeforeEach
   public void setupTestData() {
     runtimeServiceMock = mock(RuntimeService.class);
     variableInstanceQueryMock = mock(VariableInstanceQuery.class);
@@ -249,7 +249,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
     .when().get(VARIABLE_INSTANCE_BINARY_DATA_URL);
 
     byte[] responseBytes = response.getBody().asByteArray();
-    Assert.assertEquals(new String(byteContent), new String(responseBytes));
+    Assertions.assertEquals(new String(byteContent), new String(responseBytes));
     verify(variableInstanceQueryMock, never()).disableBinaryFetching();
     verify(variableInstanceQueryMock).disableCustomObjectDeserialization();
 
@@ -321,7 +321,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
     .when().get(VARIABLE_INSTANCE_BINARY_DATA_URL);
     //due to some problems with wildfly we gotta check this separately
     String contentType = response.getContentType();
-    assertThat(contentType).isEqualTo(ContentType.TEXT.toString() + ";charset=UTF-8");
+    assertThat(contentType).isEqualTo(ContentType.TEXT.toString() + "; charset=UTF-8");
   }
 
   @Test

@@ -38,10 +38,10 @@ import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinitionQuery;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -50,15 +50,15 @@ import io.restassured.response.Response;
 
 public class DecisionRequirementsDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String DECISION_REQUIREMENTS_DEFINITION_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/decision-requirements-definition";
   protected static final String DECISION_REQUIREMENTS_DEFINITION_COUNT_QUERY_URL = DECISION_REQUIREMENTS_DEFINITION_QUERY_URL + "/count";
 
   private DecisionRequirementsDefinitionQuery mockedQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntime() {
     DecisionRequirementsDefinition mockDecisionRequirementsDefinition = MockProvider.createMockDecisionRequirementsDefinition();
     mockedQuery = createMockQuery(Collections.singletonList(mockDecisionRequirementsDefinition));
@@ -337,7 +337,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
     inOrder.verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedDefinitionId1 = from(content).getString("[0].id");
@@ -407,7 +407,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -430,7 +430,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -457,7 +457,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");

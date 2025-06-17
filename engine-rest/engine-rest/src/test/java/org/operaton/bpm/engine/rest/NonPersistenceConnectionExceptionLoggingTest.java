@@ -34,11 +34,11 @@ import java.util.List;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.operaton.bpm.engine.ProcessEnginePersistenceException;
 import org.operaton.bpm.engine.identity.UserQuery;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests Connection Exceptions that do not originate from persistence layer but are still connection exceptions.
@@ -47,11 +47,11 @@ public class NonPersistenceConnectionExceptionLoggingTest extends AbstractRestSe
 
   protected static final String USER_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/user";
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
+  @RegisterExtension
+  public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
       .watch(REST_API);
 
   @Test

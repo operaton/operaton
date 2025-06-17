@@ -68,10 +68,10 @@ import org.operaton.bpm.engine.rest.dto.authorization.AuthorizationDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.ResourceUtil;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import io.restassured.http.ContentType;
 
@@ -90,10 +90,10 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   protected IdentityService identityServiceMock;
   protected ProcessEngineConfigurationImpl processEngineConfigurationMock;
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     authorizationServiceMock = mock(AuthorizationServiceImpl.class);
     identityServiceMock = mock(IdentityServiceImpl.class);

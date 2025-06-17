@@ -22,7 +22,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -37,8 +37,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.ws.rs.core.Response.Status;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
@@ -49,30 +52,26 @@ import org.operaton.bpm.engine.rest.dto.history.HistoricDecisionInputInstanceDto
 import org.operaton.bpm.engine.rest.dto.history.HistoricDecisionOutputInstanceDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.variable.value.BytesValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String HISTORIC_DECISION_INSTANCE_RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/history/decision-instance";
   protected static final String HISTORIC_DECISION_INSTANCE_COUNT_RESOURCE_URL = HISTORIC_DECISION_INSTANCE_RESOURCE_URL + "/count";
 
   protected HistoricDecisionInstanceQuery mockedQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricDecisionInstanceQuery(MockProvider.createMockHistoricDecisionInstances());
   }
@@ -235,7 +234,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     inOrder.verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> instances = from(content).getList("");
+    List<Map<String, Object>> instances = from(content).getList("");
     assertEquals(1, instances.size());
     assertThat(instances.get(0)).isNotNull();
 
@@ -321,7 +320,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     inOrder.verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> instances = from(content).getList("");
+    List<Map<String, Object>> instances = from(content).getList("");
     assertEquals(1, instances.size());
     assertThat(instances.get(0)).isNotNull();
 
@@ -355,7 +354,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     inOrder.verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> instances = from(content).getList("");
+    List<Map<String, Object>> instances = from(content).getList("");
     assertEquals(1, instances.size());
     assertThat(instances.get(0)).isNotNull();
 
@@ -390,7 +389,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     inOrder.verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> instances = from(content).getList("");
+    List<Map<String, Object>> instances = from(content).getList("");
     assertEquals(1, instances.size());
     assertThat(instances.get(0)).isNotNull();
 
@@ -503,7 +502,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> historicDecisionInstances = from(content).getList("");
+    List<Map<String, Object>> historicDecisionInstances = from(content).getList("");
     assertThat(historicDecisionInstances).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -531,7 +530,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");

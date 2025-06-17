@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.BytesValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
@@ -154,7 +154,7 @@ public abstract class AbstractRestServiceTest {
   private static Properties connectionProperties = null;
   private static MockedProcessEngineProvider processEngineProvider = null;
 
-  @Before
+  @BeforeEach
   public void setUp() throws IOException {
     setupTestScenario();
   }

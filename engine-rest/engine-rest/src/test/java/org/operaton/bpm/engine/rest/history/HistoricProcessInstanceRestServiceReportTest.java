@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.dto.converter.ReportResultToCsvConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
 import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
@@ -37,10 +37,10 @@ import java.util.Map;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -60,14 +60,14 @@ import static org.mockito.Mockito.when;
  */
 public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String HISTORIC_PROCESS_INSTANCE_REPORT_URL = TEST_RESOURCE_ROOT_PATH + "/history/process-instance/report";
 
   protected HistoricProcessInstanceReport mockedReportQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockedReportQuery = setUpMockHistoricProcessInstanceReportQuery();
   }
@@ -207,8 +207,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
           .get(HISTORIC_PROCESS_INSTANCE_REPORT_URL);
 
     String content = response.asString();
-    List<String> reports = from(content).getList("");
-    Assert.assertEquals("There should be one report returned.", 1, reports.size());
+    List<Map<String, Object>> reports = from(content).getList("");
     assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     long returnedAvg = from(content).getLong("[0].average");
@@ -217,11 +216,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
     int returnedPeriod = from(content).getInt("[0].period");
     String returnedPeriodUnit = from(content).getString("[0].periodUnit");
 
-    Assert.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG, returnedAvg);
-    Assert.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX, returnedMax);
-    Assert.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN, returnedMin);
-    Assert.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD, returnedPeriod);
-    Assert.assertEquals(MONTH.toString(), returnedPeriodUnit);
+    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG, returnedAvg);
+    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX, returnedMax);
+    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN, returnedMin);
+    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD, returnedPeriod);
+    Assertions.assertEquals(MONTH.toString(), returnedPeriodUnit);
   }
 
   @Test
@@ -237,8 +236,8 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
           .get(HISTORIC_PROCESS_INSTANCE_REPORT_URL);
 
     String content = response.asString();
-    List<String> reports = from(content).getList("");
-    Assert.assertEquals("There should be one report returned.", 1, reports.size());
+    List<Map<String, Object>> reports = from(content).getList("");
+    Assertions.assertEquals(1, reports.size(), "There should be one report returned.");
     assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     long returnedAvg = from(content).getLong("[0].average");
@@ -247,11 +246,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
     int returnedPeriod = from(content).getInt("[0].period");
     String returnedPeriodUnit = from(content).getString("[0].periodUnit");
 
-    Assert.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG, returnedAvg);
-    Assert.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX, returnedMax);
-    Assert.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN, returnedMin);
-    Assert.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD, returnedPeriod);
-    Assert.assertEquals(QUARTER.toString(), returnedPeriodUnit);
+    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG, returnedAvg);
+    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX, returnedMax);
+    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN, returnedMin);
+    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD, returnedPeriod);
+    Assertions.assertEquals(QUARTER.toString(), returnedPeriodUnit);
   }
 
   @Test

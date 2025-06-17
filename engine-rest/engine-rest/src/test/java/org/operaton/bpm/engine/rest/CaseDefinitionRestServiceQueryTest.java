@@ -37,10 +37,10 @@ import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.CaseDefinitionQuery;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -56,12 +56,12 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   protected static final String CASE_DEFINITION_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/case-definition";
   protected static final String CASE_DEFINITION_COUNT_QUERY_URL = CASE_DEFINITION_QUERY_URL + "/count";
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   private CaseDefinitionQuery mockedQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntime() {
     mockedQuery = createMockCaseDefinitionQuery(MockProvider.createMockCaseDefinitions());
   }
@@ -370,7 +370,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
     inOrder.verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedDefinitionId1 = from(content).getString("[0].id");
@@ -413,7 +413,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -436,7 +436,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -463,7 +463,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");

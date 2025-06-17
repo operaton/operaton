@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.util.HeaderRule;
 
@@ -29,13 +29,13 @@ import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.im
 /**
  * @author Tassilo Weidner
  */
-public class XssProtectionTest {
+class XssProtectionTest {
 
-  @Rule
-  public HeaderRule headerRule = new HeaderRule();
+  @RegisterExtension
+  HeaderRule headerRule = new HeaderRule();
 
   @Test
-  public void shouldConfigureEnabledByDefault() {
+  void shouldConfigureEnabledByDefault() {
     // given
     headerRule.startServer("web.xml", "headersec");
 
@@ -47,7 +47,7 @@ public class XssProtectionTest {
   }
 
   @Test
-  public void shouldConfigureDisabled() {
+  void shouldConfigureDisabled() {
     // given
     headerRule.startServer("xss/disabled_web.xml", "headersec");
 
@@ -59,7 +59,7 @@ public class XssProtectionTest {
   }
 
   @Test
-  public void shouldConfigureDisabledIgnoreCase() {
+  void shouldConfigureDisabledIgnoreCase() {
     // given
     headerRule.startServer("xss/disabled_ignore_case_web.xml", "headersec");
 
@@ -71,7 +71,7 @@ public class XssProtectionTest {
   }
 
   @Test
-  public void shouldConfigureCustomValue() {
+  void shouldConfigureCustomValue() {
     // given
     headerRule.startServer("xss/custom_value_web.xml", "headersec");
 
@@ -83,7 +83,7 @@ public class XssProtectionTest {
   }
 
   @Test
-  public void shouldConfigureOptionSanitize() {
+  void shouldConfigureOptionSanitize() {
     // given
     headerRule.startServer("xss/option_sanitize_web.xml", "headersec");
 
@@ -95,7 +95,7 @@ public class XssProtectionTest {
   }
 
   @Test
-  public void shouldConfigureOptionSanitizeIgnoreCase() {
+  void shouldConfigureOptionSanitizeIgnoreCase() {
     // given
     headerRule.startServer("xss/option_sanitize_ignore_case_web.xml", "headersec");
 
@@ -107,7 +107,7 @@ public class XssProtectionTest {
   }
 
   @Test
-  public void shouldConfigureOptionBlock() {
+  void shouldConfigureOptionBlock() {
     // given
     headerRule.startServer("xss/option_block_web.xml", "headersec");
 
@@ -119,7 +119,7 @@ public class XssProtectionTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnSetBothParamsOptionAndValue() {
+  void shouldThrowExceptionOnSetBothParamsOptionAndValue() {
     // given
     headerRule.startServer("xss/option_and_value_web.xml", "headersec");
 
@@ -134,7 +134,7 @@ public class XssProtectionTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnNonExistingOption() {
+  void shouldThrowExceptionOnNonExistingOption() {
     // given
     headerRule.startServer("xss/option_non_existing_web.xml", "headersec");
 

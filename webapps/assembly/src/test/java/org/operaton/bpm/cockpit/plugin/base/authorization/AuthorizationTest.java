@@ -16,19 +16,9 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.authorization;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
-import static org.operaton.bpm.engine.authorization.Resources.USER;
-
-import java.util.Arrays;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -40,8 +30,14 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.After;
-import org.junit.Before;
+
+import java.util.List;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Permissions.ALL;
+import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
+import static org.operaton.bpm.engine.authorization.Resources.USER;
 
 /**
  * @author Roman Smirnov
@@ -49,43 +45,26 @@ import org.junit.Before;
  */
 public abstract class AuthorizationTest extends AbstractCockpitPluginTest {
 
-  protected ProcessEngine processEngine;
   protected String engineName;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  protected IdentityService identityService;
-  protected AuthorizationService authorizationService;
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
 
   protected String userId = "test";
   protected String groupId = "accounting";
   protected User user;
   protected Group group;
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    super.before();
-
-    processEngine = getProcessEngine();
-    engineName = getProcessEngine().getName();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-
-    identityService = processEngine.getIdentityService();
-    authorizationService = processEngine.getAuthorizationService();
-    repositoryService = processEngine.getRepositoryService();
-    runtimeService = processEngine.getRuntimeService();
-
     user = createUser(userId);
     group = createGroup(groupId);
 
     identityService.createMembership(userId, groupId);
 
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
     enableAuthorization();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     disableAuthorization();
     for (User user : identityService.createUserQuery().list()) {

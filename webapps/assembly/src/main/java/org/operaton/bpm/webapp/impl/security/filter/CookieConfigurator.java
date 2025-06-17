@@ -22,7 +22,8 @@ import jakarta.servlet.FilterConfig;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
-import org.operaton.bpm.webapp.impl.util.ServletFilterUtil;
+
+import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
 
 public class CookieConfigurator {
 
@@ -38,51 +39,27 @@ public class CookieConfigurator {
 
   public void parseParams(FilterConfig filterConfig) {
 
-    String enableSecureCookie = filterConfig.getInitParameter(ENABLE_SECURE_PARAM);
-    if (!ServletFilterUtil.isEmpty(enableSecureCookie)) {
-      isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookie);
+    String enableSecureCookieInitParam = filterConfig.getInitParameter(ENABLE_SECURE_PARAM);
+    if (hasText(enableSecureCookieInitParam)) {
+      isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookieInitParam);
     }
 
-    String cookieNameInput = filterConfig.getServletContext().getSessionCookieConfig().getName();
-    if (!isBlank(cookieNameInput)) {
-      cookieName = cookieNameInput;
+    String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
+    if (hasText(sessionCookieName) && !CookieConstants.JSESSION_ID.equals(sessionCookieName)) {
+      cookieName = sessionCookieName;
     }
 
-    String enableSameSiteCookie = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);
-    if (!ServletFilterUtil.isEmpty(enableSameSiteCookie)) {
-      isSameSiteCookieEnabled = Boolean.parseBoolean(enableSameSiteCookie);
+    String enableSameSiteCookieInitParam = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);
+    if (hasText(enableSameSiteCookieInitParam)) {
+      isSameSiteCookieEnabled = Boolean.parseBoolean(enableSameSiteCookieInitParam);
     } else {
       isSameSiteCookieEnabled = true; // default
     }
 
-    String sameSiteCookieValue = filterConfig.getInitParameter(SAME_SITE_VALUE_PARAM);
-    String sameSiteCookieOption = filterConfig.getInitParameter(SAME_SITE_OPTION_PARAM);
+    String sameSiteCookieValueInitParam = filterConfig.getInitParameter(SAME_SITE_VALUE_PARAM);
+    String sameSiteCookieOptionInitParam = filterConfig.getInitParameter(SAME_SITE_OPTION_PARAM);
 
-    if (!ServletFilterUtil.isEmpty(sameSiteCookieValue) && !ServletFilterUtil.isEmpty(sameSiteCookieOption)) {
-      throw new ProcessEngineException("Please either configure " + SAME_SITE_OPTION_PARAM +
-        " or " + SAME_SITE_VALUE_PARAM + ".");
-
-    } else if (!ServletFilterUtil.isEmpty(sameSiteCookieValue)) {
-      this.sameSiteCookieValue = sameSiteCookieValue;
-
-    } else if (!ServletFilterUtil.isEmpty(sameSiteCookieOption)) {
-
-      if (SameSiteOption.LAX.compareTo(sameSiteCookieOption)) {
-        this.sameSiteCookieValue = SameSiteOption.LAX.getValue();
-
-      } else if (SameSiteOption.STRICT.compareTo(sameSiteCookieOption)) {
-        this.sameSiteCookieValue = SameSiteOption.STRICT.getValue();
-
-      } else {
-        throw new ProcessEngineException("For " + SAME_SITE_OPTION_PARAM + " param, please configure one of the " +
-          "following options: " + Arrays.toString(SameSiteOption.values()));
-
-      }
-
-    } else { // default
-      this.sameSiteCookieValue = SameSiteOption.LAX.getValue();
-
-    }
+    this.sameSiteCookieValue = getSameSiteCookieValueInitValue(sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam);
   }
 
   public String getConfig() {
@@ -108,11 +85,29 @@ public class CookieConfigurator {
   }
 
   public String getCookieName(String defaultName) {
-    return isBlank(cookieName) ? defaultName : cookieName;
+    return !hasText(cookieName) ? defaultName : cookieName;
   }
 
-  protected boolean isBlank(String s) {
-    return s == null || s.trim().isEmpty();
+  static String getSameSiteCookieValueInitValue(String sameSiteCookieValueInitParam, String sameSiteCookieOptionInitParam) {
+    if (hasText(sameSiteCookieValueInitParam) && hasText(sameSiteCookieOptionInitParam)) {
+      throw new ProcessEngineException("Please either configure " + SAME_SITE_OPTION_PARAM +
+              " or " + SAME_SITE_VALUE_PARAM + ".");
+    }
+
+    if (hasText(sameSiteCookieValueInitParam)) {
+      return sameSiteCookieValueInitParam;
+    } else if (hasText(sameSiteCookieOptionInitParam)) {
+      if (sameSiteCookieOptionInitParam.equalsIgnoreCase(SameSiteOption.LAX.name())) {
+        return SameSiteOption.LAX.getValue();
+      } else if (sameSiteCookieOptionInitParam.equalsIgnoreCase(SameSiteOption.STRICT.name())) {
+        return SameSiteOption.STRICT.getValue();
+      } else {
+        throw new ProcessEngineException("For " + SAME_SITE_OPTION_PARAM + " param, please configure one of the " +
+                "following options: " + Arrays.toString(Arrays.stream(SameSiteOption.values()).map(SameSiteOption::getValue).toArray(String[]::new)));
+      }
+    } else { // default
+      return SameSiteOption.LAX.getValue();
+    }
   }
 
   public enum SameSiteOption {
@@ -120,7 +115,7 @@ public class CookieConfigurator {
     LAX("Lax"),
     STRICT("Strict");
 
-    protected final String value;
+    private final String value;
 
     SameSiteOption(String value) {
       this.value = value;
@@ -129,15 +124,6 @@ public class CookieConfigurator {
     public String getValue() {
       return value;
     }
-
-    public String getName() {
-      return this.name();
-    }
-
-    public boolean compareTo(String value) {
-      return this.value.equalsIgnoreCase(value);
-    }
-
   }
 
 }

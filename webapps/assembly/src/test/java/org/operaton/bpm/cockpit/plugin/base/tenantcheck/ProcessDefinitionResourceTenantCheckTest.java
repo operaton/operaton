@@ -16,50 +16,35 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.tenantcheck;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionQueryDto;
+import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessDefinitionResource;
+import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
+import org.operaton.bpm.engine.authorization.Groups;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto;
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionQueryDto;
-import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessDefinitionResource;
-import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.authorization.Groups;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPluginTest {
+class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPluginTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
   protected static final String ADMIN_GROUP = "adminGroup";
   protected static final String ADMIN_USER = "adminUser";
 
-  private ProcessEngine processEngine;
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
-  private RuntimeService runtimeService;
-  private IdentityService identityService;
-
   private ProcessDefinitionResource resource;
   private ProcessDefinitionQueryDto queryParameter;
 
-  @Before
-  public void init() {
-
-    processEngine = getProcessEngine();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-
-    runtimeService = processEngine.getRuntimeService();
-    identityService = processEngine.getIdentityService();
+  @BeforeEach
+  void init() {
 
     processEngineConfiguration.getAdminGroups().add(ADMIN_GROUP);
     processEngineConfiguration.getAdminUsers().add(ADMIN_USER);
@@ -76,14 +61,14 @@ public class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPlu
     queryParameter = new ProcessDefinitionQueryDto();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.getAdminGroups().remove(ADMIN_GROUP);
     processEngineConfiguration.getAdminUsers().remove(ADMIN_USER);
   }
 
   @Test
-  public void calledProcessDefinitionByParentProcessDefinitionIdNoAuthenticatedTenant() {
+  void calledProcessDefinitionByParentProcessDefinitionIdNoAuthenticatedTenant() {
 
     identityService.setAuthentication("user", null, null);
 
@@ -92,7 +77,7 @@ public class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPlu
   }
 
   @Test
-  public void calledProcessDefinitionByParentProcessDefinitionIdWithAuthenticatedTenant() {
+  void calledProcessDefinitionByParentProcessDefinitionIdWithAuthenticatedTenant() {
 
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
@@ -103,7 +88,7 @@ public class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPlu
   }
 
   @Test
-  public void calledProcessDefinitionByParentProcessDefinitionIdDisabledTenantCheck() {
+  void calledProcessDefinitionByParentProcessDefinitionIdDisabledTenantCheck() {
 
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
@@ -115,7 +100,7 @@ public class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPlu
   }
 
   @Test
-  public void calledProcessDefinitionByParentProcessDefinitionIdWithOperatonAdmin() {
+  void calledProcessDefinitionByParentProcessDefinitionIdWithOperatonAdmin() {
 
     identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
@@ -126,7 +111,7 @@ public class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPlu
   }
 
   @Test
-  public void calledProcessDefinitionByParentProcessDefinitionIdWithAdminGroups() {
+  void calledProcessDefinitionByParentProcessDefinitionIdWithAdminGroups() {
 
     identityService.setAuthentication("user", Collections.singletonList(ADMIN_GROUP), null);
 
@@ -137,7 +122,7 @@ public class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPlu
   }
 
   @Test
-  public void calledProcessDefinitionByParentProcessDefinitionIdWithAdminUsers() {
+  void calledProcessDefinitionByParentProcessDefinitionIdWithAdminUsers() {
 
     identityService.setAuthentication("adminUser", null, null);
 

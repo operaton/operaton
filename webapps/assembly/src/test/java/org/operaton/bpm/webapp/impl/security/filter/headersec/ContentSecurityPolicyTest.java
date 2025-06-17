@@ -16,22 +16,22 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.webapp.impl.util.HeaderRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_DEFAULT_VALUE;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NAME;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NONCE_PLACEHOLDER;
 
-public class ContentSecurityPolicyTest {
+class ContentSecurityPolicyTest {
 
-  @Rule
-  public HeaderRule headerRule = new HeaderRule();
+  @RegisterExtension
+  HeaderRule headerRule = new HeaderRule();
 
   @Test
-  public void shouldConfigureEnabledByDefault() {
+  void shouldConfigureEnabledByDefault() {
     // given
     headerRule.startServer("web.xml", "headersec");
 
@@ -44,7 +44,7 @@ public class ContentSecurityPolicyTest {
   }
 
   @Test
-  public void shouldConfigureDisabled() {
+  void shouldConfigureDisabled() {
     // given
     headerRule.startServer("csp/disabled_web.xml", "headersec");
 
@@ -56,7 +56,7 @@ public class ContentSecurityPolicyTest {
   }
 
   @Test
-  public void shouldConfigureDisabledIgnoreCase() {
+  void shouldConfigureDisabledIgnoreCase() {
     // given
     headerRule.startServer("csp/disabled_ignore_case_web.xml", "headersec");
 
@@ -68,7 +68,7 @@ public class ContentSecurityPolicyTest {
   }
 
   @Test
-  public void shouldConfigureCustomValue() {
+  void shouldConfigureCustomValue() {
     // given
     headerRule.startServer("csp/custom_value_web.xml", "headersec");
 

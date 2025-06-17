@@ -55,6 +55,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+
 import org.slf4j.Logger;
 
 
@@ -349,6 +350,8 @@ public abstract class TestHelper {
   public static String assertAndEnsureCleanDbAndCache(ProcessEngine processEngine, boolean fail) {
     ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
 
+    clearMetrics(processEngineConfiguration);
+
     // clear user operation log in case some operations are
     // executed with an authenticated user
     clearUserOperationLog(processEngineConfiguration);
@@ -532,6 +535,12 @@ public abstract class TestHelper {
         historyService.deleteUserOperationLogEntry(log.getId());
       }
     }
+  }
+
+  public static void clearMetrics(ProcessEngineConfigurationImpl processEngineConfiguration) {
+    var managementService = processEngineConfiguration.getManagementService();
+    managementService.deleteMetrics(null);
+    managementService.deleteTaskMetrics(null);
   }
 
   public static void deleteInstallationId(ProcessEngineConfigurationImpl processEngineConfiguration) {

@@ -16,22 +16,22 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.webapp.impl.util.HeaderRule;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContentTypeOptionsTest {
 
   public static final String HEADER_NAME = "X-Content-Type-Options";
   public static final String HEADER_DEFAULT_VALUE = "nosniff";
 
-  @Rule
-  public HeaderRule headerRule = new HeaderRule();
+  @RegisterExtension
+  HeaderRule headerRule = new HeaderRule();
 
   @Test
-  public void shouldConfigureEnabledByDefault() {
+  void shouldConfigureEnabledByDefault() {
     // given
     headerRule.startServer("web.xml", "headersec");
 
@@ -43,7 +43,7 @@ public class ContentTypeOptionsTest {
   }
 
   @Test
-  public void shouldConfigureDisabled() {
+  void shouldConfigureDisabled() {
     // given
     headerRule.startServer("cto/disabled_web.xml", "headersec");
 
@@ -55,7 +55,7 @@ public class ContentTypeOptionsTest {
   }
 
   @Test
-  public void shouldConfigureDisabledIgnoreCase() {
+  void shouldConfigureDisabledIgnoreCase() {
     // given
     headerRule.startServer("cto/disabled_ignore_case_web.xml", "headersec");
 
@@ -67,7 +67,7 @@ public class ContentTypeOptionsTest {
   }
 
   @Test
-  public void shouldConfigureCustomValue() {
+  void shouldConfigureCustomValue() {
     // given
     headerRule.startServer("cto/custom_value_web.xml", "headersec");
 

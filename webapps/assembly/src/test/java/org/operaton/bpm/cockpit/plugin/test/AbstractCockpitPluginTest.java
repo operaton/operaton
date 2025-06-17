@@ -16,28 +16,33 @@
  */
 package org.operaton.bpm.cockpit.plugin.test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.ibatis.logging.LogFactory;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.db.CommandExecutor;
 import org.operaton.bpm.cockpit.db.QueryService;
 import org.operaton.bpm.cockpit.impl.DefaultCockpitRuntimeDelegate;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.LogUtil;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -56,32 +61,39 @@ public abstract class AbstractCockpitPluginTest {
     // with an upgrade of mybatis, this might have to become org.mybatis.generator.logging.LogFactory.forceJavaLogging();
   }
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule(true);
+  protected ProcessEngine processEngine;
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected RuntimeService runtimeService;
+  protected RepositoryService repositoryService;
+  protected IdentityService identityService;
+  protected AuthorizationService authorizationService;
 
-  @BeforeClass
+  @RegisterExtension
+  public static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().ensureCleanAfterTest(false).build();
+
+  @BeforeAll
   public static void beforeClass() {
     Cockpit.setCockpitRuntimeDelegate(RUNTIME_DELEGATE);
   }
 
-  @AfterClass
+  @AfterAll
   public static void afterClass() {
     Cockpit.setCockpitRuntimeDelegate(null);
   }
 
-  @Before
+  @BeforeEach
   public void before() {
     RUNTIME_DELEGATE.engine = getProcessEngine();
   }
 
-  @After
+  @AfterEach
   public void after() {
     RUNTIME_DELEGATE.engine = null;
     getProcessEngine().getIdentityService().clearAuthentication();
   }
 
   public ProcessEngine getProcessEngine() {
-    return processEngineRule.getProcessEngine();
+    return processEngine;
   }
 
   protected CommandExecutor getCommandExecutor() {
@@ -103,7 +115,9 @@ public abstract class AbstractCockpitPluginTest {
     for (Job job : jobs) {
       try {
         managementService.executeJob(job.getId());
-      } catch (Exception e) {}
+      } catch (Exception ignored) {
+        // ignore
+      }
     }
 
     executeAvailableJobs();
@@ -130,7 +144,7 @@ public abstract class AbstractCockpitPluginTest {
 
     Deployment deployment = deploymentBuilder.deploy();
 
-    processEngineRule.manageDeployment(deployment);
+    processEngineExtension.manageDeployment(deployment);
 
     return deployment;
   }

@@ -16,37 +16,19 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
-import static junit.framework.TestCase.fail;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OPERATOR_NAME;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LESS_THAN_OPERATOR_NAME;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_OPERATOR_NAME;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQUALS_OPERATOR_NAME;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentStatisticsDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessInstanceDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessInstanceQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.resources.ProcessInstanceRestService;
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
 import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -56,48 +38,46 @@ import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OPERATOR_NAME;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LESS_THAN_OPERATOR_NAME;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_OPERATOR_NAME;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQUALS_OPERATOR_NAME;
 
 /**
  * @author roman.smirnov
  * @author nico.rehwaldt
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
-
-  private ProcessEngine processEngine;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  private RuntimeService runtimeService;
-  private RepositoryService repositoryService;
-  protected IdentityService identityService;
-
+class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   private ProcessInstanceRestService resource;
 
-  @Before
-  public void setUp() {
-    super.before();
-
-    processEngine = getProcessEngine();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) getProcessEngine()
-      .getProcessEngineConfiguration();
-    runtimeService = processEngine.getRuntimeService();
-    repositoryService = processEngine.getRepositoryService();
-    identityService = processEngine.getIdentityService();
-
+  @BeforeEach
+  void setUp() {
     resource = new ProcessInstanceRestService(processEngine.getName());
   }
 
-  @After
-  public void clearAuthentication() {
+  @AfterEach
+  void clearAuthentication() {
     identityService.clearAuthentication();
   }
 
-  @After
-  public void resetQueryMaxResultsLimit() {
+  @AfterEach
+  void resetQueryMaxResultsLimit() {
     processEngineConfiguration.setQueryMaxResultsLimit(Integer.MAX_VALUE);
   }
 
@@ -123,7 +103,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
-  public void testQuery() {
+  void query() {
     startProcessInstances("userTaskProcess", 3);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -139,7 +119,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
-  public void testQueryCount() {
+  void queryCount() {
     startProcessInstances("userTaskProcess", 3);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -156,7 +136,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
-  public void testQueryOrderByStartTime() {
+  void queryOrderByStartTime() {
     startProcessInstancesDelayed("userTaskProcess", 3);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -179,7 +159,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
-  public void testQueryOrderByStartTimeAsc() {
+  void queryOrderByStartTimeAsc() {
     startProcessInstancesDelayed("userTaskProcess", 3);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -203,7 +183,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
-  public void testQueryOrderByStartTimeDesc() {
+  void queryOrderByStartTimeDesc() {
     startProcessInstancesDelayed("userTaskProcess", 3);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -227,7 +207,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
-  public void testQueryPagination() {
+  void queryPagination() {
     startProcessInstances("userTaskProcess", 5);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -249,7 +229,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
-  public void testQueryPaginationWithOrderByStartTimeDesc() {
+  void queryPaginationWithOrderByStartTimeDesc() {
     startProcessInstancesDelayed("userTaskProcess", 8);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -285,7 +265,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
-  public void testQueryPaginationWithOrderByStartTimeAsc() {
+  void queryPaginationWithOrderByStartTimeAsc() {
     startProcessInstancesDelayed("userTaskProcess", 8);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -319,9 +299,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
+    "processes/user-task-process.bpmn"
   })
-  public void testQueryWithoutAnyIncident() {
+  void queryWithoutAnyIncident() {
     startProcessInstances("userTaskProcess", 1);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -342,7 +322,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/failing-process.bpmn"
   })
-  public void testQueryWithContainingIncidents() {
+  void queryWithContainingIncidents() {
     startProcessInstances("FailingProcess", 1);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -368,7 +348,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/process-with-two-parallel-failing-services.bpmn"
   })
-  public void testQueryWithMoreThanOneIncident() {
+  void queryWithMoreThanOneIncident() {
     startProcessInstances("processWithTwoParallelFailingServices", 1);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -395,7 +375,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       } else if (incidentType.equals("anotherIncident")) {
         assertThat(incident.getIncidentCount()).isEqualTo(5);
       } else {
-        Assert.fail(incidentType + " not expected.");
+        fail(incidentType + " not expected.");
       }
 
     }
@@ -405,7 +385,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/variables-process.bpmn"
   })
-  public void testQueryWithBooleanVariable() {
+  void queryWithBooleanVariable() {
     // given
     startProcessInstances("variableProcess", 2);
 
@@ -425,7 +405,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/variables-process.bpmn"
   })
-  public void testQueryWithStringVariable() {
+  void queryWithStringVariable() {
     // given
     startProcessInstances("variableProcess", 2);
 
@@ -445,7 +425,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/variables-process.bpmn"
   })
-  public void testQueryWithFloatVariable() {
+  void queryWithFloatVariable() {
     // given
     startProcessInstances("variableProcess", 2);
 
@@ -465,7 +445,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/variables-process.bpmn"
   })
-  public void testQueryWithIntegerVariable() {
+  void queryWithIntegerVariable() {
     // given
     startProcessInstances("variableProcess", 2);
 
@@ -486,7 +466,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     "processes/variables-process.bpmn"
   })
   @RequiredDatabase(excludes = {DbSqlSessionFactory.MYSQL, DbSqlSessionFactory.MARIADB})
-  public void testQueryWithComplexVariableFilter() {
+  void queryWithComplexVariableFilter() {
     // given
     startProcessInstances("variableProcess", 2);
 
@@ -517,7 +497,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     "processes/nested-call-activity.bpmn",
     "processes/failing-process.bpmn"
   })
-  public void testNestedIncidents() {
+  void nestedIncidents() {
     startProcessInstances("NestedCallActivity", 1);
 
     String nestedCallActivityId = repositoryService
@@ -580,9 +560,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryByBusinessKey() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryByBusinessKey() {
     startProcessInstances("userTaskProcess", 3);
 
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
@@ -594,9 +574,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryByBusinessKeyCount() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryByBusinessKeyCount() {
     startProcessInstances("userTaskProcess", 3);
 
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
@@ -609,10 +589,10 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn",
-      "processes/failing-process.bpmn"
-    })
-  public void testQueryByBusinessKeyWithMoreThanOneProcess() {
+    "processes/user-task-process.bpmn",
+    "processes/failing-process.bpmn"
+  })
+  void queryByBusinessKeyWithMoreThanOneProcess() {
     startProcessInstances("userTaskProcess", 3);
     startProcessInstances("FailingProcess", 3);
 
@@ -625,10 +605,10 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn",
-      "processes/failing-process.bpmn"
-    })
-  public void testQueryByBusinessKeyWithMoreThanOneProcessCount() {
+    "processes/user-task-process.bpmn",
+    "processes/failing-process.bpmn"
+  })
+  void queryByBusinessKeyWithMoreThanOneProcessCount() {
     startProcessInstances("userTaskProcess", 3);
     startProcessInstances("FailingProcess", 3);
 
@@ -642,9 +622,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryByBusinessKeyAndProcessDefinition() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryByBusinessKeyAndProcessDefinition() {
     startProcessInstances("userTaskProcess", 3);
 
     ProcessDefinition userTaskProcess = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -659,9 +639,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryByBusinessKeyAndProcessDefinitionCount() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryByBusinessKeyAndProcessDefinitionCount() {
     startProcessInstances("userTaskProcess", 3);
 
     ProcessDefinition userTaskProcess = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -677,11 +657,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByActivityId() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByActivityId() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
@@ -695,11 +675,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByActivityIdCount() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByActivityIdCount() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
@@ -714,11 +694,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByActivityIds() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByActivityIds() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
@@ -732,11 +712,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByActivityIdsCount() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByActivityIdsCount() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
@@ -751,11 +731,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByActivityIdAndProcessDefinitionId() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByActivityIdAndProcessDefinitionId() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessDefinition processDef = repositoryService
@@ -774,11 +754,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByActivityIdAndProcessDefinitionIdCount() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByActivityIdAndProcessDefinitionIdCount() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessDefinition processDef = repositoryService
@@ -798,11 +778,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByParentProcessDefinitionId() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByParentProcessDefinitionId() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessDefinition twoCallActivitiesProcess = repositoryService
@@ -819,11 +799,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByParentProcessDefinitionIdCount() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByParentProcessDefinitionIdCount() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessDefinition twoCallActivitiesProcess = repositoryService
@@ -841,11 +821,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByParentProcessDefinitionIdAndProcessDefinitionId() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByParentProcessDefinitionIdAndProcessDefinitionId() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessDefinition twoCallActivitiesProcess = repositoryService
@@ -869,11 +849,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByParentProcessDefinitionIdAndProcessDefinitionIdCount() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByParentProcessDefinitionIdAndProcessDefinitionIdCount() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessDefinition twoCallActivitiesProcess = repositoryService
@@ -897,11 +877,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByParentProcessDefinitionIdAndProcessDefinitionIdAndActivityId() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByParentProcessDefinitionIdAndProcessDefinitionIdAndActivityId() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessDefinition twoCallActivitiesProcess = repositoryService
@@ -926,11 +906,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/two-parallel-call-activities-calling-different-process.bpmn",
-      "processes/user-task-process.bpmn",
-      "processes/another-user-task-process.bpmn"
-    })
-  public void testQueryByParentProcessDefinitionIdAndProcessDefinitionIdAndActivityIdCount() {
+    "processes/two-parallel-call-activities-calling-different-process.bpmn",
+    "processes/user-task-process.bpmn",
+    "processes/another-user-task-process.bpmn"
+  })
+  void queryByParentProcessDefinitionIdAndProcessDefinitionIdAndActivityIdCount() {
     startProcessInstances("TwoParallelCallActivitiesCallingDifferentProcess", 2);
 
     ProcessDefinition twoCallActivitiesProcess = repositoryService
@@ -956,9 +936,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithIntegerVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithIntegerVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -979,9 +959,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithIntegerVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithIntegerVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1002,9 +982,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithIntegerVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithIntegerVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1025,9 +1005,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithIntegerVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithIntegerVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1048,9 +1028,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithIntegerVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithIntegerVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1071,9 +1051,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithIntegerVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithIntegerVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1094,9 +1074,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithLongVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithLongVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1117,9 +1097,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithLongVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithLongVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1140,9 +1120,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithLongVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithLongVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1163,9 +1143,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithLongVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithLongVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1186,9 +1166,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithLongVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithLongVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1209,9 +1189,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithLongVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithLongVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1232,9 +1212,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithShortVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithShortVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1255,9 +1235,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithShortVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithShortVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1278,9 +1258,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithShortVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithShortVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1301,9 +1281,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithShortVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithShortVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1324,9 +1304,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithShortVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithShortVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1347,9 +1327,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithShortVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithShortVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1370,9 +1350,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithDoubleVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithDoubleVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1393,9 +1373,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithDoubleVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithDoubleVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1415,11 +1395,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithDoubleVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithDoubleVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1439,11 +1419,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithDoubleVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithDoubleVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1463,11 +1443,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithDoubleVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithDoubleVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1487,11 +1467,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterShortVariableWithDoubleVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterShortVariableWithDoubleVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
@@ -1512,9 +1492,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithIntegerVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithIntegerVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1535,9 +1515,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithIntegerVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithIntegerVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1558,9 +1538,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithIntegerVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithIntegerVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1581,9 +1561,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithIntegerVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithIntegerVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1604,9 +1584,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithIntegerVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithIntegerVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1627,9 +1607,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithIntegerVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithIntegerVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1650,9 +1630,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithLongVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithLongVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1673,9 +1653,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithLongVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithLongVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1696,9 +1676,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithLongVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithLongVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1719,9 +1699,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithLongVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithLongVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1742,9 +1722,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithLongVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithLongVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1765,9 +1745,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithLongVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithLongVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1788,9 +1768,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithShortVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithShortVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1811,9 +1791,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithShortVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithShortVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1834,9 +1814,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithShortVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithShortVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1857,9 +1837,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithShortVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithShortVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1880,9 +1860,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithShortVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithShortVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1903,9 +1883,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithShortVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithShortVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1926,9 +1906,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithDoubleVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithDoubleVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1949,9 +1929,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithDoubleVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithDoubleVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1971,11 +1951,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithDoubleVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithDoubleVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -1995,11 +1975,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithDoubleVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithDoubleVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -2019,11 +1999,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithDoubleVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithDoubleVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -2043,11 +2023,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterIntegerVariableWithDoubleVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterIntegerVariableWithDoubleVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
@@ -2068,9 +2048,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithIntegerVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithIntegerVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2091,9 +2071,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithIntegerVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithIntegerVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2114,9 +2094,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithIntegerVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithIntegerVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2137,9 +2117,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithIntegerVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithIntegerVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2160,9 +2140,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithIntegerVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithIntegerVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2183,9 +2163,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithIntegerVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithIntegerVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2206,9 +2186,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithLongVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithLongVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2229,9 +2209,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithLongVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithLongVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2252,9 +2232,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithLongVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithLongVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2275,9 +2255,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithLongVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithLongVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2298,9 +2278,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithLongVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithLongVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2321,9 +2301,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithLongVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithLongVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2344,9 +2324,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithShortVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithShortVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2367,9 +2347,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithShortVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithShortVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2390,9 +2370,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithShortVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithShortVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2413,9 +2393,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithShortVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithShortVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2436,9 +2416,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithShortVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithShortVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2459,9 +2439,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithShortVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithShortVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2482,9 +2462,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithDoubleVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithDoubleVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2505,9 +2485,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithDoubleVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithDoubleVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2527,11 +2507,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithDoubleVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithDoubleVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2551,11 +2531,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithDoubleVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithDoubleVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2575,11 +2555,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithDoubleVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithDoubleVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2599,11 +2579,11 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
+  @Disabled("FIXME")
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterLongVariableWithDoubleVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterLongVariableWithDoubleVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
@@ -2624,9 +2604,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithIntegerVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithIntegerVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
@@ -2647,9 +2627,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithIntegerVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithIntegerVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -2670,9 +2650,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithIntegerVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithIntegerVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
@@ -2693,9 +2673,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithIntegerVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithIntegerVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -2716,9 +2696,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithIntegerVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithIntegerVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
@@ -2739,9 +2719,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithIntegerVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithIntegerVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -2762,9 +2742,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithLongVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithLongVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
@@ -2785,9 +2765,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithLongVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithLongVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -2808,9 +2788,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithLongVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithLongVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -2831,9 +2811,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithLongVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithLongVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -2854,9 +2834,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithLongVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithLongVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
@@ -2877,9 +2857,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithLongVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithLongVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -2900,9 +2880,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithShortVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithShortVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
@@ -2923,9 +2903,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithShortVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithShortVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -2946,9 +2926,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithShortVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithShortVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5.3);
 
@@ -2969,9 +2949,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithShortVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithShortVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -2992,9 +2972,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithShortVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithShortVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
@@ -3015,9 +2995,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithShortVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithShortVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -3038,9 +3018,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithDoubleVariable_Eq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithDoubleVariableEq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
@@ -3061,9 +3041,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithDoubleVariable_Neq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithDoubleVariableNeq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -3084,9 +3064,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithDoubleVariable_Gteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithDoubleVariableGteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -3107,9 +3087,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithDoubleVariable_Gt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithDoubleVariableGt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -3130,9 +3110,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithDoubleVariable_Lteq() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithDoubleVariableLteq() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.1);
 
@@ -3153,9 +3133,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryAfterDoubleVariableWithDoubleVariable_Lt() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryAfterDoubleVariableWithDoubleVariableLt() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
@@ -3176,9 +3156,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryByStartedAfter() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryByStartedAfter() {
     String date = "2014-01-01T13:13:00";
     Date currentDate = DateTimeUtil.parseDateTime(date).toDate();
 
@@ -3195,9 +3175,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryByStartedBefore() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryByStartedBefore() {
     String date = "2014-01-01T13:13:00";
     Date currentDate = DateTimeUtil.parseDateTime(date).toDate();
 
@@ -3217,9 +3197,9 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/user-task-process.bpmn"
-    })
-  public void testQueryByStartedBetween() {
+    "processes/user-task-process.bpmn"
+  })
+  void queryByStartedBetween() {
     String date = "2014-01-01T13:13:00";
     Date currentDate = DateTimeUtil.parseDateTime(date).toDate();
 
@@ -3239,84 +3219,70 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  public void shouldReturnPaginatedResult() {
+  void shouldReturnPaginatedResult() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
     identityService.setAuthenticatedUserId("foo");
 
-    try {
+    Assertions.assertDoesNotThrow(() -> {
       // when
       resource.queryProcessInstances(new ProcessInstanceQueryDto(), 0, 10);
       // then: no exception expected
-    } catch (BadUserRequestException e) {
-      // then
-      fail("No exception expected");
-    }
+    }, "No exception expected");
   }
 
   @Test
-  public void shouldReturnUnboundedResult_NotAuthenticated() {
+  void shouldReturnUnboundedResult_NotAuthenticated() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
-    try {
+    Assertions.assertDoesNotThrow(() -> {
       // when
       resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
       // then: no exception expected
-    } catch (BadUserRequestException e) {
-      // then
-      fail("No exception expected");
-    }
+    }, "No exception expected");
   }
 
   @Test
-  public void shouldReturnUnboundedResult_NoLimitConfigured() {
+  void shouldReturnUnboundedResult_NoLimitConfigured() {
     // given
     identityService.setAuthenticatedUserId("foo");
 
-    try {
+    Assertions.assertDoesNotThrow(() -> {
       // when
       resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
       // then: no exception expected
-    } catch (BadUserRequestException e) {
-      // then
-      fail("No exception expected");
-    }
+    }, "No exception expected");
   }
 
   @Test
-  public void shouldThrowExceptionWhenMaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenMaxResultsLimitExceeded() {
+    // given
+    processEngineConfiguration.setQueryMaxResultsLimit(10);
+
+    identityService.setAuthenticatedUserId("foo");
+    var processInstanceQueryDto = new ProcessInstanceQueryDto();
+
+    // when
+    assertThatThrownBy(() -> resource.queryProcessInstances(processInstanceQueryDto, 0, 11))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 10 exceeded!");
+  }
+
+  @Test
+  void shouldThrowExceptionWhenQueryUnbounded() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
     identityService.setAuthenticatedUserId("foo");
 
-    try {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), 0, 11);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("Max results limit of 10 exceeded!");
-    }
-  }
+    var processInstanceQueryDto = new ProcessInstanceQueryDto();
 
-  @Test
-  public void shouldThrowExceptionWhenQueryUnbounded() {
-    // given
-    processEngineConfiguration.setQueryMaxResultsLimit(10);
-
-    identityService.setAuthenticatedUserId("foo");
-
-    try {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("An unbound number of results is forbidden!");
-    }
+    // when
+    assertThatThrownBy(() -> resource.queryProcessInstances(processInstanceQueryDto, null, null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("An unbound number of results is forbidden!");
   }
 
   @Test
@@ -3324,7 +3290,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     "processes/failing-process.bpmn",
     "processes/user-task-process.bpmn"
   })
-  public void shouldFilterWithIncident() {
+  void shouldFilterWithIncident() {
     startProcessInstances("FailingProcess", 1);
     startProcessInstances("userTaskProcess", 1);
 
@@ -3350,7 +3316,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     "processes/failing-process.bpmn",
     "processes/user-task-process.bpmn"
   })
-  public void shouldFilterWithIncidentOnCount() {
+  void shouldFilterWithIncidentOnCount() {
     startProcessInstances("FailingProcess", 1);
     startProcessInstances("userTaskProcess", 1);
 

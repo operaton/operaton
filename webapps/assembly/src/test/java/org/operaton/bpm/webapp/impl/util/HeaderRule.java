@@ -16,30 +16,36 @@
  */
 package org.operaton.bpm.webapp.impl.util;
 
+import org.eclipse.jetty.ee10.webapp.WebAppContext;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.resource.URLResourceFactory;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
+
 import java.io.IOException;
 import java.net.BindException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.ee10.webapp.WebAppContext;
-import org.eclipse.jetty.util.resource.URLResourceFactory;
-import org.junit.rules.ExternalResource;
 
 /**
+ * JUnit 5 extension for managing a Jetty server during tests.
+ *
  * @author Tassilo Weidner
  */
-public class HeaderRule extends ExternalResource {
+public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
 
-  protected static final int SERVER_PORT = 8085;
-  protected static final int RETRIES = 3;
+  private static final int SERVER_PORT = 8085;
+  private static final int RETRIES = 3;
 
-  protected Server server = new Server(SERVER_PORT);
-  protected WebAppContext webAppContext = new WebAppContext();
-  protected HttpURLConnection connection = null;
+  private final Server server = new Server(SERVER_PORT);
+  private final WebAppContext webAppContext = new WebAppContext();
+  private HttpURLConnection connection = null;
 
   @Override
-  protected void before() {
+  public void beforeEach(ExtensionContext context) {
     try {
       server.stop();
     } catch (Exception e) {
@@ -48,7 +54,7 @@ public class HeaderRule extends ExternalResource {
   }
 
   @Override
-  protected void after() {
+  public void afterEach(ExtensionContext context) {
     try {
       server.stop();
     } catch (Exception e) {
@@ -64,7 +70,7 @@ public class HeaderRule extends ExternalResource {
     startServer(webDescriptor, scope, contextPath, RETRIES);
   }
 
-  protected void startServer(String webDescriptor, String scope, String contextPath, int startUpRetries) {
+  private void startServer(String webDescriptor, String scope, String contextPath, int startUpRetries) {
     webAppContext.setContextPath(contextPath);
     webAppContext.setBaseResource(new URLResourceFactory().newResource("/"));
     webAppContext.setDescriptor("src/test/resources/WEB-INF/" + scope + "/" + webDescriptor);
@@ -77,7 +83,8 @@ public class HeaderRule extends ExternalResource {
       if (e.getCause() instanceof BindException && startUpRetries > 0) {
         try {
           Thread.sleep(500L);
-        } catch (Exception ex) {
+        } catch (InterruptedException ignored) {
+          Thread.currentThread().interrupt();
         }
         startServer(webDescriptor, scope, contextPath, --startUpRetries);
       } else {
@@ -100,9 +107,8 @@ public class HeaderRule extends ExternalResource {
 
   public void performRequestWithHeader(String name, String value, String path, String method) {
     try {
-      connection =
-        (HttpURLConnection) new URL("http://localhost:" + SERVER_PORT + "/operaton" + path)
-          .openConnection();
+      connection = (HttpURLConnection) new URL("http://localhost:" + SERVER_PORT + "/operaton" + path)
+        .openConnection();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -131,7 +137,7 @@ public class HeaderRule extends ExternalResource {
   }
 
   public String getCookieHeader() {
-    return connection.getHeaderField("Set-Cookie");
+    return connection.getHeaderField(CookieConstants.SET_COOKIE_HEADER_NAME);
   }
 
   public Throwable getException() {
@@ -139,13 +145,7 @@ public class HeaderRule extends ExternalResource {
   }
 
   public boolean headerExists(String name) {
-    for (String key : connection.getHeaderFields().keySet()) {
-      if (name.equals(key)) {
-        return true;
-      }
-    }
-
-    return false;
+    return connection.getHeaderFields().containsKey(name);
   }
 
   public String getResponseBody() {
@@ -181,5 +181,4 @@ public class HeaderRule extends ExternalResource {
     }
     return regex.toString();
   }
-
 }

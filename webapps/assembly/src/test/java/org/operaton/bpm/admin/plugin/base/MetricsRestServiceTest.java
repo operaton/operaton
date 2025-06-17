@@ -16,25 +16,23 @@
  */
 package org.operaton.bpm.admin.plugin.base;
 
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriInfo;
 import org.assertj.core.groups.Tuple;
+import org.joda.time.DateTime;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.operaton.bpm.admin.impl.plugin.resources.MetricsRestService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskMeterLogEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.joda.time.DateTime;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
 
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.UriInfo;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -43,24 +41,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 
-public class MetricsRestServiceTest extends AbstractAdminPluginTest {
+class MetricsRestServiceTest extends AbstractAdminPluginTest {
 
   private final MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
   private MetricsRestService resource;
   private UriInfo uriInfo;
-  private ManagementService managementService;
   private DbMetricsReporter dbMetricsReporter;
   private MetricsRegistry metricsRegistry;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     super.before();
 
-    var processEngine = getProcessEngine();
-    var processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
     dbMetricsReporter = processEngineConfiguration.getDbMetricsReporter();
     metricsRegistry = processEngineConfiguration.getMetricsRegistry();
-    managementService = processEngine.getManagementService();
 
     resource = new MetricsRestService(processEngine.getName());
 
@@ -68,16 +62,15 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
     Mockito.doReturn(queryParameters).when(uriInfo).getQueryParameters();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     queryParameters.clear();
-    managementService.deleteMetrics(null);
-    managementService.deleteTaskMetrics(null);
+
     ClockUtil.reset();
   }
 
   @Test
-  public void shouldThrowExceptionWhenSubscriptionStartDateNotProvided() {
+  void shouldThrowExceptionWhenSubscriptionStartDateNotProvided() {
     // given
     queryParameters.add("subscriptionStartDate", "");
 
@@ -89,7 +82,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenSubscriptionStartDateInvalid() {
+  void shouldThrowExceptionWhenSubscriptionStartDateInvalid() {
     // given
     queryParameters.add("subscriptionStartDate", "notDate");
     queryParameters.add("groupBy", "month");
@@ -103,7 +96,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenSubscriptionStartDateNotInPast() {
+  void shouldThrowExceptionWhenSubscriptionStartDateNotInPast() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2100).withMonthOfYear(1).withDayOfMonth(31).toString());
     queryParameters.add("groupBy", "month");
@@ -116,7 +109,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenGroupByNotProvided() {
+  void shouldThrowExceptionWhenGroupByNotProvided() {
     // given
     queryParameters.add("subscriptionStartDate", "2024-01-01");
 
@@ -127,7 +120,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenGroupByInvalid() {
+  void shouldThrowExceptionWhenGroupByInvalid() {
     // given
     queryParameters.add("subscriptionStartDate", "2024-01-01");
     queryParameters.add("groupBy", "day");
@@ -139,7 +132,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenStartDateInvalid() {
+  void shouldThrowExceptionWhenStartDateInvalid() {
     // given
     queryParameters.add("subscriptionStartDate", "2024-01-01");
     queryParameters.add("startDate", "notDate");
@@ -153,7 +146,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenEndDateInvalid() {
+  void shouldThrowExceptionWhenEndDateInvalid() {
     // given
     queryParameters.add("subscriptionStartDate", "2024-01-01");
     queryParameters.add("endDate", "notDate");
@@ -167,7 +160,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenStartDateNotBeforeEndDate() {
+  void shouldThrowExceptionWhenStartDateNotBeforeEndDate() {
     // given
     queryParameters.add("subscriptionStartDate", "2024-01-01");
     queryParameters.add("startDate", "2023-01-31T16:54:00.000+0100");
@@ -180,7 +173,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenMetricsInvalid() {
+  void shouldThrowExceptionWhenMetricsInvalid() {
     // given
     queryParameters.add("subscriptionStartDate", "2024-01-01");
     queryParameters.add("groupBy", "month");
@@ -194,7 +187,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldReturnAggregatedMetricsFilteredByMetricsParameter() {
+  void shouldReturnAggregatedMetricsFilteredByMetricsParameter() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(1).withDayOfMonth(1).toString());
     queryParameters.add("groupBy", "year");
@@ -217,7 +210,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldReturnAggregatedMetricsFilteredByStartDateParameter() {
+  void shouldReturnAggregatedMetricsFilteredByStartDateParameter() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(1).withDayOfMonth(1).toString());
     queryParameters.add("groupBy", "year");
@@ -244,7 +237,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldReturnAggregatedMetricsFilteredByEndDateParameter() {
+  void shouldReturnAggregatedMetricsFilteredByEndDateParameter() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(1).withDayOfMonth(1).toString());
     queryParameters.add("groupBy", "year");
@@ -271,7 +264,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldReturnAggregatedMetricsGroupedByMonth() {
+  void shouldReturnAggregatedMetricsGroupedByMonth() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(4).withDayOfMonth(15).toString());
     queryParameters.add("groupBy", "month");
@@ -304,7 +297,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldReturnAggregatedMetricsGroupedByYear() {
+  void shouldReturnAggregatedMetricsGroupedByYear() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(4).withDayOfMonth(15).toString());
     queryParameters.add("groupBy", "year");
@@ -337,16 +330,18 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldReturnAnnualAggregatedMetricsForTU() {
+  void shouldReturnAnnualAggregatedMetricsForTU() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(1).withDayOfMonth(1).toString());
     queryParameters.add("groupBy", "year");
     queryParameters.add("metrics", Metrics.TASK_USERS);
 
     // generate TU metric - counts _unique_ task workers (unique ASSIGNEE_HASH_)
-    processEngineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
-      commandContext.getMeterLogManager().insert(new TaskMeterLogEntity("assignee", ClockUtil.getCurrentTime()));
-      commandContext.getMeterLogManager().insert(new TaskMeterLogEntity("assignee", ClockUtil.getCurrentTime()));
+    TaskMeterLogEntity assignee1 = new TaskMeterLogEntity("assignee", ClockUtil.getCurrentTime());
+    TaskMeterLogEntity assignee2 = new TaskMeterLogEntity("assignee", ClockUtil.getCurrentTime());
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getMeterLogManager().insert(assignee1);
+      commandContext.getMeterLogManager().insert(assignee2);
       ClockUtil.reset();
       return null;
     });
@@ -362,7 +357,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldReturnMonthlyAggregatedMetricsForTU() {
+  void shouldReturnMonthlyAggregatedMetricsForTU() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(1).withDayOfMonth(1).toString());
     queryParameters.add("startDate", "2023-01-01");
@@ -372,7 +367,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
     // generate TU metric - counts _unique_ task workers (unique ASSIGNEE_HASH_) for the selected period (startDate, endDate)
     DateTime now = new DateTime();
     DateTime prevMonth = now.minusMonths(1);
-    processEngineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
+    processEngineExtension.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
       commandContext.getMeterLogManager().insert(new TaskMeterLogEntity("assignee1", ClockUtil.getCurrentTime()));
       commandContext.getMeterLogManager().insert(new TaskMeterLogEntity("assignee3", ClockUtil.getCurrentTime()));
 
@@ -410,7 +405,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
       dbMetricsReporter.reportNow();
 
       int i1 = i;
-      processEngineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
+      processEngineExtension.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
         for (int j = 1; j <= i1; j++) {
           commandContext.getMeterLogManager().insert(
               new TaskMeterLogEntity(UUID.randomUUID().toString(), ClockUtil.getCurrentTime()));
@@ -424,7 +419,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldReturnAggregatedMetricsByYear() {
+  void shouldReturnAggregatedMetricsByYear() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(1).withDayOfMonth(1).toString());
     queryParameters.add("groupBy", "year");
@@ -455,7 +450,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   }
 
   @Test
-  public void shouldReturnAggregatedMetricsByMonth() {
+  void shouldReturnAggregatedMetricsByMonth() {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(1).withDayOfMonth(1).toString());
     queryParameters.add("groupBy", "month");

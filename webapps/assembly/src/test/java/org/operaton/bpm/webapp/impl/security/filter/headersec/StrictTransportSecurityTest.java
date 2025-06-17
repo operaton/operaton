@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.util.HeaderRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.StrictTransportSecurityProvider.HEADER_NAME;
 
-public class StrictTransportSecurityTest {
+class StrictTransportSecurityTest {
 
-  @Rule
-  public HeaderRule headerRule = new HeaderRule();
+  @RegisterExtension
+  HeaderRule headerRule = new HeaderRule();
 
   @Test
-  public void shouldConfigureDisabledByDefault() {
+  void shouldConfigureDisabledByDefault() {
     // given
     headerRule.startServer("web.xml", "headersec");
 
@@ -42,7 +42,7 @@ public class StrictTransportSecurityTest {
   }
 
   @Test
-  public void shouldConfigureEnabled() {
+  void shouldConfigureEnabled() {
     // given
     headerRule.startServer("hsts/enabled_web.xml", "headersec");
 
@@ -54,7 +54,7 @@ public class StrictTransportSecurityTest {
   }
 
   @Test
-  public void shouldConfigureEnabledIgnoreCase() {
+  void shouldConfigureEnabledIgnoreCase() {
     // given
     headerRule.startServer("hsts/enabled_ignore_case_web.xml", "headersec");
 
@@ -66,7 +66,7 @@ public class StrictTransportSecurityTest {
   }
 
   @Test
-  public void shouldConfigureCustomValue() {
+  void shouldConfigureCustomValue() {
     // given
     headerRule.startServer("hsts/custom_value_web.xml", "headersec");
 
@@ -78,7 +78,7 @@ public class StrictTransportSecurityTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenConfiguringCustomValueAndMaxAge() {
+  void shouldThrowExceptionWhenConfiguringCustomValueAndMaxAge() {
     // given
     headerRule.startServer("hsts/max_age_and_value_web.xml", "headersec");
 
@@ -95,7 +95,7 @@ public class StrictTransportSecurityTest {
   }
 
   @Test
-  public void shouldConfigureIncludeSubdomains() {
+  void shouldConfigureIncludeSubdomains() {
     // given
     headerRule.startServer("hsts/include_subdomains_web.xml", "headersec");
 
@@ -107,7 +107,7 @@ public class StrictTransportSecurityTest {
   }
 
   @Test
-  public void shouldConfigureIncludeSubdomainsAndMaxAge() {
+  void shouldConfigureIncludeSubdomainsAndMaxAge() {
     // given
     headerRule.startServer("hsts/include_subdomains_max_age_web.xml", "headersec");
 
@@ -119,7 +119,7 @@ public class StrictTransportSecurityTest {
   }
 
   @Test
-  public void shouldConfigureMaxAge() {
+  void shouldConfigureMaxAge() {
     // given
     headerRule.startServer("hsts/max_age_web.xml", "headersec");
 

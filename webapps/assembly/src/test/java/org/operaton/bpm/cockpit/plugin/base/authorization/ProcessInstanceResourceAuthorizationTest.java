@@ -16,30 +16,30 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.authorization;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.CalledProcessInstanceDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.CalledProcessInstanceQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessInstanceResource;
 import org.operaton.bpm.engine.impl.db.AuthorizationCheck;
 import org.operaton.bpm.engine.impl.db.PermissionCheck;
 import org.operaton.bpm.engine.impl.identity.Authentication;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest {
+class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest {
 
   protected static final String USER_TASK_PROCESS_KEY = "userTaskProcess";
   protected static final String CALLING_USER_TASK_PROCESS_KEY = "CallingUserTaskProcess";
@@ -49,11 +49,9 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   protected ProcessInstanceResource resource;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     super.setUp();
-
-    runtimeService = processEngine.getRuntimeService();
 
     deploymentId = createDeployment(null, "processes/user-task-process.bpmn", "processes/calling-user-task-process.bpmn").getId();
 
@@ -61,7 +59,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     deleteDeployment(deploymentId);
     super.tearDown();
@@ -70,7 +68,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   // ProcessInstanceResource#queryCalledProcessInstances() /////////////////////////////
 
   @Test
-  public void testCalledInstancesWithoutAuthorization() {
+  void calledInstancesWithoutAuthorization() {
     // given
     String processInstanceId = selectAnyProcessInstanceByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
 
@@ -86,7 +84,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCalledInstancesWithReadPermissionOnProcessInstance() {
+  void calledInstancesWithReadPermissionOnAnyProcessInstance() {
     // given
     String processInstanceId = selectAnyProcessInstanceByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -104,25 +102,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCalledInstancesWithReadPermissionOnAnyProcessInstance() {
-    // given
-    String processInstanceId = selectAnyProcessInstanceByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
-    createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
-
-    resource = new ProcessInstanceResource(engineName, processInstanceId);
-
-    CalledProcessInstanceQueryDto queryParameter = new CalledProcessInstanceQueryDto();
-
-    // when
-    List<CalledProcessInstanceDto> calledInstances = resource.queryCalledProcessInstances(queryParameter);
-
-    // then
-    assertThat(calledInstances).isNotEmpty().hasSize(1);
-    assertThat(calledInstances.get(0).getId()).isNotEqualTo(processInstanceId);
-  }
-
-  @Test
-  public void testCalledInstancesWithReadPermissionOnProcessDefinition() {
+  void calledInstancesWithReadPermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, CALLING_USER_TASK_PROCESS_KEY, userId, READ_INSTANCE);
 
@@ -140,7 +120,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCalledInstancesWithMultipleReadPermissions() {
+  void calledInstancesWithMultipleReadPermissions() {
     // given
     String processInstanceId = selectAnyProcessInstanceByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, CALLING_USER_TASK_PROCESS_KEY, userId, READ_INSTANCE);
@@ -162,7 +142,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   // query "selectCalledProcessInstances" //////////////////////////////////////////////
 
   @Test
-  public void testCalledInstancesQueryWithoutAuthorization() {
+  void calledInstancesQueryWithoutAuthorization() {
     // given
     CalledProcessInstanceQueryDto queryParameter = new CalledProcessInstanceQueryDto();
 
@@ -174,7 +154,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCalledInstancesQueryWithReadPermissionOnProcessInstance() {
+  void calledInstancesQueryWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = selectAnyProcessInstanceByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -190,7 +170,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCalledInstancesQueryWithReadPermissionOnAnyProcessInstance() {
+  void calledInstancesQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
 
@@ -204,7 +184,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCalledInstancesQueryWithReadInstancePermissionOnProcessDefinition() {
+  void calledInstancesQueryWithReadInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, CALLING_USER_TASK_PROCESS_KEY, userId, READ_INSTANCE);
 
@@ -218,7 +198,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCalledInstancesQueryWithMultipleReadPermissins() {
+  void calledInstancesQueryWithMultipleReadPermissins() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, CALLING_USER_TASK_PROCESS_KEY, userId, READ_INSTANCE);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);

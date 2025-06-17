@@ -64,7 +64,6 @@ const Controller = [
     PluginMetricsResource,
     $translate
   ) {
-    const telemetryResource = camAPI.resource('telemetry');
     const dateFilter = $filter('date');
 
     // initial scope data
@@ -89,21 +88,6 @@ const Controller = [
     $scope.annualMetrics = [];
     $scope.displayLegacyMetrics = false;
     $scope.datePickerOptions = {maxDate: moment().toDate()};
-
-    telemetryResource.fetchData((err, res) => {
-      if (!err) {
-        $scope.telemetryData = res;
-        delete $scope.telemetryData.product.internals.commands;
-        delete $scope.telemetryData.product.internals.metrics;
-      } else {
-        $scope.telemetryData = $translate.instant(
-          'DIAGNOSTICS_FETCH_DATA_ERROR_MESSAGE',
-          {
-            err
-          }
-        );
-      }
-    });
 
     const initChart = () => {
       const $canvas = angular.element('canvas#monthly-metrics-chart-canvas');
@@ -415,7 +399,6 @@ const Controller = [
         str += `- ${metricKey}: ${metric[metrics[metricKey]].sumFmt}\n`;
       });
       str += '\n';
-      str += JSON.stringify($scope.telemetryData, null, 2);
       return str;
     };
 

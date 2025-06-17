@@ -51,7 +51,6 @@ import org.operaton.bpm.spring.boot.starter.configuration.impl.GenericProperties
 import org.operaton.bpm.spring.boot.starter.event.EventPublisherPlugin;
 import org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminator;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.operaton.bpm.spring.boot.starter.telemetry.OperatonIntegrationDeterminator;
 import org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -174,8 +173,4 @@ public class OperatonBpmConfiguration {
     return new EventPublisherPlugin(properties.getEventing(), publisher);
   }
 
-  @Bean
-  public OperatonIntegrationDeterminator operatonIntegrationDeterminator() {
-    return new OperatonIntegrationDeterminator();
-  }
 }

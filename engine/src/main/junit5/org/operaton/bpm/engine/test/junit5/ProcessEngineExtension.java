@@ -63,7 +63,6 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.test.TestHelper;
@@ -303,7 +302,6 @@ public class ProcessEngineExtension implements TestWatcher,
 
    TestHelper.resetIdGenerator(processEngineConfiguration);
    ClockUtil.reset();
-   PlatformDiagnosticsRegistry.clear();
 
    TestHelper.clearUserOperationLog(processEngineConfiguration);
 

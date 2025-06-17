@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.management.TableMetaData;
 import org.operaton.bpm.engine.management.TablePage;
-import org.operaton.bpm.engine.telemetry.TelemetryData;
 
 import java.util.Collections;
 import java.util.List;
@@ -479,71 +478,6 @@ class ManagementAuthorizationTest extends AuthorizationTest {
     })
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.DELETE));
-  }
-
-  // configure telemetry /////////////////////////////////////
-
-  @Test
-  void shouldNotThrowExceptionWhenToggleTelemetry() {
-    // given
-
-    // when
-    managementService.toggleTelemetry(true);
-
-    // then
-    assertThat(managementService.isTelemetryEnabled()).isFalse();
-  }
-
-  // get telemetry data /////////////////////////////////////
-
-  @Test
-  void shouldGetTelemetryDataAsOperatonAdmin() {
-    // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
-
-    // when
-    TelemetryData telemetryData = managementService.getTelemetryData();
-
-    // then
-    assertThat(telemetryData).isNotNull();
-  }
-
-  @Test
-  void shouldGetTelemetryDataWithPermission() {
-    // given
-    createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
-
-    // when
-    TelemetryData telemetryData = managementService.getTelemetryData();
-
-    // then
-    assertThat(telemetryData).isNotNull();
-  }
-
-  @Test
-  void shouldGetTelemetryDataWithAdminAndPermission() {
-    // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
-    createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
-
-    // when
-    TelemetryData telemetryData = managementService.getTelemetryData();
-
-    // then
-    assertThat(telemetryData).isNotNull();
-  }
-
-
-  @Test
-  void shouldNotGetTelemetryDataWithoutAdminAndPermission() {
-    // given
-
-    assertThatThrownBy(() -> {
-      // when
-      managementService.getTelemetryData();
-    })
-    // then
-      .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
 
   // delete metrics //////////////////////////////////////

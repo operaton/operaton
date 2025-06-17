@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -244,8 +243,6 @@ public class ProcessEngineRule extends TestWatcher implements ProcessEngineServi
     ClockUtil.reset();
 
     clearServiceReferences();
-
-    PlatformDiagnosticsRegistry.clear();
   }
 
   public void setCurrentTime(Date currentTime) {

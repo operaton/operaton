@@ -17,49 +17,16 @@
 package org.operaton.bpm.engine.impl.diagnostics;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-
-import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
 
 public class DiagnosticsRegistry {
 
   protected Map<String, CommandCounter> commands = new HashMap<>();
-  protected ApplicationServerImpl applicationServer;
-  protected String operatonIntegration;
-  protected Set<String> webapps = new HashSet<>();
-
-  public synchronized ApplicationServerImpl getApplicationServer() {
-    if (applicationServer == null) {
-      applicationServer = PlatformDiagnosticsRegistry.getApplicationServer();
-    }
-    return applicationServer;
-  }
-
-  public synchronized void setApplicationServer(String applicationServerVersion) {
-    this.applicationServer = new ApplicationServerImpl(applicationServerVersion);
-  }
 
   public Map<String, CommandCounter> getCommands() {
     return commands;
   }
 
-  public String getOperatonIntegration() {
-    return operatonIntegration;
-  }
-
-  public void setOperatonIntegration(String operatonIntegration) {
-    this.operatonIntegration = operatonIntegration;
-  }
-
-  public synchronized Set<String> getWebapps() {
-    return webapps;
-  }
-
-  public synchronized void setWebapps(Set<String> webapps) {
-    this.webapps = webapps;
-  }
 
   public void markOccurrence(String name) {
     markOccurrence(name, 1);
@@ -79,20 +46,12 @@ public class DiagnosticsRegistry {
     counter.mark(times);
   }
 
-  public synchronized void addWebapp(String webapp) {
-    if (!webapps.contains(webapp)) {
-      webapps.add(webapp);
-    }
-  }
-
   public void clearCommandCounts() {
     commands.clear();
   }
 
   public void clear() {
     commands.clear();
-    applicationServer = null;
-    webapps.clear();
   }
 
 }

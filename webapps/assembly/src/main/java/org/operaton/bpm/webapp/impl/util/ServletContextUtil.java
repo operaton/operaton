@@ -37,8 +37,6 @@ public class ServletContextUtil {
   protected static final String APP_PATH_ATTR_NAME =
     "org.operaton.bpm.spring.boot.starter.webapp.applicationPath";
 
-  protected static final String SUCCESSFUL_ET_ATTR_NAME =
-    "org.operaton.bpm.webapp.telemetry.data.stored";
 
   protected static final String AUTH_CACHE_TTL_ATTR_NAME =
     "org.operaton.bpm.webapp.auth.cache.ttl";
@@ -76,25 +74,6 @@ public class ServletContextUtil {
     servletContext.setAttribute(APP_PATH_ATTR_NAME, applicationPath);
   }
 
-  /**
-   * @return whether the web application has already successfully been sent to
-   *         the engine as telemetry info or not.
-   */
-  public static boolean isTelemetryDataSentAlready(String webappName, String engineName, ServletContext servletContext) {
-    return servletContext.getAttribute(buildTelemetrySentAttribute(webappName, engineName)) != null;
-  }
-
-  /**
-   * Marks the web application as successfully sent to the engine as telemetry
-   * info
-   */
-  public static void setTelemetryDataSent(String webappName, String engineName, ServletContext servletContext) {
-    servletContext.setAttribute(buildTelemetrySentAttribute(webappName, engineName), true);
-  }
-
-  protected static String buildTelemetrySentAttribute(String webappName, String engineName) {
-    return SUCCESSFUL_ET_ATTR_NAME + "." + webappName + "." + engineName;
-  }
 
   /**
    * Sets {@param cacheTimeToLive} in the {@link AuthenticationFilter} to be used on initial login authentication.

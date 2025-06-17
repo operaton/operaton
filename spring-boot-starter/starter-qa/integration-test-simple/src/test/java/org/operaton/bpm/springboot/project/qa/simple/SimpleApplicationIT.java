@@ -18,9 +18,6 @@ package org.operaton.bpm.springboot.project.qa.simple;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsRegistry;
-import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +46,8 @@ class SimpleApplicationIT {
    * spring-boot-starter-jersey (i.e. without servlet API) still works correctly.
    */
   @Test
-  void shouldNotDetermineApplicationServer() {
-
-    DiagnosticsRegistry diagnosticsRegistry = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getDiagnosticsRegistry();
-
-    // then
-    ApplicationServerImpl applicationServer = diagnosticsRegistry.getApplicationServer();
-    assertThat(applicationServer).isNull();
+  void shouldExposeProcessEngineName() {
+    assertThat(processEngine.getName()).isNotEmpty();
   }
 
 }

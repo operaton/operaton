@@ -88,14 +88,6 @@ import org.operaton.bpm.engine.impl.form.OperatonFormRefImpl;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.impl.persistence.entity.MetricIntervalEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
-import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.CommandImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.DatabaseImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.InternalsImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.MetricImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.ProductImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 import org.operaton.bpm.engine.management.ActivityStatistics;
 import org.operaton.bpm.engine.management.IncidentStatistics;
 import org.operaton.bpm.engine.management.JobDefinition;
@@ -989,55 +981,6 @@ public abstract class MockProvider {
   public static final String EXAMPLE_PROBLEM_ELEMENT_ID_2 = "element_89";
   public static final String EXAMPLE_RESOURCE_NAME = "abc";
   public static final List<String> EXAMPLE_ELEMENT_IDS = Arrays.asList(EXAMPLE_PROBLEM_ELEMENT_ID, EXAMPLE_PROBLEM_ELEMENT_ID_2);
-
-  // Telemetry
-  public static final String EXAMPLE_TELEMETRY_INSTALLATION_ID = "8343cc7a-8ad1-42d4-97d2-43452c0bdfa3";
-  public static final String EXAMPLE_TELEMETRY_PRODUCT_NAME = "Operaton BPM Runtime";
-  public static final String EXAMPLE_TELEMETRY_PRODUCT_VERSION = "7.14.0";
-  public static final String EXAMPLE_TELEMETRY_PRODUCT_EDITION = "enterprise";
-  public static final String EXAMPLE_TELEMETRY_DB_VENDOR = "h2";
-  public static final String EXAMPLE_TELEMETRY_DB_VERSION = "1.4.190 (2015-10-11)";
-  public static final String EXAMPLE_TELEMETRY_APP_SERVER_VENDOR = "Wildfly";
-  public static final String EXAMPLE_TELEMETRY_APP_SERVER_VERSION = "WildFly Full 19.0.0.Final (WildFly Core 11.0.0.Final) - 2.0.30.Final";
-  public static final String EXAMPLE_TELEMETRY_TELEMETRY_CONFIGURE_CMD = "TelemetryConfigureCmd";
-  public static final String EXAMPLE_TELEMETRY_IS_TELEMETRY_ENABLED_CMD = "IsTelemetryEnabledCmd";
-  public static final String EXAMPLE_TELEMETRY_GET_TELEMETRY_DATA_CMD = "GetTelemetryDataCmd";
-  public static final String EXAMPLE_TELEMETRY_LICENSE_CUSTOMER_NAME = "customer name";
-  public static final String EXAMPLE_TELEMETRY_LICENSE_TYPE = "UNIFIED";
-  public static final String EXAMPLE_TELEMETRY_LICENSE_VALID_UNTIL = "2022-09-30";
-  public static final boolean EXAMPLE_TELEMETRY_LICENSE_UNLIMITED = false;
-  public static final Map<String, String> EXAMPLE_TELEMETRY_LICENSE_FEATURES = Collections.singletonMap("operatonBPM", "true");
-  public static final String EXAMPLE_TELEMETRY_LICENSE_RAW = "customer=customer name;expiryDate=2022-09-30;operatonBPM=true;optimize=false;cawemo=false";
-  public static final String EXAMPLE_TELEMETRY_JDK_VERSION = "14.0.2";
-  public static final String EXAMPLE_TELEMETRY_JDK_VENDOR = "Oracle Corporation";
-  public static final String EXAMPLE_TELEMETRY_DATA_COLLECTION_START_DATE = withTimezone("2022-01-01T00:00:00");
-
-  public static final DatabaseImpl EXAMPLE_TELEMETRY_DATABASE = new DatabaseImpl(EXAMPLE_TELEMETRY_DB_VENDOR,
-      EXAMPLE_TELEMETRY_DB_VERSION);
-  public static final ApplicationServerImpl EXAMPLE_TELEMETRY_SERVER = new ApplicationServerImpl(
-      EXAMPLE_TELEMETRY_APP_SERVER_VENDOR, EXAMPLE_TELEMETRY_APP_SERVER_VERSION);
-  public static final JdkImpl EXAMPLE_TELEMETRY_JDK = new JdkImpl(EXAMPLE_TELEMETRY_JDK_VERSION, EXAMPLE_TELEMETRY_JDK_VENDOR);
-  public static final InternalsImpl EXAMPLE_TELEMETRY_INTERNALS = new InternalsImpl(EXAMPLE_TELEMETRY_DATABASE,
-      EXAMPLE_TELEMETRY_SERVER, EXAMPLE_TELEMETRY_JDK);
-  static {
-    EXAMPLE_TELEMETRY_INTERNALS.setOperatonIntegration(
-        Stream.of("spring-boot-starter", "operaton-bpm-run").collect(Collectors.toCollection(HashSet::new)));
-    EXAMPLE_TELEMETRY_INTERNALS
-        .setWebapps(Stream.of("cockpit", "admin").collect(Collectors.toCollection(HashSet::new)));
-    EXAMPLE_TELEMETRY_INTERNALS
-        .setCommands(Stream.of(new Object[][] { { "StartProcessInstanceCmd", 40 }, { "FetchExternalTasksCmd", 100 } })
-            .collect(Collectors.toMap(data -> (String) data[0], data -> new CommandImpl((Integer) data[1]))));
-    EXAMPLE_TELEMETRY_INTERNALS.setMetrics(Stream
-        .of(new Object[][] { { "process-instances", 936L }, { "flow-node-instances", 6125L },
-            { "decision-instances", 140L }, { "executed-decision-elements", 732L } })
-        .collect(Collectors.toMap(data -> (String) data[0], data -> new MetricImpl((Long) data[1]))));
-    EXAMPLE_TELEMETRY_INTERNALS.setOperatonIntegration(Collections.singleton("spring-boot"));
-    EXAMPLE_TELEMETRY_INTERNALS.setWebapps(Collections.singleton("cockpit"));
-    EXAMPLE_TELEMETRY_INTERNALS.setDataCollectionStartDate(DateTimeUtil.parseDate(EXAMPLE_TELEMETRY_DATA_COLLECTION_START_DATE));
-  }
-  public static final ProductImpl EXAMPLE_TELEMETRY_PRODUCT = new ProductImpl(EXAMPLE_TELEMETRY_PRODUCT_NAME,
-      EXAMPLE_TELEMETRY_PRODUCT_VERSION, EXAMPLE_TELEMETRY_PRODUCT_EDITION, EXAMPLE_TELEMETRY_INTERNALS);
-  public static final TelemetryDataImpl EXAMPLE_TELEMETRY_DATA = new TelemetryDataImpl(EXAMPLE_TELEMETRY_INSTALLATION_ID, EXAMPLE_TELEMETRY_PRODUCT);
 
   public static Task createMockTask() {
     return mockTask().build();

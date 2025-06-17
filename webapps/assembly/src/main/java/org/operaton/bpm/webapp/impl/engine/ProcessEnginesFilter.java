@@ -22,7 +22,6 @@ import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.CockpitRuntimeDelegate;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.authorization.Groups;
-import org.operaton.bpm.engine.rest.util.WebApplicationUtil;
 import org.operaton.bpm.tasklist.Tasklist;
 import org.operaton.bpm.tasklist.TasklistRuntimeDelegate;
 import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
@@ -263,7 +262,6 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
                                 String contextPath,
                                 HttpServletResponse response,
                                 ServletContext servletContext) throws IOException {
-    setWebappInTelemetry(engineName, appName, servletContext);
     String data = getWebResourceContents("/app/" + appName + "/index.html");
     final String cspNonce = (String) servletContext.getAttribute(ContentSecurityPolicyProvider.ATTR_CSP_FILTER_NONCE);
 
@@ -275,12 +273,6 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
     response.getWriter().append(data);
   }
 
-  protected void setWebappInTelemetry(String engineName, String appName, ServletContext servletContext) {
-    if (!ServletContextUtil.isTelemetryDataSentAlready(appName, engineName, servletContext) &&
-        WebApplicationUtil.setWebapp(engineName, appName)) {
-      ServletContextUtil.setTelemetryDataSent(appName, engineName, servletContext);
-    }
-  }
 
   protected String replacePlaceholder(String data,
                                       String appName,

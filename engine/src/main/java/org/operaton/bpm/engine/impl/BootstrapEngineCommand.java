@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.EverLivingJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
-import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 
 /**
  * @author Nikola Koevski
@@ -52,9 +51,6 @@ public class BootstrapEngineCommand implements ProcessEngineBootstrapCommand {
       checkHistoryCleanupLockExists(commandContext);
       createHistoryCleanupJob(commandContext);
     }
-
-    // installationId needs to be updated in the telemetry data
-    updateTelemetryData(commandContext);
 
     return null;
   }
@@ -144,15 +140,6 @@ public class BootstrapEngineCommand implements ProcessEngineBootstrapCommand {
     }
   }
 
-  protected void updateTelemetryData(CommandContext commandContext) {
-    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
-    String installationId = processEngineConfiguration.getInstallationId();
-
-    TelemetryDataImpl telemetryData = processEngineConfiguration.getTelemetryData();
-
-    // set installationId in the telemetry data
-    telemetryData.setInstallation(installationId);
-  }
 
   protected void acquireExclusiveInstallationIdLock(CommandContext commandContext) {
     PropertyManager propertyManager = commandContext.getPropertyManager();

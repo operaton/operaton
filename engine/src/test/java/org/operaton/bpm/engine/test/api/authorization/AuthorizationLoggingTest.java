@@ -66,7 +66,7 @@ class AuthorizationLoggingTest {
         .start();
 
     // when
-    engineRule.getManagementService().getTelemetryData();
+    engineRule.getManagementService().getTableCount();
 
     // then
     String message = "ENGINE-03110 Required admin authenticated group or user or any of the following permissions:";

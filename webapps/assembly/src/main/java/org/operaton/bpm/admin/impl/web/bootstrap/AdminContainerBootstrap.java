@@ -22,7 +22,6 @@ import jakarta.servlet.ServletContextListener;
 import org.operaton.bpm.admin.Admin;
 import org.operaton.bpm.admin.impl.DefaultAdminRuntimeDelegate;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
-import org.operaton.bpm.engine.rest.util.WebApplicationUtil;
 
 /**
  * @author Daniel Meyer
@@ -38,7 +37,6 @@ public class AdminContainerBootstrap implements ServletContextListener {
     environment = createAdminEnvironment();
     environment.setup();
 
-    WebApplicationUtil.setApplicationServer(sce.getServletContext().getServerInfo());
 
   }
 

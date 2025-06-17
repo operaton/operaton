@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.impl.calendar.DurationHelper;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.el.Expression;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
-import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
 
 public class ParseUtil {
 
@@ -146,14 +145,8 @@ public class ParseUtil {
     return serverVendor;
   }
 
-  public static JdkImpl parseJdkDetails() {
-    String jdkVendor = System.getProperty("java.vm.vendor");
-    if (jdkVendor != null && jdkVendor.contains("Oracle")
-        && System.getProperty("java.vm.name").contains("OpenJDK")) {
-      jdkVendor = "OpenJDK";
-    }
-    String jdkVersion = System.getProperty("java.version");
-    return new JdkImpl(jdkVersion, jdkVendor);
+  public static String parseJdkDetails() {
+    return System.getProperty("java.version");
   }
 
 }

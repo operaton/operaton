@@ -22,7 +22,6 @@ import jakarta.servlet.ServletContextListener;
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.impl.DefaultCockpitRuntimeDelegate;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
-import org.operaton.bpm.engine.rest.util.WebApplicationUtil;
 
 /**
  * A servlet context listener that bootstraps cockpit on a
@@ -40,7 +39,6 @@ public class CockpitContainerBootstrap implements ServletContextListener {
     environment = createCockpitEnvironment();
     environment.setup();
 
-    WebApplicationUtil.setApplicationServer(sce.getServletContext().getServerInfo());
 
   }
 

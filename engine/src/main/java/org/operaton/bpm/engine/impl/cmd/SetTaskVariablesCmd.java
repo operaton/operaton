@@ -101,13 +101,4 @@ public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements Varia
     onLocalVariableChanged();
   }
 
-  @Override
-  public void onDelete(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
-    onLocalVariableChanged();
-  }
-
-  @Override
-  public void onUpdate(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
-    onLocalVariableChanged();
-  }
 }

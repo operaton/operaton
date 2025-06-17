@@ -32,13 +32,4 @@ public class VariableInstanceEntityPersistenceListener implements VariableInstan
     VariableInstanceEntity.insert(variable);
   }
 
-  @Override
-  public void onDelete(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
-    variable.delete();
-  }
-
-  @Override
-  public void onUpdate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
-  }
-
 }

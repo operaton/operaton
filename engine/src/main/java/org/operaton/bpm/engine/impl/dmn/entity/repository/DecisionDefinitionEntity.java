@@ -57,10 +57,6 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
   protected Integer historyTimeToLive;
   protected String versionTag;
 
-  public DecisionDefinitionEntity() {
-
-  }
-
   @Override
   public String getId() {
     return id;

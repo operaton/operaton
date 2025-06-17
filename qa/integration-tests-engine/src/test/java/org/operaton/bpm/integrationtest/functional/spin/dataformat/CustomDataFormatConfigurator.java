@@ -27,9 +27,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  */
 public class CustomDataFormatConfigurator implements DataFormatConfigurator<JacksonJsonDataFormat> {
 
-  public CustomDataFormatConfigurator() {
-  }
-
   @Override
   public Class<JacksonJsonDataFormat> getDataFormatClass() {
     return JacksonJsonDataFormat.class;

@@ -26,8 +26,6 @@ public class IncidentStatisticsEntity implements IncidentStatistics {
   protected String incidentType;
   protected int incidentCount;
 
-  public IncidentStatisticsEntity() {}
-
   @Override
   public String getIncidentType() {
     return incidentType;

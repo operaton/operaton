@@ -73,7 +73,7 @@ import jakarta.ws.rs.core.Response.Status;
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class FetchAndLockHandlerTest {
+class FetchAndLockHandlerTest {
 
   @Mock
   protected ProcessEngine processEngine;
@@ -104,7 +104,7 @@ public class FetchAndLockHandlerTest {
   protected static final Date START_DATE = new Date(1457326800000L);
 
   @BeforeEach
-  public void initMocks() {
+  void initMocks() {
     when(fetchAndLockBuilder.workerId(anyString())).thenReturn(fetchAndLockBuilder);
     when(fetchAndLockBuilder.maxTasks(anyInt())).thenReturn(fetchAndLockBuilder);
     when(fetchAndLockBuilder.usePriority(anyBoolean())).thenReturn(fetchAndLockBuilder);
@@ -129,22 +129,22 @@ public class FetchAndLockHandlerTest {
   }
 
   @BeforeEach
-  public void setClock() {
+  void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
   }
 
   @AfterEach
-  public void resetClock() {
+  void resetClock() {
     ClockUtil.reset();
   }
 
   @AfterEach
-  public void resetUniqueWorkerRequestParam() {
+  void resetUniqueWorkerRequestParam() {
     handler.parseUniqueWorkerRequestParam("false");
   }
 
   @Test
-  public void shouldResumeAsyncResponseDueToAvailableTasks() {
+  void shouldResumeAsyncResponseDueToAvailableTasks() {
     // given
     List<LockedExternalTask> tasks = new ArrayList<>();
     tasks.add(lockedExternalTaskMock);
@@ -166,7 +166,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldNotResumeAsyncResponseDueToNoAvailableTasks() {
+  void shouldNotResumeAsyncResponseDueToNoAvailableTasks() {
     // given
     when(fetchAndLockBuilder.subscribe()).thenReturn(externalTaskQueryTopicBuilder);
     when(externalTaskQueryTopicBuilder.execute()).thenReturn(Collections.emptyList());
@@ -184,7 +184,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldResumeAsyncResponseDueToTimeoutExpired_1() {
+  void shouldResumeAsyncResponseDueToTimeoutExpired_1() {
     // given
     when(fetchAndLockBuilder.subscribe()).thenReturn(externalTaskQueryTopicBuilder);
     when(externalTaskQueryTopicBuilder.execute()).thenReturn(Collections.emptyList());
@@ -214,7 +214,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldResumeAsyncResponseDueToTimeoutExpired_2() {
+  void shouldResumeAsyncResponseDueToTimeoutExpired_2() {
     // given
     when(fetchAndLockBuilder.subscribe()).thenReturn(externalTaskQueryTopicBuilder);
     when(externalTaskQueryTopicBuilder.execute()).thenReturn(Collections.emptyList());
@@ -241,7 +241,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldResumeAsyncResponseDueToTimeoutExpired_3() {
+  void shouldResumeAsyncResponseDueToTimeoutExpired_3() {
     // given
     when(fetchAndLockBuilder.subscribe()).thenReturn(externalTaskQueryTopicBuilder);
     when(externalTaskQueryTopicBuilder.execute()).thenReturn(Collections.emptyList());
@@ -269,7 +269,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldResumeAsyncResponseImmediatelyDueToProcessEngineException() {
+  void shouldResumeAsyncResponseImmediatelyDueToProcessEngineException() {
     // given
     when(fetchAndLockBuilder.subscribe()).thenReturn(externalTaskQueryTopicBuilder);
     when(externalTaskQueryTopicBuilder.execute()).thenThrow(new ProcessEngineException());
@@ -285,7 +285,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldResumeAsyncResponseAfterBackoffDueToProcessEngineException() {
+  void shouldResumeAsyncResponseAfterBackoffDueToProcessEngineException() {
     // given
     when(fetchAndLockBuilder.subscribe()).thenReturn(externalTaskQueryTopicBuilder);
     when(externalTaskQueryTopicBuilder.execute()).thenReturn(Collections.emptyList());
@@ -309,7 +309,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldResumeAsyncResponseDueToTimeoutExceeded() {
+  void shouldResumeAsyncResponseDueToTimeoutExceeded() {
     // given - no pending requests
 
     // assume
@@ -330,7 +330,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldPollPeriodicallyWhenRequestPending() {
+  void shouldPollPeriodicallyWhenRequestPending() {
     // given
     doReturn(Collections.emptyList()).when(externalTaskQueryTopicBuilder).execute();
 
@@ -344,7 +344,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldNotPollPeriodicallyWhenNotRequestsPending() {
+  void shouldNotPollPeriodicallyWhenNotRequestsPending() {
     // when
     handler.acquire();
 
@@ -353,7 +353,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldCancelPreviousPendingRequestWhenWorkerIdsEqual() {
+  void shouldCancelPreviousPendingRequestWhenWorkerIdsEqual() {
     // given
     doReturn(Collections.emptyList()).when(externalTaskQueryTopicBuilder).execute();
 
@@ -374,7 +374,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldNotCancelPreviousPendingRequestWhenWorkerIdsDiffer() {
+  void shouldNotCancelPreviousPendingRequestWhenWorkerIdsDiffer() {
     // given
     doReturn(Collections.emptyList()).when(externalTaskQueryTopicBuilder).execute();
 
@@ -395,7 +395,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldResumeAsyncResponseDueToTooManyRequests() {
+  void shouldResumeAsyncResponseDueToTooManyRequests() {
     // given
 
     // when
@@ -410,7 +410,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldSuspendForeverDueToNoPendingRequests() {
+  void shouldSuspendForeverDueToNoPendingRequests() {
     // given - no pending requests
 
     // assume
@@ -425,7 +425,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldRejectRequestDueToShutdown() {
+  void shouldRejectRequestDueToShutdown() {
     // given
     AsyncResponse asyncResponse = mock(AsyncResponse.class);
     handler.addPendingRequest(createDto(5000L), asyncResponse, processEngine);
@@ -446,7 +446,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldInitialiseQueueWithSpecifiedParam() {
+  void shouldInitialiseQueueWithSpecifiedParam() {
     // given
     String queueSizeParamValue = "5";
     when(servletContext.getInitParameter(BLOCKING_QUEUE_CAPACITY_PARAM_NAME)).then(invocation -> queueSizeParamValue);
@@ -459,7 +459,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldInitialiseQueueWithDefaultCapacityWhenAbsentParam() {
+  void shouldInitialiseQueueWithDefaultCapacityWhenAbsentParam() {
     // given no parameter
 
     // when
@@ -470,7 +470,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldInitialiseQueueWithDefaultCapacityIfInvalidParam() {
+  void shouldInitialiseQueueWithDefaultCapacityIfInvalidParam() {
     // given
     String queueSizeParamValue = "NaN";
     when(servletContext.getInitParameter(BLOCKING_QUEUE_CAPACITY_PARAM_NAME)).then(invocation -> queueSizeParamValue);
@@ -483,7 +483,7 @@ public class FetchAndLockHandlerTest {
   }
 
   @Test
-  public void shouldInitialiseQueueWithDefaultCapacityIfNotGreaterThanZero() {
+  void shouldInitialiseQueueWithDefaultCapacityIfNotGreaterThanZero() {
     // given
     String queueSizeParamValue = "-3";
     when(servletContext.getInitParameter(BLOCKING_QUEUE_CAPACITY_PARAM_NAME)).then(invocation -> queueSizeParamValue);

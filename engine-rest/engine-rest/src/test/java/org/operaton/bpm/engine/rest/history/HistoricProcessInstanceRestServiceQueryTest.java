@@ -85,7 +85,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   protected HistoricProcessInstanceQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricProcessInstanceQuery(MockProvider.createMockHistoricProcessInstances());
   }
 
@@ -100,7 +100,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("processDefinitionKey", queryKey)
@@ -112,7 +112,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -123,7 +123,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testNoParametersQueryAsPost() {
+  void testNoParametersQueryAsPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -138,7 +138,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testInvalidVariableRequests() {
+  void testInvalidVariableRequests() {
     // invalid comparator
     String invalidComparator = "anInvalidComparator";
     String variableName = "varName";
@@ -172,7 +172,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("definitionId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -189,7 +189,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "definitionId")
     .then()
@@ -203,7 +203,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
     .then()
@@ -217,7 +217,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("instanceId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessInstanceId();
@@ -301,7 +301,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
@@ -320,7 +320,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -337,7 +337,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -352,7 +352,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -367,7 +367,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -378,7 +378,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryCountForPost() {
+  void testQueryCountForPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -392,7 +392,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testSimpleHistoricProcessQuery() {
+  void testSimpleHistoricProcessQuery() {
     String processInstanceId = MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     Response response = given()
@@ -459,7 +459,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testAdditionalParametersExcludingProcesses() {
+  void testAdditionalParametersExcludingProcesses() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()
@@ -474,7 +474,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testAdditionalParametersExcludingProcessesAsPost() {
+  void testAdditionalParametersExcludingProcessesAsPost() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()
@@ -533,7 +533,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testHistoricBeforeAndAfterStartTimeQuery() {
+  void testHistoricBeforeAndAfterStartTimeQuery() {
     given()
       .queryParam("startedBefore", MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_BEFORE)
       .queryParam("startedAfter", MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_AFTER)
@@ -547,7 +547,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testHistoricBeforeAndAfterStartTimeQueryAsPost() {
+  void testHistoricBeforeAndAfterStartTimeQueryAsPost() {
     Map<String, Date> parameters = getCompleteStartDateQueryParameters();
 
     given()
@@ -563,7 +563,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testHistoricBeforeAndAfterStartTimeAsStringQueryAsPost() {
+  void testHistoricBeforeAndAfterStartTimeAsStringQueryAsPost() {
     Map<String, String> parameters = getCompleteStartDateAsStringQueryParameters();
 
     given()
@@ -615,7 +615,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testHistoricAfterAndBeforeFinishTimeQuery() {
+  void testHistoricAfterAndBeforeFinishTimeQuery() {
     given()
       .queryParam("finishedAfter", MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_FINISHED_AFTER)
       .queryParam("finishedBefore", MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_FINISHED_BEFORE)
@@ -629,7 +629,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testHistoricAfterAndBeforeFinishTimeQueryAsPost() {
+  void testHistoricAfterAndBeforeFinishTimeQueryAsPost() {
     Map<String, Date> parameters = getCompleteFinishedDateQueryParameters();
 
     given()
@@ -645,7 +645,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testHistoricAfterAndBeforeFinishTimeAsStringQueryAsPost() {
+  void testHistoricAfterAndBeforeFinishTimeAsStringQueryAsPost() {
     Map<String, String> parameters = getCompleteFinishedDateAsStringQueryParameters();
 
     given()
@@ -697,7 +697,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessQueryFinished() {
+  void testProcessQueryFinished() {
     given()
       .queryParam("finished", true)
     .then()
@@ -712,7 +712,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessQueryFinishedAsPost() {
+  void testProcessQueryFinishedAsPost() {
     Map<String, Boolean> body = new HashMap<>();
     body.put("finished", true);
 
@@ -731,7 +731,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessQueryUnfinished() {
+  void testProcessQueryUnfinished() {
     List<HistoricProcessInstance> mockedHistoricProcessInstances = MockProvider.createMockRunningHistoricProcessInstances();
     HistoricProcessInstanceQuery mockedhistoricProcessInstanceQuery = mock(HistoricProcessInstanceQuery.class);
     when(mockedhistoricProcessInstanceQuery.list()).thenReturn(mockedHistoricProcessInstances);
@@ -761,7 +761,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessQueryUnfinishedAsPost() {
+  void testProcessQueryUnfinishedAsPost() {
     List<HistoricProcessInstance> mockedHistoricProcessInstances = MockProvider.createMockRunningHistoricProcessInstances();
     HistoricProcessInstanceQuery mockedhistoricProcessInstanceQuery = mock(HistoricProcessInstanceQuery.class);
     when(mockedhistoricProcessInstanceQuery.list()).thenReturn(mockedHistoricProcessInstances);
@@ -796,7 +796,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithIncidents() {
+  void testQueryWithIncidents() {
     given()
       .queryParam("withIncidents", true)
       .then()
@@ -811,7 +811,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithIncidentsAsPost() {
+  void testQueryWithIncidentsAsPost() {
     Map<String, Boolean> body = new HashMap<>();
     body.put("withIncidents", true);
 
@@ -830,7 +830,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithIncidentStatusOpen() {
+  void testQueryWithIncidentStatusOpen() {
     given()
       .queryParam("incidentStatus", "open")
       .then()
@@ -845,7 +845,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithIncidentStatusOpenAsPost() {
+  void testQueryWithIncidentStatusOpenAsPost() {
     Map<String, String> body = new HashMap<>();
     body.put("incidentStatus", "open");
 
@@ -864,7 +864,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryCountIncidentStatusOpenForPost() {
+  void testQueryCountIncidentStatusOpenForPost() {
     Map<String,String> body = new HashMap<>();
     body.put("incidentStatus", "open");
     given()
@@ -881,7 +881,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithIncidentStatusResolved() {
+  void testQueryWithIncidentStatusResolved() {
     given()
       .queryParam("incidentStatus", "resolved")
       .then()
@@ -896,7 +896,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithIncidentStatusResolvedAsPost() {
+  void testQueryWithIncidentStatusResolvedAsPost() {
     Map<String, String> body = new HashMap<>();
     body.put("incidentStatus", "resolved");
 
@@ -915,7 +915,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryCountIncidentStatusResolvedForPost() {
+  void testQueryCountIncidentStatusResolvedForPost() {
     Map<String,String> body = new HashMap<>();
     body.put("incidentStatus", "resolved");
     given()
@@ -932,7 +932,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryIncidentType() {
+  void testQueryIncidentType() {
     given()
       .queryParam("incidentType", MockProvider.EXAMPLE_INCIDENT_TYPE)
       .then()
@@ -947,7 +947,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryIncidentTypeAsPost() {
+  void testQueryIncidentTypeAsPost() {
     Map<String, String> body = new HashMap<>();
     body.put("incidentType", MockProvider.EXAMPLE_INCIDENT_TYPE);
 
@@ -966,7 +966,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryIncidentMessage() {
+  void testQueryIncidentMessage() {
     given()
       .queryParam("incidentMessage", MockProvider.EXAMPLE_INCIDENT_MESSAGE)
       .then()
@@ -981,7 +981,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryIncidentMessageAsPost() {
+  void testQueryIncidentMessageAsPost() {
     Map<String, String> body = new HashMap<>();
     body.put("incidentMessage", MockProvider.EXAMPLE_INCIDENT_MESSAGE);
 
@@ -998,8 +998,9 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     inOrder.verify(mockedQuery).incidentMessage(MockProvider.EXAMPLE_INCIDENT_MESSAGE);
     inOrder.verify(mockedQuery).list();
   }
+
   @Test
-  public void testQueryIncidentMessageLike() {
+  void testQueryIncidentMessageLike() {
     given()
       .queryParam("incidentMessageLike", MockProvider.EXAMPLE_INCIDENT_MESSAGE_LIKE)
       .then()
@@ -1014,7 +1015,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryIncidentMessageLikeAsPost() {
+  void testQueryIncidentMessageLikeAsPost() {
     Map<String, String> body = new HashMap<>();
     body.put("incidentMessageLike", MockProvider.EXAMPLE_INCIDENT_MESSAGE_LIKE);
 
@@ -1033,7 +1034,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessInstanceIds() {
+  void testQueryByProcessInstanceIds() {
     given()
       .queryParam("processInstanceIds", "firstProcessInstanceId,secondProcessInstanceId")
     .then()
@@ -1046,7 +1047,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessInstanceIdsAsPost() {
+  void testQueryByProcessInstanceIdsAsPost() {
     Map<String, Set<String>> parameters = getCompleteProcessInstanceIdSetQueryParameters();
 
     given()
@@ -1081,7 +1082,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessInstanceIdNotIn() {
+  void testQueryByProcessInstanceIdNotIn() {
     given()
         .queryParam("processInstanceIdNotIn", "firstProcessInstanceId,secondProcessInstanceId")
         .then()
@@ -1095,7 +1096,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessInstanceIdNotInAsPost() {
+  void testQueryByProcessInstanceIdNotInAsPost() {
     Map<String, Set<String>> parameters = new HashMap<String, Set<String>>();
 
     Set<String> processInstanceIds = new HashSet<String>();
@@ -1118,7 +1119,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeyNotIn() {
+  void testQueryByProcessDefinitionKeyNotIn() {
     given()
       .queryParam("processDefinitionKeyNotIn", "firstProcessInstanceKey,secondProcessInstanceKey")
     .then()
@@ -1131,7 +1132,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeyNotInAsPost() {
+  void testQueryByProcessDefinitionKeyNotInAsPost() {
     Map<String, List<String>> parameters = getCompleteProcessDefinitionKeyNotInListQueryParameters();
 
     given()
@@ -1166,7 +1167,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void shouldQueryByBusinessKeyIn() {
+  void shouldQueryByBusinessKeyIn() {
     given()
         .queryParam("processInstanceBusinessKeyIn", "business-key-one,business-key-two")
         .then()
@@ -1179,7 +1180,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void shouldQueryByBusinessKeyInAsPost() {
+  void shouldQueryByBusinessKeyInAsPost() {
     Map<String, List<String>> parameters = getCompleteBusinessKeyInListQueryParameters();
 
     given()
@@ -1215,7 +1216,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeyIn() {
+  void testQueryByProcessDefinitionKeyIn() {
     given()
       .queryParam("processDefinitionKeyIn", "firstProcessDefinitionKey,secondProcessDefinitionKey")
     .then()
@@ -1228,7 +1229,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeyInAsPost() {
+  void testQueryByProcessDefinitionKeyInAsPost() {
     Map<String, List<String>> parameters = getCompleteProcessDefinitionKeyInListQueryParameters();
 
     given()
@@ -1264,7 +1265,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueEquals() {
+  void testVariableValueEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -1275,7 +1276,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueGreaterThan() {
+  void testVariableValueGreaterThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_gt_" + variableValue;
@@ -1286,7 +1287,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueGreaterThanEquals() {
+  void testVariableValueGreaterThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_gteq_" + variableValue;
@@ -1297,7 +1298,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueLessThan() {
+  void testVariableValueLessThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_lt_" + variableValue;
@@ -1308,7 +1309,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueLessThanEquals() {
+  void testVariableValueLessThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_lteq_" + variableValue;
@@ -1319,7 +1320,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueLike() {
+  void testVariableValueLike() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_like_" + variableValue;
@@ -1330,7 +1331,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueNotEquals() {
+  void testVariableValueNotEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -1341,7 +1342,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValuesEqualsIgnoreCase() {
+  void testVariableValuesEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -1353,7 +1354,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValuesNotEqualsIgnoreCase() {
+  void testVariableValuesNotEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -1365,7 +1366,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValuesLikeIgnoreCase() {
+  void testVariableValuesLikeIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_like_" + variableValue;
@@ -1378,7 +1379,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
 
   @Test
-  public void testVariableNamesEqualsIgnoreCase() {
+  void testVariableNamesEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -1390,7 +1391,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableNamesNotEqualsIgnoreCase() {
+  void testVariableNamesNotEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -1402,7 +1403,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueEqualsAsPost() {
+  void testVariableValueEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1427,7 +1428,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueGreaterThanAsPost() {
+  void testVariableValueGreaterThanAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1452,7 +1453,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueGreaterThanEqualsAsPost() {
+  void testVariableValueGreaterThanEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1477,7 +1478,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueLessThanAsPost() {
+  void testVariableValueLessThanAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1502,7 +1503,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueLessThanEqualsAsPost() {
+  void testVariableValueLessThanEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1527,7 +1528,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueLikeAsPost() {
+  void testVariableValueLikeAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1552,7 +1553,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValueNotEqualsAsPost() {
+  void testVariableValueNotEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1577,7 +1578,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValuesEqualsIgnoreCaseAsPost() {
+  void testVariableValuesEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1604,7 +1605,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValuesNotEqualsIgnoreCaseAsPost() {
+  void testVariableValuesNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1631,7 +1632,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableValuesLikeIgnoreCaseAsPost() {
+  void testVariableValuesLikeIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1659,7 +1660,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
 
   @Test
-  public void testVariableNamesEqualsIgnoreCaseAsPost() {
+  void testVariableNamesEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1686,7 +1687,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testVariableNamesNotEqualsIgnoreCaseAsPost() {
+  void testVariableNamesNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1713,7 +1714,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testMultipleVariableParameters() {
+  void testMultipleVariableParameters() {
     String variableName1 = "varName";
     String variableValue1 = "varValue";
     String variableParameter1 = variableName1 + "_eq_" + variableValue1;
@@ -1737,7 +1738,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testMultipleVariableParametersAsPost() {
+  void testMultipleVariableParametersAsPost() {
     String variableName = "varName";
     String variableValue = "varValue";
     String anotherVariableName = "anotherVarName";
@@ -1774,7 +1775,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockHistoricProcessInstanceQuery(createMockHistoricProcessInstancesTwoTenants());
 
     Response response = given()
@@ -1799,7 +1800,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testTenantIdListPostParameter() {
+  void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricProcessInstanceQuery(createMockHistoricProcessInstancesTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -1828,7 +1829,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testWithoutTenantIdParameter() {
+  void testWithoutTenantIdParameter() {
     mockedQuery = setUpMockHistoricProcessInstanceQuery(Collections.singletonList(MockProvider.createMockHistoricProcessInstance(null)));
 
     Response response = given()
@@ -1850,7 +1851,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testWithoutTenantIdPostParameter() {
+  void testWithoutTenantIdPostParameter() {
     mockedQuery = setUpMockHistoricProcessInstanceQuery(Collections.singletonList(MockProvider.createMockHistoricProcessInstance(null)));
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -1882,7 +1883,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testExecutedActivityBeforeAndAfterTimeQuery() {
+  void testExecutedActivityBeforeAndAfterTimeQuery() {
     given()
       .queryParam(QUERY_PARAM_EXECUTED_ACTIVITY_BEFORE, MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_BEFORE)
       .queryParam(QUERY_PARAM_EXECUTED_ACTIVITY_AFTER, MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_AFTER)
@@ -1896,7 +1897,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testExecutedActivityBeforeAndAfterTimeQueryAsPost() {
+  void testExecutedActivityBeforeAndAfterTimeQueryAsPost() {
     Map<String, Date> parameters = getCompleteExecutedActivityDateQueryParameters();
 
     given()
@@ -1912,7 +1913,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testExecutedActivityBeforeAndAfterTimeAsStringQueryAsPost() {
+  void testExecutedActivityBeforeAndAfterTimeAsStringQueryAsPost() {
     Map<String, String> parameters = getCompleteExecutedActivityDateAsStringQueryParameters();
 
     given()
@@ -1967,7 +1968,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   // ===================================================================================================================
 
   @Test
-  public void testExecutedJobBeforeAndAfterTimeQuery() {
+  void testExecutedJobBeforeAndAfterTimeQuery() {
     given()
       .queryParam(QUERY_PARAM_EXECUTED_JOB_BEFORE, MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_BEFORE)
       .queryParam(QUERY_PARAM_EXECUTED_JOB_AFTER, MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_AFTER)
@@ -1981,7 +1982,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testExecutedJobBeforeAndAfterTimeQueryAsPost() {
+  void testExecutedJobBeforeAndAfterTimeQueryAsPost() {
     Map<String, Date> parameters = getCompleteExecutedJobDateQueryParameters();
 
     given()
@@ -1997,7 +1998,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testExecutedJobBeforeAndAfterTimeAsStringQueryAsPost() {
+  void testExecutedJobBeforeAndAfterTimeAsStringQueryAsPost() {
     Map<String, String> parameters = getCompleteExecutedJobDateAsStringQueryParameters();
 
     given()
@@ -2013,7 +2014,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testExecutedActivityIdIn() {
+  void testExecutedActivityIdIn() {
 
     given()
       .queryParam(QUERY_PARAM_EXECUTED_ACTIVITY_IDS, "1,2")
@@ -2026,7 +2027,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testExecutedActivityIdInAsPost() {
+  void testExecutedActivityIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put(QUERY_PARAM_EXECUTED_ACTIVITY_IDS, Arrays.asList("1", "2"));
 
@@ -2042,7 +2043,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testActiveActivityIdIn() {
+  void testActiveActivityIdIn() {
 
     given()
       .queryParam(QUERY_PARAM_ACTIVE_ACTIVITY_IDS, "1,2")
@@ -2055,7 +2056,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testActiveActivityIdInAsPost() {
+  void testActiveActivityIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put(QUERY_PARAM_ACTIVE_ACTIVITY_IDS, Arrays.asList("1", "2"));
 
@@ -2071,7 +2072,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithRootIncidents() {
+  void testQueryWithRootIncidents() {
     given()
       .queryParam("withRootIncidents", true)
     .then().expect()
@@ -2085,7 +2086,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithRootIncidentsAsPost() {
+  void testQueryWithRootIncidentsAsPost() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("withRootIncidents", true);
 
@@ -2137,7 +2138,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByActive() {
+  void testQueryByActive() {
     given()
       .queryParam("active", true)
     .then()
@@ -2151,7 +2152,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
 
   @Test
-  public void testQueryByCompleted() {
+  void testQueryByCompleted() {
     given()
       .queryParam("completed", true)
     .then()
@@ -2164,7 +2165,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryBySuspended() {
+  void testQueryBySuspended() {
     given()
       .queryParam("suspended", true)
     .then()
@@ -2177,7 +2178,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByExternallyTerminated() {
+  void testQueryByExternallyTerminated() {
     given()
       .queryParam("externallyTerminated", true)
     .then()
@@ -2190,7 +2191,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByInternallyTerminated() {
+  void testQueryByInternallyTerminated() {
     given()
       .queryParam("internallyTerminated", true)
     .then()
@@ -2203,7 +2204,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByTwoStates() {
+  void testQueryByTwoStates() {
     String message = "expected exception";
     doThrow(new BadUserRequestException(message)).when(mockedQuery).completed();
 
@@ -2222,7 +2223,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByActiveAsPost() {
+  void testQueryByActiveAsPost() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("active", true);
 
@@ -2239,7 +2240,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByCompletedAsPost() {
+  void testQueryByCompletedAsPost() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("completed", true);
 
@@ -2256,7 +2257,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryBySuspendedAsPost() {
+  void testQueryBySuspendedAsPost() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("suspended", true);
 
@@ -2273,7 +2274,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByExternallyTerminatedAsPost() {
+  void testQueryByExternallyTerminatedAsPost() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("externallyTerminated", true);
 
@@ -2291,7 +2292,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
 
   @Test
-  public void testQueryByInternallyTerminatedAsPost() {
+  void testQueryByInternallyTerminatedAsPost() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("internallyTerminated", true);
 
@@ -2307,7 +2308,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByTwoStatesAsPost() {
+  void testQueryByTwoStatesAsPost() {
     String message = "expected exception";
     doThrow(new BadUserRequestException(message)).when(mockedQuery).completed();
 
@@ -2330,7 +2331,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByRootProcessInstances() {
+  void testQueryByRootProcessInstances() {
     given()
       .queryParam("rootProcessInstances", true)
     .then()
@@ -2343,7 +2344,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByRootProcessInstancesAsPost() {
+  void testQueryByRootProcessInstancesAsPost() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("rootProcessInstances", true);
 
@@ -2358,8 +2359,9 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
     verify(mockedQuery).rootProcessInstances();
   }
+
   @Test
-  public void testQueryByIncidentIdIn() {
+  void testQueryByIncidentIdIn() {
     given()
         .queryParam(QUERY_PARAM_INCIDENT_IDS, "1,2")
         .then().expect()
@@ -2371,7 +2373,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByIncidentIdInAsPost() {
+  void testQueryByIncidentIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put(QUERY_PARAM_INCIDENT_IDS, Arrays.asList("1", "2"));
 
@@ -2387,7 +2389,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByActivityIdIn() {
+  void testQueryByActivityIdIn() {
     given()
         .queryParam(QUERY_PARAM_ACTIVE_OR_FAILING_ACTIVITY_IDS, "1,2")
         .then().expect()
@@ -2399,7 +2401,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryByActivityIdInAsPost() {
+  void testQueryByActivityIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put(QUERY_PARAM_ACTIVE_OR_FAILING_ACTIVITY_IDS, Arrays.asList("1", "2"));
 

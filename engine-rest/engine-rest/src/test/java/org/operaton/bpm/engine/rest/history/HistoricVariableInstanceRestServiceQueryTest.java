@@ -75,7 +75,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   protected MockHistoricVariableInstanceBuilder mockInstanceBuilder;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockInstanceBuilder = MockProvider.mockHistoricVariableInstance();
     mockInstance = mockInstanceBuilder.build();
 
@@ -97,7 +97,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("processInstanceId", queryKey)
@@ -109,7 +109,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -123,7 +123,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testNoParametersQueryDisableObjectDeserialization() {
+  void testNoParametersQueryDisableObjectDeserialization() {
     given()
       .queryParam("deserializeValues", false)
     .expect()
@@ -139,7 +139,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testNoParametersQueryAsPost() {
+  void testNoParametersQueryAsPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -155,7 +155,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testNoParametersQueryAsPostDisableObjectDeserialization() {
+  void testNoParametersQueryAsPostDisableObjectDeserialization() {
     given()
       .queryParam("deserializeValues", false)
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -172,7 +172,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("instanceId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -187,7 +187,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "instanceId")
     .then()
@@ -201,7 +201,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
     .then()
@@ -215,7 +215,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
 
     executeAndVerifySorting("instanceId", "asc", Status.OK);
@@ -242,7 +242,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
@@ -261,7 +261,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
 
     int firstResult = 0;
     int maxResults = 10;
@@ -278,7 +278,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
     given()
       .queryParam("maxResults", maxResults)
@@ -292,7 +292,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
     given()
       .queryParam("firstResult", firstResult)
@@ -306,7 +306,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -317,7 +317,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryCountForPost() {
+  void testQueryCountForPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -330,7 +330,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testVariableNameLikeQuery() {
+  void testVariableNameLikeQuery() {
     String variableNameLike = "aVariableNameLike";
 
     given()
@@ -347,7 +347,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testVariableNameLikeQueryIgnoreCase() {
+  void testVariableNameLikeQueryIgnoreCase() {
     String variableNameLike = "aVariableNameLike";
 
     given()
@@ -365,7 +365,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByVariableTypeIn() {
+  void testHistoricVariableQueryByVariableTypeIn() {
     String aVariableType = "string";
     String anotherVariableType = "integer";
 
@@ -378,7 +378,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByVariableTypeInAsPost() {
+  void testHistoricVariableQueryByVariableTypeInAsPost() {
     String aVariableType = "string";
     String anotherVariableType = "integer";
 
@@ -397,7 +397,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSimpleHistoricVariableQuery() {
+  void testSimpleHistoricVariableQuery() {
     String processInstanceId = MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     given()
@@ -435,7 +435,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSerializableVariableInstanceRetrieval() {
+  void testSerializableVariableInstanceRetrieval() {
     MockHistoricVariableInstanceBuilder builder = MockProvider.mockHistoricVariableInstance()
         .typedValue(MockObjectValue.fromObjectValue(Variables
             .objectValue("a serialized value")
@@ -463,7 +463,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSpinVariableInstanceRetrieval() {
+  void testSpinVariableInstanceRetrieval() {
     MockHistoricVariableInstanceBuilder builder = MockProvider.mockHistoricVariableInstance()
         .typedValue(Variables
             .serializedObjectValue("aSpinSerializedValue")
@@ -490,7 +490,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testAdditionalParametersExcludingVariables() {
+  void testAdditionalParametersExcludingVariables() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()
@@ -523,7 +523,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testVariableNameAndValueQuery() {
+  void testVariableNameAndValueQuery() {
     String variableName = MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME;
     String variableValue = MockProvider.EXAMPLE_PRIMITIVE_VARIABLE_VALUE.getValue();
 
@@ -546,7 +546,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testVariableNameAndValueIgnoreCaseQuery() {
+  void testVariableNameAndValueIgnoreCaseQuery() {
     String variableName = MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME;
     String variableValue = MockProvider.EXAMPLE_PRIMITIVE_VARIABLE_VALUE.getValue();
 
@@ -572,7 +572,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testVariableValueQuery_BadRequest() {
+  void testVariableValueQuery_BadRequest() {
     given()
       .queryParam("variableValue", MockProvider.EXAMPLE_PRIMITIVE_VARIABLE_VALUE)
     .then()
@@ -586,7 +586,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByExecutionIdsAndTaskIds() {
+  void testHistoricVariableQueryByExecutionIdsAndTaskIds() {
       String anExecutionId = "anExecutionId";
       String anotherExecutionId = "anotherExecutionId";
 
@@ -604,7 +604,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByExecutionIdsAndTaskIdsAsPost() {
+  void testHistoricVariableQueryByExecutionIdsAndTaskIdsAsPost() {
     String anExecutionId = "anExecutionId";
     String anotherExecutionId = "anotherExecutionId";
 
@@ -632,7 +632,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByProcessInstanceIdIn () {
+  void testHistoricVariableQueryByProcessInstanceIdIn() {
     String aProcessInstanceId = "aProcessInstanceId";
     String anotherProcessInstanceId = "anotherProcessInstanceId";
 
@@ -645,7 +645,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByProcessInstanceIdInAsPOST() {
+  void testHistoricVariableQueryByProcessInstanceIdInAsPOST() {
     String aProcessInstanceId = "aProcessInstanceId";
     String anotherProcessInstanceId = "anotherProcessInstanceId";
 
@@ -665,7 +665,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByActivityInstanceIds() {
+  void testHistoricVariableQueryByActivityInstanceIds() {
       String anActivityInstanceId = "anActivityInstanceId";
       String anotherActivityInstanceId = "anotherActivityInstanceId";
 
@@ -678,7 +678,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByActivityInstanceIdsAsPost() {
+  void testHistoricVariableQueryByActivityInstanceIdsAsPost() {
     String anActivityInstanceId = "anActivityInstanceId";
     String anotherActivityInstanceId = "anotherActivityInstanceId";
 
@@ -697,7 +697,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByCaseInstanceId() {
+  void testHistoricVariableQueryByCaseInstanceId() {
 
     given()
       .queryParam("caseInstanceId", MockProvider.EXAMPLE_CASE_INSTANCE_ID)
@@ -710,7 +710,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByCaseInstanceIdAsPost() {
+  void testHistoricVariableQueryByCaseInstanceIdAsPost() {
     Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceId", MockProvider.EXAMPLE_CASE_INSTANCE_ID);
 
@@ -726,7 +726,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByCaseExecutionIds() {
+  void testHistoricVariableQueryByCaseExecutionIds() {
 
     String caseExecutionIds = MockProvider.EXAMPLE_CASE_EXECUTION_ID + "," + MockProvider.ANOTHER_EXAMPLE_CASE_EXECUTION_ID;
 
@@ -741,7 +741,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByCaseExecutionIdsAsPost() {
+  void testHistoricVariableQueryByCaseExecutionIdsAsPost() {
     Map<String, Object> json = new HashMap<>();
     json.put("caseExecutionIdIn", Arrays.asList(MockProvider.EXAMPLE_CASE_EXECUTION_ID, MockProvider.ANOTHER_EXAMPLE_CASE_EXECUTION_ID));
 
@@ -757,7 +757,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockHistoricVariableInstanceQuery(createMockHistoricVariableInstancesTwoTenants());
 
     Response response = given()
@@ -782,7 +782,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testTenantIdListPostParameter() {
+  void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricVariableInstanceQuery(createMockHistoricVariableInstancesTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -811,7 +811,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryFilterWithoutTenantIdParameter() {
+  void testQueryFilterWithoutTenantIdParameter() {
     // given
     HistoricVariableInstance historicVariableInstance = MockProvider
         .mockHistoricVariableInstance(null)
@@ -839,7 +839,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryFilterWithoutTenantIdPostParameter() {
+  void testQueryFilterWithoutTenantIdPostParameter() {
     // given
     HistoricVariableInstance historicVariableInstance = MockProvider
         .mockHistoricVariableInstance(null)
@@ -869,7 +869,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByCaseActivityIds() {
+  void testHistoricVariableQueryByCaseActivityIds() {
 
     String caseExecutionIds = MockProvider.EXAMPLE_CASE_ACTIVITY_ID + "," + MockProvider.ANOTHER_EXAMPLE_CASE_ACTIVITY_ID;
 
@@ -884,7 +884,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByCaseActivityIdsAsPost() {
+  void testHistoricVariableQueryByCaseActivityIdsAsPost() {
     Map<String, Object> json = new HashMap<>();
     json.put("caseActivityIdIn", Arrays.asList(MockProvider.EXAMPLE_CASE_ACTIVITY_ID, MockProvider.ANOTHER_EXAMPLE_CASE_ACTIVITY_ID));
 
@@ -900,7 +900,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testIncludeDeletedVariables() {
+  void testIncludeDeletedVariables() {
     when(mockedQuery.includeDeleted()).thenReturn(mockedQuery);
 
     given()
@@ -915,7 +915,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByProcessDefinitionIdAsPost() {
+  void testHistoricVariableQueryByProcessDefinitionIdAsPost() {
     when(mockedQuery.processDefinitionId(anyString())).thenReturn(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
@@ -932,7 +932,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByProcessDefinitionId() {
+  void testHistoricVariableQueryByProcessDefinitionId() {
     when(mockedQuery.processDefinitionId(anyString())).thenReturn(mockedQuery);
 
     given()
@@ -946,7 +946,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByProcessDefinitionKeyAsPost() {
+  void testHistoricVariableQueryByProcessDefinitionKeyAsPost() {
     when(mockedQuery.processDefinitionKey(anyString())).thenReturn(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
@@ -963,7 +963,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByProcessDefinitionKey() {
+  void testHistoricVariableQueryByProcessDefinitionKey() {
     when(mockedQuery.processDefinitionKey(anyString())).thenReturn(mockedQuery);
 
     given()
@@ -983,7 +983,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByVariableNameAndValueIgnoreCaseAsPost() {
+  void testHistoricVariableQueryByVariableNameAndValueIgnoreCaseAsPost() {
     when(mockedQuery.processDefinitionKey(anyString())).thenReturn(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("variableName", "aVariableName");
@@ -1006,7 +1006,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricVariableQueryByVariableNameLikeIgnoreCaseAsPost() {
+  void testHistoricVariableQueryByVariableNameLikeIgnoreCaseAsPost() {
     when(mockedQuery.processDefinitionKey(anyString())).thenReturn(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("variableNameLike", "aVariableName");
@@ -1025,7 +1025,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void shouldQueryByVariableNameInAsGet() {
+  void shouldQueryByVariableNameInAsGet() {
       String aVariableName = "aVariableName";
       String anotherVariableName = "anotherVariableName";
 
@@ -1038,7 +1038,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void shouldQueryByVariableNameInAsPost() {
+  void shouldQueryByVariableNameInAsPost() {
     String aVariableName = "aVariableName";
     String anotherVariableName = "anotherVariableName";
 

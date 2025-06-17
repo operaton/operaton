@@ -87,7 +87,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   private HistoryService historyServiceMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     historyServiceMock = mock(HistoryService.class);
 
     // runtime service
@@ -95,7 +95,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testGetSingleInstance() {
+  void testGetSingleInstance() {
     HistoricProcessInstance mockInstance = MockProvider.createMockHistoricProcessInstance();
     HistoricProcessInstanceQuery sampleInstanceQuery = mock(HistoricProcessInstanceQuery.class);
 
@@ -146,7 +146,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testGetNonExistingProcessInstance() {
+  void testGetNonExistingProcessInstance() {
     HistoricProcessInstanceQuery sampleInstanceQuery = mock(HistoricProcessInstanceQuery.class);
 
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(sampleInstanceQuery);
@@ -161,7 +161,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testDeleteProcessInstance() {
+  void testDeleteProcessInstance() {
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID)
         .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
         .when().delete(HISTORIC_SINGLE_PROCESS_INSTANCE_URL);
@@ -170,7 +170,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testDeleteNonExistingProcessInstance() {
+  void testDeleteNonExistingProcessInstance() {
     doThrow(new ProcessEngineException("expected exception")).when(historyServiceMock).deleteHistoricProcessInstance(anyString());
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID)
@@ -181,7 +181,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testDeleteNonExistingProcessInstanceIfExists() {
+  void testDeleteNonExistingProcessInstanceIfExists() {
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID).queryParam("failIfNotExists", false)
     .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
     .when().delete(HISTORIC_SINGLE_PROCESS_INSTANCE_URL);
@@ -190,7 +190,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testDeleteProcessInstanceThrowsAuthorizationException() {
+  void testDeleteProcessInstanceThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(historyServiceMock).deleteHistoricProcessInstance(anyString());
 
@@ -206,7 +206,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testDeleteAsync() {
+  void testDeleteAsync() {
     List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     Batch batchEntity = MockProvider.createMockBatch();
     when(historyServiceMock.deleteHistoricProcessInstancesAsync(anyList(), any(), anyString())).thenReturn(batchEntity);
@@ -228,7 +228,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testDeleteAsyncWithQuery() {
+  void testDeleteAsyncWithQuery() {
     Batch batchEntity = MockProvider.createMockBatch();
     when(historyServiceMock.deleteHistoricProcessInstancesAsync(any(), any(), any())
     ).thenReturn(batchEntity);
@@ -252,7 +252,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
 
 
   @Test
-  public void testDeleteAsyncWithBadRequestQuery() {
+  void testDeleteAsyncWithBadRequestQuery() {
     doThrow(new BadUserRequestException("process instance ids are empty"))
         .when(historyServiceMock).deleteHistoricProcessInstancesAsync(eq((List<String>) null), eq((HistoricProcessInstanceQuery) null), anyString());
 
@@ -267,7 +267,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testDeleteAllVariablesByProcessInstanceId() {
+  void testDeleteAllVariablesByProcessInstanceId() {
     given()
       .pathParam("id", EXAMPLE_PROCESS_INSTANCE_ID)
     .expect()
@@ -279,7 +279,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testDeleteAllVariablesForNonExistingProcessInstance() {
+  void testDeleteAllVariablesForNonExistingProcessInstance() {
     doThrow(new NotFoundException("No historic process instance found with id: 'NON_EXISTING_ID'"))
     .when(historyServiceMock).deleteHistoricVariableInstancesByProcessInstanceId("NON_EXISTING_ID");
 
@@ -293,7 +293,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void shouldSetRemovalTime_ByIds() {
+  void shouldSetRemovalTime_ByIds() {
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -322,7 +322,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void shouldSetRemovalTime_ByQuery() {
+  void shouldSetRemovalTime_ByQuery() {
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -356,7 +356,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void shouldSetRemovalTime_Absolute() {
+  void shouldSetRemovalTime_Absolute() {
     Date removalTime = new Date();
 
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builderMock =
@@ -387,7 +387,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void shouldSetRemovalTime_AbsoluteNoTime() {
+  void shouldSetRemovalTime_AbsoluteNoTime() {
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -415,7 +415,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void shouldSetRemovalTime_ClearTime() {
+  void shouldSetRemovalTime_ClearTime() {
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -445,7 +445,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void shouldSetRemovalTime_Response() {
+  void shouldSetRemovalTime_Response() {
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -466,7 +466,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void shouldSetRemovalTime_FailBadUserRequest() {
+  void shouldSetRemovalTime_FailBadUserRequest() {
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -484,7 +484,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void shouldSetRemovalTime_InChunks() {
+  void shouldSetRemovalTime_InChunks() {
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builderMock =
         mock(SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -516,7 +516,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void shouldSetRemovalTime_ChunkSize() {
+  void shouldSetRemovalTime_ChunkSize() {
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builderMock =
         mock(SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -548,7 +548,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
   }
 
   @Test
-  public void testOrQuery() {
+  void testOrQuery() {
     // given
     HistoricProcessInstanceQueryImpl mockedQuery = mock(HistoricProcessInstanceQueryImpl.class);
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(mockedQuery);

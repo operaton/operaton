@@ -63,7 +63,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   protected HistoricTaskInstanceQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricTaskInstanceQuery(MockProvider.createMockHistoricTaskInstances());
   }
 
@@ -79,7 +79,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("processInstanceId", queryKey)
@@ -91,7 +91,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -102,7 +102,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testNoParametersQueryAsPost() {
+  void testNoParametersQueryAsPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -116,7 +116,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("processInstanceId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -133,7 +133,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
     .queryParam("sortOrder", "asc")
   .then()
@@ -147,7 +147,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("taskId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByTaskId();
@@ -355,7 +355,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
@@ -374,7 +374,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -391,7 +391,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -406,7 +406,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -421,7 +421,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -432,7 +432,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryCountForPost() {
+  void testQueryCountForPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -446,7 +446,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSimpleHistoricTaskInstanceQuery() {
+  void testSimpleHistoricTaskInstanceQuery() {
     Response response = given()
       .then()
         .expect()
@@ -466,7 +466,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testSimpleHistoricTaskInstanceQueryAsPost() {
+  void testSimpleHistoricTaskInstanceQueryAsPost() {
     Response response = given()
         .contentType(POST_JSON_CONTENT_TYPE)
         .body(EMPTY_JSON_OBJECT)
@@ -488,7 +488,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskId() {
+  void testQueryByTaskId() {
     String taskId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ID;
 
     given()
@@ -500,7 +500,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskIdAsPost() {
+  void testQueryByTaskIdAsPost() {
     String taskId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ID;
 
     Map<String, Object> params = new HashMap<>();
@@ -516,7 +516,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
     String processInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PROC_INST_ID;
 
     given()
@@ -528,7 +528,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessInstanceIdAsPost() {
+  void testQueryByProcessInstanceIdAsPost() {
     String processInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PROC_INST_ID;
 
     Map<String, Object> params = new HashMap<>();
@@ -544,7 +544,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByRootProcessInstanceId() {
+  void testQueryByRootProcessInstanceId() {
     String rootProcessInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ROOT_PROC_INST_ID;
 
     given().queryParam("rootProcessInstanceId", rootProcessInstanceId)
@@ -558,7 +558,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByRootProcessInstanceIdAsPost() {
+  void testQueryByRootProcessInstanceIdAsPost() {
     String rootProcessInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ROOT_PROC_INST_ID;
 
     Map<String, Object> params = new HashMap<>();
@@ -576,7 +576,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessInstanceBusinessKey() {
+  void testQueryByProcessInstanceBusinessKey() {
     String processInstanceBusinessKey = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PROC_INST_BUSINESS_KEY;
 
     given()
@@ -588,7 +588,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessInstanceBusinessKeyAsPost() {
+  void testQueryByProcessInstanceBusinessKeyAsPost() {
     String processInstanceBusinessKey = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PROC_INST_BUSINESS_KEY;
 
     Map<String, Object> params = new HashMap<>();
@@ -604,7 +604,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessInstanceBusinessKeyLike() {
+  void testQueryByProcessInstanceBusinessKeyLike() {
     String processInstanceBusinessKeyLike = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PROC_INST_BUSINESS_KEY;
 
     given()
@@ -616,7 +616,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessInstanceBusinessKeyLikeAsPost() {
+  void testQueryByProcessInstanceBusinessKeyLikeAsPost() {
     String processInstanceBusinessKeyLike = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PROC_INST_BUSINESS_KEY;
 
     Map<String, Object> params = new HashMap<>();
@@ -632,7 +632,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessInstanceBusinessKeyIn() {
+  void testQueryByProcessInstanceBusinessKeyIn() {
     given()
         .queryParam("processInstanceBusinessKeyIn", String.join(",", "aBusinessKey", "anotherBusinessKey"))
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -642,7 +642,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessInstanceBusinessKeyInAsPost() {
+  void testQueryByProcessInstanceBusinessKeyInAsPost() {
     String businessKey1 = "aBusinessKey";
     String businessKey2 = "anotherBusinessKey";
     List<String> processInstanceBusinessKeyIn = new ArrayList<>();
@@ -662,7 +662,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByExecutionId() {
+  void testQueryByExecutionId() {
     String executionId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_EXEC_ID;
 
     given()
@@ -674,7 +674,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByExecutionIdAsPost() {
+  void testQueryByExecutionIdAsPost() {
     String executionId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_EXEC_ID;
 
     Map<String, Object> params = new HashMap<>();
@@ -690,7 +690,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByActivityInstanceId() {
+  void testQueryByActivityInstanceId() {
     String activityInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ACT_INST_ID;
 
     given()
@@ -702,7 +702,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByActivityInstanceIdAsPost() {
+  void testQueryByActivityInstanceIdAsPost() {
     String activityInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ACT_INST_ID;
 
     List<String> activityInstanceIds = new ArrayList<>();
@@ -721,7 +721,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByActivityInstanceIds() {
+  void testQueryByActivityInstanceIds() {
     String activityInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ACT_INST_ID;
     String anotherActivityInstanceId = "anotherActivityInstanceId";
 
@@ -734,7 +734,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByActivityInstanceIdsAsPost() {
+  void testQueryByActivityInstanceIdsAsPost() {
     String activityInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ACT_INST_ID;
     String anotherActivityInstanceId = "anotherActivityInstanceId";
 
@@ -755,7 +755,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessDefinitionId() {
+  void testQueryByProcessDefinitionId() {
     String processDefinitionId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PROC_DEF_ID;
 
     given()
@@ -767,7 +767,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessDefinitionIdAsPost() {
+  void testQueryByProcessDefinitionIdAsPost() {
     String processDefinitionId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PROC_DEF_ID;
 
     Map<String, Object> params = new HashMap<>();
@@ -783,7 +783,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessDefinitionKey() {
+  void testQueryByProcessDefinitionKey() {
     String processDefinitionKey = "aProcDefKey";
 
     given()
@@ -795,7 +795,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeyAsPost() {
+  void testQueryByProcessDefinitionKeyAsPost() {
     String processDefinitionKey = "aProcDefKey";
 
     Map<String, Object> params = new HashMap<>();
@@ -811,7 +811,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessDefinitionName() {
+  void testQueryByProcessDefinitionName() {
     String processDefinitionName = "aProcDefName";
 
     given()
@@ -823,7 +823,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessDefinitionNameAsPost() {
+  void testQueryByProcessDefinitionNameAsPost() {
     String processDefinitionName = "aProcDefName";
 
     Map<String, Object> params = new HashMap<>();
@@ -839,7 +839,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskName() {
+  void testQueryByTaskName() {
     String taskName = "aTaskName";
 
     given()
@@ -851,7 +851,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskNameAsPost() {
+  void testQueryByTaskNameAsPost() {
     String taskName = "aTaskName";
 
     Map<String, Object> params = new HashMap<>();
@@ -867,7 +867,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskNameLike() {
+  void testQueryByTaskNameLike() {
     String taskNameLike = "aTaskNameLike";
 
     given()
@@ -879,7 +879,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskNameLikeAsPost() {
+  void testQueryByTaskNameLikeAsPost() {
     String taskNameLike = "aTaskNameLike";
 
     Map<String, Object> params = new HashMap<>();
@@ -895,7 +895,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDescription() {
+  void testQueryByTaskDescription() {
     String taskDescription = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DESCRIPTION;
 
     given()
@@ -907,7 +907,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDescriptionAsPost() {
+  void testQueryByTaskDescriptionAsPost() {
     String taskDescription = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DESCRIPTION;
 
     Map<String, Object> params = new HashMap<>();
@@ -923,7 +923,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDescriptionLike() {
+  void testQueryByTaskDescriptionLike() {
     String taskDescriptionLike = "aTaskDescriptionLike";
 
     given()
@@ -935,7 +935,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDescriptionLikeAsPost() {
+  void testQueryByTaskDescriptionLikeAsPost() {
     String taskDescriptionLike = "aTaskDescriptionLike";
 
     Map<String, Object> params = new HashMap<>();
@@ -951,7 +951,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDefinitionKey() {
+  void testQueryByTaskDefinitionKey() {
     String taskDefinitionKey = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DEF_KEY;
 
     given()
@@ -963,7 +963,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDefinitionKeyAsPost() {
+  void testQueryByTaskDefinitionKeyAsPost() {
     String taskDefinitionKey = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DEF_KEY;
 
     Map<String, Object> params = new HashMap<>();
@@ -979,7 +979,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDeleteReason() {
+  void testQueryByTaskDeleteReason() {
     String taskDeleteReason = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DELETE_REASON;
 
     given()
@@ -991,7 +991,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDeleteReasonAsPost() {
+  void testQueryByTaskDeleteReasonAsPost() {
     String taskDeleteReason = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DELETE_REASON;
 
     Map<String, Object> params = new HashMap<>();
@@ -1007,7 +1007,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDeleteReasonLike() {
+  void testQueryByTaskDeleteReasonLike() {
     String taskDeleteReasonLike = "aTaskDeleteReasonLike";
 
     given()
@@ -1019,7 +1019,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDeleteReasonLikeAsPost() {
+  void testQueryByTaskDeleteReasonLikeAsPost() {
     String taskDeleteReasonLike = "aTaskDeleteReasonLike";
 
     Map<String, Object> params = new HashMap<>();
@@ -1035,7 +1035,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskAssignee() {
+  void testQueryByTaskAssignee() {
     String taskAssignee = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ASSIGNEE;
 
     given()
@@ -1047,7 +1047,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskAssigneeAsPost() {
+  void testQueryByTaskAssigneeAsPost() {
     String taskAssignee = MockProvider.EXAMPLE_HISTORIC_TASK_INST_ASSIGNEE;
 
     Map<String, Object> params = new HashMap<>();
@@ -1063,7 +1063,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskAssigneeLike() {
+  void testQueryByTaskAssigneeLike() {
     String taskAssigneeLike = "aTaskAssigneeLike";
 
     given()
@@ -1075,7 +1075,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskAssigneeLikeAsPost() {
+  void testQueryByTaskAssigneeLikeAsPost() {
     String taskAssigneeLike = "aTaskAssigneeLike";
 
     Map<String, Object> params = new HashMap<>();
@@ -1091,7 +1091,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskOwner() {
+  void testQueryByTaskOwner() {
     String taskOwner = MockProvider.EXAMPLE_HISTORIC_TASK_INST_OWNER;
 
     given()
@@ -1103,7 +1103,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskOwnerAsPost() {
+  void testQueryByTaskOwnerAsPost() {
     String taskOwner = MockProvider.EXAMPLE_HISTORIC_TASK_INST_OWNER;
 
     Map<String, Object> params = new HashMap<>();
@@ -1119,7 +1119,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskOwnerLike() {
+  void testQueryByTaskOwnerLike() {
     String taskOwnerLike = "aTaskOwnerLike";
 
     given()
@@ -1131,7 +1131,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskOwnerLikeAsPost() {
+  void testQueryByTaskOwnerLikeAsPost() {
     String taskOwnerLike = "aTaskOwnerLike";
 
     Map<String, Object> params = new HashMap<>();
@@ -1147,7 +1147,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskPriority() {
+  void testQueryByTaskPriority() {
     int taskPriority = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PRIORITY;
 
     given()
@@ -1159,7 +1159,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskPriorityAsPost() {
+  void testQueryByTaskPriorityAsPost() {
     int taskPriority = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PRIORITY;
 
     Map<String, Object> params = new HashMap<>();
@@ -1175,7 +1175,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByAssigned() {
+  void testQueryByAssigned() {
     given()
       .queryParam("assigned", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -1185,7 +1185,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByAssignedAsPost() {
+  void testQueryByAssignedAsPost() {
     Map<String, Object> params = new HashMap<>();
     params.put("assigned", true);
 
@@ -1199,7 +1199,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByWithCandidateGroups() {
+  void testQueryByWithCandidateGroups() {
     given()
       .queryParam("withCandidateGroups", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -1209,7 +1209,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByWithCandidateGroupsAsPost() {
+  void testQueryByWithCandidateGroupsAsPost() {
     Map<String, Object> params = new HashMap<>();
     params.put("withCandidateGroups", true);
 
@@ -1223,7 +1223,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByWithoutCandidateGroups() {
+  void testQueryByWithoutCandidateGroups() {
     given()
       .queryParam("withoutCandidateGroups", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -1233,7 +1233,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByWithoutCandidateGroupsAsPost() {
+  void testQueryByWithoutCandidateGroupsAsPost() {
     Map<String, Object> params = new HashMap<>();
     params.put("withoutCandidateGroups", true);
 
@@ -1247,7 +1247,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByUnassigned() {
+  void testQueryByUnassigned() {
     given()
       .queryParam("unassigned", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -1257,7 +1257,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByUnassignedAsPost() {
+  void testQueryByUnassignedAsPost() {
     Map<String, Object> params = new HashMap<>();
     params.put("unassigned", true);
 
@@ -1271,7 +1271,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByFinished() {
+  void testQueryByFinished() {
     given()
       .queryParam("finished", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -1281,7 +1281,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByFinishedAsPost() {
+  void testQueryByFinishedAsPost() {
     Map<String, Object> params = new HashMap<>();
     params.put("finished", true);
 
@@ -1295,7 +1295,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByUnfinished() {
+  void testQueryByUnfinished() {
     given()
       .queryParam("unfinished", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -1305,7 +1305,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByUnfinishedAsPost() {
+  void testQueryByUnfinishedAsPost() {
     Map<String, Object> params = new HashMap<>();
     params.put("unfinished", true);
 
@@ -1319,7 +1319,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessFinished() {
+  void testQueryByProcessFinished() {
     given()
       .queryParam("processFinished", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -1329,7 +1329,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessFinishedAsPost() {
+  void testQueryByProcessFinishedAsPost() {
     Map<String, Object> params = new HashMap<>();
     params.put("processFinished", true);
 
@@ -1343,7 +1343,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessUnfinished() {
+  void testQueryByProcessUnfinished() {
     given()
       .queryParam("processUnfinished", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -1353,7 +1353,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessUnfinishedAsPost() {
+  void testQueryByProcessUnfinishedAsPost() {
     Map<String, Object> params = new HashMap<>();
     params.put("processUnfinished", true);
 
@@ -1367,7 +1367,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskParentTaskId() {
+  void testQueryByTaskParentTaskId() {
     String taskParentTaskId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PARENT_TASK_ID;
 
     given()
@@ -1379,7 +1379,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskParentTaskIdAsPost() {
+  void testQueryByTaskParentTaskIdAsPost() {
     String taskParentTaskId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_PARENT_TASK_ID;
 
     Map<String, Object> params = new HashMap<>();
@@ -1395,7 +1395,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDueDate() {
+  void testQueryByTaskDueDate() {
     String due = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DUE_DATE;
 
     given()
@@ -1407,7 +1407,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDueDateAsPost() {
+  void testQueryByTaskDueDateAsPost() {
     String due = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DUE_DATE;
 
     Map<String, Object> params = new HashMap<>();
@@ -1423,7 +1423,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDueDateBefore() {
+  void testQueryByTaskDueDateBefore() {
     String due = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DUE_DATE;
 
     given()
@@ -1435,7 +1435,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDueDateBeforeAsPost() {
+  void testQueryByTaskDueDateBeforeAsPost() {
     String due = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DUE_DATE;
 
     Map<String, Object> params = new HashMap<>();
@@ -1451,7 +1451,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDueDateAfter() {
+  void testQueryByTaskDueDateAfter() {
     String due = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DUE_DATE;
 
     given()
@@ -1463,7 +1463,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDueDateAfterAsPost() {
+  void testQueryByTaskDueDateAfterAsPost() {
     String due = MockProvider.EXAMPLE_HISTORIC_TASK_INST_DUE_DATE;
 
     Map<String, Object> params = new HashMap<>();
@@ -1479,7 +1479,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryWithoutTaskDueDateQueryParameter() {
+  void testQueryWithoutTaskDueDateQueryParameter() {
     // given
     mockedQuery = setUpMockHistoricTaskInstanceQuery(Collections.singletonList(
         MockProvider.createMockHistoricTaskInstance(MockProvider.EXAMPLE_TENANT_ID, null)));
@@ -1505,7 +1505,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryWithoutTaskDueDatePostParameter() {
+  void testQueryWithoutTaskDueDatePostParameter() {
     // given
     mockedQuery = setUpMockHistoricTaskInstanceQuery(Collections.singletonList(
         MockProvider.createMockHistoricTaskInstance(MockProvider.EXAMPLE_TENANT_ID, null)));
@@ -1533,7 +1533,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskFollowUpDate() {
+  void testQueryByTaskFollowUpDate() {
     String followUp = MockProvider.EXAMPLE_HISTORIC_TASK_INST_FOLLOW_UP_DATE;
 
     given()
@@ -1545,7 +1545,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskFollowUpDateAsPost() {
+  void testQueryByTaskFollowUpDateAsPost() {
     String followUp = MockProvider.EXAMPLE_HISTORIC_TASK_INST_FOLLOW_UP_DATE;
 
     Map<String, Object> params = new HashMap<>();
@@ -1561,7 +1561,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskFollowUpDateBefore() {
+  void testQueryByTaskFollowUpDateBefore() {
     String followUp = MockProvider.EXAMPLE_HISTORIC_TASK_INST_FOLLOW_UP_DATE;
 
     given()
@@ -1573,7 +1573,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskFollowUpDateBeforeAsPost() {
+  void testQueryByTaskFollowUpDateBeforeAsPost() {
     String followUp = MockProvider.EXAMPLE_HISTORIC_TASK_INST_FOLLOW_UP_DATE;
 
     Map<String, Object> params = new HashMap<>();
@@ -1589,7 +1589,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskFollowUpDateAfter() {
+  void testQueryByTaskFollowUpDateAfter() {
     String followUp = MockProvider.EXAMPLE_HISTORIC_TASK_INST_FOLLOW_UP_DATE;
 
     given()
@@ -1601,7 +1601,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskFollowUpDateAfterAsPost() {
+  void testQueryByTaskFollowUpDateAfterAsPost() {
     String followUp = MockProvider.EXAMPLE_HISTORIC_TASK_INST_FOLLOW_UP_DATE;
 
     Map<String, Object> params = new HashMap<>();
@@ -1616,8 +1616,8 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     verify(mockedQuery).taskFollowUpAfter(DateTimeUtil.parseDate(followUp));
   }
 
-    @Test
-    public void testQueryByStartedBefore() {
+  @Test
+  void testQueryByStartedBefore() {
       String startedBefore = MockProvider.EXAMPLE_HISTORIC_TASK_INST_START_TIME;
 
       given()
@@ -1629,7 +1629,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     }
 
   @Test
-  public void testQueryByStartedBeforeWithInvalidParameter() {
+  void testQueryByStartedBeforeWithInvalidParameter() {
     String startedBefore = "\"pizza\"";
 
     given()
@@ -1645,8 +1645,8 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
 
   }
 
-    @Test
-    public void testQueryByStartedBeforeAsPost() {
+  @Test
+  void testQueryByStartedBeforeAsPost() {
       String startedBefore = MockProvider.EXAMPLE_HISTORIC_TASK_INST_START_TIME;
 
       Map<String, Object> params = new HashMap<>();
@@ -1662,8 +1662,8 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     }
 
 
-    @Test
-    public void testQueryByStartedAfter() {
+  @Test
+  void testQueryByStartedAfter() {
       String startedAfter = MockProvider.EXAMPLE_HISTORIC_TASK_INST_START_TIME;
 
       given()
@@ -1674,8 +1674,8 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
       verify(mockedQuery).startedAfter(DateTimeUtil.parseDate(startedAfter));
     }
 
-    @Test
-    public void testQueryByStartedAfterAsPost() {
+  @Test
+  void testQueryByStartedAfterAsPost() {
       String startedAfter = MockProvider.EXAMPLE_HISTORIC_TASK_INST_START_TIME;
 
       Map<String, Object> params = new HashMap<>();
@@ -1691,8 +1691,8 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     }
 
 
-    @Test
-    public void testQueryByFinishedBefore() {
+  @Test
+  void testQueryByFinishedBefore() {
       String finishedBefore = MockProvider.EXAMPLE_HISTORIC_TASK_INST_END_TIME;
 
       given()
@@ -1703,8 +1703,8 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
       verify(mockedQuery).finishedBefore(DateTimeUtil.parseDate(finishedBefore));
     }
 
-    @Test
-    public void testQueryByFinishedBeforeAsPost() {
+  @Test
+  void testQueryByFinishedBeforeAsPost() {
       String finishedBefore = MockProvider.EXAMPLE_HISTORIC_TASK_INST_END_TIME;
 
       Map<String, Object> params = new HashMap<>();
@@ -1720,8 +1720,8 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     }
 
 
-    @Test
-    public void testQueryByFinishedAfter() {
+  @Test
+  void testQueryByFinishedAfter() {
       String finishedAfter = MockProvider.EXAMPLE_HISTORIC_TASK_INST_END_TIME;
 
       given()
@@ -1732,8 +1732,8 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
       verify(mockedQuery).finishedAfter(DateTimeUtil.parseDate(finishedAfter));
     }
 
-    @Test
-    public void testQueryByFinishedAfterAsPost() {
+  @Test
+  void testQueryByFinishedAfterAsPost() {
       String finishedAfter = MockProvider.EXAMPLE_HISTORIC_TASK_INST_END_TIME;
 
       Map<String, Object> params = new HashMap<>();
@@ -1749,7 +1749,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     }
 
   @Test
-  public void testQueryByTaskVariable() {
+  void testQueryByTaskVariable() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_eq_" + variableValue;
@@ -1768,7 +1768,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskVariableValueIgnoreCase() {
+  void testQueryByTaskVariableValueIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_eq_" + variableValue;
@@ -1789,7 +1789,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskVariableNameIgnoreCase() {
+  void testQueryByTaskVariableNameIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_eq_" + variableValue;
@@ -1810,7 +1810,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskVariableNameValueIgnoreCase() {
+  void testQueryByTaskVariableNameValueIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_eq_" + variableValue;
@@ -1833,7 +1833,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskVariableAsPost() {
+  void testQueryByTaskVariableAsPost() {
     String variableName = "varName";
     String variableValue = "varValue";
 
@@ -1861,7 +1861,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByInvalidTaskVariable() {
+  void testQueryByInvalidTaskVariable() {
     // invalid comparator
     String invalidComparator = "anInvalidComparator";
     String variableName = "varName";
@@ -1895,7 +1895,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByInvalidTaskVariableAsPost() {
+  void testQueryByInvalidTaskVariableAsPost() {
     // invalid comparator
     String invalidComparator = "anInvalidComparator";
     String variableName = "varName";
@@ -1926,7 +1926,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessVariableEquals() {
+  void testQueryByProcessVariableEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_eq_" + variableValue;
@@ -1945,7 +1945,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessVariableGreaterThan() {
+  void testQueryByProcessVariableGreaterThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_gt_" + variableValue;
@@ -1964,7 +1964,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessVariableGreaterThanEquals() {
+  void testQueryByProcessVariableGreaterThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_gteq_" + variableValue;
@@ -1983,7 +1983,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessVariableLessThan() {
+  void testQueryByProcessVariableLessThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_lt_" + variableValue;
@@ -2002,7 +2002,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessVariableLessThanEquals() {
+  void testQueryByProcessVariableLessThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_lteq_" + variableValue;
@@ -2021,7 +2021,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessVariableLike() {
+  void testQueryByProcessVariableLike() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_like_" + variableValue;
@@ -2040,7 +2040,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessVariableNotLike() {
+  void testQueryByProcessVariableNotLike() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_notLike_" + variableValue;
@@ -2059,7 +2059,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessVariableNotEquals() {
+  void testQueryByProcessVariableNotEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String variableParameter = variableName + "_neq_" + variableValue;
@@ -2078,7 +2078,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByProcessVariableAsPost() {
+  void testQueryByProcessVariableAsPost() {
     String variableName = "varName";
     String variableValue = "varValue";
 
@@ -2106,7 +2106,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByInvalidProcessVariable() {
+  void testQueryByInvalidProcessVariable() {
     // invalid comparator
     String invalidComparator = "anInvalidComparator";
     String variableName = "varName";
@@ -2140,7 +2140,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByInvalidProcessVariableAsPost() {
+  void testQueryByInvalidProcessVariableAsPost() {
     // invalid comparator
     String invalidComparator = "anInvalidComparator";
     String variableName = "varName";
@@ -2171,7 +2171,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseDefinitionId() {
+  void testQueryByCaseDefinitionId() {
     String caseDefinitionId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_CASE_DEF_ID;
 
     given()
@@ -2183,7 +2183,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseDefinitionIdAsPost() {
+  void testQueryByCaseDefinitionIdAsPost() {
     String caseDefinitionId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_CASE_DEF_ID;
 
     Map<String, Object> params = new HashMap<>();
@@ -2199,7 +2199,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseDefinitionKey() {
+  void testQueryByCaseDefinitionKey() {
     String caseDefinitionKey = "aCaseDefKey";
 
     given()
@@ -2211,7 +2211,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseDefinitionKeyAsPost() {
+  void testQueryByCaseDefinitionKeyAsPost() {
     String caseDefinitionKey = "aCaseDefKey";
 
     Map<String, Object> params = new HashMap<>();
@@ -2227,7 +2227,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseDefinitionName() {
+  void testQueryByCaseDefinitionName() {
     String caseDefinitionName = "aCaseDefName";
 
     given()
@@ -2239,7 +2239,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseDefinitionNameAsPost() {
+  void testQueryByCaseDefinitionNameAsPost() {
     String caseDefinitionName = "aCaseDefName";
 
     Map<String, Object> params = new HashMap<>();
@@ -2255,7 +2255,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseInstanceId() {
+  void testQueryByCaseInstanceId() {
     String caseInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_CASE_INST_ID;
 
     given()
@@ -2267,7 +2267,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseInstanceIdAsPost() {
+  void testQueryByCaseInstanceIdAsPost() {
     String caseInstanceId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_CASE_INST_ID;
 
     Map<String, Object> params = new HashMap<>();
@@ -2283,7 +2283,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseExecutionId() {
+  void testQueryByCaseExecutionId() {
     String caseExecutionId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_CASE_EXEC_ID;
 
     given()
@@ -2295,7 +2295,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByCaseExecutionIdAsPost() {
+  void testQueryByCaseExecutionIdAsPost() {
     String caseExecutionId = MockProvider.EXAMPLE_HISTORIC_TASK_INST_CASE_EXEC_ID;
 
     Map<String, Object> params = new HashMap<>();
@@ -2311,7 +2311,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockHistoricTaskInstanceQuery(createMockHistoricTaskInstancesTwoTenants());
 
     Response response = given()
@@ -2336,7 +2336,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testTenantIdListPostParameter() {
+  void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricTaskInstanceQuery(createMockHistoricTaskInstancesTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -2365,7 +2365,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryWithoutTenantIdQueryParameter() {
+  void testQueryWithoutTenantIdQueryParameter() {
     // given
     mockedQuery = setUpMockHistoricTaskInstanceQuery(Collections.singletonList(MockProvider.createMockHistoricTaskInstance(null)));
 
@@ -2390,7 +2390,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryWithoutTenantIdPostParameter() {
+  void testQueryWithoutTenantIdPostParameter() {
     // given
     mockedQuery = setUpMockHistoricTaskInstanceQuery(Collections.singletonList(MockProvider.createMockHistoricTaskInstance(null)));
     Map<String, Object> queryParameters = Collections.singletonMap("withoutTenantId", (Object) true);
@@ -2417,7 +2417,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryTaskInvolvedUser() {
+  void testQueryTaskInvolvedUser() {
     String taskInvolvedUser = MockProvider.EXAMPLE_HISTORIC_TASK_INST_TASK_INVOLVED_USER;
     given()
       .queryParam("taskInvolvedUser", taskInvolvedUser)
@@ -2428,7 +2428,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryTaskInvolvedGroup() {
+  void testQueryTaskInvolvedGroup() {
     String taskInvolvedGroup = MockProvider.EXAMPLE_HISTORIC_TASK_INST_TASK_INVOLVED_GROUP;
     given()
       .queryParam("taskInvolvedGroup", taskInvolvedGroup)
@@ -2439,7 +2439,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryTaskHadCandidateUser() {
+  void testQueryTaskHadCandidateUser() {
     String taskHadCandidateUser = MockProvider.EXAMPLE_HISTORIC_TASK_INST_TASK_HAD_CANDIDATE_USER;
     given()
       .queryParam("taskHadCandidateUser", taskHadCandidateUser)
@@ -2450,7 +2450,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryTaskHadCandidateGroup() {
+  void testQueryTaskHadCandidateGroup() {
     String taskHadCandidateGroup = MockProvider.EXAMPLE_HISTORIC_TASK_INST_TASK_HAD_CANDIDATE_GROUP;
     given()
       .queryParam("taskHadCandidateGroup", taskHadCandidateGroup)
@@ -2461,7 +2461,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDefinitionKeyIn() {
+  void testQueryByTaskDefinitionKeyIn() {
 
     String taskDefinitionKey1 = "aTaskDefinitionKey";
     String taskDefinitionKey2 = "anotherTaskDefinitionKey";
@@ -2478,7 +2478,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testQueryByTaskDefinitionKeyInAsPost() {
+  void testQueryByTaskDefinitionKeyInAsPost() {
 
     String taskDefinitionKey1 = "aTaskDefinitionKey";
     String taskDefinitionKey2 = "anotherTaskDefinitionKey";
@@ -2503,7 +2503,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   @Test
-  public void testOrQuery() {
+  void testOrQuery() {
     // given
     HistoricTaskInstanceQueryImpl historicTaskInstanceQuery = mock(HistoricTaskInstanceQueryImpl.class);
     when(processEngine.getHistoryService().createHistoricTaskInstanceQuery()).thenReturn(historicTaskInstanceQuery);

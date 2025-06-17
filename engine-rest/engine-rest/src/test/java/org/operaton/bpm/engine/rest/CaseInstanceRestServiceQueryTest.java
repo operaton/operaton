@@ -67,7 +67,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   private CaseInstanceQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockCaseInstanceQuery(MockProvider.createMockCaseInstances());
   }
 
@@ -82,7 +82,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryCaseInstanceId = "";
 
     given()
@@ -97,7 +97,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQueryAsPost() {
+  void testEmptyQueryAsPost() {
     Map<String, String> params = new HashMap<>();
     params.put("caseInstanceId", "");
 
@@ -114,7 +114,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -125,7 +125,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQueryAsPost() {
+  void testNoParametersQueryAsPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -140,7 +140,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("caseInstanceId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -157,7 +157,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "caseInstanceId")
     .then()
@@ -168,7 +168,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
     .then()
@@ -179,7 +179,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     // asc
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("caseInstanceId", "asc", Status.OK);
@@ -224,7 +224,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
@@ -243,7 +243,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -263,7 +263,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
    * If parameter "firstResult" is missing, we expect 0 as default.
    */
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -281,7 +281,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
    * If parameter "maxResults" is missing, we expect Integer.MAX_VALUE as default.
    */
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -296,7 +296,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCaseInstanceRetrieval() {
+  void testCaseInstanceRetrieval() {
     String queryCaseInstanceId = "aCaseInstanceId";
 
     Response response = given()
@@ -336,7 +336,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCaseInstanceRetrievalAsPost() {
+  void testCaseInstanceRetrievalAsPost() {
     String queryCaseInstanceId = "aCaseInstanceId";
 
     Map<String, String> queryParameter = new HashMap<>();
@@ -380,7 +380,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleParameters() {
+  void testMultipleParameters() {
     Map<String, String> queryParameters = new HashMap<>();
 
     queryParameters.put("caseInstanceId", "aCaseInstanceId");
@@ -422,7 +422,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleParametersAsPost() {
+  void testMultipleParametersAsPost() {
     String aCaseInstanceId = "aCaseInstanceId";
     String aCaseDefId = "aCaseDefId";
     String aCaseDefKey = "aCaseDefKey";
@@ -473,7 +473,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueEquals() {
+  void testVariableValueEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -490,7 +490,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueGreaterThan() {
+  void testVariableValueGreaterThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_gt_" + variableValue;
@@ -507,7 +507,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueGreaterThanEquals() {
+  void testVariableValueGreaterThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_gteq_" + variableValue;
@@ -524,7 +524,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueLessThan() {
+  void testVariableValueLessThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_lt_" + variableValue;
@@ -541,7 +541,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueLessThanEquals() {
+  void testVariableValueLessThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_lteq_" + variableValue;
@@ -558,7 +558,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueLike() {
+  void testVariableValueLike() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_like_" + variableValue;
@@ -575,7 +575,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueNotEquals() {
+  void testVariableValueNotEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -592,7 +592,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValuesEqualsIgnoreCase() {
+  void testVariableValuesEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -611,7 +611,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValuesNotEqualsIgnoreCase() {
+  void testVariableValuesNotEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -630,7 +630,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValuesLikeIgnoreCase() {
+  void testVariableValuesLikeIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_like_" + variableValue;
@@ -649,7 +649,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableNamesEqualsIgnoreCase() {
+  void testVariableNamesEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -668,7 +668,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableNamesNotEqualsIgnoreCase() {
+  void testVariableNamesNotEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -687,7 +687,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueEqualsAsPost() {
+  void testVariableValueEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -712,7 +712,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableGreaterThanAsPost() {
+  void testVariableGreaterThanAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -737,7 +737,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueGreaterThanEqualsAsPost() {
+  void testVariableValueGreaterThanEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -762,7 +762,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueLessThanAsPost() {
+  void testVariableValueLessThanAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -787,7 +787,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueLessThanEqualsAsPost() {
+  void testVariableValueLessThanEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -812,7 +812,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueLikeAsPost() {
+  void testVariableValueLikeAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -837,7 +837,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValueNotEqualsAsPost() {
+  void testVariableValueNotEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -862,7 +862,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValuesEqualsIgnoreCaseAsPost() {
+  void testVariableValuesEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -889,7 +889,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValuesNotEqualsIgnoreCaseAsPost() {
+  void testVariableValuesNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -916,7 +916,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableValuesLikeIgnoreCaseAsPost() {
+  void testVariableValuesLikeIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -943,7 +943,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableNamesEqualsIgnoreCaseAsPost() {
+  void testVariableNamesEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -970,7 +970,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testVariableNamesNotEqualsIgnoreCaseAsPost() {
+  void testVariableNamesNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -997,7 +997,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleVariableParameters() {
+  void testMultipleVariableParameters() {
     String variableName1 = "varName";
     String variableValue1 = "varValue";
     String variableParameter1 = variableName1 + "_eq_" + variableValue1;
@@ -1021,7 +1021,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleVariableParametersAsPost() {
+  void testMultipleVariableParametersAsPost() {
     String variableName = "varName";
     String variableValue = "varValue";
     String anotherVariableName = "anotherVarName";
@@ -1058,7 +1058,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -1069,7 +1069,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCountAsPost() {
+  void testQueryCountAsPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -1084,7 +1084,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockCaseInstanceQuery(createMockCaseInstancesTwoTenants());
 
     Response response = given()
@@ -1109,7 +1109,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testWithoutTenantIdParameter() {
+  void testWithoutTenantIdParameter() {
     mockedQuery = setUpMockCaseInstanceQuery(Arrays.asList(MockProvider.createMockCaseInstance(null)));
 
     Response response = given()
@@ -1131,7 +1131,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTenantIdListPostParameter() {
+  void testTenantIdListPostParameter() {
     mockedQuery = setUpMockCaseInstanceQuery(createMockCaseInstancesTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -1160,7 +1160,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testWithoutTenantIdPostParameter() {
+  void testWithoutTenantIdPostParameter() {
     mockedQuery = setUpMockCaseInstanceQuery(Arrays.asList(MockProvider.createMockCaseInstance(null)));
 
     Map<String, Object> queryParameters = new HashMap<>();

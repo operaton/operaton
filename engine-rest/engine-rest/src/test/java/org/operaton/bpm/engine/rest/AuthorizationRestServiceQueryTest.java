@@ -74,7 +74,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   public static TestContainerExtension rule = new TestContainerExtension();
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     authorizationServiceMock = mock(AuthorizationServiceImpl.class);
     identityServiceMock = mock(IdentityServiceImpl.class);
     processEngineConfigurationMock = mock(ProcessEngineConfigurationImpl.class);
@@ -96,7 +96,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
 
     setUpMockQuery(MockProvider.createMockAuthorizations());
 
@@ -108,7 +108,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "resourceType")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -117,7 +117,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -126,7 +126,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
 
     AuthorizationQuery mockQuery = setUpMockQuery(MockProvider.createMockAuthorizations());
 
@@ -137,7 +137,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSimpleAuthorizationQuery() {
+  void testSimpleAuthorizationQuery() {
 
     List<Authorization> mockAuthorizations = MockProvider.createMockGlobalAuthorizations();
     AuthorizationQuery mockQuery = setUpMockQuery(mockAuthorizations);
@@ -173,7 +173,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCompleteGetParameters() {
+  void testCompleteGetParameters() {
 
     List<Authorization> mockAuthorizations = MockProvider.createMockGlobalAuthorizations();
     AuthorizationQuery mockQuery = setUpMockQuery(mockAuthorizations);
@@ -214,7 +214,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
 
     AuthorizationQuery mockQuery = setUpMockQuery(MockProvider.createMockAuthorizations());
 
@@ -226,7 +226,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
 
     AuthorizationQuery mockQuery = setUpMockQuery(MockProvider.createMockAuthorizations());
 

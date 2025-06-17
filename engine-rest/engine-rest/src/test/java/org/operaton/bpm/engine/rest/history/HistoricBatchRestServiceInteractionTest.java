@@ -72,7 +72,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   protected HistoricBatchQuery queryMock;
 
   @BeforeEach
-  public void setUpHistoricBatchQueryMock() {
+  void setUpHistoricBatchQueryMock() {
     HistoricBatch historicBatchMock = MockProvider.createMockHistoricBatch();
 
     queryMock = mock(HistoricBatchQuery.class);
@@ -86,7 +86,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetHistoricBatch() {
+  void testGetHistoricBatch() {
     Response response = given()
         .pathParam("id", MockProvider.EXAMPLE_BATCH_ID)
       .then().expect()
@@ -103,7 +103,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testGetNonExistingHistoricBatch() {
+  void testGetNonExistingHistoricBatch() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
     HistoricBatchQuery historicBatchQuery = mock(HistoricBatchQuery.class);
     when(historicBatchQuery.batchId(nonExistingId)).thenReturn(historicBatchQuery);
@@ -121,7 +121,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void deleteHistoricBatch() {
+  void deleteHistoricBatch() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_BATCH_ID)
     .then().expect()
@@ -134,7 +134,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void deleteNonExistingHistoricBatch() {
+  void deleteNonExistingHistoricBatch() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Historic batch for id '" + nonExistingId + "' cannot be found"))
@@ -151,7 +151,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void shouldSetRemovalTime_ByIds() {
+  void shouldSetRemovalTime_ByIds() {
     SetRemovalTimeSelectModeForHistoricBatchesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricBatchesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -180,7 +180,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void shouldSetRemovalTime_ByQuery() {
+  void shouldSetRemovalTime_ByQuery() {
     SetRemovalTimeSelectModeForHistoricBatchesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricBatchesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -211,7 +211,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void shouldSetRemovalTime_Absolute() {
+  void shouldSetRemovalTime_Absolute() {
     Date removalTime = new Date();
 
     SetRemovalTimeSelectModeForHistoricBatchesBuilder builderMock =
@@ -242,7 +242,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void shouldNotSetRemovalTime_Absolute() {
+  void shouldNotSetRemovalTime_Absolute() {
     SetRemovalTimeSelectModeForHistoricBatchesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricBatchesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -270,7 +270,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void shouldClearRemovalTime() {
+  void shouldClearRemovalTime() {
     SetRemovalTimeSelectModeForHistoricBatchesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricBatchesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -300,7 +300,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void shouldSetRemovalTime_Response() {
+  void shouldSetRemovalTime_Response() {
     SetRemovalTimeSelectModeForHistoricBatchesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricBatchesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -321,7 +321,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void shouldSetRemovalTime_ThrowBadUserException() {
+  void shouldSetRemovalTime_ThrowBadUserException() {
     SetRemovalTimeSelectModeForHistoricBatchesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricBatchesBuilder.class, RETURNS_DEEP_STUBS);
 

@@ -72,7 +72,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   protected HistoricDecisionInstanceQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricDecisionInstanceQuery(MockProvider.createMockHistoricDecisionInstances());
   }
 
@@ -87,7 +87,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("caseDefinitionKey", queryKey)
@@ -98,7 +98,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -109,13 +109,13 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("definitionId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "evaluationTime")
     .then().expect()
@@ -128,7 +128,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
     .then().expect()
@@ -141,7 +141,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("evaluationTime", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByEvaluationTime();
@@ -164,7 +164,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -180,7 +180,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -194,7 +194,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -208,7 +208,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -219,7 +219,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSimpleHistoricDecisionInstanceQuery() {
+  void testSimpleHistoricDecisionInstanceQuery() {
     String decisionDefinitionId = MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
 
     Response response = given()
@@ -286,7 +286,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testAdditionalParameters() {
+  void testAdditionalParameters() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()
@@ -300,7 +300,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testIncludeInputs() {
+  void testIncludeInputs() {
     mockedQuery = setUpMockHistoricDecisionInstanceQuery(Collections.singletonList(MockProvider.createMockHistoricDecisionInstanceWithInputs()));
 
     String decisionDefinitionId = MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
@@ -334,7 +334,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testIncludeOutputs() {
+  void testIncludeOutputs() {
     mockedQuery = setUpMockHistoricDecisionInstanceQuery(Collections.singletonList(MockProvider.createMockHistoricDecisionInstanceWithOutputs()));
 
     String decisionDefinitionId = MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
@@ -368,7 +368,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testIncludeInputsAndOutputs() {
+  void testIncludeInputsAndOutputs() {
     mockedQuery = setUpMockHistoricDecisionInstanceQuery(Collections.singletonList(MockProvider.createMockHistoricDecisionInstanceWithInputsAndOutputs()));
 
     String decisionDefinitionId = MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
@@ -404,7 +404,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testDefaultBinaryFetching() {
+  void testDefaultBinaryFetching() {
     String decisionDefinitionId = MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
 
     given()
@@ -421,7 +421,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testDisableBinaryFetching() {
+  void testDisableBinaryFetching() {
     String decisionDefinitionId = MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
 
     given()
@@ -439,7 +439,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testDefaultCustomObjectDeserialization() {
+  void testDefaultCustomObjectDeserialization() {
     String decisionDefinitionId = MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
 
     given()
@@ -456,7 +456,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testDisableCustomObjectDeserialization() {
+  void testDisableCustomObjectDeserialization() {
     String decisionDefinitionId = MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
 
     given()
@@ -474,7 +474,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testRootDecisionInstancesOnly() {
+  void testRootDecisionInstancesOnly() {
 
     given()
         .queryParam("rootDecisionInstancesOnly", true)
@@ -488,7 +488,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockHistoricDecisionInstanceQuery(createMockHistoricDecisionInstancesTwoTenants());
 
     Response response = given()
@@ -513,7 +513,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testWithoutTenantIdQueryParameter() {
+  void testWithoutTenantIdQueryParameter() {
     // given
     mockedQuery = setUpMockHistoricDecisionInstanceQuery(Collections.singletonList(MockProvider.createMockHistoricDecisionInstanceBase(null)));
 

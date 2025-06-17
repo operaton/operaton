@@ -115,7 +115,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   protected MigrationPlanExecutionBuilder migrationPlanExecutionBuilderMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     runtimeServiceMock = mock(RuntimeService.class);
     when(processEngine.getRuntimeService()).thenReturn(runtimeServiceMock);
 
@@ -136,7 +136,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generateMigrationPlanWithInitialEmptyInstructions() {
+  void generateMigrationPlanWithInitialEmptyInstructions() {
     Map<String, Object> initialMigrationPlan = new MigrationPlanDtoBuilder(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
       .instructions(Collections.<Map<String, Object>>emptyList())
       .build();
@@ -154,7 +154,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generateMigrationPlanWithInitialNullInstructions() {
+  void generateMigrationPlanWithInitialNullInstructions() {
     Map<String, Object> initialMigrationPlan = new MigrationPlanDtoBuilder(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
       .instructions(null)
       .build();
@@ -172,7 +172,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generateMigrationPlanWithNoInitialInstructions() {
+  void generateMigrationPlanWithNoInitialInstructions() {
     Map<String, Object> initialMigrationPlan = new MigrationPlanDtoBuilder(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
       .build();
 
@@ -189,7 +189,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generateMigrationPlanIgnoringInitialInstructions() {
+  void generateMigrationPlanIgnoringInitialInstructions() {
     Map<String, Object> initialMigrationPlan = new MigrationPlanDtoBuilder(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
       .instruction("ignored", "ignored")
       .build();
@@ -207,7 +207,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generateMigrationPlanWithNullSourceProcessDefinition() {
+  void generateMigrationPlanWithNullSourceProcessDefinition() {
     String message = "source process definition id is null";
     MigrationPlanBuilder planBuilder = mock(MigrationPlanBuilder.class, Mockito.RETURNS_DEEP_STUBS);
     when(runtimeServiceMock.createMigrationPlan(isNull(), anyString()))
@@ -229,7 +229,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generateMigrationPlanWithNonExistingSourceProcessDefinition() {
+  void generateMigrationPlanWithNonExistingSourceProcessDefinition() {
     String message = "source process definition with id " + NON_EXISTING_PROCESS_DEFINITION_ID + " does not exist";
     MigrationPlanBuilder migrationPlanBuilder = mock(MigrationPlanBuilder.class, Mockito.RETURNS_DEEP_STUBS);
     when(runtimeServiceMock.createMigrationPlan(eq(NON_EXISTING_PROCESS_DEFINITION_ID), anyString()))
@@ -254,7 +254,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generateMigrationPlanWithNullTargetProcessDefinition() {
+  void generateMigrationPlanWithNullTargetProcessDefinition() {
     String message = "target process definition id is null";
     MigrationPlanBuilder migrationPlanBuilder = mock(MigrationPlanBuilder.class, Mockito.RETURNS_DEEP_STUBS);
     when(runtimeServiceMock.createMigrationPlan(anyString(), isNull()))
@@ -278,7 +278,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generateMigrationPlanWithNonExistingTargetProcessDefinition() {
+  void generateMigrationPlanWithNonExistingTargetProcessDefinition() {
     String message = "target process definition with id " + NON_EXISTING_PROCESS_DEFINITION_ID + " does not exist";
     MigrationPlanBuilder migrationPlanBuilder = mock(MigrationPlanBuilder.class, Mockito.RETURNS_DEEP_STUBS);
     when(runtimeServiceMock.createMigrationPlan(anyString(), eq(NON_EXISTING_PROCESS_DEFINITION_ID)))
@@ -302,7 +302,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generatePlanUpdateEventTriggers() {
+  void generatePlanUpdateEventTriggers() {
     migrationPlanBuilderMock = new MockMigrationPlanBuilder()
       .sourceProcessDefinitionId(EXAMPLE_PROCESS_DEFINITION_ID)
       .targetProcessDefinitionId(ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
@@ -336,7 +336,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generatePlanUpdateEventTriggerResponse() {
+  void generatePlanUpdateEventTriggerResponse() {
     migrationPlanBuilderMock = new MockMigrationPlanBuilder()
         .sourceProcessDefinitionId(EXAMPLE_PROCESS_DEFINITION_ID)
         .targetProcessDefinitionId(ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
@@ -363,7 +363,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generatePlanVariables() {
+  void generatePlanVariables() {
     migrationPlanBuilderMock = new MockMigrationPlanBuilder()
       .sourceProcessDefinitionId(EXAMPLE_PROCESS_DEFINITION_ID)
       .targetProcessDefinitionId(ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
@@ -424,7 +424,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void generatePlanVariablesResponse() {
+  void generatePlanVariablesResponse() {
     migrationPlanBuilderMock = new MockMigrationPlanBuilder()
         .sourceProcessDefinitionId(EXAMPLE_PROCESS_DEFINITION_ID)
         .targetProcessDefinitionId(ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
@@ -458,7 +458,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlan() {
+  void executeMigrationPlan() {
     Map<String, Object> migrationExecution = new MigrationExecutionDtoBuilder()
       .migrationPlan(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
         .instruction(EXAMPLE_ACTIVITY_ID, ANOTHER_EXAMPLE_ACTIVITY_ID)
@@ -480,7 +480,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithProcessInstanceQuery() {
+  void executeMigrationPlanWithProcessInstanceQuery() {
     when(runtimeServiceMock.createProcessInstanceQuery())
       .thenReturn(new ProcessInstanceQueryImpl());
 
@@ -509,7 +509,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanSkipListeners() {
+  void executeMigrationPlanSkipListeners() {
 
     Map<String, Object> migrationExecution = new MigrationExecutionDtoBuilder()
       .migrationPlan(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
@@ -531,7 +531,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanSkipIoMappings() {
+  void executeMigrationPlanSkipIoMappings() {
 
     Map<String, Object> migrationExecution = new MigrationExecutionDtoBuilder()
       .migrationPlan(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
@@ -553,7 +553,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithNullInstructions() {
+  void executeMigrationPlanWithNullInstructions() {
     MigrationInstructionValidationReport instructionReport = mock(MigrationInstructionValidationReport.class);
     when(instructionReport.getMigrationInstruction()).thenReturn(null);
     when(instructionReport.getFailures()).thenReturn(Collections.singletonList("failure"));
@@ -585,7 +585,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithEmptyInstructions() {
+  void executeMigrationPlanWithEmptyInstructions() {
     MigrationInstructionValidationReport instructionReport = mock(MigrationInstructionValidationReport.class);
     when(instructionReport.getMigrationInstruction()).thenReturn(null);
     when(instructionReport.getFailures()).thenReturn(Collections.singletonList("failure"));
@@ -620,7 +620,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithNullSourceProcessInstanceId() {
+  void executeMigrationPlanWithNullSourceProcessInstanceId() {
     String message = "source process definition id is null";
     JoinedMigrationPlanBuilderMock migrationPlanBuilder = mock(JoinedMigrationPlanBuilderMock.class, new FluentAnswer());
     when(runtimeServiceMock.createMigrationPlan(isNull(), anyString()))
@@ -646,7 +646,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithNonExistingSourceProcessInstanceId() {
+  void executeMigrationPlanWithNonExistingSourceProcessInstanceId() {
     String message = "source process definition with id " + NON_EXISTING_PROCESS_DEFINITION_ID + " does not exist";
     JoinedMigrationPlanBuilderMock migrationPlanBuilder = mock(JoinedMigrationPlanBuilderMock.class, new FluentAnswer());
     when(runtimeServiceMock.createMigrationPlan(eq(NON_EXISTING_PROCESS_DEFINITION_ID), anyString()))
@@ -672,7 +672,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithNullTargetProcessInstanceId() {
+  void executeMigrationPlanWithNullTargetProcessInstanceId() {
     String message = "target process definition id is null";
     JoinedMigrationPlanBuilderMock migrationPlanBuilder = mock(JoinedMigrationPlanBuilderMock.class, new FluentAnswer());
     when(runtimeServiceMock.createMigrationPlan(anyString(), isNull()))
@@ -698,7 +698,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithNonExistingTargetProcessInstanceId() {
+  void executeMigrationPlanWithNonExistingTargetProcessInstanceId() {
     String message = "target process definition with id " + NON_EXISTING_PROCESS_DEFINITION_ID + " does not exist";
     JoinedMigrationPlanBuilderMock migrationPlanBuilder = mock(JoinedMigrationPlanBuilderMock.class, new FluentAnswer());
     when(runtimeServiceMock.createMigrationPlan(anyString(), eq(NON_EXISTING_PROCESS_DEFINITION_ID)))
@@ -724,7 +724,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithNullSourceActivityId() {
+  void executeMigrationPlanWithNullSourceActivityId() {
     String message = "sourceActivityId is null";
     when(migrationPlanBuilderMock.mapActivities(isNull(), anyString()))
       .thenThrow(new BadUserRequestException(message));
@@ -748,7 +748,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithNonExistingSourceActivityId() {
+  void executeMigrationPlanWithNonExistingSourceActivityId() {
     String message = "sourceActivity is null";
     when(migrationPlanBuilderMock.mapActivities(eq(NON_EXISTING_ACTIVITY_ID), anyString()))
       .thenThrow(new BadUserRequestException(message));
@@ -772,7 +772,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithNullTargetActivityId() {
+  void executeMigrationPlanWithNullTargetActivityId() {
     String message = "targetActivityId is null";
     when(migrationPlanBuilderMock.mapActivities(anyString(), isNull()))
       .thenThrow(new BadUserRequestException(message));
@@ -796,7 +796,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanWithNonExistingTargetActivityId() {
+  void executeMigrationPlanWithNonExistingTargetActivityId() {
     String message = "targetActivity is null";
     when(migrationPlanBuilderMock.mapActivities(anyString(), eq(NON_EXISTING_ACTIVITY_ID)))
       .thenThrow(new BadUserRequestException(message));
@@ -820,7 +820,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanValidationException() {
+  void executeMigrationPlanValidationException() {
 
     MigrationInstruction migrationInstruction = mock(MigrationInstruction.class);
     when(migrationInstruction.getSourceActivityId()).thenReturn(EXAMPLE_ACTIVITY_ID);
@@ -866,7 +866,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigratingProcessInstanceValidationException() {
+  void executeMigratingProcessInstanceValidationException() {
 
     MigrationInstruction migrationInstruction = mock(MigrationInstruction.class);
     when(migrationInstruction.getSourceActivityId()).thenReturn(EXAMPLE_ACTIVITY_ID);
@@ -936,7 +936,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsync() {
+  void executeMigrationPlanAsync() {
     Batch batchMock = createMockBatch();
     when(migrationPlanExecutionBuilderMock.executeAsync()).thenReturn(batchMock);
 
@@ -970,7 +970,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithProcessInstanceQuery() {
+  void executeMigrationPlanAsyncWithProcessInstanceQuery() {
     when(runtimeServiceMock.createProcessInstanceQuery())
       .thenReturn(new ProcessInstanceQueryImpl());
 
@@ -1010,7 +1010,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncSkipListeners() {
+  void executeMigrationPlanAsyncSkipListeners() {
     Batch batchMock = createMockBatch();
     when(migrationPlanExecutionBuilderMock.executeAsync()).thenReturn(batchMock);
 
@@ -1034,7 +1034,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncSkipIoMappings() {
+  void executeMigrationPlanAsyncSkipIoMappings() {
     Batch batchMock = createMockBatch();
     when(migrationPlanExecutionBuilderMock.executeAsync()).thenReturn(batchMock);
 
@@ -1058,7 +1058,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithNullInstructions() {
+  void executeMigrationPlanAsyncWithNullInstructions() {
     MigrationInstructionValidationReport instructionReport = mock(MigrationInstructionValidationReport.class);
     when(instructionReport.getMigrationInstruction()).thenReturn(null);
     when(instructionReport.getFailures()).thenReturn(Collections.singletonList("failure"));
@@ -1090,7 +1090,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithEmptyInstructions() {
+  void executeMigrationPlanAsyncWithEmptyInstructions() {
     MigrationInstructionValidationReport instructionReport = mock(MigrationInstructionValidationReport.class);
     when(instructionReport.getMigrationInstruction()).thenReturn(null);
     when(instructionReport.getFailures()).thenReturn(Collections.singletonList("failure"));
@@ -1125,7 +1125,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithNullSourceProcessDefinitionId() {
+  void executeMigrationPlanAsyncWithNullSourceProcessDefinitionId() {
     String message = "source process definition id is null";
     JoinedMigrationPlanBuilderMock migrationPlanBuilder = mock(JoinedMigrationPlanBuilderMock.class, new FluentAnswer());
     when(runtimeServiceMock.createMigrationPlan(isNull(), anyString()))
@@ -1151,7 +1151,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithNonExistingSourceProcessDefinitionId() {
+  void executeMigrationPlanAsyncWithNonExistingSourceProcessDefinitionId() {
     String message = "source process definition with id " + NON_EXISTING_PROCESS_DEFINITION_ID + " does not exist";
     JoinedMigrationPlanBuilderMock migrationPlanBuilder = mock(JoinedMigrationPlanBuilderMock.class, new FluentAnswer());
     when(runtimeServiceMock.createMigrationPlan(eq(NON_EXISTING_PROCESS_DEFINITION_ID), anyString()))
@@ -1177,7 +1177,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithNullTargetProcessDefinitionId() {
+  void executeMigrationPlanAsyncWithNullTargetProcessDefinitionId() {
     String message = "target process definition id is null";
     JoinedMigrationPlanBuilderMock migrationPlanBuilder = mock(JoinedMigrationPlanBuilderMock.class, new FluentAnswer());
     when(runtimeServiceMock.createMigrationPlan(anyString(), isNull()))
@@ -1203,7 +1203,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithNonExistingTargetProcessDefinitionId() {
+  void executeMigrationPlanAsyncWithNonExistingTargetProcessDefinitionId() {
     String message = "target process definition with id " + NON_EXISTING_PROCESS_DEFINITION_ID + " does not exist";
     JoinedMigrationPlanBuilderMock migrationPlanBuilder = mock(JoinedMigrationPlanBuilderMock.class, new FluentAnswer());
     when(runtimeServiceMock.createMigrationPlan(anyString(), eq(NON_EXISTING_PROCESS_DEFINITION_ID)))
@@ -1229,7 +1229,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithNullSourceActivityId() {
+  void executeMigrationPlanAsyncWithNullSourceActivityId() {
     String message = "sourceActivityId is null";
     when(migrationPlanBuilderMock.mapActivities(isNull(), anyString()))
       .thenThrow(new BadUserRequestException(message));
@@ -1253,7 +1253,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithNonExistingSourceActivityId() {
+  void executeMigrationPlanAsyncWithNonExistingSourceActivityId() {
     String message = "sourceActivity is null";
     when(migrationPlanBuilderMock.mapActivities(eq(NON_EXISTING_ACTIVITY_ID), anyString()))
       .thenThrow(new BadUserRequestException(message));
@@ -1277,7 +1277,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithNullTargetActivityId() {
+  void executeMigrationPlanAsyncWithNullTargetActivityId() {
     String message = "targetActivityId is null";
     when(migrationPlanBuilderMock.mapActivities(anyString(), isNull()))
       .thenThrow(new BadUserRequestException(message));
@@ -1301,7 +1301,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncWithNonExistingTargetActivityId() {
+  void executeMigrationPlanAsyncWithNonExistingTargetActivityId() {
     String message = "targetActivity is null";
     when(migrationPlanBuilderMock.mapActivities(anyString(), eq(NON_EXISTING_ACTIVITY_ID)))
       .thenThrow(new BadUserRequestException(message));
@@ -1325,7 +1325,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanAsyncValidationException() {
+  void executeMigrationPlanAsyncValidationException() {
 
     MigrationInstruction migrationInstruction = mock(MigrationInstruction.class);
     when(migrationInstruction.getSourceActivityId()).thenReturn(EXAMPLE_ACTIVITY_ID);
@@ -1371,7 +1371,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void executeMigrationPlanUpdateEventTrigger() {
+  void executeMigrationPlanUpdateEventTrigger() {
     Map<String, Object> migrationExecution = new MigrationExecutionDtoBuilder()
       .migrationPlan(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
         .instruction(EXAMPLE_ACTIVITY_ID, ANOTHER_EXAMPLE_ACTIVITY_ID, true)
@@ -1393,7 +1393,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void validateMigrationPlan() {
+  void validateMigrationPlan() {
     Map<String, Object> migrationPlan = new MigrationPlanDtoBuilder(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
       .instruction(EXAMPLE_ACTIVITY_ID, ANOTHER_EXAMPLE_ACTIVITY_ID)
       .instruction(ANOTHER_EXAMPLE_ACTIVITY_ID, EXAMPLE_ACTIVITY_ID, true)
@@ -1413,7 +1413,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void validateMigrationPlanInstructionsValidationException() {
+  void validateMigrationPlanInstructionsValidationException() {
     MigrationInstruction migrationInstruction = mock(MigrationInstruction.class);
     when(migrationInstruction.getSourceActivityId()).thenReturn(EXAMPLE_ACTIVITY_ID);
     when(migrationInstruction.getTargetActivityId()).thenReturn(ANOTHER_EXAMPLE_ACTIVITY_ID);
@@ -1453,7 +1453,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void validateMigrationPlanVariablesValidationException() {
+  void validateMigrationPlanVariablesValidationException() {
     MigrationInstruction migrationInstruction = mock(MigrationInstruction.class);
     when(migrationInstruction.getSourceActivityId()).thenReturn(EXAMPLE_ACTIVITY_ID);
     when(migrationInstruction.getTargetActivityId()).thenReturn(ANOTHER_EXAMPLE_ACTIVITY_ID);

@@ -56,13 +56,13 @@ public class TelemetryRestServiceTest extends AbstractRestServiceTest {
 
 
   @BeforeEach
-  public void setupMocks() {
+  void setupMocks() {
     managementServiceMock = mock(ManagementService.class);
     when(processEngine.getManagementService()).thenReturn(managementServiceMock);
   }
 
   @Test
-  public void shouldDisableTelemetry() {
+  void shouldDisableTelemetry() {
     Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("enableTelemetry", false);
 
@@ -79,7 +79,7 @@ public class TelemetryRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldFetchDisabledTelemetryConfiguration() {
+  void shouldFetchDisabledTelemetryConfiguration() {
     when(managementServiceMock.isTelemetryEnabled()).thenReturn(false);
 
     given()
@@ -95,7 +95,7 @@ public class TelemetryRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldGetTelemetryData() {
+  void shouldGetTelemetryData() {
     when(managementServiceMock.getTelemetryData()).thenReturn(MockProvider.EXAMPLE_TELEMETRY_DATA);
 
     given()
@@ -129,7 +129,7 @@ public class TelemetryRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldGetMinimalTelemetryData() {
+  void shouldGetMinimalTelemetryData() {
 
     TelemetryData telemetryData = mock(TelemetryData.class);
     when(telemetryData.getInstallation()).thenReturn(MockProvider.EXAMPLE_TELEMETRY_INSTALLATION_ID);

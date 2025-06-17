@@ -84,7 +84,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   private List<MessageCorrelationResultWithVariables> execResultWithVariablesList;
 
   @BeforeEach
-  public void setupMocks() {
+  void setupMocks() {
     runtimeServiceMock = mock(RuntimeService.class);
     when(processEngine.getRuntimeService()).thenReturn(runtimeServiceMock);
 
@@ -115,7 +115,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullMessageCorrelation() {
+  void testFullMessageCorrelation() {
     String messageName = "aMessageName";
     String businessKey = "aBusinessKey";
     Map<String, Object> variables = VariablesBuilder.create().variable("aKey", "aValue").getVariables();
@@ -184,7 +184,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullMessageCorrelationWithExecutionResult() {
+  void testFullMessageCorrelationWithExecutionResult() {
     //given
     when(messageCorrelationBuilderMock.correlateWithResult()).thenReturn(executionResult);
 
@@ -222,7 +222,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullMessageCorrelationWithProcessDefinitionResult() {
+  void testFullMessageCorrelationWithProcessDefinitionResult() {
     //given
     when(messageCorrelationBuilderMock.correlateWithResult()).thenReturn(procInstanceResult);
 
@@ -262,7 +262,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullMessageCorrelationAll() {
+  void testFullMessageCorrelationAll() {
     String messageName = "aMessageName";
     String businessKey = "aBusinessKey";
     Map<String, Object> variables = VariablesBuilder.create().variable("aKey", "aValue").getVariables();
@@ -332,7 +332,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullMessageCorrelationAllWithExecutionResult() {
+  void testFullMessageCorrelationAllWithExecutionResult() {
     //given
     when(messageCorrelationBuilderMock.correlateAllWithResult()).thenReturn(executionResultList);
 
@@ -365,8 +365,8 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     verify(messageCorrelationBuilderMock).correlateAllWithResult();
   }
 
- @Test
-  public void testFullMessageCorrelationAllWithProcessInstanceResult() {
+  @Test
+  void testFullMessageCorrelationAllWithProcessInstanceResult() {
     //given
     when(messageCorrelationBuilderMock.correlateAllWithResult()).thenReturn(procInstanceResultList);
 
@@ -400,7 +400,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFullMessageCorrelationAllWithMixedResult() {
+  void testFullMessageCorrelationAllWithMixedResult() {
     //given
     when(messageCorrelationBuilderMock.correlateAllWithResult()).thenReturn(mixedResultList);
 
@@ -441,7 +441,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testFullMessageCorrelationAllWithNoResult() {
+  void testFullMessageCorrelationAllWithNoResult() {
     //given
     when(messageCorrelationBuilderMock.correlateAllWithResult()).thenReturn(mixedResultList);
 
@@ -467,7 +467,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessageNameOnlyCorrelation() {
+  void testMessageNameOnlyCorrelation() {
     String messageName = "aMessageName";
 
     Map<String, Object> messageParameters = new HashMap<>();
@@ -483,7 +483,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessageNameAndBusinessKeyCorrelation() {
+  void testMessageNameAndBusinessKeyCorrelation() {
     String messageName = "aMessageName";
     String businessKey = "aBusinessKey";
 
@@ -503,7 +503,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessageNameAndBusinessKeyCorrelationAll() {
+  void testMessageNameAndBusinessKeyCorrelationAll() {
     String messageName = "aMessageName";
     String businessKey = "aBusinessKey";
 
@@ -524,7 +524,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMismatchingCorrelation() {
+  void testMismatchingCorrelation() {
     String messageName = "aMessage";
 
     doThrow(new MismatchingMessageCorrelationException(messageName, "Expected exception: cannot correlate"))
@@ -540,7 +540,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingInstantiation() {
+  void testFailingInstantiation() {
     String messageName = "aMessage";
 
     // thrown, if instantiation of the process or signalling the instance fails
@@ -557,7 +557,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoMessageNameCorrelation() {
+  void testNoMessageNameCorrelation() {
     given().contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -566,7 +566,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessageCorrelationWithTenantId() {
+  void testMessageCorrelationWithTenantId() {
     String messageName = "aMessageName";
 
     Map<String, Object> messageParameters = new HashMap<>();
@@ -584,7 +584,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessageCorrelationWithoutTenantId() {
+  void testMessageCorrelationWithoutTenantId() {
     String messageName = "aMessageName";
 
     Map<String, Object> messageParameters = new HashMap<>();
@@ -602,7 +602,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingInvalidTenantParameters() {
+  void testFailingInvalidTenantParameters() {
     String messageName = "aMessageName";
 
     Map<String, Object> messageParameters = new HashMap<>();
@@ -623,7 +623,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableIntegerInCorrelationKeys() {
+  void testFailingDueToUnparseableIntegerInCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Integer";
@@ -645,7 +645,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableIntegerInLocalCorrelationKeys() {
+  void testFailingDueToUnparseableIntegerInLocalCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Integer";
@@ -667,7 +667,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableShortInCorrelationKeys() {
+  void testFailingDueToUnparseableShortInCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Short";
@@ -689,7 +689,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableShortInLocalCorrelationKeys() {
+  void testFailingDueToUnparseableShortInLocalCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Short";
@@ -711,7 +711,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableLongInCorrelationKeys() {
+  void testFailingDueToUnparseableLongInCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Long";
@@ -733,7 +733,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableLongInLocalCorrelationKeys() {
+  void testFailingDueToUnparseableLongInLocalCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Long";
@@ -755,7 +755,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableDoubleInCorrelationKeys() {
+  void testFailingDueToUnparseableDoubleInCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Double";
@@ -777,7 +777,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableDoubleInLocalCorrelationKeys() {
+  void testFailingDueToUnparseableDoubleInLocalCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Double";
@@ -799,7 +799,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableDateInCorrelationKeys() {
+  void testFailingDueToUnparseableDateInCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Date";
@@ -821,7 +821,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableDateInLocalCorrelationKeys() {
+  void testFailingDueToUnparseableDateInLocalCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Date";
@@ -843,7 +843,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToNotSupportedTypeInCorrelationKeys() {
+  void testFailingDueToNotSupportedTypeInCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "X";
@@ -864,7 +864,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToNotSupportedTypeInLocalCorrelationKeys() {
+  void testFailingDueToNotSupportedTypeInLocalCorrelationKeys() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "X";
@@ -885,7 +885,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableIntegerInProcessVariables() {
+  void testFailingDueToUnparseableIntegerInProcessVariables() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Integer";
@@ -907,7 +907,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableShortInProcessVariables() {
+  void testFailingDueToUnparseableShortInProcessVariables() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Short";
@@ -929,7 +929,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableLongInProcessVariables() {
+  void testFailingDueToUnparseableLongInProcessVariables() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Long";
@@ -951,7 +951,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableDoubleInProcessVariables() {
+  void testFailingDueToUnparseableDoubleInProcessVariables() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Double";
@@ -973,7 +973,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableDateInProcessVariables() {
+  void testFailingDueToUnparseableDateInProcessVariables() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Date";
@@ -995,7 +995,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToNotSupportedTypeInProcessVariables() {
+  void testFailingDueToNotSupportedTypeInProcessVariables() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "X";
@@ -1016,7 +1016,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableIntegerInProcessVariablesLocal() {
+  void testFailingDueToUnparseableIntegerInProcessVariablesLocal() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Integer";
@@ -1038,7 +1038,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToNotSupportedTypeInProcessVariablesLocal() {
+  void testFailingDueToNotSupportedTypeInProcessVariablesLocal() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "X";
@@ -1059,7 +1059,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableDateInProcessVariablesLocal() {
+  void testFailingDueToUnparseableDateInProcessVariablesLocal() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Date";
@@ -1081,7 +1081,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableIntegerInProcessVariablesToTriggeredScope() {
+  void testFailingDueToUnparseableIntegerInProcessVariablesToTriggeredScope() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Integer";
@@ -1104,7 +1104,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testFailingDueToNotSupportedTypeInProcessVariablesToTriggeredScope() {
+  void testFailingDueToNotSupportedTypeInProcessVariablesToTriggeredScope() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "X";
@@ -1125,7 +1125,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingDueToUnparseableDateInProcessVariablesToTriggeredScope() {
+  void testFailingDueToUnparseableDateInProcessVariablesToTriggeredScope() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "Date";
@@ -1147,7 +1147,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCorrelateThrowsAuthorizationException() {
+  void testCorrelateThrowsAuthorizationException() {
     String messageName = "aMessageName";
     Map<String, Object> messageParameters = new HashMap<>();
     messageParameters.put("messageName", messageName);
@@ -1167,7 +1167,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testcorrelateAllThrowsAuthorizationException() {
+  void testcorrelateAllThrowsAuthorizationException() {
     String messageName = "aMessageName";
     Map<String, Object> messageParameters = new HashMap<>();
     messageParameters.put("messageName", messageName);
@@ -1188,7 +1188,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessageCorrelationWithProcessInstanceId() {
+  void testMessageCorrelationWithProcessInstanceId() {
     String messageName = "aMessageName";
 
     Map<String, Object> messageParameters = new HashMap<>();
@@ -1209,7 +1209,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessageCorrelationWithoutBusinessKey() {
+  void testMessageCorrelationWithoutBusinessKey() {
     when(messageCorrelationBuilderMock.processInstanceBusinessKey(null))
       .thenThrow(new NullValueException());
 
@@ -1233,7 +1233,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCorrelationWithVariablesInResult() {
+  void testCorrelationWithVariablesInResult() {
     // given
     when(messageCorrelationBuilderMock.correlateWithResultAndVariables(false)).thenReturn(executionResultWithVariables);
 
@@ -1263,7 +1263,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCorrelationAllWithVariablesInResult() {
+  void testCorrelationAllWithVariablesInResult() {
     // given
     when(messageCorrelationBuilderMock.correlateAllWithResultAndVariables(false)).thenReturn(execResultWithVariablesList);
 
@@ -1296,7 +1296,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFailingCorrelationWithVariablesInResultDueToDisabledResult() {
+  void testFailingCorrelationWithVariablesInResultDueToDisabledResult() {
     // given
     String messageName = "aMessageName";
     Map<String, Object> messageParameters = new HashMap<>();
@@ -1316,7 +1316,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldReturnErrorOnMessageCorrelation() {
+  void shouldReturnErrorOnMessageCorrelation() {
     // given
     doThrow(new ProcessEngineException("foo", 123))
         .when(messageCorrelationBuilderMock).correlateWithResult();

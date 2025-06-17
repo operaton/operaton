@@ -57,7 +57,7 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
   private User mockUser;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     createMockIdentityQueries();
   }
 
@@ -90,7 +90,7 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testGroupInfoQuery() {
+  void testGroupInfoQuery() {
     given().queryParam("userId", "name")
         .then().expect().statusCode(Status.OK.getStatusCode())
         .body("groups.size()", is(1))
@@ -102,7 +102,7 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupInfoQueryWithMissingUserParameter() {
+  void testGroupInfoQueryWithMissingUserParameter() {
     expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
     .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
     .body("message", equalTo("No user id was supplied"))
@@ -110,7 +110,7 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void verifyUserWithMissingParameter () {
+  void verifyUserWithMissingParameter() {
     given()
         .body(new BasicUserCredentialsDto()).contentType(ContentType.JSON).
     expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
@@ -120,7 +120,7 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void verifyUser () {
+  void verifyUser() {
     when(processEngine.getIdentityService()
         .checkPassword(TEST_USERNAME, TEST_PASSWORD))
     .thenReturn(true);

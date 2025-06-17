@@ -77,7 +77,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   protected ProcessEngineConfiguration processEngineConfigurationMock;
 
   @BeforeEach
-  public void setupGroupData() {
+  void setupGroupData() {
 
     identityServiceMock = mock(IdentityService.class);
     authorizationServiceMock = mock(AuthorizationService.class);
@@ -92,7 +92,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetSingleGroup() {
+  void testGetSingleGroup() {
     Group sampleGroup = MockProvider.createMockGroup();
     GroupQuery sampleGroupQuery = mock(GroupQuery.class);
     when(identityServiceMock.createGroupQuery()).thenReturn(sampleGroupQuery);
@@ -107,7 +107,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testUserRestServiceOptions() {
+  void testUserRestServiceOptions() {
     String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + GroupRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
@@ -136,7 +136,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testUserRestServiceOptionsWithAuthorizationDisabled() {
+  void testUserRestServiceOptionsWithAuthorizationDisabled() {
     String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + GroupRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
@@ -164,7 +164,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupResourceOptionsUnauthenticated() {
+  void testGroupResourceOptionsUnauthenticated() {
     String fullGroupUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
 
     Group sampleGroup = MockProvider.createMockGroup();
@@ -198,7 +198,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupResourceOptionsUnauthorized() {
+  void testGroupResourceOptionsUnauthorized() {
     String fullGroupUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
@@ -234,7 +234,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupResourceOptionsAuthorized() {
+  void testGroupResourceOptionsAuthorized() {
     String fullGroupUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
@@ -273,7 +273,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupResourceOptionsWithAuthorizationDisabled() {
+  void testGroupResourceOptionsWithAuthorizationDisabled() {
     String fullGroupUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
@@ -302,7 +302,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupMembersResourceOptions() {
+  void testGroupMembersResourceOptions() {
     String fullMembersUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID + "/members";
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
@@ -327,7 +327,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupMembersResourceOptionsAuthorized() {
+  void testGroupMembersResourceOptionsAuthorized() {
     String fullMembersUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID + "/members";
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
@@ -365,7 +365,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupMembersResourceOptionsUnauthorized() {
+  void testGroupMembersResourceOptionsUnauthorized() {
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
     when(authorizationServiceMock.isUserAuthorized(MockProvider.EXAMPLE_USER_ID, null, DELETE, GROUP_MEMBERSHIP, MockProvider.EXAMPLE_GROUP_ID)).thenReturn(false);
@@ -397,7 +397,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupMembersResourceOptionsWithAuthorizationDisabled() {
+  void testGroupMembersResourceOptionsWithAuthorizationDisabled() {
     String fullMembersUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID + "/members";
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
@@ -422,7 +422,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetNonExistingGroup() {
+  void testGetNonExistingGroup() {
     GroupQuery sampleGroupQuery = mock(GroupQuery.class);
     when(identityServiceMock.createGroupQuery()).thenReturn(sampleGroupQuery);
     when(sampleGroupQuery.groupId(anyString())).thenReturn(sampleGroupQuery);
@@ -436,21 +436,21 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeleteGroup() {
+  void testDeleteGroup() {
     given().pathParam("id", MockProvider.EXAMPLE_GROUP_ID)
       .expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().delete(GROUP_URL);
   }
 
   @Test
-  public void testDeleteNonExistingGroup() {
+  void testDeleteNonExistingGroup() {
     given().pathParam("id", "non-existing")
     .expect().statusCode(Status.NO_CONTENT.getStatusCode())
     .when().delete(GROUP_URL);
   }
 
   @Test
-  public void testDeleteGroupThrowsAuthorizationException() {
+  void testDeleteGroupThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(identityServiceMock).deleteGroup(MockProvider.EXAMPLE_GROUP_ID);
 
@@ -466,7 +466,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testUpdateExistingGroup() {
+  void testUpdateExistingGroup() {
     Group initialGroup = MockProvider.createMockGroup();
     Group groupUpdate = MockProvider.createMockGroupUpdate();
     GroupQuery sampleGroupQuery = mock(GroupQuery.class);
@@ -487,7 +487,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testUpdateNonExistingGroup() {
+  void testUpdateNonExistingGroup() {
     Group groupUpdate = MockProvider.createMockGroupUpdate();
     GroupQuery sampleGroupQuery = mock(GroupQuery.class);
     when(identityServiceMock.createGroupQuery()).thenReturn(sampleGroupQuery);
@@ -506,7 +506,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testUpdateGroupThrowsAuthorizationException() {
+  void testUpdateGroupThrowsAuthorizationException() {
     Group initialGroup = MockProvider.createMockGroup();
     Group groupUpdate = MockProvider.createMockGroupUpdate();
 
@@ -535,7 +535,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupCreate() {
+  void testGroupCreate() {
     Group newGroup = MockProvider.createMockGroup();
     when(identityServiceMock.newGroup(MockProvider.EXAMPLE_GROUP_ID)).thenReturn(newGroup);
 
@@ -552,7 +552,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupCreateExistingFails() {
+  void testGroupCreateExistingFails() {
     Group newGroup = MockProvider.createMockGroup();
     when(identityServiceMock.newGroup(MockProvider.EXAMPLE_GROUP_ID)).thenReturn(newGroup);
     doThrow(new ProcessEngineException("")).when(identityServiceMock).saveGroup(newGroup);
@@ -567,7 +567,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGroupCreateThrowsAuthorizationException() {
+  void testGroupCreateThrowsAuthorizationException() {
     Group newGroup = MockProvider.createMockGroup();
     String message = "exception expected";
     when(identityServiceMock.newGroup(newGroup.getId())).thenThrow(new AuthorizationException(message));
@@ -585,7 +585,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSaveGroupThrowsAuthorizationException() {
+  void testSaveGroupThrowsAuthorizationException() {
     Group newGroup = MockProvider.createMockGroup();
 
     String message = "exception expected";
@@ -605,7 +605,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCreateGroupMember() {
+  void testCreateGroupMember() {
 
     given()
         .pathParam("id", MockProvider.EXAMPLE_GROUP_ID)
@@ -619,7 +619,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCreateGroupMemberThrowsAuthorizationException() {
+  void testCreateGroupMemberThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(identityServiceMock).createMembership(MockProvider.EXAMPLE_USER_ID, MockProvider.EXAMPLE_GROUP_ID);
 
@@ -636,7 +636,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeleteGroupMember() {
+  void testDeleteGroupMember() {
 
     given()
         .pathParam("id", MockProvider.EXAMPLE_GROUP_ID)
@@ -650,7 +650,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeleteGroupMemberThrowsAuthorizationException() {
+  void testDeleteGroupMemberThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(identityServiceMock).deleteMembership(MockProvider.EXAMPLE_USER_ID, MockProvider.EXAMPLE_GROUP_ID);
 
@@ -667,7 +667,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testReadOnlyGroupCreateFails() {
+  void testReadOnlyGroupCreateFails() {
     Group newGroup = MockProvider.createMockGroup();
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
@@ -681,7 +681,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testReadOnlyGroupUpdateFails() {
+  void testReadOnlyGroupUpdateFails() {
     Group groupUdpdate = MockProvider.createMockGroup();
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
@@ -697,7 +697,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testReadOnlyGroupDeleteFails() {
+  void testReadOnlyGroupDeleteFails() {
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
     given()
@@ -711,7 +711,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testReadOnlyCreateGroupMemberFails() {
+  void testReadOnlyCreateGroupMemberFails() {
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
     given()
@@ -728,7 +728,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testReadOnlyGroupMemberDeleteFails() {
+  void testReadOnlyGroupMemberDeleteFails() {
     when(identityServiceMock.isReadOnly()).thenReturn(true);
 
     given()

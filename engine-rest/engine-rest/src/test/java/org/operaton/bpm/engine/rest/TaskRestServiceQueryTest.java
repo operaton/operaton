@@ -92,7 +92,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   private TaskQuery mockQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockQuery = setUpMockTaskQuery(MockProvider.createMockTasks());
   }
 
@@ -108,7 +108,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given().queryParam("name", queryKey)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -117,7 +117,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testInvalidDateParameter() {
+  void testInvalidDateParameter() {
     given().queryParams("due", "anInvalidDate")
       .header("accept", MediaType.APPLICATION_JSON)
       .expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
@@ -128,7 +128,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "dueDate")
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
@@ -138,7 +138,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -147,7 +147,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSimpleTaskQuery() {
+  void testSimpleTaskQuery() {
     String queryName = "name";
 
     Response response = given().queryParam("name", queryName)
@@ -211,8 +211,9 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
 
   }
+
   @Test
-  public void testTaskQueryWithAttachmentAndComment() {
+  void testTaskQueryWithAttachmentAndComment() {
     String queryName = "name";
 
     Response response = given().queryParam("name", queryName)
@@ -239,7 +240,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSimpleHalTaskQuery() {
+  void testSimpleHalTaskQuery() {
     String queryName = "name";
 
     // setup user query mock
@@ -404,7 +405,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     given()
       .header("accept", MediaType.APPLICATION_JSON)
     .expect().statusCode(Status.OK.getStatusCode())
@@ -416,7 +417,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAdditionalParametersExcludingVariables() {
+  void testAdditionalParametersExcludingVariables() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
     Map<String, Integer> intQueryParameters = getCompleteIntQueryParameters();
     Map<String, Boolean> booleanQueryParameters = getCompleteBooleanQueryParameters();
@@ -618,7 +619,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDateParameters() {
+  void testDateParameters() {
     Map<String, String> queryParameters = getDateParameters();
 
     given().queryParams(queryParameters)
@@ -640,7 +641,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDateParametersPost() {
+  void testDateParametersPost() {
     Map<String, String> json = getDateParameters();
 
     given()
@@ -666,7 +667,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeprecatedDateParameters() {
+  void testDeprecatedDateParameters() {
     Map<String, String> queryParameters = new HashMap<>();
     queryParameters.put("due", withTimezone("2013-01-23T14:42:44"));
     queryParameters.put("created", withTimezone("2013-01-23T14:42:47"));
@@ -702,7 +703,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCandidateGroupInList() {
+  void testCandidateGroupInList() {
     List<String> candidateGroups = new ArrayList<>();
     candidateGroups.add("boss");
     candidateGroups.add("worker");
@@ -717,7 +718,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDelegationState() {
+  void testDelegationState() {
     given().queryParams("delegationState", "PENDING")
       .header("accept", MediaType.APPLICATION_JSON)
       .expect().statusCode(Status.OK.getStatusCode())
@@ -734,7 +735,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testLowerCaseDelegationStateParam() {
+  void testLowerCaseDelegationStateParam() {
     given().queryParams("delegationState", "resolved")
     .header("accept", MediaType.APPLICATION_JSON)
     .expect().statusCode(Status.OK.getStatusCode())
@@ -744,7 +745,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockQuery);
     executeAndVerifySorting("dueDate", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByDueDate();
@@ -900,7 +901,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockQuery);
     executeAndVerifySortingAsPost(
       OrderingBuilder.create()
@@ -948,7 +949,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
 
     int firstResult = 0;
     int maxResults = 10;
@@ -961,7 +962,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskVariableParameters() {
+  void testTaskVariableParameters() {
     // equals
     String variableName = "varName";
     String variableValue = "varValue";
@@ -1141,7 +1142,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskVariableValueEqualsIgnoreCaseAsPost() {
+  void testTaskVariableValueEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "eq");
@@ -1168,7 +1169,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskVariableNameEqualsIgnoreCaseAsPost() {
+  void testTaskVariableNameEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME.toLowerCase());
     variableJson.put("operator", "eq");
@@ -1211,7 +1212,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskVariableValueNotEqualsIgnoreCaseAsPost() {
+  void testTaskVariableValueNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "neq");
@@ -1238,7 +1239,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskVariableValueLikeIgnoreCaseAsPost() {
+  void testTaskVariableValueLikeIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "like");
@@ -1265,7 +1266,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessVariableParameters() {
+  void testProcessVariableParameters() {
     // equals
     String variableName = "varName";
     String variableValue = "varValue";
@@ -1449,7 +1450,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessVariableValueEqualsIgnoreCaseAsPost() {
+  void testProcessVariableValueEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "eq");
@@ -1476,7 +1477,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessVariableNameEqualsIgnoreCaseAsPost() {
+  void testProcessVariableNameEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME.toLowerCase());
     variableJson.put("operator", "eq");
@@ -1519,7 +1520,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessVariableValueNotEqualsIgnoreCaseAsPost() {
+  void testProcessVariableValueNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "neq");
@@ -1546,7 +1547,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessVariableValueLikeIgnoreCaseAsPost() {
+  void testProcessVariableValueLikeIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "like");
@@ -1573,7 +1574,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessVariableValueNotLikeIgnoreCaseAsPost() {
+  void testProcessVariableValueNotLikeIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "notLike");
@@ -1600,7 +1601,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCaseVariableParameters() {
+  void testCaseVariableParameters() {
     // equals
     String variableName = "varName";
     String variableValue = "varValue";
@@ -1784,7 +1785,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCaseInstanceVariableValueEqualsIgnoreCaseAsPost() {
+  void testCaseInstanceVariableValueEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "eq");
@@ -1811,7 +1812,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCaseInstanceVariableNameEqualsIgnoreCaseAsPost() {
+  void testCaseInstanceVariableNameEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME.toLowerCase());
     variableJson.put("operator", "eq");
@@ -1853,7 +1854,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCaseInstanceVariableValueNotEqualsIgnoreCaseAsPost() {
+  void testCaseInstanceVariableValueNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "neq");
@@ -1880,7 +1881,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCaseInstanceVariableValueLikeIgnoreCaseAsPost() {
+  void testCaseInstanceVariableValueLikeIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", SAMPLE_VAR_NAME);
     variableJson.put("operator", "like");
@@ -1907,7 +1908,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleVariableParameters() {
+  void testMultipleVariableParameters() {
     String variableName1 = "varName";
     String variableValue1 = "varValue";
     String variableParameter1 = variableName1 + "_eq_" + variableValue1;
@@ -1928,7 +1929,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleVariableParametersAsPost() {
+  void testMultipleVariableParametersAsPost() {
     String variableName = "varName";
     String variableValue = "varValue";
     String anotherVariableName = "anotherVarName";
@@ -1962,7 +1963,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleProcessVariableParameters() {
+  void testMultipleProcessVariableParameters() {
     String variableName1 = "varName";
     String variableValue1 = "varValue";
     String variableParameter1 = variableName1 + "_eq_" + variableValue1;
@@ -1983,7 +1984,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleProcessVariableParametersAsPost() {
+  void testMultipleProcessVariableParametersAsPost() {
     String variableName = "varName";
     String variableValue = "varValue";
     String anotherVariableName = "anotherVarName";
@@ -2021,7 +2022,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleCaseVariableParameters() {
+  void testMultipleCaseVariableParameters() {
     String variableName1 = "varName";
     String variableValue1 = "varValue";
     String variableParameter1 = variableName1 + "_eq_" + variableValue1;
@@ -2042,7 +2043,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleCaseVariableParametersAsPost() {
+  void testMultipleCaseVariableParametersAsPost() {
     String variableName = "varName";
     String variableValue = "varValue";
     String anotherVariableName = "anotherVarName";
@@ -2080,7 +2081,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCompletePostParameters() {
+  void testCompletePostParameters() {
 
     Map<String, Object> queryParameters = new HashMap<>();
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
@@ -2116,7 +2117,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     given()
         .header("accept", MediaType.APPLICATION_JSON)
       .expect()
@@ -2129,7 +2130,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCountForPost() {
+  void testQueryCountForPost() {
     given().contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
     .header("accept", MediaType.APPLICATION_JSON)
     .expect().statusCode(Status.OK.getStatusCode())
@@ -2140,7 +2141,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryWithExpressions() {
+  void testQueryWithExpressions() {
     String testExpression = "${'test-%s'}";
 
     ValueGenerator generator = new ValueGenerator(testExpression);
@@ -2217,7 +2218,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryWithCandidateUsers() {
+  void testQueryWithCandidateUsers() {
     given().queryParam("withCandidateUsers", true)
     .accept(MediaType.APPLICATION_JSON)
     .then().expect().statusCode(Status.OK.getStatusCode())
@@ -2227,7 +2228,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryWithoutCandidateUsers() {
+  void testQueryWithoutCandidateUsers() {
     given().queryParam("withoutCandidateUsers", true)
     .accept(MediaType.APPLICATION_JSON)
     .then().expect().statusCode(Status.OK.getStatusCode())
@@ -2237,7 +2238,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNeverQueryWithCandidateUsers() {
+  void testNeverQueryWithCandidateUsers() {
     given().queryParam("withCandidateUsers", false)
     .accept(MediaType.APPLICATION_JSON)
     .then().expect().statusCode(Status.OK.getStatusCode())
@@ -2247,7 +2248,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNeverQueryWithoutCandidateUsers() {
+  void testNeverQueryWithoutCandidateUsers() {
     given().queryParam("withoutCandidateUsers", false)
     .accept(MediaType.APPLICATION_JSON)
     .then().expect().statusCode(Status.OK.getStatusCode())
@@ -2257,7 +2258,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNeverQueryWithCandidateGroups() {
+  void testNeverQueryWithCandidateGroups() {
     given().queryParam("withCandidateGroups", false)
     .accept(MediaType.APPLICATION_JSON)
     .then().expect().statusCode(Status.OK.getStatusCode())
@@ -2267,7 +2268,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNeverQueryWithoutCandidateGroups() {
+  void testNeverQueryWithoutCandidateGroups() {
     given().queryParam("withoutCandidateGroups", false)
     .accept(MediaType.APPLICATION_JSON)
     .then().expect().statusCode(Status.OK.getStatusCode())
@@ -2277,7 +2278,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testOrQuery() {
+  void testOrQuery() {
     TaskQueryDto queryDto = TaskQueryDto.fromQuery(new TaskQueryImpl()
       .or()
         .taskName(MockProvider.EXAMPLE_TASK_NAME)

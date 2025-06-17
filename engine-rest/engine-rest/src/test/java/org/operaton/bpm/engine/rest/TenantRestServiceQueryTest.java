@@ -62,7 +62,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   private TenantQuery mockQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     List<Tenant> tenants = Collections.singletonList(MockProvider.createMockTenant());
     mockQuery = setUpMockQuery(tenants);
   }
@@ -78,7 +78,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void emptyQuery() {
+  void emptyQuery() {
     String queryKey = "";
 
     given().queryParam("name", queryKey)
@@ -87,7 +87,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void noParametersQuery() {
+  void noParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode()).when().get(QUERY_URL);
 
     verify(mockQuery).list();
@@ -95,7 +95,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void tenantRetrieval() {
+  void tenantRetrieval() {
     String name = MockProvider.EXAMPLE_TENANT_NAME;
 
     Response response = given().queryParam("name", name)
@@ -118,7 +118,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void completeGetParameters() {
+  void completeGetParameters() {
     Map<String, String> queryParameters = getCompleteStringQueryParameters();
 
     RequestSpecification requestSpecification = given().contentType(POST_JSON_CONTENT_TYPE);
@@ -152,7 +152,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void queryByUserIncludingGroups() {
+  void queryByUserIncludingGroups() {
 
     given()
       .queryParam("userMember", MockProvider.EXAMPLE_USER_ID)
@@ -169,7 +169,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void queryCount() {
+  void queryCount() {
     expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
       .when().get(COUNT_QUERY_URL);
@@ -178,7 +178,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void queryPagination() {
+  void queryPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -194,7 +194,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void sortByParameterOnly() {
+  void sortByParameterOnly() {
     given().queryParam("sortBy", "name")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -203,7 +203,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void sortOrderParameterOnly() {
+  void sortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -212,7 +212,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void sortById() {
+  void sortById() {
     given()
       .queryParam("sortBy", "id")
       .queryParam("sortOrder", "asc")
@@ -227,7 +227,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void sortByName() {
+  void sortByName() {
     given()
       .queryParam("sortBy", "name")
       .queryParam("sortOrder", "desc")

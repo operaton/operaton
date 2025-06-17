@@ -30,17 +30,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Thorben Lindhauer
  */
 @SuppressWarnings("java:S5778")
-public class NoIntermediaryInvocationTest {
+class NoIntermediaryInvocationTest {
 
   protected Foo foo;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     foo = Mockito.mock(Foo.class);
   }
 
   @Test
-  public void testSucceeds() {
+  void testSucceeds() {
 
     // given
     foo.getFoo();
@@ -56,7 +56,7 @@ public class NoIntermediaryInvocationTest {
   }
 
   @Test
-  public void testFailureWhenInvocationNotPresent() {
+  void testFailureWhenInvocationNotPresent() {
     // given
     foo.getFoo();
     foo.getBaz();
@@ -71,7 +71,7 @@ public class NoIntermediaryInvocationTest {
   }
 
   @Test
-  public void testFailureWhenInvocationNotPresentCase2() {
+  void testFailureWhenInvocationNotPresentCase2() {
     // given
     foo.getFoo();
 
@@ -85,7 +85,7 @@ public class NoIntermediaryInvocationTest {
   }
 
   @Test
-  public void testFailureOnWrongInvocationOrder() {
+  void testFailureOnWrongInvocationOrder() {
     // given
     foo.getBar();
     foo.getFoo();
@@ -100,7 +100,7 @@ public class NoIntermediaryInvocationTest {
   }
 
   @Test
-  public void testFailureWithIntermittentInvocations() {
+  void testFailureWithIntermittentInvocations() {
     // given
     foo.getFoo();
     foo.getBaz();

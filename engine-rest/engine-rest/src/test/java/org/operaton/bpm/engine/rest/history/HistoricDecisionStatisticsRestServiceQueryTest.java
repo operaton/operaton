@@ -52,12 +52,12 @@ public class HistoricDecisionStatisticsRestServiceQueryTest extends AbstractRest
   private HistoricDecisionInstanceStatisticsQuery historicDecisionInstanceStatisticsQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     setupHistoricDecisionStatisticsMock();
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     Mockito.reset(processEngine.getHistoryService(), historicDecisionInstanceStatisticsQuery);
   }
 
@@ -75,7 +75,7 @@ public class HistoricDecisionStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testHistoricDefinitionInstanceStatisticsRetrieval() {
+  void testHistoricDefinitionInstanceStatisticsRetrieval() {
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
         .then().expect()
         .statusCode(Response.Status.OK.getStatusCode())
@@ -88,7 +88,7 @@ public class HistoricDecisionStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testHistoricDefinitionInstanceStatisticsRetrievalWithDefinitionInstance() {
+  void testHistoricDefinitionInstanceStatisticsRetrievalWithDefinitionInstance() {
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
         .queryParam("decisionInstanceId", MockProvider.EXAMPLE_DECISION_INSTANCE_ID)
         .then().expect()

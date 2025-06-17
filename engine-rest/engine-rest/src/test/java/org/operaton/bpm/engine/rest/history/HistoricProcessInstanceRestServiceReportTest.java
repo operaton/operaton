@@ -68,7 +68,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   protected HistoricProcessInstanceReport mockedReportQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedReportQuery = setUpMockHistoricProcessInstanceReportQuery();
   }
 
@@ -94,7 +94,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testEmptyReportByMonth() {
+  void testEmptyReportByMonth() {
     given()
       .queryParam("reportType", "duration")
       .queryParam("periodUnit", "month")
@@ -110,7 +110,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testEmptyReportByQuarter() {
+  void testEmptyReportByQuarter() {
     given()
       .queryParam("reportType", "duration")
       .queryParam("periodUnit", "quarter")
@@ -126,7 +126,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testInvalidReportType() {
+  void testInvalidReportType() {
     given()
     .queryParam("reportType", "abc")
   .then()
@@ -139,7 +139,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testInvalidPeriodUnit() {
+  void testInvalidPeriodUnit() {
     given()
     .queryParam("periodUnit", "abc")
   .then()
@@ -152,7 +152,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testMissingReportType() {
+  void testMissingReportType() {
     given()
     .then()
       .expect()
@@ -164,7 +164,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testMissingPeriodUnit() {
+  void testMissingPeriodUnit() {
     given()
       .queryParam("reportType", "duration")
     .then()
@@ -177,7 +177,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testMissingAuthorization() {
+  void testMissingAuthorization() {
     String message = "not authorized";
     when(mockedReportQuery.duration(MONTH)).thenThrow(new AuthorizationException(message));
 
@@ -195,7 +195,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testDurationReportByMonth() {
+  void testDurationReportByMonth() {
     Response response = given()
         .queryParam("periodUnit", "month")
         .queryParam("reportType", "duration")
@@ -224,7 +224,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testDurationReportByQuarter() {
+  void testDurationReportByQuarter() {
     Response response = given()
         .queryParam("periodUnit", "quarter")
         .queryParam("reportType", "duration")
@@ -254,7 +254,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testListParameters() {
+  void testListParameters() {
     String aProcDefId = "anProcDefId";
     String anotherProcDefId = "anotherProcDefId";
 
@@ -279,7 +279,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricBeforeAndAfterStartTimeQuery() {
+  void testHistoricBeforeAndAfterStartTimeQuery() {
     given()
       .queryParam("periodUnit", "month")
       .queryParam("reportType", "duration")
@@ -296,7 +296,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testEmptyCsvReportByMonth() {
+  void testEmptyCsvReportByMonth() {
     given()
       .queryParam("reportType", "duration")
       .queryParam("periodUnit", "month")
@@ -316,7 +316,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testEmptyCsvReportByQuarter() {
+  void testEmptyCsvReportByQuarter() {
     given()
       .queryParam("reportType", "duration")
       .queryParam("periodUnit", "quarter")
@@ -336,7 +336,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testCsvInvalidReportType() {
+  void testCsvInvalidReportType() {
     given()
     .queryParam("reportType", "abc")
   .then()
@@ -349,7 +349,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testCsvInvalidPeriodUnit() {
+  void testCsvInvalidPeriodUnit() {
     given()
     .queryParam("periodUnit", "abc")
   .then()
@@ -362,7 +362,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testCsvMissingReportType() {
+  void testCsvMissingReportType() {
     given()
     .then()
       .expect()
@@ -374,7 +374,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testCsvMissingPeriodUnit() {
+  void testCsvMissingPeriodUnit() {
     given()
       .queryParam("reportType", "duration")
     .then()
@@ -387,7 +387,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testCsvMissingAuthorization() {
+  void testCsvMissingAuthorization() {
     String message = "not authorized";
     when(mockedReportQuery.duration(MONTH)).thenThrow(new AuthorizationException(message));
 
@@ -405,7 +405,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testCsvDurationReportByMonth() {
+  void testCsvDurationReportByMonth() {
     Response response = given()
         .queryParam("reportType", "duration")
         .queryParam("periodUnit", "month")
@@ -428,7 +428,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testCsvDurationReportByQuarter() {
+  void testCsvDurationReportByQuarter() {
     Response response = given()
         .queryParam("reportType", "duration")
         .queryParam("periodUnit", "quarter")
@@ -452,7 +452,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testApplicationCsvDurationReportByMonth() {
+  void testApplicationCsvDurationReportByMonth() {
     Response response = given()
         .queryParam("reportType", "duration")
         .queryParam("periodUnit", "month")
@@ -476,7 +476,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testApplicationCsvDurationReportByQuarter() {
+  void testApplicationCsvDurationReportByQuarter() {
     Response response = given()
         .queryParam("reportType", "duration")
         .queryParam("periodUnit", "quarter")
@@ -500,7 +500,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testCsvListParameters() {
+  void testCsvListParameters() {
     String aProcDefId = "anProcDefId";
     String anotherProcDefId = "anotherProcDefId";
 
@@ -529,7 +529,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   @Test
-  public void testCsvHistoricBeforeAndAfterStartTimeQuery() {
+  void testCsvHistoricBeforeAndAfterStartTimeQuery() {
     given()
       .queryParam("periodUnit", "month")
       .queryParam("reportType", "duration")

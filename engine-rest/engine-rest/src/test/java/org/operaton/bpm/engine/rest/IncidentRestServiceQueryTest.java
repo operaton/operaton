@@ -71,7 +71,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   private IncidentQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     List<Incident> incidents = MockProvider.createMockIncidents();
 
     mockedQuery = setupMockIncidentQuery(incidents);
@@ -89,7 +89,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("processInstanceId", queryKey)
@@ -101,7 +101,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -113,7 +113,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("processInstanceId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -130,7 +130,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
     .queryParam("sortOrder", "asc")
   .then()
@@ -144,7 +144,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("incidentId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentId();
@@ -267,7 +267,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -284,7 +284,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -299,7 +299,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -314,7 +314,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -325,7 +325,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSimpleIncidentQuery() {
+  void testSimpleIncidentQuery() {
     Response response = given()
       .then()
         .expect()
@@ -375,7 +375,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByIncidentId() {
+  void testQueryByIncidentId() {
     String incidentId = MockProvider.EXAMPLE_INCIDENT_ID;
 
     given()
@@ -387,7 +387,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByIncidentType() {
+  void testQueryByIncidentType() {
     String incidentType = MockProvider.EXAMPLE_INCIDENT_TYPE;
 
     given()
@@ -399,7 +399,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByIncidentMessage() {
+  void testQueryByIncidentMessage() {
     String incidentMessage = MockProvider.EXAMPLE_INCIDENT_MESSAGE;
 
     given()
@@ -411,7 +411,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByIncidentMessageLike() {
+  void testQueryByIncidentMessageLike() {
     String incidentMessage = MockProvider.EXAMPLE_INCIDENT_MESSAGE;
 
     given()
@@ -423,7 +423,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByIncidentTimestampBeforeAndAfter() {
+  void testQueryByIncidentTimestampBeforeAndAfter() {
     given()
             .queryParam("incidentTimestampBefore", MockProvider.EXAMPLE_INCIDENT_TIMESTAMP_BEFORE)
             .queryParam("incidentTimestampAfter", MockProvider.EXAMPLE_INCIDENT_TIMESTAMP_AFTER)
@@ -436,7 +436,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionId() {
+  void testQueryByProcessDefinitionId() {
     String processDefinitionId = MockProvider.EXAMPLE_INCIDENT_PROC_DEF_ID;
 
     given()
@@ -448,7 +448,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionKey() {
+  void testQueryByProcessDefinitionKey() {
     String key1 = "foo";
     String key2 = "bar";
 
@@ -464,7 +464,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
     String processInstanceId = MockProvider.EXAMPLE_INCIDENT_PROC_INST_ID;
 
     given()
@@ -476,7 +476,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByExecutionId() {
+  void testQueryByExecutionId() {
     String executionId = MockProvider.EXAMPLE_INCIDENT_EXECUTION_ID;
 
     given()
@@ -488,7 +488,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByActivityId() {
+  void testQueryByActivityId() {
     String activityId = MockProvider.EXAMPLE_INCIDENT_ACTIVITY_ID;
 
     given()
@@ -500,7 +500,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByFailedActivityId() {
+  void testQueryByFailedActivityId() {
     String activityId = MockProvider.EXAMPLE_INCIDENT_FAILED_ACTIVITY_ID;
 
     given()
@@ -512,7 +512,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByCauseIncidentId() {
+  void testQueryByCauseIncidentId() {
     String causeIncidentId = MockProvider.EXAMPLE_INCIDENT_CAUSE_INCIDENT_ID;
 
     given()
@@ -524,7 +524,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByRootCauseIncidentId() {
+  void testQueryByRootCauseIncidentId() {
     String rootCauseIncidentId = MockProvider.EXAMPLE_INCIDENT_ROOT_CAUSE_INCIDENT_ID;
 
     given()
@@ -536,7 +536,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByConfiguration() {
+  void testQueryByConfiguration() {
     String configuration = MockProvider.EXAMPLE_INCIDENT_CONFIGURATION;
 
     given()
@@ -548,7 +548,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     mockedQuery = setupMockIncidentQuery(Arrays.asList(
         MockProvider.createMockIncident(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockIncident(MockProvider.ANOTHER_EXAMPLE_TENANT_ID)));
@@ -575,7 +575,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryByJobDefinitionIds() {
+  void testQueryByJobDefinitionIds() {
     String jobDefinitionIds = EXAMPLE_JOB_DEFINITION_ID + "," + NON_EXISTING_JOB_DEFINITION_ID;
 
     given()

@@ -44,7 +44,7 @@ import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRes
   protected static final String WITH_RETRIES_LEFT = "withRetriesLeft";
 
   @BeforeEach
-  public void setupMocks(){
+  void setupMocks(){
     when(processEngine.getExternalTaskService().getTopicNames(false,false,false)).thenReturn(Arrays.asList("allTopics"));
     when(processEngine.getExternalTaskService().getTopicNames(true,false,false)).thenReturn(Arrays.asList("lockedTasks"));
     when(processEngine.getExternalTaskService().getTopicNames(false,true,false)).thenReturn(Arrays.asList("unlockedTasks"));
@@ -52,7 +52,7 @@ import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRes
   }
 
   @Test
-  public void testGetTopicNames(){
+  void testGetTopicNames(){
     Response response = given()
         .then()
         .expect()
@@ -67,7 +67,7 @@ import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRes
   }
 
   @Test
-  public void testGetTopicNamesOfLockedTasks(){
+  void testGetTopicNamesOfLockedTasks(){
     Response response = given()
         .header("accept", MediaType.APPLICATION_JSON)
         .param(WITH_LOCKED_TASKS, true)
@@ -86,7 +86,7 @@ import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRes
   }
 
   @Test
-  public void testGetTopicNamesOfUnlockedTasks(){
+  void testGetTopicNamesOfUnlockedTasks(){
     Response response = given()
         .header("accept", MediaType.APPLICATION_JSON)
         .param(WITH_LOCKED_TASKS, false)
@@ -105,7 +105,7 @@ import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRes
   }
 
   @Test
-  public void testGetTopicNamesOfTasksWithRetriesLeft(){
+  void testGetTopicNamesOfTasksWithRetriesLeft(){
     Response response = given()
         .header("accept", MediaType.APPLICATION_JSON)
         .param(WITH_LOCKED_TASKS, false)

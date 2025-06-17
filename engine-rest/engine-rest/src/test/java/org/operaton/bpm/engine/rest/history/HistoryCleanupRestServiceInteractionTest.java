@@ -60,7 +60,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   private HistoryService historyServiceMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     historyServiceMock = mock(HistoryService.class);
     Job mockJob = MockProvider.createMockJob();
     List<Job> mockJobs = MockProvider.createMockJobs();
@@ -76,7 +76,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testFindHistoryCleanupJob() {
+  void testFindHistoryCleanupJob() {
     given().contentType(ContentType.JSON)
         .then()
         .expect().statusCode(Status.OK.getStatusCode())
@@ -86,7 +86,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testFindNoHistoryCleanupJob() {
+  void testFindNoHistoryCleanupJob() {
     when(historyServiceMock.findHistoryCleanupJob())
         .thenReturn(null);
 
@@ -99,7 +99,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testFindHistoryCleanupJobs() {
+  void testFindHistoryCleanupJobs() {
     given().contentType(ContentType.JSON)
         .then()
         .expect().statusCode(Status.OK.getStatusCode())
@@ -109,7 +109,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testFindNoHistoryCleanupJobs() {
+  void testFindNoHistoryCleanupJobs() {
     when(historyServiceMock.findHistoryCleanupJobs())
         .thenReturn(null);
 
@@ -122,7 +122,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoryCleanupImmediatelyDueDefault() {
+  void testHistoryCleanupImmediatelyDueDefault() {
     given().contentType(ContentType.JSON)
         .then()
         .expect().statusCode(Status.OK.getStatusCode())
@@ -132,7 +132,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoryCleanupImmediatelyDue() {
+  void testHistoryCleanupImmediatelyDue() {
     given().contentType(ContentType.JSON)
         .queryParam("immediatelyDue", true)
         .then().expect().statusCode(Status.OK.getStatusCode())
@@ -142,7 +142,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoryCleanup() {
+  void testHistoryCleanup() {
     given().contentType(ContentType.JSON).queryParam("immediatelyDue", false)
         .then().expect().statusCode(Status.OK.getStatusCode())
         .when().post(HISTORY_CLEANUP_URL);
@@ -151,7 +151,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoryConfigurationOutsideBatchWindow() throws ParseException {
+  void testHistoryConfigurationOutsideBatchWindow() throws ParseException {
     ProcessEngineConfigurationImpl processEngineConfigurationImplMock = mock(ProcessEngineConfigurationImpl.class);
     Date startDate = HistoryCleanupHelper.parseTimeConfiguration("23:59");
     Date endDate = HistoryCleanupHelper.parseTimeConfiguration("00:00");
@@ -186,7 +186,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoryConfigurationWithinBatchWindow() throws ParseException {
+  void testHistoryConfigurationWithinBatchWindow() throws ParseException {
     ProcessEngineConfigurationImpl processEngineConfigurationImplMock = mock(ProcessEngineConfigurationImpl.class);
     Date startDate = HistoryCleanupHelper.parseTimeConfiguration("22:00+0200");
     Date endDate = HistoryCleanupHelper.parseTimeConfiguration("23:00+0200");
@@ -219,7 +219,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoryConfigurationWhenBatchNotDefined() {
+  void testHistoryConfigurationWhenBatchNotDefined() {
     ProcessEngineConfigurationImpl processEngineConfigurationImplMock = mock(ProcessEngineConfigurationImpl.class);
     when(processEngine.getProcessEngineConfiguration()).thenReturn(processEngineConfigurationImplMock);
     when(processEngineConfigurationImplMock.getHistoryCleanupBatchWindowStartTime()).thenReturn(null);
@@ -240,7 +240,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void shouldReturnEnabledFalse() {
+  void shouldReturnEnabledFalse() {
     ProcessEngineConfigurationImpl engineConfigMock = mock(ProcessEngineConfigurationImpl.class);
     when(processEngine.getProcessEngineConfiguration()).thenReturn(engineConfigMock);
 

@@ -60,7 +60,7 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
   protected TaskReport mockedReportQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedReportQuery = setUpMockHistoricProcessInstanceReportQuery();
   }
 
@@ -76,7 +76,7 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyReport() {
+  void testEmptyReport() {
     given()
     .then()
       .expect()
@@ -90,7 +90,7 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMissingAuthorization() {
+  void testMissingAuthorization() {
     String message = "not authorized";
     when(mockedReportQuery.taskCountByCandidateGroup()).thenThrow(new AuthorizationException(message));
 
@@ -106,7 +106,7 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTaskCountByCandidateGroupReport() {
+  void testTaskCountByCandidateGroupReport() {
     Response response = given()
       .then()
       .expect()
@@ -129,7 +129,7 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testEmptyCsvReport() {
+  void testEmptyCsvReport() {
     given()
       .accept("text/csv")
     .then()
@@ -144,7 +144,7 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCsvTaskCountByCandidateGroupReport() {
+  void testCsvTaskCountByCandidateGroupReport() {
     Response response = given()
         .accept("text/csv")
       .then()
@@ -164,7 +164,7 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testApplicationCsvTaskCountByCandidateGroupReport() {
+  void testApplicationCsvTaskCountByCandidateGroupReport() {
     Response response = given()
         .accept("application/csv")
       .then()

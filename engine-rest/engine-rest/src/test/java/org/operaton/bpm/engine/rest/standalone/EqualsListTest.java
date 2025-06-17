@@ -29,24 +29,24 @@ import org.junit.jupiter.api.Test;
  * @author Thorben Lindhauer
  *
  */
-public class EqualsListTest {
+class EqualsListTest {
 
   protected List<String> list1;
   protected List<String> list2;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     list1 = new ArrayList<>();
     list2 = new ArrayList<>();
   }
 
   @Test
-  public void testListsSame() {
+  void testListsSame() {
     assertThat(new EqualsList(list1).matches(list1)).isTrue();
   }
 
   @Test
-  public void testListsEqual() {
+  void testListsEqual() {
     list1.add("aString");
     list2.add("aString");
 
@@ -55,7 +55,7 @@ public class EqualsListTest {
   }
 
   @Test
-  public void testListsNotEqual() {
+  void testListsNotEqual() {
     list1.add("aString");
 
     assertThat(new EqualsList(list1).matches(list2)).isFalse();
@@ -63,7 +63,7 @@ public class EqualsListTest {
   }
 
   @Test
-  public void testListsNull() {
+  void testListsNull() {
     assertThat(new EqualsList(null).matches(list1)).isFalse();
     assertThat(new EqualsList(list1).matches(null)).isFalse();
     assertThat(new EqualsList(null).matches(null)).isTrue();

@@ -58,7 +58,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   private MetricsQuery meterQueryMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     managementServiceMock = mock(ManagementService.class);
 
     when(processEngine.getManagementService()).thenReturn(managementServiceMock);
@@ -70,7 +70,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetInterval() {
+  void testGetInterval() {
     when(meterQueryMock.interval()).thenReturn(MockProvider.createMockMetricIntervalResult());
 
     given()
@@ -101,7 +101,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetIntervalByName() {
+  void testGetIntervalByName() {
     given()
       .queryParam("name", MockProvider.EXAMPLE_METRICS_NAME)
       .then()
@@ -118,7 +118,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testGetIntervalByReporter() {
+  void testGetIntervalByReporter() {
     given()
       .queryParam("reporter", MockProvider.EXAMPLE_METRICS_REPORTER)
       .then()
@@ -135,7 +135,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testGetIntervalWithOffset() {
+  void testGetIntervalWithOffset() {
     given()
       .queryParam("firstResult", 10)
       .then()
@@ -152,7 +152,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetIntervalWithLimit() {
+  void testGetIntervalWithLimit() {
     given()
       .queryParam("maxResults", 10)
       .then()
@@ -169,7 +169,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetIntervalAggregation() {
+  void testGetIntervalAggregation() {
     given()
       .queryParam("aggregateByReporter", true)
       .then()
@@ -186,7 +186,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetIntervalWithStartDate() {
+  void testGetIntervalWithStartDate() {
 
     given()
       .queryParam("startDate", DATE_FORMAT_WITH_TIMEZONE.format(new Date(0)))
@@ -204,7 +204,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetIntervalWithEndDate() {
+  void testGetIntervalWithEndDate() {
 
     given()
       .queryParam("endDate", DATE_FORMAT_WITH_TIMEZONE.format(new Date(15 * 60 * 1000)))
@@ -222,7 +222,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetIntervalWithCustomInterval() {
+  void testGetIntervalWithCustomInterval() {
     given()
       .queryParam("interval", 300)
       .then()
@@ -238,7 +238,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetIntervalWithAll() {
+  void testGetIntervalWithAll() {
 
     given()
       .queryParam("name", MockProvider.EXAMPLE_METRICS_NAME)
@@ -267,7 +267,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetSum() {
+  void testGetSum() {
 
     when(meterQueryMock.sum()).thenReturn(10L);
 
@@ -285,7 +285,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetSumWithTimestamps() {
+  void testGetSumWithTimestamps() {
 
     when(meterQueryMock.sum()).thenReturn(10L);
 
@@ -307,7 +307,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetSumWithInvalidTimestamp() {
+  void testGetSumWithInvalidTimestamp() {
 
     when(meterQueryMock.sum()).thenReturn(10L);
 
@@ -322,7 +322,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetUtw() {
+  void testGetUtw() {
 
     given()
       .pathParam("name", Metrics.UNIQUE_TASK_WORKERS)
@@ -337,7 +337,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetTaskUsers() {
+  void testGetTaskUsers() {
 
     given()
       .pathParam("name", Metrics.TASK_USERS)
@@ -352,7 +352,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetUtwWithTimestamps() {
+  void testGetUtwWithTimestamps() {
 
     given()
       .pathParam("name", Metrics.UNIQUE_TASK_WORKERS)
@@ -369,7 +369,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testGetUtwWithInvalidTimestamp() {
+  void testGetUtwWithInvalidTimestamp() {
 
     given()
       .pathParam("name", Metrics.UNIQUE_TASK_WORKERS)
@@ -383,7 +383,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeleteUtwWithTimestamp() {
+  void testDeleteUtwWithTimestamp() {
     Date date = MockProvider.createMockDuedate();
 
     given()
@@ -398,7 +398,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeleteUtwWithoutTimestamp() {
+  void testDeleteUtwWithoutTimestamp() {
     given()
     .then().expect()
       .statusCode(Status.NO_CONTENT.getStatusCode())
@@ -410,7 +410,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDeleteUtwThrowsAuthorizationException() {
+  void testDeleteUtwThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(managementServiceMock).deleteTaskMetrics(any());
 

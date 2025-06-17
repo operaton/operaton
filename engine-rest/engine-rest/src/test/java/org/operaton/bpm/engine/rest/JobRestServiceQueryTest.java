@@ -73,7 +73,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   protected static final long JOB_QUERY_MIN_PRIORITY = Long.MIN_VALUE;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockQuery = setUpMockJobQuery(MockProvider.createMockJobs());
   }
 
@@ -89,7 +89,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryJobId = "";
     given().queryParam("id", queryJobId).then().expect()
         .statusCode(Status.OK.getStatusCode())
@@ -97,7 +97,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode())
     .when().get(JOBS_RESOURCE_URL);
 
@@ -106,7 +106,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "jobDueDate")
         .then()
         .expect()
@@ -120,7 +120,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
         .then()
         .expect()
@@ -134,7 +134,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSimpleJobQuery() {
+  void testSimpleJobQuery() {
     String jobId = MockProvider.EXAMPLE_JOB_ID;
 
     Response response = given().queryParam("jobId", jobId).then().expect()
@@ -295,47 +295,47 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testInvalidDueDateComparator() {
+  void testInvalidDueDateComparator() {
     testInvalidDateComparator(DUE_DATES);
   }
 
   @Test
-  public void testInvalidCreateTimeComparator() {
+  void testInvalidCreateTimeComparator() {
     testInvalidDateComparator(CREATE_TIMES);
   }
 
   @Test
-  public void testInvalidDueDateComperatorAsPost() {
+  void testInvalidDueDateComperatorAsPost() {
     testInvalidDateComparatorAsPost(DUE_DATES);
   }
 
   @Test
-  public void testInvalidCreateTimeComparatorAsPost() {
+  void testInvalidCreateTimeComparatorAsPost() {
     testInvalidDateComparatorAsPost(CREATE_TIMES);
   }
 
   @Test
-  public void testInvalidDueDate() {
+  void testInvalidDueDate() {
     testInvalidDate(DUE_DATES);
   }
 
   @Test
-  public void testInvalidCreateTime() {
+  void testInvalidCreateTime() {
     testInvalidDate(CREATE_TIMES);
   }
 
   @Test
-  public void testInvalidDueDateAsPost() {
+  void testInvalidDueDateAsPost() {
     testInvalidDateAsPost(DUE_DATES);
   }
 
   @Test
-  public void testInvalidCreateTimeAsPost() {
+  void testInvalidCreateTimeAsPost() {
     testInvalidDateAsPost(CREATE_TIMES);
   }
 
   @Test
-  public void testAdditionalParametersExcludingDueDates() {
+  void testAdditionalParametersExcludingDueDates() {
     Map<String, Object> parameters = getCompleteParameters();
 
     given().queryParams(parameters).then().expect()
@@ -347,7 +347,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessagesParameter() {
+  void testMessagesParameter() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("messages", MockProvider.EXAMPLE_MESSAGES);
 
@@ -360,7 +360,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessagesTimersParameter() {
+  void testMessagesTimersParameter() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("messages", MockProvider.EXAMPLE_MESSAGES);
     parameters.put("timers", MockProvider.EXAMPLE_TIMERS);
@@ -374,7 +374,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessagesTimersParameterAsPost() {
+  void testMessagesTimersParameterAsPost() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("messages", MockProvider.EXAMPLE_MESSAGES);
     parameters.put("timers", MockProvider.EXAMPLE_TIMERS);
@@ -388,7 +388,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMessagesParameterAsPost() {
+  void testMessagesParameterAsPost() {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("messages", MockProvider.EXAMPLE_MESSAGES);
 
@@ -425,7 +425,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAdditionalParametersExcludingDueDatesAsPost() {
+  void testAdditionalParametersExcludingDueDatesAsPost() {
     Map<String, Object> parameters = getCompleteParameters();
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(parameters)
@@ -526,37 +526,37 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testDueDateParameters() {
+  void testDueDateParameters() {
     testDateParameters(DUE_DATES);
   }
 
   @Test
-  public void testCreateTimeParameters() {
+  void testCreateTimeParameters() {
     testDateParameters(CREATE_TIMES);
   }
 
   @Test
-  public void testDueDateParametersAsPost() {
+  void testDueDateParametersAsPost() {
     testDateParametersAsPost(DUE_DATES);
   }
 
   @Test
-  public void testCreateTimeParametersAsPost() {
+  void testCreateTimeParametersAsPost() {
     testDateParametersAsPost(CREATE_TIMES);
   }
 
   @Test
-  public void testMultipleDueDateParameters() {
+  void testMultipleDueDateParameters() {
     testMultipleDateParameters(DUE_DATES);
   }
 
   @Test
-  public void testMultipleCreateTimeParameters() {
+  void testMultipleCreateTimeParameters() {
     testMultipleDateParameters(CREATE_TIMES);
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockQuery);
     executeAndVerifySorting("jobId", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByJobId();
@@ -606,7 +606,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
@@ -625,7 +625,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
 
     int firstResult = FIRST_RESULTS_ZERO;
     int maxResults = MAX_RESULTS_TEN;
@@ -638,7 +638,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     given()
       .header("accept", MediaType.APPLICATION_JSON)
     .expect()
@@ -651,7 +651,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCountForPost() {
+  void testQueryCountForPost() {
     given().contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
     .header("accept", MediaType.APPLICATION_JSON)
     .expect().statusCode(Status.OK.getStatusCode())
@@ -662,7 +662,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockQuery = setUpMockJobQuery(createMockJobsTwoTenants());
 
     Response response = given()
@@ -687,7 +687,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testWithoutTenantIdParameter() {
+  void testWithoutTenantIdParameter() {
     Job mockJob = MockProvider.mockJob().tenantId(null).build();
     mockQuery = setUpMockJobQuery(Arrays.asList(mockJob));
 
@@ -710,7 +710,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testIncludeJobsWithoutTenantIdParameter() {
+  void testIncludeJobsWithoutTenantIdParameter() {
     List<Job> jobs = Arrays.asList(
         MockProvider.mockJob().tenantId(null).build(),
         MockProvider.mockJob().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
@@ -740,7 +740,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testTenantIdListPostParameter() {
+  void testTenantIdListPostParameter() {
     mockQuery = setUpMockJobQuery(createMockJobsTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -769,7 +769,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testWithoutTenantIdPostParameter() {
+  void testWithoutTenantIdPostParameter() {
     Job mockJob = MockProvider.mockJob().tenantId(null).build();
     mockQuery = setUpMockJobQuery(Arrays.asList(mockJob));
 
@@ -793,7 +793,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testIncludeJobsWithoutTenantIdPostParameter() {
+  void testIncludeJobsWithoutTenantIdPostParameter() {
     List<Job> jobs = Arrays.asList(
         MockProvider.mockJob().tenantId(null).build(),
         MockProvider.mockJob().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
@@ -833,7 +833,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessInstanceIdListParameter() {
+  void testProcessInstanceIdListParameter() {
     mockQuery = setUpMockJobQuery(createMockJobsTwoProcessInstances());
 
     Response response = given()
@@ -860,7 +860,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessInstanceIdListPostParameter() {
+  void testProcessInstanceIdListPostParameter() {
     mockQuery = setUpMockJobQuery(createMockJobsTwoProcessInstances());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -897,7 +897,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testJobIdListParameter() {
+  void testJobIdListParameter() {
     mockQuery = setUpMockJobQuery(createMockJobsTwoJobIds());
 
     Response response = given()
@@ -924,7 +924,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testJobIdListPostParameter() {
+  void testJobIdListPostParameter() {
     mockQuery = setUpMockJobQuery(createMockJobsTwoJobIds());
 
     Map<String, Object> queryParameters = new HashMap<>();

@@ -60,7 +60,7 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
   protected IdentityService identityServiceMock;
 
   @BeforeEach
-  public void setUpMocks() {
+  void setUpMocks() {
     identityServiceMock = mock(IdentityService.class);
 
     when(processEngine.getProcessEngineConfiguration())
@@ -71,7 +71,7 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldGetPolicy() {
+  void shouldGetPolicy() {
     when(processEngineConfigurationMock.isEnablePasswordPolicy()).thenReturn(true);
 
     PasswordPolicy passwordPolicyMock = mock(PasswordPolicy.class);
@@ -93,7 +93,7 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldReturnNotFound_PasswordPolicyDisabled() {
+  void shouldReturnNotFound_PasswordPolicyDisabled() {
     when(processEngineConfigurationMock.isEnablePasswordPolicy()).thenReturn(false);
 
     given()
@@ -105,7 +105,7 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldCheckInvalidPassword() {
+  void shouldCheckInvalidPassword() {
     when(processEngineConfigurationMock.isEnablePasswordPolicy()).thenReturn(true);
 
     PasswordPolicyResult passwordPolicyResultMock = mock(PasswordPolicyResult.class);
@@ -141,7 +141,7 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldCheckValidPassword() {
+  void shouldCheckValidPassword() {
     when(processEngineConfigurationMock.isEnablePasswordPolicy()).thenReturn(true);
 
     PasswordPolicyResult passwordPolicyResultMock = mock(PasswordPolicyResult.class);
@@ -168,7 +168,7 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldCheckPasswordPolicyWithUserData() {
+  void shouldCheckPasswordPolicyWithUserData() {
     when(processEngineConfigurationMock.isEnablePasswordPolicy()).thenReturn(true);
 
     User userMock = mock(User.class);
@@ -215,7 +215,7 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldCheckPasswordPolicyWithUserDataAndUserIdNull() {
+  void shouldCheckPasswordPolicyWithUserDataAndUserIdNull() {
     when(processEngineConfigurationMock.isEnablePasswordPolicy()).thenReturn(true);
 
     User userMock = mock(User.class);
@@ -256,7 +256,7 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldCheckPasswordAgainstNoPolicy() {
+  void shouldCheckPasswordAgainstNoPolicy() {
     when(processEngineConfigurationMock.isEnablePasswordPolicy()).thenReturn(false);
 
     given()

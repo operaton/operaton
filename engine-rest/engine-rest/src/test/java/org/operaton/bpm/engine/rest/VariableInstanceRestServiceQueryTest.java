@@ -72,7 +72,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   protected MockVariableInstanceBuilder mockInstanceBuilder;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockInstanceBuilder = MockProvider.mockVariableInstance();
     mockInstance = mockInstanceBuilder.build();
 
@@ -97,7 +97,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode()).when().get(VARIABLE_INSTANCE_QUERY_URL);
 
     verify(mockedQuery).list();
@@ -107,7 +107,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testNoParametersQueryDisableObjectDeserialization() {
+  void testNoParametersQueryDisableObjectDeserialization() {
     given()
       .queryParam("deserializeValues", false)
     .expect()
@@ -122,7 +122,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testNoParametersQueryAsPost() {
+  void testNoParametersQueryAsPost() {
     given().contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
       .expect().statusCode(Status.OK.getStatusCode())
       .when().post(VARIABLE_INSTANCE_QUERY_URL);
@@ -134,7 +134,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testNoParametersQueryAsPostDisableObjectDeserialization() {
+  void testNoParametersQueryAsPostDisableObjectDeserialization() {
     given()
       .queryParam("deserializeValues", false)
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -151,7 +151,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testInvalidVariableRequests() {
+  void testInvalidVariableRequests() {
     // invalid comparator
     String invalidComparator = "anInvalidComparator";
     String variableName = "varName";
@@ -173,7 +173,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("variableName", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -185,21 +185,21 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "variableName")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
       .when().get(VARIABLE_INSTANCE_QUERY_URL);
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
       .when().get(VARIABLE_INSTANCE_QUERY_URL);
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("variableName", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByVariableName();
@@ -232,7 +232,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
@@ -251,7 +251,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
 
     int firstResult = 0;
     int maxResults = 10;
@@ -271,7 +271,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
    * If parameter "firstResult" is missing, we expect 0 as default.
    */
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
     given().queryParam("maxResults", maxResults)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -289,7 +289,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
    * If parameter "maxResults" is missing, we expect Integer.MAX_VALUE as default.
    */
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
     given().queryParam("firstResult", firstResult)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -304,7 +304,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableInstanceRetrieval() {
+  void testVariableInstanceRetrieval() {
     String queryVariableName = "aVariableInstanceName";
     Response response = given().queryParam("variableName", queryVariableName)
         .then().expect().statusCode(Status.OK.getStatusCode())
@@ -344,7 +344,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
 
   @Test
-  public void testVariableInstanceRetrievalAsPost() {
+  void testVariableInstanceRetrievalAsPost() {
     String queryVariableName = "aVariableInstanceName";
     Map<String, String> queryParameter = new HashMap<>();
     queryParameter.put("variableName", queryVariableName);
@@ -387,7 +387,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testAdditionalParametersExcludingVariableValues() {
+  void testAdditionalParametersExcludingVariableValues() {
     Map<String, String> queryParameters = new HashMap<>();
 
     queryParameters.put("variableName", "aVariableName");
@@ -427,7 +427,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testAdditionalParametersExcludingVariableValuesAsPost() {
+  void testAdditionalParametersExcludingVariableValuesAsPost() {
     String aVariableName = "aVariableName";
     String aVariableNameLike = "aVariableNameLike";
     String aProcessInstanceId = "aProcessInstanceId";
@@ -503,7 +503,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueEquals() {
+  void testVariableValueEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -519,7 +519,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueGreaterThan() {
+  void testVariableValueGreaterThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_gt_" + variableValue;
@@ -535,7 +535,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueGreaterThanEquals() {
+  void testVariableValueGreaterThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_gteq_" + variableValue;
@@ -551,7 +551,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueLessThan() {
+  void testVariableValueLessThan() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_lt_" + variableValue;
@@ -567,7 +567,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueLessThanEquals() {
+  void testVariableValueLessThanEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_lteq_" + variableValue;
@@ -583,7 +583,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueLike() {
+  void testVariableValueLike() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_like_" + variableValue;
@@ -599,7 +599,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueNotEquals() {
+  void testVariableValueNotEquals() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -615,7 +615,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValuesEqualsIgnoreCase() {
+  void testVariableValuesEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -632,7 +632,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValuesNotEqualsIgnoreCase() {
+  void testVariableValuesNotEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -649,7 +649,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValuesLikeIgnoreCase() {
+  void testVariableValuesLikeIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_like_" + variableValue;
@@ -667,7 +667,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
 
   @Test
-  public void testVariableNamesEqualsIgnoreCase() {
+  void testVariableNamesEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_eq_" + variableValue;
@@ -684,7 +684,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableNamesNotEqualsIgnoreCase() {
+  void testVariableNamesNotEqualsIgnoreCase() {
     String variableName = "varName";
     String variableValue = "varValue";
     String queryValue = variableName + "_neq_" + variableValue;
@@ -701,7 +701,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueEqualsAsPost() {
+  void testVariableValueEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -731,7 +731,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueGreaterThanAsPost() {
+  void testVariableValueGreaterThanAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -761,7 +761,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueGreaterThanEqualsAsPost() {
+  void testVariableValueGreaterThanEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -791,7 +791,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueLessThanAsPost() {
+  void testVariableValueLessThanAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -821,7 +821,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueLessThanEqualsAsPost() {
+  void testVariableValueLessThanEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -851,7 +851,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueLikeAsPost() {
+  void testVariableValueLikeAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -881,7 +881,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValueNotEqualsAsPost() {
+  void testVariableValueNotEqualsAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -911,7 +911,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValuesEqualsIgnoreCaseAsPost() {
+  void testVariableValuesEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -943,7 +943,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValuesNotEqualsIgnoreCaseAsPost() {
+  void testVariableValuesNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -975,7 +975,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableValuesLikeIgnoreCaseAsPost() {
+  void testVariableValuesLikeIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1008,7 +1008,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
 
   @Test
-  public void testVariableNamesEqualsIgnoreCaseAsPost() {
+  void testVariableNamesEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1040,7 +1040,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testVariableNamesNotEqualsIgnoreCaseAsPost() {
+  void testVariableNamesNotEqualsIgnoreCaseAsPost() {
     Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
@@ -1072,7 +1072,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testMultipleVariableParameters() {
+  void testMultipleVariableParameters() {
     String variableName1 = "varName";
     String variableValue1 = "varValue";
     String variableParameter1 = variableName1 + "_eq_" + variableValue1;
@@ -1097,7 +1097,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testMultipleVariableParametersAsPost() {
+  void testMultipleVariableParametersAsPost() {
     String variableName = "varName";
     String variableValue = "varValue";
     String anotherVariableName = "anotherVarName";
@@ -1134,7 +1134,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testMultipleParameters() {
+  void testMultipleParameters() {
     String aProcessInstanceId = "aProcessInstanceId";
     String anotherProcessInstanceId = "anotherProcessInstanceId";
 
@@ -1172,7 +1172,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testMultipleParametersAsPost() {
+  void testMultipleParametersAsPost() {
     String aProcessInstanceId = "aProcessInstanceId";
     String anotherProcessInstanceId = "anotherProcessInstanceId";
 
@@ -1232,7 +1232,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
       .when().get(VARIABLE_INSTANCE_COUNT_QUERY_URL);
@@ -1241,7 +1241,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryCountForPost() {
+  void testQueryCountForPost() {
     given().contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
     .expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))

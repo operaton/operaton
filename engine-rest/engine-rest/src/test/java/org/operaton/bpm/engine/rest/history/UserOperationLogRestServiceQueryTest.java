@@ -82,7 +82,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   protected HistoryService historyService;
 
   @BeforeEach
-  public void setUpMock() {
+  void setUpMock() {
     List<UserOperationLogEntry> entries = MockProvider.createUserOperationLogEntries();
     queryMock = mock(UserOperationLogQuery.class);
     when(queryMock.list()).thenReturn(entries);
@@ -95,7 +95,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode())
         .body("count", equalTo(1))
         .when().get(USER_OPERATION_LOG_COUNT_RESOURCE_URL);
@@ -104,7 +104,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     expect().statusCode(Status.OK.getStatusCode())
         .when().get(USER_OPERATION_LOG_RESOURCE_URL);
 
@@ -136,7 +136,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryParameter() {
+  void testQueryParameter() {
     Response response = given()
         .queryParam("deploymentId", "a-deployment-id")
         .queryParam("processDefinitionId", "1")
@@ -211,7 +211,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryAfterTimestamp() {
+  void testQueryAfterTimestamp() {
     given().queryParam("afterTimestamp", MockProvider.EXAMPLE_USER_OPERATION_TIMESTAMP)
         .expect().statusCode(Status.OK.getStatusCode())
         .when().get(USER_OPERATION_LOG_RESOURCE_URL);
@@ -219,7 +219,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryBeforeTimestamp() {
+  void testQueryBeforeTimestamp() {
     given().queryParam("beforeTimestamp", MockProvider.EXAMPLE_USER_OPERATION_TIMESTAMP)
         .expect().statusCode(Status.OK.getStatusCode())
         .when().get(USER_OPERATION_LOG_RESOURCE_URL);
@@ -227,7 +227,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testSortByTimestampAscending() {
+  void testSortByTimestampAscending() {
     given()
         .queryParam("sortBy", "timestamp")
         .queryParam("sortOrder", "asc")
@@ -239,7 +239,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testSortByTimestampDescending() {
+  void testSortByTimestampDescending() {
     given()
         .queryParam("sortBy", "timestamp")
         .queryParam("sortOrder", "desc")
@@ -251,7 +251,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testInvalidSortByParameter() {
+  void testInvalidSortByParameter() {
     given()
         .queryParam("sortBy", "unknownField")
         .queryParam("sortOrder", "desc")
@@ -262,7 +262,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testPagination() {
+  void testPagination() {
     given()
         .queryParam("firstResult", 7)
         .queryParam("maxResults", 13)
@@ -272,7 +272,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testFirstResultMissing() {
+  void testFirstResultMissing() {
     given().queryParam("maxResults", 13)
         .expect().statusCode(Status.OK.getStatusCode())
         .when().get(USER_OPERATION_LOG_RESOURCE_URL);
@@ -280,7 +280,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testMaxResultsMissing() {
+  void testMaxResultsMissing() {
     given().queryParam("firstResult", 7)
         .expect().statusCode(Status.OK.getStatusCode())
         .when().get(USER_OPERATION_LOG_RESOURCE_URL);
@@ -288,7 +288,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void shouldSetAnnotation() {
+  void shouldSetAnnotation() {
     given()
         .pathParam("operationId", EXAMPLE_USER_OPERATION_LOG_ID)
         .contentType(MediaType.APPLICATION_JSON)
@@ -303,7 +303,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void shouldThrowExceptionWhenSetAnnotation() {
+  void shouldThrowExceptionWhenSetAnnotation() {
     doThrow(NotValidException.class)
         .when(historyService)
         .setAnnotationForOperationLogById(anyString(), anyString());
@@ -319,7 +319,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void shouldClearAnnotation() {
+  void shouldClearAnnotation() {
     given()
         .pathParam("operationId", EXAMPLE_USER_OPERATION_LOG_ID)
         .expect()
@@ -332,7 +332,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void shouldThrowExceptionWhenClearAnnotation() {
+  void shouldThrowExceptionWhenClearAnnotation() {
     doThrow(BadUserRequestException.class)
         .when(historyService)
         .clearAnnotationForOperationLogById(anyString());

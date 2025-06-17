@@ -82,7 +82,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   protected HistoricDecisionInstanceQuery historicQueryMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     historyServiceMock = mock(HistoryService.class);
 
     // runtime service
@@ -97,7 +97,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testGetSingleHistoricDecisionInstance() {
+  void testGetSingleHistoricDecisionInstance() {
     Response response = given()
         .pathParam("id", MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID)
       .then().expect()
@@ -157,7 +157,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testGetSingleHistoricDecisionInstanceWithInputs() {
+  void testGetSingleHistoricDecisionInstanceWithInputs() {
     historicInstanceMock = MockProvider.createMockHistoricDecisionInstanceWithInputs();
     when(historicQueryMock.singleResult()).thenReturn(historicInstanceMock);
 
@@ -186,7 +186,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testGetSingleHistoricDecisionInstanceWithOutputs() {
+  void testGetSingleHistoricDecisionInstanceWithOutputs() {
     historicInstanceMock = MockProvider.createMockHistoricDecisionInstanceWithOutputs();
     when(historicQueryMock.singleResult()).thenReturn(historicInstanceMock);
 
@@ -215,7 +215,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testGetSingleHistoricDecisionInstanceWithInputsAndOutputs() {
+  void testGetSingleHistoricDecisionInstanceWithInputsAndOutputs() {
     historicInstanceMock = MockProvider.createMockHistoricDecisionInstanceWithInputsAndOutputs();
     when(historicQueryMock.singleResult()).thenReturn(historicInstanceMock);
 
@@ -247,7 +247,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testGetSingleHistoricDecisionInstanceWithDisabledBinaryFetching() {
+  void testGetSingleHistoricDecisionInstanceWithDisabledBinaryFetching() {
     historicInstanceMock = MockProvider.createMockHistoricDecisionInstanceWithInputsAndOutputs();
     when(historicQueryMock.singleResult()).thenReturn(historicInstanceMock);
 
@@ -266,7 +266,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testGetSingleHistoricDecisionInstanceWithDisabledCustomObjectDeserialization() {
+  void testGetSingleHistoricDecisionInstanceWithDisabledCustomObjectDeserialization() {
     historicInstanceMock = MockProvider.createMockHistoricDecisionInstanceWithInputsAndOutputs();
     when(historicQueryMock.singleResult()).thenReturn(historicInstanceMock);
 
@@ -285,7 +285,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testGetNonExistingHistoricCaseInstance() {
+  void testGetNonExistingHistoricCaseInstance() {
     when(historicQueryMock.singleResult()).thenReturn(null);
 
     given()
@@ -300,7 +300,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testDeleteAsync() {
+  void testDeleteAsync() {
     List<String> ids = Arrays.asList(EXAMPLE_DECISION_INSTANCE_ID);
 
     Batch batchEntity = MockProvider.createMockBatch();
@@ -323,7 +323,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testDeleteAsyncWithQuery() {
+  void testDeleteAsyncWithQuery() {
     Batch batchEntity = MockProvider.createMockBatch();
 
     when(historyServiceMock.deleteHistoricDecisionInstancesAsync(any(), any(), any())).thenReturn(batchEntity);
@@ -346,7 +346,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testDeleteAsyncWithIdsAndQuery() {
+  void testDeleteAsyncWithIdsAndQuery() {
     Batch batchEntity = MockProvider.createMockBatch();
 
     when(historyServiceMock.deleteHistoricDecisionInstancesAsync(
@@ -376,7 +376,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testDeleteAsyncWithBadRequestQuery() {
+  void testDeleteAsyncWithBadRequestQuery() {
     doThrow(new BadUserRequestException("process instance ids are empty"))
         .when(historyServiceMock).deleteHistoricDecisionInstancesAsync(eq((List<String>) null), eq((HistoricDecisionInstanceQuery) null), any());
 
@@ -388,7 +388,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void shouldSetRemovalTime_ByIds() {
+  void shouldSetRemovalTime_ByIds() {
     SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -417,7 +417,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void shouldSetRemovalTime_ByQuery() {
+  void shouldSetRemovalTime_ByQuery() {
     SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -448,7 +448,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void shouldSetRemovalTime_Absolute() {
+  void shouldSetRemovalTime_Absolute() {
     Date removalTime = new Date();
 
     SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder builderMock =
@@ -479,7 +479,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void shouldNotSetRemovalTime_Absolute() {
+  void shouldNotSetRemovalTime_Absolute() {
     SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -507,7 +507,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void shouldClearRemovalTime() {
+  void shouldClearRemovalTime() {
     SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -537,7 +537,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void shouldSetRemovalTime_Response() {
+  void shouldSetRemovalTime_Response() {
     SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder.class, RETURNS_DEEP_STUBS);
 
@@ -558,7 +558,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void shouldSetRemovalTime_ThrowBadUserException() {
+  void shouldSetRemovalTime_ThrowBadUserException() {
     SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder builderMock =
       mock(SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder.class, RETURNS_DEEP_STUBS);
 

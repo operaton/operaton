@@ -62,7 +62,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   private CaseDefinitionQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntime() {
+  void setUpRuntime() {
     mockedQuery = createMockCaseDefinitionQuery(MockProvider.createMockCaseDefinitions());
   }
 
@@ -77,7 +77,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     given()
       .then()
         .expect()
@@ -89,7 +89,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testInvalidNumericParameter() {
+  void testInvalidNumericParameter() {
     String anInvalidIntegerQueryParam = "aString";
 
     given()
@@ -110,7 +110,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
    * or "false" are evaluated to "false" and don't cause a 400 error.
    */
   @Test
-  public void testInvalidBooleanParameter() {
+  void testInvalidBooleanParameter() {
     String anInvalidBooleanQueryParam = "neitherTrueNorFalse";
     given()
       .queryParam("active", anInvalidBooleanQueryParam)
@@ -122,13 +122,13 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("id", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "id")
       .then()
@@ -139,7 +139,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
       .then()
@@ -161,7 +161,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     // asc
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("id", "asc", Status.OK);
@@ -236,7 +236,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -256,7 +256,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
    * If parameter "firstResult" is missing, we expect 0 as default.
    */
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -274,7 +274,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
    * If parameter "maxResults" is missing, we expect Integer.MAX_VALUE as default.
    */
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -289,7 +289,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testCaseDefinitionRetrieval() {
+  void testCaseDefinitionRetrieval() {
     Response response = given()
         .then()
           .expect()
@@ -327,7 +327,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testAdditionalParameters() {
+  void testAdditionalParameters() {
     Map<String, String> queryParameters = getCompleteQueryParameters();
 
     given()
@@ -354,7 +354,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testCaseDefinitionRetrievalByList() {
+  void testCaseDefinitionRetrievalByList() {
     mockedQuery = createMockCaseDefinitionQuery(MockProvider.createMockTwoCaseDefinitions());
 
     Response response = given()
@@ -381,7 +381,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testCaseDefinitionRetrievalByEmptyList() {
+  void testCaseDefinitionRetrievalByEmptyList() {
     given()
       .queryParam("caseDefinitionIdIn", "")
       .then().expect()
@@ -396,7 +396,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testCaseDefinitionTenantIdList() {
+  void testCaseDefinitionTenantIdList() {
     List<CaseDefinition> caseDefinitions = Arrays.asList(
         MockProvider.mockCaseDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.mockCaseDefinition().id(MockProvider.ANOTHER_EXAMPLE_CASE_DEFINITION_ID).tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).build());
@@ -424,7 +424,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testCaseDefinitionWithoutTenantId() {
+  void testCaseDefinitionWithoutTenantId() {
     Response response = given()
       .queryParam("withoutTenantId", true)
     .then().expect()
@@ -444,7 +444,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testCaseDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
+  void testCaseDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
     List<CaseDefinition> caseDefinitions = Arrays.asList(
         MockProvider.mockCaseDefinition().tenantId(null).build(),
         MockProvider.mockCaseDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
@@ -474,7 +474,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
       .when().get(CASE_DEFINITION_COUNT_QUERY_URL);

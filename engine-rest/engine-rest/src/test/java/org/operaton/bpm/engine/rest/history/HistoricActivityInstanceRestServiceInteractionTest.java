@@ -53,7 +53,7 @@ public class HistoricActivityInstanceRestServiceInteractionTest extends Abstract
   protected HistoricActivityInstanceQuery historicQueryMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     historyServiceMock = mock(HistoryService.class);
 
     // runtime service
@@ -68,7 +68,7 @@ public class HistoricActivityInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testGetSingleHistoricActivityInstance() {
+  void testGetSingleHistoricActivityInstance() {
     Response response = given()
         .pathParam("id", MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_ID)
       .then().expect()
@@ -124,7 +124,7 @@ public class HistoricActivityInstanceRestServiceInteractionTest extends Abstract
   }
 
   @Test
-  public void testGetNonExistingHistoricCaseInstance() {
+  void testGetNonExistingHistoricCaseInstance() {
     when(historicQueryMock.singleResult()).thenReturn(null);
 
     given()

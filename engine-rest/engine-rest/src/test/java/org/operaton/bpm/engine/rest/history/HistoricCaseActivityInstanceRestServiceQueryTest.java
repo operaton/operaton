@@ -64,7 +64,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   protected HistoricCaseActivityInstanceQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricCaseActivityInstanceQuery(MockProvider.createMockHistoricCaseActivityInstances());
   }
 
@@ -79,7 +79,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("caseInstanceId", queryKey)
@@ -91,7 +91,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -102,7 +102,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("instanceId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -119,7 +119,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "caseInstanceId")
     .then().expect()
@@ -132,7 +132,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
     .queryParam("sortOrder", "asc")
   .then().expect()
@@ -145,7 +145,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("caseActivityInstanceId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByHistoricCaseActivityInstanceId();
@@ -258,7 +258,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -274,7 +274,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -288,7 +288,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -302,7 +302,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -313,7 +313,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testSimpleHistoricActivityQuery() {
+  void testSimpleHistoricActivityQuery() {
     String caseInstanceId = MockProvider.EXAMPLE_CASE_INSTANCE_ID;
 
     Response response = given()
@@ -380,7 +380,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testAdditionalParameters() {
+  void testAdditionalParameters() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()
@@ -394,7 +394,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testBooleanParameters() {
+  void testBooleanParameters() {
     Map<String, Boolean> params = getCompleteBooleanQueryParameters();
 
     given()
@@ -495,7 +495,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testFinishedHistoricCaseActivityQuery() {
+  void testFinishedHistoricCaseActivityQuery() {
     Response response = given()
         .queryParam("finished", true)
       .then().expect()
@@ -520,7 +520,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testUnfinishedHistoricCaseActivityQuery() {
+  void testUnfinishedHistoricCaseActivityQuery() {
     List<HistoricCaseActivityInstance> mockedHistoricCaseActivityInstances = MockProvider.createMockRunningHistoricCaseActivityInstances();
     HistoricCaseActivityInstanceQuery mockedHistoricCaseActivityInstanceQuery = mock(HistoricCaseActivityInstanceQuery.class);
     when(mockedHistoricCaseActivityInstanceQuery.list()).thenReturn(mockedHistoricCaseActivityInstances);
@@ -550,7 +550,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testHistoricAfterAndBeforeCreateTimeQuery() {
+  void testHistoricAfterAndBeforeCreateTimeQuery() {
     given()
       .queryParam("createdAfter", MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_CREATED_AFTER)
       .queryParam("createdBefore", MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_CREATED_BEFORE)
@@ -581,7 +581,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testHistoricAfterAndBeforeEndTimeQuery() {
+  void testHistoricAfterAndBeforeEndTimeQuery() {
     given()
       .queryParam("endedAfter", MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_ENDED_AFTER)
       .queryParam("endedBefore", MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_ENDED_BEFORE)
@@ -612,7 +612,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockHistoricCaseActivityInstanceQuery(createMockHistoricCaseActivityInstancesTwoTenants());
 
     Response response = given()
@@ -637,7 +637,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testQueryWithoutTenantIdQueryParameter() {
+  void testQueryWithoutTenantIdQueryParameter() {
     // given
     HistoricCaseActivityInstance caseInstance = MockProvider.createMockHistoricCaseActivityInstance(null);
     mockedQuery = setUpMockHistoricCaseActivityInstanceQuery(Collections.singletonList(caseInstance));
@@ -663,7 +663,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testCaseActivityInstanceIdListParameter() {
+  void testCaseActivityInstanceIdListParameter() {
 
     given()
       .queryParam("caseActivityInstanceIdIn", MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_ID + "," + MockProvider.EXAMPLE_HISTORIC_ANOTHER_CASE_ACTIVITY_INSTANCE_ID)
@@ -677,7 +677,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   @Test
-  public void testCaseActivityIdListParameter() {
+  void testCaseActivityIdListParameter() {
 
     given()
       .queryParam("caseActivityIdIn", MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_ID + "," + MockProvider.EXAMPLE_HISTORIC_ANOTHER_CASE_ACTIVITY_ID)

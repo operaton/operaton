@@ -65,7 +65,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
   private CleanableHistoricBatchReport historicBatchReport;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     setupHistoryReportMock();
   }
 
@@ -98,7 +98,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testGetReport() {
+  void testGetReport() {
     given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -110,7 +110,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testReportRetrieval() {
+  void testReportRetrieval() {
     Response response = given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -138,7 +138,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testMissingAuthorization() {
+  void testMissingAuthorization() {
     String message = "not authorized";
     when(historicBatchReport.list()).thenThrow(new AuthorizationException(message));
 
@@ -152,7 +152,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(2))
@@ -163,7 +163,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testOrderByFinishedBatchOperationAsc() {
+  void testOrderByFinishedBatchOperationAsc() {
     given()
       .queryParam("sortBy", "finished")
       .queryParam("sortOrder", "asc")
@@ -177,7 +177,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testOrderByFinishedBatchOperationDesc() {
+  void testOrderByFinishedBatchOperationDesc() {
     given()
       .queryParam("sortBy", "finished")
       .queryParam("sortOrder", "desc")
@@ -191,7 +191,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
     .queryParam("sortOrder", "asc")
   .then()
@@ -205,7 +205,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("finished", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }

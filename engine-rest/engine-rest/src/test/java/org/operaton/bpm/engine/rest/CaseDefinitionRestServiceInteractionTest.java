@@ -100,7 +100,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   private CaseInstanceBuilder caseInstanceBuilder;
 
   @BeforeEach
-  public void setUpRuntime() {
+  void setUpRuntime() {
     CaseDefinition mockCaseDefinition = MockProvider.createMockCaseDefinition();
 
     setUpRuntimeData(mockCaseDefinition);
@@ -143,7 +143,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseDefinitionCmmnXmlRetrieval() {
+  void testCaseDefinitionCmmnXmlRetrieval() {
     Response response = given()
         .pathParam("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
       .then()
@@ -159,7 +159,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testDefinitionRetrieval() {
+  void testDefinitionRetrieval() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
     .then()
@@ -180,7 +180,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseDefinitionCmmnXmlRetrieval_ByKey() {
+  void testCaseDefinitionCmmnXmlRetrieval_ByKey() {
     Response response = given()
         .pathParam("key", MockProvider.EXAMPLE_CASE_DEFINITION_KEY)
       .then()
@@ -196,7 +196,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testDefinitionRetrieval_ByKey() {
+  void testDefinitionRetrieval_ByKey() {
     given()
       .pathParam("key", MockProvider.EXAMPLE_CASE_DEFINITION_KEY)
     .then()
@@ -218,7 +218,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testNonExistingCaseDefinitionRetrieval_ByKey() {
+  void testNonExistingCaseDefinitionRetrieval_ByKey() {
     String nonExistingKey = "aNonExistingDefinitionKey";
 
     when(repositoryServiceMock.createCaseDefinitionQuery().caseDefinitionKey(nonExistingKey)).thenReturn(caseDefinitionQueryMock);
@@ -238,7 +238,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testDefinitionRetrieval_ByKeyAndTenantId() {
+  void testDefinitionRetrieval_ByKeyAndTenantId() {
     CaseDefinition mockDefinition = MockProvider.mockCaseDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build();
     setUpRuntimeData(mockDefinition);
 
@@ -264,7 +264,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testNonExistingCaseDefinitionRetrieval_ByKeyAndTenantId() {
+  void testNonExistingCaseDefinitionRetrieval_ByKeyAndTenantId() {
     String nonExistingKey = "aNonExistingDefinitionKey";
     String nonExistingTenantId = "aNonExistingTenantId";
 
@@ -282,7 +282,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByCaseDefinitionKeyAndTenantId() {
+  void testCreateCaseInstanceByCaseDefinitionKeyAndTenantId() {
     CaseDefinition mockDefinition = MockProvider.mockCaseDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build();
     setUpRuntimeData(mockDefinition);
 
@@ -304,7 +304,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByCaseDefinitionId() {
+  void testCreateCaseInstanceByCaseDefinitionId() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -324,7 +324,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByCaseDefinitionKey() {
+  void testCreateCaseInstanceByCaseDefinitionKey() {
     given()
       .pathParam("key", MockProvider.EXAMPLE_CASE_DEFINITION_KEY)
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -343,7 +343,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByCaseDefinitionIdWithBusinessKey() {
+  void testCreateCaseInstanceByCaseDefinitionIdWithBusinessKey() {
     Map<String, Object> params = new HashMap<>();
     params.put("businessKey", MockProvider.EXAMPLE_CASE_INSTANCE_BUSINESS_KEY);
 
@@ -366,7 +366,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByCaseDefinitionKeyWithBusinessKey() {
+  void testCreateCaseInstanceByCaseDefinitionKeyWithBusinessKey() {
     Map<String, Object> params = new HashMap<>();
     params.put("businessKey", MockProvider.EXAMPLE_CASE_INSTANCE_BUSINESS_KEY);
 
@@ -388,7 +388,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByCaseDefinitionIdWithVariables() {
+  void testCreateCaseInstanceByCaseDefinitionIdWithVariables() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", VariablesBuilder.getVariableValueMap("abc", ValueType.STRING.getName()));
     variables.put("anotherVariableName", VariablesBuilder.getVariableValueMap(900, ValueType.INTEGER.getName()));
@@ -417,7 +417,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByCaseDefinitionKeyWithVariables() {
+  void testCreateCaseInstanceByCaseDefinitionKeyWithVariables() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", VariablesBuilder.getVariableValueMap("abc", null));
     variables.put("anotherVariableName", VariablesBuilder.getVariableValueMap(900, null));
@@ -449,7 +449,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByCaseDefinitionIdWithBusinessKeyAndVariables() {
+  void testCreateCaseInstanceByCaseDefinitionIdWithBusinessKeyAndVariables() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", VariablesBuilder.getVariableValueMap("abc", null));
     variables.put("anotherVariableName", VariablesBuilder.getVariableValueMap(900, null));
@@ -483,7 +483,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByCaseDefinitionKeyWithBusinessKeyAndVariables() {
+  void testCreateCaseInstanceByCaseDefinitionKeyWithBusinessKeyAndVariables() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", VariablesBuilder.getVariableValueMap("abc", null));
     variables.put("anotherVariableName", VariablesBuilder.getVariableValueMap(900, null));
@@ -516,7 +516,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByInvalidCaseDefinitionId() {
+  void testCreateCaseInstanceByInvalidCaseDefinitionId() {
     when(caseInstanceBuilder.create())
       .thenThrow(new ProcessEngineException("expected exception"));
 
@@ -535,7 +535,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCreateCaseInstanceByInvalidCaseDefinitionKey() {
+  void testCreateCaseInstanceByInvalidCaseDefinitionKey() {
     when(caseInstanceBuilder.create())
       .thenThrow(new ProcessEngineException("expected exception"));
 
@@ -554,7 +554,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseDiagramRetrieval() throws FileNotFoundException, URISyntaxException {
+  void testCaseDiagramRetrieval() throws FileNotFoundException, URISyntaxException {
     // setup additional mock behavior
     File file = getFile("/processes/todo-process.png");
     when(repositoryServiceMock.getCaseDiagram(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
@@ -580,7 +580,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseDiagramNullFilename() throws FileNotFoundException, URISyntaxException {
+  void testCaseDiagramNullFilename() throws FileNotFoundException, URISyntaxException {
     // setup additional mock behavior
     File file = getFile("/processes/todo-process.png");
     when(repositoryServiceMock.getCaseDefinition(MockProvider.EXAMPLE_CASE_DEFINITION_ID).getDiagramResourceName())
@@ -607,7 +607,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testCaseDiagramNotExist() {
+  void testCaseDiagramNotExist() {
     // setup additional mock behavior
     when(repositoryServiceMock.getCaseDiagram(MockProvider.EXAMPLE_CASE_DEFINITION_ID)).thenReturn(null);
 
@@ -622,7 +622,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testProcessDiagramMediaType() {
+  void testProcessDiagramMediaType() {
     Assertions.assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.png"));
     Assertions.assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.PNG"));
     Assertions.assertEquals("image/svg+xml", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.svg"));
@@ -634,7 +634,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testUpdateHistoryTimeToLive() {
+  void testUpdateHistoryTimeToLive() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
       .body(new HistoryTimeToLiveDto(5))
@@ -649,7 +649,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testUpdateHistoryTimeToLiveNullValue() {
+  void testUpdateHistoryTimeToLiveNullValue() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
       .body(new HistoryTimeToLiveDto())
@@ -664,7 +664,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testUpdateHistoryTimeToLiveNegativeValue() {
+  void testUpdateHistoryTimeToLiveNegativeValue() {
     String expectedMessage = "expectedMessage";
 
     doThrow(new BadUserRequestException(expectedMessage))
@@ -687,7 +687,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testUpdateHistoryTimeToLiveAuthorizationException() {
+  void testUpdateHistoryTimeToLiveAuthorizationException() {
     String expectedMessage = "expectedMessage";
 
     doThrow(new AuthorizationException(expectedMessage))

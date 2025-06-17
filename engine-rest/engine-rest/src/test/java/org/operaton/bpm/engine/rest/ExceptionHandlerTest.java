@@ -48,7 +48,7 @@ public class ExceptionHandlerTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testGeneralExceptionHandler() {
+  void testGeneralExceptionHandler() {
     given().header(ACCEPT_WILDCARD_HEADER)
     .expect().contentType(ContentType.JSON)
       .statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())
@@ -59,7 +59,7 @@ public class ExceptionHandlerTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testRestExceptionHandler() {
+  void testRestExceptionHandler() {
     given().header(ACCEPT_WILDCARD_HEADER)
     .expect().contentType(ContentType.JSON)
       .statusCode(Status.BAD_REQUEST.getStatusCode())
@@ -70,7 +70,7 @@ public class ExceptionHandlerTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testProcessEngineExceptionHandler() {
+  void testProcessEngineExceptionHandler() {
     given().header(ACCEPT_WILDCARD_HEADER)
     .expect().contentType(ContentType.JSON)
       .statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())
@@ -81,7 +81,7 @@ public class ExceptionHandlerTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAuthorizationExceptionHandler() {
+  void testAuthorizationExceptionHandler() {
   //    TODO remove "resourceName", "resourceId", "permissionName" once the deprecated methods from AuthorizationException are removed
     given().header(ACCEPT_WILDCARD_HEADER)
     .expect().contentType(ContentType.JSON)
@@ -100,7 +100,7 @@ public class ExceptionHandlerTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testAuthorizationExceptionWithMultipleMissingAuthorizationsHandler() {
+  void testAuthorizationExceptionWithMultipleMissingAuthorizationsHandler() {
   //    TODO remove "resourceName", "resourceId", "permissionName" once the deprecated methods from AuthorizationException are removed
     given().header(ACCEPT_WILDCARD_HEADER)
     .expect().contentType(ContentType.JSON)
@@ -121,7 +121,7 @@ public class ExceptionHandlerTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testThrowableHandler() {
+  void testThrowableHandler() {
     given().header(ACCEPT_WILDCARD_HEADER)
       .expect().contentType(ContentType.JSON)
       .statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())

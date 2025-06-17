@@ -101,7 +101,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   private List<String> tenantIds;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     when(processEngine.getExternalTaskService()).thenReturn(externalTaskService);
 
     lockedExternalTaskMock = MockProvider.createMockLockedExternalTask();
@@ -139,7 +139,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldFetchAndLock() {
+  void shouldFetchAndLock() {
     when(fetchTopicBuilder.execute()).thenReturn(new ArrayList<>(Collections.singleton(lockedExternalTaskMock)));
     FetchExternalTasksExtendedDto fetchExternalTasksDto = createDto(null, true, true, false);
 
@@ -186,7 +186,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldFetchWithoutVariables() {
+  void shouldFetchWithoutVariables() {
     when(fetchTopicBuilder.execute()).thenReturn(new ArrayList<>(Collections.singleton(lockedExternalTaskMock)));
     FetchExternalTasksExtendedDto fetchExternalTasksDto = createDto(null);
 
@@ -216,7 +216,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldFetchWithCustomObjectDeserializationEnabled() {
+  void shouldFetchWithCustomObjectDeserializationEnabled() {
     when(fetchTopicBuilder.execute())
       .thenReturn(new ArrayList<>(Collections.singleton(lockedExternalTaskMock)));
     FetchExternalTasksExtendedDto fetchExternalTasksDto = createDto(null, false, true, true);
@@ -249,7 +249,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldThrowInvalidRequestExceptionOnMaxTimeoutExceeded() {
+  void shouldThrowInvalidRequestExceptionOnMaxTimeoutExceeded() {
     FetchExternalTasksExtendedDto fetchExternalTasksDto = createDto(FetchAndLockHandlerImpl.MAX_REQUEST_TIMEOUT + 1);
 
     given()
@@ -265,7 +265,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldThrowProcessEngineExceptionDuringTimeout() {
+  void shouldThrowProcessEngineExceptionDuringTimeout() {
     FetchExternalTasksExtendedDto fetchExternalTasksDto = createDto(500L);
 
     when(fetchTopicBuilder.execute())
@@ -288,7 +288,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldThrowProcessEngineExceptionNotDuringTimeout() {
+  void shouldThrowProcessEngineExceptionNotDuringTimeout() {
     FetchExternalTasksExtendedDto fetchExternalTasksDto = createDto(500L);
 
     when(fetchTopicBuilder.execute())
@@ -309,7 +309,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldResponseImmediatelyDueToAvailableTasks() {
+  void shouldResponseImmediatelyDueToAvailableTasks() {
     when(fetchTopicBuilder.execute())
       .thenReturn(new ArrayList<>(Collections.singleton(lockedExternalTaskMock)));
 
@@ -327,7 +327,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldSetAuthenticationProperly() {
+  void shouldSetAuthenticationProperly() {
     when(identityServiceMock.getCurrentAuthentication())
       .thenReturn(new Authentication(MockProvider.EXAMPLE_USER_ID, groupIds, tenantIds));
 
@@ -348,7 +348,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldReturnInternalServerErrorResponseJsonWithTypeAndMessage() {
+  void shouldReturnInternalServerErrorResponseJsonWithTypeAndMessage() {
     FetchExternalTasksExtendedDto fetchExternalTasksDto = createDto(500L);
 
     when(fetchTopicBuilder.execute())
@@ -369,7 +369,7 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void shouldFetchAndLockByProcessDefinitionVersionTag() {
+  void shouldFetchAndLockByProcessDefinitionVersionTag() {
     when(fetchTopicBuilder.execute())
     .thenReturn(new ArrayList<LockedExternalTask>(Collections.singleton(lockedExternalTaskMock)));
 

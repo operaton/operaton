@@ -67,7 +67,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   protected HistoricActivityInstanceQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricActivityInstanceQuery(MockProvider.createMockHistoricActivityInstances());
   }
 
@@ -82,7 +82,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("processInstanceId", queryKey)
@@ -94,7 +94,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -105,7 +105,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testNoParametersQueryAsPost() {
+  void testNoParametersQueryAsPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -119,7 +119,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("instanceId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -136,7 +136,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "instanceId")
     .then()
@@ -150,7 +150,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
     .queryParam("sortOrder", "asc")
   .then()
@@ -164,7 +164,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("activityInstanceId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByHistoricActivityInstanceId();
@@ -282,7 +282,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSecondarySortingAsPost() {
+  void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
@@ -301,7 +301,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -318,7 +318,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -333,7 +333,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -348,7 +348,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -359,7 +359,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryCountForPost() {
+  void testQueryCountForPost() {
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
       .body(EMPTY_JSON_OBJECT)
@@ -373,7 +373,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testSimpleHistoricActivityQuery() {
+  void testSimpleHistoricActivityQuery() {
     String processInstanceId = MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     Response response = given()
@@ -435,7 +435,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testAdditionalParameters() {
+  void testAdditionalParameters() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()
@@ -450,7 +450,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testAdditionalParametersAsPost() {
+  void testAdditionalParametersAsPost() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
 
     given()
@@ -466,7 +466,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testBooleanParameters() {
+  void testBooleanParameters() {
     Map<String, Boolean> params = getCompleteBooleanQueryParameters();
 
     given()
@@ -481,7 +481,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testBooleanParametersAsPost() {
+  void testBooleanParametersAsPost() {
     Map<String, Boolean> params = getCompleteBooleanQueryParameters();
 
     given()
@@ -553,7 +553,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testFinishedHistoricActivityQuery() {
+  void testFinishedHistoricActivityQuery() {
     Response response = given()
         .queryParam("finished", true)
       .then()
@@ -580,7 +580,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testFinishedHistoricActivityQueryAsPost() {
+  void testFinishedHistoricActivityQueryAsPost() {
     Map<String, Boolean> body = new HashMap<>();
     body.put("finished", true);
 
@@ -612,7 +612,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testUnfinishedHistoricActivityQuery() {
+  void testUnfinishedHistoricActivityQuery() {
     List<HistoricActivityInstance> mockedHistoricActivityInstances = MockProvider.createMockRunningHistoricActivityInstances();
     HistoricActivityInstanceQuery mockedhistoricActivityInstanceQuery = mock(HistoricActivityInstanceQuery.class);
     when(mockedhistoricActivityInstanceQuery.list()).thenReturn(mockedHistoricActivityInstances);
@@ -643,7 +643,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testUnfinishedHistoricActivityQueryAsPost() {
+  void testUnfinishedHistoricActivityQueryAsPost() {
     List<HistoricActivityInstance> mockedHistoricActivityInstances = MockProvider.createMockRunningHistoricActivityInstances();
     HistoricActivityInstanceQuery mockedhistoricActivityInstanceQuery = mock(HistoricActivityInstanceQuery.class);
     when(mockedhistoricActivityInstanceQuery.list()).thenReturn(mockedHistoricActivityInstances);
@@ -678,7 +678,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricBeforeAndAfterStartTimeQuery() {
+  void testHistoricBeforeAndAfterStartTimeQuery() {
     given()
       .queryParam("startedBefore", MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_STARTED_BEFORE)
       .queryParam("startedAfter", MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_STARTED_AFTER)
@@ -692,7 +692,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricBeforeAndAfterStartTimeQueryAsPost() {
+  void testHistoricBeforeAndAfterStartTimeQueryAsPost() {
     Map<String, Date> parameters = getCompleteStartDateQueryParameters();
 
     given()
@@ -726,7 +726,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricAfterAndBeforeFinishTimeQuery() {
+  void testHistoricAfterAndBeforeFinishTimeQuery() {
     given()
       .queryParam("finishedAfter", MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_FINISHED_AFTER)
       .queryParam("finishedBefore", MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_FINISHED_BEFORE)
@@ -740,7 +740,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testHistoricAfterAndBeforeFinishTimeQueryAsPost() {
+  void testHistoricAfterAndBeforeFinishTimeQueryAsPost() {
     Map<String, Date> parameters = getCompleteFinishedDateQueryParameters();
 
     given()
@@ -774,7 +774,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedQuery = setUpMockHistoricActivityInstanceQuery(createMockHistoricActivityInstancesTwoTenants());
 
     Response response = given()
@@ -799,7 +799,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testTenantIdListPostParameter() {
+  void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricActivityInstanceQuery(createMockHistoricActivityInstancesTwoTenants());
 
     Map<String, Object> queryParameters = new HashMap<>();
@@ -828,7 +828,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryFilterWithoutTenantIdParameter() {
+  void testQueryFilterWithoutTenantIdParameter() {
     // given
     HistoricActivityInstance activityInstance = MockProvider.createMockHistoricActivityInstance(null);
     mockedQuery = setUpMockHistoricActivityInstanceQuery(Collections.singletonList(activityInstance));
@@ -854,7 +854,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryFilterWithoutTenantIdPostParameter() {
+  void testQueryFilterWithoutTenantIdPostParameter() {
     // given
     HistoricActivityInstance activityInstance = MockProvider.createMockHistoricActivityInstance(null);
     mockedQuery = setUpMockHistoricActivityInstanceQuery(Collections.singletonList(activityInstance));

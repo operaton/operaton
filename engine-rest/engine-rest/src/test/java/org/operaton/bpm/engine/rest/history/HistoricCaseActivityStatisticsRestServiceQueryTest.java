@@ -57,7 +57,7 @@ public class HistoricCaseActivityStatisticsRestServiceQueryTest extends Abstract
   protected static HistoricCaseActivityStatisticsQuery historicCaseActivityStatisticsQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     List<HistoricCaseActivityStatistics> mocks = MockProvider.createMockHistoricCaseActivityStatistics();
 
     historicCaseActivityStatisticsQuery = mock(HistoricCaseActivityStatisticsQueryImpl.class);
@@ -66,7 +66,7 @@ public class HistoricCaseActivityStatisticsRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testHistoricCaseActivityStatisticsRetrieval() {
+  void testHistoricCaseActivityStatisticsRetrieval() {
     given().pathParam("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -76,7 +76,7 @@ public class HistoricCaseActivityStatisticsRestServiceQueryTest extends Abstract
   }
 
   @Test
-  public void testSimpleTaskQuery() {
+  void testSimpleTaskQuery() {
     Response response = given()
           .pathParam("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
          .then().expect()

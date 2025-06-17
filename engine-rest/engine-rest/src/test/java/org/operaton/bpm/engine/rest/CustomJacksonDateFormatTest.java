@@ -62,7 +62,7 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
   protected RuntimeServiceImpl runtimeServiceMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     runtimeServiceMock = mock(RuntimeServiceImpl.class);
 
     when(runtimeServiceMock.getVariableTyped(EXAMPLE_PROCESS_INSTANCE_ID, EXAMPLE_VARIABLE_KEY, true))
@@ -72,12 +72,12 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
   }
 
   @AfterAll
-  public static void reset() {
+  static void reset() {
     JacksonConfigurator.setDateFormatString(DEFAULT_DATE_FORMAT);
   }
 
   @Test
-  public void testGetDateVariable() {
+  void testGetDateVariable() {
     given()
         .pathParam("id", EXAMPLE_PROCESS_INSTANCE_ID)
         .pathParam("varId", EXAMPLE_VARIABLE_KEY)
@@ -90,7 +90,7 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSetDateVariable() {
+  void testSetDateVariable() {
     String variableValue = TEST_DATE_FORMAT.format(TEST_DATE);
 
     Map<String, Object> variableJson = VariablesBuilder.getVariableValueMap(variableValue, "Date");

@@ -65,7 +65,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   protected int anotherMockedFilterItemCount;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = MockProvider.createMockFilterQuery();
     mockedFilter = MockProvider.createMockFilter(MockProvider.EXAMPLE_FILTER_ID);
     mockedFilterItemCount = 13;
@@ -82,7 +82,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryFilterId = "";
 
     given()
@@ -96,7 +96,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -107,7 +107,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCountyQuery() {
+  void testCountyQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(2))
@@ -119,7 +119,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFilterRetrieval() {
+  void testFilterRetrieval() {
     Response response = given()
       .queryParam("filterId", MockProvider.EXAMPLE_FILTER_ID)
     .then().expect()
@@ -131,7 +131,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testMultipleParameters() {
+  void testMultipleParameters() {
     given()
       .queryParams(getQueryParameters())
     .then().expect()
@@ -143,13 +143,13 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("filterId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "filterId")
     .then().expect()
@@ -159,7 +159,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
     .then().expect()
@@ -169,22 +169,22 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     executeAndVerifyPagination(0, 10, Status.OK);
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     executeAndVerifyPagination(null, 10, Status.OK);
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     executeAndVerifyPagination(0, null, Status.OK);
   }
 
   @Test
-  public void testSingleFilterWithItemCount() {
+  void testSingleFilterWithItemCount() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_FILTER_ID)
       .queryParam("itemCount", true)
@@ -197,7 +197,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSingleFilterWithoutItemCount() {
+  void testSingleFilterWithoutItemCount() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_FILTER_ID)
     .then().expect()
@@ -208,7 +208,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFilterQueryWithItemCount() {
+  void testFilterQueryWithItemCount() {
     given()
       .queryParam("itemCount", true)
     .then().expect()
@@ -222,7 +222,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testFilterQueryWithoutItemCount() {
+  void testFilterQueryWithoutItemCount() {
     given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())

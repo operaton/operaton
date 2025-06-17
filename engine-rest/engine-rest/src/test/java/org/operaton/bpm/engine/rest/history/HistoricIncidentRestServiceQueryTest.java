@@ -71,7 +71,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   private HistoricIncidentQuery mockedQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricIncidentQuery(MockProvider.createMockHistoricIncidents());
   }
 
@@ -87,7 +87,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     String queryKey = "";
     given()
       .queryParam("processInstanceId", queryKey)
@@ -99,7 +99,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -111,7 +111,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
 
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("processInstanceId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
@@ -128,7 +128,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
     .queryParam("sortOrder", "asc")
   .then()
@@ -142,7 +142,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
     executeAndVerifySorting("incidentId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentId();
@@ -295,7 +295,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
 
@@ -312,7 +312,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
 
     given()
@@ -327,7 +327,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
 
     given()
@@ -342,7 +342,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -353,7 +353,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testSimpleHistoricTaskInstanceQuery() {
+  void testSimpleHistoricTaskInstanceQuery() {
     Response response = given()
       .then()
         .expect()
@@ -418,7 +418,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByIncidentId() {
+  void testQueryByIncidentId() {
     String incidentId = MockProvider.EXAMPLE_HIST_INCIDENT_ID;
 
     given()
@@ -430,7 +430,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByIncidentType() {
+  void testQueryByIncidentType() {
     String incidentType = MockProvider.EXAMPLE_HIST_INCIDENT_TYPE;
 
     given()
@@ -442,7 +442,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByIncidentMessage() {
+  void testQueryByIncidentMessage() {
     String incidentMessage = MockProvider.EXAMPLE_HIST_INCIDENT_MESSAGE;
 
     given()
@@ -454,7 +454,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByIncidentMessageLike() {
+  void testQueryByIncidentMessageLike() {
     String incidentMessage = MockProvider.EXAMPLE_HIST_INCIDENT_MESSAGE;
 
     given()
@@ -466,7 +466,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByProcessDefinitionId() {
+  void testQueryByProcessDefinitionId() {
     String processDefinitionId = MockProvider.EXAMPLE_HIST_INCIDENT_PROC_DEF_ID;
 
     given()
@@ -478,7 +478,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByProcessDefinitionKey() {
+  void testQueryByProcessDefinitionKey() {
     String processDefinitionKey = MockProvider.EXAMPLE_HIST_INCIDENT_PROC_DEF_KEY;
 
     given()
@@ -490,7 +490,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeyIn() {
+  void testQueryByProcessDefinitionKeyIn() {
     String key1 = "foo";
     String key2 = "bar";
 
@@ -506,7 +506,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
     String processInstanceId = MockProvider.EXAMPLE_HIST_INCIDENT_PROC_INST_ID;
 
     given()
@@ -518,7 +518,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByExecutionId() {
+  void testQueryByExecutionId() {
     String executionId = MockProvider.EXAMPLE_HIST_INCIDENT_EXECUTION_ID;
 
     given()
@@ -530,7 +530,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByActivityId() {
+  void testQueryByActivityId() {
     String activityId = MockProvider.EXAMPLE_HIST_INCIDENT_ACTIVITY_ID;
 
     given()
@@ -542,7 +542,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByCreateTimeBeforeAndAfter() {
+  void testQueryByCreateTimeBeforeAndAfter() {
     given()
             .queryParam("createTimeBefore", MockProvider.EXAMPLE_HIST_INCIDENT_CREATE_TIME_BEFORE)
             .queryParam("createTimeAfter", MockProvider.EXAMPLE_HIST_INCIDENT_CREATE_TIME_AFTER)
@@ -555,7 +555,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByEndTimeBeforeAndAfter() {
+  void testQueryByEndTimeBeforeAndAfter() {
     given()
             .queryParam("endTimeBefore", MockProvider.EXAMPLE_HIST_INCIDENT_END_TIME_BEFORE)
             .queryParam("endTimeAfter", MockProvider.EXAMPLE_HIST_INCIDENT_END_TIME_AFTER)
@@ -568,7 +568,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByFailedActivityId() {
+  void testQueryByFailedActivityId() {
     String activityId = MockProvider.EXAMPLE_HIST_INCIDENT_FAILED_ACTIVITY_ID;
 
     given()
@@ -580,7 +580,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByCauseIncidentId() {
+  void testQueryByCauseIncidentId() {
     String causeIncidentId = MockProvider.EXAMPLE_HIST_INCIDENT_CAUSE_INCIDENT_ID;
 
     given()
@@ -592,7 +592,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByRootCauseIncidentId() {
+  void testQueryByRootCauseIncidentId() {
     String rootCauseIncidentId = MockProvider.EXAMPLE_HIST_INCIDENT_ROOT_CAUSE_INCIDENT_ID;
 
     given()
@@ -604,7 +604,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByConfiguration() {
+  void testQueryByConfiguration() {
     String configuration = MockProvider.EXAMPLE_HIST_INCIDENT_CONFIGURATION;
 
     given()
@@ -616,7 +616,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByHistoryConfiguration() {
+  void testQueryByHistoryConfiguration() {
     String historyConfiguration = MockProvider.EXAMPLE_HIST_INCIDENT_HISTORY_CONFIGURATION;
 
     given()
@@ -628,7 +628,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByOpen() {
+  void testQueryByOpen() {
     given()
       .queryParam("open", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -638,7 +638,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByResolved() {
+  void testQueryByResolved() {
     given()
       .queryParam("resolved", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -648,7 +648,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByDeleted() {
+  void testQueryByDeleted() {
     given()
       .queryParam("deleted", true)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -658,7 +658,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     mockedQuery = setUpMockHistoricIncidentQuery(Arrays.asList(
         MockProvider.createMockHistoricIncident(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricIncident(MockProvider.ANOTHER_EXAMPLE_TENANT_ID)));
@@ -685,7 +685,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryWithoutTenantIdQueryParameter() {
+  void testQueryWithoutTenantIdQueryParameter() {
     // given
     mockedQuery = setUpMockHistoricIncidentQuery(Collections.singletonList(MockProvider.createMockHistoricIncident(null)));
 
@@ -710,7 +710,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testQueryByJobDefinitionIds() {
+  void testQueryByJobDefinitionIds() {
     String jobDefinitionIds = EXAMPLE_JOB_DEFINITION_ID + "," + NON_EXISTING_JOB_DEFINITION_ID;
 
     given()

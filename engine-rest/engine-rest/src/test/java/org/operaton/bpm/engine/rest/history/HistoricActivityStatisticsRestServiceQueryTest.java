@@ -67,7 +67,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   private HistoricActivityStatisticsQuery historicActivityStatisticsQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     setupHistoricActivityStatisticsMock();
   }
 
@@ -80,7 +80,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testHistoricActivityStatisticsRetrieval() {
+  void testHistoricActivityStatisticsRetrieval() {
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -90,7 +90,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalCanceledOption() {
+  void testAdditionalCanceledOption() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("canceled", "true")
@@ -105,7 +105,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalFinishedOption() {
+  void testAdditionalFinishedOption() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("finished", "true")
@@ -120,7 +120,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalCompleteScopeOption() {
+  void testAdditionalCompleteScopeOption() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
     . queryParam("completeScope", "true")
@@ -135,7 +135,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalStartedAfterOption() {
+  void testAdditionalStartedAfterOption() {
     final Date testDate = new Date(0);
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
@@ -151,7 +151,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalStartedBeforeOption() {
+  void testAdditionalStartedBeforeOption() {
     final Date testDate = new Date(0);
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
@@ -167,7 +167,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalFinishedAfterOption() {
+  void testAdditionalFinishedAfterOption() {
     final Date testDate = new Date(0);
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
@@ -183,7 +183,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalFinishedBeforeOption() {
+  void testAdditionalFinishedBeforeOption() {
     final Date testDate = new Date(0);
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
@@ -199,7 +199,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalCompleteScopeAndCanceledOption() {
+  void testAdditionalCompleteScopeAndCanceledOption() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("completeScope", "true")
@@ -215,7 +215,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalCompleteScopeAndFinishedOption() {
+  void testAdditionalCompleteScopeAndFinishedOption() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("completeScope", "true")
@@ -231,7 +231,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalCanceledAndFinishedOption() {
+  void testAdditionalCanceledAndFinishedOption() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("canceled", "true")
@@ -247,7 +247,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalCompleteScopeAndFinishedAndCanceledOption() {
+  void testAdditionalCompleteScopeAndFinishedAndCanceledOption() {
     given()
     .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("completeScope", "true")
@@ -265,7 +265,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testAdditionalCompleteScopeAndFinishedAndCanceledOptionFalse() {
+  void testAdditionalCompleteScopeAndFinishedAndCanceledOptionFalse() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("completeScope", "false")
@@ -281,7 +281,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
 
 
   @Test
-  public void testProcessInstanceIdInFilter() {
+  void testProcessInstanceIdInFilter() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("processInstanceIdIn", "foo,bar")
@@ -296,7 +296,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testIncidentsFilter() {
+  void testIncidentsFilter() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("incidents", "true")
@@ -311,7 +311,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testSimpleTaskQuery() {
+  void testSimpleTaskQuery() {
     Response response = given()
           .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
          .then().expect()
@@ -364,7 +364,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("sortBy", "activityId")
@@ -375,7 +375,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("sortOrder", "asc")
@@ -386,7 +386,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testInvalidSortOrder() {
+  void testInvalidSortOrder() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("sortOrder", "invalid")
@@ -398,7 +398,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testInvalidSortByParameterOnly() {
+  void testInvalidSortByParameterOnly() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("sortOrder", "asc")
@@ -410,7 +410,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
   }
 
   @Test
-  public void testValidSortingParameters() {
+  void testValidSortingParameters() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .queryParam("sortOrder", "asc")

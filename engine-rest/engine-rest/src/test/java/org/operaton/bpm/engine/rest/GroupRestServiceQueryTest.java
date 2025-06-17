@@ -62,7 +62,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   private GroupQuery mockQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockQuery = setUpMockGroupQuery(MockProvider.createMockGroups());
   }
 
@@ -77,7 +77,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
 
     String queryKey = "";
     given().queryParam("name", queryKey)
@@ -87,7 +87,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given().queryParam("sortBy", "name")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -96,7 +96,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given().queryParam("sortOrder", "asc")
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
@@ -105,7 +105,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode()).when().get(GROUP_QUERY_URL);
 
     verify(mockQuery).list();
@@ -113,7 +113,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSimpleGroupQuery() {
+  void testSimpleGroupQuery() {
     String queryName = MockProvider.EXAMPLE_GROUP_NAME;
 
     Response response = given().queryParam("name", queryName)
@@ -138,7 +138,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCompleteGetParameters() {
+  void testCompleteGetParameters() {
 
     Map<String, Object> queryParameters = getCompleteStringQueryParameters();
 
@@ -185,7 +185,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect().statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
       .when().get(GROUP_COUNT_QUERY_URL);
@@ -194,7 +194,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
     int firstResult = 0;
     int maxResults = 10;
     given().queryParam("firstResult", firstResult).queryParam("maxResults", maxResults)
@@ -206,7 +206,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testQueryCountForPost() {
+  void testQueryCountForPost() {
     given().contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
     .header("accept", MediaType.APPLICATION_JSON)
     .expect().statusCode(Status.OK.getStatusCode())
@@ -217,7 +217,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testCompletePostParameters() {
+  void testCompletePostParameters() {
 
     Map<String, Object> requestBody = getCompletePostParameters();
 
@@ -239,7 +239,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
 
 
   @Test
-  public void testPaginationGet() {
+  void testPaginationGet() {
 
     int firstResult = 0;
     int maxResults = 10;
@@ -252,7 +252,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testPaginationPost() {
+  void testPaginationPost() {
 
     int firstResult = 0;
     int maxResults = 10;

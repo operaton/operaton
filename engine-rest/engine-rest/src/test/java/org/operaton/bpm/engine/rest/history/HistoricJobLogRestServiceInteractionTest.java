@@ -63,7 +63,7 @@ public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServic
   protected HistoricJobLogQuery mockQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockQuery = mock(HistoricJobLogQuery.class);
 
     HistoricJobLog mockedHistoricJobLog = MockProvider.createMockHistoricJobLog();
@@ -79,7 +79,7 @@ public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testSimpleHistoricJobLogGet() {
+  void testSimpleHistoricJobLogGet() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_HISTORIC_JOB_LOG_ID)
     .then()
@@ -120,7 +120,7 @@ public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testHistoricJobLogGetIdDoesntExist() {
+  void testHistoricJobLogGetIdDoesntExist() {
     String id = "nonExistingId";
 
     HistoricJobLogQuery invalidQueryNonExistingHistoricJobLog = mock(HistoricJobLogQuery.class);
@@ -140,7 +140,7 @@ public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetStacktrace() {
+  void testGetStacktrace() {
     String stacktrace = "aStacktrace";
     when(mockHistoryService.getHistoricJobLogExceptionStacktrace(MockProvider.EXAMPLE_HISTORIC_JOB_LOG_ID)).thenReturn(stacktrace);
 
@@ -158,7 +158,7 @@ public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetStacktraceJobNotFound() {
+  void testGetStacktraceJobNotFound() {
     String exceptionMessage = "historic job log not found";
     doThrow(new ProcessEngineException(exceptionMessage)).when(mockHistoryService).getHistoricJobLogExceptionStacktrace(MockProvider.EXAMPLE_HISTORIC_JOB_LOG_ID);
 
@@ -174,7 +174,7 @@ public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  public void testGetStacktraceThrowsAuthorizationException() {
+  void testGetStacktraceThrowsAuthorizationException() {
     String exceptionMessage = "expected exception";
     doThrow(new AuthorizationException(exceptionMessage)).when(mockHistoryService).getHistoricJobLogExceptionStacktrace(MockProvider.EXAMPLE_HISTORIC_JOB_LOG_ID);
 

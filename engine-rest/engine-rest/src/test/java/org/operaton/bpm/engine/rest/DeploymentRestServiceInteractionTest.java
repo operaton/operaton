@@ -76,7 +76,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   protected Collection<String> resourceNames = new ArrayList<>();
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockRepositoryService = mock(RepositoryService.class);
     when(processEngine.getRepositoryService()).thenReturn(mockRepositoryService);
 
@@ -130,7 +130,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetSingleDeployment() {
+  void testGetSingleDeployment() {
 
     Response response = given().pathParam("id", EXAMPLE_DEPLOYMENT_ID)
       .then().expect().statusCode(Status.OK.getStatusCode())
@@ -141,7 +141,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetNonExistingSingleDeployment() {
+  void testGetNonExistingSingleDeployment() {
 
     when(mockDeploymentQuery.deploymentId(NON_EXISTING_DEPLOYMENT_ID)).thenReturn(mockDeploymentQuery);
     when(mockDeploymentQuery.singleResult()).thenReturn(null);
@@ -154,7 +154,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResources() {
+  void testGetDeploymentResources() {
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -166,7 +166,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetNonExistingDeploymentResources() {
+  void testGetNonExistingDeploymentResources() {
 
     given().pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
@@ -176,7 +176,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourcesThrowsAuthorizationException() {
+  void testGetDeploymentResourcesThrowsAuthorizationException() {
     String message = "expected exception";
     when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenThrow(new AuthorizationException(message));
 
@@ -190,7 +190,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResource() {
+  void testGetDeploymentResource() {
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -203,7 +203,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetNonExistingDeploymentResource() {
+  void testGetNonExistingDeploymentResource() {
 
     given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -215,7 +215,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceWithNonExistingDeploymentId() {
+  void testGetDeploymentResourceWithNonExistingDeploymentId() {
 
     given()
         .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
@@ -227,7 +227,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceWithNonExistingDeploymentIdAndNonExistingResourceId() {
+  void testGetDeploymentResourceWithNonExistingDeploymentIdAndNonExistingResourceId() {
 
     given()
         .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
@@ -239,7 +239,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceThrowsAuthorizationException() {
+  void testGetDeploymentResourceThrowsAuthorizationException() {
     String message = "expected exception";
     when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenThrow(new AuthorizationException(message));
 
@@ -255,7 +255,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceData() {
+  void testGetDeploymentResourceData() {
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -275,7 +275,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentSvgResourceData() {
+  void testGetDeploymentSvgResourceData() {
     Resource resource = MockProvider.createMockDeploymentSvgResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -301,7 +301,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentPngResourceData() {
+  void testGetDeploymentPngResourceData() {
     Resource resource = MockProvider.createMockDeploymentPngResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -329,7 +329,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentGifResourceData() {
+  void testGetDeploymentGifResourceData() {
     Resource resource = MockProvider.createMockDeploymentGifResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -357,7 +357,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentJpgResourceData() {
+  void testGetDeploymentJpgResourceData() {
     Resource resource = MockProvider.createMockDeploymentJpgResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -385,7 +385,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentJpegResourceData() {
+  void testGetDeploymentJpegResourceData() {
     Resource resource = MockProvider.createMockDeploymentJpegResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -413,7 +413,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentJpeResourceData() {
+  void testGetDeploymentJpeResourceData() {
     Resource resource = MockProvider.createMockDeploymentJpeResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -441,7 +441,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentTifResourceData() {
+  void testGetDeploymentTifResourceData() {
     Resource resource = MockProvider.createMockDeploymentTifResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -469,7 +469,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentTiffResourceData() {
+  void testGetDeploymentTiffResourceData() {
     Resource resource = MockProvider.createMockDeploymentTiffResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -497,7 +497,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentBpmnResourceData() {
+  void testGetDeploymentBpmnResourceData() {
     Resource resource = MockProvider.createMockDeploymentBpmnResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -523,7 +523,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentBpmnXmlResourceData() {
+  void testGetDeploymentBpmnXmlResourceData() {
     Resource resource = MockProvider.createMockDeploymentBpmnXmlResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -549,7 +549,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentCmmnResourceData() {
+  void testGetDeploymentCmmnResourceData() {
     Resource resource = MockProvider.createMockDeploymentCmmnResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -577,7 +577,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentCmmnXmlResourceData() {
+  void testGetDeploymentCmmnXmlResourceData() {
     Resource resource = MockProvider.createMockDeploymentCmmnXmlResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -605,7 +605,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentDmnResourceData() {
+  void testGetDeploymentDmnResourceData() {
     Resource resource = MockProvider.createMockDeploymentDmnResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -633,7 +633,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentDmnXmlResourceData() {
+  void testGetDeploymentDmnXmlResourceData() {
     Resource resource = MockProvider.createMockDeploymentDmnXmlResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -661,7 +661,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentXmlResourceData() {
+  void testGetDeploymentXmlResourceData() {
     Resource resource = MockProvider.createMockDeploymentXmlResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -689,7 +689,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentJsonResourceData() {
+  void testGetDeploymentJsonResourceData() {
     Resource resource = MockProvider.createMockDeploymentJsonResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -717,7 +717,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentGroovyResourceData() {
+  void testGetDeploymentGroovyResourceData() {
     Resource resource = MockProvider.createMockDeploymentGroovyResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -745,7 +745,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentJavaResourceData() {
+  void testGetDeploymentJavaResourceData() {
     Resource resource = MockProvider.createMockDeploymentJavaResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -773,7 +773,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentJsResourceData() {
+  void testGetDeploymentJsResourceData() {
     Resource resource = MockProvider.createMockDeploymentJsResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -801,7 +801,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentPythonResourceData() {
+  void testGetDeploymentPythonResourceData() {
     Resource resource = MockProvider.createMockDeploymentPythonResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -829,7 +829,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentRubyResourceData() {
+  void testGetDeploymentRubyResourceData() {
     Resource resource = MockProvider.createMockDeploymentRubyResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -857,7 +857,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentPhpResourceData() {
+  void testGetDeploymentPhpResourceData() {
     Resource resource = MockProvider.createMockDeploymentPhpResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -885,7 +885,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentHtmlResourceData() {
+  void testGetDeploymentHtmlResourceData() {
     Resource resource = MockProvider.createMockDeploymentHtmlResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -913,7 +913,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentTxtResourceData() {
+  void testGetDeploymentTxtResourceData() {
     Resource resource = MockProvider.createMockDeploymentTxtResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -941,7 +941,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentOperatonFormResourceData() {
+  void testGetDeploymentOperatonFormResourceData() {
     Resource resource = MockProvider.createMockDeploymentOperatonFormResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -969,7 +969,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceDataFilename() {
+  void testGetDeploymentResourceDataFilename() {
     Resource resource = MockProvider.createMockDeploymentResourceFilename();
 
     List<Resource> resources = new ArrayList<>();
@@ -997,7 +997,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceDataFilenameBackslash() {
+  void testGetDeploymentResourceDataFilenameBackslash() {
     Resource resource = MockProvider.createMockDeploymentResourceFilenameBackslash();
 
     List<Resource> resources = new ArrayList<>();
@@ -1025,7 +1025,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceDataForNonExistingDeploymentId() {
+  void testGetDeploymentResourceDataForNonExistingDeploymentId() {
 
     given()
         .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
@@ -1037,7 +1037,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceDataForNonExistingResourceId() {
+  void testGetDeploymentResourceDataForNonExistingResourceId() {
 
     given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -1049,7 +1049,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceDataForNonExistingDeploymentIdAndNonExistingResourceId() {
+  void testGetDeploymentResourceDataForNonExistingDeploymentIdAndNonExistingResourceId() {
 
     given()
       .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
@@ -1061,7 +1061,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentResourceDataThrowsAuthorizationException() {
+  void testGetDeploymentResourceDataThrowsAuthorizationException() {
     String message = "expected exception";
     when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_RESOURCE_ID)).thenThrow(new AuthorizationException(message));
 
@@ -1077,7 +1077,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDeployment() {
+  void testCreateCompleteDeployment() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1099,7 +1099,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteBpmnDeployment() {
+  void testCreateCompleteBpmnDeployment() {
     // given
     DeploymentWithDefinitions deployment = MockProvider.createMockDeploymentWithDefinitions();
     when(deployment.getDeployedDecisionDefinitions()).thenReturn(null);
@@ -1129,7 +1129,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteCmmnDeployment() {
+  void testCreateCompleteCmmnDeployment() {
     // given
     DeploymentWithDefinitions deployment = MockProvider.createMockDeploymentWithDefinitions();
     when(deployment.getDeployedDecisionDefinitions()).thenReturn(null);
@@ -1159,7 +1159,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDmnDeployment() {
+  void testCreateCompleteDmnDeployment() {
     // given
     DeploymentWithDefinitions deployment = MockProvider.createMockDeploymentWithDefinitions();
     when(deployment.getDeployedCaseDefinitions()).thenReturn(null);
@@ -1189,7 +1189,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDrdDeployment() {
+  void testCreateCompleteDrdDeployment() {
     // given
     DeploymentWithDefinitions deployment = MockProvider.createMockDeploymentWithDefinitions();
     when(deployment.getDeployedCaseDefinitions()).thenReturn(null);
@@ -1218,7 +1218,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithNonExecutableProcess() {
+  void testCreateDeploymentWithNonExecutableProcess() {
 
     // given
     DeploymentWithDefinitions deployment = MockProvider.createMockDeploymentWithDefinitions();
@@ -1250,7 +1250,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDeploymentDeployChangedOnly() {
+  void testCreateCompleteDeploymentDeployChangedOnly() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1267,7 +1267,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDeploymentConflictingDuplicateSetting() {
+  void testCreateCompleteDeploymentConflictingDuplicateSetting() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1286,7 +1286,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithDeploymentSource() {
+  void testCreateDeploymentWithDeploymentSource() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1305,7 +1305,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithActivationTime() {
+  void testCreateDeploymentWithActivationTime() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1322,7 +1322,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithTenantId() {
+  void testCreateDeploymentWithTenantId() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1338,7 +1338,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentOnlyWithBytes() {
+  void testCreateDeploymentOnlyWithBytes() {
 
     resourceNames.addAll(Arrays.asList("data", "more-data"));
 
@@ -1355,7 +1355,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithoutBytes() {
+  void testCreateDeploymentWithoutBytes() {
 
     given()
       .multiPart("deployment-name", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1367,7 +1367,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithNonExistentPart() {
+  void testCreateDeploymentWithNonExistentPart() {
 
     given()
     .multiPart("non-existent-body-part", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1379,7 +1379,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentThrowsAuthorizationException() {
+  void testCreateDeploymentThrowsAuthorizationException() {
     String message = "expected exception";
     when(mockDeploymentBuilder.deployWithResult()).thenThrow(new AuthorizationException(message));
 
@@ -1401,7 +1401,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testCreateDeploymentThrowsParseException() {
+  void testCreateDeploymentThrowsParseException() {
     resourceNames.addAll( Arrays.asList("data", "more-data") );
     String message = "expected exception";
     List<Problem> mockErrors = mockProblems(EXAMPLE_PROBLEM_COLUMN, EXAMPLE_PROBLEM_LINE, message, EXAMPLE_PROBLEM_ELEMENT_ID);
@@ -1441,7 +1441,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeployment() {
+  void testDeleteDeployment() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1454,7 +1454,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentCascade() {
+  void testDeleteDeploymentCascade() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1468,7 +1468,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentCascadeNonsense() {
+  void testDeleteDeploymentCascadeNonsense() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1482,7 +1482,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentCascadeFalse() {
+  void testDeleteDeploymentCascadeFalse() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1496,7 +1496,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentSkipCustomListeners() {
+  void testDeleteDeploymentSkipCustomListeners() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1510,7 +1510,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentSkipCustomListenersNonsense() {
+  void testDeleteDeploymentSkipCustomListenersNonsense() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1524,7 +1524,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentSkipCustomListenersFalse() {
+  void testDeleteDeploymentSkipCustomListenersFalse() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1538,7 +1538,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentSkipCustomListenersAndCascade() {
+  void testDeleteDeploymentSkipCustomListenersAndCascade() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1553,7 +1553,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentSkipIoMappings() {
+  void testDeleteDeploymentSkipIoMappings() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1568,7 +1568,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentSkipIoMappingsFalse() {
+  void testDeleteDeploymentSkipIoMappingsFalse() {
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1583,7 +1583,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteNonExistingDeployment() {
+  void testDeleteNonExistingDeployment() {
 
     when(mockDeploymentQuery.deploymentId(NON_EXISTING_DEPLOYMENT_ID)).thenReturn(mockDeploymentQuery);
     when(mockDeploymentQuery.singleResult()).thenReturn(null);
@@ -1598,7 +1598,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testDeleteDeploymentThrowsAuthorizationException() {
+  void testDeleteDeploymentThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(mockRepositoryService).deleteDeployment(MockProvider.EXAMPLE_DEPLOYMENT_ID, false, false, false);
 
@@ -1613,7 +1613,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployDeployment() {
+  void testRedeployDeployment() {
     Map<String, Object> json = new HashMap<>();
 
     List<String> resourceIds = new ArrayList<>();
@@ -1651,7 +1651,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployDeploymentWithoutRequestBody() {
+  void testRedeployDeploymentWithoutRequestBody() {
     Response response = given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -1674,7 +1674,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployDeploymentEmptyRequestBody() {
+  void testRedeployDeploymentEmptyRequestBody() {
     Response response = given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -1698,7 +1698,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployDeploymentResourceIds() {
+  void testRedeployDeploymentResourceIds() {
     Map<String, Object> json = new HashMap<>();
 
     List<String> resourceIds = new ArrayList<>();
@@ -1729,7 +1729,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployDeploymentResourceNames() {
+  void testRedeployDeploymentResourceNames() {
     Map<String, Object> json = new HashMap<>();
 
     List<String> resources = new ArrayList<>();
@@ -1760,7 +1760,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployDeploymentSource() {
+  void testRedeployDeploymentSource() {
     Map<String, String> json = new HashMap<>();
     json.put("source", MockProvider.EXAMPLE_DEPLOYMENT_SOURCE);
 
@@ -1787,7 +1787,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployDeploymentWithoutTenantId() {
+  void testRedeployDeploymentWithoutTenantId() {
     when(mockDeployment.getTenantId()).thenReturn(null);
 
     Response response = given()
@@ -1807,7 +1807,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployDeploymentWithTenantId() {
+  void testRedeployDeploymentWithTenantId() {
     when(mockDeployment.getTenantId()).thenReturn(MockProvider.EXAMPLE_TENANT_ID);
 
     Response response = given()
@@ -1827,7 +1827,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployThrowsNotFoundException() {
+  void testRedeployThrowsNotFoundException() {
     String message = "deployment not found";
     doThrow(new NotFoundException(message)).when(mockDeploymentBuilder).deployWithResult();
 
@@ -1845,7 +1845,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployThrowsNotValidException() {
+  void testRedeployThrowsNotValidException() {
     String message = "not valid";
     doThrow(new NotValidException(message)).when(mockDeploymentBuilder).deployWithResult();
 
@@ -1863,7 +1863,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployThrowsProcessEngineException() {
+  void testRedeployThrowsProcessEngineException() {
     String message = "something went wrong";
     doThrow(new ProcessEngineException(message)).when(mockDeploymentBuilder).deployWithResult();
 
@@ -1879,7 +1879,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testRedeployThrowsAuthorizationException() {
+  void testRedeployThrowsAuthorizationException() {
     String message = "missing authorization";
     doThrow(new AuthorizationException(message)).when(mockDeploymentBuilder).deployWithResult();
 

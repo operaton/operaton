@@ -78,7 +78,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   protected DecisionService decisionServiceMock;
 
   @BeforeEach
-  public void setUpRuntime() throws FileNotFoundException, URISyntaxException {
+  void setUpRuntime() throws FileNotFoundException, URISyntaxException {
     DecisionRequirementsDefinition mockDecisionRequirementsDefinition = MockProvider.createMockDecisionRequirementsDefinition();
 
     setUpRuntimeData(mockDecisionRequirementsDefinition);
@@ -87,7 +87,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   }
 
   @Test
-  public void decisionRequirementsDefinitionRetrievalById() {
+  void decisionRequirementsDefinitionRetrievalById() {
     given()
       .pathParam("id", MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
     .then()
@@ -108,7 +108,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   }
 
   @Test
-  public void nonExistingDecisionRequirementsDefinitionRetrieval() {
+  void nonExistingDecisionRequirementsDefinitionRetrieval() {
     String nonExistingId = "aNonExistingDefinitionId";
 
     when(repositoryServiceMock.getDecisionRequirementsDefinition(nonExistingId)).thenThrow(new ProcessEngineException("No matching decision requirements definition"));
@@ -124,7 +124,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   }
 
   @Test
-  public void decisionRequirementsDefinitionRetrievalByKey() {
+  void decisionRequirementsDefinitionRetrievalByKey() {
     given()
       .pathParam("key", MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY)
     .then()
@@ -145,7 +145,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   }
 
   @Test
-  public void decisionRequirementsDefinitionRetrievalByNonExistingKey() {
+  void decisionRequirementsDefinitionRetrievalByNonExistingKey() {
 
     String nonExistingKey = "aNonExistingRequirementsDefinitionKey";
 
@@ -168,7 +168,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   }
 
   @Test
-  public void decisionRequirementsDefinitionRetrievalByKeyAndTenantId() throws FileNotFoundException, URISyntaxException {
+  void decisionRequirementsDefinitionRetrievalByKeyAndTenantId() throws FileNotFoundException, URISyntaxException {
     DecisionRequirementsDefinition mockDefinition = MockProvider.mockDecisionRequirementsDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build();
     setUpRuntimeData(mockDefinition);
 
@@ -194,7 +194,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   }
 
   @Test
-  public void nonExistingDecisionRequirementsDefinitionRetrievalByKeyAndTenantId() {
+  void nonExistingDecisionRequirementsDefinitionRetrievalByKeyAndTenantId() {
     String nonExistingKey = "aNonExistingDecisionDefinitionRequirementsDefinitionKey";
     String nonExistingTenantId = "aNonExistingTenantId";
 
@@ -215,7 +215,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
 
   // dmn xml retrieval
   @Test
-  public void decisionRequirementsDefinitionDmnXmlRetrieval() {
+  void decisionRequirementsDefinitionDmnXmlRetrieval() {
     Response response = given()
       .pathParam("id", MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
       .then()
@@ -232,7 +232,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
 
   // DRD retrieval
   @Test
-  public void decisionRequirementsDiagramRetrieval() throws FileNotFoundException, URISyntaxException {
+  void decisionRequirementsDiagramRetrieval() throws FileNotFoundException, URISyntaxException {
     byte[] actual = given().pathParam("id", MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
       .expect()
         .statusCode(Status.OK.getStatusCode())

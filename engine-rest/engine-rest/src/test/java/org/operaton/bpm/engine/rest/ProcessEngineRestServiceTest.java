@@ -176,7 +176,7 @@ public class ProcessEngineRestServiceTest extends
   private MessageCorrelationResult mockMessageCorrelationResult;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     namedProcessEngine = getProcessEngine(EXAMPLE_ENGINE_NAME);
     mockRepoService = mock(RepositoryService.class);
     mockRuntimeService = mock(RuntimeService.class);
@@ -457,7 +457,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testNonExistingEngineAccess() {
+  void testNonExistingEngineAccess() {
     given().pathParam("name", MockProvider.NON_EXISTING_PROCESS_ENGINE_NAME)
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
     .then().expect()
@@ -468,7 +468,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testEngineNamesList() {
+  void testEngineNamesList() {
     expect()
       .statusCode(Status.OK.getStatusCode())
       .body("$.size()", is(2))
@@ -477,7 +477,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testProcessDefinitionServiceEngineAccess() {
+  void testProcessDefinitionServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
     .then().expect()
@@ -489,7 +489,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testProcessInstanceServiceEngineAccess() {
+  void testProcessInstanceServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID)
     .then().expect()
@@ -501,7 +501,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testTaskServiceEngineAccess() {
+  void testTaskServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
       .pathParam("id", MockProvider.EXAMPLE_TASK_ID)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -514,7 +514,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testIdentityServiceEngineAccess() {
+  void testIdentityServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
       .queryParam("userId", "someId")
     .then().expect()
@@ -526,7 +526,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testMessageServiceEngineAccess() {
+  void testMessageServiceEngineAccess() {
     String messageName = "aMessage";
     Map<String, Object> messageParameters = new HashMap<>();
     messageParameters.put("messageName", messageName);
@@ -542,7 +542,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testMessageWithResultServiceEngineAccess() {
+  void testMessageWithResultServiceEngineAccess() {
     String messageName = "aMessage";
     Map<String, Object> messageParameters = new HashMap<>();
     messageParameters.put("messageName", messageName);
@@ -560,7 +560,7 @@ public class ProcessEngineRestServiceTest extends
 
 
   @Test
-  public void testExecutionServiceEngineAccess() {
+  void testExecutionServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -571,7 +571,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testVariableInstanceServiceEngineAccess() {
+  void testVariableInstanceServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -582,7 +582,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testUserServiceEngineAccess() {
+  void testUserServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -593,7 +593,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testGroupServiceEngineAccess() {
+  void testGroupServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -604,7 +604,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testAuthorizationServiceEngineAccess() {
+  void testAuthorizationServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
@@ -612,7 +612,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_HistoricActivityInstance() {
+  void testHistoryServiceEngineAccess_HistoricActivityInstance() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -626,7 +626,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_HistoricProcessInstance() {
+  void testHistoryServiceEngineAccess_HistoricProcessInstance() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -640,7 +640,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_HistoricVariableInstance() {
+  void testHistoryServiceEngineAccess_HistoricVariableInstance() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -655,7 +655,7 @@ public class ProcessEngineRestServiceTest extends
 
   @Disabled
   @Test
-  public void testHistoryServiceEngineAccess_HistoricVariableInstanceBinaryFile() {
+  void testHistoryServiceEngineAccess_HistoricVariableInstanceBinaryFile() {
 
     HistoricVariableInstanceQuery query = mock(HistoricVariableInstanceQuery.class);
     HistoricVariableInstance instance = mock(HistoricVariableInstance.class);
@@ -686,7 +686,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_HistoricActivityStatistics() {
+  void testHistoryServiceEngineAccess_HistoricActivityStatistics() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
@@ -701,7 +701,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testJobDefinitionAccess() {
+  void testJobDefinitionAccess() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -715,7 +715,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_HistoricDetail() {
+  void testHistoryServiceEngineAccess_HistoricDetail() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -730,7 +730,7 @@ public class ProcessEngineRestServiceTest extends
 
   @Disabled
   @Test
-  public void testHistoryServiceEngineAccess_HistoricDetailBinaryFile() {
+  void testHistoryServiceEngineAccess_HistoricDetailBinaryFile() {
     HistoricDetailQuery query = mock(HistoricDetailQuery.class);
     HistoricVariableUpdate instance = mock(HistoricVariableUpdate.class);
     String filename = "test.txt";
@@ -759,7 +759,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_HistoricTaskInstance() {
+  void testHistoryServiceEngineAccess_HistoricTaskInstance() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -773,7 +773,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_Incident() {
+  void testHistoryServiceEngineAccess_Incident() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -787,7 +787,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_HistoricIncident() {
+  void testHistoryServiceEngineAccess_HistoricIncident() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -801,7 +801,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testDeploymentRestServiceEngineAccess() {
+  void testDeploymentRestServiceEngineAccess() {
     given().pathParam("name", EXAMPLE_ENGINE_NAME)
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
     .then().expect()
@@ -813,7 +813,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testGetRegisteredDeployments() {
+  void testGetRegisteredDeployments() {
     final Set<String> registeredDeployments = new HashSet<>(Arrays.asList("deployment1", "deployment2"));
     when(mockManagementService.getRegisteredDeployments()).thenReturn(registeredDeployments);
 
@@ -830,7 +830,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testCaseDefinitionAccess() {
+  void testCaseDefinitionAccess() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -844,7 +844,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testCaseInstanceAccess() {
+  void testCaseInstanceAccess() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -858,7 +858,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testCaseExecutionAccess() {
+  void testCaseExecutionAccess() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -872,7 +872,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testFilterAccess() {
+  void testFilterAccess() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -886,7 +886,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_HistoricJobLog() {
+  void testHistoryServiceEngineAccess_HistoricJobLog() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -900,7 +900,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testExternalTaskAccess() {
+  void testExternalTaskAccess() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
     .then()
@@ -914,7 +914,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   @Test
-  public void testHistoryServiceEngineAccess_HistoricExternalTaskLog() {
+  void testHistoryServiceEngineAccess_HistoricExternalTaskLog() {
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
       .then()

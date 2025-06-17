@@ -58,7 +58,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   private EventSubscriptionQuery mockedEventSubscriptionQuery;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedEventSubscriptionQuery = setUpMockEventSubscriptionQuery(createMockEventSubscriptionList());
   }
 
@@ -78,7 +78,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     given()
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
@@ -86,7 +86,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testEventSubscriptionRetrieval() {
+  void testEventSubscriptionRetrieval() {
     Response response =
         given()
           .then().expect()
@@ -122,13 +122,13 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testInvalidSortingOptions() {
+  void testInvalidSortingOptions() {
     executeAndVerifySorting("anInvalidSortByOption", "asc", Status.BAD_REQUEST);
     executeAndVerifySorting("definitionId", "anInvalidSortOrderOption", Status.BAD_REQUEST);
   }
 
   @Test
-  public void testSortByParameterOnly() {
+  void testSortByParameterOnly() {
     given()
       .queryParam("sortBy", "created")
     .then().expect()
@@ -137,7 +137,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testSortOrderParameterOnly() {
+  void testSortOrderParameterOnly() {
     given()
       .queryParam("sortOrder", "asc")
     .then().expect()
@@ -146,7 +146,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testNoParametersQuery() {
+  void testNoParametersQuery() {
     expect().statusCode(Status.OK.getStatusCode())
     .when().get(EVENT_SUBSCRIPTION_URL);
 
@@ -155,7 +155,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testQueryParameters() {
+  void testQueryParameters() {
     Map<String, String> queryParameters = getCompleteQueryParameters();
 
     given()
@@ -173,7 +173,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testTenantIdListParameter() {
+  void testTenantIdListParameter() {
     mockedEventSubscriptionQuery = setUpMockEventSubscriptionQuery(createMockEventSubscriptionTwoTenants());
 
     Response response =
@@ -199,7 +199,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
 
 
   @Test
-  public void testWithoutTenantIdParameter() {
+  void testWithoutTenantIdParameter() {
     mockedEventSubscriptionQuery = setUpMockEventSubscriptionQuery(Arrays.asList(MockProvider.createMockEventSubscription(null)));
 
     Response response =
@@ -221,7 +221,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testSortingParameters() {
+  void testSortingParameters() {
     InOrder inOrder = Mockito.inOrder(mockedEventSubscriptionQuery);
     executeAndVerifySorting("created", "asc", Status.OK);
     inOrder.verify(mockedEventSubscriptionQuery).orderByCreated();
@@ -245,7 +245,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testSuccessfulPagination() {
+  void testSuccessfulPagination() {
 
     int firstResult = 0;
     int maxResults = 10;
@@ -263,7 +263,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
    * If parameter "firstResult" is missing, we expect 0 as default.
    */
   @Test
-  public void testMissingFirstResultParameter() {
+  void testMissingFirstResultParameter() {
     int maxResults = 10;
     given()
       .queryParam("maxResults", maxResults)
@@ -279,7 +279,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
    * default.
    */
   @Test
-  public void testMissingMaxResultsParameter() {
+  void testMissingMaxResultsParameter() {
     int firstResult = 10;
     given()
       .queryParam("firstResult", firstResult)
@@ -292,7 +292,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     expect()
       .statusCode(Status.OK.getStatusCode()).body("count", equalTo(1))
     .when().get(EVENT_SUBSCRIPTION_COUNT_QUERY_URL);

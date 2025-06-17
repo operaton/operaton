@@ -88,7 +88,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   protected TaskService taskServiceMock;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     taskServiceMock = mock(TaskService.class);
     when(processEngine.getTaskService()).thenReturn(taskServiceMock);
   }
@@ -100,7 +100,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetLocalVariables() {
+  void testGetLocalVariables() {
 
     when(taskServiceMock.getVariablesLocalTyped(EXAMPLE_TASK_ID, true)).thenReturn(EXAMPLE_VARIABLES);
 
@@ -116,7 +116,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetLocalObjectVariables() {
+  void testGetLocalObjectVariables() {
     // given
     String variableKey = "aVariableId";
 
@@ -147,7 +147,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetLocalObjectVariablesSerialized() {
+  void testGetLocalObjectVariablesSerialized() {
     // given
     String variableKey = "aVariableId";
 
@@ -177,7 +177,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetLocalVariablesForNonExistingTaskId() {
+  void testGetLocalVariablesForNonExistingTaskId() {
     when(taskServiceMock.getVariablesLocalTyped(NON_EXISTING_ID, true)).thenThrow(new ProcessEngineException("task " + NON_EXISTING_ID + " doesn't exist"));
 
     given().pathParam("id", NON_EXISTING_ID)
@@ -189,7 +189,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetLocalVariablesThrowsAuthorizationException() {
+  void testGetLocalVariablesThrowsAuthorizationException() {
     String message = "expected exception";
     when(taskServiceMock.getVariablesLocalTyped(anyString(), anyBoolean())).thenThrow(new AuthorizationException(message));
 
@@ -205,7 +205,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testLocalVariableModification() {
+  void testLocalVariableModification() {
     TaskServiceImpl taskService = mockTaskServiceImpl();
 
     Map<String, Object> messageBodyJson = new HashMap<>();
@@ -232,7 +232,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testLocalVariableModificationForNonExistingTaskId() {
+  void testLocalVariableModificationForNonExistingTaskId() {
     TaskServiceImpl taskService = mockTaskServiceImpl();
     doThrow(new ProcessEngineException("Cannot find task with id " + NON_EXISTING_ID)).when(taskService).updateVariablesLocal(any(), any(), any());
 
@@ -252,7 +252,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testEmptyLocalVariableModification() {
+  void testEmptyLocalVariableModification() {
     mockTaskServiceImpl();
 
     given().pathParam("id", EXAMPLE_TASK_ID).contentType(ContentType.JSON).body(EMPTY_JSON_OBJECT)
@@ -262,7 +262,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testVariableModificationThrowsAuthorizationException() {
+  void testVariableModificationThrowsAuthorizationException() {
     String variableKey = "aKey";
     int variableValue = 123;
     Map<String, Object> messageBodyJson = new HashMap<>();
@@ -286,7 +286,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleLocalVariable() {
+  void testGetSingleLocalVariable() {
     String variableKey = "aVariableKey";
     int variableValue = 123;
 
@@ -303,7 +303,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
 
 
   @Test
-  public void testGetSingleLocalVariableData() {
+  void testGetSingleLocalVariableData() {
 
     when(taskServiceMock.getVariableLocalTyped(anyString(), eq(EXAMPLE_BYTES_VARIABLE_KEY), eq(false))).thenReturn(EXAMPLE_VARIABLE_VALUE_BYTES);
 
@@ -321,7 +321,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleLocalVariableDataNonExisting() {
+  void testGetSingleLocalVariableDataNonExisting() {
 
     when(taskServiceMock.getVariableLocalTyped(anyString(), eq("nonExisting"), eq(false))).thenReturn(null);
 
@@ -340,7 +340,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleLocalVariableDataNotBinary() {
+  void testGetSingleLocalVariableDataNotBinary() {
 
     when(taskServiceMock.getVariableLocalTyped(anyString(), eq(EXAMPLE_VARIABLE_KEY), eq(false))).thenReturn(EXAMPLE_VARIABLE_VALUE);
 
@@ -357,7 +357,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleLocalObjectVariable() {
+  void testGetSingleLocalObjectVariable() {
     // given
     String variableKey = "aVariableId";
 
@@ -387,7 +387,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleLocalObjectVariableSerialized() {
+  void testGetSingleLocalObjectVariableSerialized() {
     // given
     String variableKey = "aVariableId";
 
@@ -417,7 +417,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testNonExistingLocalVariable() {
+  void testNonExistingLocalVariable() {
     String variableKey = "aVariableKey";
 
     when(taskServiceMock.getVariableLocal(EXAMPLE_TASK_ID, variableKey)).thenReturn(null);
@@ -431,7 +431,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetLocalVariableForNonExistingTaskId() {
+  void testGetLocalVariableForNonExistingTaskId() {
     String variableKey = "aVariableKey";
 
     when(taskServiceMock.getVariableLocalTyped(eq(NON_EXISTING_ID), eq(variableKey), anyBoolean()))
@@ -446,7 +446,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleLocalVariableThrowsAuthorizationException() {
+  void testGetSingleLocalVariableThrowsAuthorizationException() {
     String variableKey = "aVariableKey";
 
     String message = "expected exception";
@@ -464,7 +464,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetFileVariable() {
+  void testGetFileVariable() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -485,7 +485,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetNullFileVariable() {
+  void testGetNullFileVariable() {
     String variableKey = "aVariableKey";
     String filename = "test.txt";
     String mimeType = "text/plain";
@@ -506,7 +506,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetFileVariableDownloadWithType() {
+  void testGetFileVariableDownloadWithType() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -526,7 +526,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetFileVariableDownloadWithTypeAndEncoding() {
+  void testGetFileVariableDownloadWithTypeAndEncoding() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -548,7 +548,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetFileVariableDownloadWithoutType() {
+  void testGetFileVariableDownloadWithoutType() {
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
@@ -569,7 +569,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testCannotDownloadVariableOtherThanFile() {
+  void testCannotDownloadVariableOtherThanFile() {
     String variableKey = "aVariableKey";
     BooleanValue variableValue = Variables.booleanValue(true);
 
@@ -584,7 +584,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleLocalVariable() {
+  void testPutSingleLocalVariable() {
     String variableKey = "aVariableKey";
     String variableValue = "aVariableValue";
 
@@ -601,7 +601,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithTypeInteger() {
+  void testPutSingleVariableWithTypeInteger() {
     String variableKey = "aVariableKey";
     Integer variableValue = 123;
     String type = "Integer";
@@ -619,7 +619,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableInteger() {
+  void testPutSingleVariableWithUnparseableInteger() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Integer";
@@ -637,7 +637,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithTypeShort() {
+  void testPutSingleVariableWithTypeShort() {
     String variableKey = "aVariableKey";
     Short variableValue = 123;
     String type = "Short";
@@ -655,7 +655,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableShort() {
+  void testPutSingleVariableWithUnparseableShort() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Short";
@@ -673,7 +673,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithTypeLong() {
+  void testPutSingleVariableWithTypeLong() {
     String variableKey = "aVariableKey";
     Long variableValue = 123L;
     String type = "Long";
@@ -691,7 +691,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableLong() {
+  void testPutSingleVariableWithUnparseableLong() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Long";
@@ -709,7 +709,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithTypeDouble() {
+  void testPutSingleVariableWithTypeDouble() {
     String variableKey = "aVariableKey";
     Double variableValue = 123.456;
     String type = "Double";
@@ -727,7 +727,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableDouble() {
+  void testPutSingleVariableWithUnparseableDouble() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Double";
@@ -745,7 +745,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithTypeBoolean() {
+  void testPutSingleVariableWithTypeBoolean() {
     String variableKey = "aVariableKey";
     Boolean variableValue = true;
     String type = "Boolean";
@@ -763,7 +763,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithTypeDate() throws Exception {
+  void testPutSingleVariableWithTypeDate() throws Exception {
     Date now = new Date();
     String variableKey = "aVariableKey";
     String variableValue = DATE_FORMAT_WITH_TIMEZONE.format(now);
@@ -784,7 +784,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithUnparseableDate() {
+  void testPutSingleVariableWithUnparseableDate() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "Date";
@@ -802,7 +802,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableWithNotSupportedType() {
+  void testPutSingleVariableWithNotSupportedType() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "X";
@@ -819,7 +819,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleLocalVariableWithNoValue() {
+  void testPutSingleLocalVariableWithNoValue() {
     String variableKey = "aVariableKey";
 
     given().pathParam("id", EXAMPLE_TASK_ID).pathParam("varId", variableKey)
@@ -833,7 +833,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutLocalVariableForNonExistingTaskId() {
+  void testPutLocalVariableForNonExistingTaskId() {
     String variableKey = "aVariableKey";
     String variableValue = "aVariableValue";
 
@@ -852,7 +852,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableThrowsAuthorizationException() {
+  void testPutSingleVariableThrowsAuthorizationException() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String type = "String";
@@ -875,7 +875,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleLocalBinaryVariable() {
+  void testPostSingleLocalBinaryVariable() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -894,7 +894,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleLocalBinaryVariableWithValueType() {
+  void testPostSingleLocalBinaryVariableWithValueType() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -914,7 +914,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleLocalBinaryVariableWithNoValue() {
+  void testPostSingleLocalBinaryVariableWithNoValue() {
     byte[] bytes = new byte[0];
 
     String variableKey = "aVariableKey";
@@ -933,7 +933,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleBinaryVariableThrowsAuthorizationException() {
+  void testPutSingleBinaryVariableThrowsAuthorizationException() {
     byte[] bytes = "someContent".getBytes();
     String variableKey = "aVariableKey";
 
@@ -954,7 +954,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleLocalSerializableVariable() throws Exception {
+  void testPostSingleLocalSerializableVariable() throws Exception {
 
     ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
@@ -980,7 +980,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleLocalSerializableVariableUnsupportedMediaType() throws Exception {
+  void testPostSingleLocalSerializableVariableUnsupportedMediaType() throws Exception {
 
     ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
@@ -1007,7 +1007,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithEncodingAndMimeType() {
+  void testPostSingleLocalFileVariableWithEncodingAndMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -1036,7 +1036,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithMimeType() {
+  void testPostSingleLocalFileVariableWithMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -1064,7 +1064,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithEncoding() {
+  void testPostSingleLocalFileVariableWithEncoding() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -1084,7 +1084,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleLocalFileVariableOnlyFilename() throws Exception {
+  void testPostSingleLocalFileVariableOnlyFilename() throws Exception {
 
     String variableKey = "aVariableKey";
     String filename = "test.txt";
@@ -1110,7 +1110,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleLocalVariableFromSerialized() {
+  void testPutSingleLocalVariableFromSerialized() {
     String serializedValue = "{\"prop\" : \"value\"}";
     Map<String, Object> requestJson = VariablesBuilder
         .getObjectValueMap(serializedValue, ValueType.OBJECT.getName(), "aDataFormat", "aRootType");
@@ -1135,7 +1135,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleLocalVariableFromInvalidSerialized() {
+  void testPutSingleLocalVariableFromInvalidSerialized() {
     String serializedValue = "{\"prop\" : \"value\"}";
 
     Map<String, Object> requestJson = VariablesBuilder
@@ -1156,7 +1156,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleLocalVariableFromSerializedWithNoValue() {
+  void testPutSingleLocalVariableFromSerializedWithNoValue() {
     String variableKey = "aVariableKey";
 
     Map<String, Object> requestJson = VariablesBuilder
@@ -1173,7 +1173,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testDeleteSingleLocalVariable() {
+  void testDeleteSingleLocalVariable() {
     String variableKey = "aVariableKey";
 
     given().pathParam("id", EXAMPLE_TASK_ID).pathParam("varId", variableKey)
@@ -1185,7 +1185,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testDeleteLocalVariableForNonExistingTaskId() {
+  void testDeleteLocalVariableForNonExistingTaskId() {
     String variableKey = "aVariableKey";
 
     doThrow(new ProcessEngineException("Cannot find task with id " + NON_EXISTING_ID))
@@ -1201,7 +1201,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testDeleteVariableThrowsAuthorizationException() {
+  void testDeleteVariableThrowsAuthorizationException() {
     String variableKey = "aVariableKey";
 
     String message = "expected exception";

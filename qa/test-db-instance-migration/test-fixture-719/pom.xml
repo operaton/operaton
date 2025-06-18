@@ -1,20 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.qa.upgrade</groupId>
     <artifactId>operaton-qa-db-instance-migration</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-qa-upgrade-test-fixture-719</artifactId>
-  <packaging>jar</packaging>
   <name>operaton BPM - QA - upgrade - instance migration - test fixture - 7.19.0</name>
-
+  <description>${project.name}</description>
   <properties>
     <operaton.version.previous>7.18.0</operaton.version.previous>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -26,45 +23,37 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-plugin-spin</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.qa.upgrade</groupId>
       <artifactId>operaton-qa-upgrade-scenario-util</artifactId>
       <version>${project.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.apache.openjpa</groupId>
       <artifactId>openjpa</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.hibernate.javax.persistence</groupId>
       <artifactId>hibernate-jpa-2.0-api</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
   </dependencies>
-
   <build>
     <resources>
       <resource>
@@ -79,7 +68,6 @@
       </testResource>
     </testResources>
   </build>
-
   <profiles>
     <profile>
       <id>instance-migration</id>
@@ -154,6 +142,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

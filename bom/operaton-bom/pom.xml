@@ -1,32 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-bom-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-bom</artifactId>
   <packaging>pom</packaging>
   <name>Operaton - BOM</name>
-  <url>http://operaton.org</url>
-
   <description>Operaton bill of material</description>
-
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-    </license>
-  </licenses>
-
-  <organization>
-    <name>Operaton</name>
-    <url>http://www.operaton.org</url>
-  </organization>
-
   <dependencyManagement>
     <dependencies>
       <!-- external dependencies -->
@@ -55,4 +38,15 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+  <url>http://operaton.org</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <organization>
+    <name>Operaton</name>
+    <url>http://www.operaton.org</url>
+  </organization>
 </project>

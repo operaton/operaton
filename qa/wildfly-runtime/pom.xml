@@ -1,18 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa-wildfly-runtime</artifactId>
-  <packaging>jar</packaging>
-
-  <name>Operaton - QA Wildfly Test Runtime</name>
-
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
-
+  <artifactId>operaton-qa-wildfly-runtime</artifactId>
+  <name>Operaton - QA Wildfly Test Runtime</name>
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -28,7 +24,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <!--
       database drivers
@@ -39,7 +34,6 @@
       <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
     </dependency>
-
     <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython</artifactId>
@@ -50,7 +44,6 @@
       <artifactId>jruby-complete</artifactId>
       <scope>runtime</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.qa</groupId>
       <artifactId>operaton-qa-ensure-clean-db</artifactId>
@@ -63,7 +56,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <resources>
       <resource>
@@ -123,9 +115,7 @@
       </plugin>
     </plugins>
   </build>
-
   <profiles>
-
     <profile>
       <id>wildfly</id>
       <dependencies>
@@ -138,7 +128,6 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-
       <build>
         <plugins>
           <plugin>
@@ -203,7 +192,7 @@
                 <configuration>
                   <target unless="maven.test.skip">
                     <copy todir="${wildfly.runtime.location}/modules" overwrite="true">
-                      <fileset dir="src/main/common/modules" />
+                      <fileset dir="src/main/common/modules"/>
                     </copy>
                   </target>
                 </configuration>
@@ -216,36 +205,32 @@
                 </goals>
                 <configuration>
                   <target unless="maven.test.skip">
-                    <dependencyfilesets scopes="runtime" />
-
+                    <dependencyfilesets scopes="runtime"/>
                     <!-- copy modules -->
                     <copy todir="${wildfly.runtime.location}/modules" flatten="false" overwrite="true">
-                      <fileset refid="maven.project.dependencies" />
-                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
+                      <fileset refid="maven.project.dependencies"/>
+                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes"/>
                     </copy>
-
                     <delete>
-                      <fileset dir="${wildfly.runtime.location}/modules/org/operaton/bpm/qa" includes="**/*.jar" />
+                      <fileset dir="${wildfly.runtime.location}/modules/org/operaton/bpm/qa" includes="**/*.jar"/>
                     </delete>
                     <!-- copy all files again, but this only matches fox files and this treatment makes is maven 2/3 compatible => timestamped snapshot -->
                     <copy todir="${wildfly.runtime.location}/modules" flatten="false" verbose="true">
-                      <fileset refid="maven.project.dependencies" />
+                      <fileset refid="maven.project.dependencies"/>
                       <mapper>
                         <chainedmapper>
-                          <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
-                          <regexpmapper from="^(org.operaton.bpm.qa.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                          <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes"/>
+                          <regexpmapper from="^(org.operaton.bpm.qa.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes"/>
                         </chainedmapper>
                       </mapper>
                     </copy>
-
                     <!-- replace database versions -->
                     <replace dir="${wildfly.runtime.location}/modules">
-                      <include name="**/module.xml" />
-                      <replacefilter token="@project.version@" value="${project.version}" />
-                      <replacefilter token="@version.postgresql@" value="${version.postgresql}" />
-                      <replacefilter token="@version.jython@" value="${version.jython}" />
+                      <include name="**/module.xml"/>
+                      <replacefilter token="@project.version@" value="${project.version}"/>
+                      <replacefilter token="@version.postgresql@" value="${version.postgresql}"/>
+                      <replacefilter token="@version.jython@" value="${version.jython}"/>
                     </replace>
-
                   </target>
                 </configuration>
               </execution>
@@ -254,10 +239,8 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>wildfly-domain</id>
-
       <dependencies>
         <dependency>
           <!-- make sure it comes after assembly in the build -->
@@ -268,7 +251,6 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-
       <build>
         <plugins>
           <plugin>
@@ -333,7 +315,7 @@
                 <configuration>
                   <target unless="maven.test.skip">
                     <copy todir="${wildfly.runtime.location}/modules" overwrite="true">
-                      <fileset dir="src/main/common/modules" />
+                      <fileset dir="src/main/common/modules"/>
                     </copy>
                   </target>
                 </configuration>
@@ -346,35 +328,31 @@
                 </goals>
                 <configuration>
                   <target unless="maven.test.skip">
-                    <dependencyfilesets scopes="runtime" />
-
+                    <dependencyfilesets scopes="runtime"/>
                     <!-- copy modules -->
                     <copy todir="${wildfly.runtime.location}/modules" flatten="false" overwrite="true">
-                      <fileset refid="maven.project.dependencies" />
-                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
+                      <fileset refid="maven.project.dependencies"/>
+                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes"/>
                     </copy>
-
                     <delete>
-                      <fileset dir="${wildfly.runtime.location}/modules/org/operaton/bpm/qa" includes="**/*.jar" />
+                      <fileset dir="${wildfly.runtime.location}/modules/org/operaton/bpm/qa" includes="**/*.jar"/>
                     </delete>
                     <!-- copy all files again, but this only matches fox files and this treatment makes is maven 2/3 compatible => timestamped snapshot -->
                     <copy todir="${wildfly.runtime.location}/modules" flatten="false" verbose="true">
-                      <fileset refid="maven.project.dependencies" />
+                      <fileset refid="maven.project.dependencies"/>
                       <mapper>
                         <chainedmapper>
-                          <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
-                          <regexpmapper from="^(org.operaton.bpm.qa.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                          <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes"/>
+                          <regexpmapper from="^(org.operaton.bpm.qa.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes"/>
                         </chainedmapper>
                       </mapper>
                     </copy>
-
                     <!-- replace database versions -->
                     <replace dir="${wildfly.runtime.location}/modules">
-                      <include name="**/module.xml" />
-                      <replacefilter token="@project.version@" value="${project.version}" />
-                      <replacefilter token="@version.postgresql@" value="${version.postgresql}" />
+                      <include name="**/module.xml"/>
+                      <replacefilter token="@project.version@" value="${project.version}"/>
+                      <replacefilter token="@version.postgresql@" value="${version.postgresql}"/>
                     </replace>
-
                   </target>
                 </configuration>
               </execution>
@@ -384,5 +362,4 @@
       </build>
     </profile>
   </profiles>
-  <description>${project.name}</description>
 </project>

@@ -1,24 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>operaton-bpm-archunit</artifactId>
-    <packaging>jar</packaging>
-
-    <name>Operaton - ArchUnit</name>
-
-    <parent>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-parent</artifactId>
-        <relativePath>../../parent</relativePath>
-        <version>1.0.0-beta-5-SNAPSHOT</version>
-    </parent>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit-junit4</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-    </dependencies>
-
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-parent</artifactId>
+    <relativePath>../../parent</relativePath>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
+  </parent>
+  <artifactId>operaton-bpm-archunit</artifactId>
+  <name>Operaton - ArchUnit</name>
   <description>${project.name}</description>
+  <dependencies>
+    <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit4</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+  </dependencies>
 </project>

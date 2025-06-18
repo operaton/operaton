@@ -1,42 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-bpm-tomcat</artifactId>
-  <packaging>pom</packaging>
-
   <parent>
     <groupId>org.operaton.bpm.tomcat</groupId>
     <artifactId>operaton-tomcat</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <artifactId>operaton-bpm-tomcat</artifactId>
+  <packaging>pom</packaging>
   <name>Operaton - Tomcat - Distro</name>
-
+  <description>${project.name}</description>
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.bpm.distro</groupId>
       <artifactId>operaton-sql-scripts</artifactId>
       <version>${version.operaton.dbscheme}</version>
       <type>jar</type>
     </dependency>
-
     <!-- Tomcat 10 dependencies -->
-
     <dependency>
       <groupId>org.operaton.bpm.tomcat</groupId>
       <artifactId>operaton-tomcat-assembly</artifactId>
       <version>${project.version}</version>
       <type>tar.gz</type>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
       <artifactId>operaton-webapp-tomcat</artifactId>
       <version>${project.version}</version>
       <type>war</type>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest</artifactId>
@@ -44,16 +37,13 @@
       <classifier>tomcat</classifier>
       <type>war</type>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.example</groupId>
       <artifactId>operaton-example-invoice</artifactId>
       <version>${project.version}</version>
       <type>war</type>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -82,6 +72,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

@@ -1,47 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
-
   <groupId>org.operaton.bpm.dmn</groupId>
   <artifactId>operaton-engine-dmn-bom</artifactId>
-  <version>1.0.0-beta-5-SNAPSHOT</version>
-  <name>Operaton - DMN - Engine - BOM</name>
   <packaging>pom</packaging>
-
+  <name>Operaton - DMN - Engine - BOM</name>
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
-
       <dependency>
         <groupId>org.operaton.bpm.dmn</groupId>
         <artifactId>operaton-engine-dmn</artifactId>
         <version>${project.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.operaton.bpm.dmn</groupId>
         <artifactId>operaton-engine-feel-api</artifactId>
         <version>${project.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.operaton.bpm.dmn</groupId>
         <artifactId>operaton-engine-feel-juel</artifactId>
         <version>${project.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.operaton.bpm.dmn</groupId>
         <artifactId>operaton-engine-feel-scala</artifactId>
         <version>${project.version}</version>
       </dependency>
-
       <!-- See CAM-11346
       <dependency>
         <groupId>org.operaton.bpm.dmn</groupId>
@@ -49,9 +41,7 @@
         <version>${project.version}</version>
       </dependency>
       -->
-
     </dependencies>
   </dependencyManagement>
-
-  <description>${project.name}</description>
+  <version>1.0.0-beta-5-SNAPSHOT</version>
 </project>

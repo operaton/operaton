@@ -1,17 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../../database</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-test-utils-testcontainers</artifactId>
   <name>Operaton - Test Utils - Testcontainers</name>
-  <packaging>jar</packaging>
-
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -23,9 +21,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
-
     <!-- TestContainers dependencies -->
     <dependency>
       <groupId>org.testcontainers</groupId>
@@ -51,31 +47,26 @@
       <groupId>org.testcontainers</groupId>
       <artifactId>oracle-xe</artifactId>
     </dependency>
-
     <!-- test dependencies -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- jdbc drivers for testing -->
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -97,7 +88,5 @@
       <artifactId>mssql-jdbc</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-  <description>${project.name}</description>
 </project>

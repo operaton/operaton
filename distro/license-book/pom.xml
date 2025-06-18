@@ -1,18 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>license-book</artifactId>
   <packaging>pom</packaging>
-
   <name>Operaton - License Book</name>
-
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -24,10 +22,8 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <build>
     <plugins>
-
       <!-- assemble zip artifact -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -52,7 +48,6 @@
           </execution>
         </executions>
       </plugin>
-
       <!-- copy book to target directory -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -68,7 +63,7 @@
               <target>
                 <copy todir="target/">
                   <fileset dir="src/main/resources">
-                    <include name="**/*.txt" />
+                    <include name="**/*.txt"/>
                   </fileset>
                 </copy>
               </target>
@@ -76,7 +71,6 @@
           </execution>
         </executions>
       </plugin>
-
       <!-- attach artifact -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -99,9 +93,6 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

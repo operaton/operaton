@@ -1,22 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>org.operaton.bpm</groupId>
   <artifactId>operaton-root</artifactId>
-  <version>1.0.0-beta-5-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Operaton - Root POM</name>
-  <inceptionYear>2024</inceptionYear>
-
   <description>
     This pom defines the modules that make up the build.
     The parent pom for all Operaton projects can be found in the parent directory relative to this file.
   </description>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
-
     <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
     <version.mybatis>3.5.19</version.mybatis>
     <version.joda-time>2.12.5</version.joda-time>
@@ -34,7 +29,8 @@
     <!-- Set to true for each module with packaging default/jar that does not have 'main' sources -->
     <install.skip>false</install.skip>
   </properties>
-
+  <version>1.0.0-beta-5-SNAPSHOT</version>
+  <inceptionYear>2024</inceptionYear>
   <build>
     <defaultGoal>verify</defaultGoal>
     <plugins>
@@ -97,7 +93,6 @@
         </dependencies>
       </plugin>
     </plugins>
-
     <pluginManagement>
       <plugins>
         <plugin>
@@ -321,9 +316,7 @@
         </plugin>
       </plugins>
     </pluginManagement>
-
   </build>
-
   <profiles>
     <!-- distro profile is default and builds the complete distribution.
          Does not run integration tests. -->
@@ -371,7 +364,6 @@
         <module>bom</module>
       </modules>
     </profile>
-
     <profile>
       <id>distro-serverless</id>
       <modules>
@@ -395,7 +387,6 @@
         <module>bom</module>
       </modules>
     </profile>
-
     <profile>
       <id>distro-tomcat</id>
       <activation>
@@ -406,7 +397,6 @@
         <module>distro/tomcat</module>
       </modules>
     </profile>
-
     <profile>
       <id>distro-wildfly</id>
       <activation>
@@ -418,7 +408,6 @@
         <module>distro/wildfly</module>
       </modules>
     </profile>
-
     <profile>
       <id>distro-webjar</id>
       <activation>
@@ -428,7 +417,6 @@
         <module>distro/webjar</module>
       </modules>
     </profile>
-
     <profile>
       <id>distro-run</id>
       <activation>
@@ -438,7 +426,6 @@
         <module>distro/run</module>
       </modules>
     </profile>
-
     <profile>
       <id>distro-starter</id>
       <!-- This profile is run in the release CI for building the enterprise artifacts
@@ -448,7 +435,6 @@
         <module>spring-boot-starter</module>
       </modules>
     </profile>
-
     <profile>
       <!-- profile for running process-engine unit tests in QA -->
       <id>check-engine</id>
@@ -457,13 +443,11 @@
         <module>engine-cdi</module>
         <module>engine-spring</module>
         <module>engine-rest</module>
-
         <module>database</module>
         <module>parent</module>
         <module>bom</module>
       </modules>
     </profile>
-
     <profile>
       <!-- profile for running webapp unit tests in QA -->
       <id>check-webapps</id>
@@ -472,7 +456,6 @@
         <module>bom</module>
       </modules>
     </profile>
-
     <profile>
       <id>sonatype-oss-release</id>
       <properties>
@@ -506,7 +489,6 @@
         <module>parent</module>
         <module>bom</module>
       </modules>
-
       <build>
         <plugins>
           <plugin>
@@ -545,7 +527,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>license-header-check</id>
       <build>
@@ -557,7 +538,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>openrewrite</id>
       <build>
@@ -594,7 +574,6 @@
       </build>
     </profile>
   </profiles>
-
   <repositories>
     <repository>
       <id>maven-central</id>
@@ -605,21 +584,17 @@
       </snapshots>
     </repository>
   </repositories>
-
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
       <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
-
   <organization>
     <name>Operaton</name>
     <url>http://www.operaton.com</url>
   </organization>
-
   <url>http://www.operaton.org</url>
-
   <developers>
     <developer>
       <id>operaton.org</id>
@@ -628,14 +603,12 @@
       <organizationUrl>http://operaton.org</organizationUrl>
     </developer>
   </developers>
-
   <scm>
     <url>https://github.com/operaton/operaton</url>
     <connection>scm:git:git@github.com:operaton/operaton.git</connection>
     <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
-
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/operaton/operaton/issues/</url>

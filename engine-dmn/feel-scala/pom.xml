@@ -9,6 +9,7 @@
 
   <artifactId>operaton-engine-feel-scala</artifactId>
   <name>Operaton - DMN - Engine - FEEL - SCALA</name>
+  <description>${project.name}</description>
   <properties>
     <operaton.artifact>org.operaton.bpm.dmn.feel.impl.scala</operaton.artifact>
   </properties>
@@ -60,5 +61,4 @@
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

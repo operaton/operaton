@@ -1,34 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-external-task-client</artifactId>
-  <name>Operaton - Java External Task Client - Client</name>
-  <description>${project.name}</description>
-
-  <packaging>jar</packaging>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-external-task-client-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <artifactId>operaton-external-task-client</artifactId>
+  <name>Operaton - Java External Task Client - Client</name>
+  <description>${project.name}</description>
   <properties>
     <engine.runtime>${project.build.directory}/operaton-tomcat</engine.runtime>
     <tomcat.runtime>${engine.runtime}/server/apache-tomcat-${version.tomcat}</tomcat.runtime>
     <http.port>${tomcat.connector.http.port}</http.port>
-
     <tomcat.connector.http.port>48080</tomcat.connector.http.port>
     <tomcat.connector.http.redirectPort>48443</tomcat.connector.http.redirectPort>
     <tomcat.connector.ajp.port>48009</tomcat.connector.ajp.port>
     <tomcat.connector.ajp.redirectPort>48443</tomcat.connector.ajp.redirectPort>
     <tomcat.server.port>48005</tomcat.server.port>
-
     <cargo.timeout>240000</cargo.timeout>
     <cargo.deploy.timeout>60000</cargo.deploy.timeout>
-    <cargo.start.jvmargs></cargo.start.jvmargs>
+    <cargo.start.jvmargs/>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -54,36 +47,29 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
-
     <!-- mandatory dependencies -->
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-logging</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-typed-values</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.apache.httpcomponents.client5</groupId>
       <artifactId>httpclient5</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
@@ -94,25 +80,21 @@
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-bpmn-model</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-all</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.qa</groupId>
       <artifactId>engine-variable-test</artifactId>
@@ -120,7 +102,6 @@
       <classifier>classes</classifier>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.tomcat</groupId>
       <artifactId>operaton-tomcat-assembly</artifactId>
@@ -134,7 +115,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest</artifactId>
@@ -143,7 +123,6 @@
       <classifier>tomcat</classifier>
       <version>${project.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.qa</groupId>
       <artifactId>engine-variable-test</artifactId>
@@ -151,13 +130,11 @@
       <type>war</type>
       <version>${project.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
@@ -185,18 +162,14 @@
       <version>4.2.0</version>
       <scope>provided</scope>
     </dependency>
-
-
     <dependency>
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
-
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -215,7 +188,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -223,7 +195,6 @@
           <trimStackTrace>false</trimStackTrace>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -249,7 +220,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
@@ -264,7 +234,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven3-plugin</artifactId>
@@ -363,9 +332,7 @@
           </deployables>
         </configuration>
       </plugin>
-
     </plugins>
-
     <testResources>
       <testResource>
         <directory>src/it/resources</directory>
@@ -374,9 +341,7 @@
         <directory>src/test/resources</directory>
       </testResource>
     </testResources>
-
   </build>
-
   <profiles>
     <profile>
       <id>debug-cargo</id>
@@ -390,5 +355,4 @@
       </properties>
     </profile>
   </profiles>
-
 </project>

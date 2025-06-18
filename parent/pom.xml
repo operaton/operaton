@@ -1,21 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-parent</artifactId>
-  <name>Operaton - Parent POM</name>
-  <inceptionYear>2024</inceptionYear>
   <packaging>pom</packaging>
-
+  <name>Operaton - Parent POM</name>
   <description>
     This pom is the parent of all Operaton projects
   </description>
-
   <properties>
     <version.spring-boot>3.5.0</version.spring-boot>
     <version.resteasy>3.15.6.Final</version.resteasy>
@@ -39,42 +35,31 @@
     <version.jackson>2.15.2</version.jackson>
     <version.httpclient>4.5.14</version.httpclient>
     <version.httpclient5>5.4.1</version.httpclient5>
-
     <version.assertj>3.27.3</version.assertj>
     <version.mockito>5.17.0</version.mockito>
     <version.jna>5.16.0</version.jna>
     <version.testcontainers>1.20.6</version.testcontainers>
-
     <version.commonj>1.1.0</version.commonj>
-
     <!-- application servers -->
     <version.wildfly>36.0.1.Final</version.wildfly>
     <version.wildfly.core>28.0.1.Final</version.wildfly.core>
-
     <version.tomcat>10.1.42</version.tomcat>
-
     <version.arquillian>1.9.4.Final</version.arquillian>
-
     <version.shrinkwrap.resolvers>3.3.3</version.shrinkwrap.resolvers>
     <version.selenium>4.31.0</version.selenium>
     <version.freemarker>2.3.31</version.freemarker>
-
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
-
     <version.nodejs>22.13.0</version.nodejs>
     <version.npm>11.0.0</version.npm>
-
     <jacoco.argLine/>
     <surefire.memArgs>-Xmx1024m -XX:MetaspaceSize=128m</surefire.memArgs>
     <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>
     <surefire.forkCount>1</surefire.forkCount>
-
     <!-- profile activation properties -->
     <with-sources>false</with-sources>
     <with-javadocs>false</with-javadocs>
-
     <!-- OSGi bundles properties -->
-    <operaton.artifact />
+    <operaton.artifact/>
     <operaton.osgi.import.operaton.spin.version>version="[$(version;==;${operaton.spin.version.clean}),$(version;=+;${operaton.spin.version.clean}))"</operaton.osgi.import.operaton.spin.version>
     <operaton.osgi.import.operaton.connect.version>version="[$(version;==;${operaton.connect.version.clean}),$(version;=+;${operaton.connect.version.clean}))"</operaton.osgi.import.operaton.connect.version>
     <operaton.osgi.import.operaton.commons.version>version="[$(version;==;${operaton.commons.version.clean}),$(version;=+;${operaton.commons.version.clean}))"</operaton.osgi.import.operaton.commons.version>
@@ -83,15 +68,15 @@
     <operaton.osgi.import.default.version>[$(version;==;$(@)),$(version;+;$(@)))</operaton.osgi.import.default.version>
     <operaton.osgi.import.defaults>
     </operaton.osgi.import.defaults>
-    <operaton.osgi.import.before.defaults />
-    <operaton.osgi.import.additional />
+    <operaton.osgi.import.before.defaults/>
+    <operaton.osgi.import.additional/>
     <operaton.osgi.import.pkg>
       ${operaton.osgi.import.before.defaults},
       ${operaton.osgi.import.defaults},
       ${operaton.osgi.import.additional},
       *
     </operaton.osgi.import.pkg>
-    <operaton.osgi.activator />
+    <operaton.osgi.activator/>
     <operaton.osgi.failok>false</operaton.osgi.failok>
     <operaton.osgi.export>${operaton.osgi.export.pkg};${operaton.osgi.version};-noimport:=true</operaton.osgi.export>
     <!--
@@ -99,18 +84,17 @@
     <operaton.osgi.private.pkg>${operaton.artifact}*.impl</operaton.osgi.private.pkg>
     -->
     <operaton.osgi.export.pkg>${operaton.artifact}*</operaton.osgi.export.pkg>
-    <operaton.osgi.private.pkg />
+    <operaton.osgi.private.pkg/>
     <operaton.osgi.version>version=${project.version}</operaton.osgi.version>
     <operaton.osgi.split.pkg>-split-package:=first</operaton.osgi.split.pkg>
     <operaton.osgi.import>${operaton.osgi.import.pkg}</operaton.osgi.import>
-    <operaton.osgi.dynamic />
+    <operaton.osgi.dynamic/>
     <operaton.osgi.symbolic.name>${operaton.artifact}</operaton.osgi.symbolic.name>
     <operaton.osgi.exclude.dependencies>false</operaton.osgi.exclude.dependencies>
     <operaton.osgi.remove.headers>Ignore-Package,Include-Resource,Private-Package,Bundle-DocURL</operaton.osgi.remove.headers>
     <operaton.osgi.include.resource>{maven-resources}</operaton.osgi.include.resource>
-    <operaton.osgi.embed />
+    <operaton.osgi.embed/>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -122,8 +106,8 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-   <build>
+  <inceptionYear>2024</inceptionYear>
+  <build>
     <pluginManagement>
       <plugins>
         <!-- test plugins -->
@@ -146,15 +130,14 @@
             <runOrder>hourly</runOrder>
           </configuration>
           <executions>
-              <execution>
-                <goals>
-                  <goal>integration-test</goal>
-                  <goal>verify</goal>
-                </goals>
-              </execution>
-            </executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
-
         <!-- artifact plugins -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -245,31 +228,31 @@
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
           <configuration>
-           <excludeDependencies>${operaton.osgi.exclude.dependencies}</excludeDependencies>
-           <instructions>
-             <Bundle-Name>${project.name}</Bundle-Name>
-             <Bundle-SymbolicName>${operaton.osgi.symbolic.name}</Bundle-SymbolicName>
-             <Bundle-Activator>${operaton.osgi.activator}</Bundle-Activator>
-             <Export-Package>${operaton.osgi.export}</Export-Package>
-             <Import-Package>${operaton.osgi.import}</Import-Package>
-             <DynamicImport-Package>${operaton.osgi.dynamic}</DynamicImport-Package>
-             <Private-Package>${operaton.osgi.private.pkg}</Private-Package>
-             <Implementation-Title>operaton</Implementation-Title>
-             <Implementation-Version>${project.version}</Implementation-Version>
-             <Include-Resource>${operaton.osgi.include.resource}</Include-Resource>
-             <_versionpolicy>${operaton.osgi.import.default.version}</_versionpolicy>
-             <_removeheaders>${operaton.osgi.remove.headers}</_removeheaders>
-             <_failok>${operaton.osgi.failok}</_failok>
-             <Export-Service>${operaton.osgi.export.service}</Export-Service>
-             <Import-Service>${operaton.osgi.import.service}</Import-Service>
-             <Embed-Dependency>${operaton.osgi.embed}</Embed-Dependency>
+            <excludeDependencies>${operaton.osgi.exclude.dependencies}</excludeDependencies>
+            <instructions>
+              <Bundle-Name>${project.name}</Bundle-Name>
+              <Bundle-SymbolicName>${operaton.osgi.symbolic.name}</Bundle-SymbolicName>
+              <Bundle-Activator>${operaton.osgi.activator}</Bundle-Activator>
+              <Export-Package>${operaton.osgi.export}</Export-Package>
+              <Import-Package>${operaton.osgi.import}</Import-Package>
+              <DynamicImport-Package>${operaton.osgi.dynamic}</DynamicImport-Package>
+              <Private-Package>${operaton.osgi.private.pkg}</Private-Package>
+              <Implementation-Title>operaton</Implementation-Title>
+              <Implementation-Version>${project.version}</Implementation-Version>
+              <Include-Resource>${operaton.osgi.include.resource}</Include-Resource>
+              <_versionpolicy>${operaton.osgi.import.default.version}</_versionpolicy>
+              <_removeheaders>${operaton.osgi.remove.headers}</_removeheaders>
+              <_failok>${operaton.osgi.failok}</_failok>
+              <Export-Service>${operaton.osgi.export.service}</Export-Service>
+              <Import-Service>${operaton.osgi.import.service}</Import-Service>
+              <Embed-Dependency>${operaton.osgi.embed}</Embed-Dependency>
             </instructions>
-           <versions>
-            <operaton.osgi.version.clean>${project.version}</operaton.osgi.version.clean>
-            <operaton.connect.version.clean>${project.version}</operaton.connect.version.clean>
-            <operaton.spin.version.clean>${project.version}</operaton.spin.version.clean>
-            <operaton.commons.version.clean>${project.version}</operaton.commons.version.clean>
-           </versions>
+            <versions>
+              <operaton.osgi.version.clean>${project.version}</operaton.osgi.version.clean>
+              <operaton.connect.version.clean>${project.version}</operaton.connect.version.clean>
+              <operaton.spin.version.clean>${project.version}</operaton.spin.version.clean>
+              <operaton.commons.version.clean>${project.version}</operaton.commons.version.clean>
+            </versions>
           </configuration>
         </plugin>
         <plugin>
@@ -279,7 +262,6 @@
             <keepFormat>true</keepFormat>
           </configuration>
         </plugin>
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
@@ -293,7 +275,6 @@
             <windowtitle>Operaton Javadocs ${project.version}</windowtitle>
           </configuration>
         </plugin>
-
         <plugin>
           <groupId>org.eclipse.transformer</groupId>
           <artifactId>transformer-maven-plugin</artifactId>
@@ -307,7 +288,6 @@
             <classifier>jakarta</classifier>
           </configuration>
         </plugin>
-
         <plugin>
           <groupId>com.github.eirslett</groupId>
           <artifactId>frontend-maven-plugin</artifactId>
@@ -316,7 +296,6 @@
             <npmVersion>${version.npm}</npmVersion>
           </configuration>
         </plugin>
-
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
@@ -328,7 +307,6 @@
       </plugins>
     </pluginManagement>
   </build>
-
   <profiles>
     <profile>
       <id>license-header-check</id>
@@ -341,7 +319,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>coverage</id>
       <activation>
@@ -388,7 +365,6 @@
         <jacoco.argLine/>
       </properties>
     </profile>
-
     <profile>
       <id>sonatype-oss-release</id>
       <properties>
@@ -396,7 +372,6 @@
         <with-javadocs>true</with-javadocs>
       </properties>
     </profile>
-
     <profile>
       <id>sources</id>
       <activation>
@@ -422,7 +397,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>javadocs</id>
       <activation>
@@ -458,7 +432,6 @@
       </build>
     </profile>
   </profiles>
-
   <repositories>
     <repository>
       <id>JBoss public</id>
@@ -466,21 +439,15 @@
       <url>https://repository.jboss.org/nexus/content/groups/public/</url>
     </repository>
   </repositories>
-
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
       <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
-
   <organization>
     <name>Operaton</name>
     <url>http://www.operaton.com</url>
   </organization>
-
   <url>http://www.operaton.org</url>
-
 </project>
-
-

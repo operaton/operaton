@@ -1,18 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>org.operaton.bpm.qa.upgrade</groupId>
-  <artifactId>operaton-qa-db-rolling-update</artifactId>
-
-  <packaging>pom</packaging>
-  <name>Operaton - QA - upgrade - rolling update</name>
-
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <groupId>org.operaton.bpm.qa.upgrade</groupId>
+  <artifactId>operaton-qa-db-rolling-update</artifactId>
+  <packaging>pom</packaging>
+  <name>Operaton - QA - upgrade - rolling update</name>
+  <description>${project.name}</description>
   <modules>
     <module>rolling-update-util</module>
     <module>create-old-engine</module>
@@ -32,5 +30,4 @@
       </plugins>
     </pluginManagement>
   </build>
-  <description>${project.name}</description>
 </project>

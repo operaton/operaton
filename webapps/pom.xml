@@ -1,49 +1,34 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
     <relativePath>../database</relativePath>
   </parent>
-
-  <artifactId>operaton-webapp-root</artifactId>
   <groupId>org.operaton.bpm.webapp</groupId>
+  <artifactId>operaton-webapp-root</artifactId>
   <packaging>pom</packaging>
   <name>Operaton - Webapp - Root</name>
-
+  <description>${project.name}</description>
   <properties>
-
     <web.resources.override>src/main/runtime/default/webapp</web.resources.override>
-
     <history.level>full</history.level>
-
     <frontend.app.path>${project.build.directory}/webapp/</frontend.app.path>
-
     <frontend.development.cockpit.path>${frontend.app.path}</frontend.development.cockpit.path>
     <frontend.development.tasklist.path>${frontend.app.path}</frontend.development.tasklist.path>
-
     <exec.shell>bash</exec.shell>
     <exec.arg>-c</exec.arg>
-
     <skip.frontend.build>false</skip.frontend.build>
-
     <authorizationCheckRevokes>auto</authorizationCheckRevokes>
-
     <jdbcBatchProcessing>true</jdbcBatchProcessing>
-
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
-
     <!-- frontend-sources artifact is for internal use only.
     Artifact generation is skipped when it comes to maven central deployment -->
     <skip-zip-frontend-sources>false</skip-zip-frontend-sources>
-
     <surefire.forkCount>1</surefire.forkCount>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -55,15 +40,12 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-logging</artifactId>
@@ -74,9 +56,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <!-- tests -->
-
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-testing</artifactId>
@@ -87,58 +67,48 @@
       <artifactId>junit</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.uuid</groupId>
       <artifactId>java-uuid-generator</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-http</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.eclipse.jetty.ee10</groupId>
       <artifactId>jetty-ee10-webapp</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-common</artifactId>
       <version>${version.jersey3}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -213,7 +183,6 @@
             </systemPropertyVariables>
           </configuration>
         </plugin>
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
@@ -224,8 +193,7 @@
               <nonFilteredFileExtension>png</nonFilteredFileExtension>
             </nonFilteredFileExtensions>
           </configuration>
-		</plugin>
-
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
@@ -245,13 +213,13 @@
               <resource>
                 <filtering>true</filtering>
                 <directory>target/webapp</directory>
-								<!-- no filtering for favicon because linux destroys images through carriage return -->
+                <!-- no filtering for favicon because linux destroys images through carriage return -->
                 <includes>
                   <include>**/*.html</include>
                 </includes>
               </resource>
             </webResources>
-						<!-- exclude development resources (task forms etc.) -->
+            <!-- exclude development resources (task forms etc.) -->
             <packagingExcludes>
               develop/**
             </packagingExcludes>
@@ -295,11 +263,9 @@
       </plugins>
     </pluginManagement>
   </build>
-
   <modules>
     <module>assembly</module>
   </modules>
-
   <profiles>
     <profile>
       <id>skipFrontendBuild</id>
@@ -308,6 +274,4 @@
       </properties>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

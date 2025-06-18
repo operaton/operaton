@@ -10,6 +10,7 @@
 
   <artifactId>operaton-engine-feel-api</artifactId>
   <name>Operaton - DMN - Engine - FEEL - API</name>
+  <description>${project.name}</description>
   <properties>
     <operaton.artifact>org.operaton.bpm.dmn.feel.impl</operaton.artifact>
   </properties>
@@ -94,6 +95,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

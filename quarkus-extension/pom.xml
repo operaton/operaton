@@ -1,21 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
-  <artifactId>operaton-bpm-quarkus-parent</artifactId>
   <groupId>org.operaton.bpm.quarkus</groupId>
-
-  <name>Operaton - Quarkus Extension - Parent</name>
-
+  <artifactId>operaton-bpm-quarkus-parent</artifactId>
   <packaging>pom</packaging>
-
+  <name>Operaton - Quarkus Extension - Parent</name>
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -34,7 +30,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -51,7 +46,6 @@
       </plugins>
     </pluginManagement>
   </build>
-
   <profiles>
     <profile>
       <id>quarkus-tests</id>
@@ -69,9 +63,7 @@
       </build>
     </profile>
   </profiles>
-
   <modules>
     <module>engine</module>
   </modules>
-  <description>${project.name}</description>
 </project>

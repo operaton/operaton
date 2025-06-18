@@ -1,31 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-modules</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-bpm-run-modules-example-invoice</artifactId>
   <name>Operaton - Run - Module Example Invoice</name>
-  
+  <description>${project.name}</description>
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
     Note: Every compile time dependency will end up in the license book. Please
     declare only dependencies that are actually needed -->
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
-
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.bpm.springboot</groupId>
       <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.example</groupId>
       <artifactId>operaton-example-invoice</artifactId>
@@ -33,9 +28,7 @@
       <classifier>classes</classifier>
       <scope>provided</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -61,8 +54,8 @@
                   </excludes>
                   <fileMappers>
                     <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
-                       <pattern>^\QWEB-INF/classes/\E</pattern>
-                       <replacement>./</replacement>
+                      <pattern>^\QWEB-INF/classes/\E</pattern>
+                      <replacement>./</replacement>
                     </org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
                     <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
                       <pattern>^\Qindex.html\E</pattern>
@@ -81,6 +74,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

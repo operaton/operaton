@@ -310,7 +310,7 @@ public class JobExecutorWaitUtils {
    *
    * @return the default {@link ProcessEngine} instance as configured in the BPM platform.
    */
-  private static ProcessEngine getProcessEngine() {
+  static ProcessEngine getProcessEngine() {
     ProcessEngineService processEngineService = BpmPlatform.getProcessEngineService();
     return processEngineService.getDefaultProcessEngine();
   }

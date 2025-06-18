@@ -24,6 +24,6 @@ package org.operaton.bpm.engine.impl.cmmn.transformer;
  *
  * @deprecated Will be removed, implement CmmnTransformListener directly in your code
  */
-@Deprecated(forRemoval = true)
+@Deprecated(forRemoval = true, since = "1.0")
 public class AbstractCmmnTransformListener implements CmmnTransformListener {
 }

@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 import org.operaton.bpm.engine.impl.util.xml.Namespace;
 
-public class DefaultFailedJobParseListener extends AbstractBpmnParseListener {
+public class DefaultFailedJobParseListener implements BpmnParseListener {
 
   protected static final String TYPE = "type";
   protected static final String START_TIMER_EVENT = "startTimerEvent";

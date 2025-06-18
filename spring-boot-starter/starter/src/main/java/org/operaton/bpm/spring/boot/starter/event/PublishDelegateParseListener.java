@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
+import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -40,7 +40,7 @@ import static org.operaton.bpm.engine.delegate.TaskListener.*;
 /**
  * Parse listener adding provided execution and task listeners.
  */
-public class PublishDelegateParseListener extends AbstractBpmnParseListener {
+public class PublishDelegateParseListener implements BpmnParseListener {
 
   private static final List<String> TASK_EVENTS = Arrays.asList(
     EVENTNAME_COMPLETE,
@@ -87,30 +87,14 @@ public class PublishDelegateParseListener extends AbstractBpmnParseListener {
     addExecutionListener(activity);
   }
 
-  @Override
-  public void parseBoundaryErrorEventDefinition(Element errorEventDefinition, boolean interrupting, ActivityImpl activity, ActivityImpl nestedErrorEventActivity) {
-    // Do not implement. Start and end event listener are set by parseBoundaryEvent()
-  }
 
   @Override
   public void parseBoundaryEvent(Element boundaryEventElement, ScopeImpl scopeElement, ActivityImpl activity) {
     addExecutionListener(activity);
   }
 
-  @Override
-  public void parseBoundaryMessageEventDefinition(Element element, boolean interrupting, ActivityImpl activity) {
-    // Do not implement. Start and end event listener are set by parseBoundaryEvent()
-  }
 
-  @Override
-  public void parseBoundarySignalEventDefinition(Element signalEventDefinition, boolean interrupting, ActivityImpl activity) {
-    // Do not implement. Start and end event listener are set by parseBoundaryEvent()
-  }
 
-  @Override
-  public void parseBoundaryTimerEventDefinition(Element timerEventDefinition, boolean interrupting, ActivityImpl activity) {
-    // Do not implement. Start and end event listener are set by parseBoundaryEvent()
-  }
 
   @Override
   public void parseBusinessRuleTask(Element businessRuleTaskElement, ScopeImpl scope, ActivityImpl activity) {
@@ -122,10 +106,6 @@ public class PublishDelegateParseListener extends AbstractBpmnParseListener {
     addExecutionListener(activity);
   }
 
-  @Override
-  public void parseCompensateEventDefinition(Element compensateEventDefinition, ActivityImpl activity) {
-    // Do not implement. Start and end event listener are set by parseBoundaryEvent()
-  }
 
   @Override
   public void parseEndEvent(Element endEventElement, ScopeImpl scope, ActivityImpl activity) {
@@ -152,25 +132,13 @@ public class PublishDelegateParseListener extends AbstractBpmnParseListener {
     addExecutionListener(activity);
   }
 
-  @Override
-  public void parseIntermediateMessageCatchEventDefinition(Element messageEventDefinition, ActivityImpl activity) {
-    // Do not implement. Start and end event listener are set by parseIntermediateCatchEvent()
-  }
 
-  @Override
-  public void parseIntermediateSignalCatchEventDefinition(Element signalEventDefinition, ActivityImpl activity) {
-    // Do not implement. Start and end event listener are set by parseIntermediateCatchEvent()
-  }
 
   @Override
   public void parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity) {
     addExecutionListener(activity);
   }
 
-  @Override
-  public void parseIntermediateTimerEventDefinition(Element timerEventDefinition, ActivityImpl activity) {
-    // Do not implement. Start and end event listener are set by parseIntermediateCatchEvent()
-  }
 
   @Override
   public void parseManualTask(Element manualTaskElement, ScopeImpl scope, ActivityImpl activity) {

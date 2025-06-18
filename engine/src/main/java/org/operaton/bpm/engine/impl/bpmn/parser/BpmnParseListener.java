@@ -38,42 +38,80 @@ import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
  */
 public interface BpmnParseListener {
 
-  void parseProcess(Element processElement, ProcessDefinitionEntity processDefinition);
-  void parseStartEvent(Element startEventElement, ScopeImpl scope, ActivityImpl startEventActivity);
-  void parseExclusiveGateway(Element exclusiveGwElement, ScopeImpl scope, ActivityImpl activity);
-  void parseInclusiveGateway(Element inclusiveGwElement, ScopeImpl scope, ActivityImpl activity);
-  void parseParallelGateway(Element parallelGwElement, ScopeImpl scope, ActivityImpl activity);
-  void parseScriptTask(Element scriptTaskElement, ScopeImpl scope, ActivityImpl activity);
-  void parseServiceTask(Element serviceTaskElement, ScopeImpl scope, ActivityImpl activity);
-  void parseBusinessRuleTask(Element businessRuleTaskElement, ScopeImpl scope, ActivityImpl activity);
-  void parseTask(Element taskElement, ScopeImpl scope, ActivityImpl activity);
-  void parseManualTask(Element manualTaskElement, ScopeImpl scope, ActivityImpl activity);
-  void parseUserTask(Element userTaskElement, ScopeImpl scope, ActivityImpl activity);
-  void parseEndEvent(Element endEventElement, ScopeImpl scope, ActivityImpl activity);
-  void parseBoundaryTimerEventDefinition(Element timerEventDefinition, boolean interrupting, ActivityImpl timerActivity);
-  void parseBoundaryErrorEventDefinition(Element errorEventDefinition, boolean interrupting, ActivityImpl activity, ActivityImpl nestedErrorEventActivity);
-  void parseSubProcess(Element subProcessElement, ScopeImpl scope, ActivityImpl activity);
-  void parseCallActivity(Element callActivityElement, ScopeImpl scope, ActivityImpl activity);
-  void parseProperty(Element propertyElement, VariableDeclaration variableDeclaration, ActivityImpl activity);
-  void parseSequenceFlow(Element sequenceFlowElement, ScopeImpl scopeElement, TransitionImpl transition);
-  void parseSendTask(Element sendTaskElement, ScopeImpl scope, ActivityImpl activity);
-  void parseMultiInstanceLoopCharacteristics(Element activityElement, Element multiInstanceLoopCharacteristicsElement, ActivityImpl activity);
-  void parseIntermediateTimerEventDefinition(Element timerEventDefinition, ActivityImpl timerActivity);
-  void parseRootElement(Element rootElement, List<ProcessDefinitionEntity> processDefinitions);
-  void parseReceiveTask(Element receiveTaskElement, ScopeImpl scope, ActivityImpl activity);
-  void parseIntermediateSignalCatchEventDefinition(Element signalEventDefinition, ActivityImpl signalActivity);
-  void parseIntermediateMessageCatchEventDefinition(Element messageEventDefinition, ActivityImpl nestedActivity);
-  void parseBoundarySignalEventDefinition(Element signalEventDefinition, boolean interrupting, ActivityImpl signalActivity);
-  void parseEventBasedGateway(Element eventBasedGwElement, ScopeImpl scope, ActivityImpl activity);
-  void parseTransaction(Element transactionElement, ScopeImpl scope, ActivityImpl activity);
-  void parseCompensateEventDefinition(Element compensateEventDefinition, ActivityImpl compensationActivity);
-  void parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity);
-  void parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity);
-  void parseBoundaryEvent(Element boundaryEventElement, ScopeImpl scopeElement, ActivityImpl nestedActivity);
-  void parseBoundaryMessageEventDefinition(Element element, boolean interrupting, ActivityImpl messageActivity);
-  void parseBoundaryEscalationEventDefinition(Element escalationEventDefinition, boolean interrupting, ActivityImpl boundaryEventActivity);
-  void parseBoundaryConditionalEventDefinition(Element element, boolean interrupting, ActivityImpl conditionalActivity);
-  void parseIntermediateConditionalEventDefinition(Element conditionalEventDefinition, ActivityImpl conditionalActivity);
-  void parseConditionalStartEventForEventSubprocess(Element element, ActivityImpl conditionalActivity, boolean interrupting);
-  void parseIoMapping(Element extensionElements, ActivityImpl activity, IoMapping inputOutput);
+  default void parseProcess(Element processElement, ProcessDefinitionEntity processDefinition) {
+  }
+  default void parseStartEvent(Element startEventElement, ScopeImpl scope, ActivityImpl startEventActivity) {
+  }
+  default void parseExclusiveGateway(Element exclusiveGwElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseInclusiveGateway(Element inclusiveGwElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseParallelGateway(Element parallelGwElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseScriptTask(Element scriptTaskElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseServiceTask(Element serviceTaskElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseBusinessRuleTask(Element businessRuleTaskElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseTask(Element taskElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseManualTask(Element manualTaskElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseUserTask(Element userTaskElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseEndEvent(Element endEventElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseBoundaryTimerEventDefinition(Element timerEventDefinition, boolean interrupting, ActivityImpl timerActivity) {
+  }
+  default void parseBoundaryErrorEventDefinition(Element errorEventDefinition, boolean interrupting, ActivityImpl activity, ActivityImpl nestedErrorEventActivity) {
+  }
+  default void parseSubProcess(Element subProcessElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseCallActivity(Element callActivityElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseProperty(Element propertyElement, VariableDeclaration variableDeclaration, ActivityImpl activity) {
+  }
+  default void parseSequenceFlow(Element sequenceFlowElement, ScopeImpl scopeElement, TransitionImpl transition) {
+  }
+  default void parseSendTask(Element sendTaskElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseMultiInstanceLoopCharacteristics(Element activityElement, Element multiInstanceLoopCharacteristicsElement, ActivityImpl activity) {
+  }
+  default void parseIntermediateTimerEventDefinition(Element timerEventDefinition, ActivityImpl timerActivity) {
+  }
+  default void parseRootElement(Element rootElement, List<ProcessDefinitionEntity> processDefinitions) {
+  }
+  default void parseReceiveTask(Element receiveTaskElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseIntermediateSignalCatchEventDefinition(Element signalEventDefinition, ActivityImpl signalActivity) {
+  }
+  default void parseIntermediateMessageCatchEventDefinition(Element messageEventDefinition, ActivityImpl nestedActivity) {
+  }
+  default void parseBoundarySignalEventDefinition(Element signalEventDefinition, boolean interrupting, ActivityImpl signalActivity) {
+  }
+  default void parseEventBasedGateway(Element eventBasedGwElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseTransaction(Element transactionElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseCompensateEventDefinition(Element compensateEventDefinition, ActivityImpl compensationActivity) {
+  }
+  default void parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity) {
+  }
+  default void parseBoundaryEvent(Element boundaryEventElement, ScopeImpl scopeElement, ActivityImpl nestedActivity) {
+  }
+  default void parseBoundaryMessageEventDefinition(Element element, boolean interrupting, ActivityImpl messageActivity) {
+  }
+  default void parseBoundaryEscalationEventDefinition(Element escalationEventDefinition, boolean interrupting, ActivityImpl boundaryEventActivity) {
+  }
+  default void parseBoundaryConditionalEventDefinition(Element element, boolean interrupting, ActivityImpl conditionalActivity) {
+  }
+  default void parseIntermediateConditionalEventDefinition(Element conditionalEventDefinition, ActivityImpl conditionalActivity) {
+  }
+  default void parseConditionalStartEventForEventSubprocess(Element element, ActivityImpl conditionalActivity, boolean interrupting) {
+  }
+  default void parseIoMapping(Element extensionElements, ActivityImpl activity, IoMapping inputOutput) {
+  }
 }

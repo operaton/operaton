@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
 import org.operaton.bpm.engine.impl.el.Expression;
@@ -124,7 +123,7 @@ class BPMNParseListenerTest {
       .endEvent()
       .done();
 
-    DelegatingBpmnParseListener.delegate = new AbstractBpmnParseListener() {
+    DelegatingBpmnParseListener.delegate = new BpmnParseListener() {
       @Override
       public void parseUserTask(Element userTaskElement, ScopeImpl scope, ActivityImpl activity) {
         UserTaskActivityBehavior activityBehavior = (UserTaskActivityBehavior) activity.getActivityBehavior();
@@ -171,7 +170,7 @@ class BPMNParseListenerTest {
           .endEvent()
         .done();
 
-    DelegatingBpmnParseListener.delegate = new AbstractBpmnParseListener() {
+    DelegatingBpmnParseListener.delegate = new BpmnParseListener() {
       @Override
       public void parseUserTask(Element userTaskElement, ScopeImpl scope, ActivityImpl activity) {
         UserTaskActivityBehavior activityBehavior = (UserTaskActivityBehavior) activity.getActivityBehavior();
@@ -247,7 +246,7 @@ class BPMNParseListenerTest {
   void shouldInvokeParseIoMapping() {
     // given
     AtomicInteger invokeTimes = new AtomicInteger();
-    DelegatingBpmnParseListener.delegate = new AbstractBpmnParseListener() {
+    DelegatingBpmnParseListener.delegate = new BpmnParseListener() {
       @Override
       public void parseIoMapping(Element extensionElements, ActivityImpl activity, IoMapping inputOutput) {
         invokeTimes.incrementAndGet();
@@ -266,7 +265,7 @@ class BPMNParseListenerTest {
   // helper ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   protected BpmnParseListener createBpmnParseListenerAndAssertTenantId(String tenantId) {
-    return new AbstractBpmnParseListener() {
+    return new BpmnParseListener() {
       protected void checkTenantId(ProcessDefinitionImpl processDefinitionImpl) {
         // then
         ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) processDefinitionImpl;

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.cdi.impl.event;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
@@ -33,7 +32,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
  *
  * @author Daniel Meyer
  */
-public class CdiEventSupportBpmnParseListener extends AbstractBpmnParseListener {
+public class CdiEventSupportBpmnParseListener implements BpmnParseListener {
 
   protected void addEndEventListener(ActivityImpl activity) {
     activity.addListener(ExecutionListener.EVENTNAME_END, new CdiEventListener());

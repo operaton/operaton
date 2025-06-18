@@ -16,79 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.transformer;
 
-import java.util.List;
-
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
-import org.operaton.bpm.model.cmmn.instance.Case;
-import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
-import org.operaton.bpm.model.cmmn.instance.CaseTask;
-import org.operaton.bpm.model.cmmn.instance.DecisionTask;
-import org.operaton.bpm.model.cmmn.instance.Definitions;
-import org.operaton.bpm.model.cmmn.instance.EventListener;
-import org.operaton.bpm.model.cmmn.instance.HumanTask;
-import org.operaton.bpm.model.cmmn.instance.Milestone;
-import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.operaton.bpm.model.cmmn.instance.ProcessTask;
-import org.operaton.bpm.model.cmmn.instance.Sentry;
-import org.operaton.bpm.model.cmmn.instance.Stage;
-import org.operaton.bpm.model.cmmn.instance.Task;
-
 /**
  * Abstract base class for implementing a {@link CmmnTransformListener} without being forced to implement
  * all methods provided, which make the implementation more robust to future changes.
  *
  * @author Sebastian Menski
+ *
+ * @deprecated Will be removed, implement CmmnTransformListener directly in your code
  */
+@Deprecated(forRemoval = true)
 public class AbstractCmmnTransformListener implements CmmnTransformListener {
-
-  @Override
-  public void transformRootElement(Definitions definitions, List<? extends CmmnCaseDefinition> caseDefinitions) {
-  }
-
-  @Override
-  public void transformCase(Case element, CmmnCaseDefinition caseDefinition) {
-  }
-
-  @Override
-  public void transformCasePlanModel(CasePlanModel casePlanModel, CmmnActivity activity) {
-  }
-
-  @Override
-  public void transformHumanTask(PlanItem planItem, HumanTask humanTask, CmmnActivity activity) {
-  }
-
-  @Override
-  public void transformProcessTask(PlanItem planItem, ProcessTask processTask, CmmnActivity activity) {
-  }
-
-  @Override
-  public void transformCaseTask(PlanItem planItem, CaseTask caseTask, CmmnActivity activity) {
-  }
-
-  @Override
-  public void transformDecisionTask(PlanItem planItem, DecisionTask decisionTask, CmmnActivity activity) {
-  }
-
-  @Override
-  public void transformTask(PlanItem planItem, Task task, CmmnActivity activity) {
-  }
-
-  @Override
-  public void transformStage(PlanItem planItem, Stage stage, CmmnActivity activity) {
-  }
-
-  @Override
-  public void transformMilestone(PlanItem planItem, Milestone milestone, CmmnActivity activity) {
-  }
-
-  @Override
-  public void transformEventListener(PlanItem planItem, EventListener eventListener, CmmnActivity activity) {
-  }
-
-  @Override
-  public void transformSentry(Sentry sentry, CmmnSentryDeclaration sentryDeclaration) {
-  }
-
 }

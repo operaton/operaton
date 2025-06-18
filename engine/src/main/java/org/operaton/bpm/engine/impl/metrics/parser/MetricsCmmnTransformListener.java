@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.impl.metrics.parser;
 
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
-import org.operaton.bpm.engine.impl.cmmn.transformer.AbstractCmmnTransformListener;
+import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformListener;
 import org.operaton.bpm.model.cmmn.instance.CaseTask;
 import org.operaton.bpm.model.cmmn.instance.DecisionTask;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
@@ -32,7 +32,7 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  * @author Daniel Meyer
  *
  */
-public class MetricsCmmnTransformListener extends AbstractCmmnTransformListener {
+public class MetricsCmmnTransformListener implements CmmnTransformListener {
 
   public static MetricsCaseExecutionListener listener = new MetricsCaseExecutionListener();
 

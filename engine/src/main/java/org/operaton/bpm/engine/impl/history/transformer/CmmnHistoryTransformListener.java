@@ -76,13 +76,6 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
     caseActivityInstanceEndListener = new CaseActivityInstanceEndListener(historyEventProducer);
   }
 
-  @Override
-  public void transformRootElement(Definitions definitions, List<? extends CmmnCaseDefinition> caseDefinitions) {
-  }
-
-  @Override
-  public void transformCase(Case element, CmmnCaseDefinition caseDefinition) {
-  }
 
   @Override
   public void transformCasePlanModel(CasePlanModel casePlanModel, CmmnActivity caseActivity) {
@@ -129,9 +122,6 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
     addEventListenerOrMilestoneHandlers(caseActivity);
   }
 
-  @Override
-  public void transformSentry(Sentry sentry, CmmnSentryDeclaration sentryDeclaration) {
-  }
 
   protected void addCasePlanModelHandlers(CmmnActivity caseActivity) {
     ensureHistoryLevelInitialized();

@@ -46,9 +46,11 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  */
 public interface CmmnTransformListener {
 
-  void transformRootElement(Definitions definitions, List<? extends CmmnCaseDefinition> caseDefinitions);
+  default void transformRootElement(Definitions definitions, List<? extends CmmnCaseDefinition> caseDefinitions) {
+  }
 
-  void transformCase(Case element, CmmnCaseDefinition caseDefinition);
+  default void transformCase(Case element, CmmnCaseDefinition caseDefinition) {
+  }
 
   /**
    * @deprecated Use {@link #transformCasePlanModel(org.operaton.bpm.model.cmmn.instance.CasePlanModel, CmmnActivity)} instead.
@@ -58,24 +60,34 @@ public interface CmmnTransformListener {
     transformCasePlanModel((org.operaton.bpm.model.cmmn.instance.CasePlanModel) casePlanModel, caseActivity);
   }
 
-  void transformCasePlanModel(CasePlanModel casePlanModel, CmmnActivity caseActivity);
+  default void transformCasePlanModel(CasePlanModel casePlanModel, CmmnActivity caseActivity) {
+  }
 
-  void transformHumanTask(PlanItem planItem, HumanTask humanTask, CmmnActivity caseActivity);
+  default void transformHumanTask(PlanItem planItem, HumanTask humanTask, CmmnActivity caseActivity) {
+  }
 
-  void transformProcessTask(PlanItem planItem, ProcessTask processTask, CmmnActivity caseActivity);
+  default void transformProcessTask(PlanItem planItem, ProcessTask processTask, CmmnActivity caseActivity) {
+  }
 
-  void transformCaseTask(PlanItem planItem, CaseTask caseTask, CmmnActivity caseActivity);
+  default void transformCaseTask(PlanItem planItem, CaseTask caseTask, CmmnActivity caseActivity) {
+  }
 
-  void transformDecisionTask(PlanItem planItem, DecisionTask decisionTask, CmmnActivity caseActivity);
+  default void transformDecisionTask(PlanItem planItem, DecisionTask decisionTask, CmmnActivity caseActivity) {
+  }
 
-  void transformTask(PlanItem planItem, Task task, CmmnActivity caseActivity);
+  default void transformTask(PlanItem planItem, Task task, CmmnActivity caseActivity) {
+  }
 
-  void transformStage(PlanItem planItem, Stage stage, CmmnActivity caseActivity);
+  default void transformStage(PlanItem planItem, Stage stage, CmmnActivity caseActivity) {
+  }
 
-  void transformMilestone(PlanItem planItem, Milestone milestone, CmmnActivity caseActivity);
+  default void transformMilestone(PlanItem planItem, Milestone milestone, CmmnActivity caseActivity) {
+  }
 
-  void transformEventListener(PlanItem planItem, EventListener eventListener, CmmnActivity caseActivity);
+  default void transformEventListener(PlanItem planItem, EventListener eventListener, CmmnActivity caseActivity) {
+  }
 
-  void transformSentry(Sentry sentry, CmmnSentryDeclaration sentryDeclaration);
+  default void transformSentry(Sentry sentry, CmmnSentryDeclaration sentryDeclaration) {
+  }
 
 }

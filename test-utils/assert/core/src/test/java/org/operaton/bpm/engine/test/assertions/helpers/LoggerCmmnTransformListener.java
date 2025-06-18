@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.assertions.helpers;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
-import org.operaton.bpm.engine.impl.cmmn.transformer.AbstractCmmnTransformListener;
+import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformListener;
 import org.operaton.bpm.model.cmmn.instance.CaseTask;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
 import org.operaton.bpm.model.cmmn.instance.Milestone;
@@ -31,7 +31,7 @@ import org.operaton.bpm.model.cmmn.instance.Task;
 /**
  * Created by Malte on 08.09.2015.
  */
-public class LoggerCmmnTransformListener extends AbstractCmmnTransformListener {
+public class LoggerCmmnTransformListener implements CmmnTransformListener {
   public static CaseExecutionListener listener = new CaseExecutionListener() {
     @Override
     public void notify(DelegateCaseExecution var1) {

@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
  *
  * @deprecated Will be removed in a future version. Implement BpmnParseListener directly.
  */
-@Deprecated(forRemoval = true)
+@Deprecated(forRemoval = true, since = "1.0")
 public class AbstractBpmnParseListener implements BpmnParseListener {
 
   // no-op implementation retained for backwards compatibility

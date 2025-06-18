@@ -23,7 +23,7 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CompensationEventActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.NoneEndEventActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.NoneStartEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
+import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.CompensateEventDefinition;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
 /**
  * @author Frederik Heremans
  */
-public class TestBPMNParseListener extends AbstractBpmnParseListener {
+public class TestBPMNParseListener implements BpmnParseListener {
 
   @Override
   public void parseRootElement(Element rootElement, List<ProcessDefinitionEntity> processDefinitions) {

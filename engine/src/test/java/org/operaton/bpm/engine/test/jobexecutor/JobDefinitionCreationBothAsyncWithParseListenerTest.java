@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -52,7 +51,7 @@ class JobDefinitionCreationBothAsyncWithParseListenerTest {
     .randomEngineName().closeEngineAfterAllTests()
     .configurator(configuration -> {
       List<BpmnParseListener> listeners = new ArrayList<>();
-      listeners.add(new AbstractBpmnParseListener(){
+      listeners.add(new BpmnParseListener(){
         
         @Override
         public void parseServiceTask(Element serviceTaskElement, ScopeImpl scope, ActivityImpl activity) {

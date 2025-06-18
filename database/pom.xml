@@ -390,11 +390,14 @@
     <profile>
       <id>sqlserver</id>
       <properties>
-        <database.type>mssql</database.type>
+        <database.type>sqlserver</database.type>
         <database.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</database.driver>
         <database.datasource.class>com.microsoft.sqlserver.jdbc.SQLServerDataSource</database.datasource.class>
+        <jboss.datasource.filename>sqlserver-ds.xml</jboss.datasource.filename>
         <database.tc.url>operatonsqlserver:2022-latest</database.tc.url>
         <database.name>operaton_test</database.name>
+        <database.username>sa</database.username>
+        <database.password>A_Str0ng_Required_Password</database.password>
         <database.tc.params>;DatabaseName=${database.name}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>

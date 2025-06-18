@@ -41,11 +41,11 @@ public class ArquillianEventObserver {
   private static final String SQLSERVER_VERSION = "2022-latest";
 
   // Initialized with providers, so we do not start all containers at the same time here statically upon initialization
-  private static final Map<String, Supplier<JdbcDatabaseContainer>> AVAILABLE_DB_CONTAINERS = new HashMap<>();
+  private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = new HashMap<>();
 
   static {
-    AVAILABLE_DB_CONTAINERS.put(POSTGRES, () -> new PostgreSQLContainer(POSTGRES + ":" + POSTGRES_VERSION));
-    AVAILABLE_DB_CONTAINERS.put(SQLSERVER, () -> new OperatonMSSQLContainer("mcr.microsoft.com/mssql/server" + ":" + SQLSERVER_VERSION).acceptLicense());
+    AVAILABLE_DB_CONTAINERS.put(POSTGRES, new PostgreSQLContainer(POSTGRES + ":" + POSTGRES_VERSION));
+    AVAILABLE_DB_CONTAINERS.put(SQLSERVER, new OperatonMSSQLContainer("mcr.microsoft.com/mssql/server" + ":" + SQLSERVER_VERSION).acceptLicense());
   }
 
   private static JdbcDatabaseContainer dbContainer;
@@ -65,7 +65,7 @@ public class ArquillianEventObserver {
     var containerName = System.getProperty("databaseType");
 
     if (containerName != null && AVAILABLE_DB_CONTAINERS.containsKey(containerName)) {
-      dbContainer = AVAILABLE_DB_CONTAINERS.get(containerName).get();
+      dbContainer = AVAILABLE_DB_CONTAINERS.get(containerName);
       dbContainer.start();
       //Assume that there is only one container in the registry
       registry.getContainers().stream().findFirst().ifPresent(container -> {

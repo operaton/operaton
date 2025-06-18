@@ -21,6 +21,11 @@ import org.testcontainers.utility.DockerImageName;
 
 import java.io.IOException;
 
+
+/**
+ * Class for setting up a MSSQLServer database and managing its lifecycle within the test environment. This class is a custom extension of Testcontainers' {@code MSSQLServerContainer
+ * }, providing additional functionality for the Operaton project.
+ */
 public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> extends MSSQLServerContainer<SELF> {
 
     public OperatonMSSQLContainer(DockerImageName dockerImageName) {

@@ -15,16 +15,14 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainer;
+import org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider;
+import org.operaton.impl.test.utils.testcontainers.OperatonPostgreSQLContainerProvider;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
 
 /**
  * {@link org.jboss.arquillian.core.api.annotation.Observer} for Arquillian lifecycle events.
@@ -41,14 +39,10 @@ public class ArquillianEventObserver {
   private static final String SQLSERVER_VERSION = "2022-latest";
 
   // Initialized with providers, so we do not start all containers at the same time here statically upon initialization
-  private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = new HashMap<>();
-
-  static {
-    AVAILABLE_DB_CONTAINERS.put(POSTGRES, new PostgreSQLContainer(POSTGRES + ":" + POSTGRES_VERSION));
-    AVAILABLE_DB_CONTAINERS.put(SQLSERVER, new OperatonMSSQLContainer("mcr.microsoft.com/mssql/server" + ":" + SQLSERVER_VERSION).acceptLicense());
-  }
-
-  private static JdbcDatabaseContainer dbContainer;
+  private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = Map.of(
+          POSTGRES, new OperatonPostgreSQLContainerProvider().newInstance(POSTGRES_VERSION),
+          SQLSERVER, new OperatonMSSQLContainerProvider().newInstance(SQLSERVER_VERSION)
+  );
 
   /**
    * Listens for the Arquillian ContainerRegistry event to start the appropriate jdbc database container
@@ -65,8 +59,9 @@ public class ArquillianEventObserver {
     var containerName = System.getProperty("databaseType");
 
     if (containerName != null && AVAILABLE_DB_CONTAINERS.containsKey(containerName)) {
-      dbContainer = AVAILABLE_DB_CONTAINERS.get(containerName);
+      JdbcDatabaseContainer dbContainer = AVAILABLE_DB_CONTAINERS.get(containerName);
       dbContainer.start();
+
       //Assume that there is only one container in the registry
       registry.getContainers().stream().findFirst().ifPresent(container -> {
         var jvmArguments = container.getContainerConfiguration().getContainerProperty("javaVmArguments");

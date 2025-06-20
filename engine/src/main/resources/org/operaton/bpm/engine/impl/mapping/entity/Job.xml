@@ -228,6 +228,9 @@
       ${orderBy}
     </if>
     ${limitAfter}
+    <if test="parameter.skipLocked">
+      FOR UPDATE SKIP LOCKED
+    </if>
   </select>
 
   <sql id="AtomicExclusiveOrNonExclusiveJobs">

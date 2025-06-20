@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.processEngine;
@@ -111,14 +112,9 @@ class ProcessEngineTestsTest {
     // Given
     processEnginesMockedStatic.when(ProcessEngines::getProcessEngines).thenReturn(new HashMap<String,ProcessEngine>());
     reset();
-    try {
-      // When
-      processEngine();
-      fail("Process engine should not be initialized");
-    } catch (IllegalStateException e) {
-      // Then
-      assertThat(e).hasMessage("No ProcessEngine found to be registered with ProcessEngines!");
-    }
+    assertThatThrownBy(AbstractAssertions::processEngine, "Process engine should not be initialized")
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessage("No ProcessEngine found to be registered with ProcessEngines!");
   }
 
   @Test
@@ -129,14 +125,9 @@ class ProcessEngineTestsTest {
     multipleEnginesMap.put("test2", mock(ProcessEngine.class));
     processEnginesMockedStatic.when(ProcessEngines::getProcessEngines).thenReturn(multipleEnginesMap);
     reset();
-    try {
-      // When
-      processEngine();
-      fail("Process engine should not be initialized");
-    } catch (IllegalStateException e) {
-      // Then
-      assertThat(e).hasMessage("2 ProcessEngines initialized. Call BpmnAwareTests.init(ProcessEngine processEngine) first!");
-    }
+    assertThatThrownBy(AbstractAssertions::processEngine, "Process engine should not be initialized")
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessage("2 ProcessEngines initialized. Call BpmnAwareTests.init(ProcessEngine processEngine) first!");
   }
 
   @Test

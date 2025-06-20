@@ -1,33 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-bpm-run</artifactId>
-  <name>Operaton - Run - Distribution</name>
   <packaging>pom</packaging>
-
+  <name>Operaton - Run - Distribution</name>
+  <description>${project.name}</description>
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.bpm.run</groupId>
       <artifactId>operaton-bpm-run-assembly</artifactId>
       <version>${project.version}</version>
       <type>tar.gz</type>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.distro</groupId>
       <artifactId>operaton-sql-scripts</artifactId>
       <version>${version.operaton.dbscheme}</version>
       <type>jar</type>
     </dependency>
-
     <!-- make sure this runs after webapps -->
     <dependency>
       <groupId>org.operaton.bpm.run</groupId>
@@ -42,9 +37,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -74,6 +67,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

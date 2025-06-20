@@ -1,24 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.operaton.bpm.jboss</groupId>
     <artifactId>operaton-jboss</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
-  <modelVersion>4.0.0</modelVersion>
   <groupId>org.operaton.bpm.webapp</groupId>
-  <name>Operaton - Webapp - JBoss</name>
   <artifactId>operaton-webapp-jboss</artifactId>
   <packaging>war</packaging>
-  
+  <name>Operaton - Webapp - JBoss</name>
+  <description>${project.name}</description>
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
     Note: Every compile time dependency will end up in the license book. Please
     declare only dependencies that are actually needed -->
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
@@ -28,10 +26,8 @@
       <scope>runtime</scope>
     </dependency>
   </dependencies>
-
   <build>
     <finalName>operaton-webapp</finalName>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -42,11 +38,9 @@
               <!-- module dependencies for deployment on JBoss/WildFly -->
               <Dependencies>org.operaton.bpm.operaton-engine,org.operaton.bpm.dmn.operaton-engine-dmn,org.operaton.bpm.model.operaton-bpmn-model,org.operaton.bpm.model.operaton-cmmn-model,org.operaton.bpm.model.operaton-dmn-model,org.operaton.bpm.model.operaton-xml-model,org.operaton.commons.operaton-commons-logging,org.operaton.spin.operaton-spin-core,org.operaton.bpm.juel.operaton-juel services,org.graalvm.js.js-scriptengine services</Dependencies>
             </manifestEntries>
-          </archive>          
+          </archive>
         </configuration>
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

@@ -1,15 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa-integration-tests-webapps</artifactId>
-  <name>Operaton - QA Integration Tests - Webapps ITs</name>
-
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <artifactId>operaton-qa-integration-tests-webapps</artifactId>
+  <name>Operaton - QA Integration Tests - Webapps ITs</name>
+  <description>${project.name}</description>
   <!--
     Maven modules running these tests with the failsafe plugin should declare the following system property:
 
@@ -17,7 +16,6 @@
         (e.g. set to "${project.build.directory}/selenium-screenshots");
         no screenshots created if not set
    -->
-
   <dependencies>
     <!-- set shrinkwrap artifacts -->
     <dependency>
@@ -33,7 +31,6 @@
       <scope>provided</scope>
       <type>pom</type>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
@@ -59,7 +56,6 @@
       <groupId>com.fasterxml.jackson.jaxrs</groupId>
       <artifactId>jackson-jaxrs-json-provider</artifactId>
     </dependency>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -95,6 +91,4 @@
       <artifactId>jakarta.ws.rs-api</artifactId>
     </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

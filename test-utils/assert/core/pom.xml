@@ -1,16 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-bpm-assert</artifactId>
-  <packaging>jar</packaging>
-
-  <name>Operaton - Assert</name>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-bpm-assert-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <artifactId>operaton-bpm-assert</artifactId>
+  <name>Operaton - Assert</name>
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -22,7 +20,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <!-- managed by spring-boot-dependencies -->
     <dependency>
@@ -30,7 +27,6 @@
       <artifactId>assertj-core</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <!-- managed by operaton internal dependencies -->
     <dependency>
       <groupId>org.operaton.bpm</groupId>
@@ -81,6 +77,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

@@ -1,20 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.operaton.bpm.quarkus</groupId>
     <artifactId>operaton-bpm-quarkus-engine-parent</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
-  <modelVersion>4.0.0</modelVersion>
-
   <artifactId>operaton-bpm-quarkus-engine-qa</artifactId>
   <name>Operaton - Quarkus Extension - Engine - CDI QA</name>
-
+  <description>${project.name}</description>
   <properties>
     <deploy.skip>true</deploy.skip>
     <install.skip>true</install.skip>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <!-- Add Quarkus BOM to fix Maven artifact dependencies overriden by Arquillian BOM -->
@@ -34,7 +32,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <build>
     <plugins>
       <plugin>
@@ -44,15 +41,12 @@
           <systemPropertyVariables>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
           </systemPropertyVariables>
-
           <dependenciesToScan>
             <dependency>org.operaton.bpm:operaton-engine-cdi</dependency>
           </dependenciesToScan>
-
           <excludes>
             <!-- See https://jira.camunda.com/browse/CAM-13751 -->
             <exclude>**/BeanPropertyElTest.java</exclude>
-
             <!-- See ProgrammaticBeanLookupTest in quarkus-extension/engine/deployment module -->
             <exclude>**/ProgrammaticBeanLookupTest.java</exclude>
             <!-- See https://github.com/camunda/camunda-bpm-platform/issues/3419 -->
@@ -62,22 +56,18 @@
       </plugin>
     </plugins>
   </build>
-
   <dependencies>
     <!-- Operaton dependencies -->
-
     <dependency>
       <groupId>org.operaton.bpm.quarkus</groupId>
       <artifactId>operaton-bpm-quarkus-engine</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <classifier>junit4</classifier>
       <scope>test</scope>
     </dependency>
-    
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-cdi</artifactId>
@@ -85,41 +75,32 @@
       <type>test-jar</type>
       <classifier>tests-quarkus</classifier>
     </dependency>
-
     <!-- Quarkus dependencies -->
-
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arquillian</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-h2</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- Test dependencies -->
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

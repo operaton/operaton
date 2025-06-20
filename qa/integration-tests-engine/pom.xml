@@ -1,29 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa-integration-tests-engine</artifactId>
-  <name>Operaton - QA Integration Tests - Engine</name>
-
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <artifactId>operaton-qa-integration-tests-engine</artifactId>
+  <name>Operaton - QA Integration Tests - Engine</name>
+  <description>${project.name}</description>
   <properties>
     <!-- Needs to be updated after a new WildFly release -->
     <wildfly.container.adapter.groupId>org.wildfly.arquillian</wildfly.container.adapter.groupId>
     <wildfly.container.adapter.version>5.0.1.Final</wildfly.container.adapter.version>
-
     <version.arquillian>1.9.3.Final</version.arquillian>
-
     <redirect.test.output>true</redirect.test.output>
-
     <install.skip>true</install.skip>
   </properties>
-
-  <!-- import shrinkwrap and arquillian bom for artifact versions,
-    DO NOT CHANGE ordering, because we want shrinkwrap versions to be newer -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -33,10 +26,10 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
-
+  <!-- import shrinkwrap and arquillian bom for artifact versions,
+    DO NOT CHANGE ordering, because we want shrinkwrap versions to be newer -->
   <dependencies>
     <!-- set shrinkwrap artifacts -->
     <dependency>
@@ -45,7 +38,6 @@
       <scope>test</scope>
       <type>pom</type>
     </dependency>
-
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
@@ -56,13 +48,11 @@
       <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
@@ -103,15 +93,12 @@
       <artifactId>jakarta.persistence-api</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- CDI engine & Client -->
-
     <dependency>
       <groupId>org.operaton.bpm.jakartaee</groupId>
       <artifactId>operaton-ejb-client</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-cdi</artifactId>
@@ -123,7 +110,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <!-- operaton -->
     <dependency>
       <groupId>org.operaton.bpm</groupId>
@@ -140,7 +126,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.dmn</groupId>
       <artifactId>operaton-engine-dmn</artifactId>
@@ -164,7 +149,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-spring</artifactId>
@@ -177,29 +161,24 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <classifier>junit4</classifier>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-core</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-joda</artifactId>
     </dependency>
-
     <!--
       needed for offline shrinkwrap,
       BOM must be installed before this module is built
@@ -211,7 +190,6 @@
       <type>pom</type>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-core-internal-dependencies</artifactId>
@@ -219,12 +197,10 @@
       <type>pom</type>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-core</artifactId>
     </dependency>
-
     <!-- explicit Spring dependencies for applications
       that pack operaton-engine-spring -->
     <dependency>
@@ -247,34 +223,28 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.wiremock</groupId>
       <artifactId>wiremock-standalone</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>jdbc</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- required for TestWarDeploymentWithProcessEnginePlugin -->
     <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <testResources>
       <testResource>
@@ -331,9 +301,7 @@
       </plugin>
     </plugins>
   </build>
-
   <profiles>
-
     <profile>
       <id>tomcat</id>
       <dependencyManagement>
@@ -348,7 +316,6 @@
           </dependency>
         </dependencies>
       </dependencyManagement>
-
       <dependencies>
         <dependency>
           <!-- make sure this comes after runtime in the reactor build -->
@@ -358,39 +325,32 @@
           <scope>provided</scope>
           <type>pom</type>
         </dependency>
-
         <dependency>
           <groupId>org.jboss.weld.servlet</groupId>
           <artifactId>weld-servlet-shaded</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-tomcat-managed-10</artifactId>
           <version>1.2.3.Final</version>
           <scope>test</scope>
         </dependency>
-
         <!-- switch to use Jakarta Servlet 5.0 protocol -->
         <dependency>
           <groupId>org.jboss.arquillian.protocol</groupId>
           <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
         </dependency>
-
         <dependency>
           <groupId>org.jboss.arquillian.junit</groupId>
           <artifactId>arquillian-junit-container</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>jakarta.xml.bind</groupId>
           <artifactId>jakarta.xml.bind-api</artifactId>
         </dependency>
-
       </dependencies>
-
       <build>
         <testResources>
           <testResource>
@@ -452,25 +412,17 @@
                 <exclude>**/TestWarDeploymentWithBrokenBpmnXml.java</exclude>
                 <exclude>**/TestDeploymentWithDroolsTaskFails.java</exclude>
                 <exclude>**/TestProcessEnginesXmlFails.java</exclude>
-
                 <exclude>**/TestWarDeploymentWithProcessEnginePlugin.java</exclude>
-
                 <exclude>**/*_JBOSS.java</exclude>
                 <exclude>**/EjbPALifecycleCallbacksTest.java</exclude>
-
                 <exclude>**/PythonPaClassImportTest.java</exclude>
-
                 <exclude>**/MigrationContextSwitchBeansTest.java</exclude>
-
                 <exclude>**/ManagedJobExecutorTest.java</exclude>
-
                 <!-- TODO Please delete the following exclusions after the Tomcat 10 issue with Arquillian -->
                 <!-- See Relevant issue: https://github.com/camunda/camunda-bpm-platform/issues/4434 -->
                 <exclude>**/CallActivityContextSwitchTest.java</exclude>
                 <exclude>**/CdiBeanCallActivityResolutionTest.java</exclude>
-
                 <!-- TODO and weld-servlet-shaded is resolved with integration-tests-engine -->
-
               </excludes>
               <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
             </configuration>
@@ -478,7 +430,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>wildfly</id>
       <dependencies>
@@ -556,7 +507,6 @@
                 <!-- CAM-1778 -->
                 <exclude>**/TestWarDeploymentWithProcessEnginePlugin.java</exclude>
                 <exclude>**/TestWarDeploymentWithProcessEnginePlugin.exclude</exclude>
-
                 <exclude>**/SpringServletPATimerStartEventExpressionTest.java</exclude>
                 <!-- no Nashorn module on Wildfly -->
                 <exclude>**/*NashornTest.java</exclude>
@@ -567,7 +517,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>wildfly-domain</id>
       <dependencies>
@@ -641,7 +590,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>wildfly-servlet</id>
       <build>
@@ -680,7 +628,6 @@
                 <exclude>**/BusinessRuleTaskVersionTagTest.java</exclude>
                 <!-- CAM-1778 -->
                 <exludes>**/TestWarDeploymentWithProcessEnginePlugin.java</exludes>
-
                 <exclude>**/SpringServletPATimerStartEventExpressionTest.java</exclude>
               </excludes>
               <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
@@ -689,7 +636,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>distro</id>
       <activation>
@@ -760,7 +706,6 @@
         </plugins>
       </build>
     </profile>
-
     <!-- allows dropping all databases -->
     <profile>
       <id>clean-db</id>
@@ -827,5 +772,4 @@
       </build>
     </profile>
   </profiles>
-  <description>${project.name}</description>
 </project>

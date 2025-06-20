@@ -1,28 +1,23 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.webapp</groupId>
     <artifactId>operaton-webapp-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-webapp</artifactId>
   <packaging>war</packaging>
   <name>Operaton - Webapp - Assembly</name>
-
+  <description>${project.name}</description>
   <properties>
     <java.resources.override>src/main/runtime/default/resources</java.resources.override>
     <properties.override>src/main/runtime/default/config.properties</properties.override>
-
     <!-- generate a bom of compile time dependencies for the license book.
     Note: Every compile time dependency will end up in the license book. Please
     declare only dependencies that are actually needed -->
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -34,9 +29,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
-
     <!-- jee spec -->
     <dependency>
       <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
@@ -52,19 +45,15 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
-
-
     <!-- rest api -->
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
     </dependency>
-
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
@@ -85,13 +74,11 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <!-- rest api -->
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest-core</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -109,25 +96,21 @@
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <classifier>junit5</classifier>
     </dependency>
-
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-http</artifactId>
@@ -153,9 +136,7 @@
       <artifactId>mockito-junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <finalName>operaton-webapp</finalName>
     <resources>
@@ -167,14 +148,12 @@
         <filtering>true</filtering>
       </resource>
     </resources>
-
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>
         <filtering>true</filtering>
       </testResource>
     </testResources>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -211,7 +190,7 @@
             <phase>generate-resources</phase>
             <configuration>
               <target>
-                <mkdir dir="${project.basedir}/target/webapp" />
+                <mkdir dir="${project.basedir}/target/webapp"/>
               </target>
             </configuration>
             <goals>
@@ -244,7 +223,6 @@
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>sonatype-oss-release</id>
@@ -254,7 +232,6 @@
         <skip-zip-frontend-sources>true</skip-zip-frontend-sources>
       </properties>
     </profile>
-
     <profile>
       <id>os</id>
       <activation>
@@ -267,7 +244,6 @@
         <exec.arg>/c</exec.arg>
       </properties>
     </profile>
-
     <profile>
       <id>develop</id>
       <dependencies>
@@ -335,8 +311,8 @@
                 <phase>generate-resources</phase>
                 <configuration>
                   <tasks>
-                    <mkdir dir="${project.basedir}/target/webapp" />
-                    <mkdir dir="${project.basedir}/target/operaton-welcome" />
+                    <mkdir dir="${project.basedir}/target/webapp"/>
+                    <mkdir dir="${project.basedir}/target/operaton-welcome"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -398,14 +374,12 @@
         <java.resources.override>src/main/runtime/develop/resources</java.resources.override>
       </properties>
     </profile>
-
     <profile>
       <id>h2</id>
       <properties>
         <project.parent.basedir>./</project.parent.basedir>
       </properties>
     </profile>
-
     <profile>
       <id>dev-e2e</id>
       <dependencies>
@@ -425,8 +399,8 @@
                 <phase>generate-resources</phase>
                 <configuration>
                   <tasks>
-                    <mkdir dir="${project.basedir}/target/webapp" />
-                    <mkdir dir="${project.basedir}/target/operaton-welcome" />
+                    <mkdir dir="${project.basedir}/target/webapp"/>
+                    <mkdir dir="${project.basedir}/target/operaton-welcome"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -545,7 +519,6 @@
         <java.resources.override>src/main/runtime/test/resources</java.resources.override>
       </properties>
     </profile>
-
     <!-- database QA profiles -->
     <profile>
       <id>database</id>
@@ -578,7 +551,6 @@
         </plugins>
       </build>
     </profile>
-
     <!-- profile for running cockpit testsuite with database table prefix -->
     <profile>
       <id>db-table-prefix</id>
@@ -592,7 +564,6 @@
           <classifier>tests</classifier>
         </dependency>
       </dependencies>
-
       <build>
         <plugins>
           <plugin>
@@ -606,7 +577,7 @@
                 </goals>
                 <configuration>
                   <target>
-                    <copy file="target/test-classes/operaton.cfg.prefix.xml" tofile="target/test-classes/operaton.cfg.xml" overwrite="true" />
+                    <copy file="target/test-classes/operaton.cfg.prefix.xml" tofile="target/test-classes/operaton.cfg.xml" overwrite="true"/>
                   </target>
                 </configuration>
               </execution>
@@ -615,7 +586,6 @@
         </plugins>
       </build>
     </profile>
-
     <!--  check history audit -->
     <profile>
       <id>cfghistoryaudit</id>
@@ -623,7 +593,6 @@
         <history.level>audit</history.level>
       </properties>
     </profile>
-
     <!--  check history activity -->
     <profile>
       <id>cfghistoryactivity</id>
@@ -631,7 +600,6 @@
         <history.level>activity</history.level>
       </properties>
     </profile>
-
     <!--  check history none -->
     <profile>
       <id>cfghistorynone</id>
@@ -639,14 +607,12 @@
         <history.level>none</history.level>
       </properties>
     </profile>
-
     <profile>
       <id>cfgJdbcBatchProcessingOff</id>
       <properties>
         <jdbcBatchProcessing>false</jdbcBatchProcessing>
       </properties>
     </profile>
-
     <profile>
       <id>license-header-check</id>
       <build>
@@ -658,8 +624,5 @@
         </plugins>
       </build>
     </profile>
-
   </profiles>
-
-  <description>${project.name}</description>
 </project>

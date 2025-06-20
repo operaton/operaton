@@ -1,29 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa</artifactId>
-  <groupId>org.operaton.bpm.qa</groupId>
-
-  <packaging>pom</packaging>
-  <name>Operaton - QA</name>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <groupId>org.operaton.bpm.qa</groupId>
+  <artifactId>operaton-qa</artifactId>
+  <packaging>pom</packaging>
+  <name>Operaton - QA</name>
+  <description>${project.name}</description>
   <properties>
     <!--
       all maven properties used in QA/CI
     -->
     <!-- override mail port so subethawiser does not try to bind itself on port 25 -->
     <mail.server.port>5025</mail.server.port>
-
     <!-- wildfly -->
     <wildfly.runtime.location>../wildfly-runtime/target/server/wildfly-${version.wildfly}</wildfly.runtime.location>
-
     <jboss.http.port>38080</jboss.http.port>
     <jboss.ajp.port>38009</jboss.ajp.port>
     <jboss.https.port>38443</jboss.https.port>
@@ -35,7 +31,6 @@
     <jboss.txn-recovery-environment.port>34712</jboss.txn-recovery-environment.port>
     <jboss.txn-status-manager.port>34713</jboss.txn-status-manager.port>
     <jboss.mail-smtp.port>25</jboss.mail-smtp.port>
-
     <!-- Tomcat -->
     <tomcat.connector.http.port>48080</tomcat.connector.http.port>
     <tomcat.connector.http.redirectPort>48443</tomcat.connector.http.redirectPort>
@@ -44,7 +39,6 @@
     <tomcat.server.port>48005</tomcat.server.port>
     <tomcat.runtime.location>../tomcat-runtime/target/server/apache-tomcat-${version.tomcat}</tomcat.runtime.location>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -56,13 +50,10 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <modules>
     <module>ensure-clean-db-plugin</module>
   </modules>
-
   <profiles>
-
     <profile>
       <id>distro</id>
       <activation>
@@ -79,9 +70,7 @@
         <module>large-data-tests</module>
       </modules>
     </profile>
-
     <!-- Server profiles -->
-
     <profile>
       <id>wildfly</id>
       <modules>
@@ -94,30 +83,25 @@
         <module>wildfly-runtime</module>
       </modules>
     </profile>
-
     <profile>
       <id>tomcat</id>
       <modules>
         <module>tomcat-runtime</module>
       </modules>
     </profile>
-
     <!-- Testsuite profiles -->
-
     <profile>
       <id>webapps-integration</id>
       <modules>
         <module>integration-tests-webapps</module>
       </modules>
     </profile>
-
     <profile>
       <id>engine-integration</id>
       <modules>
         <module>integration-tests-engine</module>
       </modules>
     </profile>
-
     <profile>
       <id>instance-migration</id>
       <modules>
@@ -125,7 +109,6 @@
         <module>test-db-instance-migration</module>
       </modules>
     </profile>
-
     <profile>
       <id>rolling-update</id>
       <modules>
@@ -133,7 +116,6 @@
         <module>test-db-rolling-update</module>
       </modules>
     </profile>
-
     <profile>
       <id>old-engine</id>
       <modules>
@@ -141,6 +123,4 @@
       </modules>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

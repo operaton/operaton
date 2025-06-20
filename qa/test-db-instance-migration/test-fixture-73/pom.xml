@@ -1,26 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.qa.upgrade</groupId>
     <artifactId>operaton-qa-db-instance-migration</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-qa-upgrade-test-fixture-73</artifactId>
-  <packaging>jar</packaging>
   <name>Operaton - QA - upgrade - instance migration - test fixture - 7.3.0</name>
-
-  <!-- Due to https://issues.apache.org/jira/browse/MRELEASE-799 the release test fails when
-     the version is managed in a property. Thus we use explicit versions everywhere. -->
+  <description>${project.name}</description>
   <properties>
-<!--     <operaton.version.current>7.3.0</operaton.version.current> -->
+    <!--     <operaton.version.current>7.3.0</operaton.version.current> -->
     <operaton.version.previous>7.2.0</operaton.version.previous>
-
     <version.h2>${version.h2-v1}</version.h2>
     <version.mariadb>${version.mariadb-v1}</version.mariadb>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -32,20 +26,19 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
+  <!-- Due to https://issues.apache.org/jira/browse/MRELEASE-799 the release test fails when
+     the version is managed in a property. Thus we use explicit versions everywhere. -->
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.qa.upgrade</groupId>
       <artifactId>operaton-qa-upgrade-scenario-util</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
-
   <build>
     <resources>
       <resource>
@@ -60,7 +53,6 @@
       </testResource>
     </testResources>
   </build>
-
   <profiles>
     <profile>
       <id>instance-migration</id>
@@ -75,18 +67,14 @@
                 <phase>generate-test-sources</phase>
                 <configuration>
                   <target>
-
                     <!-- create the SQL scripts so that the files exist even if they do not exist in the distribution. (this can be the case if there are no db
                       upgrades (yet) for a particular release ) -->
-
-                    <mkdir dir="${project.build.directory}/scripts-current/sql/upgrade/" />
-
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" />
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" />
-
+                    <mkdir dir="${project.build.directory}/scripts-current/sql/upgrade/"/>
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql"/>
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql"/>
                     <!-- patches for current minor version if any -->
                     <!-- 7.2.4 to 7.2.5 -->
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.4_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.5.sql" />
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.4_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.5.sql"/>
                   </target>
                 </configuration>
                 <goals>
@@ -98,12 +86,9 @@
                 <phase>generate-test-resources</phase>
                 <configuration>
                   <target>
-
                     <!-- copy mysql upgrade scripts from 7.3 for mariadb as with 7.5 mariadb has own scripts -->
                     <!-- TODO: if 7.2 patch scripts for mysql are created they probably also have to be copied for mariadb -->
-
-                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" overwrite="true" />
-
+                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" overwrite="true"/>
                   </target>
                 </configuration>
                 <goals>
@@ -112,7 +97,6 @@
               </execution>
             </executions>
           </plugin>
-
           <!-- provide sql scripts -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -139,7 +123,6 @@
               </execution>
             </executions>
           </plugin>
-
           <!-- parse version properties from qa/pom.xml -->
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
@@ -167,7 +150,6 @@
               </execution>
             </executions>
           </plugin>
-
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>sql-maven-plugin</artifactId>
@@ -184,7 +166,6 @@
                 <configuration>
                   <srcFiles>
                     <!-- now patch old version of the schema -->
-
                     <!-- 7.2.4 to 7.2.5 -->
                     <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.4_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.5.sql</srcFile>
                   </srcFiles>
@@ -208,7 +189,6 @@
               </execution>
             </executions>
           </plugin>
-
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
@@ -236,6 +216,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

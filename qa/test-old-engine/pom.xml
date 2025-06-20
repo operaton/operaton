@@ -1,21 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-qa-old-engine</artifactId>
-  <packaging>jar</packaging>
   <name>Operaton - QA - test new schema with old engine</name>
-
+  <description>${project.name}</description>
   <properties>
     <operaton.old.engine.version>7.22.0</operaton.old.engine.version>
     <surefire.memArgs>-Xmx2g -XX:MetaspaceSize=128m</surefire.memArgs>
   </properties>
-
   <build>
     <testSourceDirectory>${project.build.directory}/engine-test-sources</testSourceDirectory>
     <testResources>
@@ -33,7 +30,6 @@
       </testResource>
     </testResources>
   </build>
-
   <profiles>
     <profile>
       <id>distro</id>
@@ -52,7 +48,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>mysql</id>
       <build>
@@ -71,7 +66,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>mariadb</id>
       <build>
@@ -90,10 +84,8 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>old-engine</id>
-
       <dependencyManagement>
         <dependencies>
           <dependency>
@@ -113,86 +105,72 @@
           </dependency>
         </dependencies>
       </dependencyManagement>
-
       <dependencies>
-       <dependency>
+        <dependency>
           <groupId>com.fasterxml.uuid</groupId>
           <artifactId>java-uuid-generator</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.hamcrest</groupId>
           <artifactId>hamcrest-library</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-test</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>com.h2database</groupId>
           <artifactId>h2</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>commons-collections</groupId>
           <artifactId>commons-collections</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-email</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.subethamail</groupId>
           <artifactId>subethasmtp-wiser</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>commons-io</groupId>
           <artifactId>commons-io</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.apache.groovy</groupId>
           <artifactId>groovy-jsr223</artifactId>
         </dependency>
-
         <dependency>
           <groupId>org.python</groupId>
           <artifactId>jython</artifactId>
           <scope>runtime</scope>
         </dependency>
-
         <dependency>
           <groupId>org.jruby</groupId>
           <artifactId>jruby-complete</artifactId>
           <scope>runtime</scope>
         </dependency>
-
         <dependency>
           <groupId>org.operaton.bpm.distro</groupId>
           <artifactId>operaton-sql-scripts</artifactId>
           <version>${version.operaton.dbscheme}</version>
           <type>test-jar</type>
         </dependency>
-
         <dependency>
           <groupId>org.operaton.bpm</groupId>
           <artifactId>operaton-engine</artifactId>
@@ -203,51 +181,43 @@
           <artifactId>mockito-core</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-lang3</artifactId>
           <version>3.17.0</version>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.assertj</groupId>
           <artifactId>assertj-core</artifactId>
           <version>2.9.1</version>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.operaton.commons</groupId>
           <artifactId>operaton-commons-testing</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.wiremock</groupId>
           <artifactId>wiremock</artifactId>
           <scope>test</scope>
         </dependency>
-        
         <dependency>
           <groupId>org.graalvm.js</groupId>
           <artifactId>js</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.graalvm.js</groupId>
           <artifactId>js-scriptengine</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>jakarta.transaction</groupId>
           <artifactId>jakarta.transaction-api</artifactId>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.jboss</groupId>
           <artifactId>jboss-vfs</artifactId>
@@ -255,15 +225,12 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-
       <build>
         <plugins>
-
           <!--UNPACKING-->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
-
             <executions>
               <!--UNPACK OLD TEST SUITE-->
               <execution>
@@ -284,7 +251,6 @@
                   </artifactItems>
                 </configuration>
               </execution>
-
               <!--UNPACK NEW SQL SCRIPTS-->
               <execution>
                 <id>unpack-new-scripts</id>
@@ -306,15 +272,12 @@
                 </configuration>
               </execution>
             </executions>
-
           </plugin>
-
           <!--SQL EXECUTION-->
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>sql-maven-plugin</artifactId>
             <executions>
-
               <!--DROP DB IF PRESENT-->
               <execution>
                 <id>drop-db-if-present</id>
@@ -331,7 +294,6 @@
                   <onError>continue</onError>
                 </configuration>
               </execution>
-
               <!--CREATE NEW SCHEMA-->
               <execution>
                 <id>create-new-schema</id>
@@ -346,7 +308,6 @@
                   </srcFiles>
                 </configuration>
               </execution>
-
               <!--DROP DB AFTER TEST-->
               <execution>
                 <id>drop-db</id>
@@ -361,46 +322,39 @@
                   </srcFiles>
                 </configuration>
               </execution>
-
             </executions>
           </plugin>
-
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <excludes>
                 <exclude>**/*TestCase.java</exclude>
-
                 <exclude>**/ClassPathScannerTest.java</exclude>
                 <exclude>**/MultipleClasspathRootsClassPathScannerTest.java</exclude>
-
-                <exclude>**/WSDLImporterTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-315 -->
-                <exclude>**/JobExecutorTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-427 -->
-                <exclude>**/HistoricTaskInstanceUpdateTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-485 -->
+                <exclude>**/WSDLImporterTest.java</exclude>
+                <!-- http://jira.codehaus.org/browse/ACT-315 -->
+                <exclude>**/JobExecutorTest.java</exclude>
+                <!-- http://jira.codehaus.org/browse/ACT-427 -->
+                <exclude>**/HistoricTaskInstanceUpdateTest.java</exclude>
+                <!-- http://jira.codehaus.org/browse/ACT-485 -->
                 <exclude>**/RepeatingServiceTaskTest.java</exclude>
                 <!--Exclude test class, because 4 tests fail and are removed on later patch versions -->
                 <exclude>**/MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest.java</exclude>
-
                 <!-- commons-email 1.5 update -->
                 <exclude>**/AsyncEmailTaskTest.java</exclude>
                 <exclude>**/EmailSendTaskTest.java</exclude>
                 <exclude>**/EmailServiceTaskTest.java</exclude>
-
                 <!-- Exclude test classes because resources are not available in the old-engine classpath -->
                 <exclude>**/ProcessDiagramRetrievalTest.java</exclude>
                 <exclude>**/ProcessDiagramParseTest.java</exclude>
                 <exclude>**/ConnectionPersistenceExceptionTest.java</exclude>
-
                 <!-- Exclude test class because old-engine tests old engine version with new db schema version -->
                 <exclude>**/SchemaLogEnsureSqlScriptTest.java</exclude>
-
                 <exclude>**/ManagementServiceTableCountTest.java</exclude>
-
                 <!-- The test is not relevant in `old-engine` setup since the feature has been removed -->
                 <!-- See https://github.com/camunda/camunda-bpm-platform/pull/4544#discussion_r1728748399 -->
                 <exclude>**/ConcurrentTelemetryConfigurationTest.java</exclude>
-
                 <!-- The test is not relevant in `old-engine` setup and lacks necessary resource files -->
                 <exclude>**DatabaseNamingConsistencyTest.java</exclude>
               </excludes>
@@ -408,11 +362,8 @@
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
             </configuration>
           </plugin>
-
         </plugins>
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

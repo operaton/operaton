@@ -1,19 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-engine-rest-openapi</artifactId>
-  <name>Operaton - Engine - REST - OpenAPI</name>
-  <packaging>jar</packaging>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <artifactId>operaton-engine-rest-openapi</artifactId>
+  <name>Operaton - Engine - REST - OpenAPI</name>
+  <description>${project.name}</description>
   <properties>
     <generated-directory>${project.build.directory}/generated-sources/openapi-json</generated-directory>
     <generated-file>openapi.json</generated-file>
-
     <openapi.generator.version>7.11.0</openapi.generator.version>
     <!-- properties versions used by the openapi client -->
     <!-- update them during openapi.generator version update  -->
@@ -24,7 +22,6 @@
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <surefire.forkCount>1</surefire.forkCount>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -34,16 +31,13 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest-openapi-generator</artifactId>
       <scope>test</scope>
       <version>${project.version}</version>
     </dependency>
-
     <!-- test dependencies -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -64,7 +58,6 @@
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- dependencies required by the openapi client -->
     <!-- update them during openapi-generator-maven-plugin version update  -->
     <dependency>
@@ -78,8 +71,8 @@
       <groupId>org.openapitools</groupId>
       <artifactId>jackson-databind-nullable</artifactId>
       <version>0.2.6</version>
-	</dependency>
-	<dependency>
+    </dependency>
+    <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>jsr305</artifactId>
       <version>3.0.2</version>
@@ -126,7 +119,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -169,7 +161,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -202,7 +193,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.openapitools</groupId>
         <artifactId>openapi-generator-maven-plugin</artifactId>
@@ -226,10 +216,8 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>javadocs</id>
@@ -243,7 +231,6 @@
               <skip>true</skip>
             </configuration>
           </plugin>
-          
           <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
             <executions>
@@ -260,6 +247,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

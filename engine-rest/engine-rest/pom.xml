@@ -1,22 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-engine-rest-core</artifactId>
-  <name>Operaton - Engine - REST</name>
-  <packaging>jar</packaging>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <artifactId>operaton-engine-rest-core</artifactId>
+  <name>Operaton - Engine - REST</name>
+  <description>${project.name}</description>
   <properties>
     <!-- pin tomcat version for engine-rest -->
     <version.tomcat>10.1.42</version.tomcat>
     <rest.http.port>38080</rest.http.port>
     <surefire.memArgs>-Xmx2g</surefire.memArgs>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -28,7 +26,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>commons-fileupload</groupId>
@@ -45,30 +42,25 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
       <artifactId>jackson-jakarta-rs-json-provider</artifactId>
       <version>2.19.1</version>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
     </dependency>
-
     <!-- provided deps -->
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
@@ -80,18 +72,15 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-logging</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>jakarta.ws.rs</groupId>
       <artifactId>jakarta.ws.rs-api</artifactId>
     </dependency>
-
     <!--
       needed for offline shrinkwrap (in particular CustomJacksonDateFormatTest),
       BOMs must be installed before this module is built
@@ -103,7 +92,6 @@
       <type>pom</type>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-core-internal-dependencies</artifactId>
@@ -111,38 +99,33 @@
       <type>pom</type>
       <scope>test</scope>
     </dependency>
-
     <!-- test -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter</artifactId>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <classifier>junit5</classifier>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-bpm-junit5</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- only included to prevent java.lang.ClassNotFoundException: org.apache.jasper.servlet.JspServlet -->
     <!-- removing this dep. will not break the tests, but makes them "ugly"-->
     <dependency>
@@ -151,7 +134,6 @@
       <version>${version.tomcat}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.jboss.shrinkwrap.resolver</groupId>
       <artifactId>shrinkwrap-resolver-depchain</artifactId>
@@ -159,43 +141,36 @@
       <scope>test</scope>
       <type>pom</type>
     </dependency>
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpcore</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
@@ -207,60 +182,50 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- Tomcat for resteasy and wink -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
-
-   <dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
       <scope>test</scope>
-   </dependency>
-
-   <dependency>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
       <scope>test</scope>
-   </dependency>
-
+    </dependency>
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-testing</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-core</artifactId>
       <version>${version.tomcat}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-logging-juli</artifactId>
       <version>7.0.50</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <testResources>
       <testResource>
@@ -268,7 +233,6 @@
         <filtering>true</filtering>
       </testResource>
     </testResources>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -284,7 +248,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -296,7 +259,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -304,7 +266,6 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -314,7 +275,6 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.jboss.shrinkwrap.resolver</groupId>
         <artifactId>shrinkwrap-resolver-maven-plugin</artifactId>
@@ -328,7 +288,6 @@
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>distro</id>
@@ -351,18 +310,15 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>resteasy</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-
       <properties>
         <version.netty>4.1.89.Final</version.netty>
         <version.undertow>2.3.0.Final</version.undertow>
       </properties>
-
       <dependencies>
         <dependency>
           <groupId>io.undertow</groupId>
@@ -392,7 +348,6 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-
       <build>
         <plugins>
           <plugin>
@@ -427,7 +382,9 @@
                 </goals>
                 <configuration>
                   <resources>
-                    <resource><directory>${project.build.directory}/generated-test-resources/jakarta-resteasy</directory></resource>
+                    <resource>
+                      <directory>${project.build.directory}/generated-test-resources/jakarta-resteasy</directory>
+                    </resource>
                   </resources>
                 </configuration>
               </execution>
@@ -533,7 +490,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>wildfly-compatibility</id>
       <properties>
@@ -543,9 +499,7 @@
         <version.resteasy>3.6.1.SP2</version.resteasy>
         <version.netty>4.2.1.Final</version.netty>
       </properties>
-
       <dependencies>
-
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
           <artifactId>resteasy-jaxrs</artifactId>
@@ -558,14 +512,12 @@
             </exclusion>
           </exclusions>
         </dependency>
-
         <dependency>
           <groupId>io.netty</groupId>
           <artifactId>netty-all</artifactId>
           <version>${version.netty}</version>
           <scope>test</scope>
         </dependency>
-
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
           <artifactId>resteasy-netty4</artifactId>
@@ -633,7 +585,5 @@
         </plugins>
       </build>
     </profile>
-
   </profiles>
-  <description>${project.name}</description>
 </project>

@@ -1,78 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.spin</groupId>
     <artifactId>operaton-spin-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-spin-core</artifactId>
   <name>Operaton - Spin - Core</name>
-
+  <description>${project.name}</description>
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-logging</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-utils</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.openjdk.nashorn</groupId>
       <artifactId>nashorn-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby-complete</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
       <scope>test</scope>
     </dependency>
-    
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
       <scope>test</scope>
     </dependency>
-    
-
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>net.javacrumbs.json-unit</groupId>
       <artifactId>json-unit-fluent</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <profiles>
     <!-- check for api differences between latest minor release -->
     <profile>
@@ -123,19 +109,18 @@
       </build>
     </profile>
   </profiles>
-
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <configuration>
-         <instructions>
-          <Import-Package>
+          <instructions>
+            <Import-Package>
             org.junit*;resolution:=optional,
             *
           </Import-Package>
-         </instructions>
+          </instructions>
         </configuration>
         <executions>
           <execution>
@@ -171,5 +156,4 @@
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

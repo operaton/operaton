@@ -1,18 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <groupId>org.operaton.bpm.juel</groupId>
   <artifactId>operaton-juel</artifactId>
   <name>Operaton - JUEL</name>
-
+  <description>${project.name}</description>
   <properties>
     <!-- We only wrap and maintain external code in here that has
     its own license header already -->
@@ -21,7 +19,6 @@
     a dependency BOM for the license book -->
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -33,7 +30,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>jakarta.el</groupId>
@@ -41,6 +37,4 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

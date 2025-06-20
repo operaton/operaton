@@ -1,23 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
     <relativePath>../../database</relativePath>
   </parent>
-
   <groupId>org.operaton.bpm.run</groupId>
   <artifactId>operaton-bpm-run-root</artifactId>
+  <packaging>pom</packaging>
   <name>Operaton - Run - Root</name>
   <description>This is the root of Operaton Run</description>
-  <packaging>pom</packaging>
-
   <dependencyManagement>
     <dependencies>
-
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
@@ -25,22 +21,18 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-
       <dependency>
         <groupId>org.graalvm.js</groupId>
         <artifactId>js</artifactId>
         <version>${version.graal.js}</version>
       </dependency>
-
       <dependency>
         <groupId>org.graalvm.js</groupId>
         <artifactId>js-scriptengine</artifactId>
         <version>${version.graal.js}</version>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
-
   <profiles>
     <profile>
       <id>distro</id>
@@ -66,5 +58,4 @@
       </modules>
     </profile>
   </profiles>
-
 </project>

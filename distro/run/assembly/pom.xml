@@ -1,24 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-bpm-run-assembly</artifactId>
-  <name>Operaton - Run - Assembly</name>
   <packaging>pom</packaging>
-  
+  <name>Operaton - Run - Assembly</name>
+  <description>${project.name}</description>
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
     Note: Every compile time dependency will end up in the license book. Please
     declare only dependencies that are actually needed -->
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <!-- override the Spring Boot Groovy version with the Operaton Groovy version -->
@@ -31,7 +28,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
   <dependencies>
     <!-- make sure the assembly runs after the REST module -->
     <dependency>
@@ -47,7 +43,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <!-- make sure this runs after the oauth2 module -->
     <dependency>
       <groupId>org.operaton.bpm.run</groupId>
@@ -62,7 +57,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.run</groupId>
       <artifactId>operaton-bpm-run-modules-example-invoice</artifactId>
@@ -76,7 +70,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.run</groupId>
       <artifactId>operaton-bpm-run-core</artifactId>
@@ -89,19 +82,16 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>license-book</artifactId>
       <version>${project.version}</version>
       <type>zip</type>
     </dependency>
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
@@ -126,9 +116,7 @@
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-datetime</artifactId>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -158,6 +146,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

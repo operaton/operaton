@@ -2,9 +2,6 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <name>Operaton - Engine</name>
-  <artifactId>operaton-engine</artifactId>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
@@ -12,6 +9,54 @@
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
+  <artifactId>operaton-engine</artifactId>
+  <name>Operaton - Engine</name>
+  <description>${project.name}</description>
+
+  <properties>
+    <test.includes />
+    <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
+    <test.excludes>$.</test.excludes>
+    <skipTests.operaton-engine>false</skipTests.operaton-engine>
+    <history.level>full</history.level>
+    <mail.server.port>5025</mail.server.port>
+    <authorizationCheckRevokes>auto</authorizationCheckRevokes>
+    <jdbcBatchProcessing>true</jdbcBatchProcessing>
+
+    <!-- We shade artifacts into the jar, so we need to generate a dependency BOM
+    for the license book -->
+    <skip-third-party-bom>false</skip-third-party-bom>
+
+    <operaton.artifact>
+      org.operaton.bpm
+    </operaton.artifact>
+    <operaton.osgi.export.pkg>
+      !${operaton.artifact}.engine.variable.*,
+      ${operaton.artifact},
+      ${operaton.artifact}.application.*,
+      ${operaton.artifact}.container.*,
+      ${operaton.artifact}.engine.*
+    </operaton.osgi.export.pkg>
+    <operaton.osgi.import.additional>
+      !com.google.gson.*,
+      junit*;resolution:=optional,
+      org.junit*;resolution:=optional,
+      com.sun*;resolution:=optional,
+      javax.persistence*;resolution:=optional,
+      javax.servlet*;resolution:=optional,
+      javax.transaction*;resolution:=optional,
+      javax.ejb*;resolution:=optional,
+      javax.xml*;resolution:=optional,
+      javax.mail*;resolution:=optional,
+      org.apache.catalina*;resolution:=optional,
+      org.apache.commons.mail;resolution:=optional,
+      org.apache.tools.ant*;resolution:=optional,
+      org.apache.xerces*;resolution:=optional,
+      org.springframework*;resolution:=optional,
+      com.fasterxml*;resolution:=optional,
+      org.jboss.vfs*;resolution:=optional
+    </operaton.osgi.import.additional>
+  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -336,50 +381,6 @@
   </dependencies>
 
 
-  <properties>
-    <test.includes />
-    <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
-    <test.excludes>$.</test.excludes>
-    <skipTests.operaton-engine>false</skipTests.operaton-engine>
-    <history.level>full</history.level>
-    <mail.server.port>5025</mail.server.port>
-    <authorizationCheckRevokes>auto</authorizationCheckRevokes>
-    <jdbcBatchProcessing>true</jdbcBatchProcessing>
-
-    <!-- We shade artifacts into the jar, so we need to generate a dependency BOM
-    for the license book -->
-    <skip-third-party-bom>false</skip-third-party-bom>
-
-    <operaton.artifact>
-      org.operaton.bpm
-    </operaton.artifact>
-    <operaton.osgi.export.pkg>
-      !${operaton.artifact}.engine.variable.*,
-      ${operaton.artifact},
-      ${operaton.artifact}.application.*,
-      ${operaton.artifact}.container.*,
-      ${operaton.artifact}.engine.*
-    </operaton.osgi.export.pkg>
-    <operaton.osgi.import.additional>
-      !com.google.gson.*,
-      junit*;resolution:=optional,
-      org.junit*;resolution:=optional,
-      com.sun*;resolution:=optional,
-      javax.persistence*;resolution:=optional,
-      javax.servlet*;resolution:=optional,
-      javax.transaction*;resolution:=optional,
-      javax.ejb*;resolution:=optional,
-      javax.xml*;resolution:=optional,
-      javax.mail*;resolution:=optional,
-      org.apache.catalina*;resolution:=optional,
-      org.apache.commons.mail;resolution:=optional,
-      org.apache.tools.ant*;resolution:=optional,
-      org.apache.xerces*;resolution:=optional,
-      org.springframework*;resolution:=optional,
-      com.fasterxml*;resolution:=optional,
-      org.jboss.vfs*;resolution:=optional
-    </operaton.osgi.import.additional>
-  </properties>
 
   <build>
     <!-- filter test configurations to inject properties -->
@@ -1025,5 +1026,4 @@
 
   </profiles>
 
-  <description>${project.name}</description>
 </project>

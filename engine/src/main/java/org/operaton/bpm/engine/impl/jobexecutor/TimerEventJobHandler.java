@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.TimerJobConfiguration;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 
 
 /**
@@ -106,9 +105,4 @@ public abstract class TimerEventJobHandler implements JobHandler<TimerJobConfigu
 
   }
 
-  @Override
-  public void onDelete(TimerJobConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
-}
+ }

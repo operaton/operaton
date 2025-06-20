@@ -143,6 +143,9 @@
                     <driver name="postgresql" module="org.postgresql.postgresql">
                         <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
                     </driver>
+                    <driver name="sqlserver" module="com.microsoft.sqlserver.mssql-jdbc">
+                        <xa-datasource-class>com.microsoft.sqlserver.jdbc.SQLServerXADataSource</xa-datasource-class>
+                    </driver>
                 </drivers>
             </datasources>
         </subsystem>

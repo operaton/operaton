@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 
@@ -42,16 +42,9 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     Comment createdComment = createComment(TASK_ID, null, "aComment");
     var createdCommentId = createdComment.getId();
 
-    try {
-      // when
-      taskService.deleteTaskComment(TASK_ID, createdCommentId);
-      fail("Exception expected: It should not be possible to delete a comment.");
-    } catch (AuthorizationException e) {
-      // then
-      testRule.assertTextPresent(
-          "The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource 'myTask' of type 'Task' or 'UPDATE' permission on resource 'myTask' of type 'Task'",
-          e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.deleteTaskComment(TASK_ID, createdCommentId), "Exception expected: It should not be possible to delete a comment.")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource 'myTask' of type 'Task' or 'UPDATE' permission on resource 'myTask' of type 'Task'");
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -81,16 +74,9 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     createTask(TASK_ID);
     createComment(TASK_ID, null, "aComment");
 
-    try {
-      // when
-      taskService.deleteTaskComments(TASK_ID);
-      fail("Exception expected: It should not be possible to delete a comment.");
-    } catch (AuthorizationException e) {
-      // then
-      testRule.assertTextPresent(
-          "The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource 'myTask' of type 'Task' or 'UPDATE' permission on resource 'myTask' of type 'Task'",
-          e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.deleteTaskComments(TASK_ID), "Exception expected: It should not be possible to delete a comment.")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource 'myTask' of type 'Task' or 'UPDATE' permission on resource 'myTask' of type 'Task'");
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -123,16 +109,9 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     Comment createdComment = createComment(TASK_ID, null, "originalComment");
     var createdCommentId = createdComment.getId();
 
-    try {
-      // when
-      taskService.updateTaskComment(TASK_ID, createdCommentId, "updateMessage");
-      fail("Exception expected: It should not be possible to delete a comment.");
-    } catch (AuthorizationException e) {
-      // then
-      testRule.assertTextPresent(
-          "The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource 'myTask' of type 'Task' or 'UPDATE' permission on resource 'myTask' of type 'Task'",
-          e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.updateTaskComment(TASK_ID, createdCommentId, "updateMessage"), "Exception expected: It should not be possible to delete a comment.")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource 'myTask' of type 'Task' or 'UPDATE' permission on resource 'myTask' of type 'Task'");
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -167,16 +146,9 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     var taskId = selectSingleTask().getId();
     var createdCommentId = createComment(taskId, processInstance.getId(), "aComment").getId();
 
-    try {
-      // when
-      taskService.deleteTaskComment(taskId, createdCommentId);
-      fail("Exception expected: It should not be possible to delete a comment.");
-    } catch (AuthorizationException e) {
-      // then
-      testRule.assertTextPresent(
-          "The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource",
-          e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.deleteTaskComment(taskId, createdCommentId), "Exception expected: It should not be possible to delete a comment.")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource");
   }
 
   @Test
@@ -206,16 +178,10 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     var taskId = task.getId();
     createComment(taskId, processInstance.getId(), "aComment");
 
-    try {
-      // when
-      taskService.deleteTaskComments(taskId);
-      fail("Exception expected: It should not be possible to delete a comment.");
-    } catch (AuthorizationException e) {
-      // then
-      testRule.assertTextPresent(
-          "The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource",
-          e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.deleteTaskComments(taskId), "Exception expected: It should not be possible to delete a comment.")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource");
+
   }
 
   @Test
@@ -245,16 +211,10 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     var taskId = selectSingleTask().getId();
     var createdCommentId = createComment(taskId, processInstance.getId(), "originalComment").getId();
 
-    try {
-      // when
-      taskService.updateTaskComment(taskId, createdCommentId, "updateMessage");
-      fail("Exception expected: It should not be possible to delete a comment.");
-    } catch (AuthorizationException e) {
-      // then
-      testRule.assertTextPresent(
-          "The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource",
-          e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.updateTaskComment(taskId, createdCommentId, "updateMessage"), "Exception expected: It should not be possible to delete a comment.")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource");
+
   }
 
   @Test

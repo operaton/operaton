@@ -817,14 +817,10 @@ class CaseServiceCaseInstanceTest {
 
     caseService.completeCaseExecution(caseInstanceId);
 
-    try {
-      // when
-      caseService.terminateCaseExecution(caseInstanceId);
-      fail("It should not be possible to terminate a task.");
-    } catch (NotAllowedException e) {
-      boolean result = e.getMessage().contains("The case execution must be in state 'active' to terminate");
-      assertThat(result).isTrue();
-    }
+    assertThatThrownBy(() -> caseService.terminateCaseExecution(caseInstanceId), "It should not be possible to terminate a task.")
+        .isInstanceOf(NotAllowedException.class)
+        .hasMessageContaining("The case execution must be in state 'active' to terminate");
+
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

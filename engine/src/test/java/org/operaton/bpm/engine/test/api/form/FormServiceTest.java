@@ -177,12 +177,7 @@ class FormServiceTest {
 
   @Test
   void testGetTaskFormNullTaskId() {
-    try {
-      formService.getRenderedTaskForm(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // Expected Exception
-    }
+    assertThatThrownBy(() -> formService.getRenderedTaskForm(null), "ProcessEngineException expected").isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

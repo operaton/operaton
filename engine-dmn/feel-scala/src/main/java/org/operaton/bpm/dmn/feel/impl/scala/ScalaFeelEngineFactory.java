@@ -1,5 +1,7 @@
 /*
- * Copyright 2025 the Operaton contributors.
+ * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+ * under one or more contributor license agreements.
+ * Modifications Copyright 2025 the Operaton contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

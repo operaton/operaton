@@ -131,7 +131,7 @@ class PropertyHelperTest {
     Map<String, String> propertiesToSet = new HashMap<>();
     propertiesToSet.put("aNonExistingProperty", "someValue");
 
-    assertThatThrownBy(() -> PropertyHelper.applyProperties(engineConfiguration, propertiesToSet), fail("Exception expected"))
+    assertThatThrownBy(() -> PropertyHelper.applyProperties(engineConfiguration, propertiesToSet), "Exception expected")
         .isInstanceOf(Exception.class);
   }
 

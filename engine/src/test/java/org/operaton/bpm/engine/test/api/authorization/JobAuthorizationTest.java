@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
@@ -23,12 +24,11 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.util.Date;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -333,17 +333,13 @@ class JobAuthorizationTest extends AuthorizationTest {
     disableAuthorization();
     String jobId = selectJobByProcessInstanceId(processInstanceId).getId();
 
-    try {
-      // when
-      managementService.getJobExceptionStacktrace(jobId);
-      fail("Exception expected: It should not be possible to get the exception stacktrace");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName() + "' permission on resource '" + processInstanceId + "' of type '" + PROCESS_INSTANCE.resourceName() + "' or '", message);
-      testRule.assertTextPresent(READ_INSTANCE.getName() + "' permission on resource '" + ONE_INCIDENT_PROCESS_KEY + "' of type '" + PROCESS_DEFINITION.resourceName() + "'", message);
-    }
+    Throwable thrown = catchThrowable(() -> managementService.getJobExceptionStacktrace(jobId));
+    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to get the exception stacktrace")
+        .isInstanceOf(AuthorizationException.class);
+    String message = thrown.getMessage();
+    testRule.assertTextPresent(userId, message);
+    testRule.assertTextPresent(READ.getName() + "' permission on resource '" + processInstanceId + "' of type '" + PROCESS_INSTANCE.resourceName() + "' or '", message);
+    testRule.assertTextPresent(READ_INSTANCE.getName() + "' permission on resource '" + ONE_INCIDENT_PROCESS_KEY + "' of type '" + PROCESS_DEFINITION.resourceName() + "'", message);
   }
 
   @Test

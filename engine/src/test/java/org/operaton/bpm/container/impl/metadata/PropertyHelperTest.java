@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.container.impl.metadata;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.Assertions.within;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -30,6 +26,8 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Thorben Lindhauer
@@ -133,12 +131,8 @@ class PropertyHelperTest {
     Map<String, String> propertiesToSet = new HashMap<>();
     propertiesToSet.put("aNonExistingProperty", "someValue");
 
-    try {
-      PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> PropertyHelper.applyProperties(engineConfiguration, propertiesToSet), fail("Exception expected"))
+        .isInstanceOf(Exception.class);
   }
 
   @Test

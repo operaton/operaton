@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE_INSTANCE;
@@ -27,9 +28,6 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.form.StartFormData;
@@ -1049,12 +1047,8 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
     String taskId = selectSingleTask().getId();
     createGrantAuthorization(TASK, taskId, userId, UPDATE);
 
-    try {
-      // when
-      taskService.complete(taskId);
-      fail("Exception expected: It should not be possible to execute the command inside JavaDelegate");
-    } catch (AuthorizationException e) {
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId), "Exception expected: It should not be possible to execute the command inside JavaDelegate")
+        .isInstanceOf(AuthorizationException.class);
 
     // then
     assertThat(MyDelegationService.currentAuthentication).isNotNull();

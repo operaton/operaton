@@ -144,35 +144,25 @@ class FileValueTypeImplTest {
   @Test
   void createValueWithNullProperties() {
     // given
-    InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
+    final InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     Map<String, Object> properties = new HashMap<>();
     properties.put("filename", "someFileName");
     properties.put("mimeType", null);
     properties.put("encoding", "someEncoding");
 
-    // when
-    try {
-      type.createValue(file, properties);
-      fail("expected exception");
-    } catch (IllegalArgumentException e) {
-      // then
-      assertThat(e.getMessage()).contains("The provided mime type is null. Set a non-null value info property with key 'filename'");
-    }
+    assertThatThrownBy(() -> type.createValue(file, properties), "expected exception")
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("The provided mime type is null. Set a non-null value info property with key 'filename'");
 
     // given
-    file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
+    final InputStream file2 = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
 
     properties.put("mimeType", "someMimetype");
     properties.put("encoding", null);
 
-    // when
-    try {
-      type.createValue(file, properties);
-      fail("expected exception");
-    } catch (IllegalArgumentException e) {
-      // then
-      assertThat(e.getMessage()).contains("The provided encoding is null. Set a non-null value info property with key 'encoding'");
-    }
+    assertThatThrownBy(() -> type.createValue(file2, properties), "expected exception")
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("The provided encoding is null. Set a non-null value info property with key 'encoding'");
   }
 
   @Test

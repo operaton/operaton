@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.cmmn10;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collection;
@@ -184,13 +185,8 @@ class Cmmn10Test {
     HumanTask humanTask = modelInstance.newInstance(HumanTask.class);
     casePlanModel.getPlanItemDefinitions().add(humanTask);
 
-    try {
-      Cmmn.writeModelToStream(System.out, modelInstance);
-      fail("cannot save cmmn 1.0 model");
-    }
-    catch (Exception e) {
-      // expected exception
-    }
+    assertThatThrownBy(() -> Cmmn.writeModelToStream(System.out, modelInstance), "cannot save cmmn 1.0 model")
+        .isInstanceOf(Exception.class);
   }
 
   @Test
@@ -209,13 +205,8 @@ class Cmmn10Test {
     Event event = modelInstance.newInstance(Event.class);
     casePlanModel.getPlanItemDefinitions().add(event);
 
-    try {
-      Cmmn.writeModelToStream(System.out, modelInstance);
-      fail("cannot save cmmn 1.1 model");
-    }
-    catch (Exception e) {
-      // expected exception
-    }
+    assertThatThrownBy(() -> Cmmn.writeModelToStream(System.out, modelInstance), "cannot save cmmn 1.0 model")
+        .isInstanceOf(Exception.class);
   }
 
   protected CmmnModelInstance getCmmnModelInstance() {

@@ -21,7 +21,6 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
@@ -167,8 +166,4 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
 
   }
 
-  @Override
-  public void onDelete(AsyncContinuationConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
 }

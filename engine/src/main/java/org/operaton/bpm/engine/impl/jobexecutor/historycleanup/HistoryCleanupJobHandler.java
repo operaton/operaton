@@ -21,7 +21,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import com.google.gson.JsonObject;
@@ -55,7 +54,7 @@ public class HistoryCleanupJobHandler implements JobHandler<HistoryCleanupJobHan
   }
 
   protected HistoryCleanupHandler initCleanupHandler(HistoryCleanupJobHandlerConfiguration configuration, CommandContext commandContext) {
-    HistoryCleanupHandler cleanupHandler = null;
+    HistoryCleanupHandler cleanupHandler;
 
     if (isHistoryCleanupStrategyRemovalTimeBased(commandContext)) {
       cleanupHandler = getTimeBasedHandler();
@@ -94,10 +93,6 @@ public class HistoryCleanupJobHandler implements JobHandler<HistoryCleanupJobHan
   @Override
   public String getType() {
     return TYPE;
-  }
-
-  @Override
-  public void onDelete(HistoryCleanupJobHandlerConfiguration configuration, JobEntity jobEntity) {
   }
 
 }

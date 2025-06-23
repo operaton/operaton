@@ -23,15 +23,15 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 
 /**
  * The batch seed job handler is responsible to
  * create all jobs to be executed by the batch.
- *
+ * <p>
  * If all jobs are created a seed monitor job is
  * created to oversee the completion of the batch
  * (see {@link BatchMonitorJobHandler}).
+ * </p>
  */
 public class BatchSeedJobHandler implements JobHandler<BatchSeedJobConfiguration> {
 
@@ -88,9 +88,4 @@ public class BatchSeedJobHandler implements JobHandler<BatchSeedJobConfiguration
     }
   }
 
-  @Override
-  public void onDelete(BatchSeedJobConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
-}
+ }

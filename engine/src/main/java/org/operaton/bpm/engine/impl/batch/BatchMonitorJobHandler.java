@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 
 /**
  * Job handler for batch monitor jobs. The batch monitor job
@@ -75,11 +74,6 @@ public class BatchMonitorJobHandler implements JobHandler<BatchMonitorJobConfigu
     public String toCanonicalString() {
       return batchId;
     }
-  }
-
-  @Override
-  public void onDelete(BatchMonitorJobConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
   }
 
 }

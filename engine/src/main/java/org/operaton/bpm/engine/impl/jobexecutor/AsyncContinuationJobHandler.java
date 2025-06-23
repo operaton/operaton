@@ -119,7 +119,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
     if (jobConfiguration != null ) {
       String[] configParts = jobConfiguration.split("\\$");
       if (configParts.length > 2) {
-        throw new ProcessEngineException("Illegal async continuation job handler configuration: '" + jobConfiguration + "': exprecting one part or two parts seperated by '$'.");
+        throw new ProcessEngineException("Illegal async continuation job handler configuration: '" + jobConfiguration + "': expecting one part or two parts separated by '$'.");
       }
       configuration[0] = configParts[0];
       if (configParts.length == 2) {

@@ -16,44 +16,93 @@
 
 package org.operaton.bpm.engine.impl.calendar;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junitpioneer.jupiter.DefaultTimeZone;
 
+import java.text.ParseException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.TimeZone;
-import java.util.stream.Stream;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junitpioneer.jupiter.DefaultTimeZone;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DefaultTimeZone("UTC")
 class CronExpressionTest {
-  private static Date dateFromString(String date) {
-    return Date.from(Instant.parse(date));
-  }
+    private static Date dateFromString(String date) {
+        return Date.from(Instant.parse(date));
+    }
 
-  private static Stream<Arguments> validCronArguments() {
-    return Stream.of(
-        Arguments.of("1 * * * * ?", dateFromString("2025-01-01T00:00:00Z"), dateFromString("2025-01-01T00:00:01Z")),
-        Arguments.of("* 1 * * * ?", dateFromString("2025-01-01T00:00:00Z"), dateFromString("2025-01-01T00:01:00Z")),
-        Arguments.of("* * 1 * * ?", dateFromString("2025-01-01T00:00:00Z"), dateFromString("2025-01-01T01:00:00Z")),
-        Arguments.of("* * * 2 * ?", dateFromString("2025-01-01T00:00:00Z"), dateFromString("2025-01-02T00:00:00Z")),
-        Arguments.of("* * * L * ?", dateFromString("2025-01-01T00:00:00Z"), dateFromString("2025-01-31T00:00:00Z")),
-        Arguments.of("* * * L * ?", dateFromString("2025-01-01T00:00:00Z"), dateFromString("2025-01-31T00:00:00Z")),
-        Arguments.of("* * * * 2 ?", dateFromString("2025-01-01T00:00:00Z"), dateFromString("2025-02-01T00:00:00Z")),
-        Arguments.of("* * * ? * 1", dateFromString("2025-01-01T00:00:00Z"), dateFromString("2025-01-05T00:00:00Z")),
-        Arguments.of("* * * ? * * 2026", dateFromString("2025-01-01T00:00:00Z"),
-            dateFromString("2026-01-01T00:00:00Z")));
-  }
+    @ParameterizedTest
+    @CsvSource({
+            // cron, start, expected
+            "'1 * * * * ?', 2025-01-01T00:00:00Z, 2025-01-01T00:00:01Z",
+            "'* 1 * * * ?', 2025-01-01T00:00:00Z, 2025-01-01T00:01:00Z",
+            "'* * 1 * * ?', 2025-01-01T00:00:00Z, 2025-01-01T01:00:00Z",
+            "'* * * 2 * ?', 2025-01-01T00:00:00Z, 2025-01-02T00:00:00Z",
+            "'* * * L * ?', 2025-01-01T00:00:00Z, 2025-01-31T00:00:00Z",
+            "'* * * * 2 ?', 2025-01-01T00:00:00Z, 2025-02-01T00:00:00Z",
+            "'* * * ? * 1', 2025-01-01T00:00:00Z, 2025-01-05T00:00:00Z",
+            "'* * * ? * * 2026', 2025-01-01T00:00:00Z, 2026-01-01T00:00:00Z",
+            "'0 0 12 * * ?', 2025-01-01T11:00:00Z, 2025-01-01T12:00:00Z",
+            "'0 15 10 ? * MON-FRI', 2025-01-03T10:00:00Z, 2025-01-03T10:15:00Z",
+            "'0 0 0 1 1 ?', 2025-01-01T00:00:00Z, 2026-01-01T00:00:00Z",
+            "'0 0 0 29 2 ?', 2023-01-01T00:00:00Z, 2024-02-29T00:00:00Z",
+            // Month names
+            "'0 0 12 * JAN ? 2025', 2025-01-01T00:00:00Z, 2025-01-01T12:00:00Z",
+            "'0 0 12 * FEB ? 2025', 2025-01-01T00:00:00Z, 2025-02-01T12:00:00Z",
+            // Weekday names
+            "'0 0 12 ? * MON 2025', 2025-01-01T00:00:00Z, 2025-01-06T12:00:00Z",
+            "'0 0 12 ? * SUN 2025', 2025-01-01T00:00:00Z, 2025-01-05T12:00:00Z",
+            // Ranges
+            "'0 0 0 28-2 * ?', 2025-01-01T00:00:00Z, 2025-01-02T00:00:00Z",
+            // Steps
+            "'0 0/15 12 * * ?', 2025-01-01T12:00:00Z, 2025-01-01T12:15:00Z",
+            "'0 0 0 1/2 * ?', 2025-01-01T00:00:00Z, 2025-01-03T00:00:00Z",
+            // Lists
+            "'0 0 12 * 1,3,5 ?', 2025-01-01T00:00:00Z, 2025-01-01T12:00:00Z",
+            // L (last day of the month)
+            "'0 0 0 L * ?', 2025-01-01T00:00:00Z, 2025-01-31T00:00:00Z",
+            // L weekday (last friday of the month)
+            "'0 0 0 ? * 6L', 2025-01-01T00:00:00Z, 2025-01-31T00:00:00Z",
+            // W (next weekday)
+            "'0 0 0 15W * ?', 2025-02-01T00:00:00Z, 2025-02-14T00:00:00Z", // 15.2.2025 is Saturday, next weekday is 14.2. (Friday)
+            // LW (last weekday of the month)
+            "'0 0 0 LW * ?', 2025-02-01T00:00:00Z, 2025-02-28T00:00:00Z",
+            // L-3 (third last day of the month)
+            "'0 0 0 L-3 * ?', 2025-01-01T00:00:00Z, 2025-01-28T00:00:00Z",
+            // L-3W (third last weekday of the month)
+            "'0 0 0 L-3W * ?', 2025-01-01T00:00:00Z, 2025-01-28T00:00:00Z",
+            // # (third Friday of the month)
+            "'0 0 0 ? * 6#3', 2025-01-01T00:00:00Z, 2025-01-17T00:00:00Z",
+            // ?
+            "'0 0 12 ? * 2', 2025-01-01T00:00:00Z, 2025-01-06T12:00:00Z"
+    })
+    void shouldParseBasicCronExpression(String expression, String startDate, String expectedDate) throws Exception {
+        // given
+        CronExpression cronExpression = new CronExpression(expression);
+        assertTrue(cronExpression.expressionParsed);
 
-  @ParameterizedTest
-  @MethodSource("validCronArguments")
-  void shouldParseBasicCronExpression(String expression, Date startDate, Date expectedDate) throws Exception {
-    CronExpression cronExpression = new CronExpression(expression);
-    assertTrue(cronExpression.expressionParsed);
-    assertEquals(expectedDate, cronExpression.getTimeAfter(startDate));
-    assertEquals(TimeZone.getTimeZone("UTC"), cronExpression.getTimeZone());
-  }
+        // when
+        Date result = cronExpression.getTimeAfter(CronExpressionTest.dateFromString(startDate));
+
+        // then
+        assertThat(result).isEqualTo(CronExpressionTest.dateFromString(expectedDate));
+        assertThat(cronExpression.getTimeZone()).isEqualTo(TimeZone.getTimeZone("UTC"));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            // Invalid cron expressions
+            "'', 'Unexpected end of expression'",
+            "'* * * * *', 'Unexpected end of expression'",
+            "'0 0 0 1 1 1', 'Support for specifying both a day-of-week AND a day-of-month parameter is not implemented.'"
+    })
+    void shouldNotParseInvalidCronExpression(String expression, String expectedMessage) {
+        assertThatThrownBy(() -> new CronExpression(expression))
+                .isInstanceOf(ParseException.class)
+                .hasMessageContaining(expectedMessage);
+    }
 }

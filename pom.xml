@@ -19,6 +19,7 @@
     <version.feel-scala>1.19.1</version.feel-scala>
     <version.quarkus>3.23.0</version.quarkus>
     <version.java>17</version.java>
+    <version.spring-boot>3.5.3</version.spring-boot>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <sonar.organization>operaton</sonar.organization>
@@ -312,7 +313,7 @@
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>3.5.0</version>
+          <version>${version.spring-boot}</version>
         </plugin>
       </plugins>
     </pluginManagement>

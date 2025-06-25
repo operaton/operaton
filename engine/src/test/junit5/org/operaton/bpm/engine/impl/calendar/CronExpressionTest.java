@@ -83,7 +83,7 @@ class CronExpressionTest {
     void shouldParseBasicCronExpression(String expression, String startDate, String expectedDate) throws Exception {
         // given
         CronExpression cronExpression = new CronExpression(expression);
-        assertTrue(cronExpression.expressionParsed);
+        assertThat(cronExpression.toString()).isEqualTo(expression);
 
         // when
         Date result = cronExpression.getTimeAfter(CronExpressionTest.dateFromString(startDate));

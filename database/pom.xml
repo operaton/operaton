@@ -31,7 +31,8 @@
     <operaton.dbscheme.current.version>7.23.1</operaton.dbscheme.current.version>
 
     <!-- needed for sql script and backward compatibility checks -->
-    <operaton.version.old>7.22.0</operaton.version.old>
+    <operaton.dbscheme.previous.artifactVersion>1.0.0-beta-2</operaton.dbscheme.previous.artifactVersion>
+    <operaton.dbscheme.previous.version>7.22.0</operaton.dbscheme.previous.version>
 
     <!-- Testcontainers JDBC URL parameters. By default, an empty string -->
     <database.tc.params>TC_DAEMON=true</database.tc.params>

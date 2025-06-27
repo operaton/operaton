@@ -14,7 +14,7 @@
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-bom</artifactId>
-        <version>7.22.0</version>
+        <version>${operaton.dbscheme.previous.artifactVersion}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>

@@ -9,21 +9,11 @@
   <artifactId>operaton-qa-db-rolling-update-util</artifactId>
   <name>Operaton - QA - upgrade - rolling update util</name>
   <description>${project.name}</description>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-bom</artifactId>
-        <version>7.22.0</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm.qa.upgrade</groupId>

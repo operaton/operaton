@@ -46,7 +46,7 @@ The script has the following options:
 
 - `--testsuite=<TESTSUITE>` - The test suite to run. Valid values: `engine` (default), `webapps`.
 - `--distro=<TESTSUITE>` - The application distribution to perform the test on. Valid values: `tomcat` (default), `wildfly`.
-- `--db=<DATABASE>` - The database to use. Valid values: `h2` (default), `postgresql`.
+- `--db=<DATABASE>` - The database to use. Valid values: `h2` (default), `postgresql` `postgresql-xa` `mysql` `mariadb`, `oracle` `db2` `sqlserver`.
 - `--no-build` - Skip the build step.
 - `--no-test` - Skip the test step.
 
@@ -54,4 +54,20 @@ Example:
 
 ```bash
 ./build/build-and-run-integration-tests.sh --testsuite=engine --distro=wildfly --db=h2
+```
+
+## `build-and-run-database-update-tests.sh`
+
+Use this script to perform database upgrade tests.
+
+The script has the following options:
+
+- `--db=<DATABASE>` - The database to use. Valid values: `h2` (default), `postgresql` `postgresql-xa` `mysql` `mariadb`, `oracle` `db2` `sqlserver`.
+- `--no-build` - Skip the build step.
+- `--no-test` - Skip the test step.
+
+Example:
+
+```bash
+./build/build-and-run-database-update-tests.sh --db=h2
 ```

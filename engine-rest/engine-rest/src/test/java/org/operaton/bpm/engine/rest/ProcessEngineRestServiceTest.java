@@ -653,7 +653,6 @@ public class ProcessEngineRestServiceTest extends
     verifyNoInteractions(processEngine);
   }
 
-  @Disabled
   @Test
   void testHistoryServiceEngineAccess_HistoricVariableInstanceBinaryFile() {
 
@@ -664,8 +663,10 @@ public class ProcessEngineRestServiceTest extends
     String encoding = UTF_8.name();
     FileValue variableValue = Variables.fileValue(filename).file(byteContent).mimeType(ContentType.TEXT.toString()).encoding(encoding).create();
     when(instance.getTypedValue()).thenReturn(variableValue);
-    when(query.singleResult()).thenReturn(instance);
     when(mockHistoryService.createHistoricVariableInstanceQuery()).thenReturn(query);
+    when(query.variableId(anyString())).thenReturn(query);
+    when(query.singleResult()).thenReturn(instance);
+    when(query.disableCustomObjectDeserialization()).thenReturn(query);
 
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
@@ -728,8 +729,8 @@ public class ProcessEngineRestServiceTest extends
     verifyNoInteractions(processEngine);
   }
 
-  @Disabled
   @Test
+  @Disabled("org.operaton.bpm.engine.rest.sub.AbstractResourceProvider.getResource does not support text/plain content type")
   void testHistoryServiceEngineAccess_HistoricDetailBinaryFile() {
     HistoricDetailQuery query = mock(HistoricDetailQuery.class);
     HistoricVariableUpdate instance = mock(HistoricVariableUpdate.class);
@@ -740,6 +741,8 @@ public class ProcessEngineRestServiceTest extends
     when(instance.getTypedValue()).thenReturn(variableValue);
     when(query.singleResult()).thenReturn(instance);
     when(mockHistoryService.createHistoricDetailQuery()).thenReturn(query);
+    when(query.disableBinaryFetching()).thenReturn(query);
+    when(query.detailId(anyString())).thenReturn(query);
 
     given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)

@@ -651,11 +651,7 @@ class MigrationAddSubprocessTest {
     testHelper.assertProcessEnded(processInstanceId);
   }
 
-  /**
-   * Readd when we implement migration for multi-instance
-   */
   @Test
-  @Disabled
   void testAddParentScopeToMultiInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(

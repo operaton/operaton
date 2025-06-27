@@ -361,9 +361,8 @@ public class AsyncTaskTest {
     runtimeService.deleteProcessInstance(execution.getId(), "dead");
   }
 
-  // TODO: Think about this:
   @Deployment
-  @Disabled
+  @Disabled("TODO: Think about this:")
   @Test
   void testFailingAsyncServiceTimerWithMessageJob() {
     // start process

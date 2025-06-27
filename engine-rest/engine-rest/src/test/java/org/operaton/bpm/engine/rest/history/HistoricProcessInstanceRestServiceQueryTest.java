@@ -796,7 +796,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithJobsRetrying() {
+  void testQueryWithJobsRetrying() {
     given()
       .queryParam("withJobsRetrying", true)
       .then()
@@ -811,7 +811,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryWithJobsRetryingAsPost() {
+  void testQueryWithJobsRetryingAsPost() {
     Map<String, Boolean> body = new HashMap<String, Boolean>();
     body.put("withJobsRetrying", true);
 

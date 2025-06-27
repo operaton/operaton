@@ -70,7 +70,7 @@ class JobExecutorAcquireCleanupJobsTest extends AbstractJobExecutorAcquireJobsTe
   }
 
   @AfterEach
-  public void resetDatabase() {
+  void resetDatabase() {
     configuration.getCommandExecutorTxRequired().execute(commandContext -> {
       String handlerType = "history-cleanup";
       List<Job> jobsByHandlerType = commandContext.getJobManager()

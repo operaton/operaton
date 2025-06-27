@@ -686,7 +686,7 @@ class MultiTenancyProcessDefinitionSuspensionStateTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(commandContext -> {
       commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerActivateProcessDefinitionHandler.TYPE);

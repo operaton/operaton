@@ -9,6 +9,7 @@
     This pom defines the modules that make up the build.
     The parent pom for all Operaton projects can be found in the parent directory relative to this file.
   </description>
+  <!-- just a test -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>

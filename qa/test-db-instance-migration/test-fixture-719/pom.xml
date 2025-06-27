@@ -15,8 +15,8 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-bom</artifactId>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-bom</artifactId>
         <version>7.19.0</version>
         <scope>import</scope>
         <type>pom</type>

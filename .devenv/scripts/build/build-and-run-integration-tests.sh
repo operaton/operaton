@@ -5,7 +5,7 @@ EXECUTE_TEST=true
 TEST_SUITE="engine"
 DATABASE="h2"
 DISTRO="tomcat"
-VALID_TEST_SUITES=("engine" "webapps")
+VALID_TEST_SUITES=("engine" "webapps" "db-rolling-update")
 VALID_DISTROS=("operaton" "tomcat" "wildfly")
 VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb", "oracle" "db2" "sqlserver")
 
@@ -119,6 +119,8 @@ run_tests () {
     echo "❌ Error: Build failed"
     popd > /dev/null
     exit 1
+  else
+    echo "✅ Integration tests completed successfully"
   fi
 }
 

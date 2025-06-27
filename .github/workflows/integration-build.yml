@@ -194,11 +194,17 @@ jobs:
         shell: bash
         run: |
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-test
+          .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-test
       - name: Execute Integration Tests
         id: maven-integration-tests
         shell: bash
         run: |
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+      - name: Execute Database Upgrade Tests
+        id: maven-db-upgrade-tests
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-build
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@cf701569b05ccdd861a76b8607a66d76f6fd4857 #v5.5.1

@@ -28,7 +28,7 @@
     <version.db2>${version.db2-11.5}</version.db2>
     <version.postgresql>42.7.7</version.postgresql>
     <version.liquibase>4.32.0</version.liquibase>
-    <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
+    <operaton.dbscheme.current.version>7.23.1</operaton.dbscheme.current.version>
 
     <!-- needed for sql script and backward compatibility checks -->
     <operaton.version.old>7.22.0</operaton.version.old>

@@ -66,6 +66,69 @@ on:
         required: true
         default: false
 
+  workflow_call:
+    inputs:
+      java_version:
+        description: 'Java version to use'
+        type: choice
+        required: true
+        default: '["17"]'
+        options:
+          - '["17"]'
+          - '["21"]'
+          - '["17", "21"]'
+      skip_build:
+        description: 'Build: By default skipped. Deactivate to perform the regular project build'
+        type: boolean
+        default: true
+      skip_tests:
+        description: 'Build: Skip test execution for faster build'
+        type: boolean
+        default: true
+      integration_tests:
+        description: 'Integration Tests: Enable/Disable'
+        type: boolean
+        default: true
+      testsuite:
+        description: 'Integration Tests: Test suite to run'
+        type: choice
+        required: true
+        default: '["engine"]'
+        options:
+          - '["engine"]'
+          - '["webapps"]'
+          - '["engine", "webapps"]'
+      distro:
+        description: 'Integration Tests: Distribution to use'
+        type: choice
+        required: true
+        default: '["operaton", "tomcat", "wildfly"]'
+        options:
+          - '["operaton"]'
+          - '["tomcat"]'
+          - '["wildfly"]'
+          - '["operaton", "tomcat", "wildfly"]'
+      database:
+        description: 'Integration Tests: Database to use'
+        type: choice
+        required: true
+        default: '["h2"]'
+        options:
+          - '["h2"]'
+          - '["postgresql"]'
+          - '["postgresql-xa"]'
+          - '["mariadb"]'
+          - '["sqlserver"]'
+          - '["mysql"]'
+          - '["oracle"]'
+          - '["db2"]'
+          - '["h2", "postgresql"]'
+      dry_run:
+        description: 'Release: Skips remote operations when true'
+        type: boolean
+        required: true
+        default: false
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true

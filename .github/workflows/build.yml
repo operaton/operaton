@@ -94,14 +94,11 @@ jobs:
           key: ${{ github.run_id }}-build-artifacts
 
   integration-build:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Integration Build
-        if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, ','), 'pom.xml') }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh workflow run integration-build.yml --field distro='["wildfly"]'
+    if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, ','), 'pom.xml') }}
+    uses: ./.github/workflows/integration-build.yml
+    with:
+      distro: '["wildfly"]'
+    secrets: inherit
 
   publish:
     name: Publish

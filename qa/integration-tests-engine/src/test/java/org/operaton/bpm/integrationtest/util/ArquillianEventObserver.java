@@ -17,8 +17,6 @@ package org.operaton.bpm.integrationtest.util;
 
 import java.util.Map;
 
-import java.util.function.Supplier;
-
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
@@ -26,6 +24,7 @@ import org.operaton.impl.test.utils.testcontainers.OperatonDb2ContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonOracleContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMariaDBContainerProvider;
+import org.operaton.impl.test.utils.testcontainers.OperatonMySqlContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonPostgreSQLContainerProvider;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 
@@ -52,13 +51,17 @@ public class ArquillianEventObserver {
   private static final String DB2 = "db2";
   private static final String DB2_VERSION = "12.1.2.0";
 
+  private static final String MYSQL = "mysql";
+  private static final String MYSQL_VERSION = "9.3.0";
+
   // Initialized with providers, so we do not start all containers at the same time here statically upon initialization
   private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = Map.of(
           POSTGRES, new OperatonPostgreSQLContainerProvider().newInstance(POSTGRES_VERSION),
           SQLSERVER, new OperatonMSSQLContainerProvider().newInstance(SQLSERVER_VERSION),
           MARIADB, new OperatonMariaDBContainerProvider().newInstance(MARIADB_VERSION),
           ORACLE, new OperatonOracleContainerProvider().newInstance(ORACLE_VERSION),
-          DB2, new OperatonDb2ContainerProvider().newInstance(DB2_VERSION)
+          DB2, new OperatonDb2ContainerProvider().newInstance(DB2_VERSION),
+          MYSQL, new OperatonMySqlContainerProvider().newInstance(MYSQL_VERSION)
   );
 
   /**

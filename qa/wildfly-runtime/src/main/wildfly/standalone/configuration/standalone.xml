@@ -149,6 +149,9 @@
                     <driver name="mariadb" module="org.mariadb.jdbc.mariadb-java-client">
                         <xa-datasource-class>org.mariadb.jdbc.MariaDbDataSource</xa-datasource-class>
                     </driver>
+                    <driver name="mysql" module="com.mysql.mysql-connector-j">
+                        <xa-datasource-class>com.mysql.cj.jdbc.MysqlXADataSource</xa-datasource-class>
+                    </driver>
                     <driver name="oracle" module="com.oracle.database.jdbc.ojdbc11">
                         <xa-datasource-class>oracle.jdbc.xa.client.OracleXADataSource</xa-datasource-class>
                     </driver>

@@ -60,6 +60,7 @@ on:
           - '["oracle"]'
           - '["db2"]'
           - '["h2", "postgresql"]'
+          - '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]'
       dry_run:
         description: 'Release: Skips remote operations when true'
         type: boolean

@@ -2,6 +2,7 @@
 <definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
              id="definitions"
              name="operaton"
+             xmlns:operaton="http://operaton.org/schema/1.0/dmn"
              namespace="http://operaton.org/schema/1.0/dmn">
   <decision id="feel-spin-json-decision" name="decision" operaton:historyTimeToLive="P180D">
     <decisionTable id="decisionTable_1">

@@ -22,6 +22,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
@@ -33,7 +34,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
-public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
+public class FeelEngineTest extends AbstractFoxPlatformIntegrationTest {
 
   protected static final String PATH = "org/operaton/bpm/integrationtest/functional/spin/feel/";
 
@@ -41,6 +42,8 @@ public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
   protected static final String DMN_XML = "feel-spin-xml-decision.dmn";
   protected static final String PROCESS_JSON = "feel-spin-json-process.bpmn";
   protected static final String PROCESS_XML = "feel-spin-xml-process.bpmn";
+  protected static final String FEEL_EXCLUSIVE_GATEWAY_BMPN = "feel-spin-process.bpmn";
+  protected static final String FEEL_INPUT_OUTPUT_PROCESS_BPMN = "feel-spin-input-output.bpmn";
 
   protected static final List<String> TEST_LIST = Arrays.asList("\"foo\"", "\"bar\"");
 
@@ -52,6 +55,9 @@ public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
         .addAsResource(PATH + DMN_XML, DMN_XML)
         .addAsResource(PATH + PROCESS_JSON, PROCESS_JSON)
         .addAsResource(PATH + PROCESS_XML, PROCESS_XML)
+        .addAsResource(PATH + FEEL_EXCLUSIVE_GATEWAY_BMPN, FEEL_EXCLUSIVE_GATEWAY_BMPN)
+        .addAsResource(PATH + FEEL_INPUT_OUTPUT_PROCESS_BPMN, FEEL_INPUT_OUTPUT_PROCESS_BPMN)
+        .addClass(FeelContextDelegate.class)
         .addClass(JsonListSerializable.class)
         .addClass(XmlListSerializable.class)
         .addClass(AbstractFoxPlatformIntegrationTest.class);
@@ -91,6 +97,39 @@ public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
 
     assertThat(hdi.getOutputs()).hasSize(1);
     assertThat(hdi.getOutputs().get(0).getValue()).isEqualTo(Boolean.TRUE);
+  }
+
+  @Test
+  public void testSpinIntegration() {
+    // Accessing SPIN object from FEEL requires the org.operaton.spin.plugin.impl.feel.integration.SpinValueMapper SPI
+    // given
+    VariableMap variablesLarge = Variables.createVariables().putValue("amount", Spin.JSON("{\"value\": 25}"));
+    VariableMap variablesSmall = Variables.createVariables().putValue("amount", Spin.JSON("{\"value\": 2}"));
+
+    // when
+    ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("feelScriptExecution", variablesLarge);
+    List<String> resultsLarge = runtimeService.getActiveActivityIds(pi1.getId());
+
+    ProcessInstance pi2 = runtimeService.startProcessInstanceByKey("feelScriptExecution", variablesSmall);
+    List<String> resultsSmall = runtimeService.getActiveActivityIds(pi2.getId());
+
+    // then
+    assertThat(resultsLarge).hasSize(1);
+    assertThat(resultsLarge).first().isEqualTo("taskRequestInvoice");
+
+    assertThat(resultsSmall).hasSize(1);
+    assertThat(resultsSmall).first().isEqualTo("taskApprove");
+  }
+
+  @Test
+  public void testFeelEngineComplexContext() {
+    // Mapping complex FEEL context into Java requires the org.operaton.feel.impl.JavaValueMapper SPI to be registered
+    // when
+    ProcessInstance pi = runtimeService.startProcessInstanceByKey("feelComplexContextProcess");
+    String result = (String) runtimeService.getVariable(pi.getId(), "result");
+
+    // then
+    assertThat(result).isEqualTo("contentFromInnerContext");
   }
 
   // HELPER

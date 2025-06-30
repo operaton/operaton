@@ -1,0 +1,10 @@
+<module xmlns="urn:jboss:module:1.1" name="com.oracle.database.ojdbc11">
+  <resources>
+    <resource-root path="ojdbc11-23.5.0.24.07.jar"/>
+  </resources>
+
+  <dependencies>
+    <module name="jakarta.enterprise.api"/>
+    <module name="jakarta.transaction.api"/>
+  </dependencies>
+</module>

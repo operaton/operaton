@@ -41,16 +41,17 @@ class DatabaseContainerProviderTest {
    * @param versionStatement The SQL statement to execute to retrieve the database version.
    * @param dbVersion     The expected database version.
    */
-  @ParameterizedTest(name = "{index} => jdbcUrl={0}, versionStatement={1}, dbVersion={2}")
+  @ParameterizedTest(name = "{3}:{2}")
   @CsvSource({
-    "jdbc:tc:operatonpostgresql:13.2:///process-engine, SELECT version();, 13.2",
-    "jdbc:tc:operatonmariadb:10.0://localhost:3306/process-engine, SELECT version();, 10.0",
-    "jdbc:tc:operatonmysql:5.7://localhost:3306/process-engine, SELECT version();, 5.7",
-    "jdbc:tc:operatonmysql:8.0://localhost:3306/process-engine, SELECT version();, 8.0",
-    "jdbc:tc:operatonsqlserver:2022-latest://localhost:1433/process-engine, SELECT @@VERSION, 2022",
-    "jdbc:tc:operatonoracle:21-faststart://localhost:1521, SELECT * FROM v$version, 21c"
+    "jdbc:tc:operatonpostgresql:13.2:///process-engine, SELECT version();, 13.2, postgres",
+    "jdbc:tc:operatonmariadb:10.0://localhost:3306/process-engine, SELECT version();, 10.0, mariadb",
+    "jdbc:tc:operatonmysql:5.7://localhost:3306/process-engine, SELECT version();, 5.7, mysql",
+    "jdbc:tc:operatonmysql:8.0://localhost:3306/process-engine, SELECT version();, 8.0, mysql",
+    "jdbc:tc:operatonsqlserver:2022-latest://localhost:1433/process-engine, SELECT @@VERSION, 2022, sqlserver",
+    "jdbc:tc:operatonoracle:21-faststart://localhost:1521, SELECT * FROM v$version, 21c, oracle",
+    "jdbc:tc:operatondb2:12.1.2.0://localhost:50000, SELECT SERVICE_LEVEL FROM TABLE(SYSPROC.ENV_GET_INST_INFO()), v12, db2"
   })
-  void testJdbcTestcontainersUrl(String jdbcUrl, String versionStatement, String dbVersion) {
+  void testJdbcTestcontainersUrl(String jdbcUrl, String versionStatement, String dbVersion, String dbLabel) {
     // when
     try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
       connection.setAutoCommit(false);
@@ -60,6 +61,7 @@ class DatabaseContainerProviderTest {
         String version = rs.getString(1);
         assertThat(version).contains(dbVersion);
       }
+      connection.rollback();
     } catch (SQLException exception) {
       fail("Testcontainers failed to spin up a Docker container: " + exception.getMessage());
     }

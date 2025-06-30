@@ -25,7 +25,7 @@
     <version.mysql>9.2.0</version.mysql>
     <version.sqlserver>12.10.0.jre8</version.sqlserver>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
-    <version.db2>${version.db2-11.5}</version.db2>
+    <version.db2>12.1.2.0</version.db2>
     <version.postgresql>42.7.7</version.postgresql>
     <version.liquibase>4.32.0</version.liquibase>
     <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
@@ -113,6 +113,10 @@
         <database.type>db2</database.type>
         <database.driver>com.ibm.db2.jcc.DB2Driver</database.driver>
         <database.datasource.class>com.ibm.db2.jcc.DB2SimpleDataSource</database.datasource.class>
+        <jboss.datasource.filename>db2-ds.xml</jboss.datasource.filename>
+        <database.tc.url>operatondb2:12.1.2.0</database.tc.url>
+        <database.tc.params>/${database.name}</database.tc.params>
+        <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
     </profile>
 

@@ -79,7 +79,7 @@
       <plugin>
         <groupId>org.openrewrite.maven</groupId>
         <artifactId>rewrite-maven-plugin</artifactId>
-        <version>5.42.0</version>
+        <version>6.12.0</version>
         <configuration>
           <activeRecipes>
             <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
@@ -546,7 +546,7 @@
           <plugin>
             <groupId>org.openrewrite.maven</groupId>
             <artifactId>rewrite-maven-plugin</artifactId>
-            <version>5.45.0</version>
+            <version>6.12.0</version>
             <configuration>
               <activeRecipes>
                 org.openrewrite.java.RemoveUnusedImports,

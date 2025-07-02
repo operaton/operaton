@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.repository;
 
 /**
- * @author kristin.polenz@operaton.com
+ * @author kristin.polenz@camunda.com
  */
 public interface Resource {
 

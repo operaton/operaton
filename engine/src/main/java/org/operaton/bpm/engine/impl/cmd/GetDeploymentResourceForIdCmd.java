@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 
 
 /**
- * @author kristin.polenz@operaton.com
+ * @author kristin.polenz@camunda.com
  */
 public class GetDeploymentResourceForIdCmd implements Command<InputStream>, Serializable {
 

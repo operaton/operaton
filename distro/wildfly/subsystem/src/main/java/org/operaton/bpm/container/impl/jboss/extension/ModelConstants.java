@@ -21,7 +21,7 @@ package org.operaton.bpm.container.impl.jboss.extension;
  * Constants used in the model
  *
  * @author Daniel Meyer
- * @author christian.lipphardt@operaton.com
+ * @author christian.lipphardt@camunda.com
  */
 public interface ModelConstants {
 

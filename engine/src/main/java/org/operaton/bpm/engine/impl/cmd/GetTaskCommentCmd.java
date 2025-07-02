@@ -25,7 +25,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**
- * @author kristin.polenz@operaton.com
+ * @author kristin.polenz@camunda.com
  */
 public class GetTaskCommentCmd implements Command<Comment>, Serializable {
 

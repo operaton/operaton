@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * An Element.
  *
- * @author christian.lipphardt@operaton.com
+ * @author christian.lipphardt@camunda.com
  */
 public enum Namespace {
   /**

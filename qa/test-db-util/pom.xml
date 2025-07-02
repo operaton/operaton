@@ -10,33 +10,23 @@
   <artifactId>operaton-qa-upgrade-scenario-util</artifactId>
   <name>Operaton - QA - upgrade - scenario util</name>
   <description>${project.name}</description>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-bom</artifactId>
-        <version>${project.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
+      <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <version>${project.version}</version>
       <classifier>junit4</classifier>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+
   </dependencies>
 </project>

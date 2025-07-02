@@ -42,8 +42,8 @@ parse_args() {
 
 run_build () {
   echo "ℹ️ Building BOMs and engine modules"
-  echo "./mvnw install -f bom && ./mvnw install -DskipTests -am -pl engine"
-  ./mvnw install -f bom && ./mvnw install -DskipTests -am -pl engine
+  echo "./mvnw install -f bom && ./mvnw install -DskipTests -am -pl engine,distro/sql-script"
+  ./mvnw install -f bom && ./mvnw install -DskipTests -am -pl engine,distro/sql-script
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
     popd > /dev/null

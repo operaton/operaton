@@ -15,7 +15,7 @@ This can be done by running the following commands from the root of the project:
 
 ```bash
 ./mvnw install -f bom 
-./mvnw install -DskipTests -am -pl engine
+./mvnw install -DskipTests -am -pl engine,distro/sql-script
 ```
 
 ## Executing Tests

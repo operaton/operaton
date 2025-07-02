@@ -457,23 +457,6 @@
         <module>bom</module>
       </modules>
     </profile>
-    <profile>
-      <id>rolling-update</id>
-      <modules>
-        <module>database</module>
-        <module>parent</module>
-        <module>bom</module>
-        <module>model-api</module>
-        <module>test-utils/archunit</module>
-        <module>test-utils/junit5-extension</module>
-        <module>test-utils/testcontainers</module>
-        <module>juel</module>
-        <module>commons</module>
-        <module>engine-dmn</module>
-        <module>engine</module>
-        <module>qa</module>
-      </modules>
-    </profile>
 
     <profile>
       <id>sonatype-oss-release</id>

@@ -10,12 +10,14 @@ How this test suite works (`$CURRENT` refers to current minor version, `$PREVIOU
 
 ## Preparing build
 
-Before execution of the tests make sure that the latest version of the `bom` and `engine` modules are built.
+Before execution of the tests make sure that the latest version of the `bom`, `distro/sql-script` modules 
+and dependent modules (esp. engine and what it depends on) are built.
+
 This can be done by running the following commands from the root of the project:
 
 ```bash
 ./mvnw install -f bom 
-./mvnw install -DskipTests -am -pl engine,distro/sql-script
+./mvnw install -DskipTests -am -pl distro/sql-script
 ```
 
 ## Executing Tests

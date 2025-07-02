@@ -524,6 +524,8 @@
                 <exclude>**/SpringServletPATimerStartEventExpressionTest.java</exclude>
                 <!-- no Nashorn module on Wildfly -->
                 <exclude>**/*NashornTest.java</exclude>
+                <!-- https://github.com/camunda/camunda-bpm-platform/issues/5037-->
+                <exclude>**/FeelEngineTest.java</exclude>
               </excludes>
               <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
             </configuration>
@@ -643,6 +645,8 @@
                 <!-- CAM-1778 -->
                 <exludes>**/TestWarDeploymentWithProcessEnginePlugin.java</exludes>
                 <exclude>**/SpringServletPATimerStartEventExpressionTest.java</exclude>
+                <!-- https://github.com/camunda/camunda-bpm-platform/issues/5037-->
+                <exclude>**/FeelEngineTest.java</exclude>
               </excludes>
               <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
             </configuration>

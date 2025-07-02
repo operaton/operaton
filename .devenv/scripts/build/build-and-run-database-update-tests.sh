@@ -41,11 +41,9 @@ parse_args() {
 }
 
 run_build () {
-  PROFILES=(rolling-update $DATABASE)
-
-  echo "ℹ️ Building database update tests for database $DATABASE using profiles: [${PROFILES[*]}]"
-  echo "./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install"
-  ./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install
+  echo "ℹ️ Building BOMs and engine modules"
+  echo "./mvnw install -f bom && ./mvnw install -DskipTests -am -pl engine"
+  ./mvnw install -f bom && ./mvnw install -DskipTests -am -pl engine
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
     popd > /dev/null
@@ -59,8 +57,8 @@ run_tests () {
   MVN_ARGS+=(clean install)
 
   echo "ℹ️ Running database update tests for database $DATABASE using profiles: [${PROFILES[*]}]"
-  echo "./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}") -f qa/test-db-rolling-update"
-  ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}") -f qa/test-db-rolling-update
+  echo "./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}") -f qa"
+  ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}") -f qa
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
     popd > /dev/null

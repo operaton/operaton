@@ -18,13 +18,11 @@ package org.operaton.bpm.qa.rolling.update;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
+import org.junit.jupiter.api.BeforeEach;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
 import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
@@ -36,23 +34,21 @@ import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public abstract class AbstractRollingUpdateTestCase {
 
-  @Parameters(name = "{0} engine")
-    public static Collection<Object[]> data() {
+  @Parameters
+  public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
           {RollingUpdateConstants.OLD_ENGINE_TAG}, {RollingUpdateConstants.NEW_ENGINE_TAG}
            });
     }
-
-  @Parameter
   public String tag;
 
-  @Rule
-  public UpgradeTestRule rule = new UpgradeTestRule();
+  @RegisterExtension
+  protected static UpgradeTestRule rule = new UpgradeTestRule();
 
-  @Before
+  @BeforeEach
   public void init() {
     rule.setTag(tag);
   }

@@ -16,14 +16,22 @@
       <version>${operaton.dbscheme.previous.artifactVersion}</version>
     </dependency>
     <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
+      <scope>test</scope>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-junit5</artifactId>
+      <scope>test</scope>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.operaton.bpm.qa.upgrade</groupId>
       <artifactId>operaton-qa-db-rolling-update-util</artifactId>
       <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -69,13 +77,6 @@
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
             </configuration>
-            <dependencies>
-              <dependency>
-                <groupId>org.apache.maven.surefire</groupId>
-                <artifactId>surefire-junit47</artifactId>
-                <version>3.5.3</version>
-              </dependency>
-            </dependencies>
           </plugin>
           <!-- provide sql scripts -->
           <plugin>

@@ -15,32 +15,31 @@
  * limitations under the License.
  */
 package org.operaton.bpm.qa.rolling.update.timestamp;
-
-import java.util.Date;
-
-import org.junit.Test;
-
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.upgrade.Origin;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import java.util.Date;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Nikola Koevski
  */
 @ScenarioUnderTest("JobTimestampsUpdateScenario")
 @Origin("7.11.0")
-public class JobTimestampsUpdateTest extends AbstractTimestampUpdateTest {
+@Parameterized
+class JobTimestampsUpdateTest extends AbstractTimestampUpdateTest {
 
   protected static final long LOCK_DURATION = 300000L;
   protected static final Date LOCK_EXP_TIME = new Date(TIME + LOCK_DURATION);
 
   @ScenarioUnderTest("initJobTimestamps.1")
-  @Test
-  public void testDueDateConversion() {
+  @TestTemplate
+  void dueDateConversion() {
 
     Job job = rule.jobQuery().singleResult();
 
@@ -48,12 +47,12 @@ public class JobTimestampsUpdateTest extends AbstractTimestampUpdateTest {
     assertNotNull(job);
 
     // then
-    assertThat(job.getDuedate(), is(TIMESTAMP));
+    assertThat(job.getDuedate()).isEqualTo(TIMESTAMP);
   }
 
   @ScenarioUnderTest("initJobTimestamps.1")
-  @Test
-  public void testLockExpirationTimeConversion() {
+  @TestTemplate
+  void lockExpirationTimeConversion() {
 
     JobEntity job = (JobEntity) rule.jobQuery().singleResult();
 
@@ -61,6 +60,6 @@ public class JobTimestampsUpdateTest extends AbstractTimestampUpdateTest {
     assertNotNull(job);
 
     // then
-    assertThat(job.getLockExpirationTime(), is(LOCK_EXP_TIME));
+    assertThat(job.getLockExpirationTime()).isEqualTo(LOCK_EXP_TIME);
   }
 }

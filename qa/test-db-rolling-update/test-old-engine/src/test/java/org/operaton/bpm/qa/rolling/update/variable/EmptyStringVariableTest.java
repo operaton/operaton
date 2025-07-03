@@ -16,15 +16,14 @@
  */
 package org.operaton.bpm.qa.rolling.update.variable;
 
-import org.junit.Test;
-
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test ensures that the old engine can read an empty String variable created by the new engine.
@@ -33,40 +32,41 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  */
 @ScenarioUnderTest("EmptyStringVariableScenario")
-public class EmptyStringVariableTest extends AbstractRollingUpdateTestCase {
+@Parameterized
+class EmptyStringVariableTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.1")
-  public void shouldFindEmptyStringVariableWithValue() {
+  void shouldFindEmptyStringVariableWithValue() {
     //given
     VariableInstance variableInstance = rule.getRuntimeService().createVariableInstanceQuery()
         .variableName("myStringVar")
         .singleResult();
 
     // then
-    assertThat(variableInstance.getValue(), is(""));
+    assertThat(variableInstance.getValue()).isEqualTo("");
   }
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.1")
-  public void shouldQueryEmptyStringVariableWithValueEquals() {
+  void shouldQueryEmptyStringVariableWithValueEquals() {
     //given
     VariableInstanceQuery variableInstanceQuery = rule.getRuntimeService().createVariableInstanceQuery()
         .variableValueEquals("myStringVar", "");
 
     // then
-    assertThat(variableInstanceQuery.count(), is(1L));
+    assertThat(variableInstanceQuery.count()).isOne();
   }
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.1")
-  public void shouldQueryEmptyStringVariableWithValueNotEquals() {
+  void shouldQueryEmptyStringVariableWithValueNotEquals() {
     //given
     VariableInstanceQuery variableInstanceQuery = rule.getRuntimeService().createVariableInstanceQuery()
         .variableValueNotEquals("myStringVar", "");
 
     // then
-    assertThat(variableInstanceQuery.count(), is(0L));
+    assertThat(variableInstanceQuery.count()).isZero();
   }
 
 }

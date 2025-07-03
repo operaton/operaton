@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.qa.rolling.update.task;
-
-import org.junit.Test;
-
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -32,11 +31,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithAsyncServiceTaskScenario")
-public class CompleteProcessWithAsyncServiceTaskTest extends AbstractRollingUpdateTestCase {
+@Parameterized
+class CompleteProcessWithAsyncServiceTaskTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.1")
-  public void testCompleteWithAsyncServiceTask() {
+  void completeWithAsyncServiceTask() {
     //given process with async service task
     ProcessInstance oldInstance = rule.processInstance();
     assertThat(oldInstance).isNotNull();

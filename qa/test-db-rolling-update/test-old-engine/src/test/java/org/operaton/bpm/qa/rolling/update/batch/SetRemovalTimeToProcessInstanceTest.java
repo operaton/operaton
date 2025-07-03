@@ -18,15 +18,14 @@ package org.operaton.bpm.qa.rolling.update.batch;
 
 import java.util.Date;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.rolling.update.RollingUpdateConstants;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
@@ -34,20 +33,21 @@ import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ScenarioUnderTest("SetRemovalTimeToProcessInstanceScenario")
-public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTestCase {
+@Parameterized
+class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTestCase {
 
   protected ManagementService managementService;
   protected RuntimeService runtimeService;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     managementService = rule.getManagementService();
     runtimeService = rule.getRuntimeService();
   }
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("createSetRemovalTimeToProcessInstanceBatch.1")
-  public void shouldCompleteBatch() {
+  void shouldCompleteBatch() {
     if (RollingUpdateConstants.OLD_ENGINE_TAG.equals(rule.getTag())) { // test cleanup with old engine
       Date removalTime = new Date(1363609000000L);
 
@@ -76,9 +76,9 @@ public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTe
     }
   }
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("createSetRemovalTimeToProcessInstanceBatchJob.1")
-  public void testCompleteBatchKJob() {
+  void completeBatchKJob() {
     if (RollingUpdateConstants.OLD_ENGINE_TAG.equals(rule.getTag())) { // test cleanup with old engine
       Date removalTime = new Date(1363609000000L);
 

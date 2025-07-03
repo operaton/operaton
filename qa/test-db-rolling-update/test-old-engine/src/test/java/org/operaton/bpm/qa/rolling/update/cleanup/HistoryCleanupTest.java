@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.qa.rolling.update.cleanup;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -23,32 +24,29 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.rolling.update.RollingUpdateConstants;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.After;
-import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner
  */
 @ScenarioUnderTest("HistoryCleanupScenario")
-public class HistoryCleanupTest extends AbstractRollingUpdateTestCase {
+class HistoryCleanupTest extends AbstractRollingUpdateTestCase {
 
   static final Date FIXED_DATE = new Date(1363608000000L);
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("initHistoryCleanup.1")
-  public void testHistoryCleanup() {
+  void historyCleanup() {
 
     if (RollingUpdateConstants.OLD_ENGINE_TAG.equals(rule.getTag())) { // test cleanup with old engine
 
@@ -78,7 +76,7 @@ public class HistoryCleanupTest extends AbstractRollingUpdateTestCase {
 
       // assume
       for (Job job : jobs) {
-        assertThat(job.getDuedate(), is(addSeconds(currentDate, (int)(Math.pow(2., (double)4) * 10))));
+        assertThat(job.getDuedate()).isEqualTo(addSeconds(currentDate, (int)(Math.pow(2., (double)4) * 10)));
       }
 
       List<HistoricProcessInstance> processInstances = rule.getHistoryService()
@@ -87,8 +85,8 @@ public class HistoryCleanupTest extends AbstractRollingUpdateTestCase {
         .list();
 
       // assume
-      assertThat(jobs.size(), is(3));
-      assertThat(processInstances.size(), is(15));
+      assertThat(jobs).hasSize(3);
+      assertThat(processInstances).hasSize(15);
 
       ClockUtil.setCurrentTime(addDays(currentDate, 5));
 
@@ -101,7 +99,7 @@ public class HistoryCleanupTest extends AbstractRollingUpdateTestCase {
         .list();
 
       // then
-      assertThat(processInstances.size(), is(10));
+      assertThat(processInstances).hasSize(10);
 
       // when
       rule.getManagementService().executeJob(jobTwo.getId());
@@ -112,7 +110,7 @@ public class HistoryCleanupTest extends AbstractRollingUpdateTestCase {
         .list();
 
       // then
-      assertThat(processInstances.size(), is(5));
+      assertThat(processInstances).hasSize(5);
 
       // when
       rule.getManagementService().executeJob(jobThree.getId());
@@ -123,7 +121,7 @@ public class HistoryCleanupTest extends AbstractRollingUpdateTestCase {
         .list();
 
       // then
-      assertThat(processInstances.size(), is(0));
+      assertThat(processInstances).isEmpty();
     }
   }
 

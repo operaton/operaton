@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 package org.operaton.bpm.qa.rolling.update.task;
-
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test ensures that the old engine can complete an
@@ -31,26 +31,26 @@ import org.junit.Test;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithUserTaskScenario")
-public class CompleteProcessWithUserTaskTest extends AbstractRollingUpdateTestCase {
+class CompleteProcessWithUserTaskTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.1")
-  public void testCompleteProcessWithUserTask() {
+  void completeProcessWithUserTask() {
     //given an already started process instance
     ProcessInstance oldInstance = rule.processInstance();
-    Assert.assertNotNull(oldInstance);
+    assertThat(oldInstance).isNotNull();
 
     //which waits on an user task
     TaskService taskService = rule.getTaskService();
     Task userTask = taskService.createTaskQuery().processInstanceId(oldInstance.getId()).singleResult();
-    Assert.assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
 
     //when completing the user task
     taskService.complete(userTask.getId());
 
     //then there exists no more tasks
     //and the process instance is also completed
-    Assert.assertEquals(0, rule.taskQuery().count());
+    assertThat(rule.taskQuery().count()).isZero();
     rule.assertScenarioEnded();
   }
 

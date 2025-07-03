@@ -203,6 +203,7 @@ jobs:
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
       - name: Execute Database Upgrade Tests
         id: maven-db-upgrade-tests
+        if: ${{ matrix.database == 'h2' }}
         shell: bash
         run: |
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-build

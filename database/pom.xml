@@ -205,7 +205,6 @@
         <database.driver>org.h2.Driver</database.driver>
         <database.datasource.class>org.h2.jdbcx.JdbcDataSource</database.datasource.class>
         <jboss.datasource.filename>h2-ds.xml</jboss.datasource.filename>
-        <was.liberty.datasource.filename>h2-config.xml</was.liberty.datasource.filename>
         <hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
       </properties>
       <dependencies>
@@ -316,6 +315,7 @@
         <database.type>oracle</database.type>
         <database.driver>oracle.jdbc.OracleDriver</database.driver>
         <database.datasource.class>oracle.jdbc.pool.OracleDataSource</database.datasource.class>
+        <jboss.datasource.filename>oracle-ds.xml</jboss.datasource.filename>
         <database.tc.url>operatonoracle:21-faststart</database.tc.url>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
@@ -355,7 +355,6 @@
         <database.driver>org.postgresql.Driver</database.driver>
         <database.datasource.class>org.postgresql.ds.PGSimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-ds.xml</jboss.datasource.filename>
-        <was.liberty.datasource.filename>postgresql-config.xml</was.liberty.datasource.filename>
         <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
         <database.tc.url>operatonpostgresql:13.2</database.tc.url>
         <database.url>jdbc:tc:${database.tc.url}:///${database.name}/${database.tc.params}</database.url>
@@ -391,7 +390,6 @@
       <properties>
         <database.datasource.class>org.postgresql.xa.PGXADataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-xa-ds.xml</jboss.datasource.filename>
-        <was.liberty.datasource.filename>postgresql-xa-config.xml</was.liberty.datasource.filename>
       </properties>
     </profile>
     <profile>

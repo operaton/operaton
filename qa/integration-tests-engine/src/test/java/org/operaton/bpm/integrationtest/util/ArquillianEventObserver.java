@@ -24,6 +24,7 @@ import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.operaton.impl.test.utils.testcontainers.OperatonDb2ContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider;
+import org.operaton.impl.test.utils.testcontainers.OperatonOracleContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMariaDBContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonPostgreSQLContainerProvider;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -45,6 +46,9 @@ public class ArquillianEventObserver {
   private static final String MARIADB = "mariadb";
   private static final String MARIADB_VERSION = "10.0";
 
+  private static final String ORACLE = "oracle";
+  private static final String ORACLE_VERSION = "21-faststart";
+
   private static final String DB2 = "db2";
   private static final String DB2_VERSION = "12.1.2.0";
 
@@ -53,6 +57,7 @@ public class ArquillianEventObserver {
           POSTGRES, new OperatonPostgreSQLContainerProvider().newInstance(POSTGRES_VERSION),
           SQLSERVER, new OperatonMSSQLContainerProvider().newInstance(SQLSERVER_VERSION),
           MARIADB, new OperatonMariaDBContainerProvider().newInstance(MARIADB_VERSION),
+          ORACLE, new OperatonOracleContainerProvider().newInstance(ORACLE_VERSION),
           DB2, new OperatonDb2ContainerProvider().newInstance(DB2_VERSION)
   );
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.qa.rolling.update.timestamp;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -25,14 +25,10 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
-import org.junit.Before;
-import org.junit.Rule;
 
 import java.util.Date;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Nikola Koevski
@@ -45,13 +41,13 @@ public abstract class AbstractTimestampUpdateTest extends AbstractRollingUpdateT
   protected RuntimeService runtimeService;
   protected ManagementService managementService;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     runtimeService = rule.getRuntimeService();
     managementService = rule.getManagementService();
   }
 
   protected void assertNotNull(Object object) {
-    assertThat(object, is(notNullValue()));
+    assertThat(object).isNotNull();
   }
 }

@@ -16,49 +16,50 @@
  */
 package org.operaton.bpm.qa.rolling.update.multiInstance;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.Test;
-import static org.junit.Assert.assertNotNull;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithMultiInstanceCallActivityScenario")
-public class CompleteProcessWithMultiInstanceCallActivityTest extends AbstractRollingUpdateTestCase {
+class CompleteProcessWithMultiInstanceCallActivityTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.1")
-  public void testCompleteProcessWithCallActivity() {
+  void completeProcessWithCallActivity() {
     //given process with user task before multi-instance call activity
     ProcessInstance processInstance = rule.processInstance();
     TaskQuery taskQuery = rule.getTaskService().createTaskQuery().processInstanceId(processInstance.getId());
     Task taskBeforeSubProcess = taskQuery.taskName("Task before multi-instance").singleResult();
-    assertNotNull(taskBeforeSubProcess);
+    assertThat(taskBeforeSubProcess).isNotNull();
 
     //when the task before is complete the process leads to calling the multi-instance subprocess
     rule.getTaskService().complete(taskBeforeSubProcess.getId());
 
     Task taskAfterSubProcess = taskQuery.taskName("Task after multi-instance").singleResult();
-    assertNotNull(taskAfterSubProcess);
+    assertThat(taskAfterSubProcess).isNotNull();
 
     //after completing the after task the process instance ends
     rule.getTaskService().complete(taskAfterSubProcess.getId());
     rule.assertScenarioEnded();
   }
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.complete.one.1")
-  public void testCompleteProcessWithCallActivityAndOneCompletedTask() {
+  void completeProcessWithCallActivityAndOneCompletedTask() {
     //given process after multi-instance callactivity
     ProcessInstance processInstance = rule.processInstance();
     TaskQuery taskQuery = rule.getTaskService().createTaskQuery().processInstanceId(processInstance.getId());
     Task taskAfterSubProcess = taskQuery.taskName("Task after multi-instance").singleResult();
-    assertNotNull(taskAfterSubProcess);
+    assertThat(taskAfterSubProcess).isNotNull();
 
     // Completing this task end the process instance
     rule.getTaskService().complete(taskAfterSubProcess.getId());

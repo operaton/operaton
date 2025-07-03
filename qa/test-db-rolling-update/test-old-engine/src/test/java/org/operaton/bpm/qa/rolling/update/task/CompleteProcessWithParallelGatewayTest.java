@@ -17,14 +17,15 @@
 package org.operaton.bpm.qa.rolling.update.task;
 
 import java.util.List;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test ensures that the old engine can complete an
@@ -33,17 +34,17 @@ import org.junit.Test;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithParallelGatewayScenario")
-public class CompleteProcessWithParallelGatewayTest extends AbstractRollingUpdateTestCase {
+class CompleteProcessWithParallelGatewayTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.none.1")
-  public void testCompleteProcessWithParallelGateway() {
+  void completeProcessWithParallelGateway() {
     //given an already started process instance with two user tasks
     ProcessInstance oldInstance = rule.processInstance();
-    Assert.assertNotNull(oldInstance);
+    assertThat(oldInstance).isNotNull();
 
     List<Task> tasks = rule.taskQuery().list();
-    Assert.assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
 
     //when completing the user tasks
     for (Task task : tasks) {
@@ -52,43 +53,43 @@ public class CompleteProcessWithParallelGatewayTest extends AbstractRollingUpdat
 
     //then there exists no more tasks
     //and the process instance is also completed
-    Assert.assertEquals(0, rule.taskQuery().count());
+    assertThat(rule.taskQuery().count()).isZero();
     rule.assertScenarioEnded();
   }
 
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.complete.one.1")
-  public void testCompleteProcessWithParallelGatewayAndSingleUserTask() {
+  void completeProcessWithParallelGatewayAndSingleUserTask() {
     //given an already started process instance
     ProcessInstance oldInstance = rule.processInstance();
-    Assert.assertNotNull(oldInstance);
+    assertThat(oldInstance).isNotNull();
 
     //with one completed user task
     HistoricTaskInstanceQuery historicTaskQuery = rule.getHistoryService()
             .createHistoricTaskInstanceQuery()
             .processInstanceId(oldInstance.getId())
             .finished();
-    Assert.assertEquals(1, historicTaskQuery.count());
+    assertThat(historicTaskQuery.count()).isOne();
 
     //and one waiting
     Task task = rule.taskQuery().singleResult();
-    Assert.assertNotNull(task);
+    assertThat(task).isNotNull();
 
     //when completing the user task
     rule.getTaskService().complete(task.getId());
 
     //then there exists no more tasks
-    Assert.assertEquals(0, rule.taskQuery().count());
+    assertThat(rule.taskQuery().count()).isZero();
     //and two historic tasks
-    Assert.assertEquals(2, historicTaskQuery.count());
+    assertThat(historicTaskQuery.count()).isEqualTo(2);
     //and the process instance is also completed
     rule.assertScenarioEnded();
   }
 
-  @Test
+  @TestTemplate
   @ScenarioUnderTest("init.complete.two.1")
-  public void testQueryHistoricProcessWithParallelGateway() {
+  void queryHistoricProcessWithParallelGateway() {
     //given an already finished process instance with parallel gateway and two user tasks
     HistoricProcessInstance historicProcessInstance = rule.historicProcessInstance();
 
@@ -98,7 +99,7 @@ public class CompleteProcessWithParallelGatewayTest extends AbstractRollingUpdat
             .processInstanceId(historicProcessInstance.getId());
 
     //then two historic user tasks are returned
-    Assert.assertEquals(2, historicTaskQuery.count());
+    assertThat(historicTaskQuery.count()).isEqualTo(2);
   }
 
 }

@@ -3,7 +3,7 @@
 EXECUTE_BUILD=true
 EXECUTE_TEST=true
 DATABASE="h2"
-VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb", "oracle" "db2" "sqlserver")
+VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb" "oracle" "db2" "sqlserver")
 
 ##########################################################################
 check_valid_values() {

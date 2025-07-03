@@ -47,6 +47,7 @@ class DatabaseContainerProviderTest {
     "jdbc:tc:operatonmariadb:10.0://localhost:3306/process-engine, SELECT version();, 10.0, mariadb",
     "jdbc:tc:operatonmysql:5.7://localhost:3306/process-engine, SELECT version();, 5.7, mysql",
     "jdbc:tc:operatonmysql:8.0://localhost:3306/process-engine, SELECT version();, 8.0, mysql",
+    "jdbc:tc:operatonmysql:9.2.0://localhost:3306/process-engine, SELECT version();, 9.2.0, mysql",
     "jdbc:tc:operatonsqlserver:2022-latest://localhost:1433/process-engine, SELECT @@VERSION, 2022, sqlserver",
     "jdbc:tc:operatonoracle:21-faststart://localhost:1521, SELECT * FROM v$version, 21c, oracle",
     "jdbc:tc:operatondb2:12.1.2.0://localhost:50000, SELECT SERVICE_LEVEL FROM TABLE(SYSPROC.ENV_GET_INST_INFO()), v12, db2"

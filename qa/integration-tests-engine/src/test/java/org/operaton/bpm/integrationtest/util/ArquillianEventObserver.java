@@ -22,6 +22,7 @@ import java.util.function.Supplier;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
+import org.operaton.impl.test.utils.testcontainers.OperatonDb2ContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMariaDBContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonPostgreSQLContainerProvider;
@@ -44,11 +45,15 @@ public class ArquillianEventObserver {
   private static final String MARIADB = "mariadb";
   private static final String MARIADB_VERSION = "10.0";
 
+  private static final String DB2 = "db2";
+  private static final String DB2_VERSION = "12.1.2.0";
+
   // Initialized with providers, so we do not start all containers at the same time here statically upon initialization
   private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = Map.of(
           POSTGRES, new OperatonPostgreSQLContainerProvider().newInstance(POSTGRES_VERSION),
           SQLSERVER, new OperatonMSSQLContainerProvider().newInstance(SQLSERVER_VERSION),
-          MARIADB, new OperatonMariaDBContainerProvider().newInstance(MARIADB_VERSION)
+          MARIADB, new OperatonMariaDBContainerProvider().newInstance(MARIADB_VERSION),
+          DB2, new OperatonDb2ContainerProvider().newInstance(DB2_VERSION)
   );
 
   /**

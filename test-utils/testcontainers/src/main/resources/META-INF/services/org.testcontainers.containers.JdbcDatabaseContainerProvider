@@ -3,3 +3,4 @@ org.operaton.impl.test.utils.testcontainers.OperatonMariaDBContainerProvider
 org.operaton.impl.test.utils.testcontainers.OperatonMySqlContainerProvider
 org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider
 org.operaton.impl.test.utils.testcontainers.OperatonOracleContainerProvider
+org.operaton.impl.test.utils.testcontainers.OperatonDb2ContainerProvider

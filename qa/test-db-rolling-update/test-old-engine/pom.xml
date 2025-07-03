@@ -9,21 +9,11 @@
   <artifactId>operaton-qa-db-test-old-engine</artifactId>
   <name>Operaton - QA - upgrade - rolling update - test old engine</name>
   <description>${project.name}</description>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-bom</artifactId>
-        <version>7.22.0</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
+      <version>${operaton.dbscheme.previous.artifactVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm.qa.upgrade</groupId>
@@ -79,6 +69,13 @@
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
             </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>org.apache.maven.surefire</groupId>
+                <artifactId>surefire-junit47</artifactId>
+                <version>3.5.2</version>
+              </dependency>
+            </dependencies>
           </plugin>
           <!-- provide sql scripts -->
           <plugin>
@@ -96,7 +93,7 @@
                     <artifactItem>
                       <groupId>org.operaton.bpm.distro</groupId>
                       <artifactId>operaton-sql-scripts</artifactId>
-                      <version>${version.operaton.dbscheme}</version>
+                      <version>${operaton.dbscheme.current.version}</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
                       <overWrite>true</overWrite>
@@ -119,8 +116,8 @@
                 <configuration>
                   <srcFiles>
                     <!-- finally drop db -->
-                    <srcFile>${project.build.directory}/scripts-current/sql/drop/${database.type}_engine_${project.version}.sql</srcFile>
-                    <srcFile>${project.build.directory}/scripts-current/sql/drop/${database.type}_identity_${project.version}.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/drop/${database.type}_engine_${operaton.dbscheme.current.version}.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/drop/${database.type}_identity_${operaton.dbscheme.current.version}.sql</srcFile>
                   </srcFiles>
                 </configuration>
               </execution>

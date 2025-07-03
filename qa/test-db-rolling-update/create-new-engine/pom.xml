@@ -9,10 +9,6 @@
   <artifactId>operaton-qa-db-create-new-engine</artifactId>
   <name>Operaton - QA - upgrade - rolling update - create new engine</name>
   <description>${project.name}</description>
-  <properties>
-    <operaton.version.current>${project.version}</operaton.version.current>
-    <operaton.version.previous>7.22.0</operaton.version.previous>
-  </properties>
   <dependencies>
     <!-- NOTE: this pulls transitive dependencies of version ${project.version} in unless
       you declare them to be ${operaton.version.current} here -->
@@ -93,7 +89,7 @@
                     <artifactItem>
                       <groupId>org.operaton.bpm.distro</groupId>
                       <artifactId>operaton-sql-scripts</artifactId>
-                      <version>${version.operaton.dbscheme}</version>
+                      <version>${operaton.dbscheme.current.version}</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
                       <overWrite>true</overWrite>
@@ -115,7 +111,7 @@
                 </goals>
                 <configuration>
                   <propertyPrefix>operaton.current</propertyPrefix>
-                  <versionString>${operaton.version.current}</versionString>
+                  <versionString>${operaton.dbscheme.current.version}</versionString>
                 </configuration>
               </execution>
               <execution>
@@ -125,7 +121,7 @@
                 </goals>
                 <configuration>
                   <propertyPrefix>operaton.previous</propertyPrefix>
-                  <versionString>${operaton.version.previous}</versionString>
+                  <versionString>${operaton.dbscheme.previous.version}</versionString>
                 </configuration>
               </execution>
             </executions>

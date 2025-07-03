@@ -20,7 +20,7 @@
     <dependency>
       <groupId>org.operaton.bpm.distro</groupId>
       <artifactId>operaton-sql-scripts</artifactId>
-      <version>${version.operaton.dbscheme}</version>
+      <version>${operaton.dbscheme.current.version}</version>
       <type>jar</type>
     </dependency>
     <!-- make sure this runs after webapps -->

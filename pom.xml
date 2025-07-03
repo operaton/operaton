@@ -457,6 +457,7 @@
         <module>bom</module>
       </modules>
     </profile>
+
     <profile>
       <id>sonatype-oss-release</id>
       <properties>

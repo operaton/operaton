@@ -16,25 +16,64 @@
  */
 package org.operaton.bpm.qa.upgrade;
 
-import java.util.Objects;
-import org.junit.jupiter.api.extension.*;
-import org.operaton.bpm.engine.*;
-import org.operaton.bpm.engine.history.*;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngines;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.history.HistoricIncidentQuery;
+import org.operaton.bpm.engine.history.HistoricProcessInstance;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.management.JobDefinitionQuery;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
+import org.operaton.bpm.engine.runtime.CaseInstance;
+import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
+import org.operaton.bpm.engine.runtime.ExecutionQuery;
+import org.operaton.bpm.engine.runtime.IncidentQuery;
+import org.operaton.bpm.engine.runtime.JobQuery;
+import org.operaton.bpm.engine.runtime.MessageCorrelationBuilder;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.TaskQuery;
-
-import java.lang.reflect.Parameter;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static java.util.Objects.requireNonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UpgradeTestRule extends ProcessEngineExtension {
+public class UpgradeTestRule implements BeforeAllCallback, BeforeEachCallback {
 
   private String scenarioTestedByClass = null;
   private String scenarioName;
   private String tag;
+
+  private ProcessEngineConfigurationImpl processEngineConfiguration;
+  private RuntimeService runtimeService;
+  private ManagementService managementService;
+  private TaskService taskService;
+  private HistoryService historyService;
+  private CaseService caseService;
+  private RepositoryService repositoryService;
+
+  @Override
+  public void beforeAll(ExtensionContext context) {
+    // Note: engine classes are loaded from the "old" engine jar.
+    // The classes are not the current ones.
+    var processEngine = ProcessEngines.getProcessEngine("default");
+    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
+    runtimeService = processEngineConfiguration.getRuntimeService();
+    managementService = processEngineConfiguration.getManagementService();
+    taskService = processEngineConfiguration.getTaskService();
+    historyService = processEngineConfiguration.getHistoryService();
+    caseService = processEngineConfiguration.getCaseService();
+    repositoryService = processEngineConfiguration.getRepositoryService();
+  }
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
@@ -46,7 +85,9 @@ public class UpgradeTestRule extends ProcessEngineExtension {
         scenarioTestedByClass = testScenarioClassAnnotation.value();
       }
     }
-    ScenarioUnderTest testScenarioAnnotation = context.getTestMethod().map(testMethod -> testMethod.getAnnotation(ScenarioUnderTest.class)).orElse(null);
+    ScenarioUnderTest testScenarioAnnotation = context.getTestMethod()
+      .map(testMethod -> testMethod.getAnnotation(ScenarioUnderTest.class))
+      .orElse(null);
     if (testScenarioAnnotation != null) {
       if (scenarioTestedByClass != null) {
         scenarioName = scenarioTestedByClass + "." + testScenarioAnnotation.value();
@@ -66,7 +107,6 @@ public class UpgradeTestRule extends ProcessEngineExtension {
 
     requireNonNull(scenarioName, "Could not determine scenario under test for test " + context.getDisplayName());
 
-    super.beforeEach(context);
   }
 
   public String getScenarioName() {
@@ -85,6 +125,46 @@ public class UpgradeTestRule extends ProcessEngineExtension {
     this.tag = tag;
   }
 
+  public RuntimeService getRuntimeService() {
+    return runtimeService;
+  }
+
+  public ManagementService getManagementService() {
+    return managementService;
+  }
+
+  public HistoryService getHistoryService() {
+    return historyService;
+  }
+
+  public CaseService getCaseService() {
+    return caseService;
+  }
+
+  public TaskService getTaskService() {
+    return taskService;
+  }
+
+  public RepositoryService getRepositoryService() {
+    return repositoryService;
+  }
+
+  public ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
+    return processEngineConfiguration;
+  }
+
+  public IdentityService getIdentityService() {
+    return processEngineConfiguration.getIdentityService();
+  }
+
+  public ExternalTaskService getExternalTaskService() {
+    return processEngineConfiguration.getExternalTaskService();
+  }
+
+  public FormService getFormService() {
+    return processEngineConfiguration.getFormService();
+  }
+
   public TaskQuery taskQuery() {
     return taskService.createTaskQuery().processInstanceBusinessKey(getBusinessKey());
   }
@@ -100,68 +180,55 @@ public class UpgradeTestRule extends ProcessEngineExtension {
 
   public JobDefinitionQuery jobDefinitionQuery() {
     ProcessInstance instance = processInstance();
-    return managementService.createJobDefinitionQuery()
-            .processDefinitionId(instance.getProcessDefinitionId());
+    return managementService.createJobDefinitionQuery().processDefinitionId(instance.getProcessDefinitionId());
   }
 
   public IncidentQuery incidentQuery() {
     ProcessInstance processInstance = processInstance();
-    return runtimeService.createIncidentQuery()
-        .processInstanceId(processInstance.getId());
+    return runtimeService.createIncidentQuery().processInstanceId(processInstance.getId());
   }
 
   public ProcessInstanceQuery processInstanceQuery() {
-    return runtimeService
-            .createProcessInstanceQuery()
-            .processInstanceBusinessKey(getBusinessKey());
+    return runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(getBusinessKey());
   }
 
   public ProcessInstance processInstance() {
-    ProcessInstance instance = processInstanceQuery().singleResult();
-    if (instance == null) {
-      throw new RuntimeException("No process instance for scenario " + getBusinessKey());
-    }
-    return instance;
+    return requireNonNull(processInstanceQuery().singleResult(), "No process instance for scenario " + getBusinessKey());
   }
 
   public HistoricProcessInstance historicProcessInstance() {
-    HistoricProcessInstance historicProcessInstance = historyService
-      .createHistoricProcessInstanceQuery()
+    HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
       .processInstanceBusinessKey(getBusinessKey())
       .singleResult();
-    return requireNonNull(historicProcessInstance, "There is no  historic process instance for scenario " + getBusinessKey());
+    return requireNonNull(historicProcessInstance,
+      "There is no  historic process instance for scenario " + getBusinessKey());
   }
 
   public HistoricIncidentQuery historicIncidentQuery() {
     ProcessInstance processInstance = processInstance();
-    return historyService.createHistoricIncidentQuery()
-        .processInstanceId(processInstance.getId());
+    return historyService.createHistoricIncidentQuery().processInstanceId(processInstance.getId());
   }
 
   public MessageCorrelationBuilder messageCorrelation(String messageName) {
-    return runtimeService.createMessageCorrelation(messageName)
-      .processInstanceBusinessKey(getBusinessKey());
+    return runtimeService.createMessageCorrelation(messageName).processInstanceBusinessKey(getBusinessKey());
   }
 
   public void assertScenarioEnded() {
-    assertThat(processInstanceQuery().singleResult())
-      .as("Process instance for scenario " + getBusinessKey() + " should have ended")
-      .isNull();
+    if (processInstanceQuery().singleResult() != null) {
+      throw new AssertionError("Process instance for scenario " + getBusinessKey() + " should have ended, but is still running");
+    }
   }
 
   // case //////////////////////////////////////////////////
   public CaseInstanceQuery caseInstanceQuery() {
-    return caseService.createCaseInstanceQuery()
-      .caseInstanceBusinessKey(getBusinessKey());
+    return caseService.createCaseInstanceQuery().caseInstanceBusinessKey(getBusinessKey());
   }
 
   public CaseExecutionQuery caseExecutionQuery() {
-    return caseService.createCaseExecutionQuery()
-      .caseInstanceBusinessKey(getBusinessKey());
+    return caseService.createCaseExecutionQuery().caseInstanceBusinessKey(getBusinessKey());
   }
 
   public CaseInstance caseInstance() {
     return requireNonNull(caseInstanceQuery().singleResult(), "No case instance for scenario " + getBusinessKey());
   }
-
 }

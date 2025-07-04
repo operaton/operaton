@@ -19,6 +19,7 @@ package org.operaton.bpm.qa.rolling.update.variable;
 import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -31,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  */
 @ScenarioUnderTest("EmptyStringVariableScenario")
+@Parameterized
 class EmptyStringVariableTest extends AbstractRollingUpdateTestCase {
 
   @TestTemplate

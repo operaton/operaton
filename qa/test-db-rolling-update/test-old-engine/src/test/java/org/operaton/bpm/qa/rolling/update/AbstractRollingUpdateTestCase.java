@@ -44,7 +44,7 @@ public abstract class AbstractRollingUpdateTestCase {
   public String tag;
 
   @RegisterExtension
-  public UpgradeTestRule rule = new UpgradeTestRule();
+  protected static UpgradeTestRule rule = new UpgradeTestRule();
 
   @BeforeEach
   public void init() {

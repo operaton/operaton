@@ -37,6 +37,7 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
     setDefaultSerializationFormat(configuration);
     setIdGenerator(configuration);
     setJobExecutorAcquireByPriority(configuration);
+    setJobExecutorAcquireWithSkipLocked(configuration);
     setDefaultNumberOfRetries(configuration);
   }
 
@@ -74,6 +75,11 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
   private void setJobExecutorAcquireByPriority(SpringProcessEngineConfiguration configuration) {
     Optional.ofNullable(operatonBpmProperties.getJobExecutorAcquireByPriority())
       .ifPresent(configuration::setJobExecutorAcquireByPriority);
+  }
+
+  private void setJobExecutorAcquireWithSkipLocked(SpringProcessEngineConfiguration configuration) {
+    Optional.ofNullable(operatonBpmProperties.getJobExecutorAcquireWithSkipLocked())
+      .ifPresent(configuration::setJobExecutorAcquireWithSkipLocked);
   }
 
   private void setDefaultNumberOfRetries(SpringProcessEngineConfiguration configuration) {

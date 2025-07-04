@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
@@ -97,12 +99,8 @@ class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTestCase 
   }
 
   private void assertFailureOnCalledProcessInstance(Runnable runnable) {
-    try {
-      runnable.run();
-      fail("call to calledProcessInstance() should have thrown an error");
-    } catch (IllegalStateException iae) {
-      // expected
-    }
+    assertThatThrownBy(runnable::run, "call to calledProcessInstance() should have thrown an error")
+        .isInstanceOf(IllegalStateException.class);
   }
 
   @Test

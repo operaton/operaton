@@ -17,7 +17,7 @@
 package org.operaton.spin.json.tree;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.spin.DataFormats.json;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.Spin.S;
@@ -26,6 +26,7 @@ import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_EMPTY_STRING;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_INVALID_JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 
+import java.io.IOException;
 import java.io.Reader;
 
 import org.junit.jupiter.api.Test;
@@ -89,171 +90,75 @@ class JsonTreeCreateTest {
   void shouldFailForNull() {
     SpinJsonNode jsonNode = null;
     var json = json();
-
-    try {
-      JSON(jsonNode);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(jsonNode, json);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(jsonNode);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> JSON(jsonNode), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> S(jsonNode, json), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> S(jsonNode), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
 
     Reader reader = null;
-
-    try {
-      JSON(reader);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(reader, json);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(reader);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> JSON(jsonNode), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> S(reader, json), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> S(reader), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
 
     String inputString = null;
-
-    try {
-      JSON(inputString);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(inputString, json);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(inputString, DataFormats.JSON_DATAFORMAT_NAME);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(inputString);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> JSON(inputString), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> S(inputString, json), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> S(inputString, DataFormats.JSON_DATAFORMAT_NAME), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> S(inputString), "Expected IllegalArgumentException")
+        .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
   void shouldFailForInvalidJson() {
     var json = json();
-    try {
-      JSON(EXAMPLE_INVALID_JSON);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_INVALID_JSON, json);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_INVALID_JSON, DataFormats.JSON_DATAFORMAT_NAME);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_INVALID_JSON);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> JSON(EXAMPLE_INVALID_JSON), "Expected SpinDataFormatException")
+        .isInstanceOf(SpinDataFormatException.class);
+    assertThatThrownBy(() -> S(EXAMPLE_INVALID_JSON, json), "Expected SpinDataFormatException")
+        .isInstanceOf(SpinDataFormatException.class);
+    assertThatThrownBy(() -> S(EXAMPLE_INVALID_JSON, DataFormats.JSON_DATAFORMAT_NAME), "Expected SpinDataFormatException")
+        .isInstanceOf(SpinDataFormatException.class);
+    assertThatThrownBy(() -> S(EXAMPLE_INVALID_JSON), "Expected SpinDataFormatException")
+        .isInstanceOf(SpinDataFormatException.class);
   }
 
   @Test
   void shouldFailForEmptyString() {
     var json = json();
-    try {
-      JSON(EXAMPLE_EMPTY_STRING);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_EMPTY_STRING, json);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_EMPTY_STRING, DataFormats.JSON_DATAFORMAT_NAME);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_EMPTY_STRING);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> JSON(EXAMPLE_EMPTY_STRING), "Expected SpinDataFormatException")
+        .isInstanceOf(SpinDataFormatException.class);
+    assertThatThrownBy(() -> S(EXAMPLE_EMPTY_STRING, json), "Expected SpinDataFormatException")
+        .isInstanceOf(SpinDataFormatException.class);
+    assertThatThrownBy(() -> S(EXAMPLE_EMPTY_STRING, DataFormats.JSON_DATAFORMAT_NAME), "Expected SpinDataFormatException")
+        .isInstanceOf(SpinDataFormatException.class);
+    assertThatThrownBy(() -> S(EXAMPLE_EMPTY_STRING), "Expected SpinDataFormatException")
+        .isInstanceOf(SpinDataFormatException.class);
   }
 
   @Test
-  void shouldFailForEmptyReader() {
-    Reader input1 = stringAsReader(EXAMPLE_EMPTY_STRING);
+  void shouldFailForEmptyReader() throws IOException {
     var json = json();
-    try {
-      JSON(input1);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
+
+    try (Reader input1 = stringAsReader(EXAMPLE_EMPTY_STRING)) {
+      assertThatThrownBy(() -> JSON(input1), "Expected SpinDataFormatException")
+          .isInstanceOf(SpinDataFormatException.class);
     }
 
-    Reader input2 = stringAsReader(EXAMPLE_EMPTY_STRING);
-    try {
-      S(input2, json);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
+    try (Reader input2 = stringAsReader(EXAMPLE_EMPTY_STRING)) {
+      assertThatThrownBy(() -> S(input2, json), "Expected SpinDataFormatException")
+          .isInstanceOf(SpinDataFormatException.class);
     }
 
-    Reader input3 = stringAsReader(EXAMPLE_EMPTY_STRING);
-    try {
-      S(input3);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
+    try (Reader input3 = stringAsReader(EXAMPLE_EMPTY_STRING)) {
+      assertThatThrownBy(() -> S(input3), "Expected SpinDataFormatException")
+          .isInstanceOf(SpinDataFormatException.class);
     }
   }
 
@@ -283,11 +188,7 @@ class JsonTreeCreateTest {
 
   @Test
   void shouldFailForUnescapedString() {
-    try {
-      JSON("a String");
-      fail("expected exception");
-    } catch (SpinDataFormatException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> JSON("a String"), "expected exception")
+        .isInstanceOf(SpinDataFormatException.class);
   }
 }

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RewindableReaderTest {
 
@@ -153,12 +153,7 @@ class RewindableReaderTest {
     assertThat(SpinIoUtil.getStringFromReader(reader))
       .isEqualTo(EXAMPLE_INPUT_STRING.substring(DEFAULT_BUFFER_SIZE + 5));
 
-    try {
-      reader.rewind();
-      fail("IOException expected");
-    } catch (IOException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> reader.rewind(), "IOException expected").isInstanceOf(IOException.class);
 
     // exceeding with read()
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
@@ -167,12 +162,7 @@ class RewindableReaderTest {
     reader.read(buffer);
     reader.read();
 
-    try {
-      reader.rewind();
-      fail("IOException expected");
-    } catch (IOException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> reader.rewind(), "IOException expected").isInstanceOf(IOException.class);
 
     // repeated read(char[])
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
@@ -181,12 +171,7 @@ class RewindableReaderTest {
     reader.read(buffer);
     reader.read(buffer);
 
-    try {
-      reader.rewind();
-      fail("IOException expected");
-    } catch (IOException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> reader.rewind(), "IOException expected").isInstanceOf(IOException.class);
   }
 
   @Test

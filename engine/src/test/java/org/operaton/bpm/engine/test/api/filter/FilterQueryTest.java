@@ -81,13 +81,7 @@ class FilterQueryTest {
     FilterQuery query = filterService.createFilterQuery();
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.singleResult(), "Exception expected").isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -113,13 +107,7 @@ class FilterQueryTest {
   @Test
   void testQueryByResourceType() {
     FilterQuery query = filterService.createFilterQuery().filterResourceType(EntityTypes.TASK);
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.singleResult(), "Exception expected").isInstanceOf(ProcessEngineException.class);
     assertThat(query.list()).hasSize(4);
     assertThat(query.count()).isEqualTo(4);
   }

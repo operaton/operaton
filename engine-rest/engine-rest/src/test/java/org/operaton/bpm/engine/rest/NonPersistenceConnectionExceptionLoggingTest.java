@@ -37,7 +37,6 @@ import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.api.Test;
 
 /**

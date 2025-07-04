@@ -16,16 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import java.util.List;
-
-import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
-import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
-import org.operaton.bpm.engine.impl.util.xml.Element;
-import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
-
 /**
  * Abstract base class for implementing a {@link BpmnParseListener} without being forced
  * to implement all methods provided, which makes the implementation more robust to

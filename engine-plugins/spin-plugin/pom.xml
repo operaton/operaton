@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>operaton-engine-plugins</artifactId>
     <groupId>org.operaton.bpm</groupId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
-
   <artifactId>operaton-engine-plugin-spin</artifactId>
   <name>Operaton - Engine Plugins - Spin</name>
-
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -22,105 +20,87 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-core</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.dmn</groupId>
       <artifactId>operaton-engine-feel-scala</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <classifier>junit5</classifier>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-bpm-junit5</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
       <scope>test</scope>
-   </dependency>
-
-   <dependency>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
       <scope>test</scope>
-   </dependency>
-
+    </dependency>
     <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-bpmn-model</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby-complete</artifactId>
@@ -131,33 +111,27 @@
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
       <scope>provided</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -168,6 +142,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

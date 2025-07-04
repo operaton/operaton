@@ -10,6 +10,7 @@
 
   <artifactId>operaton-engine-dmn</artifactId>
   <name>Operaton - DMN - Engine</name>
+  <description>${project.name}</description>
   <properties>
     <operaton.artifact>org.operaton.bpm.dmn.engine</operaton.artifact>
     <operaton.osgi.import.additional>
@@ -317,6 +318,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  * Patches task variables: First, applies modifications to existing variables and then deletes
  * specified variables.
  *
- * @author kristin.polenz@operaton.com
+ * @author kristin.polenz@camunda.com
  *
  */
 public class PatchTaskVariablesCmd extends AbstractPatchVariablesCmd {

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     https://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,29 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.container.impl.jmx.deployment;
+package org.operaton.bpm.integrationtest.functional.spin;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.naming.spi.InitialContextFactory;
+import java.util.Map;
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
 
-import java.util.Hashtable;
-
-public class MockInitialContextFactory implements InitialContextFactory {
-
-  private static final ThreadLocal<Context> currentContext = new ThreadLocal<>();
+public class FeelContextDelegate implements JavaDelegate {
 
   @Override
-  public Context getInitialContext(Hashtable<?, ?> environment) throws NamingException {
-    return currentContext.get();
-  }
+  public void execute(DelegateExecution execution) throws Exception {
+    Map<String, Object> context = (Map<String, Object>) execution.getVariable("context");
+    Map<String, Object> nestedMap = (Map<String, Object>) context.get("innerContext");
 
-  public static void setCurrentContext(Context context) {
-    currentContext.set(context);
+    String content = (String) nestedMap.get("content");
+    execution.setVariable("result", content);
   }
-
-  public static void clearCurrentContext() {
-    currentContext.remove();
-  }
-
 }

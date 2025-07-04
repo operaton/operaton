@@ -1,23 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>qa-plugins-spin</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>qa-plugins-spin-dataformat-all</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Plugins - Spin All</name>
-
+  <description>${project.name}</description>
   <properties>
     <install.skip>true</install.skip>
   </properties>
-
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.bpm.springboot.project</groupId>
       <artifactId>qa-plugins-spin-dataformat-json-jackson</artifactId>
@@ -29,19 +24,15 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-all</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
     </dependency>
-
   </dependencies>
-  
   <profiles>
     <profile>
       <id>integration-test-spring-boot-starter</id>
@@ -72,6 +63,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

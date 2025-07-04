@@ -1,14 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-engine-rest</artifactId>
-  <name>Operaton - Engine - REST - Assembly</name>
-  <packaging>war</packaging>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+
+  <artifactId>operaton-engine-rest</artifactId>
+  <packaging>war</packaging>
+  <name>Operaton - Engine - REST - Assembly</name>
+  <description>${project.name}</description>
 
   <properties>
     <!-- generate a bom of dependencies for the license book.
@@ -170,5 +171,4 @@
 
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

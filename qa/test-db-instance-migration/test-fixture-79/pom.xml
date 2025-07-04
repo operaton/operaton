@@ -1,22 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.qa.upgrade</groupId>
     <artifactId>operaton-qa-db-instance-migration</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-qa-upgrade-test-fixture-79</artifactId>
-  <packaging>jar</packaging>
   <name>Operaton - QA - upgrade - instance migration - test fixture - 7.9.0</name>
-
+  <description>${project.name}</description>
   <properties>
     <operaton.version.previous>7.8.0</operaton.version.previous>
-    
     <version.h2>${version.h2-v1}</version.h2>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -28,7 +24,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
@@ -38,7 +33,6 @@
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-core</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
@@ -47,14 +41,12 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-plugin-spin</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.qa.upgrade</groupId>
       <artifactId>operaton-qa-upgrade-scenario-util</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
-
   <build>
     <resources>
       <resource>
@@ -69,7 +61,6 @@
       </testResource>
     </testResources>
   </build>
-
   <profiles>
     <profile>
       <id>instance-migration</id>
@@ -84,26 +75,22 @@
                 <phase>generate-test-sources</phase>
                 <configuration>
                   <target>
-                    <property name="current.minor.version" value="${operaton.current.majorVersion}.${operaton.current.minorVersion}" />
-                    <property name="previous.minor.version" value="${operaton.previous.majorVersion}.${operaton.previous.minorVersion}" />
-                    <property name="current.sql.upgrade.dir" value="${project.build.directory}/scripts-current/sql/upgrade" />
-                    <property name="minor.version.upgrade.script.previous.to.current.engine" value="${database.type}_engine_${previous.minor.version}_to_${current.minor.version}.sql" />
-                    <property name="minor.version.upgrade.script.previous.to.current.identity" value="${database.type}_identity_${previous.minor.version}_to_${current.minor.version}.sql" />
-                    <property name="patch.version.upgrade.script.previous.engine.prefix" value="${database.type}_engine_${previous.minor.version}_patch_${previous.minor.version}" />
-
+                    <property name="current.minor.version" value="${operaton.current.majorVersion}.${operaton.current.minorVersion}"/>
+                    <property name="previous.minor.version" value="${operaton.previous.majorVersion}.${operaton.previous.minorVersion}"/>
+                    <property name="current.sql.upgrade.dir" value="${project.build.directory}/scripts-current/sql/upgrade"/>
+                    <property name="minor.version.upgrade.script.previous.to.current.engine" value="${database.type}_engine_${previous.minor.version}_to_${current.minor.version}.sql"/>
+                    <property name="minor.version.upgrade.script.previous.to.current.identity" value="${database.type}_identity_${previous.minor.version}_to_${current.minor.version}.sql"/>
+                    <property name="patch.version.upgrade.script.previous.engine.prefix" value="${database.type}_engine_${previous.minor.version}_patch_${previous.minor.version}"/>
                     <!-- create the SQL scripts so that the files exist even if they do not exist in the distribution. (this can be the case if there are no db
                       upgrades (yet) for a particular release ) -->
-
-                    <mkdir dir="${current.sql.upgrade.dir}/" />
-
+                    <mkdir dir="${current.sql.upgrade.dir}/"/>
                     <!-- concanated patches for last minor version -->
                     <!-- 7.8.0 is on a clean state so we can again use the concanated patches -->
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch.sql" />
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch.sql" />
-
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch.sql"/>
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch.sql"/>
                     <!-- minor version upgrade from previous to current version -->
-                    <touch file="${current.sql.upgrade.dir}/${minor.version.upgrade.script.previous.to.current.engine}" />
-                    <touch file="${current.sql.upgrade.dir}/${minor.version.upgrade.script.previous.to.current.identity}" />
+                    <touch file="${current.sql.upgrade.dir}/${minor.version.upgrade.script.previous.to.current.engine}"/>
+                    <touch file="${current.sql.upgrade.dir}/${minor.version.upgrade.script.previous.to.current.identity}"/>
                   </target>
                 </configuration>
                 <goals>
@@ -112,7 +99,6 @@
               </execution>
             </executions>
           </plugin>
-
           <!-- provide sql scripts -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -139,7 +125,6 @@
               </execution>
             </executions>
           </plugin>
-
           <!-- parse version properties from qa/pom.xml -->
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
@@ -167,7 +152,6 @@
               </execution>
             </executions>
           </plugin>
-
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>sql-maven-plugin</artifactId>
@@ -233,6 +217,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

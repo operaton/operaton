@@ -663,7 +663,7 @@ class AsyncAfterTest {
   }
 
   @Deployment
-  @Disabled
+  @Disabled("Expected 3 jobs to be created, but only 1 was created")
   @Test
   void testAsyncAfterOnParallelGatewayJoin() {
     String configuration = PvmAtomicOperation.ACTIVITY_END.getCanonicalName();

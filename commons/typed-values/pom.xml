@@ -1,18 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>org.operaton.commons</groupId>
-  <artifactId>operaton-commons-typed-values</artifactId>
-  <name>Operaton - Commons - Typed Values</name>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <groupId>org.operaton.commons</groupId>
+  <artifactId>operaton-commons-typed-values</artifactId>
+  <name>Operaton - Commons - Typed Values</name>
+  <description>${project.name}</description>
+  <properties>
+    <operaton.artifact>org.operaton.bpm.engine.variable</operaton.artifact>
+    <operaton.osgi.import.additional>
+      !jakarta.activation
+    </operaton.osgi.import.additional>
+  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -24,50 +28,36 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <properties>
-    <operaton.artifact>org.operaton.bpm.engine.variable</operaton.artifact>
-    <operaton.osgi.import.additional>
-      !jakarta.activation
-    </operaton.osgi.import.additional>
-  </properties>
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-utils</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
     </dependency>
-
     <dependency>
       <groupId>jakarta.activation</groupId>
       <artifactId>jakarta.activation-api</artifactId>
       <optional>true</optional>
     </dependency>
-
     <dependency>
       <groupId>org.eclipse.angus</groupId>
       <artifactId>jakarta.mail</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-bpm-archunit</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -176,6 +166,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  *
@@ -77,8 +77,8 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
       execution.setTransition(transition);
     }
 
-    Context.getCommandInvocationContext()
-      .performOperation(atomicOperation, execution);
+    var commandInvocationContext = requireNonNull(Context.getCommandInvocationContext());
+    commandInvocationContext.performOperation(atomicOperation, execution);
   }
 
   public PvmAtomicOperation findMatchingAtomicOperation(String operationName) {
@@ -117,8 +117,8 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
 
     if (jobConfiguration != null ) {
       String[] configParts = jobConfiguration.split("\\$");
-      if (configuration.length > 2) {
-        throw new ProcessEngineException("Illegal async continuation job handler configuration: '" + jobConfiguration + "': exprecting one part or two parts seperated by '$'.");
+      if (configParts.length > 2) {
+        throw new ProcessEngineException("Illegal async continuation job handler configuration: '" + jobConfiguration + "': expecting one part or two parts separated by '$'.");
       }
       configuration[0] = configParts[0];
       if (configParts.length == 2) {
@@ -166,8 +166,4 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
 
   }
 
-  @Override
-  public void onDelete(AsyncContinuationConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
 }

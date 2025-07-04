@@ -12,6 +12,7 @@
 
   <packaging>pom</packaging>
   <name>Operaton - Engine - REST - Root</name>
+  <description>${project.name}</description>
 
   <properties>
     <version.rest-assured>5.5.2</version.rest-assured>
@@ -73,5 +74,4 @@
     <module>docs</module>
   </modules>
 
-  <description>${project.name}</description>
 </project>

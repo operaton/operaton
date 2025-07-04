@@ -1,25 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-  <name>Operaton - Java External Task Client - Root</name>
-
-  <artifactId>operaton-external-task-client-root</artifactId>
-
-  <packaging>pom</packaging>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
-  <modules>
-    <module>qa</module>
-    <module>client</module>
-  </modules>
-
+  <artifactId>operaton-external-task-client-root</artifactId>
+  <packaging>pom</packaging>
+  <name>Operaton - Java External Task Client - Root</name>
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -38,20 +29,20 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
+  <modules>
+    <module>qa</module>
+    <module>client</module>
+  </modules>
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
     </dependency>
   </dependencies>
-
   <scm>
     <url>http://github.com/operaton/operaton-external-task-client-java</url>
     <connection>scm:git:git@github.com:operaton/operaton-external-task-client-java.git</connection>
     <developerConnection>scm:git:git@github.com:operaton/operaton-external-task-client-java.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
-
-  <description>${project.name}</description>
 </project>

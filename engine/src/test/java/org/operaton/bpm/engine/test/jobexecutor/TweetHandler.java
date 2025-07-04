@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.test.jobexecutor.TweetHandler.TweetJobConfiguration;
 
 public class TweetHandler implements JobHandler<TweetJobConfiguration> {
@@ -66,11 +65,6 @@ public class TweetHandler implements JobHandler<TweetJobConfiguration> {
     public String toCanonicalString() {
       return message;
     }
-  }
-
-  @Override
-  public void onDelete(TweetJobConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
   }
 
 }

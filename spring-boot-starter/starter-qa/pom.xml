@@ -1,23 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
-  <packaging>pom</packaging>
-
   <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
+  <packaging>pom</packaging>
   <name>Operaton - Spring Boot Starter - QA - Root POM</name>
-
+  <description>${project.name}</description>
   <properties>
     <deploy.skip>true</deploy.skip>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -27,7 +22,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm.springboot</groupId>
@@ -35,7 +29,6 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.springboot</groupId>
       <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
@@ -53,7 +46,6 @@
       </exclusions>
     </dependency>
   </dependencies>
-
   <profiles>
     <profile>
       <id>distro</id>
@@ -95,6 +87,4 @@
       </modules>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

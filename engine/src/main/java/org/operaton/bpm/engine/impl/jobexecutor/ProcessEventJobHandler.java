@@ -20,7 +20,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.ProcessEventJobHandler.EventSubscriptionJobConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 
 
 /**
@@ -71,11 +70,6 @@ public class ProcessEventJobHandler implements JobHandler<EventSubscriptionJobCo
       return eventSubscriptionId;
     }
 
-  }
-
-  @Override
-  public void onDelete(EventSubscriptionJobConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
   }
 
 }

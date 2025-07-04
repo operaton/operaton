@@ -1,66 +1,53 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.quarkus</groupId>
     <artifactId>operaton-bpm-quarkus-engine-parent</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-bpm-quarkus-engine-deployment</artifactId>
-
   <name>Operaton - Quarkus Extension - Engine - Deployment</name>
-
+  <description>${project.name}</description>
   <dependencies>
-
     <!-- Operaton dependencies -->
     <dependency>
       <groupId>org.operaton.bpm.quarkus</groupId>
       <artifactId>operaton-bpm-quarkus-engine</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <classifier>junit5</classifier>
       <scope>test</scope>
     </dependency>
-
     <!-- Quarkus dependencies -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc-deployment</artifactId>
     </dependency>
-
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-agroal-deployment</artifactId>
     </dependency>
-
     <!-- Test dependencies -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5-internal</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-h2-deployment</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <version>3.22.0</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -77,5 +64,4 @@
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

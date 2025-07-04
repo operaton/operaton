@@ -1,15 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.spin</groupId>
     <artifactId>operaton-spin-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-spin-dataformat-all</artifactId>
   <name>Operaton - Spin - All data formats in one</name>
-
+  <description>${project.name}</description>
   <properties>
     <!-- We shade artifacts into the jar, so we need to generate 
     a dependency BOM for the license book -->
@@ -17,24 +16,19 @@
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
     <third-party-bom-scopes>compile|runtime</third-party-bom-scopes>
   </properties>
-  
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
     </dependency>
-
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-core</artifactId>
@@ -43,9 +37,7 @@
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -107,9 +99,9 @@
                 </relocation>
               </relocations>
               <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer" />
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
               </transformers>
               <filters>
                 <filter>
@@ -131,17 +123,19 @@
         <configuration>
           <includeDependencySources>true</includeDependencySources>
           <includeTransitiveDependencySources>true</includeTransitiveDependencySources>
-          <dependencySourceIncludes><include>org.operaton.spin:*</include></dependencySourceIncludes>
+          <dependencySourceIncludes>
+            <include>org.operaton.spin:*</include>
+          </dependencySourceIncludes>
           <additionalDependencies>
-           <additionalDependency>
-             <groupId>junit</groupId>
-             <artifactId>junit</artifactId>
-             <version>4.13.1</version>
-           </additionalDependency>
+            <additionalDependency>
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+              <version>4.13.1</version>
+            </additionalDependency>
           </additionalDependencies>
         </configuration>
       </plugin>
-       <plugin>
+      <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <configuration>
@@ -180,5 +174,4 @@
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

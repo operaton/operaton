@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 
 /**
- * @author kristin.polenz@operaton.com
+ * @author kristin.polenz@camunda.com
  */
 @SuppressWarnings("rawtypes")
 public class GetDeploymentResourcesCmd implements Command<List>, Serializable {

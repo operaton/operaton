@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * An attribute.
  *
- * @author christian.lipphardt@operaton.com
+ * @author christian.lipphardt@camunda.com
  */
 public enum Attribute {
   /**

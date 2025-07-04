@@ -1,44 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-bpm-run-qa</artifactId>
-  <name>Operaton - Run - QA</name>
   <packaging>pom</packaging>
-
+  <name>Operaton - Run - QA</name>
+  <description>${project.name}</description>
   <properties>
     <!-- default os -->
     <os.type>linux64</os.type>
-
     <version.jersey-apache-client>1.15</version.jersey-apache-client>
     <version.httpcomponents>4.5.10</version.httpcomponents>
     <version.chromedriver>112.0.5615.49</version.chromedriver>
   </properties>
-
   <dependencyManagement>
     <dependencies>
-
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
         <version>4.31.0</version>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
-
   <profiles>
     <profile>
       <id>distro</id>
@@ -60,6 +52,4 @@
       </modules>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

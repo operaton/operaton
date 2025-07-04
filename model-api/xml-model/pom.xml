@@ -1,16 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-xml-model</artifactId>
-  <packaging>jar</packaging>
-
   <name>Operaton - XML Model API</name>
+  <description>${project.name}</description>
   <properties>
     <operaton.artifact>org.operaton.bpm.model.xml</operaton.artifact>
     <operaton.osgi.import.additional>
@@ -18,7 +16,6 @@
       org.junit.jupiter.api.*;resolution:=optional
     </operaton.osgi.import.additional>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -28,7 +25,6 @@
       <optional>true</optional>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -52,7 +48,6 @@
       </plugin>
     </plugins>
   </build>
-
   <!-- check for api differences between latest minor release -->
   <profiles>
     <profile>
@@ -103,6 +98,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

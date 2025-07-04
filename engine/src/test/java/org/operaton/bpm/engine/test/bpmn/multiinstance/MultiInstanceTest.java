@@ -475,7 +475,7 @@ class MultiInstanceTest {
     Task singleResult = taskService.createTaskQuery().singleResult();
     taskService.complete(singleResult.getId());
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertThat(recordedEvents.size()).isEqualTo(2);
+    assertThat(recordedEvents).hasSize(2);
 
     assertThat(recordedEvents.get(0).getCurrentActivityId()).isEqualTo("miTasks#multiInstanceBody");
     assertThat(recordedEvents.get(1).getCurrentActivityId()).isEqualTo("miTasks#multiInstanceBody"); // or miTasks

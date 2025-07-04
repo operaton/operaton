@@ -1,23 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <groupId>org.operaton.bpm.springboot.project</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
-  <name>Operaton - Spring Boot Starter - Root POM</name>
-
   <packaging>pom</packaging>
-
+  <name>Operaton - Spring Boot Starter - Root POM</name>
+  <description>${project.name}</description>
   <properties>
     <surefire.forkCount>1</surefire.forkCount>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -29,7 +26,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
   <profiles>
     <profile>
       <id>distro</id>
@@ -63,7 +59,6 @@
       <id>integration-test-spring-boot-starter</id>
       <modules>
         <!-- All modules that contain *IT.java test classes need to be listed here -->
-
         <module>starter-qa</module>
         <module>starter</module>
         <module>starter-rest</module>
@@ -96,7 +91,6 @@
       </build>
     </profile>
   </profiles>
-
   <build>
     <defaultGoal>clean install</defaultGoal>
     <pluginManagement>
@@ -107,7 +101,7 @@
           <configuration>
             <archive>
               <manifest>
-                <addDefaultImplementationEntries />
+                <addDefaultImplementationEntries/>
               </manifest>
             </archive>
           </configuration>
@@ -130,6 +124,4 @@
       </plugins>
     </pluginManagement>
   </build>
-
-  <description>${project.name}</description>
 </project>

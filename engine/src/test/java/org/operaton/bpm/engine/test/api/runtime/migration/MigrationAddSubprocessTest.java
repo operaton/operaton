@@ -651,11 +651,8 @@ class MigrationAddSubprocessTest {
     testHelper.assertProcessEnded(processInstanceId);
   }
 
-  /**
-   * Readd when we implement migration for multi-instance
-   */
   @Test
-  @Disabled
+  @Disabled("Fails with 'Could not match expected tree'")
   void testAddParentScopeToMultiInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(

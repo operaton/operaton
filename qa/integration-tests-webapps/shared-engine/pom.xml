@@ -1,19 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa-integration-tests-webapps-shared-engine</artifactId>
-  <name>Operaton - QA Integration Tests - Webapps Shared Engine</name>
-
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <artifactId>operaton-qa-integration-tests-webapps-shared-engine</artifactId>
+  <name>Operaton - QA Integration Tests - Webapps Shared Engine</name>
+  <description>${project.name}</description>
   <properties>
     <install.skip>true</install.skip>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm.qa</groupId>
@@ -22,7 +20,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <profiles>
     <profile>
       <id>wildfly</id>
@@ -141,7 +138,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>tomcat</id>
       <properties>
@@ -179,7 +175,6 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-
       <build>
         <plugins>
           <plugin>
@@ -256,7 +251,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>distro</id>
       <build>
@@ -272,7 +266,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>webapps-integration</id>
       <build>
@@ -294,7 +287,6 @@
         </plugins>
       </build>
     </profile>
-
     <!-- allows dropping all databases -->
     <profile>
       <id>clean-db</id>
@@ -353,7 +345,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>embedded-engine-rest</id>
       <!-- Works only on Wildfly 26 -->
@@ -402,7 +393,6 @@
       </build>
     </profile>
   </profiles>
-
   <build>
     <testResources>
       <testResource>
@@ -410,7 +400,6 @@
         <filtering>true</filtering>
       </testResource>
     </testResources>
-
     <pluginManagement>
       <plugins>
         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build
@@ -438,7 +427,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore />
+                    <ignore/>
                   </action>
                 </pluginExecution>
               </pluginExecutions>
@@ -448,6 +437,4 @@
       </plugins>
     </pluginManagement>
   </build>
-
-  <description>${project.name}</description>
 </project>

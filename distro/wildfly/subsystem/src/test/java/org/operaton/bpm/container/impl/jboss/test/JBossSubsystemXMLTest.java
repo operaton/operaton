@@ -66,8 +66,8 @@ import org.junit.Test;
 
 /**
  *
- * @author nico.rehwaldt@operaton.com
- * @author christian.lipphardt@operaton.com
+ * @author nico.rehwaldt@camunda.com
+ * @author christian.lipphardt@camunda.com
  */
 public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 

@@ -1031,10 +1031,7 @@ class MigrationTransitionInstancesTest {
     testHelper.assertJobMigrated("eventSubProcessStart", "eventSubProcessStart", AsyncContinuationJobHandler.TYPE);
   }
 
-  /**
-   * Does not apply since asyncAfter cannot be used with boundary events
-   */
-  @Disabled
+  @Disabled("Does not apply since asyncAfter cannot be used with boundary events")
   @Test
   void testMigrateAsyncAfterBoundaryEventWithChangedEventScope() {
     BpmnModelInstance sourceProcess = modify(ProcessModels.PARALLEL_GATEWAY_PROCESS)

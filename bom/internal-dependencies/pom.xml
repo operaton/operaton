@@ -66,9 +66,14 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.12.2</version>
+        <version>6.0.0-M1</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-compress</artifactId>
+        <version>1.27.1</version>
       </dependency>
       <dependency>
         <groupId>org.testcontainers</groupId>
@@ -163,7 +168,7 @@
       <dependency>
         <groupId>commons-fileupload</groupId>
         <artifactId>commons-fileupload</artifactId>
-        <version>1.5</version>
+        <version>1.6.0</version>
       </dependency>
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
@@ -232,7 +237,7 @@
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
-        <version>1.5.16</version>
+        <version>1.5.18</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -484,7 +489,7 @@
         <groupId>org.wiremock</groupId>
         <artifactId>wiremock-standalone</artifactId>
         <scope>test</scope>
-        <version>3.10.0</version>
+        <version>3.13.1</version>
       </dependency>
 
       <dependency>

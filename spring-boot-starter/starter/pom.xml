@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -5,11 +6,10 @@
     <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <groupId>org.operaton.bpm.springboot</groupId>
   <artifactId>operaton-bpm-spring-boot-starter</artifactId>
   <name>Operaton - Spring Boot Starter</name>
-
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -21,7 +21,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
@@ -37,7 +36,6 @@
       <classifier>junit5</classifier>
       <scope>test</scope>
     </dependency>
-
     <!-- Spring dependencies required by operaton-engine-spring -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -55,25 +53,21 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-plugin-spin</artifactId>
       <optional>true</optional>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
       <optional>true</optional>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-plugin-connect</artifactId>
       <optional>true</optional>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-autoconfigure</artifactId>
@@ -102,25 +96,21 @@
       <artifactId>spring-boot-starter-jersey</artifactId>
       <optional>true</optional>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
-
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>
-
     <dependency>
       <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
       <groupId>${project.groupId}</groupId>
@@ -162,7 +152,6 @@
       <artifactId>junit-platform-suite</artifactId>
     </dependency>
   </dependencies>
-
   <build>
     <resources>
       <resource>
@@ -171,6 +160,4 @@
       </resource>
     </resources>
   </build>
-
-  <description>${project.name}</description>
 </project>

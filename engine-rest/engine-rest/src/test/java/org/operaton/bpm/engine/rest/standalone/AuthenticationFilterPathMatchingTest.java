@@ -182,7 +182,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
   }
 
   @TestTemplate
-  public void testHttpBasicAuthenticationCheck() throws IOException, ServletException {
+  void testHttpBasicAuthenticationCheck() throws IOException, ServletException {
     if (authenticationExpected) {
       when(identityServiceMock.checkPassword(MockProvider.EXAMPLE_USER_ID, MockProvider.EXAMPLE_USER_PASSWORD)).thenReturn(true);
     }

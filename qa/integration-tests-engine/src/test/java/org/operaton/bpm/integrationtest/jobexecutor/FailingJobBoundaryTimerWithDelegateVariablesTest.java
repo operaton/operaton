@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  * FAILING ATM!
  * Expected a job with an exception but it isn't left in db with 0 retries, instead it is completely removed from the job table!
  *
- * @author christian.lipphardt@operaton.com
+ * @author christian.lipphardt@camunda.com
  */
 @RunWith(Arquillian.class)
 public class FailingJobBoundaryTimerWithDelegateVariablesTest extends AbstractFoxPlatformIntegrationTest {

@@ -1,17 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-qa</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-bpm-run-qa-integration-tests</artifactId>
   <name>Operaton - Run - QA - Integration Tests</name>
-  <packaging>jar</packaging>
-
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -23,53 +20,44 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
-
     <dependency>
       <groupId>jakarta.ws.rs</groupId>
       <artifactId>jakarta.ws.rs-api</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- JNA needed for Managed Container -->
     <dependency>
       <groupId>net.java.dev.jna</groupId>
       <artifactId>jna</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>net.java.dev.jna</groupId>
       <artifactId>jna-platform</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- REST -->
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- SpringBoot BOM excludes commons-logging, so we need to add it explicitly -->
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <scope>test</scope>
     </dependency>
-
     <!-- Webapps -->
     <dependency>
       <groupId>org.operaton.bpm.qa</groupId>
@@ -82,49 +70,40 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-bpmn-model</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -149,6 +128,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

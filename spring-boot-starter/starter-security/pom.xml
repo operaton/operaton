@@ -1,18 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <groupId>org.operaton.bpm.springboot</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-security</artifactId>
   <name>Operaton Platform - Spring Boot Starter - Spring Security</name>
-
+  <description>${project.name}</description>
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -32,7 +29,6 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
-
     <!-- spring security dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -42,7 +38,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-oauth2-client</artifactId>
     </dependency>
-
     <dependency>
       <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
       <groupId>${project.groupId}</groupId>
@@ -71,6 +66,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

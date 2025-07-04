@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.slf4j.Logger;
 
 
@@ -55,16 +54,6 @@ public class TweetExceptionHandler implements JobHandler<JobHandlerConfiguration
   public JobHandlerConfiguration newConfiguration(String canonicalString) {
     return () -> null;
   }
-
-  @Override
-  public void onDelete(JobHandlerConfiguration configuration, JobEntity jobEntity) {
-    // do nothing
-  }
-
-  public int getExceptionsRemaining() {
-    return exceptionsRemaining.get();
-  }
-
 
   public void setExceptionsRemaining(int exceptionsRemaining) {
     this.exceptionsRemaining.set(exceptionsRemaining);

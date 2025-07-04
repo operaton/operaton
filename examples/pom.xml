@@ -1,18 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>org.operaton.bpm.example</groupId>
-  <artifactId>operaton-example-root</artifactId>
-  <packaging>pom</packaging>
-  <name>Operaton - Example - Root</name>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
+  <groupId>org.operaton.bpm.example</groupId>
+  <artifactId>operaton-example-root</artifactId>
+  <packaging>pom</packaging>
+  <name>Operaton - Example - Root</name>
+  <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -24,48 +23,39 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <scope>test</scope>
       <classifier>junit5</classifier>
     </dependency>
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-bpm-junit5</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -93,10 +83,7 @@
       </plugins>
     </pluginManagement>
   </build>
-
   <modules>
     <module>invoice</module>
   </modules>
-
-  <description>${project.name}</description>
 </project>

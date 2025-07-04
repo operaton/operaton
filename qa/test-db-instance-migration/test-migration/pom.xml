@@ -1,23 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.qa.upgrade</groupId>
     <artifactId>operaton-qa-db-instance-migration</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-qa-upgrade-test-migration</artifactId>
-  <packaging>jar</packaging>
   <name>Operaton - QA - upgrade - instance migration - test</name>
-
+  <description>${project.name}</description>
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
@@ -26,38 +22,31 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-plugin-spin</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm.qa.upgrade</groupId>
       <artifactId>operaton-qa-upgrade-scenario-util</artifactId>
       <version>${project.version}</version>
     </dependency>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.openjpa</groupId>
       <artifactId>openjpa</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <resources>
       <resource>
@@ -72,7 +61,6 @@
       </testResource>
     </testResources>
   </build>
-
   <profiles>
     <profile>
       <id>distro</id>
@@ -91,7 +79,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>instance-migration</id>
       <build>
@@ -103,7 +90,6 @@
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
             </configuration>
           </plugin>
-
           <!-- provide sql scripts -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -130,7 +116,6 @@
               </execution>
             </executions>
           </plugin>
-          
           <plugin>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-maven-plugin</artifactId>
@@ -151,7 +136,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>clean-new-db</id>
       <build>
@@ -182,7 +166,6 @@
               </execution>
             </executions>
           </plugin>
-
           <plugin>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-maven-plugin</artifactId>
@@ -203,9 +186,5 @@
         </plugins>
       </build>
     </profile>
-
   </profiles>
-
-
-  <description>${project.name}</description>
 </project>

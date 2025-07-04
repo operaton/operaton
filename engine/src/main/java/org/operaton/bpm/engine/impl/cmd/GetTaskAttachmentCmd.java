@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.task.Attachment;
 
 
 /**
- * @author kristin.polenz@operaton.com
+ * @author kristin.polenz@camunda.com
  */
 public class GetTaskAttachmentCmd implements Command<Attachment>, Serializable {
 

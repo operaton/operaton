@@ -1,30 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
-
   <groupId>org.operaton.commons</groupId>
   <artifactId>operaton-commons-root</artifactId>
-  <name>Operaton - Commons - Root POM</name>
   <packaging>pom</packaging>
-
-  <modules>
-    <module>logging</module>
-    <module>utils</module>
-    <module>testing</module>
-    <module>typed-values</module>
-  </modules>
-
+  <name>Operaton - Commons - Root POM</name>
+  <description>${project.name}</description>
   <properties>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -36,7 +27,12 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
+  <modules>
+    <module>logging</module>
+    <module>utils</module>
+    <module>testing</module>
+    <module>typed-values</module>
+  </modules>
   <build>
     <pluginManagement>
       <plugins>
@@ -75,7 +71,6 @@
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>license-header-check</id>
@@ -89,13 +84,10 @@
       </build>
     </profile>
   </profiles>
-
   <scm>
     <url>https://github.com/operaton/operaton</url>
     <connection>scm:git:git@github.com:operaton/operaton.git</connection>
     <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
-
-  <description>${project.name}</description>
 </project>

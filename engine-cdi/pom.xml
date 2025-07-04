@@ -9,9 +9,8 @@
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
-  <name>Operaton - Engine - CDI</name>
   <artifactId>operaton-engine-cdi</artifactId>
-  <packaging>jar</packaging>
+  <name>Operaton - Engine - CDI</name>
   <description>${project.name}</description>
 
   <properties>

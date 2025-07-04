@@ -1,49 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.quarkus</groupId>
     <artifactId>operaton-bpm-quarkus-engine-parent</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-bpm-quarkus-engine</artifactId>
-
   <name>Operaton - Quarkus Extension - Engine - Runtime</name>
-
+  <description>${project.name}</description>
   <dependencies>
-
     <!-- Operaton dependencies -->
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-cdi</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.uuid</groupId>
       <artifactId>java-uuid-generator</artifactId>
     </dependency>
-
     <!-- Quarkus dependencies -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc</artifactId>
     </dependency>
-
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-agroal</artifactId>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -60,7 +49,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>      
+      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -75,5 +64,4 @@
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

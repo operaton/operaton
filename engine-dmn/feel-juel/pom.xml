@@ -11,6 +11,7 @@
   <artifactId>operaton-engine-feel-juel</artifactId>
   <name>Operaton - DMN - Engine - FEEL - JUEL</name>
 
+  <description>${project.name}</description>
   <properties>
     <operaton.artifact>org.operaton.bpm.dmn.feel.impl.juel</operaton.artifact>
   </properties>
@@ -113,6 +114,4 @@
       </build>
       </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

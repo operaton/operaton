@@ -1,60 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
-  <packaging>pom</packaging>
-
   <artifactId>qa-webapp</artifactId>
+  <packaging>pom</packaging>
   <name>Operaton - Spring Boot Starter - QA - Webapps</name>
-
-  <modules>
-    <module>invoice-example</module>
-    <module>runtime</module>
-  </modules>
-
+  <description>${project.name}</description>
   <properties>
     <!-- default os -->
     <os.type>linux64</os.type>
   </properties>
-
+  <modules>
+    <module>invoice-example</module>
+    <module>runtime</module>
+  </modules>
   <profiles>
-
     <profile>
       <id>windows</id>
-
       <activation>
         <os>
           <family>windows</family>
         </os>
       </activation>
-
       <properties>
         <os.type>win32</os.type>
       </properties>
     </profile>
-
     <profile>
       <id>mac</id>
-
       <activation>
         <os>
           <family>mac</family>
         </os>
       </activation>
-
       <properties>
         <os.type>mac64</os.type>
       </properties>
     </profile>
-
   </profiles>
-
-  <description>${project.name}</description>
 </project>

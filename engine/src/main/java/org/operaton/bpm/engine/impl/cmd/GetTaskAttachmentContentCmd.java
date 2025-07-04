@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 
 
 /**
- * @author kristin.polenz@operaton.com
+ * @author kristin.polenz@camunda.com
  */
 public class GetTaskAttachmentContentCmd implements Command<InputStream>, Serializable {
 

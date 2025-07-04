@@ -22,16 +22,17 @@
     <version.oracle>23.5.0.24.07</version.oracle>
     <version.mariadb>1.7.6</version.mariadb>
     <version.mariadb-v1>1.1.8</version.mariadb-v1>
-    <version.mysql>9.2.0</version.mysql>
+    <version.mysql>9.3.0</version.mysql>
     <version.sqlserver>12.10.0.jre8</version.sqlserver>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
-    <version.db2>${version.db2-11.5}</version.db2>
+    <version.db2>12.1.2.0</version.db2>
     <version.postgresql>42.7.7</version.postgresql>
     <version.liquibase>4.32.0</version.liquibase>
-    <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
+    <operaton.dbscheme.current.version>7.23.0</operaton.dbscheme.current.version>
 
     <!-- needed for sql script and backward compatibility checks -->
-    <operaton.version.old>7.22.0</operaton.version.old>
+    <operaton.dbscheme.previous.artifactVersion>1.0.0-beta-2</operaton.dbscheme.previous.artifactVersion>
+    <operaton.dbscheme.previous.version>7.22.0</operaton.dbscheme.previous.version>
 
     <!-- Testcontainers JDBC URL parameters. By default, an empty string -->
     <database.tc.params>TC_DAEMON=true</database.tc.params>
@@ -113,6 +114,10 @@
         <database.type>db2</database.type>
         <database.driver>com.ibm.db2.jcc.DB2Driver</database.driver>
         <database.datasource.class>com.ibm.db2.jcc.DB2SimpleDataSource</database.datasource.class>
+        <jboss.datasource.filename>db2-ds.xml</jboss.datasource.filename>
+        <database.tc.url>operatondb2:12.1.2.0</database.tc.url>
+        <database.tc.params>/${database.name}</database.tc.params>
+        <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
     </profile>
 
@@ -200,7 +205,6 @@
         <database.driver>org.h2.Driver</database.driver>
         <database.datasource.class>org.h2.jdbcx.JdbcDataSource</database.datasource.class>
         <jboss.datasource.filename>h2-ds.xml</jboss.datasource.filename>
-        <was.liberty.datasource.filename>h2-config.xml</was.liberty.datasource.filename>
         <hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
       </properties>
       <dependencies>
@@ -234,9 +238,11 @@
       <properties>
         <database.type>mariadb</database.type>
         <database.driver>org.mariadb.jdbc.Driver</database.driver>
-        <database.datasource.class>org.mariadb.jdbc.MySQLDataSource</database.datasource.class>
+        <hibernate.dialect>org.hibernate.dialect.MariaDBDialect</hibernate.dialect>
+        <database.datasource.class>org.mariadb.jdbc.MariaDbDataSource</database.datasource.class>
         <database.tc.url>operatonmariadb:10.6</database.tc.url>
-        <database.tc.params>/${database.name}?user=${database.username}&amp;amp;password=${database.password}</database.tc.params>
+        <jboss.datasource.filename>mariadb-ds.xml</jboss.datasource.filename>
+        <database.tc.params>/${database.name}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
 
@@ -272,7 +278,8 @@
         <database.type>mysql</database.type>
         <database.driver>com.mysql.cj.jdbc.Driver</database.driver>
         <database.datasource.class>com.mysql.cj.jdbc.MysqlDataSource</database.datasource.class>
-        <database.tc.url>operatonmysql:8.0</database.tc.url>
+        <database.tc.url>operatonmysql:9.2.0</database.tc.url>
+        <jboss.datasource.filename>mysql-ds.xml</jboss.datasource.filename>
         <database.tc.params>/${database.name}?sendFractionalSeconds=false&amp;amp;user=${database.username}&amp;amp;password=${database.password}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
@@ -309,6 +316,7 @@
         <database.type>oracle</database.type>
         <database.driver>oracle.jdbc.OracleDriver</database.driver>
         <database.datasource.class>oracle.jdbc.pool.OracleDataSource</database.datasource.class>
+        <jboss.datasource.filename>oracle-ds.xml</jboss.datasource.filename>
         <database.tc.url>operatonoracle:21-faststart</database.tc.url>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
@@ -348,7 +356,6 @@
         <database.driver>org.postgresql.Driver</database.driver>
         <database.datasource.class>org.postgresql.ds.PGSimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-ds.xml</jboss.datasource.filename>
-        <was.liberty.datasource.filename>postgresql-config.xml</was.liberty.datasource.filename>
         <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
         <database.tc.url>operatonpostgresql:13.2</database.tc.url>
         <database.url>jdbc:tc:${database.tc.url}:///${database.name}/${database.tc.params}</database.url>
@@ -384,17 +391,20 @@
       <properties>
         <database.datasource.class>org.postgresql.xa.PGXADataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-xa-ds.xml</jboss.datasource.filename>
-        <was.liberty.datasource.filename>postgresql-xa-config.xml</was.liberty.datasource.filename>
       </properties>
     </profile>
     <profile>
       <id>sqlserver</id>
       <properties>
-        <database.type>mssql</database.type>
+        <database.type>sqlserver</database.type>
         <database.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</database.driver>
         <database.datasource.class>com.microsoft.sqlserver.jdbc.SQLServerDataSource</database.datasource.class>
-        <database.tc.url>operatonsqlserver:2019</database.tc.url>
-        <database.tc.params>;DatabaseName=${database.name};user=${database.username};password=${database.password};</database.tc.params>
+        <jboss.datasource.filename>sqlserver-ds.xml</jboss.datasource.filename>
+        <database.tc.url>operatonsqlserver:2022-latest</database.tc.url>
+        <database.name>operaton_test</database.name>
+        <database.username>sa</database.username>
+        <database.password>A_Str0ng_Required_Password</database.password>
+        <database.tc.params>;DatabaseName=${database.name}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
 

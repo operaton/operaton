@@ -1,17 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
   <artifactId>operaton-cmmn-model</artifactId>
-  <packaging>jar</packaging>
-
   <name>Operaton - CMMN Model API</name>
+  <description>${project.name}</description>
   <properties>
     <operaton.artifact>org.operaton.bpm.model.cmmn</operaton.artifact>
     <operaton.osgi.export>
@@ -19,14 +16,12 @@
       ${operaton.osgi.export.pkg};${operaton.osgi.version};-noimport:=true
     </operaton.osgi.export>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-xml-model</artifactId>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -58,7 +53,6 @@
       </plugin>
     </plugins>
   </build>
-
   <!-- check for api differences between latest minor release -->
   <profiles>
     <profile>
@@ -109,6 +103,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

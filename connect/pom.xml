@@ -1,34 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
-
   <groupId>org.operaton.connect</groupId>
   <artifactId>operaton-connect-root</artifactId>
-  <name>Operaton - Connect - Root</name>
   <packaging>pom</packaging>
-
+  <name>Operaton - Connect - Root</name>
+  <description>${project.name}</description>
   <properties>
     <commons-codec.version>1.15</commons-codec.version>
     <connect.version.old>7.22.0</connect.version.old>
     <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
-
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
-
-  <modules>
-    <module>core</module>
-    <module>http-client</module>
-    <module>soap-http-client</module>
-    <module>connectors-all</module>
-  </modules>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -38,7 +28,6 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
@@ -46,7 +35,12 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
+  <modules>
+    <module>core</module>
+    <module>http-client</module>
+    <module>soap-http-client</module>
+    <module>connectors-all</module>
+  </modules>
   <build>
     <pluginManagement>
       <plugins>
@@ -81,7 +75,6 @@
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>license-header-check</id>
@@ -95,13 +88,10 @@
       </build>
     </profile>
   </profiles>
-
   <scm>
     <url>https://github.com/operaton/operaton</url>
     <connection>scm:git:git@github.com:operaton/operaton.git</connection>
     <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
-
-  <description>${project.name}</description>
 </project>

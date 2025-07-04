@@ -34,6 +34,6 @@ public class OperatonMariaDBContainerProvider extends MariaDBContainerProvider {
   public JdbcDatabaseContainer<?> newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mariadb", tag, "mariadb");
-    return new MariaDBContainer<>(dockerImageName).withCommand("mariadbd --transaction-isolation=READ-COMMITTED");
+    return new MariaDBContainer<>(dockerImageName).withCommand("--transaction-isolation=READ-COMMITTED");
   }
 }

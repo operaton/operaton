@@ -20,6 +20,7 @@ import java.util.List;
 import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -30,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithExternalTaskScenario")
+@Parameterized
 public class CompleteProcessWithExternalTaskTest extends AbstractRollingUpdateTestCase {
 
   public static final long LOCK_TIME = 5 * 60 * 1000;

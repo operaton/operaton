@@ -19,6 +19,7 @@ import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -31,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithUserTaskScenario")
+@Parameterized
 class CompleteProcessWithUserTaskTest extends AbstractRollingUpdateTestCase {
 
   @TestTemplate

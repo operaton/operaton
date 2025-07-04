@@ -213,6 +213,11 @@ public class ProcessEngineExtension implements TestWatcher,
         };
       }
     }
+    Stream.of(TestHelper.class.getDeclaredMethods())
+      .filter(method -> method.getName().startsWith("getProcess"))
+      .forEach(System.out::println);
+    var cl = TestHelper.class.getClassLoader();
+
     processEngine = TestHelper.getProcessEngine(configurationResource, configurator);
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }

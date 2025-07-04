@@ -18,6 +18,7 @@ package org.operaton.bpm.qa.rolling.update.timestamp;
 
 import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.runtime.Incident;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.upgrade.Origin;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -28,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @ScenarioUnderTest("IncidentTimestampUpdateScenario")
 @Origin("7.11.0")
+@Parameterized
 class IncidentTimestampUpdateTest extends AbstractTimestampUpdateTest {
 
   @ScenarioUnderTest("initIncidentTimestamp.1")

@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.rolling.update.RollingUpdateConstants;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
@@ -32,6 +33,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ScenarioUnderTest("SetRemovalTimeToProcessInstanceScenario")
+@Parameterized
 class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTestCase {
 
   protected ManagementService managementService;

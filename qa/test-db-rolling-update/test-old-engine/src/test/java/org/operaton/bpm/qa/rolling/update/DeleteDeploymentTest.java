@@ -18,6 +18,7 @@ package org.operaton.bpm.qa.rolling.update;
 
 import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 /**
@@ -27,6 +28,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("DeploymentWhichShouldBeDeletedScenario")
+@Parameterized
 class DeleteDeploymentTest extends AbstractRollingUpdateTestCase {
 
   @TestTemplate

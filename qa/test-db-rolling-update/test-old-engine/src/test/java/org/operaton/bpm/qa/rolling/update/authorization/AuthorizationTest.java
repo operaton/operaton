@@ -35,6 +35,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -45,6 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("AuthorizationScenario")
+@Parameterized
 public class AuthorizationTest extends AbstractRollingUpdateTestCase {
 
   public static final String PROCESS_DEF_KEY = "oneTaskProcess";
@@ -102,7 +104,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
 
   public void testGetDeployment() {
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
-    assertThat(deployments.isEmpty()).isFalse();
+    assertThat(deployments).isNotEmpty();
   }
 
   public void testGetProcessDefinition() {
@@ -110,7 +112,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
         .createProcessDefinitionQuery()
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
-    assertThat(definitions.isEmpty()).isFalse();
+    assertThat(definitions).isNotEmpty();
   }
 
   public void testGetProcessInstance() {
@@ -119,7 +121,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
         .processInstanceBusinessKey(rule.getBusinessKey())
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
-    assertThat(instances.isEmpty()).isFalse();
+    assertThat(instances).isNotEmpty();
   }
 
   public void testGetExecution() {
@@ -128,7 +130,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
         .processInstanceBusinessKey(rule.getBusinessKey())
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
-    assertThat(executions.isEmpty()).isFalse();
+    assertThat(executions).isNotEmpty();
   }
 
   public void testGetTask() {
@@ -137,7 +139,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
         .processInstanceBusinessKey(rule.getBusinessKey())
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
-    assertThat(tasks.isEmpty()).isFalse();
+    assertThat(tasks).isNotEmpty();
   }
 
   public void testGetHistoricProcessInstance() {
@@ -146,14 +148,14 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
         .processInstanceBusinessKey(rule.getBusinessKey())
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
-    assertThat(instances.isEmpty()).isFalse();
+    assertThat(instances).isNotEmpty();
   }
 
   public void testGetHistoricActivityInstance() {
     List<HistoricActivityInstance> instances= historyService
         .createHistoricActivityInstanceQuery()
         .list();
-    assertThat(instances.isEmpty()).isFalse();
+    assertThat(instances).isNotEmpty();
   }
 
   public void testGetHistoricTaskInstance() {
@@ -161,7 +163,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
         .createHistoricTaskInstanceQuery()
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
-    assertThat(instances.isEmpty()).isFalse();
+    assertThat(instances).isNotEmpty();
   }
 
   public void testStartProcessInstance() {

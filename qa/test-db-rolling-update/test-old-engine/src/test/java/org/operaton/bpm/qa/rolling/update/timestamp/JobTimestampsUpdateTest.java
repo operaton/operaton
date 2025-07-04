@@ -18,6 +18,7 @@ package org.operaton.bpm.qa.rolling.update.timestamp;
 import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.qa.upgrade.Origin;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -30,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @ScenarioUnderTest("JobTimestampsUpdateScenario")
 @Origin("7.11.0")
+@Parameterized
 class JobTimestampsUpdateTest extends AbstractTimestampUpdateTest {
 
   protected static final long LOCK_DURATION = 300000L;

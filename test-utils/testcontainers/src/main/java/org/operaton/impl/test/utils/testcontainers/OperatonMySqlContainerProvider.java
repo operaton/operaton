@@ -34,6 +34,6 @@ public class OperatonMySqlContainerProvider extends MySQLContainerProvider {
   public JdbcDatabaseContainer<?> newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mysql", tag, "mysql");
-    return new MySQLContainer<>(dockerImageName).withCommand("mysqld --transaction-isolation=READ-COMMITTED");
+    return new MySQLContainer<>(dockerImageName).withCommand("--transaction-isolation=READ-COMMITTED");
   }
 }

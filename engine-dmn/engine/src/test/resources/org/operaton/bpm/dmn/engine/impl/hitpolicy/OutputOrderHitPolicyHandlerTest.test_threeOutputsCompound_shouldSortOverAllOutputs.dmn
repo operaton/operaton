@@ -1,0 +1,122 @@
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
+xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+id="Definitions_SortingExample" name="RiskDecisionOutputOrder" namespace="http://camunda.org/schema/1.0/dmn"
+xmlns:modeler="http://camunda.org/schema/modeler/1.0"
+exporter="Camunda Modeler" exporterVersion="5.34.0"
+modeler:executionPlatform="Camunda Platform"
+modeler:executionPlatformVersion="7.23.0">
+  <decision id="decision1" name="RiskDecisionOutputOrder">
+    <decisionTable hitPolicy="OUTPUT ORDER" id="decisionTable1">
+
+      <!-- Inputs -->
+      <input id="input1" label="Risk Category">
+        <inputExpression id="inputExpression1" typeRef="string">
+          <text>RiskCategory</text>
+        </inputExpression>
+      </input>
+      <input id="input2" label="Is Existing Customer">
+        <inputExpression id="inputExpression2" typeRef="boolean">
+          <text>IsExistingCustomer</text>
+        </inputExpression>
+      </input>
+      <input id="input3" label="Customer Score">
+        <inputExpression id="inputExpression3" typeRef="integer">
+          <text>CustomerScore</text>
+        </inputExpression>
+      </input>
+
+      <!-- Outputs -->
+      <output id="output1" name="Action" typeRef="string">
+        <outputValues>
+          <text>"Declined", "ManualReviewed", "Approved"</text>
+        </outputValues>
+      </output>
+      <output id="output2" name="PriorityLevel" typeRef="string">
+        <outputValues>
+          <text>"High", "Medium", "Low"</text>
+        </outputValues>
+      </output>
+      <output id="output3" name="ReviewUrgency" typeRef="string">
+        <outputValues>
+          <text>"Urgent", "Standard", "Optional"</text>
+        </outputValues>
+      </output>
+
+      <!-- Rules -->
+      <rule id="rule1">
+        <inputEntry><text>"High"</text></inputEntry>
+        <inputEntry><text>false</text></inputEntry>
+        <inputEntry><text>&lt; 400</text></inputEntry>
+        <outputEntry><text>"Declined"</text></outputEntry>
+        <outputEntry><text>"High"</text></outputEntry>
+        <outputEntry><text>"Urgent"</text></outputEntry>
+      </rule>
+      <rule id="rule2">
+        <inputEntry><text>"Medium"</text></inputEntry>
+        <inputEntry><text>true</text></inputEntry>
+        <inputEntry><text>&gt;= 400</text></inputEntry>
+        <outputEntry><text>"ManualReviewed"</text></outputEntry>
+        <outputEntry><text>"Medium"</text></outputEntry>
+        <outputEntry><text>"Standard"</text></outputEntry>
+      </rule>
+      <rule id="rule3">
+        <inputEntry><text>"Low"</text></inputEntry>
+        <inputEntry><text>true</text></inputEntry>
+        <inputEntry><text>&gt;= 700</text></inputEntry>
+        <outputEntry><text>"Approved"</text></outputEntry>
+        <outputEntry><text>"Low"</text></outputEntry>
+        <outputEntry><text>"Optional"</text></outputEntry>
+      </rule>
+      <rule id="rule4">
+        <inputEntry><text>"Medium"</text></inputEntry>
+        <inputEntry><text>false</text></inputEntry>
+        <inputEntry><text>&gt;= 600</text></inputEntry>
+        <outputEntry><text>"ManualReviewed"</text></outputEntry>
+        <outputEntry><text>"High"</text></outputEntry>
+        <outputEntry><text>"Urgent"</text></outputEntry>
+      </rule>
+      <rule id="rule5">
+        <inputEntry><text>"Low"</text></inputEntry>
+        <inputEntry><text>false</text></inputEntry>
+        <inputEntry><text>&lt; 300</text></inputEntry>
+        <outputEntry><text>"Declined"</text></outputEntry>
+        <outputEntry><text>"Medium"</text></outputEntry>
+        <outputEntry><text>"Standard"</text></outputEntry>
+      </rule>
+      <rule id="rule6">
+        <inputEntry><text>"High"</text></inputEntry>
+        <inputEntry><text>true</text></inputEntry>
+        <inputEntry><text>&gt;= 800</text></inputEntry>
+        <outputEntry><text>"Approved"</text></outputEntry>
+        <outputEntry><text>"Low"</text></outputEntry>
+        <outputEntry><text>"Optional"</text></outputEntry>
+      </rule>
+      <rule id="rule7">
+        <inputEntry><text>"Medium"</text></inputEntry>
+        <inputEntry><text>false</text></inputEntry>
+        <inputEntry><text>&gt;= 500</text></inputEntry>
+        <outputEntry><text>"ManualReviewed"</text></outputEntry>
+        <outputEntry><text>"Medium"</text></outputEntry>
+        <outputEntry><text>"Standard"</text></outputEntry>
+      </rule>
+      <rule id="rule8">
+        <inputEntry><text>"Low"</text></inputEntry>
+        <inputEntry><text>true</text></inputEntry>
+        <inputEntry><text>&lt; 500</text></inputEntry>
+        <outputEntry><text>"ManualReviewed"</text></outputEntry>
+        <outputEntry><text>"Low"</text></outputEntry>
+        <outputEntry><text>"Urgent"</text></outputEntry>
+      </rule>
+      <rule id="rule9">
+        <inputEntry><text>"None"</text></inputEntry>
+        <inputEntry><text>true</text></inputEntry>
+        <inputEntry><text>&lt; 500</text></inputEntry>
+        <outputEntry><text>"None"</text></outputEntry>
+        <outputEntry><text>"Low"</text></outputEntry>
+        <outputEntry><text>"Urgent"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

@@ -16,7 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.impl;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnTypeDefinition;
+import org.operaton.bpm.engine.variable.value.TypedValue;
 
 public class DmnDecisionTableOutputImpl {
 
@@ -24,6 +28,7 @@ public class DmnDecisionTableOutputImpl {
   protected String name;
   protected String outputName;
   protected DmnTypeDefinition typeDefinition;
+  protected List<TypedValue> outputValues;
 
   public String getId() {
     return id;
@@ -57,6 +62,14 @@ public class DmnDecisionTableOutputImpl {
     this.typeDefinition = typeDefinition;
   }
 
+  public List<TypedValue> getOutputValues() {
+    return outputValues;
+  }
+
+  public void setOutputValues(List<TypedValue> outputValues) {
+    this.outputValues = outputValues;
+  }
+
   @Override
   public String toString() {
     return "DmnDecisionTableOutputImpl{" +
@@ -64,6 +77,11 @@ public class DmnDecisionTableOutputImpl {
       ", name='" + name + '\'' +
       ", outputName='" + outputName + '\'' +
       ", typeDefinition=" + typeDefinition +
+      ", outputValues=[" +
+      Optional.ofNullable(outputValues).orElse(List.of())
+        .stream().map(t -> t.getValue().toString())
+        .collect(Collectors.joining(" ,")) +
+      "]" +
       '}';
   }
 

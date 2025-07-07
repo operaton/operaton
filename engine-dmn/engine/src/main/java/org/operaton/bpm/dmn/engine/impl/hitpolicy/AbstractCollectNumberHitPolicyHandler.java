@@ -35,6 +35,22 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
 
   public static final DmnHitPolicyLogger LOG = DmnLogger.HIT_POLICY_LOGGER;
 
+  private enum NumberType {
+    INTEGER, LONG, DOUBLE
+  }
+
+  private static final Map<NumberType, ValueType> TYPE_MAPPING = Map.of(
+    NumberType.INTEGER, ValueType.INTEGER,
+    NumberType.LONG, ValueType.LONG,
+    NumberType.DOUBLE, ValueType.DOUBLE
+  );
+
+  private static final List<NumberType> TYPE_PRIORITY = List.of(
+    NumberType.INTEGER,
+    NumberType.LONG,
+    NumberType.DOUBLE
+  );
+
   protected abstract BuiltinAggregator getAggregator();
 
   @Override
@@ -88,35 +104,123 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
       // return null if no values to aggregate
       return null;
     }
-
   }
 
   protected TypedValue aggregateNumberValues(List<TypedValue> values) {
-    try {
-      List<Integer> intValues = convertValuesToInteger(values);
-      return Variables.integerValue(aggregateIntegerValues(intValues));
-    }
-    catch (IllegalArgumentException e) {
-      // ignore
-    }
+    NumberType detectedType = detectNumberType(values);
 
-    try {
-      List<Long> longValues = convertValuesToLong(values);
-      return Variables.longValue(aggregateLongValues(longValues));
-    }
-    catch (IllegalArgumentException e) {
-      // ignore
-    }
+    return switch (detectedType) {
+      case INTEGER -> {
+        List<Integer> intValues = convertToIntegers(values);
+        yield Variables.integerValue(aggregateIntegerValues(intValues));
+      }
+      case LONG -> {
+        List<Long> longValues = convertToLongs(values);
+        yield Variables.longValue(aggregateLongValues(longValues));
+      }
+      case DOUBLE -> {
+        List<Double> doubleValues = convertToDoubles(values);
+        yield Variables.doubleValue(aggregateDoubleValues(doubleValues));
+      }
+    };
+  }
 
-    try {
-      List<Double> doubleValues = convertValuesToDouble(values);
-      return Variables.doubleValue(aggregateDoubleValues(doubleValues));
-    }
-    catch (IllegalArgumentException e) {
-      // ignore
+  private NumberType detectNumberType(List<TypedValue> values) {
+    for (NumberType numberType : TYPE_PRIORITY) {
+      ValueType valueType = TYPE_MAPPING.get(numberType);
+
+      boolean allValuesCanBeConverted = values.stream()
+        .allMatch(typedValue -> canConvertToType(typedValue, valueType, numberType));
+
+      if (allValuesCanBeConverted) {
+        if (LOG.isDebugEnabled()) {
+          LOG.numberTypeDetected(valueType.getName(), values.size());
+        }
+        return numberType;
+      }
     }
 
     throw LOG.unableToConvertValuesToAggregatableTypes(values, Integer.class, Long.class, Double.class);
+  }
+
+  private boolean canConvertToType(TypedValue typedValue, ValueType expectedType, NumberType numberType) {
+    if (expectedType.equals(typedValue.getType())) {
+      return true;
+    }
+
+    if (typedValue.getType() == null) {
+      Object value = typedValue.getValue();
+      return switch (numberType) {
+        case INTEGER -> value instanceof Integer;
+        case LONG -> value instanceof Long || canParseAsLong(value);
+        case DOUBLE -> value instanceof Number || canParseAsDouble(value);
+      };
+    }
+
+    return false;
+  }
+
+  private boolean canParseAsLong(Object value) {
+    try {
+      Long.valueOf(value.toString());
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  private boolean canParseAsDouble(Object value) {
+    try {
+      Double.valueOf(value.toString());
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  private List<Integer> convertToIntegers(List<TypedValue> typedValues) {
+    List<Integer> result = new ArrayList<>();
+    for (TypedValue typedValue : typedValues) {
+      Object value = typedValue.getValue();
+      if (ValueType.INTEGER.equals(typedValue.getType()) || value instanceof Integer) {
+        result.add((Integer) value);
+      } else {
+        throw new IllegalArgumentException("Cannot convert value to Integer: " + value);
+      }
+    }
+    return result;
+  }
+
+  private List<Long> convertToLongs(List<TypedValue> typedValues) {
+    List<Long> result = new ArrayList<>();
+    for (TypedValue typedValue : typedValues) {
+      Object value = typedValue.getValue();
+      if (ValueType.LONG.equals(typedValue.getType()) || value instanceof Long) {
+        result.add((Long) value);
+      } else if (typedValue.getType() == null) {
+        result.add(Long.valueOf(value.toString()));
+      } else {
+        throw new IllegalArgumentException("Cannot convert value to Long: " + value);
+      }
+    }
+    return result;
+  }
+
+  private List<Double> convertToDoubles(List<TypedValue> typedValues) {
+    List<Double> result = new ArrayList<>();
+    for (TypedValue typedValue : typedValues) {
+      Object value = typedValue.getValue();
+      if (ValueType.DOUBLE.equals(typedValue.getType()) || value instanceof Double) {
+        result.add((Double) value);
+      } else if (value instanceof Number numberValue) {
+        result.add(numberValue.doubleValue());
+      } else if (typedValue.getType() == null) {
+        result.add(Double.valueOf(value.toString()));
+      } else {
+        throw new IllegalArgumentException("Cannot convert value to Double: " + value);
+      }
+    }
+    return result;
   }
 
   protected abstract Integer aggregateIntegerValues(List<Integer> intValues);
@@ -124,89 +228,5 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
   protected abstract Long aggregateLongValues(List<Long> longValues);
 
   protected abstract Double aggregateDoubleValues(List<Double> doubleValues);
-
-  protected List<Integer> convertValuesToInteger(List<TypedValue> typedValues) throws IllegalArgumentException {
-    List<Integer> intValues = new ArrayList<>();
-    for (TypedValue typedValue : typedValues) {
-
-      if (ValueType.INTEGER.equals(typedValue.getType())) {
-        intValues.add((Integer) typedValue.getValue());
-
-      } else if (typedValue.getType() == null) {
-        // check if it is an integer
-
-        Object value = typedValue.getValue();
-        if (value instanceof Integer integerValue) {
-          intValues.add(integerValue);
-
-        } else {
-          throw new IllegalArgumentException();
-        }
-
-      } else {
-        // reject other typed values
-        throw new IllegalArgumentException();
-      }
-
-    }
-    return intValues;
-  }
-
-  protected List<Long> convertValuesToLong(List<TypedValue> typedValues) throws IllegalArgumentException {
-    List<Long> longValues = new ArrayList<>();
-    for (TypedValue typedValue : typedValues) {
-
-      if (ValueType.LONG.equals(typedValue.getType())) {
-        longValues.add((Long) typedValue.getValue());
-
-      } else if (typedValue.getType() == null) {
-        // check if it is a long or a string of a number
-
-        Object value = typedValue.getValue();
-        if (value instanceof Long longValue) {
-          longValues.add(longValue);
-
-        } else {
-          Long longValue = Long.valueOf(value.toString());
-          longValues.add(longValue);
-        }
-
-      } else {
-        // reject other typed values
-        throw new IllegalArgumentException();
-      }
-
-    }
-    return longValues;
-  }
-
-
-  protected List<Double> convertValuesToDouble(List<TypedValue> typedValues) throws IllegalArgumentException {
-    List<Double> doubleValues = new ArrayList<>();
-    for (TypedValue typedValue : typedValues) {
-
-      if (ValueType.DOUBLE.equals(typedValue.getType())) {
-        doubleValues.add((Double) typedValue.getValue());
-
-      } else if (typedValue.getType() == null) {
-        // check if it is a double or a string of a decimal number
-
-        Object value = typedValue.getValue();
-        if (value instanceof Double doubleValue) {
-          doubleValues.add(doubleValue);
-
-        } else {
-          Double doubleValue = Double.valueOf(value.toString());
-          doubleValues.add(doubleValue);
-        }
-
-      } else {
-        // reject other typed values
-        throw new IllegalArgumentException();
-      }
-
-    }
-    return doubleValues;
-  }
 
 }

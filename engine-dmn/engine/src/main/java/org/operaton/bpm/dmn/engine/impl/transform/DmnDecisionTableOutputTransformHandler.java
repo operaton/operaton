@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.dmn.engine.impl.transform;
 
+import java.util.List;
+import java.util.stream.Stream;
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableOutputImpl;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformContext;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandler;
@@ -23,7 +25,9 @@ import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformer;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnTypeDefinition;
 import org.operaton.bpm.dmn.engine.impl.type.DefaultTypeDefinition;
 import org.operaton.bpm.dmn.engine.impl.type.DmnTypeDefinitionImpl;
+import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.model.dmn.instance.Output;
+import org.operaton.bpm.model.dmn.instance.OutputValues;
 
 public class DmnDecisionTableOutputTransformHandler implements DmnElementTransformHandler<Output, DmnDecisionTableOutputImpl> {
 
@@ -39,8 +43,29 @@ public class DmnDecisionTableOutputTransformHandler implements DmnElementTransfo
     decisionTableOutput.setName(output.getLabel());
     decisionTableOutput.setOutputName(output.getName());
     decisionTableOutput.setTypeDefinition(getTypeDefinition(context, output));
+    decisionTableOutput.setOutputValues(getOutputValues(output, decisionTableOutput.getTypeDefinition()));
 
     return decisionTableOutput;
+  }
+
+  protected List<TypedValue> getOutputValues(Output output, DmnTypeDefinition typeDefinition) {
+    OutputValues outputValues = output.getOutputValues();
+    if (outputValues == null) {
+      return List.of();
+    }
+    String textContent = output.getOutputValues().getTextContent();
+    if (textContent != null && !textContent.isEmpty()) {
+      return Stream.of(textContent.split(","))
+        .map(String::trim)
+        // Unquote the DMN string literals
+        // https://github.com/camunda/dmn-scala/blob/0a988f285de2221c4d0bdf3bc2b20e5e1dd6f361/src/main/scala/org/camunda/dmn/evaluation/DecisionTableEvaluator.scala#L264C35-L264C62
+        .map(DmnDecisionTableOutputTransformHandler::unquoteDMN)
+        .map(typeDefinition::transform)
+        .toList();
+    }
+    else {
+      return List.of();
+    }
   }
 
   @SuppressWarnings("unused")
@@ -56,6 +81,28 @@ public class DmnDecisionTableOutputTransformHandler implements DmnElementTransfo
     }
     else {
       return new DefaultTypeDefinition();
+    }
+  }
+
+  /**
+   * Unquotes a DMN/FEEL string literal:
+   * - Removes the first and last quote if they match (single or double).
+   * - Replaces doubled quote characters inside with a single quote.
+   * - Leaves unquoted strings unchanged.
+   */
+  protected static String unquoteDMN(String str) {
+    if (str == null || str.length() < 2) {
+      return str;
+    }
+    char first = str.charAt(0);
+    char last = str.charAt(str.length() - 1);
+
+    if ((first == last) && (first == '"' || first == '\'')) {
+      String inner = str.substring(1, str.length() - 1);
+      String doubled = String.valueOf(first) + first;
+      return inner.replace(doubled, String.valueOf(first));
+    } else {
+      return str;
     }
   }
 

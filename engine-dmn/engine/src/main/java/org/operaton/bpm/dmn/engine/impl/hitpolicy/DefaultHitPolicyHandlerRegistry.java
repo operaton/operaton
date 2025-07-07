@@ -40,6 +40,8 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
     handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.SUM), new CollectSumHitPolicyHandler());
     handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MIN), new CollectMinHitPolicyHandler());
     handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MAX), new CollectMaxHitPolicyHandler());
+    handlers.put(new HitPolicyEntry(HitPolicy.OUTPUT_ORDER, null), new OutputOrderHitPolicyHandler());
+    handlers.put(new HitPolicyEntry(HitPolicy.PRIORITY, null), new PriorityHitPolicyHandler());
 
     return handlers;
   }

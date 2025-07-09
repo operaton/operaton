@@ -120,7 +120,9 @@ jobs:
           TOMCAT_VERSION=$(xq --xpath project/properties/version.tomcat parent/pom.xml)
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
           echo "TOMCAT_VERSION=$TOMCAT_VERSION" >> $GITHUB_ENV
-          gh cache delete ${{ github.run_id }}-build-artifacts
+      - name: Delete build cache
+        continue-on-error: true
+        run: gh cache delete ${{ github.run_id }}-build-artifacts
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
         uses: actions/upload-artifact@v4

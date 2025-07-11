@@ -1503,19 +1503,12 @@ class CaseServiceTest {
   @Test
   void testGetVariablesInvalidCaseExecutionId() {
 
-    try {
-      caseService.getVariables("invalid");
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariables("invalid"), "The case execution should not be found.")
+        .isInstanceOf(NotFoundException.class);
 
-    try {
-      caseService.getVariables(null);
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariables(null), "The case execution should not be found.")
+        .isInstanceOf(NotValidException.class);
+
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1597,20 +1590,11 @@ class CaseServiceTest {
 
   @Test
   void testGetVariablesWithVariablesNamesInvalidCaseExecutionId() {
+    assertThatThrownBy(() -> caseService.getVariables("invalid", null), "The case execution should not be found.")
+        .isInstanceOf(NotFoundException.class);
 
-    try {
-      caseService.getVariables("invalid", null);
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
-      // expected
-    }
-
-    try {
-      caseService.getVariables(null, null);
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariables(null, null), "The case execution should not be found.")
+        .isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1689,20 +1673,12 @@ class CaseServiceTest {
 
   @Test
   void testGetVariablesLocalInvalidCaseExecutionId() {
+    assertThatThrownBy(() -> caseService.getVariablesLocal("invalid"), "The case execution should not be found.")
+        .isInstanceOf(NotFoundException.class);
 
-    try {
-      caseService.getVariablesLocal("invalid");
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariablesLocal(null), "The case execution should not be found.")
+        .isInstanceOf(NotValidException.class);
 
-    try {
-      caseService.getVariablesLocal(null);
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-      // expected
-    }
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1790,19 +1766,12 @@ class CaseServiceTest {
   @Test
   void testGetVariablesLocalWithVariablesNamesInvalidCaseExecutionId() {
 
-    try {
-      caseService.getVariablesLocal("invalid", null);
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariablesLocal("invalid", null), "The case execution should not be found.")
+        .isInstanceOf(NotFoundException.class);
 
-    try {
-      caseService.getVariablesLocal(null, null);
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariablesLocal(null, null), "The case execution should not be found.")
+        .isInstanceOf(NotValidException.class);
+
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1895,19 +1864,10 @@ class CaseServiceTest {
 
   @Test
   void testGetVariableLocalInvalidCaseExecutionId() {
-    try {
-      caseService.getVariableLocal("invalid", "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
-      // expected
-    }
-
-    try {
-      caseService.getVariableLocal(null, "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariableLocal("invalid", "aVariableName"), "The case execution should not be found.")
+        .isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(() -> caseService.getVariableLocal(null, "aVariableName"), "The case execution should not be found.")
+        .isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1951,19 +1911,10 @@ class CaseServiceTest {
 
   @Test
   void testGetVariableTypedInvalidCaseExecutionId() {
-    try {
-      caseService.getVariableTyped("invalid", "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
-      // expected
-    }
-
-    try {
-      caseService.getVariableTyped(null, "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariableTyped("invalid", "aVariableName"), "The case execution should not be found.")
+        .isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(() -> caseService.getVariableTyped(null, "aVariableName"), "The case execution should not be found.")
+        .isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2228,19 +2179,10 @@ class CaseServiceTest {
 
   @Test
   void testGetVariableLocalTypedInvalidCaseExecutionId() {
-    try {
-      caseService.getVariableLocalTyped("invalid", "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
-      // expected
-    }
-
-    try {
-      caseService.getVariableLocalTyped(null, "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariableLocalTyped("invalid", "aVariableName"), "The case execution should not be found.")
+        .isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(() -> caseService.getVariableLocalTyped(null, "aVariableName"), "The case execution should not be found.")
+        .isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

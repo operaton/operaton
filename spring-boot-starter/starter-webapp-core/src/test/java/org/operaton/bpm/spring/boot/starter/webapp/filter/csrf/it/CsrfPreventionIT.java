@@ -31,6 +31,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -79,22 +80,15 @@ class CsrfPreventionIT {
 
   @Test
   void shouldRejectModifyingRequest() {
-    // given
-
-    // when
     URLConnection urlConnection = httpClientExtension.performPostRequest("http://localhost:" + port +
             "/operaton/api/admin/auth/user/default/login/welcome", "Content-Type",
         "application/x-www-form-urlencoded");
 
-    try {
-      urlConnection.getContent();
-      fail("Exception expected!");
-    } catch (IOException e) {
-      // then
-      assertThat(e).hasMessageContaining("Server returned HTTP response code: 403 for URL");
-      assertThat(httpClientExtension.getHeaderXsrfToken()).isEqualTo("Required");
-      assertThat(httpClientExtension.getErrorResponseContent()).contains("CSRFPreventionFilter: Token provided via HTTP Header is absent/empty.");
-    }
+    assertThatThrownBy(urlConnection::getContent, "Exception expected!")
+        .isInstanceOf(IOException.class)
+        .hasMessageContaining("Server returned HTTP response code: 403 for URL");
+    assertThat(httpClientExtension.getHeaderXsrfToken()).isEqualTo("Required");
+    assertThat(httpClientExtension.getErrorResponseContent()).contains("CSRFPreventionFilter: Token provided via HTTP Header is absent/empty.");
 
   }
 

@@ -34,7 +34,7 @@ permissions:
   actions: write
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
@@ -50,7 +50,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
@@ -93,6 +93,13 @@ jobs:
             distro/**/target/operaton-*.gz
             distro/webjar/target/operaton-webapp-webjar-*.jar
           key: ${{ github.run_id }}-build-artifacts
+
+  integration-build:
+    if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, ','), 'pom.xml') }}
+    uses: ./.github/workflows/integration-build.yml
+    with:
+      distro: '["wildfly"]'
+    secrets: inherit
 
   publish:
     name: Publish

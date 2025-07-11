@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
+import org.operaton.bpm.engine.test.util.JobExecutorAssert;
 
 /**
  *
@@ -38,7 +38,11 @@ public class ThreadContextAssociationTest extends CdiProcessEngineTestCase {
   public void testBusinessProcessScopedWithJobExecutor() {
     String pid = runtimeService.startProcessInstanceByKey("processkey").getId();
 
-    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration,5000L, 25L);
+    JobExecutorAssert.assertThatJobExecutor()
+        .withProcessEngineConfiguration(processEngineConfiguration)
+        .withTimeout(5000L)
+        .withCheckInterval(25L)
+        .hasAllJobsProcessed();
 
     assertThat(managementService.createJobQuery().singleResult()).isNull();
 

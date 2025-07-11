@@ -12,7 +12,7 @@
 
 
 [![Forum](https://img.shields.io/badge/forum-Operaton-green)](https://forum.operaton.org/)
-[![Slack](https://img.shields.io/badge/chat-Slack-purple)](https://join.slack.com/t/operaton/shared_invite/zt-36z2hyul3-ygUic6F8l6QKRzpId7mOyw)
+[![Slack](https://img.shields.io/badge/chat-Slack-purple)](https://join.slack.com/t/operaton/shared_invite/zt-39cabj835-eLMK1VKAJx~kXf_qO8gaUQ)
 
 Operaton is a native BPMN 2.0 process engine that runs inside the Java Virtual Machine. It can be embedded inside any Java application and any Runtime Container. It integrates with Spring, Spring Boot, Quarkus and is a perfect match for Jakarta EE. On top of the process engine, you can choose from a stack of tools for human workflow management, operations and monitoring.
 

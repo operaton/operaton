@@ -10,8 +10,11 @@ Foundation (http://www.apache.org/).
 This product includes software developed by Odysseus Software GmbH
 (http://www.odysseus.de/).
 
-This product includes software developed by Quartz 
-(http://www.quartz-scheduler.org/)
+This product includes software developed by Quartz
+(http://www.quartz-scheduler.org/).
+
+This product includes an architectural decision record template based on MADR (Markdown Architectural Decision Records)
+(https://adr.github.io/madr/).
 
 ========================================================
 

@@ -89,7 +89,7 @@
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-testing-frameworks</artifactId>
-            <version>3.5.1</version>
+            <version>3.12.0</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -568,7 +568,7 @@
               <dependency>
                 <groupId>org.openrewrite.recipe</groupId>
                 <artifactId>rewrite-testing-frameworks</artifactId>
-                <version>3.5.1</version>
+                <version>3.12.0</version>
               </dependency>
             </dependencies>
           </plugin>

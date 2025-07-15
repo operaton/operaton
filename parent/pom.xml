@@ -44,7 +44,7 @@
     <version.wildfly>36.0.1.Final</version.wildfly>
     <version.wildfly.core>28.0.1.Final</version.wildfly.core>
     <version.tomcat>10.1.42</version.tomcat>
-    <version.arquillian>1.9.4.Final</version.arquillian>
+    <version.arquillian>1.10.0.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.3</version.shrinkwrap.resolvers>
     <version.selenium>4.31.0</version.selenium>
     <version.freemarker>2.3.31</version.freemarker>

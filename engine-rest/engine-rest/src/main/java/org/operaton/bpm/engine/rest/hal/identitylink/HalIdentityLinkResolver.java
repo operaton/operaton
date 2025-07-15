@@ -55,6 +55,7 @@ public class HalIdentityLinkResolver extends HalCachingLinkResolver {
     return resolvedIdentityLinks;
   }
 
+  @Override
   protected void putIntoCache(List<HalResource<?>> notCachedResources) {
     // this resolver only can handle a single task and resolves a list of hal resources for this task
     if (notCachedResources != null && !notCachedResources.isEmpty()) {

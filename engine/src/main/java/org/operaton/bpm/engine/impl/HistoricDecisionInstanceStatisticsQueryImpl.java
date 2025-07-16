@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatistics;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatisticsQuery;
 
 import java.util.List;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**
@@ -60,8 +62,7 @@ public class HistoricDecisionInstanceStatisticsQueryImpl extends
   @Override
   protected void checkQueryOk() {
     super.checkQueryOk();
-    EnsureUtil.ensureNotNull("decisionRequirementsDefinitionId", decisionRequirementsDefinitionId);
-    EnsureUtil.ensureNotNull("decisionInstanceId", decisionInstanceId);
+    ensureNotNull("decisionRequirementsDefinitionId", decisionRequirementsDefinitionId);
   }
 
   public String getDecisionRequirementsDefinitionId() {
@@ -70,6 +71,7 @@ public class HistoricDecisionInstanceStatisticsQueryImpl extends
 
   @Override
   public HistoricDecisionInstanceStatisticsQuery decisionInstanceId(String decisionInstanceId) {
+    ensureNotNull(NotValidException.class, "decisionInstanceId", decisionInstanceId);
     this.decisionInstanceId = decisionInstanceId;
     return this;
   }
@@ -79,6 +81,7 @@ public class HistoricDecisionInstanceStatisticsQueryImpl extends
   }
 
   public void setDecisionInstanceId(String decisionInstanceId) {
+    ensureNotNull(NotValidException.class, "decisionInstanceId", decisionInstanceId);
     this.decisionInstanceId = decisionInstanceId;
   }
 

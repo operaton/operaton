@@ -61,6 +61,7 @@ public class HistoricDecisionInstanceStatisticsQueryImpl extends
   protected void checkQueryOk() {
     super.checkQueryOk();
     EnsureUtil.ensureNotNull("decisionRequirementsDefinitionId", decisionRequirementsDefinitionId);
+    EnsureUtil.ensureNotNull("decisionInstanceId", decisionInstanceId);
   }
 
   public String getDecisionRequirementsDefinitionId() {

@@ -146,7 +146,6 @@ class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  @Disabled("Should throw exception, but does not. See https://github.com/operaton/operaton/issues/438")
   void testStatisticForRootDecisionWithNullInstanceConstraintEvaluation() {
     // given
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)

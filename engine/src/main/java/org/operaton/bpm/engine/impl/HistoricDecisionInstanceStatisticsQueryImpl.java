@@ -71,8 +71,7 @@ public class HistoricDecisionInstanceStatisticsQueryImpl extends
 
   @Override
   public HistoricDecisionInstanceStatisticsQuery decisionInstanceId(String decisionInstanceId) {
-    ensureNotNull(NotValidException.class, "decisionInstanceId", decisionInstanceId);
-    this.decisionInstanceId = decisionInstanceId;
+    setDecisionInstanceId(decisionInstanceId);
     return this;
   }
 

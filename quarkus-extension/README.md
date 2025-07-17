@@ -6,7 +6,7 @@ This sub-project provides Operaton Quarkus Extensions that allow you to add beha
 application by adding dependencies to the classpath.
 
 You can find the documentation on the Operaton Quarkus Extensions 
-[here](https://docs.operaton.org/manual/develop/user-guide/quarkus-integration/).
+[here](https://docs.operaton.org/docs/documentation/user-guide/quarkus-integration/).
 
 We also provide some useful examples at our 
 [operaton-bpm-examples](https://github.com/camunda/camunda-bpm-examples/tree/master/quarkus-extension) repository.

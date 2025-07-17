@@ -7,7 +7,7 @@ We use the [MADR format](https://adr.github.io/madr/) for writing ADRs.
 ## Table of Contents
 
 - [When to Write an ADR](#when-to-write-an-adr)
-- [How to Create a New ADR](#how-to-create-a-new-adr)
+- [ADR Creation Process](#adr-creation-process)
 - [File Naming Convention](#file-naming-convention)
 - [ADR Status Lifecycle](#adr-status-lifecycle)
 - [Style and Tone](#style-and-tone)
@@ -17,7 +17,6 @@ We use the [MADR format](https://adr.github.io/madr/) for writing ADRs.
 - [Issue Linking and Implementation Tracking](#issue-linking-and-implementation-tracking)
 - [Appendix A: What Constitutes a Significant Architectural Change?](#appendix-a-what-constitutes-a-significant-architectural-change)
 - [Appendix B: How to Review an ADR](#appendix-b-how-to-review-an-adr)
-- [Appendix C: ADR Creation Workflow](#appendix-c-adr-creation-workflow)
 - [References](#references)
 
 ## When to Write an ADR
@@ -36,71 +35,9 @@ Common examples include:
 - Modifications to process engine architecture or data models
 - Introduction of breaking changes
 
-## How to Create a New ADR
+## ADR Creation Process
 
-The ADR creation process offers two starting options, both leading to the same review and approval workflow. For a visual overview of the complete process, see [Appendix C: ADR Creation Workflow](#appendix-c-adr-creation-workflow).
-
-### ADR Metadata Format
-
-All ADRs should include metadata at the top using this YAML format:
-
-```yaml
----
-status: Proposed
-date: 2025-07-16
-decision-makers: [@alice, @bob]
-consulted: [@carol]
-informed: [@dave]
----
-```
-
-### Option 1: Start with a GitHub Issue
-
-1. Create or identify a GitHub issue: If no relevant issue exists, create a new GitHub issue to track the ADR discussion and decision-making process. If an existing issue covers the topic, you can use that issue instead. This provides a central place for initial discussion and helps maintain traceability.
-
-2. Follow the steps in [Create the ADR File](#create-the-adr-file).
-
-### Option 2: Start Directly with a Draft Pull Request
-
-1. Follow the steps in [Create the ADR File](#create-the-adr-file).
-
-2. Submit a draft Pull Request with your ADR immediately to start the discussion.
-
-### Create the ADR File {#create-the-adr-file}
-
-1. Copy `adr-template.md` and rename it to the next available number and a short title, for example:
-
-   `cp adr-template.md 0003-replace-event-bus.md`
-
-2. Edit the new file and fill in the sections with your proposal, context, considered alternatives, and decision.
-
-3. **Important**: In the metadata section at the top of the ADR, use GitHub IDs (e.g., `@username`) to identify:
-    - `decision-makers`: Everyone involved in making the decision
-    - `consulted`: Subject-matter experts whose opinions were sought
-    - `informed`: People who are kept up-to-date on progress
-
-   This ensures clear accountability and traceability of who was involved in the decision-making process. Use individual GitHub usernames rather than generic team aliases (e.g., `@johndoe` instead of `@team-backend`) for better accountability.
-
-### Common Steps for Both Approaches
-
-1. Submit a draft Pull Request with your ADR (if not done already). Use the PR to discuss and refine the proposal with others. If you started with an issue, reference it in your PR description.
-
-2. **Consensus and approval**: All listed `decision-makers` must approve the ADR Pull Request. Consensus is reached when:
-    - All decision-makers have reviewed and approved the PR
-    - Any concerns raised during review have been addressed
-    - The ADR accurately reflects the agreed-upon decision
-
-   If consensus cannot be reached through normal PR review:
-    - Escalate to a community call for broader discussion
-    - As a last resort, maintainers may call for a formal vote (requiring 2/3 majority)
-
-3. Once consensus is reached and all decision-makers have approved, the PR can be merged. The ADR is then considered accepted.
-
-### Important Notes for Contributors
-
-- **Early discussion encouraged**: ADR proposals should focus on the decision and rationale rather than requiring full implementation upfront. This encourages early discussion and consensus before significant investment in implementation work.
-- **Branch preference**: For contributors with repository access, prefer creating branches in the main repository rather than long-lived merge requests from forks, as this facilitates easier collaboration and review.
-- **Release integration**: ADRs and their current status become formal release artifacts, providing a historical record of architectural decisions at each release.
+**Note:** The process of creating an ADR is part of future discussions and will be defined later.
 
 ## File Naming Convention
 
@@ -252,65 +189,6 @@ Reviewing ADRs is not about personal taste — it's about improving the clarity,
 - Use non-technical arguments (e.g., "I don't like it" or "We never did it this way").
 
 For detailed guidance, see the [References](#references) section.
-
-## Appendix C: ADR Creation Workflow
-
-```mermaid
-flowchart TD
-    A[Start ADR Creation] --> B{Choose Approach}
-    
-    B -->|Option 1| C[Create/Identify GitHub Issue]
-    B -->|Option 2| D[Start Directly with Draft PR]
-    
-    C --> E[Create the ADR File]
-    D --> E
-    
-    E --> F[Copy adr-template.md]
-    F --> G[Rename to next number + title<br/>e.g., 0003-replace-event-bus.md]
-    G --> H[Add YAML metadata:<br/>• status: Proposed<br/>• decision-makers<br/>• consulted<br/>• informed]
-    
-    H --> I[Fill in ADR sections:<br/>• Context<br/>• Decision<br/>• Alternatives<br/>• Consequences]
-    
-    I --> J{Already have PR?}
-    J -->|No| K[Create Draft Pull Request]
-    J -->|Yes| L[Update existing PR]
-    
-    K --> M[Discussion & Review]
-    L --> M
-    
-    M --> N{Consensus Reached?}
-    N -->|No| O{Need Escalation?}
-    N -->|Yes| P[Approval Reached]
-    
-    O -->|Yes| Q[Community Call]
-    O -->|No| M
-    
-    Q --> R{Consensus Reached?}
-    R -->|No| S[Maintainer Vote<br/>2/3 majority required]
-    R -->|Yes| P
-    
-    S --> T{Vote Passes?}
-    T -->|Yes| P
-    T -->|No| U[ADR Rejected]
-    
-    P --> V[Merge PR]
-    V --> W[ADR Accepted ✅]
-    
-    style A fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#fff
-    style W fill:#00C853,stroke:#00A040,stroke-width:3px,color:#fff
-    style U fill:#F44336,stroke:#C62828,stroke-width:3px,color:#fff
-    style Q fill:#FF9800,stroke:#F57C00,stroke-width:3px,color:#fff
-    style S fill:#9C27B0,stroke:#6A1B9A,stroke-width:3px,color:#fff
-    style B fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
-    style N fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
-    style O fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
-    style R fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
-    style T fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
-    style J fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
-    style P fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
-    style V fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
-    style E fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#000
-```
 
 ## References
 

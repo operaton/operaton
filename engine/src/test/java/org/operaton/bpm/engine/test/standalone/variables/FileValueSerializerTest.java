@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.standalone.variables;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.DataInputStream;
@@ -38,6 +39,7 @@ import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+import org.operaton.bpm.engine.variable.value.builder.FileValueBuilder;
 
 /**
  * @author Ronny Bräunlich
@@ -144,7 +146,8 @@ class FileValueSerializerTest {
 
   @Test
   void testThrowsExceptionWhenConvertingUnknownUntypedValueToTypedValue() {
-    assertThrows(UnsupportedOperationException.class, () -> serializer.convertToTypedValue((UntypedValueImpl) Variables.untypedValue(new Object())));
+    UntypedValueImpl untypedValue = (UntypedValueImpl) Variables.untypedValue(new Object());
+    assertThrows(UnsupportedOperationException.class, () -> serializer.convertToTypedValue(untypedValue));
   }
 
   @Test
@@ -293,7 +296,9 @@ class FileValueSerializerTest {
 
   @Test
   void testSerializeFileValueWithoutName() {
-    assertThrows(IllegalArgumentException.class, () -> Variables.fileValue((String) null).file("abc".getBytes()).create());
+    assertThatThrownBy(() -> Variables.fileValue((String) null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("UTILS-02001 Parameter 'filename' is null");
   }
 
   private void checkStreamFromValue(TypedValue value, String expected) {

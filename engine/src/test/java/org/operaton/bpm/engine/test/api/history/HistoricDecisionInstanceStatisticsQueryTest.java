@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatisticsQuery;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
@@ -146,7 +147,6 @@ class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  @Disabled("Should throw exception, but does not. See https://github.com/operaton/operaton/issues/438")
   void testStatisticForRootDecisionWithNullInstanceConstraintEvaluation() {
     // given
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
@@ -156,17 +156,11 @@ class HistoricDecisionInstanceStatisticsQueryTest {
     DecisionRequirementsDefinition decisionRequirementsDefinition = repositoryService.createDecisionRequirementsDefinitionQuery().singleResult();
 
     // when
-    HistoricDecisionInstanceStatisticsQuery query = historyService
-        .createHistoricDecisionInstanceStatisticsQuery(
-            decisionRequirementsDefinition.getId())
-        .decisionInstanceId(null);
-
-    // then
-    assertThatThrownBy(query::count)
-      .isInstanceOf(NullValueException.class);
-
-    assertThatThrownBy(query::list)
-      .isInstanceOf(NullValueException.class);
+    assertThatThrownBy(() -> historyService
+                      .createHistoricDecisionInstanceStatisticsQuery(
+                              decisionRequirementsDefinition.getId())
+                      .decisionInstanceId(null))
+            .isInstanceOf(NotValidException.class);
   }
 
   @Test

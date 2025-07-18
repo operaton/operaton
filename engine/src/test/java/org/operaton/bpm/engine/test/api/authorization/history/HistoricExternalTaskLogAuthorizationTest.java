@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.authorization.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
@@ -187,18 +188,14 @@ class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest {
       .getId();
     enableAuthorization();
 
-    try {
-      // when
-      historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
-      fail("Exception expected: It should not be possible to retrieve the error details");
-    } catch (AuthorizationException e) {
-      // then
-      String exceptionMessage = e.getMessage();
-      testRule.assertTextPresent(userId, exceptionMessage);
-      testRule.assertTextPresent(READ_HISTORY.getName(), exceptionMessage);
-      testRule.assertTextPresent(DEFAULT_PROCESS_KEY, exceptionMessage);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), exceptionMessage);
-    }
+    assertThatThrownBy(
+        () -> historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId),
+        "Exception expected: It should not be possible to retrieve the error details")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_HISTORY.getName())
+        .hasMessageContaining(DEFAULT_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jmx.kernel;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.List;
 import java.util.Set;
 
@@ -35,6 +32,8 @@ import org.operaton.bpm.container.impl.jmx.kernel.util.StopServiceDeploymentOper
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestService;
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestServiceType;
 import org.operaton.bpm.container.impl.spi.PlatformService;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * Testcases for the {@link MBeanServiceContainer} Kernel.
@@ -96,12 +95,9 @@ class MBeanServiceContainerTest {
     assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNotNull();
     assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isEqualTo(service1);
     // as long it is started, I cannot start a second service with the same name:
-    try {
-      serviceContainer.startService(service1Name, service1);
-      fail("exception expected");
-    } catch(Exception e) {
-      assertThat(e.getMessage()).contains("service with same name already registered");
-    }
+    assertThatThrownBy(() -> serviceContainer.startService(service1Name, service1), "exception expected")
+        .isInstanceOf(Exception.class)
+        .hasMessageContaining("service with same name already registered");
 
     // but, I can start a service with a different name:
     serviceContainer.startService(service2Name, service2);
@@ -123,12 +119,9 @@ class MBeanServiceContainerTest {
     // now it's gone
     assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
 
-    try {
-      serviceContainer.stopService(service1Name);
-      fail("exception expected");
-    }catch(Exception e) {
-      assertThat(e.getMessage()).contains("no such service registered");
-    }
+    assertThatThrownBy(() -> serviceContainer.stopService(service1Name), "exception expected")
+        .isInstanceOf(Exception.class)
+        .hasMessageContaining("no such service registered");
 
   }
 
@@ -226,15 +219,9 @@ class MBeanServiceContainerTest {
         .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
         .addStep(new FailingDeploymentOperationStep());
 
-    try {
-      deploymentOperationBuilder.execute();
-
-      fail("Exception expected");
-
-    } catch(Exception e) {
-      assertThat(e.getMessage()).contains("Exception while performing 'test failing op' => 'failing step'");
-
-    }
+    assertThatThrownBy(deploymentOperationBuilder::execute, "Exception expected")
+        .isInstanceOf(Exception.class)
+        .hasMessageContaining("Exception while performing 'test failing op' => 'failing step'");
 
     // none of the services were registered
     assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
@@ -246,15 +233,10 @@ class MBeanServiceContainerTest {
       .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
       .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
       .addStep(new FailingDeploymentOperationStep());
-    try {
-      deploymentOperationBuilder1.execute();
 
-      fail("Exception expected");
-
-    } catch(Exception e) {
-      assertThat(e.getMessage()).contains("Exception while performing 'test failing op' => 'failing step'");
-
-    }
+    assertThatThrownBy(deploymentOperationBuilder1::execute, "Exception expected")
+        .isInstanceOf(Exception.class)
+        .hasMessageContaining("Exception while performing 'test failing op' => 'failing step'");
 
     // none of the services were registered
     assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();

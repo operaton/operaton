@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.authorization.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
@@ -357,18 +358,15 @@ class HistoricJobLogAuthorizationTest extends AuthorizationTest {
     String jobLogId = historyService.createHistoricJobLogQuery().failureLog().listPage(0, 1).get(0).getId();
     enableAuthorization();
 
-    try {
-      // when
-      historyService.getHistoricJobLogExceptionStacktrace(jobLogId);
-      fail("Exception expected: It should not be possible to get the historic job log exception stacktrace");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ_HISTORY.getName(), message);
-      testRule.assertTextPresent(ONE_INCIDENT_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(
+        () -> historyService.getHistoricJobLogExceptionStacktrace(jobLogId),
+        "Exception expected: It should not be possible to get the historic job log exception stacktrace")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_HISTORY.getName())
+        .hasMessageContaining(ONE_INCIDENT_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
+
   }
 
   @Test

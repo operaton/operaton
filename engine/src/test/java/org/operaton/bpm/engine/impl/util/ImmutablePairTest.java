@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
@@ -73,12 +74,9 @@ class ImmutablePairTest {
   void shouldFailWithNonComparableTypes() {
     final ImmutablePair<Object, Object> pair1 = new ImmutablePair<>(new Object(), new Object());
     final ImmutablePair<Object, Object> pair2 = new ImmutablePair<>(new Object(), new Object());
-    try {
-      pair1.compareTo(pair2);
-      fail("Pairs should not be comparable");
-    } catch (IllegalArgumentException e) {
-      assertThat(e).hasMessageContaining("Please provide comparable elements");
-    }
+    assertThatThrownBy(() -> pair1.compareTo(pair2), "Pairs should not be comparable")
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Please provide comparable elements");
   }
 
   @Test

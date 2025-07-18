@@ -151,13 +151,9 @@ class ProcessApplicationContextTest {
     try {
       ProcessApplicationContext.setCurrentProcessApplication(nonExistingName);
 
-      try {
-        getCurrentContextApplication();
-        fail("should not succeed");
-
-      } catch (ProcessEngineException e) {
-        assertThat(e.getMessage()).contains("A process application with name '" + nonExistingName + "' is not registered");
-      }
+      assertThatThrownBy(() -> getCurrentContextApplication(), "should not succeed")
+          .isInstanceOf(ProcessEngineException.class)
+          .hasMessageContaining("A process application with name '" + nonExistingName + "' is not registered");
 
     } finally {
       ProcessApplicationContext.clear();

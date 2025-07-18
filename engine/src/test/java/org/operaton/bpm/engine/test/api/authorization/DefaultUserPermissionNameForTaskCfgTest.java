@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
@@ -72,14 +73,9 @@ class DefaultUserPermissionNameForTaskCfgTest {
     testProcessEngineCfg.setDefaultUserPermissionNameForTask("UNSUPPORTED");
 
     // if
-    try {
-      testProcessEngineCfg.initDefaultUserPermissionForTask();
-      fail("Exception expected");
-
-    } catch(ProcessEngineException e) {
-      String expectedExceptionMessage = String.format("Invalid value '%s' for configuration property 'defaultUserPermissionNameForTask'.", "UNSUPPORTED");
-      assertThat(e.getMessage()).contains(expectedExceptionMessage);
-    }
+    assertThatThrownBy(testProcessEngineCfg::initDefaultUserPermissionForTask, "Exception expected")
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining(String.format("Invalid value '%s' for configuration property 'defaultUserPermissionNameForTask'.", "UNSUPPORTED"));
   }
 
   @Test
@@ -90,14 +86,9 @@ class DefaultUserPermissionNameForTaskCfgTest {
     testProcessEngineCfg.setDefaultUserPermissionNameForTask(null);
 
     // if
-    try {
-      testProcessEngineCfg.initDefaultUserPermissionForTask();
-      fail("Exception expected");
-
-    } catch(ProcessEngineException e) {
-      String expectedExceptionMessage = "Invalid value 'null' for configuration property 'defaultUserPermissionNameForTask'.";
-      assertThat(e.getMessage()).contains(expectedExceptionMessage);
-    }
+    assertThatThrownBy(testProcessEngineCfg::initDefaultUserPermissionForTask, "Exception expected")
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining(String.format("Invalid value 'null' for configuration property 'defaultUserPermissionNameForTask'."));
   }
 
   @Test

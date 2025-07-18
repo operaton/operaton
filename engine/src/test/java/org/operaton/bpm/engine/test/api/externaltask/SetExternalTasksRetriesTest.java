@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.externaltask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -120,12 +120,10 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     externalTaskIds.add("nonExistingExternalTaskId");
 
-    try {
-      externalTaskService.setRetries(externalTaskIds, 10);
-      fail("exception expected");
-    } catch (NotFoundException e) {
-      assertThat(e.getMessage()).contains("Cannot find external task with id nonExistingExternalTaskId");
-    }
+    assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, 10), "exception expected")
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("Cannot find external task with id nonExistingExternalTaskId");
+
   }
 
   @Test
@@ -139,22 +137,18 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     externalTaskIds.add(null);
 
-    try {
-      externalTaskService.setRetries(externalTaskIds, 10);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("External task id cannot be null");
-    }
+    assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, 10), "exception expected")
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("External task id cannot be null");
+
   }
 
   @Test
   void shouldFailForNullExternalTaskIdsSync() {
-    try {
-      externalTaskService.setRetries((List<String>) null, 10);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("externalTaskIds is empty");
-    }
+    assertThatThrownBy(() -> externalTaskService.setRetries((List<String>) null, 10))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("externalTaskIds is empty");
+
   }
 
   @Test
@@ -169,12 +163,10 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
     externalTaskIds.add("nonExistingExternalTaskId");
     Batch batch = externalTaskService.setRetriesAsync(externalTaskIds, null, 10);
 
-    try {
-      executeSeedAndBatchJobs(batch);
-      fail("exception expected");
-    } catch (NotFoundException e) {
-      assertThat(e.getMessage()).contains("Cannot find external task with id nonExistingExternalTaskId");
-    }
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(batch), "exception expected")
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("Cannot find external task with id nonExistingExternalTaskId");
+
   }
 
   @Test
@@ -188,22 +180,17 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     externalTaskIds.add(null);
 
-    try {
-      externalTaskService.setRetriesAsync(externalTaskIds, null, 10);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("External task id cannot be null");
-    }
+    assertThatThrownBy(() -> externalTaskService.setRetriesAsync(externalTaskIds, null, 10))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("External task id cannot be null");
+
   }
 
   @Test
   void shouldFailForNullExternalTaskIdsAsync() {
-    try {
-      externalTaskService.setRetriesAsync((List<String>) null, null, 10);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("externalTaskIds is empty");
-    }
+    assertThatThrownBy(() -> externalTaskService.setRetriesAsync((List<String>) null, null, 10))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("externalTaskIds is empty");
   }
 
   @Test
@@ -211,12 +198,10 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     List<String> externalTaskIds = Arrays.asList("externalTaskId");
 
-    try {
-      externalTaskService.setRetries(externalTaskIds, -10);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("The number of retries cannot be negative");
-    }
+    assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, -10), "exception expected")
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("The number of retries cannot be negative");
+
   }
 
   @Test
@@ -226,12 +211,10 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     Batch batch = externalTaskService.setRetriesAsync(externalTaskIds, null, -10);
 
-    try {
-      executeSeedAndBatchJobs(batch);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("The number of retries cannot be negative");
-    }
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(batch), "exception expected")
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("The number of retries cannot be negative");
+
   }
 
   @Test

@@ -37,7 +37,6 @@ import org.apache.directory.api.ldap.schema.manager.impl.DefaultSchemaManager;
 import org.apache.directory.api.util.exception.Exceptions;
 import org.apache.directory.server.constants.ServerDNConstants;
 import org.apache.directory.server.core.DefaultDirectoryService;
-import org.apache.directory.server.core.api.CacheService;
 import org.apache.directory.server.core.api.DirectoryService;
 import org.apache.directory.server.core.api.DnFactory;
 import org.apache.directory.server.core.api.InstanceLayout;
@@ -137,10 +136,6 @@ public class LdapTestEnvironment {
     service = new DefaultDirectoryService();
     InstanceLayout il = new InstanceLayout(workingDirectory);
     service.setInstanceLayout(il);
-
-    CacheService cacheService = new CacheService();
-    cacheService.initialize(service.getInstanceLayout());
-    service.setCacheService(cacheService);
 
     initSchemaPartition();
 

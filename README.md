@@ -61,7 +61,6 @@ Get the latest release from the [Releases page](https://github.com/operaton/oper
 
 To get the latest stable build visit the [Early Access release page]([https://github.com/operaton/operaton/actions/workflows/nighly-build.yml?query=branch%3Amain+event%3Aschedule+is%3Asuccess++](https://github.com/operaton/operaton/releases/tag/early-access)), click on _Assets_ and download the desired package.
 
-
 ## About Operaton
 
 ### Components
@@ -100,6 +99,10 @@ Operaton is fully backwards compatible to your existing BPMN-, DMN-models and Fo
 
 The documentation is currently under construction. Currently, you can use the [Camunda 7 Manual](https://docs.camunda.org/manual/7.22/) as a reference.
 Since Operaton is a fork of Camunda 7, most of the documentation is still valid. We will provide a new manual soon.
+
+## Architectural Decisions
+
+For insights into our architectural decisions and the reasoning behind them, see our [Architectural Decision Records (ADRs)](docs/decisions/). These documents provide context for key technical choices and help contributors understand the project's design principles.
 
 ## Contributing
 

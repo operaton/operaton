@@ -49,6 +49,7 @@ import org.apache.directory.server.i18n.I18n;
 import org.apache.directory.server.ldap.LdapServer;
 import org.apache.directory.server.protocol.shared.transport.TcpTransport;
 import org.apache.directory.server.xdbm.Index;
+import org.assertj.core.util.Files;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +71,7 @@ public class LdapTestEnvironment {
   protected DirectoryService service;
   protected LdapServer ldapService;
   protected String configFilePath = "ldap.properties";
-  protected File workingDirectory = new File(System.getProperty("java.io.tmpdir") + "/server-work");
+  protected File workingDirectory = Files.newTemporaryFolder();
 
   private int numberOfUsersCreated = 0;
   private int numberOfGroupsCreated = 0;
@@ -132,6 +133,7 @@ public class LdapTestEnvironment {
   protected void initializeDirectory() throws Exception {
 
     workingDirectory.mkdirs();
+    LOG.debug("Working directory for LDAP server: {}", workingDirectory.getAbsolutePath());
 
     service = new DefaultDirectoryService();
     InstanceLayout il = new InstanceLayout(workingDirectory);
@@ -187,18 +189,18 @@ public class LdapTestEnvironment {
   }
 
   public void init() throws Exception {
-    /// create a simple test
+    // create a simple test
     init(0,0,0);
   }
 
   /**
-   * create a specific test case. Test creates a minimum users/groups/roles but aditionnal users can be added to reach this number.
+   * create a specific test case. Test creates a minimum users/groups/roles but additional users can be added to reach this number.
    * @param additionalNumberOfUsers add this number of user.
-   * @param additionnalNumberOfGroups add this number of groups
+   * @param additionalNumberOfGroups add this number of groups
    * @param additionalNumberOfRoles add this number of roles
    * @throws Exception
    */
-    public void init(int additionalNumberOfUsers, int additionnalNumberOfGroups, int additionalNumberOfRoles) throws Exception {
+  public void init(int additionalNumberOfUsers, int additionalNumberOfGroups, int additionalNumberOfRoles) throws Exception {
     initializeDirectory();
     startServer();
 
@@ -250,7 +252,7 @@ public class LdapTestEnvironment {
     }
 
     // Create a lot of groups
-    for (int i = 1; i <= additionnalNumberOfGroups; i++) {
+    for (int i = 1; i <= additionalNumberOfGroups; i++) {
       String groupName = "Paris" + String.format("%04d", i);
       createGroup(groupName);
     }

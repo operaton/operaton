@@ -288,9 +288,10 @@ public class LdapTestEnvironment {
   }
 
   protected String createUserCN(String user, String group, String firstname, String lastname, String email) throws Exception {
-    Dn dn = new Dn("cn=" + lastname + "\\," + firstname + ",ou=" + group + ",o=operaton,c=org");
+    String upRdns = "cn=" + lastname + "\\," + firstname + ",ou=" + group + ",o=operaton,c=org";
+    Dn dn = new Dn(upRdns);
     createUser(user, firstname, lastname, email, dn);
-    return dn.getNormName();
+    return upRdns;
   }
 
   protected void createUser(String user, String firstname, String lastname,
@@ -394,6 +395,9 @@ public class LdapTestEnvironment {
       }
     } catch (Exception e) {
       LOG.error("exception while shutting down ldap", e);
+    } finally {
+      ldapService = null;
+      service = null;
     }
   }
 

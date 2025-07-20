@@ -34,6 +34,9 @@ public class OperatonMySqlContainerProvider extends MySQLContainerProvider {
   public JdbcDatabaseContainer<?> newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mysql", tag, "mysql");
-    return new MySQLContainer<>(dockerImageName).withCommand("--transaction-isolation=READ-COMMITTED");
+    return new MySQLContainer<>(dockerImageName)
+            .withCommand("--transaction-isolation=READ-COMMITTED")
+            // See https://docs.operaton.org/docs/documentation/user-guide/process-engine/database/mysql-configuration#jdbc-driver-configuration
+            .withUrlParam("sendFractionalSeconds", "false");
   }
 }

@@ -27,6 +27,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -35,37 +38,30 @@ import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
 
 
-public class LdapGroupQueryTest {
+class LdapGroupQueryTest {
 
-  @ClassRule
-  public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
-  @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
 
   ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;
   AuthorizationService authorizationService;
   LdapTestEnvironment ldapTestEnvironment;
 
-  @Before
-  public void setup() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    identityService = engineRule.getIdentityService();
-    authorizationService = engineRule.getAuthorizationService();
+  @BeforeEach
+  void setup() {
     ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
   }
 
   @Test
-  public void testCountGroups() {
+  void testCountGroups() {
     // given
 
     // when
@@ -77,7 +73,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testQueryNoFilter() {
+  void testQueryNoFilter() {
     // given
 
     // when
@@ -88,7 +84,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupId() {
+  void testFilterByGroupId() {
     // given
 
     // when
@@ -102,7 +98,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingGroupId() {
+  void testFilterByNonexistingGroupId() {
     // given
 
     // when
@@ -113,7 +109,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupIdIn() {
+  void testFilterByGroupIdIn() {
     // given
 
     // when
@@ -125,7 +121,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupName() {
+  void testFilterByGroupName() {
     // given
 
     // when
@@ -139,7 +135,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingGroupName() {
+  void testFilterByNonexistingGroupName() {
     // given
 
     // when
@@ -150,7 +146,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupNameLikeTrailingWildcard() {
+  void testFilterByGroupNameLikeTrailingWildcard() {
     // given
 
     // when
@@ -163,7 +159,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupNameLikeLeadingWildcard() {
+  void testFilterByGroupNameLikeLeadingWildcard() {
     // given
 
     // when
@@ -176,7 +172,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupNameLikeLeadingAndTrailingWildCard() {
+  void testFilterByGroupNameLikeLeadingAndTrailingWildCard() {
     // given
 
     // when
@@ -189,7 +185,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupNameLikeMIddleWildCard() {
+  void testFilterByGroupNameLikeMIddleWildCard() {
     // given
 
     // when
@@ -202,7 +198,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingGroupNameLike() {
+  void testFilterByNonexistingGroupNameLike() {
     // given
 
     // when
@@ -213,7 +209,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupNameLikeConvertFromDbWildcard() {
+  void testFilterByGroupNameLikeConvertFromDbWildcard() {
     // given
 
     // when using the SQL wildcard (%) instead of LDAP (*)
@@ -226,7 +222,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupMember() {
+  void testFilterByGroupMember() {
     // given
 
     // when
@@ -238,7 +234,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingGroupMember() {
+  void testFilterByNonexistingGroupMember() {
     // given
 
     // when
@@ -249,7 +245,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupMemberSpecialCharacter() {
+  void testFilterByGroupMemberSpecialCharacter() {
     // given
 
     // when
@@ -261,7 +257,7 @@ public class LdapGroupQueryTest {
   }
 
   @Test
-  public void testFilterByGroupMemberPosix() {
+  void testFilterByGroupMemberPosix() {
     // given
     // by default the configuration does not use posix groups
     LdapConfiguration ldapConfiguration = new LdapConfiguration();
@@ -295,12 +291,12 @@ public class LdapGroupQueryTest {
 
 
   @Test
-  public void testPagination() {
+  void testPagination() {
     testGroupPaging(identityService);
   }
 
   @Test
-  public void testPaginationWithAuthenticatedUser() {
+  void testPaginationWithAuthenticatedUser() {
     createGrantAuthorization(GROUP, "management", "oscar", READ);
     createGrantAuthorization(GROUP, "consulting", "oscar", READ);
     createGrantAuthorization(GROUP, "external", "oscar", READ);

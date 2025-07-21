@@ -29,6 +29,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.IdentityService;
@@ -38,36 +41,29 @@ import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
 
-public class LdapUserQueryTest {
+class LdapUserQueryTest {
 
-  @ClassRule
-  public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
-  @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
 
   ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;
   AuthorizationService authorizationService;
   LdapTestEnvironment ldapTestEnvironment;
 
-  @Before
-  public void setup() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    identityService = engineRule.getIdentityService();
-    authorizationService = engineRule.getAuthorizationService();
+  @BeforeEach
+  void setup() {
     ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
   }
 
   @Test
-  public void testCountUsers() {
+  void testCountUsers() {
     // given
 
     // when
@@ -79,7 +75,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testQueryNoFilter() {
+  void testQueryNoFilter() {
     // given
 
     // when
@@ -90,7 +86,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByUserId() {
+  void testFilterByUserId() {
     // given
 
     // when
@@ -107,7 +103,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistentUserId() {
+  void testFilterByNonexistentUserId() {
     // given
 
     // when
@@ -118,7 +114,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByUserIdIn() {
+  void testFilterByUserIdIn() {
     // given
 
     // when
@@ -130,7 +126,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByNonExistingUserIdIn() {
+  void testFilterByNonExistingUserIdIn() {
     // given
 
     // when
@@ -144,7 +140,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByUserIdWithCapitalization() {
+  void testFilterByUserIdWithCapitalization() {
     try {
       // given
       processEngineConfiguration.setAuthorizationEnabled(true);
@@ -168,7 +164,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByFirstname() {
+  void testFilterByFirstname() {
     // given
 
     // when
@@ -180,7 +176,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingFirstname() {
+  void testFilterByNonexistingFirstname() {
     // given
 
     // when
@@ -191,7 +187,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByFirstnameLikeTrailingWildcard() {
+  void testFilterByFirstnameLikeTrailingWildcard() {
     // given
 
     // when
@@ -203,7 +199,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByFirstnameLikeLeadingWildcard() {
+  void testFilterByFirstnameLikeLeadingWildcard() {
     // given
 
     // when
@@ -215,7 +211,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByFirstnameLikeLeadingAndTrailingWildcard() {
+  void testFilterByFirstnameLikeLeadingAndTrailingWildcard() {
     // given
 
     // when
@@ -227,7 +223,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByFirstnameLikeMiddleWildcard() {
+  void testFilterByFirstnameLikeMiddleWildcard() {
     // given
 
     // when
@@ -239,7 +235,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByFirstnameLikeConvertFromDbWildcard() {
+  void testFilterByFirstnameLikeConvertFromDbWildcard() {
     // given
 
     // when using the SQL wildcard (%) instead of LDAP (*)
@@ -251,7 +247,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingFirstnameLike() {
+  void testFilterByNonexistingFirstnameLike() {
     // given
 
     // when
@@ -262,7 +258,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByLastname() {
+  void testFilterByLastname() {
     // given
 
     // when
@@ -274,7 +270,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingLastname() {
+  void testFilterByNonexistingLastname() {
     // given
 
     // when
@@ -285,7 +281,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByLastnameLikeTrailingWildcard() {
+  void testFilterByLastnameLikeTrailingWildcard() {
     // given
 
     // when
@@ -297,7 +293,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByLastnameLikeLeadingWildcard() {
+  void testFilterByLastnameLikeLeadingWildcard() {
     // given
 
     // when
@@ -309,7 +305,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByLastnameLikeLeadingAndTrailingWildcard() {
+  void testFilterByLastnameLikeLeadingAndTrailingWildcard() {
     // given
 
     // when
@@ -321,7 +317,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByLastnameLikeMiddleWildcard() {
+  void testFilterByLastnameLikeMiddleWildcard() {
     // given
 
     // when
@@ -333,7 +329,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingLastnameLike() {
+  void testFilterByNonexistingLastnameLike() {
     // given
 
     // when
@@ -344,7 +340,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByLastnameLikeConvertFromDbWildcard() {
+  void testFilterByLastnameLikeConvertFromDbWildcard() {
     // given
 
     // when using the SQL wildcard (%) instead of LDAP (*)
@@ -356,7 +352,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByEmail() {
+  void testFilterByEmail() {
     // given
 
     // when
@@ -368,7 +364,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingEmail() {
+  void testFilterByNonexistingEmail() {
     // given
 
     // when
@@ -379,7 +375,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByEmailLikeTrailingWildCard() {
+  void testFilterByEmailLikeTrailingWildCard() {
     // given
 
     // when
@@ -391,7 +387,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByEmailLikeLeadingWildCard() {
+  void testFilterByEmailLikeLeadingWildCard() {
     // given
 
     // when
@@ -403,7 +399,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByEmailLikeLeadingAndTrailingWildCard() {
+  void testFilterByEmailLikeLeadingAndTrailingWildCard() {
     // given
 
     // when
@@ -415,7 +411,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByEmailLikeMiddleWildCard() {
+  void testFilterByEmailLikeMiddleWildCard() {
     // given
 
     // when
@@ -427,7 +423,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByNonexistingEmailLike() {
+  void testFilterByNonexistingEmailLike() {
     // given
 
     // when
@@ -438,7 +434,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByEmailLikeConvertFromDbWildcard() {
+  void testFilterByEmailLikeConvertFromDbWildcard() {
     // given
 
     // when using the SQL wildcard (%) instead of LDAP (*)
@@ -450,7 +446,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByGroupId() {
+  void testFilterByGroupId() {
     // given
 
     // when
@@ -462,7 +458,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByGroupIdAndFirstname() {
+  void testFilterByGroupIdAndFirstname() {
     // given
 
     // when
@@ -477,7 +473,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByGroupIdAndId() {
+  void testFilterByGroupIdAndId() {
     // given
 
     // when
@@ -492,7 +488,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByGroupIdAndLastname() {
+  void testFilterByGroupIdAndLastname() {
     // given
 
     // when
@@ -507,7 +503,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByGroupIdAndEmail() {
+  void testFilterByGroupIdAndEmail() {
     // given
 
     // when
@@ -522,7 +518,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByGroupIdAndEmailLike() {
+  void testFilterByGroupIdAndEmailLike() {
     // given
 
     // when
@@ -537,7 +533,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testFilterByGroupIdAndIdForDnUsingCn() {
+  void testFilterByGroupIdAndIdForDnUsingCn() {
     // given
 
     // when
@@ -552,7 +548,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testAuthenticatedUserSeesThemselve() {
+  void testAuthenticatedUserSeesThemselve() {
     try {
       // given
       processEngineConfiguration.setAuthorizationEnabled(true);
@@ -571,7 +567,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testNonexistingAuthenticatedUserDoesNotSeeThemselve() {
+  void testNonexistingAuthenticatedUserDoesNotSeeThemselve() {
     try {
       // given
       processEngineConfiguration.setAuthorizationEnabled(true);
@@ -589,17 +585,17 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testPagination() {
+  void testPagination() {
     testUserPaging(identityService, ldapTestEnvironment);
   }
 
   @Test
-  public void testPaginationWithMemberOfGroup() {
+  void testPaginationWithMemberOfGroup() {
     testUserPagingWithMemberOfGroup(identityService);
   }
 
   @Test
-  public void testPaginationWithAuthenticatedUser() {
+  void testPaginationWithAuthenticatedUser() {
     createGrantAuthorization(USER, "roman", "oscar", READ);
     createGrantAuthorization(USER, "daniel", "oscar", READ);
     createGrantAuthorization(USER, "monster", "oscar", READ);
@@ -646,7 +642,7 @@ public class LdapUserQueryTest {
   }
 
   @Test
-  public void testNativeQueryFail() {
+  void testNativeQueryFail() {
     assertThatThrownBy(() -> identityService.createNativeUserQuery())
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Native user queries are not supported for LDAP");

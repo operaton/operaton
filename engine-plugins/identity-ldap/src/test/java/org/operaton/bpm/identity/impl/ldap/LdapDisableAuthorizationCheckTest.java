@@ -23,52 +23,50 @@ import static org.operaton.bpm.engine.authorization.Resources.USER;
 import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testGroupPaging;
 import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testUserPaging;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentRule;
+import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestUtilities;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class LdapDisableAuthorizationCheckTest {
+class LdapDisableAuthorizationCheckTest {
 
-  @ClassRule
-  public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
-  @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.disable.authorization.check.cfg.xml");
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .configurationResource("operaton.ldap.disable.authorization.check.cfg.xml")
+    .build();
+  @RegisterExtension
+  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
 
   ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;
   AuthorizationService authorizationService;
   LdapTestEnvironment ldapTestEnvironment;
 
-  @Before
-  public void setup() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    identityService = engineRule.getIdentityService();
-    authorizationService = engineRule.getAuthorizationService();
+  @BeforeEach
+  void setup() {
     ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
   }
 
   @Test
-  public void testUserQueryPagination() {
+  void testUserQueryPagination() {
     LdapTestUtilities.testUserPaging(identityService, ldapTestEnvironment);
   }
 
   @Test
-  public void testUserQueryPaginationWithAuthenticatedUserWithoutAuthorizations() {
+  void testUserQueryPaginationWithAuthenticatedUserWithoutAuthorizations() {
     try {
       processEngineConfiguration.setAuthorizationEnabled(true);
 
@@ -82,7 +80,7 @@ public class LdapDisableAuthorizationCheckTest {
   }
 
   @Test
-  public void testUserQueryPaginationWithAuthenticatedUserWithAuthorizations() {
+  void testUserQueryPaginationWithAuthenticatedUserWithAuthorizations() {
     createGrantAuthorization(USER, "roman", "oscar", READ);
     createGrantAuthorization(USER, "daniel", "oscar", READ);
     createGrantAuthorization(USER, "monster", "oscar", READ);
@@ -106,12 +104,12 @@ public class LdapDisableAuthorizationCheckTest {
   }
 
   @Test
-  public void testGroupQueryPagination() {
+  void testGroupQueryPagination() {
     testGroupPaging(identityService);
   }
 
   @Test
-  public void testGroupQueryPaginationWithAuthenticatedUserWithoutAuthorizations() {
+  void testGroupQueryPaginationWithAuthenticatedUserWithoutAuthorizations() {
     try {
       processEngineConfiguration.setAuthorizationEnabled(true);
 
@@ -125,7 +123,7 @@ public class LdapDisableAuthorizationCheckTest {
   }
 
   @Test
-  public void testGroupQueryPaginationWithAuthenticatedUserWithAuthorizations() {
+  void testGroupQueryPaginationWithAuthenticatedUserWithAuthorizations() {
     createGrantAuthorization(GROUP, "management", "oscar", READ);
     createGrantAuthorization(GROUP, "consulting", "oscar", READ);
     createGrantAuthorization(GROUP, "external", "oscar", READ);

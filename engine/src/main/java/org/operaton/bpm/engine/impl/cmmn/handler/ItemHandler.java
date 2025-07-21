@@ -700,7 +700,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
         continue;
       }
 
-      if (builder.length() != 0) {
+      if (!builder.isEmpty()) {
         builder.append("\n\n");
       }
 

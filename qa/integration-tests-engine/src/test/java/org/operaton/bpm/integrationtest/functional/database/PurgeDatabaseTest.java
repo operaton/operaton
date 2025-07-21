@@ -98,7 +98,7 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
       }
     }
 
-    if (outputMessage.length() > 0) {
+    if (!outputMessage.isEmpty()) {
       outputMessage.insert(0, "DB NOT CLEAN: \n");
       /** skip drop and recreate if a table prefix is used */
       if (databaseTablePrefix.isEmpty()) {

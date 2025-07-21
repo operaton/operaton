@@ -100,7 +100,7 @@ public class Authorization {
 
     for (Object o: collection) {
 
-      if (builder.length() > 0) {
+      if (!builder.isEmpty()) {
         builder.append(delimiter);
       }
 

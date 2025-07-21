@@ -2055,7 +2055,7 @@ public class BpmnParse extends Parse {
 
     StringBuilder builder = new StringBuilder();
     for (String e : docStrings) {
-      if (builder.length() != 0) {
+      if (!builder.isEmpty()) {
         builder.append("\n\n");
       }
 
@@ -3037,7 +3037,7 @@ public class BpmnParse extends Parse {
         character = iterator.next();
       }
 
-      if (stringBuilder.length() > 0) {
+      if (!stringBuilder.isEmpty()) {
         result.add(stringBuilder.toString().trim());
       }
 

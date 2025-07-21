@@ -20,17 +20,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -40,26 +39,29 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
  * @author Thorben Lindhauer
  *
  */
-public class LdapQueryToleranceTest {
+class LdapQueryToleranceTest {
 
-  @ClassRule
-  public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
-  @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("invalid-id-attributes.cfg.xml");
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().level(Level.ERROR).watch("org.operaton.bpm.identity.impl.ldap");
+  @RegisterExtension
+  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .configurationResource("invalid-id-attributes.cfg.xml")
+      .build();
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
+      .level(Level.ERROR)
+      .watch("org.operaton.bpm.identity.impl.ldap");
 
   ProcessEngine processEngine;
   LdapTestEnvironment ldapTestEnvironment;
 
-  @Before
-  public void setup() {
-    processEngine = engineRule.getProcessEngine();
+  @BeforeEach
+  void setup() {
     ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
   }
 
   @Test
-  public void testNotReturnGroupsWithNullId() {
+  void testNotReturnGroupsWithNullId() {
     // given
     // LdapTestEnvironment creates six roles (groupOfNames) by default;
     // these won't return a group id, because they do not have the group id attribute
@@ -79,7 +81,7 @@ public class LdapQueryToleranceTest {
   }
 
   @Test
-  public void testNotReturnUsersWithNullId() {
+  void testNotReturnUsersWithNullId() {
     // given
     // LdapTestEnvironment creates 12 users by default;
     // these won't return a group id, because they do not have the group id attribute

@@ -21,36 +21,35 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Comparator;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
 
 /**
  * Represents a test case where the sortControlSupport property is enabled.
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class LdapEnableSortControlSupportTest {
+class LdapEnableSortControlSupportTest {
 
-  @ClassRule
-  public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
-
-  @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.enable.sort.control.support.cfg.xml");
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .configurationResource("operaton.ldap.enable.sort.control.support.cfg.xml")
+    .build();
+  @RegisterExtension
+  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
 
   IdentityService identityService;
   LdapTestEnvironment ldapTestEnvironment;
 
-  @Before
-  public void setup() {
-    identityService = engineRule.getIdentityService();
+  @BeforeEach
+  void setup() {
     ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
   }
 
@@ -58,7 +57,7 @@ public class LdapEnableSortControlSupportTest {
    * FirstName
    */
   @Test
-  public void testOrderByUserFirstNameAsc() {
+  void testOrderByUserFirstNameAsc() {
     List<User> orderedUsers = identityService.createUserQuery().orderByUserFirstName().asc().list();
     List<User> manualOrderedUsers = identityService.createUserQuery()
         .list()
@@ -74,7 +73,7 @@ public class LdapEnableSortControlSupportTest {
   }
 
   @Test
-  public void testOrderByUserFirstNameDesc() {
+  void testOrderByUserFirstNameDesc() {
     List<User> orderedUsers = identityService.createUserQuery().orderByUserFirstName().desc().list();
 
     List<User> manualOrderedUsers = identityService.createUserQuery()
@@ -94,7 +93,7 @@ public class LdapEnableSortControlSupportTest {
    * LastName
    */
   @Test
-  public void testOrderByUserLastNameAsc() {
+  void testOrderByUserLastNameAsc() {
     List<User> orderedUsers = identityService.createUserQuery().orderByUserLastName().asc().list();
 
     List<User> manualOrderedUsers = identityService.createUserQuery()
@@ -111,7 +110,7 @@ public class LdapEnableSortControlSupportTest {
   }
 
   @Test
-  public void testOrderByUserLastNameDesc() {
+  void testOrderByUserLastNameDesc() {
     List<User> orderedUsers = identityService.createUserQuery().orderByUserLastName().desc().list();
 
     List<User> manualOrderedUsers = identityService.createUserQuery()
@@ -131,7 +130,7 @@ public class LdapEnableSortControlSupportTest {
    * EMAIL
    */
   @Test
-  public void testOrderByUserEmailAsc() {
+  void testOrderByUserEmailAsc() {
     List<User> orderedUsers = identityService.createUserQuery().orderByUserEmail().asc().list();
     List<User> manualOrderedUsers = identityService.createUserQuery()
         .list()
@@ -147,7 +146,7 @@ public class LdapEnableSortControlSupportTest {
   }
 
   @Test
-  public void testOrderByUserEmailDesc() {
+  void testOrderByUserEmailDesc() {
     List<User> orderedUsers = identityService.createUserQuery().orderByUserEmail().desc().list();
 
     List<User> manualOrderedUsers = identityService.createUserQuery()
@@ -167,7 +166,7 @@ public class LdapEnableSortControlSupportTest {
    * ID
    */
   @Test
-  public void testOrderByUserIdAsc() {
+  void testOrderByUserIdAsc() {
     List<User> orderedUsers = identityService.createUserQuery().orderByUserId().asc().list();
     List<User> manualOrderedUsers = identityService.createUserQuery()
         .list()
@@ -183,7 +182,7 @@ public class LdapEnableSortControlSupportTest {
   }
 
   @Test
-  public void testOrderByUserIdDesc() {
+  void testOrderByUserIdDesc() {
     List<User> orderedUsers = identityService.createUserQuery().orderByUserId().desc().list();
 
     List<User> manualOrderedUsers = identityService.createUserQuery()
@@ -203,7 +202,7 @@ public class LdapEnableSortControlSupportTest {
    * Group ID Ordering
    */
   @Test
-  public void testOrderByGroupIdAsc() {
+  void testOrderByGroupIdAsc() {
     List<Group> orderedGroup = identityService.createGroupQuery().orderByGroupId().asc().list();
     List<Group> manualOrderedGroups = identityService.createGroupQuery()
         .list()
@@ -219,7 +218,7 @@ public class LdapEnableSortControlSupportTest {
   }
 
   @Test
-  public void testOrderByGroupIdDesc() {
+  void testOrderByGroupIdDesc() {
     List<Group> orderedGroup = identityService.createGroupQuery().orderByGroupId().desc().list();
     List<Group> manualOrderedGroups = identityService.createGroupQuery()
         .list()
@@ -238,7 +237,7 @@ public class LdapEnableSortControlSupportTest {
    * Group Name Ordering
    */
   @Test
-  public void testOrderByGroupNameAsc() {
+  void testOrderByGroupNameAsc() {
     List<Group> orderedGroup = identityService.createGroupQuery().orderByGroupName().asc().list();
     List<Group> manualOrderedGroups = identityService.createGroupQuery()
         .list()
@@ -254,7 +253,7 @@ public class LdapEnableSortControlSupportTest {
   }
 
   @Test
-  public void testOrderByGroupNameDesc() {
+  void testOrderByGroupNameDesc() {
     List<Group> orderedGroup = identityService.createGroupQuery().orderByGroupName().desc().list();
     List<Group> manualOrderedGroups = identityService.createGroupQuery()
         .list()

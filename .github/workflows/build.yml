@@ -94,6 +94,13 @@ jobs:
             distro/webjar/target/operaton-webapp-webjar-*.jar
           key: ${{ github.run_id }}-build-artifacts
 
+  integration-build:
+    if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, ','), 'pom.xml') }}
+    uses: ./.github/workflows/integration-build.yml
+    with:
+      distro: '["wildfly"]'
+    secrets: inherit
+
   publish:
     name: Publish
     needs: build

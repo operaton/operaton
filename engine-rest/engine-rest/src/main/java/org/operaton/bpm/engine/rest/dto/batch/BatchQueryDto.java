@@ -18,10 +18,12 @@ package org.operaton.bpm.engine.rest.dto.batch;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static org.operaton.bpm.engine.impl.util.CollectionUtil.hasElements;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -90,16 +92,13 @@ public class BatchQueryDto extends AbstractQueryDto<BatchQuery> {
   }
 
   protected void applyFilters(BatchQuery query) {
-    if (batchId != null) {
-      query.batchId(batchId);
-    }
-    if (type != null) {
-      query.type(type);
-    }
+    Optional.ofNullable(batchId).ifPresent(query::batchId);
+    Optional.ofNullable(type).ifPresent(query::type);
+
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();
     }
-    if (tenantIds != null && !tenantIds.isEmpty()) {
+    if (hasElements(tenantIds)) {
       query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
     }
     if (TRUE.equals(suspended)) {

@@ -138,4 +138,8 @@ public class CollectionUtil {
   public static boolean isEmpty(Collection<?> collection) {
     return collection == null || collection.isEmpty();
   }
+
+  public static boolean hasElements(Collection<?> collection) {
+    return !isEmpty(collection);
+  }
 }

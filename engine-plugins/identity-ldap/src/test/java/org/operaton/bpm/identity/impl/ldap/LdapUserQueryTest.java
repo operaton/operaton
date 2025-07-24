@@ -32,6 +32,8 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.IdentityService;
@@ -186,64 +188,21 @@ class LdapUserQueryTest {
     assertThat(user).isNull();
   }
 
-  @Test
-  void testFilterByFirstnameLikeTrailingWildcard() {
-    // given
-
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+          "Trailing Wildcard, Osc*, Oscar",
+          "Leading Wildcard, *car, Oscar",
+          "Leading & Trailing Wildcard, *sca*, Oscar",
+          "Middle Wildcard, O*ar, Oscar",
+          "Wildcard converted from DB Wildcard, Osc%, Oscar",
+  })
+  void testFilterByFirstnameLike(String testName, String nameSearchText, String expectedNameFound) {
     // when
-    User user = identityService.createUserQuery().userFirstNameLike("Osc*").singleResult();
+    User user = identityService.createUserQuery().userFirstNameLike(nameSearchText).singleResult();
 
     // then
     assertThat(user).isNotNull();
-    assertThat(user.getFirstName()).isEqualTo("Oscar");
-  }
-
-  @Test
-  void testFilterByFirstnameLikeLeadingWildcard() {
-    // given
-
-    // when
-    User user = identityService.createUserQuery().userFirstNameLike("*car").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getFirstName()).isEqualTo("Oscar");
-  }
-
-  @Test
-  void testFilterByFirstnameLikeLeadingAndTrailingWildcard() {
-    // given
-
-    // when
-    User user = identityService.createUserQuery().userFirstNameLike("*sca*").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getFirstName()).isEqualTo("Oscar");
-  }
-
-  @Test
-  void testFilterByFirstnameLikeMiddleWildcard() {
-    // given
-
-    // when
-    User user = identityService.createUserQuery().userFirstNameLike("O*ar").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getFirstName()).isEqualTo("Oscar");
-  }
-
-  @Test
-  void testFilterByFirstnameLikeConvertFromDbWildcard() {
-    // given
-
-    // when using the SQL wildcard (%) instead of LDAP (*)
-    User user = identityService.createUserQuery().userFirstNameLike("Osc%").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getFirstName()).isEqualTo("Oscar");
+    assertThat(user.getFirstName()).isEqualTo(expectedNameFound);
   }
 
   @Test
@@ -280,52 +239,21 @@ class LdapUserQueryTest {
     assertThat(user).isNull();
   }
 
-  @Test
-  void testFilterByLastnameLikeTrailingWildcard() {
-    // given
-
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+          "Trailing Wildcard, The Cro*, The Crouch",
+          "Leading Wildcard, * Crouch, The Crouch",
+          "Leading & Trailing Wildcard, * Cro*, The Crouch",
+          "Middle Wildcard, The *uch, The Crouch",
+          "Wildcard converted from DB Wildcard, The Cro%, The Crouch",
+  })
+  void testFilterByLastnameLike(String testName, String nameSearchText, String expectedNameFound) {
     // when
     User user = identityService.createUserQuery().userLastNameLike("The Cro*").singleResult();
 
     // then
     assertThat(user).isNotNull();
-    assertThat(user.getLastName()).isEqualTo("The Crouch");
-  }
-
-  @Test
-  void testFilterByLastnameLikeLeadingWildcard() {
-    // given
-
-    // when
-    User user = identityService.createUserQuery().userLastNameLike("* Crouch").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getLastName()).isEqualTo("The Crouch");
-  }
-
-  @Test
-  void testFilterByLastnameLikeLeadingAndTrailingWildcard() {
-    // given
-
-    // when
-    User user = identityService.createUserQuery().userLastNameLike("* Cro*").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getLastName()).isEqualTo("The Crouch");
-  }
-
-  @Test
-  void testFilterByLastnameLikeMiddleWildcard() {
-    // given
-
-    // when
-    User user = identityService.createUserQuery().userLastNameLike("The *uch").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getLastName()).isEqualTo("The Crouch");
+    assertThat(user.getLastName()).isEqualTo(expectedNameFound);
   }
 
   @Test
@@ -337,18 +265,6 @@ class LdapUserQueryTest {
 
     // then
     assertThat(user).isNull();
-  }
-
-  @Test
-  void testFilterByLastnameLikeConvertFromDbWildcard() {
-    // given
-
-    // when using the SQL wildcard (%) instead of LDAP (*)
-    User user = identityService.createUserQuery().userLastNameLike("The Cro%").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getLastName()).isEqualTo("The Crouch");
   }
 
   @Test
@@ -374,48 +290,17 @@ class LdapUserQueryTest {
     assertThat(user).isNull();
   }
 
-  @Test
-  void testFilterByEmailLikeTrailingWildCard() {
-    // given
-
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+          "Trailing Wildcard, oscar@*, oscar@operaton.org",
+          "Leading Wildcard, *car@operaton.org, oscar@operaton.org",
+          "Leading & Trailing Wildcard, *car@*, oscar@operaton.org",
+          "Middle Wildcard, oscar@*.org, oscar@operaton.org",
+          "Wildcard converted from DB Wildcard, oscar@%, oscar@operaton.org",
+  })
+  void testFilterByEmailLike(String testName, String nameSearchText, String expectedNameFound) {
     // when
     User user = identityService.createUserQuery().userEmailLike("oscar@*").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getEmail()).isEqualTo("oscar@operaton.org");
-  }
-
-  @Test
-  void testFilterByEmailLikeLeadingWildCard() {
-    // given
-
-    // when
-    User user = identityService.createUserQuery().userEmailLike("*car@operaton.org").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getEmail()).isEqualTo("oscar@operaton.org");
-  }
-
-  @Test
-  void testFilterByEmailLikeLeadingAndTrailingWildCard() {
-    // given
-
-    // when
-    User user = identityService.createUserQuery().userEmailLike("*car@*").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getEmail()).isEqualTo("oscar@operaton.org");
-  }
-
-  @Test
-  void testFilterByEmailLikeMiddleWildCard() {
-    // given
-
-    // when
-    User user = identityService.createUserQuery().userEmailLike("oscar@*.org").singleResult();
 
     // then
     assertThat(user).isNotNull();
@@ -431,18 +316,6 @@ class LdapUserQueryTest {
 
     // then
     assertThat(user).isNull();
-  }
-
-  @Test
-  void testFilterByEmailLikeConvertFromDbWildcard() {
-    // given
-
-    // when using the SQL wildcard (%) instead of LDAP (*)
-    User user = identityService.createUserQuery().userEmailLike("oscar@%").singleResult();
-
-    // then
-    assertThat(user).isNotNull();
-    assertThat(user.getEmail()).isEqualTo("oscar@operaton.org");
   }
 
   @Test

@@ -30,6 +30,8 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -145,56 +147,24 @@ class LdapGroupQueryTest {
     assertThat(group).isNull();
   }
 
-  @Test
-  void testFilterByGroupNameLikeTrailingWildcard() {
-    // given
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+          "Trailing Wildcard, manage*, management",
+          "Leading Wildcard, *agement, management",
+          "Leading & Trailing Wildcard, *ageme*, management",
+          "Middle Wildcard, man*nt, management",
+          "Wildcard converted from DB Wildcard, manage%, management",
+  })
+  void testFilterByGroupNameLike(String description, String groupNameLike, String expectedGroupName) {
+      // given
 
-    // when
-    Group group = identityService.createGroupQuery().groupNameLike("manage*").singleResult();
+      // when
+      Group group = identityService.createGroupQuery().groupNameLike(groupNameLike).singleResult();
 
-    // then
-    assertThat(group).isNotNull();
-    assertThat(group.getId()).isEqualTo("management");
-    assertThat(group.getName()).isEqualTo("management");
-  }
-
-  @Test
-  void testFilterByGroupNameLikeLeadingWildcard() {
-    // given
-
-    // when
-    Group group = identityService.createGroupQuery().groupNameLike("*agement").singleResult();
-
-    // then
-    assertThat(group).isNotNull();
-    assertThat(group.getId()).isEqualTo("management");
-    assertThat(group.getName()).isEqualTo("management");
-  }
-
-  @Test
-  void testFilterByGroupNameLikeLeadingAndTrailingWildCard() {
-    // given
-
-    // when
-    Group group = identityService.createGroupQuery().groupNameLike("*ageme*").singleResult();
-
-    // then
-    assertThat(group).isNotNull();
-    assertThat(group.getId()).isEqualTo("management");
-    assertThat(group.getName()).isEqualTo("management");
-  }
-
-  @Test
-  void testFilterByGroupNameLikeMIddleWildCard() {
-    // given
-
-    // when
-    Group group = identityService.createGroupQuery().groupNameLike("man*nt").singleResult();
-
-    // then
-    assertThat(group).isNotNull();
-    assertThat(group.getId()).isEqualTo("management");
-    assertThat(group.getName()).isEqualTo("management");
+      // then
+      assertThat(group).isNotNull();
+      assertThat(group.getId()).isEqualTo(expectedGroupName);
+      assertThat(group.getName()).isEqualTo(expectedGroupName);
   }
 
   @Test
@@ -206,19 +176,6 @@ class LdapGroupQueryTest {
 
     // then
     assertThat(group).isNull();
-  }
-
-  @Test
-  void testFilterByGroupNameLikeConvertFromDbWildcard() {
-    // given
-
-    // when using the SQL wildcard (%) instead of LDAP (*)
-    Group group = identityService.createGroupQuery().groupNameLike("manage%").singleResult();
-
-    // then
-    assertThat(group).isNotNull();
-    assertThat(group.getId()).isEqualTo("management");
-    assertThat(group.getName()).isEqualTo("management");
   }
 
   @Test

@@ -51,7 +51,7 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testTimerRecalculationBasedOnProcessVariable() {
+  void testTimerRecalculationBasedOnProcessVariable() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("timerExpression", "PT10S");

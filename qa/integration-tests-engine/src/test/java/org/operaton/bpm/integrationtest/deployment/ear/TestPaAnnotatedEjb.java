@@ -71,7 +71,7 @@ public class TestPaAnnotatedEjb extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testPaAnnotatedEjb() {
+  void testPaAnnotatedEjb() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process1");
 
     assertThat(processInstance).isNotNull();

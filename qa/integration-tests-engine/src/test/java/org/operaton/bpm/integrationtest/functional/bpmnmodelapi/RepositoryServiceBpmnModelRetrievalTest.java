@@ -45,7 +45,7 @@ public class RepositoryServiceBpmnModelRetrievalTest extends AbstractFoxPlatform
   }
 
   @Test
-  public void shouldReturnBpmnModelInstance() {
+  void shouldReturnBpmnModelInstance() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey(TEST_PROCESS)

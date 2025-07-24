@@ -42,7 +42,7 @@ public class TestDeploymentSource extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
 

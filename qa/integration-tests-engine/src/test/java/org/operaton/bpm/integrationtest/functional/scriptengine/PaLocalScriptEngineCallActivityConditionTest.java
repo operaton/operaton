@@ -69,7 +69,7 @@ public class PaLocalScriptEngineCallActivityConditionTest extends AbstractFoxPla
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldEvaluateCondition() {
+  void shouldEvaluateCondition() {
     // given
     runtimeService.startProcessInstanceByKey("callingProcessScriptConditionalFlow").getId();
 

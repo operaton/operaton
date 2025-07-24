@@ -72,7 +72,7 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBean() {
+  void testResolveBean() {
     // assert that we cannot resolve the bean here:
     assertThat(ProgrammaticBeanLookup.lookup("exampleBean")).isNull();
 
@@ -85,7 +85,7 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBeanFromJobExecutor() {
+  void testResolveBeanFromJobExecutor() {
 
     Assertions.assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
     runtimeService.startProcessInstanceByKey("testResolveBeanFromJobExecutor");
@@ -99,7 +99,7 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveCdiStandaloneProcessEngineConfigBean() {
+  void testResolveCdiStandaloneProcessEngineConfigBean() {
 
     assertThat(ProgrammaticBeanLookup.lookup(CdiStandaloneProcessEngineConfiguration.class)).isNotNull();
 

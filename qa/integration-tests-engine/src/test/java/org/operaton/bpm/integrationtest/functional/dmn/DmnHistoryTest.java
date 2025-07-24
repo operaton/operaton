@@ -46,7 +46,7 @@ public class DmnHistoryTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testHistoricDecisionInstance() {
+  void testHistoricDecisionInstance() {
 
     VariableMap variables = Variables.createVariables().putValue("status", "bronze").putValue("sum", 100);
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);

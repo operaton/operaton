@@ -43,7 +43,7 @@ public class TestWarDeploymentWithoutProcessesXml extends AbstractFoxPlatformInt
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(ProgrammaticBeanLookup.lookup(ProcessEngine.class)).isNotNull();
   }
 

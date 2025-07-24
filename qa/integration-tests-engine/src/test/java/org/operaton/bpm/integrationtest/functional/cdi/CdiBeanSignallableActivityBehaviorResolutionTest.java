@@ -63,7 +63,7 @@ public class CdiBeanSignallableActivityBehaviorResolutionTest extends AbstractFo
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClass() {
+  void testResolveClass() {
     // assert that we cannot resolve the bean here:
     assertThat(ProgrammaticBeanLookup.lookup("exampleSignallableActivityBehaviorBean")).isNull();
 

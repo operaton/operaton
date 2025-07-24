@@ -58,7 +58,7 @@ public class CdiProcessApplicationEventSupportTest extends AbstractFoxPlatformIn
   }
 
   @Test
-  public void testEventListener() {
+  void testEventListener() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     Integer listenerInvocationCount = (Integer) runtimeService.getVariable(processInstance.getId(), ExecutionListenerProcessApplication.LISTENER_INVOCATION_COUNT);

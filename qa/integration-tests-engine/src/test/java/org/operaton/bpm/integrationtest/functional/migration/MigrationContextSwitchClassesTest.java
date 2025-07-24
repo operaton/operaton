@@ -114,7 +114,7 @@ public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegr
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testCallStartListenerInTargetContext() {
+  void testCallStartListenerInTargetContext() {
     // given
     ProcessDefinition sourceDefinition = repositoryService
         .createProcessDefinitionQuery()
@@ -144,7 +144,7 @@ public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegr
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testCallEndListenerInTargetContext() {
+  void testCallEndListenerInTargetContext() {
     // given
     ProcessDefinition sourceDefinition = repositoryService
         .createProcessDefinitionQuery()

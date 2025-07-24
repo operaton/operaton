@@ -73,7 +73,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
 
   @Test
   @OperateOnDeployment("pa")
-  public void testInvokeBean(){
+  void testInvokeBean(){
 
     // this testcase first resolves the Bean synchronously and then from the JobExecutor
 
@@ -93,7 +93,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
   }
 
   @Test
-  public void testMultipleInvocations() {
+  void testMultipleInvocations() {
 
     // this is greater than any Datasource / EJB / Thread Pool size -> make sure all resources are released properly.
     int instances = 100;

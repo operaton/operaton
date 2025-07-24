@@ -43,7 +43,7 @@ public class PaLocalScriptEngineDisabledCacheTest extends AbstractPaLocalScriptE
   }
 
   @Test
-  public void shouldNotCacheScriptEngine() {
+  void shouldNotCacheScriptEngine() {
     AbstractProcessApplication processApplication = (AbstractProcessApplication) getProcessApplication();
     assertThat(processApplication.getScriptEngineForName(SCRIPT_FORMAT, false)).isNotEqualTo(processApplication.getScriptEngineForName(SCRIPT_FORMAT, false));
   }

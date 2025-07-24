@@ -40,7 +40,7 @@ public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrat
   }
 
   @Test
-  public void testProcessApplicationServiceBinding() {
+  void testProcessApplicationServiceBinding() {
     try {
       InitialContext.doLookup(testConstants.getProcessApplicationService());
     } catch (NamingException e) {
@@ -49,7 +49,7 @@ public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrat
   }
 
   @Test
-  public void testProcessEngineServiceBinding() {
+  void testProcessEngineServiceBinding() {
     try {
       InitialContext.doLookup(testConstants.getEngineService());
     } catch (NamingException e) {

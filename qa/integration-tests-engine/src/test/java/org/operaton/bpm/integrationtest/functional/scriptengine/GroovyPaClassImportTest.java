@@ -82,7 +82,7 @@ public class GroovyPaClassImportTest extends AbstractFoxPlatformIntegrationTest 
 
   @Test
   @OperateOnDeployment("pa1")
-  public void shouldSetVariable() {
+  void shouldSetVariable() {
     // first start process 1 (this creates and caches the groovy engine)
     runtimeService.startProcessInstanceByKey("process1").getId();
 

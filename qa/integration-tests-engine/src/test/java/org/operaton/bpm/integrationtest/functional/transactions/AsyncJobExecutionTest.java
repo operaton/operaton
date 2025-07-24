@@ -57,14 +57,14 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
   private RuntimeService runtimeService;
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (ProcessInstance processInstance : runtimeService.createProcessInstanceQuery().list()) {
       runtimeService.deleteProcessInstance(processInstance.getId(), "test ended", true);
     }
   }
 
   @Test
-  public void shouldExecuteAsyncServiceTasks() {
+  void shouldExecuteAsyncServiceTasks() {
     // given
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("serialnumber", "23");
@@ -79,7 +79,7 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void shouldFailJobWithFailingTransactionListener() {
+  void shouldFailJobWithFailingTransactionListener() {
     // given
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 

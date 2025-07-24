@@ -60,7 +60,7 @@ public class TestProcessEnginesXmlFails {
 
   @Test
   @RunAsClient
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     try {
       deployer.deploy("deployment");
       fail("exception expected");

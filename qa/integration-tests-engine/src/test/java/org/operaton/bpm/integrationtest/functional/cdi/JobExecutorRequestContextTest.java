@@ -49,7 +49,7 @@ public class JobExecutorRequestContextTest extends AbstractFoxPlatformIntegratio
 
 
   @Test
-  public void testResolveBean() {
+  void testResolveBean() {
 
     // verifies that @RequestScoped Beans can be resolved
 
@@ -62,7 +62,7 @@ public class JobExecutorRequestContextTest extends AbstractFoxPlatformIntegratio
   }
 
   @Test
-  public void testScoping() {
+  void testScoping() {
 
     // verifies that if the same @RequestScoped Bean is invoked multiple times
     // in the context of the same job, we get the same instance
@@ -89,7 +89,7 @@ public class JobExecutorRequestContextTest extends AbstractFoxPlatformIntegratio
   }
 
   @Test
-  public void testScopingExclusiveJobs() {
+  void testScopingExclusiveJobs() {
 
     // verifies that if the same @RequestScoped Bean is invoked
     // in the context of two subsequent exclusive jobs, we have

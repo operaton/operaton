@@ -42,7 +42,7 @@ public class ElResolveStartFormDataTest extends AbstractFoxPlatformIntegrationTe
   }
 
   @Test
-  public void testStartFormDataWithDefaultValueExpression() {
+  void testStartFormDataWithDefaultValueExpression() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     StartFormData formData = formService.getStartFormData(processDefinitionId);
@@ -53,7 +53,7 @@ public class ElResolveStartFormDataTest extends AbstractFoxPlatformIntegrationTe
   }
 
   @Test
-  public void testStartFormDataWithLabelExpression() {
+  void testStartFormDataWithLabelExpression() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     StartFormData formData = formService.getStartFormData(processDefinitionId);

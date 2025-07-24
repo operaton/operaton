@@ -52,7 +52,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
 
   @Test
   @OperateOnDeployment("pa")
-  public void testScopingSFSB() {
+  void testScopingSFSB() {
 
     // verifies that if the same @RequestScoped SFSB Bean is invoked multiple times
     // in the context of the same job, we get the same instance
@@ -79,7 +79,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
   }
 
   @Test
-  public void testMultipleInvocations() {
+  void testMultipleInvocations() {
 
     // this is greater than any Datasource- / EJB- / Thread-Pool size -> make sure all resources are released properly.
     int instances = 100;

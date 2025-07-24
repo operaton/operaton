@@ -43,7 +43,7 @@ public class SpringServletPATimerStartEventExpressionTest extends AbstractFoxPla
   }
 
   @Test
-  public void shouldStartProcessInstance() {
+  void shouldStartProcessInstance() {
     assertThatCode(() -> runtimeService.startProcessInstanceByKey("timer-start-event-process"))
       .doesNotThrowAnyException();
   }

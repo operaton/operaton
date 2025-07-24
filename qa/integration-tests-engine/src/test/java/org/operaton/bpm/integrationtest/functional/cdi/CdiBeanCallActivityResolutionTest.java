@@ -74,7 +74,7 @@ public class CdiBeanCallActivityResolutionTest extends AbstractFoxPlatformIntegr
   protected ProcessInstance processInstance;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (processInstance != null) {
       runtimeService.deleteProcessInstance(processInstance.getId(), null);
     }
@@ -82,7 +82,7 @@ public class CdiBeanCallActivityResolutionTest extends AbstractFoxPlatformIntegr
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBeanInBpmnProcess() {
+  void testResolveBeanInBpmnProcess() {
     processInstance = runtimeService.startProcessInstanceByKey("callingProcess");
 
     Task calledProcessTask = taskService.createTaskQuery().singleResult();
@@ -100,7 +100,7 @@ public class CdiBeanCallActivityResolutionTest extends AbstractFoxPlatformIntegr
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBeanInBpmnProcessConditionalFlow() {
+  void testResolveBeanInBpmnProcessConditionalFlow() {
     // given
     processInstance = runtimeService.startProcessInstanceByKey("callingProcessConditionalFlow",
         Variables.createVariables().putValue("takeFlow", true));

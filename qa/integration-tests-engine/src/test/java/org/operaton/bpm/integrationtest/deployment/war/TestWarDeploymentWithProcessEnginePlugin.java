@@ -58,7 +58,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
   }
 
   @Test
-  public void testPAGroovyProcessEnginePlugin() {
+  void testPAGroovyProcessEnginePlugin() {
     ProcessEngine groovyEngine = processEngineService.getProcessEngine("groovy");
     assertThat(groovyEngine).isNotNull();
 
@@ -69,7 +69,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
   }
 
   @Test
-  public void testPAGroovyAsyncProcessEnginePlugin() {
+  void testPAGroovyAsyncProcessEnginePlugin() {
     ProcessEngine groovyEngine = processEngineService.getProcessEngine("groovy");
     assertThat(groovyEngine).isNotNull();
 

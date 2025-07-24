@@ -59,7 +59,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
   private RuntimeService runtimeService;
 
   @Test
-  public void testProcessFailure() throws Exception {
+  void testProcessFailure() throws Exception {
 
     /* if we start a transaction here and then start
      * a process instance which synchronously invokes a java delegate,
@@ -91,7 +91,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
   }
 
   @Test
-  public void testApplicationFailure() throws Exception {
+  void testApplicationFailure() throws Exception {
 
     /* if we start a transaction here and then successfully start
      * a process instance, if our transaction is rolled back,
@@ -127,7 +127,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
 
 
   @Test
-  public void testTxSuccess() throws Exception {
+  void testTxSuccess() throws Exception {
 
     try {
       utx.begin();

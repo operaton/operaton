@@ -72,7 +72,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldSwitchContextWhenUsingDecisionService() {
+  void shouldSwitchContextWhenUsingDecisionService() {
     DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableByKey("decision", Variables.createVariables());
     assertEquals("ok", decisionResult.getFirstResult().getFirstEntry());
   }
@@ -80,7 +80,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
   @Test
   @SuppressWarnings("unchecked")
   @OperateOnDeployment("clientDeployment")
-  public void shouldSwitchContextWhenCallingFromBpmn() {
+  void shouldSwitchContextWhenCallingFromBpmn() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     VariableInstance decisionResult = runtimeService.createVariableInstanceQuery()
@@ -92,7 +92,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldSwitchContextWhenUsingDecisionServiceAfterRedeployment() {
+  void shouldSwitchContextWhenUsingDecisionServiceAfterRedeployment() {
 
     // given
     List<org.operaton.bpm.engine.repository.Deployment> deployments = repositoryService.createDeploymentQuery()
@@ -131,7 +131,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
   @Test
   @SuppressWarnings("unchecked")
   @OperateOnDeployment("clientDeployment")
-  public void shouldSwitchContextWhenCallingFromBpmnAfterRedeployment() {
+  void shouldSwitchContextWhenCallingFromBpmnAfterRedeployment() {
     // given
     List<org.operaton.bpm.engine.repository.Deployment> deployments = repositoryService.createDeploymentQuery()
         .list();

@@ -58,7 +58,7 @@ public class RedeployProcessClassloadingTest extends AbstractFoxPlatformIntegrat
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testRedeployClassloading() {
+  void testRedeployClassloading() {
     // given
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 

@@ -83,7 +83,7 @@ public class SpringPAExpressionResolvingTest extends AbstractFoxPlatformIntegrat
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBean() {
+  void testResolveBean() {
     Assertions.assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
     // but the process engine can:
     runtimeService.startProcessInstanceByKey("testResolveBean");
@@ -93,7 +93,7 @@ public class SpringPAExpressionResolvingTest extends AbstractFoxPlatformIntegrat
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBeanFromJobExecutor() {
+  void testResolveBeanFromJobExecutor() {
 
     Assertions.assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
     runtimeService.startProcessInstanceByKey("testResolveBeanFromJobExecutor");

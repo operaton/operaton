@@ -42,7 +42,7 @@ public class SignalEventCatchBoundaryWithVariablesTest extends AbstractFoxPlatfo
   }
 
   @Test
-  public void testSignalCatchBoundaryWithVariables() {
+  void testSignalCatchBoundaryWithVariables() {
     HashMap<String, Object> variables1 = new HashMap<>();
     variables1.put("processName", "catchSignal");
     ProcessInstance piCatchSignal = runtimeService.startProcessInstanceByKey("catchSignal", variables1);

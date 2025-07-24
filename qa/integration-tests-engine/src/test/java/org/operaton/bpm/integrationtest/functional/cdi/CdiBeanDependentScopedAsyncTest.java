@@ -60,7 +60,7 @@ public class CdiBeanDependentScopedAsyncTest extends AbstractFoxPlatformIntegrat
 
   @BeforeEach
   @OperateOnDeployment("clientDeployment")
-  public void setup() {
+  void setup() {
     DependentScopedBean.reset();
 
     Assertions.assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
@@ -75,7 +75,7 @@ public class CdiBeanDependentScopedAsyncTest extends AbstractFoxPlatformIntegrat
   }
 
   @Test
-  public void testResolveBeanFromJobExecutor() {
+  void testResolveBeanFromJobExecutor() {
     Assertions.assertEquals(Arrays.asList("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"), DependentScopedBean.lifecycle);
   }
 

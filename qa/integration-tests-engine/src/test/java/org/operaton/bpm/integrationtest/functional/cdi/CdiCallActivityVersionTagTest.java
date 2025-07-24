@@ -57,7 +57,7 @@ public class CdiCallActivityVersionTagTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testStartInstanceWithBeanCondition() {
+  void testStartInstanceWithBeanCondition() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     // then

@@ -69,7 +69,7 @@ public class CdiBeanCaseTaskResolutionTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBeanInCmmnCase() {
+  void testResolveBeanInCmmnCase() {
     CaseInstance caseInstance = caseService.withCaseDefinitionByKey("callingCase")
         .create();
 

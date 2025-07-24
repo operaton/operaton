@@ -37,7 +37,7 @@ public class TestWarDeploymentWithDmn extends AbstractFoxPlatformIntegrationTest
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createDecisionDefinitionQuery()

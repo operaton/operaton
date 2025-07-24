@@ -37,7 +37,7 @@ public class SpinJsonPathTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void shouldEvaluateJsonPath() {
+  void shouldEvaluateJsonPath() {
     // given
     String json = "{ " +
         "   \"foo\":[ " +

@@ -46,7 +46,7 @@ public class TestManagedDomain_JBOSS {
   }
 
   @Test
-  public void shouldBeAbleToLookupDefaultProcessEngine() {
+  void shouldBeAbleToLookupDefaultProcessEngine() {
 
     assertThatCode(() -> InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default"))
       .as("Expected to lookup default process engine")

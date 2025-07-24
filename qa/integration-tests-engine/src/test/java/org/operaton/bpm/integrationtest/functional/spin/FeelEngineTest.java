@@ -64,7 +64,7 @@ public class FeelEngineTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void shouldExecuteProcessWithJSONVariableCorrectly() {
+  void shouldExecuteProcessWithJSONVariableCorrectly() {
     // given
     VariableMap varMap = createSpinParsedVariableInMap("JSON");
 
@@ -82,7 +82,7 @@ public class FeelEngineTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void shouldExecuteProcessWithXMLVariableCorrectly() {
+  void shouldExecuteProcessWithXMLVariableCorrectly() {
     // given
     VariableMap varMap = createSpinParsedVariableInMap("XML");
 
@@ -100,7 +100,7 @@ public class FeelEngineTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testSpinIntegration() {
+  void testSpinIntegration() {
     // Accessing SPIN object from FEEL requires the org.operaton.spin.plugin.impl.feel.integration.SpinValueMapper SPI
     // given
     VariableMap variablesLarge = Variables.createVariables().putValue("amount", Spin.JSON("{\"value\": 25}"));
@@ -122,7 +122,7 @@ public class FeelEngineTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testFeelEngineComplexContext() {
+  void testFeelEngineComplexContext() {
     // Mapping complex FEEL context into Java requires the org.operaton.feel.impl.JavaValueMapper SPI to be registered
     // when
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("feelComplexContextProcess");

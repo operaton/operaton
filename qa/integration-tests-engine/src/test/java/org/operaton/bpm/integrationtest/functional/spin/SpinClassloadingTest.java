@@ -60,7 +60,7 @@ public class SpinClassloadingTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("client-app")
-  public void testDeserialization() {
+  void testDeserialization() {
 
     String serializedValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?><xmlserializable><property>value</property></xmlserializable>";
 

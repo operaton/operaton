@@ -75,7 +75,7 @@ public class PaDataFormatConfiguratorFailingTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     try {
       deployer.deploy("deployment");
     } catch (Exception e) {
@@ -88,7 +88,7 @@ public class PaDataFormatConfiguratorFailingTest {
 
   @Test
   @OperateOnDeployment("checkDeployment")
-  public void testNoProcessApplicationIsDeployed() {
+  void testNoProcessApplicationIsDeployed() {
     Set<String> registeredPAs = BpmPlatform.getProcessApplicationService().getProcessApplicationNames();
     assertThat(registeredPAs).isEmpty();
   }

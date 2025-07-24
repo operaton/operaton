@@ -49,7 +49,7 @@ public class SingletonBeanDelegateTest extends AbstractFoxPlatformIntegrationTes
 
 
   @Test
-  public void testBeanResolution() {
+  void testBeanResolution() {
 
     // this testcase first resolves the Singleton synchronouly and then from the JobExecutor
 
@@ -71,7 +71,7 @@ public class SingletonBeanDelegateTest extends AbstractFoxPlatformIntegrationTes
 
 
   @Test
-  public void testBeanResolutionfromClient() {
+  void testBeanResolutionfromClient() {
 
     // this testcase invokes a CDI bean that injects the EJB
 
@@ -91,7 +91,7 @@ public class SingletonBeanDelegateTest extends AbstractFoxPlatformIntegrationTes
   }
 
   @Test
-  public void testMultipleInvocations() {
+  void testMultipleInvocations() {
 
     // this is greater than any Datasource- / EJB- / Thread-Pool size -> make sure all resources are released properly.
     int instances = 100;

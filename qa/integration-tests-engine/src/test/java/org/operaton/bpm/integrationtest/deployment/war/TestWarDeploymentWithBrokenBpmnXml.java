@@ -58,7 +58,7 @@ public class TestWarDeploymentWithBrokenBpmnXml {
   }
 
   @Test
-  public void testXmlInvalid() {
+  void testXmlInvalid() {
     try {
       deployer.deploy(DEPLOYMENT);
       fail("exception expected");

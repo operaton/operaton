@@ -114,7 +114,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment4 extends AbstractFo
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
 
     assertProcessNotDeployed("process-0");
     assertProcessDeployed   ("process-1", "pa1");

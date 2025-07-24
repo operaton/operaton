@@ -54,14 +54,14 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
   private RuntimeService runtimeService;
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (ProcessInstance processInstance : runtimeService.createProcessInstanceQuery().list()) {
       runtimeService.deleteProcessInstance(processInstance.getId(), "test ended", true);
     }
   }
 
   @Test
-  public void shouldRollbackTransactionInServiceTask() {
+  void shouldRollbackTransactionInServiceTask() {
     // given
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
@@ -80,7 +80,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
   }
 
   @Test
-  public void shouldRollbackTransactionInServiceTaskWithCustomRetryCycle() {
+  void shouldRollbackTransactionInServiceTaskWithCustomRetryCycle() {
     // given
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 

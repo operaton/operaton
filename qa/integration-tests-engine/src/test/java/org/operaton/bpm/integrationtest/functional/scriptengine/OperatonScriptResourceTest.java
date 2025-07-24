@@ -44,7 +44,7 @@ public class OperatonScriptResourceTest extends AbstractFoxPlatformIntegrationTe
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
 
     // the process can successfully be executed
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");

@@ -47,7 +47,7 @@ public class SLSBExceptionInDelegateTest extends AbstractFoxPlatformIntegrationT
   }
 
   @Test
-  public void testOriginalExceptionFromEjbReachesCaller() {
+  void testOriginalExceptionFromEjbReachesCaller() {
       runtimeService.startProcessInstanceByKey("callProcessWithExceptionFromEjb");
       Job job = managementService.createJobQuery().processDefinitionKey("testProcessEjbWithException").singleResult();
       managementService.setJobRetries(job.getId(), 1);

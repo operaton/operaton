@@ -72,7 +72,7 @@ public class TestJavaDelegateResolution_ClientAsLibInWebModule extends AbstractF
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClass() {
+  void testResolveClass() {
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.ExampleDelegate");
@@ -87,7 +87,7 @@ public class TestJavaDelegateResolution_ClientAsLibInWebModule extends AbstractF
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClassFromJobExecutor() {
+  void testResolveClassFromJobExecutor() {
 
     runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 

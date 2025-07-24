@@ -41,7 +41,7 @@ public class TestWarDeploymentWithoutDiagram extends AbstractFoxPlatformIntegrat
   }
 
   @Test
-  public void testDeployProcessArchiveDiagramCreationDisabled() throws IOException {
+  void testDeployProcessArchiveDiagramCreationDisabled() throws IOException {
     String expectedDiagramResource = "/org/operaton/bpm/integrationtest/testDeployProcessArchive.png";
     String processDefinitionKey = "testDeployProcessArchive";
     TestHelper.assertDiagramIsDeployed(false, getClass(), expectedDiagramResource, processDefinitionKey);

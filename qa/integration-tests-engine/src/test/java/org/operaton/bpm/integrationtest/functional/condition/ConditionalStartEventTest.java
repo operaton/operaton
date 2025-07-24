@@ -44,7 +44,7 @@ public class ConditionalStartEventTest extends AbstractFoxPlatformIntegrationTes
   }
 
   @Test
-  public void testStartInstanceWithBeanCondition() {
+  void testStartInstanceWithBeanCondition() {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
     assertEquals(1, eventSubscriptions.size());

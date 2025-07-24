@@ -47,7 +47,7 @@ public class SerializableVariableTest extends AbstractFoxPlatformIntegrationTest
   }
 
   @Test
-  public void testResolveClass() {
+  void testResolveClass() {
 
     String pid = runtimeService.startProcessInstanceByKey("testResolveVariable").getId();
 

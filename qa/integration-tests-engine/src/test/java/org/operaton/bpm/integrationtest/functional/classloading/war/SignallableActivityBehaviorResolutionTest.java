@@ -65,7 +65,7 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClass() {
+  void testResolveClass() {
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleSignallableActivityBehavior");
@@ -84,7 +84,7 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClassFromJobExecutor() {
+  void testResolveClassFromJobExecutor() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 

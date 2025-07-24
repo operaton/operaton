@@ -42,7 +42,7 @@ public class ProcessEngineServiceTest extends AbstractFoxPlatformIntegrationTest
 
   @Test
   @OperateOnDeployment("test1")
-  public void testNonExistingEngineRetrieval() {
+  void testNonExistingEngineRetrieval() {
 
     ProcessEngineService engineService = BpmPlatform.getProcessEngineService();
     ProcessEngine engine = engineService.getProcessEngine("aNonExistingEngineName");

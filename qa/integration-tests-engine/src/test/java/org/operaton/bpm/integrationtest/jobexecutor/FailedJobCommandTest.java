@@ -41,7 +41,7 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testJobRetriesDecremented() {
+  void testJobRetriesDecremented() {
     runtimeService.startProcessInstanceByKey("theProcess");
     Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
@@ -57,7 +57,7 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testJobRetriesDecremented_multiple() {
+  void testJobRetriesDecremented_multiple() {
 
     for(int i = 0; i < 50; i++) {
       runtimeService.startProcessInstanceByKey("theProcess");

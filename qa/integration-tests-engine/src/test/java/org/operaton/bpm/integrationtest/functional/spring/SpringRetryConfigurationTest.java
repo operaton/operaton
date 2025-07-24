@@ -89,7 +89,7 @@ public class SpringRetryConfigurationTest extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveRetryConfigBean() {
+  void testResolveRetryConfigBean() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testRetry");
 

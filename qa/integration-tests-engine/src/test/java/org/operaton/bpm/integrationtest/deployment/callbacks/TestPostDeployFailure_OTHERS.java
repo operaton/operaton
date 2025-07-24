@@ -46,7 +46,7 @@ public class TestPostDeployFailure_OTHERS extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("checker")
-  public void test() {
+  void test() {
 
     // make sure the deployment of the first app was rolled back
 

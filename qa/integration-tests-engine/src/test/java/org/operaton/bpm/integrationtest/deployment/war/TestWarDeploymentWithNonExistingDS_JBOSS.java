@@ -75,7 +75,7 @@ public class TestWarDeploymentWithNonExistingDS_JBOSS {
 
   @Test
   @RunAsClient
-  public void testDeploymentFails(){
+  void testDeploymentFails(){
 
     try {
       deployer.deploy(DEPLOYMENT_WITH_EJB_PA);

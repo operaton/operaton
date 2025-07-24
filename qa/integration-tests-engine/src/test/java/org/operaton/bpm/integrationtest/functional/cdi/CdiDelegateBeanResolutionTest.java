@@ -73,7 +73,7 @@ public class CdiDelegateBeanResolutionTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBean() {
+  void testResolveBean() {
     assertThatCode(() -> ProgrammaticBeanLookup.lookup("exampleDelegateBean"))
       .as("Expected to lookup bean")
       .doesNotThrowAnyException();
@@ -90,7 +90,7 @@ public class CdiDelegateBeanResolutionTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBeanFromJobExecutor() {
+  void testResolveBeanFromJobExecutor() {
     var processInstanceQuery = runtimeService
             .createProcessInstanceQuery()
             .processDefinitionKey("testResolveBeanFromJobExecutor");

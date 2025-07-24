@@ -88,7 +88,7 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
   }
 
   @Test
-  public void testMultipleClasspathRoots() {
+  void testMultipleClasspathRoots() {
     ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
     assertThat(processEngine).isNotNull();
 

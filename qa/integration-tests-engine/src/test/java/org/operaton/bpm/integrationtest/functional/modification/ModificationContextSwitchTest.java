@@ -59,7 +59,7 @@ public class ModificationContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testModificationClassloading() {
+  void testModificationClassloading() {
     // given
     // process instance is in state "waitState"
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();

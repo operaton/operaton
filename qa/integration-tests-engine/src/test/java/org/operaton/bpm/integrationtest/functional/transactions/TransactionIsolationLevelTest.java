@@ -49,7 +49,7 @@ public class TransactionIsolationLevelTest extends AbstractFoxPlatformIntegratio
   private ProcessEngine processEngine;
 
   @Test
-  public void testTransactionIsolationLevelOnConnection() {
+  void testTransactionIsolationLevelOnConnection() {
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
     SqlSession sqlSession = processEngineConfiguration.getDbSqlSessionFactory()
         .getSqlSessionFactory()

@@ -52,7 +52,7 @@ public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformInteg
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createProcessDefinitionQuery()

@@ -48,17 +48,17 @@ public class PaConnectSupportTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void httpConnectorShouldBeAvailable() {
+  void httpConnectorShouldBeAvailable() {
     assertThat(Connectors.<Connector<?>>http()).isNotNull();
   }
 
   @Test
-  public void soapConnectorShouldBeAvailable() {
+  void soapConnectorShouldBeAvailable() {
     assertThat(Connectors.<Connector<?>>soap()).isNotNull();
   }
 
   @Test
-  public void connectorServiceTask() {
+  void connectorServiceTask() {
     TestConnector connector = new TestConnector();
     TestConnectors.registerConnector(connector);
 

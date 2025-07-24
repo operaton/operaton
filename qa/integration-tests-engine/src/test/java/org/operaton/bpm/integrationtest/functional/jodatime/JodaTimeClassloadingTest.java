@@ -57,7 +57,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
   }
 
   @Test
-  public void testTimeExpressionComplete() {
+  void testTimeExpressionComplete() {
     Date dt = new Date();
 
     Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dt));
@@ -65,7 +65,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
   }
 
   @Test
-  public void testTimeExpressionWithoutSeconds() {
+  void testTimeExpressionWithoutSeconds() {
     Date dt = new Date();
 
     Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dt));
@@ -73,7 +73,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
   }
 
   @Test
-  public void testTimeExpressionWithoutMinutes() {
+  void testTimeExpressionWithoutMinutes() {
     Date dt = new Date();
 
     Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(new Date()));
@@ -81,7 +81,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
   }
 
   @Test
-  public void testTimeExpressionWithoutTime() {
+  void testTimeExpressionWithoutTime() {
     Date dt = new Date();
 
     Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -89,7 +89,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
   }
 
   @Test
-  public void testTimeExpressionWithoutDay() {
+  void testTimeExpressionWithoutDay() {
     Date dt = new Date();
 
     Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM").format(new Date()));
@@ -97,7 +97,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
   }
 
   @Test
-  public void testTimeExpressionWithoutMonth() {
+  void testTimeExpressionWithoutMonth() {
     Date dt = new Date();
 
     Date dueDate = testExpression(new SimpleDateFormat("yyyy").format(new Date()));

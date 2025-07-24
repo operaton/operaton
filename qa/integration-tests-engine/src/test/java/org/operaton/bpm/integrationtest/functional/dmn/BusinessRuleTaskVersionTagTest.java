@@ -56,7 +56,7 @@ public class BusinessRuleTaskVersionTagTest extends AbstractFoxPlatformIntegrati
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testStartInstanceWithBeanCondition() {
+  void testStartInstanceWithBeanCondition() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     assertEquals("okay", runtimeService.getVariable(processInstance.getId(), "result"));

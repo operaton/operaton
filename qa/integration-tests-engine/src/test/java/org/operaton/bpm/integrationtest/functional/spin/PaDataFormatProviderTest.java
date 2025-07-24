@@ -67,7 +67,7 @@ public class PaDataFormatProviderTest extends AbstractFoxPlatformIntegrationTest
    *   by using the PA-local serializer
    */
   @Test
-  public void customFormatCanBeUsedForVariableSerialization() {
+  void customFormatCanBeUsedForVariableSerialization() {
     final ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess",
         Variables.createVariables()
           .putValue("serializedObject",

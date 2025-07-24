@@ -44,7 +44,7 @@ public class TestProcessEngineJndiBinding_JBOSS extends AbstractFoxPlatformInteg
   }
 
   @Test
-  public void testDefaultProcessEngineBindingCreated() {
+  void testDefaultProcessEngineBindingCreated() {
 
     try {
       ProcessEngine processEngine = InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default");

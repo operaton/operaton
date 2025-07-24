@@ -49,7 +49,7 @@ public class TestWarDeploymentCustomPAName extends AbstractFoxPlatformIntegratio
   }
 
   @Test
-  public void testProcessApplicationName() {
+  void testProcessApplicationName() {
     Set<String> paNames = BpmPlatform.getProcessApplicationService().getProcessApplicationNames();
 
     assertThat(paNames).hasSize(1).contains(CustomNameServletPA.NAME);

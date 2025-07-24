@@ -55,7 +55,7 @@ public class ProcessApplicationExecutionListenerTest extends AbstractFoxPlatform
   }
 
   @Test
-  public void testExecutionListener() {
+  void testExecutionListener() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     Integer listenerInvocationCount = (Integer) runtimeService.getVariable(processInstance.getId(), ExecutionListenerProcessApplication.LISTENER_INVOCATION_COUNT);

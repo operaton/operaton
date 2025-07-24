@@ -43,7 +43,7 @@ public class TimerExecutionTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testProcessExecution() {
+  void testProcessExecution() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("TimerExecutionProcess");
 

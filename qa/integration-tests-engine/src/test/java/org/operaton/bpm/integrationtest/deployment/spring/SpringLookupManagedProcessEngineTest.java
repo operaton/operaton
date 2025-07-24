@@ -49,7 +49,7 @@ public class SpringLookupManagedProcessEngineTest extends AbstractFoxPlatformInt
 
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
   }
 

@@ -84,7 +84,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldDeserializeObjectVariable_Async() {
+  void shouldDeserializeObjectVariable_Async() {
     // given
     ProcessDefinition sourceDefinition = repositoryService
         .createProcessDefinitionQuery()
@@ -134,7 +134,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldDeserializeObjectVariable_Sync() {
+  void shouldDeserializeObjectVariable_Sync() {
     // given
     ProcessDefinition sourceDefinition = repositoryService
         .createProcessDefinitionQuery()

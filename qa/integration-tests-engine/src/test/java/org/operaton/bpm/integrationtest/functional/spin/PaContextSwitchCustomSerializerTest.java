@@ -78,7 +78,7 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
    */
   @Test
   @OperateOnDeployment("pa3")
-  public void test() throws Exception {
+  void test() throws Exception {
 
     final ProcessInstance processInstance = withProcessApplicationContext(() -> {
       final XmlSerializable variable = new XmlSerializable();

@@ -60,7 +60,7 @@ public class PaDataFormatAndPostDeployTest extends AbstractFoxPlatformIntegratio
   }
 
   @Test
-  public void shouldDeployApp() {
+  void shouldDeployApp() {
     assertThat(BpmPlatform.getProcessApplicationService()
       .getProcessApplicationInfo(PaDataformatAndPostDeployApp.PA_NAME)).isNotNull();
   }

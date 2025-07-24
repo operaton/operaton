@@ -76,7 +76,7 @@ public class SetVariablesAsyncTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldDeserializeObjectVariable() {
+  void shouldDeserializeObjectVariable() {
     // given
     ProcessDefinition processDefinition = repositoryService
         .createProcessDefinitionQuery()

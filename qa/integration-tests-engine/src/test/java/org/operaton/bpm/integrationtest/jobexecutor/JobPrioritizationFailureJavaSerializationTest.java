@@ -62,7 +62,7 @@ public class JobPrioritizationFailureJavaSerializationTest extends AbstractFoxPl
   public static final String PRIORITY_BEAN_INSTANCE_FILE = "priorityBean.instance";
 
   @BeforeEach
-  public void setEngines() {
+  void setEngines() {
     ProcessEngineService engineService = BpmPlatform.getProcessEngineService();
     engine1 = engineService.getProcessEngine("engine1");
 
@@ -94,7 +94,7 @@ public class JobPrioritizationFailureJavaSerializationTest extends AbstractFoxPl
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (processInstance != null) {
       engine1.getRuntimeService().deleteProcessInstance(processInstance.getId(), "");
     }
@@ -103,7 +103,7 @@ public class JobPrioritizationFailureJavaSerializationTest extends AbstractFoxPl
 
   @Test
   @OperateOnDeployment("dummy-client")
-  public void testGracefulDegradationOnMissingBean() {
+  void testGracefulDegradationOnMissingBean() {
     // when
     processInstance = engine1.getRuntimeService().startProcessInstanceByKey("priorityProcess");
 
@@ -114,7 +114,7 @@ public class JobPrioritizationFailureJavaSerializationTest extends AbstractFoxPl
 
   @Test
   @OperateOnDeployment("dummy-client")
-  public void testGracefulDegradationOnMissingClassJava() {
+  void testGracefulDegradationOnMissingClassJava() {
     // given
     byte[] serializedPriorityBean = readByteArrayFromClasspath(PRIORITY_BEAN_INSTANCE_FILE);
     String encodedPriorityBean = StringUtil.fromBytes(Base64.getEncoder().encode(serializedPriorityBean), processEngine);

@@ -48,7 +48,7 @@ public class TestProcessEnginesXmlInLibrary extends AbstractFoxPlatformIntegrati
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngineService.getProcessEngine("engine1")).isNotNull();
   }
 

@@ -149,7 +149,7 @@ public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testResourceName() {
+  void testResourceName() {
     ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
     assertThat(processEngine).isNotNull();
 

@@ -47,7 +47,7 @@ public class ElResolverLookupTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("pa")
-  public void testNullElResolverIsIgnored() {
+  void testNullElResolverIsIgnored() {
     // The expression should be resolved correctly although the NullElResolver
     // is present
     runtimeService.startProcessInstanceByKey("elServiceTaskProcess");

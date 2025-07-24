@@ -52,7 +52,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
   public static final String PRIORITY_BEAN_INSTANCE_FILE = "priorityBean.instance";
 
   @BeforeEach
-  public void setEngines() {
+  void setEngines() {
 
     // unregister process application so that context switch cannot be performed
     unregisterProcessApplication();
@@ -79,7 +79,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (processInstance != null) {
       runtimeService.deleteProcessInstance(processInstance.getId(), "");
     }
@@ -88,7 +88,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("dummy-client")
-  public void testGracefulDegradationOnMissingBean() {
+  void testGracefulDegradationOnMissingBean() {
     // when
     processInstance = runtimeService.startProcessInstanceByKey("priorityProcess");
 
@@ -99,7 +99,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("dummy-client")
-  public void testGracefulDegradationOnMissingClassSpinJson() {
+  void testGracefulDegradationOnMissingClassSpinJson() {
     // given
     Map<String, Object> variables = Variables.createVariables().putValue(
         "priorityBean",
@@ -119,7 +119,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("dummy-client")
-  public void testGracefulDegradationOnMissingClassSpinXml() {
+  void testGracefulDegradationOnMissingClassSpinXml() {
     // given
     Map<String, Object> variables = Variables.createVariables().putValue(
         "priorityBean",

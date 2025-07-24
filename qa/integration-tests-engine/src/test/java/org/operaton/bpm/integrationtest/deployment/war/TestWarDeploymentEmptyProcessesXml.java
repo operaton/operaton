@@ -47,7 +47,7 @@ public class TestWarDeploymentEmptyProcessesXml extends AbstractFoxPlatformInteg
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
 

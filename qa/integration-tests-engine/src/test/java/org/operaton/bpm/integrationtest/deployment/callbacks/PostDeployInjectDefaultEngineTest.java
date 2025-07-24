@@ -47,7 +47,7 @@ public class PostDeployInjectDefaultEngineTest {
   }
 
   @Test
-  public void test() {
+  void test() {
     assertThat(PostDeployInjectApp.processEngine).as("processEngine must be injected").isNotNull();
     assertThat(PostDeployInjectApp.processApplicationInfo).as("processApplicationInfo must be injected").isNotNull();
 

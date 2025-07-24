@@ -55,7 +55,7 @@ public class DelegationCodeBpmnModelRetrievalTest extends AbstractFoxPlatformInt
   }
 
   @Test
-  public void shouldReturnBpmnModelInstance() {
+  void shouldReturnBpmnModelInstance() {
 
     runtimeService.startProcessInstanceByKey(TEST_PROCESS);
 

@@ -47,7 +47,7 @@ public class Slf4jClassloadingTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void shouldNotUseNopLoggerFactory() {
+  void shouldNotUseNopLoggerFactory() {
     ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
 
     // verify that a SLF4J backend is used which is not the NOP logger
@@ -59,7 +59,7 @@ public class Slf4jClassloadingTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void shouldBeAbleToLogMessageWithFormatParameters() {
+  void shouldBeAbleToLogMessageWithFormatParameters() {
     TestLogger logger = TestLogger.INSTANCE;
 
     // verify that we can use different formatting methods

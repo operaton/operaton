@@ -60,7 +60,7 @@ public class CdiRetryConfigurationTest extends AbstractFoxPlatformIntegrationTes
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBean() {
+  void testResolveBean() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testRetry");
 

@@ -65,7 +65,7 @@ public class ClassloadingByJobPriorityTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("engineWithPriorityJobAcquisition")
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     // given
     ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl) processEngineService
                                                        .getProcessEngine("engineWithJobPriority")

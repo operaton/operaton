@@ -81,7 +81,7 @@ public class JobExecutorRequestContextLocalInvocationTest extends AbstractFoxPla
 
   @Test
   @OperateOnDeployment("pa")
-  public void testRequestContextPropagationEjbLocal() {
+  void testRequestContextPropagationEjbLocal() {
 
     // This fails with  WELD-001303 No active contexts for scope type jakarta.enterprise.context.RequestScoped as well
 

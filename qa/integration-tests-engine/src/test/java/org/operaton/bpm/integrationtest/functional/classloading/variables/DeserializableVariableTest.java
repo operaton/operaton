@@ -68,7 +68,7 @@ public class DeserializableVariableTest extends AbstractFoxPlatformIntegrationTe
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testVariableDeserializationOnProcessApplicationRestart() {
+  void testVariableDeserializationOnProcessApplicationRestart() {
     // given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testDeserializeVariable");
 

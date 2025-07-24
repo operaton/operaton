@@ -78,7 +78,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testNoWaitState() {
+  void testNoWaitState() {
 
     // this test makes sure the delegate invoked by the called process can be resolved (context switch necessary).
 
@@ -105,7 +105,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testMainSyncCalledSync() {
+  void testMainSyncCalledSync() {
 
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("calledElement", "calledProcessSync");
@@ -131,7 +131,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testMainASyncCalledSync() {
+  void testMainASyncCalledSync() {
 
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("calledElement", "calledProcessSync");
@@ -159,7 +159,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testMainASyncBeforeCalledSync() {
+  void testMainASyncBeforeCalledSync() {
 
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("calledElement", "calledProcessSync");
@@ -187,7 +187,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testMainASyncAfterCalledSync() {
+  void testMainASyncAfterCalledSync() {
 
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("calledElement", "calledProcessSync");
@@ -217,7 +217,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testMainSyncCalledASync() {
+  void testMainSyncCalledASync() {
 
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("calledElement", "calledProcessASync");
@@ -249,7 +249,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testMainASyncCalledASync() {
+  void testMainASyncCalledASync() {
 
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("calledElement", "calledProcessASync");
@@ -277,7 +277,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testMainASyncBeforeCalledASync() {
+  void testMainASyncBeforeCalledASync() {
 
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("calledElement", "calledProcessASync");
@@ -305,7 +305,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testMainASyncAfterCalledASync() {
+  void testMainASyncAfterCalledASync() {
 
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("calledElement", "calledProcessASync");

@@ -62,7 +62,7 @@ public class JobPrioritizationDuringDeploymentTest extends AbstractFoxPlatformIn
 
   @Test
   @Order(1)
-  public void testPriorityOnTimerStartEvent() {
+  void testPriorityOnTimerStartEvent() {
     // when
     try {
       deployer.deploy("timerStart");
@@ -76,7 +76,7 @@ public class JobPrioritizationDuringDeploymentTest extends AbstractFoxPlatformIn
   @Test
   @OperateOnDeployment("timerStart")
   @Order(2)
-  public void testAssertPriority() {
+  void testAssertPriority() {
 
     // then the timer start event job has the priority resolved from the bean
     Job job = managementService.createJobQuery().activityId("timerStart").singleResult();

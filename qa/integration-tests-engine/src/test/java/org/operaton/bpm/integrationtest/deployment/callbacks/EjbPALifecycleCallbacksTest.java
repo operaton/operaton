@@ -48,7 +48,7 @@ public class EjbPALifecycleCallbacksTest extends AbstractFoxPlatformIntegrationT
 
   @Test
   @SuppressWarnings("java:S2699")
-  public void testPaLifecycleCallbacks() {
+  void testPaLifecycleCallbacks() {
     // if we get here, everything is all right :)
   }
 

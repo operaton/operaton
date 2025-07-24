@@ -61,7 +61,7 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveCaseExecutionListenerClass() {
+  void testResolveCaseExecutionListenerClass() {
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleCaseExecutionListener");

@@ -50,14 +50,14 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (processInstance != null) {
       runtimeService.deleteProcessInstance(processInstance.getId(), "");
     }
   }
 
   @Test
-  public void testPriorityOnProcessElement() {
+  void testPriorityOnProcessElement() {
     // given
     processInstance = runtimeService.startProcessInstanceByKey("priorityProcess");
 
@@ -69,7 +69,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testPriorityOnProcessStart() {
+  void testPriorityOnProcessStart() {
 
     // given
     processInstance = runtimeService.startProcessInstanceByKey("serviceTaskProcess");
@@ -81,7 +81,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testPriorityOnModification() {
+  void testPriorityOnModification() {
 
     // given
     processInstance = runtimeService.startProcessInstanceByKey("serviceTaskProcess");
@@ -101,7 +101,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testPriorityOnInstantiationAtActivity() {
+  void testPriorityOnInstantiationAtActivity() {
 
     // when
     processInstance = runtimeService.createProcessInstanceByKey("serviceTaskProcess")
@@ -114,7 +114,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testPriorityOnAsyncAfterUserTask() {
+  void testPriorityOnAsyncAfterUserTask() {
     // given
     processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess");
     Task task = taskService.createTaskQuery().singleResult();
@@ -128,7 +128,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testPriorityOnAsyncAfterIntermediateCatchEvent() {
+  void testPriorityOnAsyncAfterIntermediateCatchEvent() {
     // given
     processInstance = runtimeService.startProcessInstanceByKey("intermediateMessageProcess");
 

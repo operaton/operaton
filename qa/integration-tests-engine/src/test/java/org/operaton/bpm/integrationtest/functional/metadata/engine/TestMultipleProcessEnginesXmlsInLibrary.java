@@ -50,7 +50,7 @@ public class TestMultipleProcessEnginesXmlsInLibrary extends AbstractFoxPlatform
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngineService.getProcessEngine("engine1")).isNotNull();
     assertThat(processEngineService.getProcessEngine("engine2")).isNotNull();
     assertThat(processEngineService.getProcessEngine("engine3")).isNotNull();

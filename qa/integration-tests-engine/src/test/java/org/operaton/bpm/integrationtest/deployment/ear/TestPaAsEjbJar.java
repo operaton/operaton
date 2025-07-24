@@ -77,7 +77,7 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testPaAsEjbModule() {
+  void testPaAsEjbModule() {
     ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
     assertThat(processEngine).isNotNull();
 

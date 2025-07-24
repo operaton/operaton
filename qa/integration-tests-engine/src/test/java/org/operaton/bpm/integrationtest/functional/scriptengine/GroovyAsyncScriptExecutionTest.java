@@ -69,7 +69,7 @@ public class GroovyAsyncScriptExecutionTest extends AbstractFoxPlatformIntegrati
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldSetVariable() {
+  void shouldSetVariable() {
     String deploymentId = repositoryService.createDeployment()
         .addString("process.bpmn", process)
         .deploy()

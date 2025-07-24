@@ -82,7 +82,7 @@ public class PaContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
    */
   @Test
   @OperateOnDeployment("pa1")
-  public void testNoContextSwitchOnInnerCommand() throws Exception {
+  void testNoContextSwitchOnInnerCommand() throws Exception {
 
     ProcessInstance pi = withProcessApplicationContext(new Callable<ProcessInstance>() {
 

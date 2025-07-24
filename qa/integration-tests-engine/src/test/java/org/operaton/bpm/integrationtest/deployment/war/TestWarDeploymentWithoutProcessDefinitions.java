@@ -41,7 +41,7 @@ public class TestWarDeploymentWithoutProcessDefinitions extends AbstractFoxPlatf
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(ProgrammaticBeanLookup.lookup(ProcessEngine.class)).isNotNull();
 
     // no deployment has been constructed

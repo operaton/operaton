@@ -62,13 +62,13 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     ClockUtil.reset();
   }
 
   @Test
   @OperateOnDeployment("app")
-  public void testInvokeProcessApplicationWithContextOnStart() {
+  void testInvokeProcessApplicationWithContextOnStart() {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("messageProcess");
 
@@ -80,7 +80,7 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("app")
-  public void testInvokeProcessApplicationWithContextOnAsyncExecution() {
+  void testInvokeProcessApplicationWithContextOnAsyncExecution() {
 
     runtimeService.startProcessInstanceByKey("timerProcess");
     ProcessApplicationWithInvocationContext.clearInvocationContext();
@@ -102,7 +102,7 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("app")
-  public void testInvokeProcessApplicationWithContextOnMessageReceived() {
+  void testInvokeProcessApplicationWithContextOnMessageReceived() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("messageProcess");
     ProcessApplicationWithInvocationContext.clearInvocationContext();
@@ -120,7 +120,7 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("app")
-  public void testInvokeProcessApplicationWithContextOnSignalTask() {
+  void testInvokeProcessApplicationWithContextOnSignalTask() {
 
     runtimeService.startProcessInstanceByKey("signalableProcess");
     ProcessApplicationWithInvocationContext.clearInvocationContext();

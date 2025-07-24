@@ -100,7 +100,7 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testDelegateVariableMapping() {
+  void testDelegateVariableMapping() {
     //given
     runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
     testDelegation();
@@ -108,7 +108,7 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testDelegateVariableMappingExpression() {
+  void testDelegateVariableMappingExpression() {
     runtimeService.startProcessInstanceByKey("callSubProcessExpr");
     testDelegation();
   }

@@ -56,12 +56,12 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void spinShouldBeAvailable() {
+  void spinShouldBeAvailable() {
     Assertions.assertEquals("someXml", XML("<someXml />").xPath("/someXml").element().name());
   }
 
   @Test
-  public void spinCanBeUsedForVariableSerialization() {
+  void spinCanBeUsedForVariableSerialization() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", Variables.createVariables()
         .putValue("serializedObject", serializedObjectValue("{\"foo\": \"bar\"}").serializationDataFormat("application/json").objectTypeName(HashMap.class.getName())));
 
@@ -74,7 +74,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void spinPluginShouldBeRegistered() {
+  void spinPluginShouldBeRegistered() {
 
     List<ProcessEnginePlugin> processEnginePlugins = processEngineConfiguration.getProcessEnginePlugins();
 
@@ -91,7 +91,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testJacksonBug146() {
+  void testJacksonBug146() {
     InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/integrationtest/functional/spin/jackson146.json");
     String jackson146 = SpinIoUtil.inputStreamAsString(resourceAsStream);
 
@@ -104,7 +104,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testJacksonBug146AsVariable() {
+  void testJacksonBug146AsVariable() {
     InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/integrationtest/functional/spin/jackson146.json");
     String jackson146 = SpinIoUtil.inputStreamAsString(resourceAsStream);
 

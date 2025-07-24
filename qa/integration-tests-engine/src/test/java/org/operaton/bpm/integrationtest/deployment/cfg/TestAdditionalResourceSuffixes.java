@@ -55,7 +55,7 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
 

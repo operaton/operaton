@@ -67,7 +67,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
   }
 
   @Test
-  public void testPaLocalJodaConfiguration() throws IOException {
+  void testPaLocalJodaConfiguration() throws IOException {
     // given a process instance
     final ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 

@@ -55,7 +55,7 @@ public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("test1")
-  public void testProcessApplicationsDeployed() {
+  void testProcessApplicationsDeployed() {
 
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();
 

@@ -92,7 +92,7 @@ public class MigrationContextSwitchBeansTest extends AbstractFoxPlatformIntegrat
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testCreateBoundaryTimer() {
+  void testCreateBoundaryTimer() {
     // given
     ProcessDefinition sourceDefinition = repositoryService
         .createProcessDefinitionQuery()

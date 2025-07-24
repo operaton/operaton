@@ -47,7 +47,7 @@ public class SpringServletPALifecycleTest extends AbstractFoxPlatformIntegration
   }
 
   @Test
-  public void test() {
+  void test() {
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();
     assertThat(processApplicationService.getProcessApplicationInfo("pa")).isNotNull();
   }

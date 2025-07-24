@@ -42,7 +42,7 @@ public class TestJobExecutorActivateFalse_JBOSS extends AbstractFoxPlatformInteg
   }
 
   @Test
-  public void shouldNotActiateJobExecutor() {
+  void shouldNotActiateJobExecutor() {
 
     ProcessEngine processEngine = processEngineService.getProcessEngine("jobExecutorActivate-FALSE-engine");
     ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();

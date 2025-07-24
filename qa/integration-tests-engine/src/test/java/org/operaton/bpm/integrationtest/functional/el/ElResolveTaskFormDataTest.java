@@ -44,7 +44,7 @@ public class ElResolveTaskFormDataTest extends AbstractFoxPlatformIntegrationTes
   }
 
   @Test
-  public void testTaskFormDataWithDefaultValueExpression() {
+  void testTaskFormDataWithDefaultValueExpression() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("elTaskFormProcess");
     Task task = taskService.createTaskQuery().processInstanceId(instance.getId()).singleResult();
 
@@ -56,7 +56,7 @@ public class ElResolveTaskFormDataTest extends AbstractFoxPlatformIntegrationTes
   }
 
   @Test
-  public void testTaskFormDataWithLabelExpression() {
+  void testTaskFormDataWithLabelExpression() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("elTaskFormProcess");
     Task task = taskService.createTaskQuery().processInstanceId(instance.getId()).singleResult();
 

@@ -51,7 +51,7 @@ public class FailingJobBoundaryTimerWithDelegateVariablesTest extends AbstractFo
   }
 
   @Test
-  public void testFailingJobBoundaryTimerWithDelegateVariables() {
+  void testFailingJobBoundaryTimerWithDelegateVariables() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("ImmediatelyFailing");
 
     List<Job> jobs = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).list();

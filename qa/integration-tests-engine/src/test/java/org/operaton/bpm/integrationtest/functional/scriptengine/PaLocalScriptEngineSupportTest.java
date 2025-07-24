@@ -44,7 +44,7 @@ public class PaLocalScriptEngineSupportTest extends AbstractPaLocalScriptEngineT
   }
 
   @Test
-  public void shouldSetVariable() {
+  void shouldSetVariable() {
     String processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_ID).getId();
     Object scriptValue = runtimeService.getVariable(processInstanceId, "scriptValue");
     assertThat(scriptValue).isNotNull();

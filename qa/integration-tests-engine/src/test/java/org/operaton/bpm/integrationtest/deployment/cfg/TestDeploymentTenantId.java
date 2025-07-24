@@ -43,7 +43,7 @@ public class TestDeploymentTenantId extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testDeployProcessArchiveWithTenantId() {
+  void testDeployProcessArchiveWithTenantId() {
     assertThat(processEngine).isNotNull();
 
     org.operaton.bpm.engine.repository.Deployment deployment = processEngine

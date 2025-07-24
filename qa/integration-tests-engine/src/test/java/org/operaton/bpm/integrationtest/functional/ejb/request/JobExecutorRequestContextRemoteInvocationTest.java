@@ -70,7 +70,7 @@ public class JobExecutorRequestContextRemoteInvocationTest extends AbstractFoxPl
 
   @Test
   @OperateOnDeployment("pa")
-  public void testRequestContextPropagationEjbRemote() {
+  void testRequestContextPropagationEjbRemote() {
 
     // This test verifies that if a delegate bean invoked from the Job Executor
     // calls an EJB from a different deployment, the RequestContext is active there as well.

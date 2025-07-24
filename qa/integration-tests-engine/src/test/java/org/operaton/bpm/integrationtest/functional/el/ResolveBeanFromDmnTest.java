@@ -44,7 +44,7 @@ public class ResolveBeanFromDmnTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testNullElResolverIsIgnored() {
+  void testNullElResolverIsIgnored() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     Task task = taskService.createTaskQuery().singleResult();

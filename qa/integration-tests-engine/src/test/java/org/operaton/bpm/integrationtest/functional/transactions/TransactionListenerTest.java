@@ -44,7 +44,7 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
   }
 
   @Test
-  public void testSynchronizationOnRollback() {
+  void testSynchronizationOnRollback() {
 
     final TestTransactionListener rolledBackListener = new TestTransactionListener();
     final TestTransactionListener committedListener = new TestTransactionListener();
@@ -75,7 +75,7 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
   }
 
   @Test
-  public void testSynchronizationOnCommitted() {
+  void testSynchronizationOnCommitted() {
 
     final TestTransactionListener rolledBackListener = new TestTransactionListener();
     final TestTransactionListener committedListener = new TestTransactionListener();

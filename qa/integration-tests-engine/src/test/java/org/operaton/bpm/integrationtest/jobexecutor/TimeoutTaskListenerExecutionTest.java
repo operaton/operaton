@@ -42,7 +42,7 @@ public class TimeoutTaskListenerExecutionTest extends AbstractFoxPlatformIntegra
   }
 
   @Test
-  public void testProcessExecution() {
+  void testProcessExecution() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
 

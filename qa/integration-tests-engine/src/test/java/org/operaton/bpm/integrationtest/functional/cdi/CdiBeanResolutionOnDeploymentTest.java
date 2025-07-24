@@ -60,7 +60,7 @@ public class CdiBeanResolutionOnDeploymentTest extends AbstractFoxPlatformIntegr
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testTimerStartWithBeanExpression() {
+  void testTimerStartWithBeanExpression() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition).isNotNull();
   }

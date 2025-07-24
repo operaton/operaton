@@ -55,7 +55,7 @@ public class TestDeploymentWithDroolsTaskFails {
 
   @Test
   @RunAsClient
-  public void testDeployDroolsFails() {
+  void testDeployDroolsFails() {
     try {
       deployer.deploy("deployment");
       fail("exception expected");

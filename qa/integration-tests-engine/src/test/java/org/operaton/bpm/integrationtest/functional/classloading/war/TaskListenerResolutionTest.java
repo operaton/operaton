@@ -58,7 +58,7 @@ public class TaskListenerResolutionTest extends AbstractFoxPlatformIntegrationTe
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClassOnTaskComplete() {
+  void testResolveClassOnTaskComplete() {
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleTaskListener");

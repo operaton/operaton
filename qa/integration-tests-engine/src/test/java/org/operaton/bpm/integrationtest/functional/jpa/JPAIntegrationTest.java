@@ -64,7 +64,7 @@ public class JPAIntegrationTest extends AbstractFoxPlatformIntegrationTest {
   private AsyncPersistenceDelegateBean asyncPersistenceDelegateBean;
 
   @Test
-  public void testDelegateParticipateInApplicationTx() throws Exception {
+  void testDelegateParticipateInApplicationTx() throws Exception {
 
     /* if we start a transaction here, persist an entity and then
      * start a process instance which synchronously invokes a java delegate,
@@ -91,7 +91,7 @@ public class JPAIntegrationTest extends AbstractFoxPlatformIntegrationTest {
 
 
   @Test
-  public void testAsyncDelegateNewTx() throws Exception {
+  void testAsyncDelegateNewTx() throws Exception {
 
     /* if we start a transaction here, persist an entity and then
      * start a process instance which asynchronously invokes a java delegate,

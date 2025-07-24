@@ -43,7 +43,7 @@ public class PaLocalScriptEngineEnabledCacheTest extends AbstractPaLocalScriptEn
   }
 
   @Test
-  public void shouldCacheScriptEngine() {
+  void shouldCacheScriptEngine() {
     AbstractProcessApplication processApplication = (AbstractProcessApplication) getProcessApplication();
     assertEquals(processApplication.getScriptEngineForName(SCRIPT_FORMAT, true), processApplication.getScriptEngineForName(SCRIPT_FORMAT, true));
   }

@@ -58,7 +58,7 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testPurgeDatabase() {
+  void testPurgeDatabase() {
     assertThat(processEngine).isNotNull();
     VariableMap variableMap = Variables.putValue("var", "value");
     runtimeService.startProcessInstanceByKey("testDeployProcessArchive", variableMap);

@@ -55,7 +55,7 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
   private ProcessEngineConfigurationImpl engine1Configuration;
 
   @BeforeEach
-  public void setEngines() {
+  void setEngines() {
     ProcessEngineService engineService = BpmPlatform.getProcessEngineService();
     engine1 = engineService.getProcessEngine("engine1");
     engine1Configuration = ((ProcessEngineImpl) engine1).getProcessEngineConfiguration();
@@ -84,7 +84,7 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
 
   @OperateOnDeployment("pa1")
   @Test
-  public void testDeploymentRegistration() {
+  void testDeploymentRegistration() {
     Set<String> registeredDeploymentsForEngine1 = engine1.getManagementService().getRegisteredDeployments();
     Set<String> registeredDeploymentsForDefaultEngine = processEngine.getManagementService().getRegisteredDeployments();
 
@@ -113,7 +113,7 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
 
   @OperateOnDeployment("pa1")
   @Test
-  public void testDeploymentAwareJobAcquisition() {
+  void testDeploymentAwareJobAcquisition() {
     JobExecutor jobExecutor1 = engine1Configuration.getJobExecutor();
 
     ProcessInstance instance1 = engine1.getRuntimeService().startProcessInstanceByKey("archive1Process");
@@ -134,7 +134,7 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
 
   @OperateOnDeployment("pa1")
   @Test
-  public void testDeploymentUnawareJobAcquisition() {
+  void testDeploymentUnawareJobAcquisition() {
     JobExecutor defaultJobExecutor = processEngineConfiguration.getJobExecutor();
 
     ProcessInstance instance1 = engine1.getRuntimeService().startProcessInstanceByKey("archive1Process");

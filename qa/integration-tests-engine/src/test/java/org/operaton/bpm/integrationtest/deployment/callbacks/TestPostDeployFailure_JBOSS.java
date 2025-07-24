@@ -51,7 +51,7 @@ public class TestPostDeployFailure_JBOSS {
   }
 
   @Test
-  public void test() {
+  void test() {
 
     try {
       deployer.deploy(DEPLOYMENT);

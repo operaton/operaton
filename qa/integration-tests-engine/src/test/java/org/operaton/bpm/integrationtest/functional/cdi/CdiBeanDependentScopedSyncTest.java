@@ -60,7 +60,7 @@ public class CdiBeanDependentScopedSyncTest extends AbstractFoxPlatformIntegrati
 
   @BeforeEach
   @OperateOnDeployment("clientDeployment")
-  public void setup() {
+  void setup() {
     DependentScopedBean.reset();
 
     Assertions.assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
@@ -71,7 +71,7 @@ public class CdiBeanDependentScopedSyncTest extends AbstractFoxPlatformIntegrati
   }
 
   @Test
-  public void testResolveBean() {
+  void testResolveBean() {
     Assertions.assertEquals(Arrays.asList("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"), DependentScopedBean.lifecycle);
   }
 

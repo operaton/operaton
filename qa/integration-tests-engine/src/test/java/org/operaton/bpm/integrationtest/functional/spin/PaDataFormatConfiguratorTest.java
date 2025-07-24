@@ -75,7 +75,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
    * the context of it
    */
   @Test
-  public void testPaLocalFormatApplies() throws IOException {
+  void testPaLocalFormatApplies() throws IOException {
 
     // given a process instance
     final ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -111,7 +111,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
    * of the process application
    */
   @Test
-  public void testPaLocalFormatDoesNotApply() throws IOException {
+  void testPaLocalFormatDoesNotApply() throws IOException {
 
     // given a process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -142,7 +142,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
    * process application.
    */
   @Test
-  public void testExecutionVariableImplicitObjectValueUpdate() throws IOException {
+  void testExecutionVariableImplicitObjectValueUpdate() throws IOException {
 
     // given a process instance and a task
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("implicitProcessVariableUpdate");
@@ -193,7 +193,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
   }
 
   @Test
-  public void testTaskVariableImplicitObjectValueUpdate() throws IOException {
+  void testTaskVariableImplicitObjectValueUpdate() throws IOException {
 
     // given a process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("implicitTaskVariableUpdate");

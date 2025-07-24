@@ -16,21 +16,11 @@
  */
 package org.operaton.bpm.rest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-
-import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.Response;
-import org.operaton.bpm.AbstractWebIntegrationTest;
-import org.operaton.bpm.engine.rest.hal.Hal;
-import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
-import org.junit.Before;
-import org.junit.Test;
-
-import jakarta.ws.rs.core.MediaType;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,7 +29,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.AbstractWebIntegrationTest;
+import org.operaton.bpm.engine.rest.hal.Hal;
+import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 public class RestIT extends AbstractWebIntegrationTest {
 
@@ -62,7 +66,7 @@ public class RestIT extends AbstractWebIntegrationTest {
 
   private static final Logger log = Logger.getLogger(RestIT.class.getName());
 
-  @Before
+  @BeforeEach
   public void createClient() throws Exception {
     preventRaceConditions();
     createClient(getRestCtxPath());
@@ -440,7 +444,7 @@ public class RestIT extends AbstractWebIntegrationTest {
     MediaType actual = response.getMediaType();
     assertEquals(200, response.getStatus());
     // use startsWith cause sometimes server also returns quality parameters (e.g. websphere/wink)
-    assertTrue("Expected: " + expected + " Actual: " + actual, actual.toString().startsWith(expected));
+    assertTrue(actual.toString().startsWith(expected), "Expected: " + expected + " Actual: " + actual);
   }
 
 }

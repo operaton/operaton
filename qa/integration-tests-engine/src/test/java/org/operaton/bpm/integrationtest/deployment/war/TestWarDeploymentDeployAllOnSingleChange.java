@@ -16,21 +16,20 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import org.jboss.arquillian.container.test.api.Deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestWarDeploymentDeployAllOnSingleChange extends AbstractFoxPlatformIntegrationTest {
 
   private static final String PA1 = "PA1";
@@ -60,13 +59,13 @@ public class TestWarDeploymentDeployAllOnSingleChange extends AbstractFoxPlatfor
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    Assert.assertEquals(2, count);
+    Assertions.assertEquals(2, count);
 
     count = repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("testDeployProcessArchiveUnchanged")
         .count();
 
-    Assert.assertEquals(2, count);
+    Assertions.assertEquals(2, count);
   }
 
 

@@ -20,13 +20,12 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
@@ -44,7 +43,7 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
  *
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class JavaDelegateResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -89,11 +88,11 @@ public class JavaDelegateResolutionTest extends AbstractFoxPlatformIntegrationTe
 
     runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 
-    Assert.assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
+    Assertions.assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
+    Assertions.assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
 
   }
 

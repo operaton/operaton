@@ -21,8 +21,12 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.HashMap;
 
-import jakarta.inject.Inject;
-
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -30,15 +34,11 @@ import org.operaton.bpm.integrationtest.functional.transactions.beans.FailingTra
 import org.operaton.bpm.integrationtest.functional.transactions.beans.GetVersionInfoDelegate;
 import org.operaton.bpm.integrationtest.functional.transactions.beans.UpdateRouterConfiguration;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-@RunWith(Arquillian.class)
+import jakarta.inject.Inject;
+
+@ExtendWith(ArquillianExtension.class)
 public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -56,7 +56,7 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
   @Inject
   private RuntimeService runtimeService;
 
-  @After
+  @AfterEach
   public void cleanUp() {
     for (ProcessInstance processInstance : runtimeService.createProcessInstanceQuery().list()) {
       runtimeService.deleteProcessInstance(processInstance.getId(), "test ended", true);

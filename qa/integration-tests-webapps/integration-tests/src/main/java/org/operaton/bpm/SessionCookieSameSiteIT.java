@@ -16,26 +16,28 @@
  */
 package org.operaton.bpm;
 
-import jakarta.ws.rs.core.Response;
-import org.junit.Before;
-import org.junit.Test;
-
-import jakarta.ws.rs.core.MultivaluedMap;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 
 public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
 
-  @Before
+  @BeforeEach
   public void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
-  @Test(timeout=10000)
+  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfSameSiteProperties() {
     // given
 

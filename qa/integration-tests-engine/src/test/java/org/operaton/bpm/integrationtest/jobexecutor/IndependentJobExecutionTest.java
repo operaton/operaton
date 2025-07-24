@@ -16,6 +16,22 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Set;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.protocol.servlet5.arq514hack.descriptors.api.web.WebAppDescriptor;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.descriptor.api.Descriptors;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
@@ -31,30 +47,14 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.protocol.servlet5.arq514hack.descriptors.api.web.WebAppDescriptor;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.descriptor.api.Descriptors;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import java.util.Set;
-
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
 
   private ProcessEngine engine1;
   private ProcessEngineConfigurationImpl engine1Configuration;
 
-  @Before
+  @BeforeEach
   public void setEngines() {
     ProcessEngineService engineService = BpmPlatform.getProcessEngineService();
     engine1 = engineService.getProcessEngine("engine1");
@@ -92,13 +92,13 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
 
     List<ProcessApplicationDeploymentInfo> pa1DeploymentInfo = pa1Info.getDeploymentInfo();
 
-    Assert.assertEquals(1, pa1DeploymentInfo.size());
+    Assertions.assertEquals(1, pa1DeploymentInfo.size());
     assertThat(registeredDeploymentsForEngine1).contains(pa1DeploymentInfo.get(0).getDeploymentId());
 
     ProcessApplicationInfo pa2Info = getProcessApplicationDeploymentInfo("pa2");
 
     List<ProcessApplicationDeploymentInfo> pa2DeploymentInfo = pa2Info.getDeploymentInfo();
-    Assert.assertEquals(1, pa2DeploymentInfo.size());
+    Assertions.assertEquals(1, pa2DeploymentInfo.size());
     assertThat(registeredDeploymentsForDefaultEngine).contains(pa2DeploymentInfo.get(0).getDeploymentId());
   }
 
@@ -127,7 +127,7 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
     CommandExecutor commandExecutor = engine1Configuration.getCommandExecutorTxRequired();
     AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor1));
 
-    Assert.assertEquals(1, acquiredJobs.size());
+    Assertions.assertEquals(1, acquiredJobs.size());
     assertThat(acquiredJobs.contains(job1.getId())).isTrue();
     assertThat(acquiredJobs.contains(job2.getId())).isFalse();
   }
@@ -149,7 +149,7 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
     try {
       AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(defaultJobExecutor));
 
-      Assert.assertEquals(2, acquiredJobs.size());
+      Assertions.assertEquals(2, acquiredJobs.size());
       assertThat(acquiredJobs.contains(job1.getId())).isTrue();
       assertThat(acquiredJobs.contains(job2.getId())).isTrue();
     } finally {

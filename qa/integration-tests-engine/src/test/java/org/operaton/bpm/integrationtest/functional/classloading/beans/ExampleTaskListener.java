@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.beans;
 
-import jakarta.inject.Named;
-
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
+
+import jakarta.inject.Named;
 
 @Named(value = "taskListener")
 public class ExampleTaskListener implements TaskListener {

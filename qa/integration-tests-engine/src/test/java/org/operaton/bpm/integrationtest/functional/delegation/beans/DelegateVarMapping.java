@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.integrationtest.functional.delegation.beans;
 
-import jakarta.inject.Named;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateVariableMapping;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.variable.VariableMap;
+
+import jakarta.inject.Named;
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>

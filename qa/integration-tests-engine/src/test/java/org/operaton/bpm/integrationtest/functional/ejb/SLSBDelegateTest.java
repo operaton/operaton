@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.functional.ejb.beans.SLSBClientDelegate;
 import org.operaton.bpm.integrationtest.functional.ejb.beans.SLSBDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
 /**
@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -54,7 +54,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testBeanResolution");
 
-    Assert.assertEquals(true, runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName()));
+    Assertions.assertEquals(true, runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName()));
 
     runtimeService.setVariable(pi.getId(), SLSBDelegate.class.getName(), false);
 
@@ -62,7 +62,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assert.assertEquals(true, runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName()));
+    Assertions.assertEquals(true, runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName()));
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -75,7 +75,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testBeanResolutionfromClient");
 
-    Assert.assertEquals(true, runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName()));
+    Assertions.assertEquals(true, runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName()));
 
     runtimeService.setVariable(pi.getId(), SLSBDelegate.class.getName(), false);
 
@@ -83,7 +83,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assert.assertEquals(true, runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName()));
+    Assertions.assertEquals(true, runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName()));
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }
@@ -97,7 +97,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     for(int i=0; i<instances; i++) {
       ids[i] = runtimeService.startProcessInstanceByKey("testBeanResolutionfromClient").getId();
-      Assert.assertEquals("Incovation=" + i, true, runtimeService.getVariable(ids[i], SLSBDelegate.class.getName()));
+      Assertions.assertEquals(true, runtimeService.getVariable(ids[i], SLSBDelegate.class.getName()), "Incovation=" + i);
       runtimeService.setVariable(ids[i], SLSBDelegate.class.getName(), false);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -105,7 +105,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
     waitForJobExecutorToProcessAllJobs(60*1000);
 
     for(int i=0; i<instances; i++) {
-      Assert.assertEquals("Incovation=" + i, true, runtimeService.getVariable(ids[i], SLSBDelegate.class.getName()));
+      Assertions.assertEquals(true, runtimeService.getVariable(ids[i], SLSBDelegate.class.getName()), "Incovation=" + i);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
 

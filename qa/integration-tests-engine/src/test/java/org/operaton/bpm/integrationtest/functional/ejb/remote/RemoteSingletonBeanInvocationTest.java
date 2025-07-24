@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb.remote;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.ejb.remote.bean.BusinessInterface;
@@ -24,15 +32,6 @@ import org.operaton.bpm.integrationtest.functional.ejb.remote.bean.RemoteSinglet
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 
 
 
@@ -47,7 +46,7 @@ import org.junit.runner.RunWith;
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class RemoteSingletonBeanInvocationTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name="pa", order=2)
@@ -81,7 +80,7 @@ public class RemoteSingletonBeanInvocationTest extends AbstractFoxPlatformIntegr
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInvokeBean");
 
-    Assert.assertEquals(true, runtimeService.getVariable(pi.getId(), "result"));
+    Assertions.assertEquals(true, runtimeService.getVariable(pi.getId(), "result"));
 
     runtimeService.setVariable(pi.getId(), "result", false);
 
@@ -89,7 +88,7 @@ public class RemoteSingletonBeanInvocationTest extends AbstractFoxPlatformIntegr
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assert.assertEquals(true, runtimeService.getVariable(pi.getId(), "result"));
+    Assertions.assertEquals(true, runtimeService.getVariable(pi.getId(), "result"));
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }
@@ -103,7 +102,7 @@ public class RemoteSingletonBeanInvocationTest extends AbstractFoxPlatformIntegr
 
     for(int i=0; i<instances; i++) {
       ids[i] = runtimeService.startProcessInstanceByKey("testInvokeBean").getId();
-      Assert.assertEquals("Incovation=" + i, true, runtimeService.getVariable(ids[i], "result"));
+      Assertions.assertEquals(true, runtimeService.getVariable(ids[i], "result"), "Incovation=" + i);
       runtimeService.setVariable(ids[i], "result", false);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -111,7 +110,7 @@ public class RemoteSingletonBeanInvocationTest extends AbstractFoxPlatformIntegr
     waitForJobExecutorToProcessAllJobs(60*1000);
 
     for(int i=0; i<instances; i++) {
-      Assert.assertEquals("Incovation=" + i, true, runtimeService.getVariable(ids[i], "result"));
+      Assertions.assertEquals(true, runtimeService.getVariable(ids[i], "result"), "Incovation=" + i);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
 

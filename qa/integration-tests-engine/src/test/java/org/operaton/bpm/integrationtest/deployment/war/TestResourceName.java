@@ -16,6 +16,17 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.Asset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
@@ -26,23 +37,11 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestHelper;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.Asset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @author Roman Smirnov
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
 
   public static final String PROCESSES_XML =
@@ -159,22 +158,22 @@ public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     ProcessDefinition definition = query.processDefinitionKey("process-0").singleResult();
-    Assert.assertEquals("process0.bpmn", definition.getResourceName());
+    Assertions.assertEquals("process0.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-1").singleResult();
-    Assert.assertEquals("processes/process1.bpmn", definition.getResourceName());
+    Assertions.assertEquals("processes/process1.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-2").singleResult();
-    Assert.assertEquals("process2.bpmn", definition.getResourceName());
+    Assertions.assertEquals("process2.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-3").singleResult();
-    Assert.assertEquals("subDirectory/process3.bpmn", definition.getResourceName());
+    Assertions.assertEquals("subDirectory/process3.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-4").singleResult();
-    Assert.assertEquals("process4.bpmn", definition.getResourceName());
+    Assertions.assertEquals("process4.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-5").singleResult();
-    Assert.assertEquals("subDirectory/process5.bpmn", definition.getResourceName());
+    Assertions.assertEquals("subDirectory/process5.bpmn", definition.getResourceName());
   }
 
 }

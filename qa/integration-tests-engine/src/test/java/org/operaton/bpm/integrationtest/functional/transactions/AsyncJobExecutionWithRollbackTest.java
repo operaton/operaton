@@ -17,28 +17,28 @@
 package org.operaton.bpm.integrationtest.functional.transactions;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import jakarta.inject.Inject;
-
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.functional.transactions.beans.TransactionRollbackDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import jakarta.inject.Inject;
 
 /**
  * This test class ensures that when a UserTransaction is explicitly marked as ROLLBACK_ONLY,
  * and this code is executed within a Job, then the transaction is rolled back, and the job
  * execution is marked as failed, reducing the job retries.
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -53,7 +53,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
   @Inject
   private RuntimeService runtimeService;
 
-  @After
+  @AfterEach
   public void cleanUp() {
     for (ProcessInstance processInstance : runtimeService.createProcessInstanceQuery().list()) {
       runtimeService.deleteProcessInstance(processInstance.getId(), "test ended", true);

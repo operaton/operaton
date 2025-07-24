@@ -16,25 +16,26 @@
  */
 package org.operaton.bpm.integrationtest.functional.transactions;
 
-import org.apache.ibatis.session.SqlSession;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPaWithoutWeld;
 
-import jakarta.inject.Inject;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPaWithoutWeld;
-import static org.junit.Assert.assertEquals;
+import org.apache.ibatis.session.SqlSession;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import jakarta.inject.Inject;
 
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TransactionIsolationLevelTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -55,8 +56,8 @@ public class TransactionIsolationLevelTest extends AbstractFoxPlatformIntegratio
         .openSession();
     try {
       int transactionIsolation = sqlSession.getConnection().getTransactionIsolation();
-      assertEquals("TransactionIsolationLevel for connection is " + transactionIsolation + " instead of " + Connection.TRANSACTION_READ_COMMITTED,
-          Connection.TRANSACTION_READ_COMMITTED, transactionIsolation);
+      assertEquals(Connection.TRANSACTION_READ_COMMITTED, transactionIsolation,
+          "TransactionIsolationLevel for connection is " + transactionIsolation + " instead of " + Connection.TRANSACTION_READ_COMMITTED);
     } catch (SQLException e) {
       e.printStackTrace();
     }

@@ -21,26 +21,26 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Locale;
 
-import org.operaton.bpm.util.SeleniumScreenshotRule;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.operaton.bpm.util.SeleniumScreenshotExtension;
 
 public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest {
 
   protected static WebDriver driver;
 
-  @Rule
-  public SeleniumScreenshotRule screenshotRule = new SeleniumScreenshotRule(driver);
+  @RegisterExtension
+  public SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
 
-  @BeforeClass
+  @BeforeAll
   public static void createDriver() {
     String chromeDriverExecutable = "chromedriver";
     if (System.getProperty( "os.name" ).toLowerCase(Locale.US).indexOf("windows") > -1) {
@@ -87,19 +87,19 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
 
   }
 
-  @Before
+  @BeforeEach
   public void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
-  @After
+  @AfterEach
   public void after() {
     testUtil.destroy();
   }
 
-  @AfterClass
+  @AfterAll
   public static void quitDriver() {
     driver.quit();
   }

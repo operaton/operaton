@@ -952,7 +952,6 @@ class FormAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
     createGrantAuthorization(TASK, taskId, userId, UPDATE);
-    createGrantAuthorization(PROCESS_DEFINITION, FORM_PROCESS_KEY, userId, UPDATE_TASK);
 
     // when
     formService.submitTaskForm(taskId, null);
@@ -967,7 +966,6 @@ class FormAuthorizationTest extends AuthorizationTest {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
-    createGrantAuthorization(TASK, taskId, userId, UPDATE);
     createGrantAuthorization(PROCESS_DEFINITION, FORM_PROCESS_KEY, userId, UPDATE_TASK);
 
     // when

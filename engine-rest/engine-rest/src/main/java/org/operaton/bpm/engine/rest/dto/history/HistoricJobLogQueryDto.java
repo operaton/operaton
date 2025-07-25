@@ -212,7 +212,7 @@ public class HistoricJobLogQueryDto extends AbstractQueryDto<HistoricJobLogQuery
     this.withoutTenantId = withoutTenantId;
   }
 
-  @OperatonQueryParam(value = "hostname")
+  @OperatonQueryParam("hostname")
   public void setHostname(String hostname) {
     this.hostname = hostname;
   }

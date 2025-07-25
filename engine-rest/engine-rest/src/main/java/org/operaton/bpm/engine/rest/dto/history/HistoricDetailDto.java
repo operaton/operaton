@@ -34,8 +34,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     use = JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.PROPERTY, property="type"
 )
 @JsonSubTypes({
-    @Type(value = HistoricFormFieldDto.class),
-    @Type(value = HistoricVariableUpdateDto.class)
+    @Type(HistoricFormFieldDto.class),
+    @Type(HistoricVariableUpdateDto.class)
 })
 public abstract class HistoricDetailDto {
 

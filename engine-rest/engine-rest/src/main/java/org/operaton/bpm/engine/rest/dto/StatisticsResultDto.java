@@ -29,8 +29,8 @@ import java.util.List;
     use = JsonTypeInfo.Id.CLASS
 )
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ActivityStatisticsResultDto.class),
-    @JsonSubTypes.Type(value = ProcessDefinitionStatisticsResultDto.class)
+    @JsonSubTypes.Type(ActivityStatisticsResultDto.class),
+    @JsonSubTypes.Type(ProcessDefinitionStatisticsResultDto.class)
 })
 public abstract class StatisticsResultDto {
 

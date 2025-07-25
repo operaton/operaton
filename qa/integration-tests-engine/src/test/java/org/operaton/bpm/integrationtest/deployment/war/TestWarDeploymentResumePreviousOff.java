@@ -56,7 +56,7 @@ public class TestWarDeploymentResumePreviousOff extends AbstractFoxPlatformInteg
   }
 
   @Test
-  @OperateOnDeployment(value=PA2)
+  @OperateOnDeployment(PA2)
   public void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();

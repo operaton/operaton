@@ -147,22 +147,22 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
     this.suspended = suspended;
   }
 
-  @OperatonQueryParam(value = "incidentId")
+  @OperatonQueryParam("incidentId")
   public void setIncidentId(String incidentId) {
     this.incidentId = incidentId;
   }
 
-  @OperatonQueryParam(value = "incidentType")
+  @OperatonQueryParam("incidentType")
   public void setIncidentType(String incidentType) {
     this.incidentType = incidentType;
   }
 
-  @OperatonQueryParam(value = "incidentMessage")
+  @OperatonQueryParam("incidentMessage")
   public void setIncidentMessage(String incidentMessage) {
     this.incidentMessage = incidentMessage;
   }
 
-  @OperatonQueryParam(value = "incidentMessageLike")
+  @OperatonQueryParam("incidentMessageLike")
   public void setIncidentMessageLike(String incidentMessageLike) {
     this.incidentMessageLike = incidentMessageLike;
   }

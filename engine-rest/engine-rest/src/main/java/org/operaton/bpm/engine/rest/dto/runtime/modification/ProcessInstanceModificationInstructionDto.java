@@ -33,11 +33,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
-@JsonSubTypes(value = {
-    @JsonSubTypes.Type(value = CancellationInstructionDto.class),
-    @JsonSubTypes.Type(value = StartBeforeInstructionDto.class),
-    @JsonSubTypes.Type(value = StartAfterInstructionDto.class),
-    @JsonSubTypes.Type(value = StartTransitionInstructionDto.class)})
+@JsonSubTypes({
+    @JsonSubTypes.Type(CancellationInstructionDto.class),
+    @JsonSubTypes.Type(StartBeforeInstructionDto.class),
+    @JsonSubTypes.Type(StartAfterInstructionDto.class),
+    @JsonSubTypes.Type(StartTransitionInstructionDto.class)})
 public abstract class ProcessInstanceModificationInstructionDto {
 
   public static final String CANCEL_INSTRUCTION_TYPE = "cancel";

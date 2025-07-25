@@ -57,7 +57,7 @@ public class ProcessDefinitionQueryDto extends AbstractRestQueryParametersDto<Pr
     return parentProcessDefinitionId;
   }
 
-  @OperatonQueryParam(value="parentProcessDefinitionId")
+  @OperatonQueryParam("parentProcessDefinitionId")
   public void setParentProcessDefinitionId(String parentProcessDefinitionId) {
     this.parentProcessDefinitionId = parentProcessDefinitionId;
   }
@@ -66,7 +66,7 @@ public class ProcessDefinitionQueryDto extends AbstractRestQueryParametersDto<Pr
     return superProcessDefinitionId;
   }
 
-  @OperatonQueryParam(value="superProcessDefinitionId")
+  @OperatonQueryParam("superProcessDefinitionId")
   public void setSuperProcessDefinitionId(String superProcessDefinitionId) {
     this.superProcessDefinitionId = superProcessDefinitionId;
   }
@@ -84,7 +84,7 @@ public class ProcessDefinitionQueryDto extends AbstractRestQueryParametersDto<Pr
     return businessKey;
   }
 
-  @OperatonQueryParam(value="businessKey")
+  @OperatonQueryParam("businessKey")
   public void setBusinessKey(String businessKey) {
     this.businessKey = businessKey;
   }

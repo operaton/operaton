@@ -229,17 +229,17 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
     this.withRootIncidents = withRootIncidents;
   }
 
-  @OperatonQueryParam(value = "incidentStatus")
+  @OperatonQueryParam("incidentStatus")
   public void setIncidentStatus(String status) {
     this.incidentStatus = status;
   }
 
-  @OperatonQueryParam(value = "incidentMessage")
+  @OperatonQueryParam("incidentMessage")
   public void setIncidentMessage(String incidentMessage) {
     this.incidentMessage = incidentMessage;
   }
 
-  @OperatonQueryParam(value = "incidentMessageLike")
+  @OperatonQueryParam("incidentMessageLike")
   public void setIncidentMessageLike(String incidentMessageLike) {
     this.incidentMessageLike = incidentMessageLike;
   }
@@ -313,7 +313,7 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
     return incidentType;
   }
 
-  @OperatonQueryParam(value = "incidentType")
+  @OperatonQueryParam("incidentType")
   public void setIncidentType(String incidentType) {
     this.incidentType = incidentType;
   }

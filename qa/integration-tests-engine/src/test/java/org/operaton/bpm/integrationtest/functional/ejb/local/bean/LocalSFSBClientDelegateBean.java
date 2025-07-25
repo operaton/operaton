@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb.local.bean;
 
-import jakarta.ejb.EJB;
-import jakarta.inject.Named;
-
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
+import jakarta.ejb.EJB;
+import jakarta.inject.Named;
 
 /**
  * A CDI bean delegating to the local business

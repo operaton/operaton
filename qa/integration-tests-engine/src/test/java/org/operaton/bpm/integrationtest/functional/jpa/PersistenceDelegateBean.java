@@ -18,13 +18,13 @@ package org.operaton.bpm.integrationtest.functional.jpa;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 @Named
 @ApplicationScoped

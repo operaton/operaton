@@ -16,24 +16,25 @@
  */
 package org.operaton.bpm.integrationtest.deployment.callbacks;
 
-import java.util.List;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployInjectApp;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPa;
+
+import java.util.List;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployInjectApp;
 
 /**
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class PostDeployInjectDefaultEngineTest {
 
   @Deployment
@@ -46,7 +47,7 @@ public class PostDeployInjectDefaultEngineTest {
   }
 
   @Test
-  public void test() {
+  void test() {
     assertThat(PostDeployInjectApp.processEngine).as("processEngine must be injected").isNotNull();
     assertThat(PostDeployInjectApp.processApplicationInfo).as("processApplicationInfo must be injected").isNotNull();
 

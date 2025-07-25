@@ -267,7 +267,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
-  void testGETQuerySorting() {
+  void testSortingParameters() {
     // desc
     InOrder inOrder = Mockito.inOrder(mockQuery);
     executeAndVerifyGETSorting("id", "desc", Status.OK);

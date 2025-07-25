@@ -17,7 +17,9 @@
 package org.operaton.bpm.integrationtest.functional.spin.dataformat;
 
 import java.io.IOException;
+
 import org.operaton.bpm.integrationtest.functional.spin.XmlSerializable;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;

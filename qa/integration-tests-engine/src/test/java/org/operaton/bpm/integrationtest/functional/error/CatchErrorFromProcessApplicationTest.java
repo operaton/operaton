@@ -17,25 +17,25 @@
 package org.operaton.bpm.integrationtest.functional.error;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Collections;
 import java.util.Map;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -66,7 +66,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInExecute() {
+  void testThrowExceptionInExecute() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -81,7 +81,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInExecute() {
+  void testThrowErrorInExecute() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -96,7 +96,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInSignal() {
+  void testThrowExceptionInSignal() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -120,7 +120,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInSignal() {
+  void testThrowErrorInSignal() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -144,7 +144,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInExecuteSequentialMultiInstance() {
+  void testThrowExceptionInExecuteSequentialMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessSequentialMI", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -159,7 +159,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInExecuteSequentialMultiInstance() {
+  void testThrowErrorInExecuteSequentialMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessSequentialMI", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -174,7 +174,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInSignalSequentialMultiInstance() {
+  void testThrowExceptionInSignalSequentialMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessSequentialMI").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -203,7 +203,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInSignalSequentialMultiInstance() {
+  void testThrowErrorInSignalSequentialMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessSequentialMI").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -233,7 +233,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInExecuteParallelMultiInstance() {
+  void testThrowExceptionInExecuteParallelMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessParallelMI", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -248,7 +248,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInExecuteParallelMultiInstance() {
+  void testThrowErrorInExecuteParallelMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessParallelMI", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -263,7 +263,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInSignalParallelMultiInstance() {
+  void testThrowExceptionInSignalParallelMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessParallelMI").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -287,7 +287,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInSignalParallelMultiInstance() {
+  void testThrowErrorInSignalParallelMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessParallelMI").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -311,7 +311,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInDelegateExpressionExecute() {
+  void testThrowExceptionInDelegateExpressionExecute() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -326,7 +326,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInDelegateExpressionExecute() {
+  void testThrowErrorInDelegateExpressionExecute() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -341,7 +341,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInDelegateExpressionSignal() {
+  void testThrowExceptionInDelegateExpressionSignal() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -365,7 +365,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInDelegateExpressionSignal() {
+  void testThrowErrorInDelegateExpressionSignal() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -389,7 +389,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInDelegateExpressionExecuteSequentialMultiInstance() {
+  void testThrowExceptionInDelegateExpressionExecuteSequentialMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessSequentialMI", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -404,7 +404,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInDelegateExpressionExecuteSequentialMultiInstance() {
+  void testThrowErrorInDelegateExpressionExecuteSequentialMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessSequentialMI", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -419,7 +419,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInDelegateExpressionSignalSequentialMultiInstance() {
+  void testThrowExceptionInDelegateExpressionSignalSequentialMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessSequentialMI").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -448,7 +448,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInDelegateExpressionSignalSequentialMultiInstance() {
+  void testThrowErrorInDelegateExpressionSignalSequentialMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessSequentialMI").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -478,7 +478,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInDelegateExpressionExecuteParallelMultiInstance() {
+  void testThrowExceptionInDelegateExpressionExecuteParallelMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessParallelMI", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -493,7 +493,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInDelegateExpressionExecuteParallelMultiInstance() {
+  void testThrowErrorInDelegateExpressionExecuteParallelMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessParallelMI", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -508,7 +508,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowExceptionInDelegateExpressionSignalParallelMultiInstance() {
+  void testThrowExceptionInDelegateExpressionSignalParallelMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessParallelMI").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -532,7 +532,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testThrowErrorInDelegateExpressionSignalParallelMultiInstance() {
+  void testThrowErrorInDelegateExpressionSignalParallelMultiInstance() {
     String pi = runtimeService.startProcessInstanceByKey("testProcessParallelMI").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();

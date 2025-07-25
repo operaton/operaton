@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.DemoDelegate;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.DemoVariableClass;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
 /**
@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
  *
  * @author christian.lipphardt@camunda.com
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class FailingJobBoundaryTimerWithDelegateVariablesTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -51,7 +51,7 @@ public class FailingJobBoundaryTimerWithDelegateVariablesTest extends AbstractFo
   }
 
   @Test
-  public void testFailingJobBoundaryTimerWithDelegateVariables() {
+  void testFailingJobBoundaryTimerWithDelegateVariables() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("ImmediatelyFailing");
 
     List<Job> jobs = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).list();

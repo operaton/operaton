@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.deployment.war.beans.GroovyProcessEnginePlugin;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -40,7 +40,7 @@ import static org.junit.Assert.assertEquals;
  * Does not work on JBoss, see <a href="https://app.camunda.com/jira/browse/CAM-1778">CAM-1778</a>
  * </p>
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -58,7 +58,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
   }
 
   @Test
-  public void testPAGroovyProcessEnginePlugin() {
+  void testPAGroovyProcessEnginePlugin() {
     ProcessEngine groovyEngine = processEngineService.getProcessEngine("groovy");
     assertThat(groovyEngine).isNotNull();
 
@@ -69,7 +69,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
   }
 
   @Test
-  public void testPAGroovyAsyncProcessEnginePlugin() {
+  void testPAGroovyAsyncProcessEnginePlugin() {
     ProcessEngine groovyEngine = processEngineService.getProcessEngine("groovy");
     assertThat(groovyEngine).isNotNull();
 

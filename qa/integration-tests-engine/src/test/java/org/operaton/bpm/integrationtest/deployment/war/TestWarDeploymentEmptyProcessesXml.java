@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.deployment.war;
-import org.operaton.bpm.BpmPlatform;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.BpmPlatform;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 
 /**
@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * the client and an empty processes.xml file
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestWarDeploymentEmptyProcessesXml extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -47,7 +47,7 @@ public class TestWarDeploymentEmptyProcessesXml extends AbstractFoxPlatformInteg
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
 
@@ -55,7 +55,7 @@ public class TestWarDeploymentEmptyProcessesXml extends AbstractFoxPlatformInteg
       .processDefinitionKey("testDeployProcessArchive")
       .list();
 
-    Assert.assertEquals(1, processDefinitions.size());
+    Assertions.assertEquals(1, processDefinitions.size());
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery()
       .deploymentId(processDefinitions.get(0).getDeploymentId())
       .singleResult();

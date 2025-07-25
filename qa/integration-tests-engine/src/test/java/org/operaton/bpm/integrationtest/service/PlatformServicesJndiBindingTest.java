@@ -21,15 +21,15 @@ import static org.assertj.core.api.Assertions.fail;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestConstants;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrationTest {
 
   protected TestConstants testConstants = new TestConstants();
@@ -40,7 +40,7 @@ public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrat
   }
 
   @Test
-  public void testProcessApplicationServiceBinding() {
+  void testProcessApplicationServiceBinding() {
     try {
       InitialContext.doLookup(testConstants.getProcessApplicationService());
     } catch (NamingException e) {
@@ -49,7 +49,7 @@ public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrat
   }
 
   @Test
-  public void testProcessEngineServiceBinding() {
+  void testProcessEngineServiceBinding() {
     try {
       InitialContext.doLookup(testConstants.getEngineService());
     } catch (NamingException e) {

@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
-import org.junit.Assert;
-
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.Asset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.repository.DeploymentQuery;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestHelper;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.Asset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
 /**
@@ -63,7 +62,7 @@ import org.junit.runner.RunWith;
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestWarDeploymentWithMultiplePasAsSubdeployment2 extends AbstractFoxPlatformIntegrationTest {
 
   public static final String PROCESSES_XML =
@@ -127,7 +126,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment2 extends AbstractFo
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
 
     assertProcessNotDeployed("process-0");
     assertProcessDeployed   ("process-1", "PA1");
@@ -149,7 +148,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment2 extends AbstractFo
         .processDefinitionKey(processKey)
         .count();
 
-    Assert.assertEquals("Process with key "+processKey+ " should not be deployed", 0, count);
+    Assertions.assertEquals(0, count, "Process with key "+processKey+ " should not be deployed");
   }
 
   protected void assertProcessDeployed(String processKey, String expectedDeploymentName) {
@@ -164,7 +163,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment2 extends AbstractFo
         .createDeploymentQuery()
         .deploymentId(processDefinition.getDeploymentId());
 
-    Assert.assertEquals(expectedDeploymentName, deploymentQuery.singleResult().getName());
+    Assertions.assertEquals(expectedDeploymentName, deploymentQuery.singleResult().getName());
 
   }
 

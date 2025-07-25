@@ -37,7 +37,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   private static final long serialVersionUID = 1L;
 
-  protected Map<String, TypedValue> variables = new HashMap<>();
+  private Map<String, TypedValue> variables = new HashMap<>();
 
   public VariableMapImpl(VariableMapImpl map) {
     variables = new HashMap<>(map.variables);
@@ -87,7 +87,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     return (T) variables.get(name);
   }
 
-  // java.uitil Map<String, Object> implementation ////////////////////////////////////////
+  // java.util Map<String, Object> implementation ////////////////////////////////////////
 
   @Override
   public int size() {
@@ -107,9 +107,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   @Override
   public boolean containsValue(Object value) {
     for (TypedValue varValue : variables.values()) {
-      if(value == varValue.getValue()) {
-        return true;
-      } else if(value != null && value.equals(varValue.getValue())) {
+      if (value == varValue.getValue() || (value != null && value.equals(varValue.getValue()))) {
         return true;
       }
     }

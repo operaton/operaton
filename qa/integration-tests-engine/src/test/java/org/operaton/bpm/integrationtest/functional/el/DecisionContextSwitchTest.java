@@ -17,11 +17,18 @@
 package org.operaton.bpm.integrationtest.functional.el;
 
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
@@ -29,19 +36,12 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.functional.el.beans.GreeterBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
 
   protected static final String DMN_RESOURCE_NAME = "org/operaton/bpm/integrationtest/functional/el/BeanResolvingDecision.dmn11.xml";
@@ -72,7 +72,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldSwitchContextWhenUsingDecisionService() {
+  void shouldSwitchContextWhenUsingDecisionService() {
     DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableByKey("decision", Variables.createVariables());
     assertEquals("ok", decisionResult.getFirstResult().getFirstEntry());
   }
@@ -80,7 +80,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
   @Test
   @SuppressWarnings("unchecked")
   @OperateOnDeployment("clientDeployment")
-  public void shouldSwitchContextWhenCallingFromBpmn() {
+  void shouldSwitchContextWhenCallingFromBpmn() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     VariableInstance decisionResult = runtimeService.createVariableInstanceQuery()
@@ -92,7 +92,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldSwitchContextWhenUsingDecisionServiceAfterRedeployment() {
+  void shouldSwitchContextWhenUsingDecisionServiceAfterRedeployment() {
 
     // given
     List<org.operaton.bpm.engine.repository.Deployment> deployments = repositoryService.createDeploymentQuery()
@@ -131,7 +131,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
   @Test
   @SuppressWarnings("unchecked")
   @OperateOnDeployment("clientDeployment")
-  public void shouldSwitchContextWhenCallingFromBpmnAfterRedeployment() {
+  void shouldSwitchContextWhenCallingFromBpmnAfterRedeployment() {
     // given
     List<org.operaton.bpm.engine.repository.Deployment> deployments = repositoryService.createDeploymentQuery()
         .list();

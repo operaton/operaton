@@ -18,6 +18,7 @@ package org.operaton.bpm.integrationtest.deployment.ear.beans;
 
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInterface;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.ejb.ConcurrencyManagement;

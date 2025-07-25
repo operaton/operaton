@@ -16,26 +16,27 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.ws.rs.core.MediaType;
 
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
-import org.junit.Before;
-import org.junit.Test;
 
 public class DateSerializationIT extends AbstractWebIntegrationTest {
 
   private static final String SCHEMA_LOG_PATH = "api/engine/engine/default/schema/log";
 
-  @Before
+  @BeforeEach
   public void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());

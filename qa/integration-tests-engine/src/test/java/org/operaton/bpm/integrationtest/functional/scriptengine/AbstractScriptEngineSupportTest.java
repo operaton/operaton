@@ -16,22 +16,22 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Sebastian Menski
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public abstract class AbstractScriptEngineSupportTest extends AbstractFoxPlatformIntegrationTest {
 
   public static final String PROCESS_ID = "testProcess";
@@ -61,7 +61,7 @@ public abstract class AbstractScriptEngineSupportTest extends AbstractFoxPlatfor
     processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_ID).getId();
   }
 
-  @After
+  @AfterEach
   public void variableFooShouldBeBar() {
     Object foo = runtimeService.getVariable(processInstanceId, "foo");
     Object bar = runtimeService.getVariable(processInstanceId, "bar");

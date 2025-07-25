@@ -24,6 +24,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ParseException;
@@ -41,6 +43,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
 import ch.qos.logback.classic.Level;
+
+import java.nio.file.Path;
 
 class HistoryTimeToLiveDeploymentTest {
 
@@ -64,8 +68,6 @@ class HistoryTimeToLiveDeploymentTest {
 
   ProcessEngineConfigurationImpl processEngineConfiguration;
   RepositoryService repositoryService;
-  ManagementService managementService;
-  ProcessEngine processEngine;
 
   String historyTimeToLive;
 
@@ -98,25 +100,17 @@ class HistoryTimeToLiveDeploymentTest {
         .hasMessageContaining("* (Not recommended) Deactivate the enforceTTL config to disable this check");
   }
 
-  @Test
-  void processWithHTTLShouldSucceed() {
+  @ParameterizedTest(name = "{index} - {0}")
+  @CsvSource({
+        "Process with HTTL, org/operaton/bpm/engine/test/api/repository/version3.bpmn20.xml",
+        "Case with HTTL, org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithHistoryTimeToLive.cmmn",
+        "Decision with HTTL, org/operaton/bpm/engine/test/api/dmn/Example.dmn"
+  })
+  void deploymentWithHTTLShouldSucceed(@SuppressWarnings("unused") String testName, Path bpmnResource) {
     // when
     testRule.deploy(repositoryService
         .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/api/repository/version3.bpmn20.xml"));
-
-    Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
-
-    // then
-    assertThat(deployment).isNotNull();
-  }
-
-  @Test
-  void caseWithHTTLShouldSucceed() {
-    // when
-    testRule.deploy(repositoryService
-        .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithHistoryTimeToLive.cmmn"));
+        .addClasspathResource(bpmnResource.toString()));
 
     Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 
@@ -135,19 +129,6 @@ class HistoryTimeToLiveDeploymentTest {
         .isInstanceOf(ProcessEngineException.class)
         .hasCauseInstanceOf(NotValidException.class)
         .hasStackTraceContaining(EXPECTED_DEFAULT_CONFIG_MSG);
-  }
-
-  @Test
-  void decisionWithHTTLShouldSucceed() {
-    // when
-    testRule.deploy(repositoryService
-        .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/api/dmn/Example.dmn"));
-
-    Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
-
-    // then
-    assertThat(deployment).isNotNull();
   }
 
   @Test

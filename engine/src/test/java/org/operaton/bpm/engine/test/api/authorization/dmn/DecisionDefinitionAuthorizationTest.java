@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.dmn;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.io.InputStream;
@@ -116,22 +116,14 @@ class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testGetDecisionDefinitionWithoutAuthorizations() {
-    // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
 
-    try {
-      // when
-      repositoryService.getDecisionDefinition(decisionDefinitionId);
-      fail("Exception expected");
-
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(DECISION_DEFINITION_KEY, message);
-      testRule.assertTextPresent(DECISION_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionDefinition(decisionDefinitionId))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(DECISION_DEFINITION_KEY)
+        .hasMessageContaining(DECISION_DEFINITION.resourceName());
   }
 
   @Test
@@ -149,22 +141,14 @@ class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testGetDecisionDiagramWithoutAuthorizations() {
-    // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
 
-    try {
-      // when
-      repositoryService.getDecisionDiagram(decisionDefinitionId);
-      fail("Exception expected");
-
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(DECISION_DEFINITION_KEY, message);
-      testRule.assertTextPresent(DECISION_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionDiagram(decisionDefinitionId))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(DECISION_DEFINITION_KEY)
+        .hasMessageContaining(DECISION_DEFINITION.resourceName());
   }
 
   @Test
@@ -183,22 +167,14 @@ class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testGetDecisionModelWithoutAuthorizations() {
-    // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
 
-    try {
-      // when
-      repositoryService.getDecisionModel(decisionDefinitionId);
-      fail("Exception expected");
-
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(DECISION_DEFINITION_KEY, message);
-      testRule.assertTextPresent(DECISION_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionModel(decisionDefinitionId))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(DECISION_DEFINITION_KEY)
+        .hasMessageContaining(DECISION_DEFINITION.resourceName());
   }
 
   @Test
@@ -216,22 +192,14 @@ class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testGetDmnModelInstanceWithoutAuthorizations() {
-    // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
 
-    try {
-      // when
-      repositoryService.getDmnModelInstance(decisionDefinitionId);
-      fail("Exception expected");
-
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(DECISION_DEFINITION_KEY, message);
-      testRule.assertTextPresent(DECISION_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> repositoryService.getDmnModelInstance(decisionDefinitionId))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(DECISION_DEFINITION_KEY)
+        .hasMessageContaining(DECISION_DEFINITION.resourceName());
   }
 
   @Test
@@ -263,22 +231,14 @@ class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testDecisionDefinitionUpdateTimeToLiveWithoutAuthorizations() {
-    //given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
-    try {
-      //when
-      repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitionId, 6);
-      fail("Exception expected");
 
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(DECISION_DEFINITION_KEY, message);
-      testRule.assertTextPresent(DECISION_DEFINITION.resourceName(), message);
-    }
-
+    assertThatThrownBy(() -> repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitionId, 4))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(DECISION_DEFINITION_KEY)
+        .hasMessageContaining(DECISION_DEFINITION.resourceName());
   }
 
 }

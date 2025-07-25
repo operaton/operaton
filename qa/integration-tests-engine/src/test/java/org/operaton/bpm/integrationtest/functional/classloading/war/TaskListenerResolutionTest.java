@@ -16,6 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.war;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -24,19 +34,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TaskListenerResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -60,7 +58,7 @@ public class TaskListenerResolutionTest extends AbstractFoxPlatformIntegrationTe
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClassOnTaskComplete() {
+  void testResolveClassOnTaskComplete() {
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleTaskListener");

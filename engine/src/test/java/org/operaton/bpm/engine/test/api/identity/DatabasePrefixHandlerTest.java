@@ -20,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.impl.digest.DatabasePrefixHandler;
 
 class DatabasePrefixHandlerTest {
@@ -57,37 +59,13 @@ class DatabasePrefixHandlerTest {
     assertThat(algorithmName).isEqualTo("SHA");
   }
 
-  @Test
-  void retrieveAlgorithmForInvalidInput() {
-
-    // given
-    String encryptedPasswordWithPrefix = "xxx{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
-
-    // when
-    String algorithmName = prefixHandler.retrieveAlgorithmName(encryptedPasswordWithPrefix);
-
-    // then
-    assertThat(algorithmName).isNull();
-  }
-
-  @Test
-  void retrieveAlgorithmWithMissingAlgorithmPrefix() {
-
-    // given
-    String encryptedPasswordWithPrefix = "n3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
-
-    // when
-    String algorithmName = prefixHandler.retrieveAlgorithmName(encryptedPasswordWithPrefix);
-
-    // then
-    assertThat(algorithmName).isNull();
-  }
-
-  @Test
-  void retrieveAlgorithmWithErroneousAlgorithmPrefix() {
-
-    // given
-    String encryptedPasswordWithPrefix = "{SHAn3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
+  @ParameterizedTest(name = "{index} - {0}")
+  @CsvSource({
+      "Invalid Input, xxx{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=",
+      "Missing Algorithm Prefix, n3fE9/7XOmgD3BkeJlC+JLyb/Qg=",
+      "Erroneous Algorithm Prefix, {SHAn3fE9/7XOmgD3BkeJlC+JLyb/Qg="
+  })
+  void retrieveAlgorithmNameForInvalidInput(@SuppressWarnings("unused") String testName, String encryptedPasswordWithPrefix) {
 
     // when
     String algorithmName = prefixHandler.retrieveAlgorithmName(encryptedPasswordWithPrefix);
@@ -110,12 +88,13 @@ class DatabasePrefixHandlerTest {
 
   }
 
-  @Test
-  void removePrefixForInvalidInput() {
-
-    // given
-    String encryptedPasswordWithPrefix = "xxx{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
-
+  @ParameterizedTest(name = "{index} - {0}")
+  @CsvSource({
+      "Invalid Input, xxx{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=",
+      "Missing Algorithm Prefix, n3fE9/7XOmgD3BkeJlC+JLyb/Qg=",
+      "Erroneous Algorithm Prefix, {SHAn3fE9/7XOmgD3BkeJlC+JLyb/Qg="
+  })
+  void removePrefixForInvalidInput(@SuppressWarnings("unused") String testName, String encryptedPasswordWithPrefix) {
     // when
     String encryptedPassword = prefixHandler.removePrefix(encryptedPasswordWithPrefix);
 

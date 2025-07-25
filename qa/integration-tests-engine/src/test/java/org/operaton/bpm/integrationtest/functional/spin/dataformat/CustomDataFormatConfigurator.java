@@ -19,6 +19,7 @@ package org.operaton.bpm.integrationtest.functional.spin.dataformat;
 import org.operaton.bpm.integrationtest.functional.spin.XmlSerializable;
 import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.operaton.spin.spi.DataFormatConfigurator;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 

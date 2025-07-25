@@ -19,6 +19,7 @@ package org.operaton.commons.utils;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Fail.fail;
 
 /**
@@ -32,7 +33,6 @@ class EnsureUtilTest {
 
     try {
       EnsureUtil.ensureNotNull("string", string);
-
     } catch(IllegalArgumentException e) {
       fail("Not expected the following exception: ", e);
     }
@@ -41,14 +41,8 @@ class EnsureUtilTest {
   @Test
   void shouldFailEnsureNotNull() {
     String string = null;
-
-    try {
-      EnsureUtil.ensureNotNull("string", string);
-      fail("Expected: IllegalArgumentException");
-
-    } catch(IllegalArgumentException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> EnsureUtil.ensureNotNull("string", string))
+        .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
@@ -58,7 +52,6 @@ class EnsureUtilTest {
     try{
       assertThat(EnsureUtil.ensureParamInstanceOf("string", string, String.class))
         .isInstanceOf(String.class);
-
     } catch(IllegalArgumentException e) {
       fail("Not expected the following exception: ", e);
     }
@@ -67,12 +60,7 @@ class EnsureUtilTest {
   @Test
   void shouldFailEnsureParameterInstanceOfClass() {
     Object string = "string";
-
-    try{
-      EnsureUtil.ensureParamInstanceOf("string", string, Integer.class);
-      fail("Expected: IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> EnsureUtil.ensureParamInstanceOf("string", string, Integer.class))
+        .isInstanceOf(IllegalArgumentException.class);
   }
 }

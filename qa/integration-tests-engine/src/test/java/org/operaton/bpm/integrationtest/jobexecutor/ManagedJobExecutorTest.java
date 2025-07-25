@@ -16,8 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
@@ -27,16 +35,8 @@ import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.ManagedJobExecutorBean;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class ManagedJobExecutorTest {
 
   @Deployment
@@ -59,22 +59,22 @@ public class ManagedJobExecutorTest {
   protected ManagementService managementService;
   protected RuntimeService runtimeService;
 
-  @Before
-  public void setUpCdiProcessEngineTestCase() {
+  @BeforeEach
+  void setUpCdiProcessEngineTestCase() {
     processEngine = (ProgrammaticBeanLookup.lookup(ManagedJobExecutorBean.class)).getProcessEngine();
     managementService = processEngine.getManagementService();
     runtimeService = processEngine.getRuntimeService();
   }
 
-  @After
-  public void tearDownCdiProcessEngineTestCase() {
+  @AfterEach
+  void tearDownCdiProcessEngineTestCase() {
     processEngine = null;
     managementService = null;
     runtimeService = null;
   }
 
   @Test
-  public void testManagedExecutorUsed() {
+  void testManagedExecutorUsed() {
     org.operaton.bpm.engine.repository.Deployment deployment = processEngine.getRepositoryService().createDeployment()
       .addClasspathResource("org/operaton/bpm/integrationtest/jobexecutor/ManagedJobExecutorTest.testManagedExecutorUsed.bpmn20.xml")
       .deploy();

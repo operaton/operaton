@@ -16,24 +16,23 @@
  */
 package org.operaton.bpm.integrationtest.deployment.callbacks;
 
-import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployFailureApp;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.jboss.arquillian.container.test.api.Deployer;
-
-import static org.assertj.core.api.Assertions.fail;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployFailureApp;
 
 /**
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestPostDeployFailure_JBOSS {
 
   private static final String DEPLOYMENT = "DEPLOYMENT";
@@ -52,7 +51,7 @@ public class TestPostDeployFailure_JBOSS {
   }
 
   @Test
-  public void test() {
+  void test() {
 
     try {
       deployer.deploy(DEPLOYMENT);

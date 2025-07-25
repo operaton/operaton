@@ -16,25 +16,24 @@
  */
 package org.operaton.bpm.integrationtest.deployment.spring;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class SpringServletPALifecycleTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -48,7 +47,7 @@ public class SpringServletPALifecycleTest extends AbstractFoxPlatformIntegration
   }
 
   @Test
-  public void test() {
+  void test() {
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();
     assertThat(processApplicationService.getProcessApplicationInfo("pa")).isNotNull();
   }

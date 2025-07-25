@@ -17,9 +17,10 @@
 package org.operaton.bpm.integrationtest.util;
 
 import java.util.logging.Logger;
+
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.engine.CaseService;
@@ -78,7 +79,7 @@ public abstract class AbstractFoxPlatformIntegrationTest {
     return initWebArchiveDeployment("test.war");
   }
 
-  @Before
+  @BeforeEach
   public void setupBeforeTest() {
     processEngineService = BpmPlatform.getProcessEngineService();
     processEngine = processEngineService.getDefaultProcessEngine();

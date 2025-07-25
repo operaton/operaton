@@ -18,22 +18,22 @@ package org.operaton.bpm.integrationtest.functional.dmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Philipp Ossler
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class DmnHistoryTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -46,7 +46,7 @@ public class DmnHistoryTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testHistoricDecisionInstance() {
+  void testHistoricDecisionInstance() {
 
     VariableMap variables = Variables.createVariables().putValue("status", "bronze").putValue("sum", 100);
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);

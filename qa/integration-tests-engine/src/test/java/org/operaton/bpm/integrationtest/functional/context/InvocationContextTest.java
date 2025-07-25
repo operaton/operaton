@@ -19,6 +19,15 @@ package org.operaton.bpm.integrationtest.functional.context;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.EventSubscription;
@@ -30,19 +39,11 @@ import org.operaton.bpm.integrationtest.functional.context.beans.NoOpJavaDelegat
 import org.operaton.bpm.integrationtest.functional.context.beans.SignalableTask;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Checks if the process application is invoked with an invocation context.
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name = "app")
@@ -60,14 +61,14 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
         .addAsResource("org/operaton/bpm/integrationtest/functional/context/InvocationContextTest-signalTask.bpmn");
   }
 
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     ClockUtil.reset();
   }
 
   @Test
   @OperateOnDeployment("app")
-  public void testInvokeProcessApplicationWithContextOnStart() {
+  void testInvokeProcessApplicationWithContextOnStart() {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("messageProcess");
 
@@ -79,7 +80,7 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("app")
-  public void testInvokeProcessApplicationWithContextOnAsyncExecution() {
+  void testInvokeProcessApplicationWithContextOnAsyncExecution() {
 
     runtimeService.startProcessInstanceByKey("timerProcess");
     ProcessApplicationWithInvocationContext.clearInvocationContext();
@@ -101,7 +102,7 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("app")
-  public void testInvokeProcessApplicationWithContextOnMessageReceived() {
+  void testInvokeProcessApplicationWithContextOnMessageReceived() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("messageProcess");
     ProcessApplicationWithInvocationContext.clearInvocationContext();
@@ -119,7 +120,7 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   @OperateOnDeployment("app")
-  public void testInvokeProcessApplicationWithContextOnSignalTask() {
+  void testInvokeProcessApplicationWithContextOnSignalTask() {
 
     runtimeService.startProcessInstanceByKey("signalableProcess");
     ProcessApplicationWithInvocationContext.clearInvocationContext();

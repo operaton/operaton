@@ -94,7 +94,7 @@ class JsonTreeCreateTest {
     assertThatThrownBy(() -> S(jsonNode)).isInstanceOf(IllegalArgumentException.class);
 
     Reader reader = null;
-    assertThatThrownBy(() -> JSON(jsonNode)).isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> JSON(reader)).isInstanceOf(IllegalArgumentException.class);
     assertThatThrownBy(() -> S(reader, json)).isInstanceOf(IllegalArgumentException.class);
     assertThatThrownBy(() -> S(reader)).isInstanceOf(IllegalArgumentException.class);
 

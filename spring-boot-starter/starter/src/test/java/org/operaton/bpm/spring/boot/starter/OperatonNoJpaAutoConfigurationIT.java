@@ -56,7 +56,7 @@ class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfiguration
     TestEntity testEntity = testEntityRepository.save(new TestEntity());
     Map<String, Object> variables = new HashMap<>();
     variables.put("test", testEntity);
-    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("TestProcess", variables), "")
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("TestProcess", variables), "ProcessEngineException is expected when JPA is disabled.")
         .isInstanceOf(ProcessEngineException.class);
   }
 

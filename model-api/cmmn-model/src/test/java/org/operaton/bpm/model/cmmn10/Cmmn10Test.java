@@ -44,6 +44,7 @@ import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.TimerEvent;
 import org.operaton.bpm.model.cmmn.instance.UserEvent;
+import org.operaton.bpm.model.xml.ModelValidationException;
 
 /**
  * @author Roman Smirnov
@@ -184,8 +185,8 @@ class Cmmn10Test {
     HumanTask humanTask = modelInstance.newInstance(HumanTask.class);
     casePlanModel.getPlanItemDefinitions().add(humanTask);
 
-    assertThatThrownBy(() -> Cmmn.writeModelToStream(System.out, modelInstance), "cannot save cmmn 1.0 model")
-        .isInstanceOf(Exception.class);
+    assertThatThrownBy(() -> Cmmn.writeModelToStream(System.out, modelInstance), "save cmmn 1.0 model should fail")
+        .isInstanceOf(ModelValidationException.class);
   }
 
   @Test
@@ -204,8 +205,8 @@ class Cmmn10Test {
     Event event = modelInstance.newInstance(Event.class);
     casePlanModel.getPlanItemDefinitions().add(event);
 
-    assertThatThrownBy(() -> Cmmn.writeModelToStream(System.out, modelInstance), "cannot save cmmn 1.0 model")
-        .isInstanceOf(Exception.class);
+    assertThatThrownBy(() -> Cmmn.writeModelToStream(System.out, modelInstance), "save cmmn 1.1 model should fail")
+        .isInstanceOf(ModelValidationException.class);
   }
 
   protected CmmnModelInstance getCmmnModelInstance() {

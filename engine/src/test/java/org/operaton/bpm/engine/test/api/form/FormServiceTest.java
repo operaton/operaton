@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.api.form;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.entry;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
 import static org.operaton.bpm.engine.variable.Variables.booleanValue;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
@@ -177,12 +176,7 @@ class FormServiceTest {
 
   @Test
   void testGetTaskFormNullTaskId() {
-    try {
-      formService.getRenderedTaskForm(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // Expected Exception
-    }
+    assertThatThrownBy(() -> formService.getRenderedTaskForm(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

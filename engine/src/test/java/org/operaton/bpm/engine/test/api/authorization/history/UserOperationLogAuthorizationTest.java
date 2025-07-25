@@ -53,7 +53,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -1508,17 +1508,13 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // when
-    try {
-      historyService.deleteUserOperationLogEntry(entryId);
-      fail("Exception expected: It should not be possible to delete the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE.getName(), message);
-      testRule.assertTextPresent(OPERATION_LOG_CATEGORY.resourceName(), message);
-      testRule.assertTextPresent(CATEGORY_TASK_WORKER, message);
-    }
+    assertThatThrownBy(() -> historyService.deleteUserOperationLogEntry(entryId),
+        "It should not be possible to delete the user operation log")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE.getName())
+        .hasMessageContaining(OPERATION_LOG_CATEGORY.resourceName())
+        .hasMessageContaining(CATEGORY_TASK_WORKER);
 
     deleteTask(taskId, true);
   }
@@ -1535,18 +1531,14 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorizationWithoutAuthentication(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, DELETE_HISTORY);
 
-    // when
-    try {
-      historyService.deleteUserOperationLogEntry(entryId);
-      fail("Exception expected: It should not be possible to delete the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE.getName(), message);
-      testRule.assertTextPresent(OPERATION_LOG_CATEGORY.resourceName(), message);
-      testRule.assertTextPresent(CATEGORY_TASK_WORKER, message);
-    }
+    assertThatThrownBy(
+        () -> historyService.deleteUserOperationLogEntry(entryId),
+        "It should not be possible to delete the user operation log")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE.getName())
+        .hasMessageContaining(OPERATION_LOG_CATEGORY.resourceName())
+        .hasMessageContaining(CATEGORY_TASK_WORKER);
 
     deleteTask(taskId, true);
   }
@@ -1563,18 +1555,14 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorizationWithoutAuthentication(PROCESS_DEFINITION, ANY, userId, DELETE_HISTORY);
 
-    // when
-    try {
-      historyService.deleteUserOperationLogEntry(entryId);
-      fail("Exception expected: It should not be possible to delete the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE.getName(), message);
-      testRule.assertTextPresent(OPERATION_LOG_CATEGORY.resourceName(), message);
-      testRule.assertTextPresent(CATEGORY_TASK_WORKER, message);
-    }
+    assertThatThrownBy(
+        () -> historyService.deleteUserOperationLogEntry(entryId),
+        "It should not be possible to delete the user operation log")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE.getName())
+        .hasMessageContaining(OPERATION_LOG_CATEGORY.resourceName())
+        .hasMessageContaining(CATEGORY_TASK_WORKER);
 
     deleteTask(taskId, true);
   }
@@ -1634,21 +1622,16 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     String entryId = historyService.createUserOperationLogQuery().entityType("Task").singleResult().getId();
     enableAuthorization();
 
-    try {
-      // when
-      historyService.deleteUserOperationLogEntry(entryId);
-      fail("Exception expected: It should not be possible to delete the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE_HISTORY.getName(), message);
-      testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-      testRule.assertTextPresent(DELETE.getName(), message);
-      testRule.assertTextPresent(OPERATION_LOG_CATEGORY.resourceName(), message);
-      testRule.assertTextPresent(CATEGORY_TASK_WORKER, message);
-    }
+    assertThatThrownBy(() -> historyService.deleteUserOperationLogEntry(entryId),
+        "It should not be possible to delete the user operation log")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE_HISTORY.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName())
+        .hasMessageContaining(DELETE.getName())
+        .hasMessageContaining(OPERATION_LOG_CATEGORY.resourceName())
+        .hasMessageContaining(CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -1776,18 +1759,13 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     String entryId = historyService.createUserOperationLogQuery().singleResult().getId();
     enableAuthorization();
 
-    // when
-    try {
-      historyService.deleteUserOperationLogEntry(entryId);
-      fail("Exception expected: It should not be possible to delete the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE.getName(), message);
-      testRule.assertTextPresent(OPERATION_LOG_CATEGORY.resourceName(), message);
-      testRule.assertTextPresent(CATEGORY_TASK_WORKER, message);
-    }
+    assertThatThrownBy(() -> historyService.deleteUserOperationLogEntry(entryId),
+        "It should not be possible to delete the user operation log")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE.getName())
+        .hasMessageContaining(OPERATION_LOG_CATEGORY.resourceName())
+        .hasMessageContaining(CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -1803,18 +1781,13 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorizationWithoutAuthentication(PROCESS_DEFINITION, ONE_TASK_CASE_KEY, userId, DELETE_HISTORY);
 
-    // when
-    try {
-      historyService.deleteUserOperationLogEntry(entryId);
-      fail("Exception expected: It should not be possible to delete the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE.getName(), message);
-      testRule.assertTextPresent(OPERATION_LOG_CATEGORY.resourceName(), message);
-      testRule.assertTextPresent(CATEGORY_TASK_WORKER, message);
-    }
+    assertThatThrownBy(() -> historyService.deleteUserOperationLogEntry(entryId),
+        "It should not be possible to delete the user operation log")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE.getName())
+        .hasMessageContaining(OPERATION_LOG_CATEGORY.resourceName())
+        .hasMessageContaining(CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -1830,18 +1803,13 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorizationWithoutAuthentication(PROCESS_DEFINITION, ANY, userId, DELETE_HISTORY);
 
-    // when
-    try {
-      historyService.deleteUserOperationLogEntry(entryId);
-      fail("Exception expected: It should not be possible to delete the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE.getName(), message);
-      testRule.assertTextPresent(OPERATION_LOG_CATEGORY.resourceName(), message);
-      testRule.assertTextPresent(CATEGORY_TASK_WORKER, message);
-    }
+    assertThatThrownBy(() -> historyService.deleteUserOperationLogEntry(entryId),
+        "It should not be possible to delete the user operation log")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE.getName())
+        .hasMessageContaining(OPERATION_LOG_CATEGORY.resourceName())
+        .hasMessageContaining(CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -1971,19 +1939,13 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     enableAuthorization();
 
-    try {
-      // when
-      historyService.setAnnotationForOperationLogById(operationId, "anAnnotation");
-
-      fail("Exception expected: It should not be possible to update the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(OPERATION_LOG_CATEGORY.resourceName(), message);
-      testRule.assertTextPresent(CATEGORY_TASK_WORKER, message);
-    }
+    assertThatThrownBy(() -> historyService.setAnnotationForOperationLogById(operationId, "anAnnotation"),
+        "It should not be possible to update the user operation log")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(OPERATION_LOG_CATEGORY.resourceName())
+        .hasMessageContaining(CATEGORY_TASK_WORKER);
 
     // cleanup
     deleteTask("aTaskId", true);
@@ -2071,19 +2033,13 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     enableAuthorization();
 
-    try {
-      // when
-      historyService.setAnnotationForOperationLogById(operationId, "anAnnotation");
-
-      fail("Exception expected: It should not be possible to update the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(OPERATION_LOG_CATEGORY.resourceName(), message);
-      testRule.assertTextPresent(CATEGORY_TASK_WORKER, message);
-    }
+    assertThatThrownBy(() -> historyService.setAnnotationForOperationLogById(operationId, "anAnnotation"),
+        "It should not be possible to update the user operation log")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(OPERATION_LOG_CATEGORY.resourceName())
+        .hasMessageContaining(CATEGORY_TASK_WORKER);
 
     // cleanup
     deleteTask("aTaskId", true);

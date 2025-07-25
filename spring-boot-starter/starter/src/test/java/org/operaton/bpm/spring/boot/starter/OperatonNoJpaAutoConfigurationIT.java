@@ -57,7 +57,6 @@ class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfiguration
     Map<String, Object> variables = new HashMap<>();
     variables.put("test", testEntity);
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("TestProcess", variables), "")
-        .isNotNull()
         .isInstanceOf(ProcessEngineException.class);
   }
 

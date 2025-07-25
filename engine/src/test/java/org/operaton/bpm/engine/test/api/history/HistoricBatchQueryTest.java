@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicBatchByEndTime;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicBatchById;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicBatchByStartTime;
@@ -142,8 +141,9 @@ class HistoricBatchQueryTest {
   @Test
   void testBatchQueryByIdNull() {
     var historicBatchQuery = historyService.createHistoricBatchQuery();
-    assertThatThrownBy(() -> historicBatchQuery.batchId(null), "exception expected")
-        .isInstanceOf(NullValueException.class).hasMessageContaining("Batch id is null");
+    assertThatThrownBy(() -> historicBatchQuery.batchId(null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("Batch id is null");
   }
 
   @Test
@@ -199,8 +199,9 @@ class HistoricBatchQueryTest {
   @Test
   void testBatchQueryByTypeNull() {
     var historicBatchQuery = historyService.createHistoricBatchQuery();
-    assertThatThrownBy(() -> historicBatchQuery.type(null), "exception expected")
-        .isInstanceOf(NullValueException.class).hasMessageContaining("Type is null");
+    assertThatThrownBy(() -> historicBatchQuery.type(null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("Type is null");
   }
 
   @Test
@@ -311,7 +312,7 @@ class HistoricBatchQueryTest {
   @Test
   void testBatchQueryOrderingPropertyWithoutOrder() {
     var historicBatchQuery = historyService.createHistoricBatchQuery().orderById();
-    assertThatThrownBy(() -> historicBatchQuery.singleResult(), "exception expected")
+    assertThatThrownBy(historicBatchQuery::singleResult)
         .isInstanceOf(NotValidException.class)
         .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
   }
@@ -319,7 +320,8 @@ class HistoricBatchQueryTest {
   @Test
   void testBatchQueryOrderWithoutOrderingProperty() {
     var historicBatchQuery = historyService.createHistoricBatchQuery();
-    assertThatThrownBy(() -> historicBatchQuery.asc(), "exception expected")
-        .isInstanceOf(NotValidException.class).hasMessageContaining("You should call any of the orderBy methods first before specifying a direction");
+    assertThatThrownBy(historicBatchQuery::asc)
+        .isInstanceOf(NotValidException.class)
+        .hasMessageContaining("You should call any of the orderBy methods first before specifying a direction");
   }
 }

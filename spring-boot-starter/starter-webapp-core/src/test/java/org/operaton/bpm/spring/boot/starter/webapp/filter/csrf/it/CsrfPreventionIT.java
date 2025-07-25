@@ -32,7 +32,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
     properties = {"server.error.include-message=always"})
@@ -84,12 +83,11 @@ class CsrfPreventionIT {
             "/operaton/api/admin/auth/user/default/login/welcome", "Content-Type",
         "application/x-www-form-urlencoded");
 
-    assertThatThrownBy(urlConnection::getContent, "Exception expected!")
+    assertThatThrownBy(urlConnection::getContent)
         .isInstanceOf(IOException.class)
         .hasMessageContaining("Server returned HTTP response code: 403 for URL");
     assertThat(httpClientExtension.getHeaderXsrfToken()).isEqualTo("Required");
     assertThat(httpClientExtension.getErrorResponseContent()).contains("CSRFPreventionFilter: Token provided via HTTP Header is absent/empty.");
-
   }
 
 }

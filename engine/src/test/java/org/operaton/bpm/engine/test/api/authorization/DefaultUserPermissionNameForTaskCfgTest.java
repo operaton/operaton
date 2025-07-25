@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -73,7 +72,7 @@ class DefaultUserPermissionNameForTaskCfgTest {
     testProcessEngineCfg.setDefaultUserPermissionNameForTask("UNSUPPORTED");
 
     // if
-    assertThatThrownBy(testProcessEngineCfg::initDefaultUserPermissionForTask, "Exception expected")
+    assertThatThrownBy(testProcessEngineCfg::initDefaultUserPermissionForTask)
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining(String.format("Invalid value '%s' for configuration property 'defaultUserPermissionNameForTask'.", "UNSUPPORTED"));
   }
@@ -86,7 +85,7 @@ class DefaultUserPermissionNameForTaskCfgTest {
     testProcessEngineCfg.setDefaultUserPermissionNameForTask(null);
 
     // if
-    assertThatThrownBy(testProcessEngineCfg::initDefaultUserPermissionForTask, "Exception expected")
+    assertThatThrownBy(testProcessEngineCfg::initDefaultUserPermissionForTask)
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining(String.format("Invalid value 'null' for configuration property 'defaultUserPermissionNameForTask'."));
   }

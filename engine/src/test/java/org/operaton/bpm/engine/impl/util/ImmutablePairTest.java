@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.Map.Entry;

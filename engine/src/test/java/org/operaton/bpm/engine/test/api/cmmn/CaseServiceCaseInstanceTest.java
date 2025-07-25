@@ -820,7 +820,6 @@ class CaseServiceCaseInstanceTest {
     assertThatThrownBy(() -> caseService.terminateCaseExecution(caseInstanceId), "It should not be possible to terminate a task.")
         .isInstanceOf(NotAllowedException.class)
         .hasMessageContaining("The case execution must be in state 'active' to terminate");
-
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

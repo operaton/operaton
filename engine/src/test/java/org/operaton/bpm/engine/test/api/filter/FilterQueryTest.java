@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,7 +80,7 @@ class FilterQueryTest {
     FilterQuery query = filterService.createFilterQuery();
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
-    assertThatThrownBy(() -> query.singleResult(), "Exception expected").isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -107,7 +106,7 @@ class FilterQueryTest {
   @Test
   void testQueryByResourceType() {
     FilterQuery query = filterService.createFilterQuery().filterResourceType(EntityTypes.TASK);
-    assertThatThrownBy(() -> query.singleResult(), "Exception expected").isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
     assertThat(query.list()).hasSize(4);
     assertThat(query.count()).isEqualTo(4);
   }

@@ -150,7 +150,7 @@ class FileValueTypeImplTest {
     properties.put("mimeType", null);
     properties.put("encoding", "someEncoding");
 
-    assertThatThrownBy(() -> type.createValue(file, properties), "expected exception")
+    assertThatThrownBy(() -> type.createValue(file, properties))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("The provided mime type is null. Set a non-null value info property with key 'filename'");
 
@@ -160,7 +160,7 @@ class FileValueTypeImplTest {
     properties.put("mimeType", "someMimetype");
     properties.put("encoding", null);
 
-    assertThatThrownBy(() -> type.createValue(file2, properties), "expected exception")
+    assertThatThrownBy(() -> type.createValue(file2, properties))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("The provided encoding is null. Set a non-null value info property with key 'encoding'");
   }

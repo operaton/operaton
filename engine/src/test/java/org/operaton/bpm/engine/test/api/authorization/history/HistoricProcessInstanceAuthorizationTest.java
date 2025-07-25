@@ -260,7 +260,7 @@ class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     assertThatThrownBy(
         () -> historyService.deleteHistoricProcessInstance(processInstanceId),
-        "Exception expected: It should not be possible to delete the historic process instance")
+        "It should not be possible to delete the historic process instance")
         .isInstanceOf(AuthorizationException.class)
         .hasMessageContaining(userId)
         .hasMessageContaining(DELETE_HISTORY.getName())
@@ -512,11 +512,9 @@ class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest {
         .createHistoricProcessInstanceReport()
         .processDefinitionIdIn(processInstance1.getProcessDefinitionId(), processInstance2.getProcessDefinitionId());
 
-    assertThatThrownBy(
-        () -> historicProcessInstanceReport.duration(PeriodUnit.MONTH),
-        "Exception expected: It should not be possible to create a historic process instance report"
+    assertThatThrownBy(() -> historicProcessInstanceReport.duration(PeriodUnit.MONTH),
+        "It should not be possible to create a historic process instance report"
     ).isInstanceOf(AuthorizationException.class);
-
   }
 
   @Test

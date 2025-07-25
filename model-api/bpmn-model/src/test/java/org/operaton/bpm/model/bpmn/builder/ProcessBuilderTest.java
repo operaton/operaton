@@ -1090,10 +1090,8 @@ public class ProcessBuilderTest {
     var eventBasedGatewayBuilder = Bpmn.createProcess()
       .startEvent()
       .eventBasedGateway();
-    assertThatThrownBy(eventBasedGatewayBuilder::operatonAsyncAfter, "Expected UnsupportedOperationException")
-        .isInstanceOf(UnsupportedOperationException.class);
-    assertThatThrownBy(() -> eventBasedGatewayBuilder.operatonAsyncAfter(true), "Expected UnsupportedOperationException")
-        .isInstanceOf(UnsupportedOperationException.class);
+    assertThatThrownBy(eventBasedGatewayBuilder::operatonAsyncAfter).isInstanceOf(UnsupportedOperationException.class);
+    assertThatThrownBy(() -> eventBasedGatewayBuilder.operatonAsyncAfter(true)).isInstanceOf(UnsupportedOperationException.class);
   }
 
   @Test
@@ -3131,7 +3129,7 @@ public class ProcessBuilderTest {
       .boundaryEvent()
       .compensateEventDefinition();
 
-    assertThatThrownBy(() -> compensateEventDefinitionBuilder.activityRef("nonExistingTask"), "should fail")
+    assertThatThrownBy(() -> compensateEventDefinitionBuilder.activityRef("nonExistingTask"))
         .isInstanceOf(BpmnModelException.class)
         .hasMessageContaining("Activity with id 'nonExistingTask' does not exist");
   }
@@ -3156,7 +3154,7 @@ public class ProcessBuilderTest {
       .boundaryEvent("boundary")
       .compensateEventDefinition();
 
-    assertThatThrownBy(() -> compensateEventDefinitionBuilder.activityRef("subProcessTask"), "should fail")
+    assertThatThrownBy(() -> compensateEventDefinitionBuilder.activityRef("subProcessTask"))
         .isInstanceOf(BpmnModelException.class)
         .hasMessageContaining("Activity with id 'subProcessTask' must be in the same scope as 'boundary'");
   }
@@ -3505,7 +3503,7 @@ public class ProcessBuilderTest {
       .userTask()
       .endEvent();
 
-    assertThatThrownBy(() -> eventSubProcess.subProcessDone(), "eventSubProcess has returned a builder after completion")
+    assertThatThrownBy(eventSubProcess::subProcessDone, "eventSubProcess has returned a builder after completion")
         .isInstanceOf(BpmnModelException.class)
         .hasMessageContaining("Unable to find a parent subProcess.");
   }

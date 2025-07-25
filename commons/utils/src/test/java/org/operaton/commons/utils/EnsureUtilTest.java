@@ -41,7 +41,7 @@ class EnsureUtilTest {
   @Test
   void shouldFailEnsureNotNull() {
     String string = null;
-    assertThatThrownBy(() -> EnsureUtil.ensureNotNull("string", string), "Expected: IllegalArgumentException")
+    assertThatThrownBy(() -> EnsureUtil.ensureNotNull("string", string))
         .isInstanceOf(IllegalArgumentException.class);
   }
 
@@ -60,7 +60,7 @@ class EnsureUtilTest {
   @Test
   void shouldFailEnsureParameterInstanceOfClass() {
     Object string = "string";
-    assertThatThrownBy(() -> EnsureUtil.ensureParamInstanceOf("string", string, Integer.class), "Expected: IllegalArgumentException")
+    assertThatThrownBy(() -> EnsureUtil.ensureParamInstanceOf("string", string, Integer.class))
         .isInstanceOf(IllegalArgumentException.class);
   }
 }

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.api.history;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
 
@@ -534,16 +533,16 @@ public class BulkHistoryDeleteTest {
     final List<String> ids = prepareHistoricProcesses();
     runtimeService.deleteProcessInstances(ids, null, true, true);
 
-    assertThatThrownBy(
-        () -> historyService.deleteHistoricProcessInstancesBulk(null),
-        "Empty process instance ids exception was expected"
-    ).isInstanceOf(BadUserRequestException.class).hasMessageContaining("processInstanceIds is null");
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesBulk(null),
+        "Empty process instance ids exception was expected")
+            .isInstanceOf(BadUserRequestException.class)
+            .hasMessageContaining("processInstanceIds is null");
 
-    List<String> emptyPocessInstanceIds = emptyList();
-    assertThatThrownBy(
-        () -> historyService.deleteHistoricProcessInstancesBulk(emptyPocessInstanceIds),
-        "Empty process instance ids exception was expected"
-    ).isInstanceOf(BadUserRequestException.class).hasMessageContaining("processInstanceIds is empty");
+    List<String> emptyProcessInstanceIds = emptyList();
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesBulk(emptyProcessInstanceIds),
+        "Empty process instance ids exception was expected")
+            .isInstanceOf(BadUserRequestException.class)
+            .hasMessageContaining("processInstanceIds is empty");
 
   }
 
@@ -555,8 +554,8 @@ public class BulkHistoryDeleteTest {
     runtimeService.deleteProcessInstances(ids.subList(1, ids.size()), null, true, true);
 
     assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesBulk(ids), "Not all processes are finished exception was expected")
-        .isInstanceOf(BadUserRequestException.class).hasMessageContaining("Process instance is still running, cannot delete historic process instance");
-
+          .isInstanceOf(BadUserRequestException.class)
+          .hasMessageContaining("Process instance is still running, cannot delete historic process instance");
   }
 
   private void collectHistoricDecisionInputIds(List<HistoricDecisionInstance> historicDecisionInstances, List<String> historicDecisionInputIds, List<String> inputByteArrayIds) {

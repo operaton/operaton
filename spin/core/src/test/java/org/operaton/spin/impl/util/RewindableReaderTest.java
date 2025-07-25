@@ -153,7 +153,7 @@ class RewindableReaderTest {
     assertThat(SpinIoUtil.getStringFromReader(reader))
       .isEqualTo(EXAMPLE_INPUT_STRING.substring(DEFAULT_BUFFER_SIZE + 5));
 
-    assertThatThrownBy(() -> reader.rewind(), "IOException expected").isInstanceOf(IOException.class);
+    assertThatThrownBy(reader::rewind).isInstanceOf(IOException.class);
 
     // exceeding with read()
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
@@ -162,7 +162,7 @@ class RewindableReaderTest {
     reader.read(buffer);
     reader.read();
 
-    assertThatThrownBy(() -> reader.rewind(), "IOException expected").isInstanceOf(IOException.class);
+    assertThatThrownBy(reader::rewind).isInstanceOf(IOException.class);
 
     // repeated read(char[])
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
@@ -171,7 +171,7 @@ class RewindableReaderTest {
     reader.read(buffer);
     reader.read(buffer);
 
-    assertThatThrownBy(() -> reader.rewind(), "IOException expected").isInstanceOf(IOException.class);
+    assertThatThrownBy(reader::rewind).isInstanceOf(IOException.class);
   }
 
   @Test

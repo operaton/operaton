@@ -18,7 +18,10 @@ package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.authorization.Permissions.TASK_WORK;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_TASK;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 
 import java.util.Collections;
@@ -42,9 +45,16 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     Comment createdComment = createComment(TASK_ID, null, "aComment");
     var createdCommentId = createdComment.getId();
 
-    assertThatThrownBy(() -> taskService.deleteTaskComment(TASK_ID, createdCommentId), "Exception expected: It should not be possible to delete a comment.")
+    // when + then
+    assertThatThrownBy(() -> taskService.deleteTaskComment(TASK_ID, createdCommentId),
+            "It should not be possible to delete a comment.")
         .isInstanceOf(AuthorizationException.class)
-        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource 'myTask' of type 'Task' or 'UPDATE' permission on resource 'myTask' of type 'Task'");
+        .hasMessageContaining(userId)
+        .hasMessageContaining(TASK_WORK.getName())
+        .hasMessageContaining(TASK_ID)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TASK.resourceName());
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -74,9 +84,16 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     createTask(TASK_ID);
     createComment(TASK_ID, null, "aComment");
 
-    assertThatThrownBy(() -> taskService.deleteTaskComments(TASK_ID), "Exception expected: It should not be possible to delete a comment.")
+    // when + then
+    assertThatThrownBy(() -> taskService.deleteTaskComments(TASK_ID),
+            "It should not be possible to delete a comment.")
         .isInstanceOf(AuthorizationException.class)
-        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource 'myTask' of type 'Task' or 'UPDATE' permission on resource 'myTask' of type 'Task'");
+        .hasMessageContaining(userId)
+        .hasMessageContaining(TASK_WORK.getName())
+        .hasMessageContaining(TASK_ID)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TASK.resourceName());
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -109,9 +126,16 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     Comment createdComment = createComment(TASK_ID, null, "originalComment");
     var createdCommentId = createdComment.getId();
 
-    assertThatThrownBy(() -> taskService.updateTaskComment(TASK_ID, createdCommentId, "updateMessage"), "Exception expected: It should not be possible to delete a comment.")
+    // when + then
+    assertThatThrownBy(() -> taskService.updateTaskComment(TASK_ID, createdCommentId, "updateMessage"),
+            "It should not be possible to delete a comment.")
         .isInstanceOf(AuthorizationException.class)
-        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource 'myTask' of type 'Task' or 'UPDATE' permission on resource 'myTask' of type 'Task'");
+        .hasMessageContaining(userId)
+        .hasMessageContaining(TASK_WORK.getName())
+        .hasMessageContaining(TASK_ID)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TASK.resourceName());
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -146,9 +170,14 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     var taskId = selectSingleTask().getId();
     var createdCommentId = createComment(taskId, processInstance.getId(), "aComment").getId();
 
-    assertThatThrownBy(() -> taskService.deleteTaskComment(taskId, createdCommentId), "Exception expected: It should not be possible to delete a comment.")
+    // when + then
+    assertThatThrownBy(() -> taskService.deleteTaskComment(taskId, createdCommentId),
+            "It should not be possible to delete a comment.")
         .isInstanceOf(AuthorizationException.class)
-        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource");
+        .hasMessageContaining(userId)
+        .hasMessageContaining(TASK_WORK.getName())
+        .hasMessageContaining(UPDATE_TASK.getName())
+        .hasMessageContaining(TASK.resourceName());
   }
 
   @Test
@@ -178,10 +207,18 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     var taskId = task.getId();
     createComment(taskId, processInstance.getId(), "aComment");
 
-    assertThatThrownBy(() -> taskService.deleteTaskComments(taskId), "Exception expected: It should not be possible to delete a comment.")
+    // when + then
+    assertThatThrownBy(() -> taskService.deleteTaskComments(taskId),
+            "It should not be possible to delete a comment.")
         .isInstanceOf(AuthorizationException.class)
-        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource");
-
+        .hasMessageContaining(userId)
+        .hasMessageContaining(TASK_WORK.getName())
+        .hasMessageContaining(UPDATE_TASK.getName())
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName())
+        .hasMessageContaining(processInstance.getProcessDefinitionKey());
   }
 
   @Test
@@ -211,10 +248,17 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     var taskId = selectSingleTask().getId();
     var createdCommentId = createComment(taskId, processInstance.getId(), "originalComment").getId();
 
-    assertThatThrownBy(() -> taskService.updateTaskComment(taskId, createdCommentId, "updateMessage"), "Exception expected: It should not be possible to delete a comment.")
+    // when + then
+    assertThatThrownBy(() -> taskService.updateTaskComment(taskId, createdCommentId, "updateMessage"),
+            "It should not be possible to delete a comment.")
         .isInstanceOf(AuthorizationException.class)
-        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK' permission on resource");
-
+        .hasMessageContaining(userId)
+        .hasMessageContaining(TASK_WORK.getName())
+        .hasMessageContaining(UPDATE_TASK.getName())
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test

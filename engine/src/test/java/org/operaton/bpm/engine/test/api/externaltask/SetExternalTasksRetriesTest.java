@@ -120,7 +120,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     externalTaskIds.add("nonExistingExternalTaskId");
 
-    assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, 10), "exception expected")
+    assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, 10))
         .isInstanceOf(NotFoundException.class)
         .hasMessageContaining("Cannot find external task with id nonExistingExternalTaskId");
 
@@ -137,7 +137,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     externalTaskIds.add(null);
 
-    assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, 10), "exception expected")
+    assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, 10))
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining("External task id cannot be null");
 
@@ -163,7 +163,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
     externalTaskIds.add("nonExistingExternalTaskId");
     Batch batch = externalTaskService.setRetriesAsync(externalTaskIds, null, 10);
 
-    assertThatThrownBy(() -> executeSeedAndBatchJobs(batch), "exception expected")
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(batch))
         .isInstanceOf(NotFoundException.class)
         .hasMessageContaining("Cannot find external task with id nonExistingExternalTaskId");
 
@@ -198,7 +198,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     List<String> externalTaskIds = Arrays.asList("externalTaskId");
 
-    assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, -10), "exception expected")
+    assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, -10))
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining("The number of retries cannot be negative");
 
@@ -211,7 +211,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     Batch batch = externalTaskService.setRetriesAsync(externalTaskIds, null, -10);
 
-    assertThatThrownBy(() -> executeSeedAndBatchJobs(batch), "exception expected")
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(batch))
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining("The number of retries cannot be negative");
 

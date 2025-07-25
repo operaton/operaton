@@ -25,7 +25,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 public class ProcessEngineTestsWithVariablesTest {
 
@@ -88,7 +87,7 @@ public class ProcessEngineTestsWithVariablesTest {
     // Given we replace the last key with its integer value
     keys.set(keys.size() - 1, values.get(values.size() - 1));
     // When we construct the variables map, we expect an exception to be thrown
-    assertThatThrownBy(() -> returnedMap(keys, values), "IllegalArgumentException or AssertionError expected!")
+    assertThatThrownBy(() -> returnedMap(keys, values), "ClassCastException, IllegalArgumentException or AssertionError expected!")
         .isInstanceOfAny(ClassCastException.class, IllegalArgumentException.class, AssertionError.class);
   }
 
@@ -99,7 +98,7 @@ public class ProcessEngineTestsWithVariablesTest {
     // Given we replace the last key with a null pointer
     keys.set(keys.size() - 1, null);
     // When we construct the variables map, we expect an exception to be thrown
-    assertThatThrownBy(() -> returnedMap(keys, values), "IllegalArgumentException expected!")
+    assertThatThrownBy(() -> returnedMap(keys, values), "IllegalArgumentException or AssertionError expected!")
         .isInstanceOfAny(IllegalArgumentException.class, AssertionError.class);
   }
 

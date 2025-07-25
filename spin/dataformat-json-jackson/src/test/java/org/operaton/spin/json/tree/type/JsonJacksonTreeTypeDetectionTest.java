@@ -137,8 +137,7 @@ class JsonJacksonTreeTypeDetectionTest {
   @Test
   void shouldHandleNullParameter() {
     DataFormatMapper mapper = json().getMapper();
-    assertThatThrownBy(() -> mapper.getCanonicalTypeName(null), "Expected IllegalArgumentException")
-        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> mapper.getCanonicalTypeName(null)).isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test

@@ -70,7 +70,7 @@ public class IoUtilTest {
 
   @Test
   void shouldFailGetFileContentAsStringWithGarbageAsFilename() {
-    assertThatThrownBy(() -> IoUtil.fileAsString("asd123"), "Expected: IoUtilException")
+    assertThatThrownBy(() -> IoUtil.fileAsString("asd123"))
         .isInstanceOf(IoUtilException.class);
   }
 
@@ -92,7 +92,7 @@ public class IoUtilTest {
 
   @Test
   void shouldFailGetFileContentAsStreamWithGarbageAsFilename() {
-    assertThatThrownBy(() -> IoUtil.fileAsStream("asd123"), "Expected: IoUtilException")
+    assertThatThrownBy(() -> IoUtil.fileAsStream("asd123"))
         .isInstanceOf(IoUtilException.class);
   }
 
@@ -107,13 +107,13 @@ public class IoUtilTest {
 
   @Test
   void shouldFailGetFileFromClassPathWithGarbage() {
-    assertThatThrownBy(() -> IoUtil.getClasspathFile("asd123"), "Expected: IoUtilException")
+    assertThatThrownBy(() -> IoUtil.getClasspathFile("asd123"))
         .isInstanceOf(IoUtilException.class);
   }
 
   @Test
   void shouldFailGetFileFromClassPathWithNull() {
-    assertThatThrownBy(() -> IoUtil.getClasspathFile(null), "Expected: IoUtilException")
+    assertThatThrownBy(() -> IoUtil.getClasspathFile(null))
         .isInstanceOf(IoUtilException.class);
   }
 

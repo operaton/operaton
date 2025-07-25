@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE_INSTANCE;
@@ -29,12 +30,10 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 import java.io.InputStream;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,16 +82,14 @@ class FormAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testGetStartFormDataWithoutAuthorizations() {
-    // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
-    Throwable thrown = catchThrowable(() -> formService.getStartFormData(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to get start form data")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+
+    assertThatThrownBy(() -> formService.getStartFormData(processDefinitionId))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -113,17 +110,14 @@ class FormAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testGetRenderedStartFormWithoutAuthorization() {
-    // given
     String processDefinitionId = selectProcessDefinitionByKey(RENDERED_FORM_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> formService.getRenderedStartForm(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to get start form data")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(RENDERED_FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    assertThatThrownBy(() -> formService.getRenderedStartForm(processDefinitionId))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(RENDERED_FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -143,17 +137,14 @@ class FormAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testGetStartFormVariablesWithoutAuthorization() {
-    // given
     String processDefinitionId = selectProcessDefinitionByKey(RENDERED_FORM_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> formService.getStartFormVariables(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to get start form data")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(RENDERED_FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    assertThatThrownBy(() -> formService.getStartFormVariables(processDefinitionId))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(RENDERED_FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -175,16 +166,14 @@ class FormAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testSubmitStartFormWithoutAuthorization() {
-    // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> formService.submitStartForm(processDefinitionId, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to submit a start form")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(CREATE.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
+    assertThatThrownBy(() -> formService.submitStartForm(processDefinitionId, null),
+            "It should not possible to submit a start form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(CREATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName());
   }
 
   @Test
@@ -193,14 +182,14 @@ class FormAuthorizationTest extends AuthorizationTest {
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
 
-    Throwable thrown = catchThrowable(() -> formService.submitStartForm(processDefinitionId, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to submit a start form")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(CREATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.submitStartForm(processDefinitionId, null),
+            "It should not possible to submit a start form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(CREATE_INSTANCE.getName())
+        .hasMessageContaining(FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -209,13 +198,13 @@ class FormAuthorizationTest extends AuthorizationTest {
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, FORM_PROCESS_KEY, userId, CREATE_INSTANCE);
 
-    Throwable thrown = catchThrowable(() -> formService.submitStartForm(processDefinitionId, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to submit a start form")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(CREATE.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.submitStartForm(processDefinitionId, null),
+            "It should not possible to submit a start form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(CREATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName());
   }
 
   @Test
@@ -240,26 +229,27 @@ class FormAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    Throwable thrown = catchThrowable(() -> formService.getTaskFormData(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get task form data")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.getTaskFormData(taskId),
+            "It should not possible to get task form data")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName());
+
 
     // given (2)
     setReadVariableAsDefaultReadVariablePermission();
 
-    thrown = catchThrowable(() -> formService.getTaskFormData(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get task form data")
-        .isInstanceOf(AuthorizationException.class);
-    message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ_VARIABLE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
+    // when + then (2)
+    assertThatThrownBy(() -> formService.getTaskFormData(taskId),
+            "It should not possible to get task form data")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_VARIABLE.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName());
 
     deleteTask(taskId, true);
   }
@@ -307,32 +297,32 @@ class FormAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    Throwable thrown = catchThrowable(() -> formService.getTaskFormData(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get task form data")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(READ_TASK.getName(), message);
-    testRule.assertTextPresent(FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.getTaskFormData(taskId),
+            "It should not possible to get task form data")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(READ_TASK.getName())
+        .hasMessageContaining(FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // given (2)
     setReadVariableAsDefaultReadVariablePermission();
 
-    thrown = catchThrowable(() -> formService.getTaskFormData(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get task form data")
-        .isInstanceOf(AuthorizationException.class);
-    message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ_VARIABLE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(READ_TASK_VARIABLE.getName(), message);
-    testRule.assertTextPresent(FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then (2)
+    assertThatThrownBy(() -> formService.getTaskFormData(taskId),
+            "It should not possible to get task form data")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_VARIABLE.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(READ_TASK_VARIABLE.getName())
+        .hasMessageContaining(FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -431,26 +421,26 @@ class FormAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    Throwable thrown = catchThrowable(() -> formService.getRenderedTaskForm(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get rendered task form")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.getRenderedTaskForm(taskId),
+            "It should not possible to get rendered task form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName());
 
     // given (2)
     setReadVariableAsDefaultReadVariablePermission();
 
-    thrown = catchThrowable(() -> formService.getRenderedTaskForm(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get rendered task form")
-        .isInstanceOf(AuthorizationException.class);
-    message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ_VARIABLE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
+    // when + then (2)
+    assertThatThrownBy(() -> formService.getRenderedTaskForm(taskId),
+            "It should not possible to get rendered task form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_VARIABLE.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName());
 
     deleteTask(taskId, true);
   }
@@ -492,32 +482,32 @@ class FormAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    Throwable thrown = catchThrowable(() -> formService.getRenderedTaskForm(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get rendered task form")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(READ_TASK.getName(), message);
-    testRule.assertTextPresent(RENDERED_FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.getRenderedTaskForm(taskId),
+            "It should not possible to get rendered task form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(READ_TASK.getName())
+        .hasMessageContaining(RENDERED_FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // given (2)
     setReadVariableAsDefaultReadVariablePermission();
 
-    thrown = catchThrowable(() -> formService.getRenderedTaskForm(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get rendered task form")
-        .isInstanceOf(AuthorizationException.class);
-    message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ_VARIABLE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(READ_TASK_VARIABLE.getName(), message);
-    testRule.assertTextPresent(RENDERED_FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then (2)
+    assertThatThrownBy(() -> formService.getRenderedTaskForm(taskId),
+            "It should not possible to get rendered task form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_VARIABLE.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(READ_TASK_VARIABLE.getName())
+        .hasMessageContaining(RENDERED_FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -616,26 +606,26 @@ class FormAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    Throwable thrown = catchThrowable(() -> formService.getTaskFormVariables(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get task form variables")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.getTaskFormVariables(taskId),
+            "It should not possible to get task form variables")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName());
 
     // given (2)
     setReadVariableAsDefaultReadVariablePermission();
 
-    thrown = catchThrowable(() -> formService.getTaskFormVariables(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get task form variables")
-        .isInstanceOf(AuthorizationException.class);
-    message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ_VARIABLE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
+    // when + then (2)
+    assertThatThrownBy(() -> formService.getTaskFormVariables(taskId),
+            "It should not possible to get task form variables")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_VARIABLE.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName());
 
     deleteTask(taskId, true);
   }
@@ -681,33 +671,32 @@ class FormAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    Throwable thrown = catchThrowable(() -> formService.getTaskFormVariables(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get task form variables")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(READ_TASK.getName(), message);
-    testRule.assertTextPresent(RENDERED_FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.getTaskFormVariables(taskId),
+            "It should not possible to get task form variables")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(READ_TASK.getName())
+        .hasMessageContaining(RENDERED_FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // given (2)
     processEngineConfiguration.setEnforceSpecificVariablePermission(true);
 
-    thrown = catchThrowable(() -> formService.getTaskFormVariables(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get task form variables")
-        .isInstanceOf(AuthorizationException.class);
-    message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ_VARIABLE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(READ_TASK_VARIABLE.getName(), message);
-    testRule.assertTextPresent(RENDERED_FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then (2)
+    assertThatThrownBy(() -> formService.getTaskFormVariables(taskId),
+            "It should not possible to get task form variables")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_VARIABLE.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(READ_TASK_VARIABLE.getName())
+        .hasMessageContaining(RENDERED_FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -816,14 +805,14 @@ class FormAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    Throwable thrown = catchThrowable(() -> formService.submitTaskForm(taskId, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to submit a task form")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.submitTaskForm(taskId, null),
+            "It should not possible to submit a task form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName());
 
     deleteTask(taskId, true);
   }
@@ -853,17 +842,17 @@ class FormAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    Throwable thrown = catchThrowable(() -> formService.submitTaskForm(taskId, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to submit a task form")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-    testRule.assertTextPresent(FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.submitTaskForm(taskId, null),
+            "It should not possible to submit a task form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(UPDATE_TASK.getName())
+        .hasMessageContaining(FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -935,14 +924,14 @@ class FormAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> formService.getStartFormKey(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get a start form key")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.getStartFormKey(processDefinitionId),
+            "It should not possible to get a start form key")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -965,14 +954,14 @@ class FormAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> formService.getTaskFormKey(processDefinitionId, "task"));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get a task form key")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> formService.getTaskFormKey(processDefinitionId, "task"),
+            "It should not possible to get a task form key")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1006,15 +995,14 @@ class FormAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> formService.getDeployedStartForm(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get a deployed start form")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> formService.getDeployedStartForm(processDefinitionId),
+            "It should not possible to get a deployed start form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(FORM_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   // get deployed task form////////////////////////////////////////
@@ -1037,15 +1025,14 @@ class FormAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    Throwable thrown = catchThrowable(() -> formService.getDeployedTaskForm(taskId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not possible to get a deployed task form")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(FORM_PROCESS_KEY, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> formService.getDeployedTaskForm(taskId),
+            "It should not possible to get a deployed task form")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(FORM_PROCESS_KEY)
+        .hasMessageContaining(TASK.resourceName());
   }
 
   // helper ////////////////////////////////////////////////////////////////////////////////

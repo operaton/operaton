@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.TASK_ASSIGN;
@@ -32,7 +31,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -97,7 +95,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   void shouldSetOperationStandaloneWithoutAuthorization() {
     // given
     createTask(taskId);
-    assertThatThrownBy(() -> operation.accept(taskService, taskId, value), "Exception expected: It should not be possible to " + operationName)
+    assertThatThrownBy(() -> operation.accept(taskService, taskId, value), "It should not be possible to " + operationName)
         .isInstanceOf(AuthorizationException.class)
         .hasMessageContaining("The user with id '" + userId + "' does not have one of the following permissions: 'TASK_ASSIGN'");
     deleteTask(taskId, true);
@@ -163,17 +161,16 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    Throwable thrown = catchThrowable(() -> operation.accept(taskService, taskId, value));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to " + operationName)
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> operation.accept(taskService, taskId, value),
+            "It should not be possible to " + operationName)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(taskId)
+        .hasMessageContaining(TASK.resourceName())
+        .hasMessageContaining(UPDATE_TASK.getName())
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @TestTemplate

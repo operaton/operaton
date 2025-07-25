@@ -33,7 +33,6 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -209,14 +208,14 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> ((RepositoryServiceImpl)repositoryService).getDeployedProcessDefinition(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to get the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> ((RepositoryServiceImpl)repositoryService).getDeployedProcessDefinition(processDefinitionId),
+            "It should not be possible to get the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -239,14 +238,14 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> repositoryService.getProcessDiagram(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to get the process diagram")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    // when + then
+    assertThatThrownBy(() -> repositoryService.getProcessDiagram(processDefinitionId),
+            "It should not be possible to get the process diagram")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -270,15 +269,14 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> repositoryService.getProcessModel(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to get the process model")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.getProcessModel(processDefinitionId),
+            "It should not be possible to get the process model")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -301,15 +299,14 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> repositoryService.getBpmnModelInstance(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to get the bpmn model instance")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.getBpmnModelInstance(processDefinitionId),
+            "It should not be possible to get the bpmn model instance")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -332,15 +329,14 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> repositoryService.getProcessDiagramLayout(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to get the process diagram layout")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(READ.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.getProcessDiagramLayout(processDefinitionId),
+            "It should not be possible to get the process diagram layout")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -364,16 +360,15 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    Throwable thrown = catchThrowable(() -> repositoryService.suspendProcessDefinitionById(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to suspend the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessDefinitionPermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.suspendProcessDefinitionById(processDefinitionId),
+            "It should not be possible to suspend the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ProcessDefinitionPermissions.SUSPEND.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -412,16 +407,15 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     suspendProcessDefinitionById(processDefinitionId);
 
-    Throwable thrown = catchThrowable(() -> repositoryService.activateProcessDefinitionById(processDefinitionId));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to activate the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessDefinitionPermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.activateProcessDefinitionById(processDefinitionId),
+            "It should not be possible to activate the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ProcessDefinitionPermissions.SUSPEND.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -463,19 +457,18 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
 
-    Throwable thrown = catchThrowable(() -> repositoryService.suspendProcessDefinitionById(processDefinitionId, true, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to suspend the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(ProcessInstancePermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(SUSPEND_INSTANCE.getName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.suspendProcessDefinitionById(processDefinitionId, true, null),
+            "It should not be possible to suspend the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(ProcessInstancePermissions.SUSPEND.getName())
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(SUSPEND_INSTANCE.getName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -487,19 +480,18 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE, ProcessInstancePermissions.SUSPEND);
 
-    Throwable thrown = catchThrowable(() -> repositoryService.suspendProcessDefinitionById(processDefinitionId, true, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to suspend the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(ProcessInstancePermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(SUSPEND_INSTANCE.getName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.suspendProcessDefinitionById(processDefinitionId, true, null))
+        .withFailMessage("It should not be possible to suspend the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(ProcessInstancePermissions.SUSPEND.getName())
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(SUSPEND_INSTANCE.getName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -613,19 +605,18 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     suspendProcessDefinitionById(processDefinitionId);
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, ProcessDefinitionPermissions.SUSPEND);
 
-    Throwable thrown = catchThrowable(() -> repositoryService.activateProcessDefinitionById(processDefinitionId, true, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to suspend the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessInstancePermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(SUSPEND_INSTANCE.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.activateProcessDefinitionById(processDefinitionId, true, null))
+        .withFailMessage("It should not be possible to activate the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ProcessInstancePermissions.SUSPEND.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(SUSPEND_INSTANCE.getName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -638,19 +629,18 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     suspendProcessDefinitionById(processDefinitionId);
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
 
-    Throwable thrown = catchThrowable(() -> repositoryService.activateProcessDefinitionById(processDefinitionId, true, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to activate the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessInstancePermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(SUSPEND_INSTANCE.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.activateProcessDefinitionById(processDefinitionId, true, null))
+        .withFailMessage("It should not be possible to activate the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ProcessInstancePermissions.SUSPEND.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(SUSPEND_INSTANCE.getName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -763,17 +753,14 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testSuspendProcessDefinitionByKeyWithoutAuthorization() {
-    // given
-    Throwable thrown = catchThrowable(() -> repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to suspend the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessDefinitionPermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    assertThatThrownBy(() -> repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY),
+            "It should not be possible to suspend the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ProcessDefinitionPermissions.SUSPEND.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -809,16 +796,15 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
 
-    Throwable thrown = catchThrowable(() ->  repositoryService.activateProcessDefinitionByKey(ONE_TASK_PROCESS_KEY));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to activate the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessDefinitionPermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.activateProcessDefinitionByKey(ONE_TASK_PROCESS_KEY),
+            "It should not be possible to activate the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ProcessDefinitionPermissions.SUSPEND.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -856,19 +842,18 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, ProcessDefinitionPermissions.SUSPEND);
 
-    Throwable thrown = catchThrowable(() -> repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to suspend the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessDefinitionPermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(SUSPEND_INSTANCE.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, null),
+            "It should not be possible to suspend the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(ProcessInstancePermissions.SUSPEND.getName())
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(SUSPEND_INSTANCE.getName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -879,19 +864,18 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE, ProcessInstancePermissions.SUSPEND);
 
-    Throwable thrown = catchThrowable(() -> repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to suspend the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessInstancePermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(SUSPEND_INSTANCE.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, null),
+            "It should not be possible to suspend the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(ProcessInstancePermissions.SUSPEND.getName())
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(SUSPEND_INSTANCE.getName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1000,19 +984,18 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
 
-    Throwable thrown = catchThrowable(() -> repositoryService.activateProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to activate the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessInstancePermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(SUSPEND_INSTANCE.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.activateProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, null),
+            "It should not be possible to activate the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ProcessInstancePermissions.SUSPEND.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(SUSPEND_INSTANCE.getName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1024,19 +1007,18 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, ProcessDefinitionPermissions.SUSPEND);
 
-    Throwable thrown = catchThrowable(() -> repositoryService.activateProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, null));
-    Assertions.assertThat(thrown).as("Exception expected: It should not be possible to activate the process definition")
-        .isInstanceOf(AuthorizationException.class);
-    String message = thrown.getMessage();
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(ProcessInstancePermissions.SUSPEND.getName(), message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(SUSPEND_INSTANCE.getName(), message);
-    testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-
+    // when + then
+    assertThatThrownBy(() -> repositoryService.activateProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, null),
+            "It should not be possible to activate the process definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ProcessInstancePermissions.SUSPEND.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(SUSPEND_INSTANCE.getName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test

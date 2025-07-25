@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.authorization.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
@@ -366,7 +365,6 @@ class HistoricJobLogAuthorizationTest extends AuthorizationTest {
         .hasMessageContaining(READ_HISTORY.getName())
         .hasMessageContaining(ONE_INCIDENT_PROCESS_KEY)
         .hasMessageContaining(PROCESS_DEFINITION.resourceName());
-
   }
 
   @Test

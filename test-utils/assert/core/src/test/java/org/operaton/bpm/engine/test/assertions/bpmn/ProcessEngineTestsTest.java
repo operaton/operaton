@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.processEngine;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.reset;

@@ -22,6 +22,7 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
@@ -131,8 +132,8 @@ class PropertyHelperTest {
     Map<String, String> propertiesToSet = new HashMap<>();
     propertiesToSet.put("aNonExistingProperty", "someValue");
 
-    assertThatThrownBy(() -> PropertyHelper.applyProperties(engineConfiguration, propertiesToSet), "Exception expected")
-        .isInstanceOf(Exception.class);
+    assertThatThrownBy(() -> PropertyHelper.applyProperties(engineConfiguration, propertiesToSet))
+        .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

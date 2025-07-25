@@ -32,6 +32,7 @@ import org.operaton.bpm.container.impl.jmx.kernel.util.StopServiceDeploymentOper
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestService;
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestServiceType;
 import org.operaton.bpm.container.impl.spi.PlatformService;
+import org.operaton.bpm.engine.ProcessEngineException;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -95,7 +96,7 @@ class MBeanServiceContainerTest {
     assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNotNull();
     assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isEqualTo(service1);
     // as long it is started, I cannot start a second service with the same name:
-    assertThatThrownBy(() -> serviceContainer.startService(service1Name, service1), "exception expected")
+    assertThatThrownBy(() -> serviceContainer.startService(service1Name, service1))
         .isInstanceOf(Exception.class)
         .hasMessageContaining("service with same name already registered");
 
@@ -119,7 +120,7 @@ class MBeanServiceContainerTest {
     // now it's gone
     assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
 
-    assertThatThrownBy(() -> serviceContainer.stopService(service1Name), "exception expected")
+    assertThatThrownBy(() -> serviceContainer.stopService(service1Name))
         .isInstanceOf(Exception.class)
         .hasMessageContaining("no such service registered");
 
@@ -219,7 +220,7 @@ class MBeanServiceContainerTest {
         .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
         .addStep(new FailingDeploymentOperationStep());
 
-    assertThatThrownBy(deploymentOperationBuilder::execute, "Exception expected")
+    assertThatThrownBy(deploymentOperationBuilder::execute)
         .isInstanceOf(Exception.class)
         .hasMessageContaining("Exception while performing 'test failing op' => 'failing step'");
 
@@ -234,8 +235,8 @@ class MBeanServiceContainerTest {
       .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
       .addStep(new FailingDeploymentOperationStep());
 
-    assertThatThrownBy(deploymentOperationBuilder1::execute, "Exception expected")
-        .isInstanceOf(Exception.class)
+    assertThatThrownBy(deploymentOperationBuilder1::execute)
+        .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Exception while performing 'test failing op' => 'failing step'");
 
     // none of the services were registered

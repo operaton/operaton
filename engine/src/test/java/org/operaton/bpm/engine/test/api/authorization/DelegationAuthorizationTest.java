@@ -1047,7 +1047,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
     String taskId = selectSingleTask().getId();
     createGrantAuthorization(TASK, taskId, userId, UPDATE);
 
-    assertThatThrownBy(() -> taskService.complete(taskId), "Exception expected: It should not be possible to execute the command inside JavaDelegate")
+    assertThatThrownBy(() -> taskService.complete(taskId), "It should not be possible to execute the command inside JavaDelegate")
         .isInstanceOf(AuthorizationException.class);
 
     // then

@@ -40,7 +40,7 @@ public class TimerExpressionBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Inject
-  @ProcessVariableTyped(value="timerExpression")
+  @ProcessVariableTyped("timerExpression")
   private TypedValue timerExpression;
 
   @Inject

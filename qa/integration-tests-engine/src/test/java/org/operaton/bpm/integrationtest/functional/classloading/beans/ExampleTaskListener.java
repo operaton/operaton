@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 
 import jakarta.inject.Named;
 
-@Named(value = "taskListener")
+@Named("taskListener")
 public class ExampleTaskListener implements TaskListener {
 
   @Override

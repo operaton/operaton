@@ -79,7 +79,7 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
     return processDefinitionId;
   }
 
-  @OperatonQueryParam(value="processDefinitionId")
+  @OperatonQueryParam("processDefinitionId")
   public void setProcessDefinitionId(String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }
@@ -88,7 +88,7 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
     return parentProcessDefinitionId;
   }
 
-  @OperatonQueryParam(value="parentProcessDefinitionId")
+  @OperatonQueryParam("parentProcessDefinitionId")
   public void setParentProcessDefinitionId(String parentProcessDefinitionId) {
     this.parentProcessDefinitionId = parentProcessDefinitionId;
   }
@@ -110,7 +110,7 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
     return parentProcessInstanceId;
   }
 
-  @OperatonQueryParam(value="parentProcessInstanceId")
+  @OperatonQueryParam("parentProcessInstanceId")
   public void setParentProcessInstanceId(String parentProcessInstanceId) {
     this.parentProcessInstanceId = parentProcessInstanceId;
   }
@@ -137,7 +137,7 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
     return businessKey;
   }
 
-  @OperatonQueryParam(value="businessKey")
+  @OperatonQueryParam("businessKey")
   public void setBusinessKey(String businessKey) {
     this.businessKey = businessKey;
   }

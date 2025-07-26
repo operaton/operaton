@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     use = JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.PROPERTY, property="type"
 )
 @JsonSubTypes({
-    @Type(value = DurationReportResultDto.class)
+    @Type(DurationReportResultDto.class)
 })
 public abstract class ReportResultDto {
 

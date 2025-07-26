@@ -54,8 +54,8 @@ public class TestWarDeploymentResumePreviousOnDeploymentName extends AbstractFox
   }
 
   @Test
-  @OperateOnDeployment(value = PA2)
-  void testDeployProcessArchive() {
+  @OperateOnDeployment(PA2)
+  void deployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     //since we have two processes deployed for PA2 we got to check that both are present

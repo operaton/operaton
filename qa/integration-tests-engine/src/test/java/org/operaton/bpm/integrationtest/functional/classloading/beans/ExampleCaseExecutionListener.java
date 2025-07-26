@@ -25,7 +25,7 @@ import jakarta.inject.Named;
  * @author Roman Smirnov
  *
  */
-@Named(value = "caseExecutionListener")
+@Named("caseExecutionListener")
 public class ExampleCaseExecutionListener implements CaseExecutionListener {
 
   @Override

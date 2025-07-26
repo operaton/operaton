@@ -488,7 +488,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.dueAfter = dueAfter;
   }
 
-  @OperatonQueryParam(value = "dueAfterExpression")
+  @OperatonQueryParam("dueAfterExpression")
   public void setDueAfterExpression(String dueAfterExpression) {
     this.dueAfterExpression = dueAfterExpression;
   }
@@ -498,7 +498,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.dueBefore = dueBefore;
   }
 
-  @OperatonQueryParam(value = "dueBeforeExpression")
+  @OperatonQueryParam("dueBeforeExpression")
   public void setDueBeforeExpression(String dueBeforeExpression) {
     this.dueBeforeExpression = dueBeforeExpression;
   }
@@ -517,7 +517,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     setDueDate(dueDate);
   }
 
-  @OperatonQueryParam(value = "dueDateExpression")
+  @OperatonQueryParam("dueDateExpression")
   public void setDueDateExpression(String dueDateExpression) {
     this.dueDateExpression = dueDateExpression;
   }
@@ -532,7 +532,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.followUpAfter = followUpAfter;
   }
 
-  @OperatonQueryParam(value = "followUpAfterExpression")
+  @OperatonQueryParam("followUpAfterExpression")
   public void setFollowUpAfterExpression(String followUpAfterExpression) {
     this.followUpAfterExpression = followUpAfterExpression;
   }
@@ -542,7 +542,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.followUpBefore = followUpBefore;
   }
 
-  @OperatonQueryParam(value = "followUpBeforeOrNotExistentExpression")
+  @OperatonQueryParam("followUpBeforeOrNotExistentExpression")
   public void setFollowUpBeforeOrNotExistentExpression(String followUpBeforeExpression) {
     this.followUpBeforeOrNotExistentExpression = followUpBeforeExpression;
   }
@@ -552,7 +552,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.followUpBeforeOrNotExistent = followUpBefore;
   }
 
-  @OperatonQueryParam(value = "followUpBeforeExpression")
+  @OperatonQueryParam("followUpBeforeExpression")
   public void setFollowUpBeforeExpression(String followUpBeforeExpression) {
     this.followUpBeforeExpression = followUpBeforeExpression;
   }
@@ -571,7 +571,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     setFollowUpDate(followUpDate);
   }
 
-  @OperatonQueryParam(value = "followUpDateExpression")
+  @OperatonQueryParam("followUpDateExpression")
   public void setFollowUpDateExpression(String followUpDateExpression) {
     this.followUpDateExpression = followUpDateExpression;
   }
@@ -581,7 +581,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.createdAfter = createdAfter;
   }
 
-  @OperatonQueryParam(value = "createdAfterExpression")
+  @OperatonQueryParam("createdAfterExpression")
   public void setCreatedAfterExpression(String createdAfterExpression) {
     this.createdAfterExpression = createdAfterExpression;
   }
@@ -591,7 +591,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.createdBefore = createdBefore;
   }
 
-  @OperatonQueryParam(value = "createdBeforeExpression")
+  @OperatonQueryParam("createdBeforeExpression")
   public void setCreatedBeforeExpression(String createdBeforeExpression) {
     this.createdBeforeExpression = createdBeforeExpression;
   }
@@ -607,7 +607,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.createdOn = createdOn;
   }
 
-  @OperatonQueryParam(value = "createdOnExpression")
+  @OperatonQueryParam("createdOnExpression")
   public void setCreatedOnExpression(String createdOnExpression) {
     this.createdOnExpression = createdOnExpression;
   }
@@ -617,12 +617,12 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.updatedAfter = updatedAfter;
   }
 
-  @OperatonQueryParam(value = "updatedAfterExpression")
+  @OperatonQueryParam("updatedAfterExpression")
   public void setUpdatedAfterExpression(String updatedAfterExpression) {
     this.updatedAfterExpression = updatedAfterExpression;
   }
 
-  @OperatonQueryParam(value = "delegationState")
+  @OperatonQueryParam("delegationState")
   public void setDelegationState(String taskDelegationState) {
     this.delegationState = taskDelegationState;
   }
@@ -632,7 +632,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.candidateGroups = candidateGroups;
   }
 
-  @OperatonQueryParam(value = "candidateGroupsExpression")
+  @OperatonQueryParam("candidateGroupsExpression")
   public void setCandidateGroupsExpression(String candidateGroupsExpression) {
     this.candidateGroupsExpression = candidateGroupsExpression;
   }

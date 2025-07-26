@@ -56,8 +56,8 @@ public class TestWarDeploymentResumePreviousOff extends AbstractFoxPlatformInteg
   }
 
   @Test
-  @OperateOnDeployment(value = PA2)
-  void testDeployProcessArchive() {
+  @OperateOnDeployment(PA2)
+  void deployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createProcessDefinitionQuery()

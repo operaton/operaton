@@ -58,7 +58,7 @@ import jakarta.enterprise.context.RequestScoped;
  * @author Daniel Meyer
  */
 @Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
-@Retention(value = RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface BusinessProcessScoped {
 
 }

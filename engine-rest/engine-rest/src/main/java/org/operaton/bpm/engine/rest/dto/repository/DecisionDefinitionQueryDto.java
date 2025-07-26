@@ -171,12 +171,12 @@ public class DecisionDefinitionQueryDto extends AbstractQueryDto<DecisionDefinit
     this.latestVersion = latestVersion;
   }
 
-  @OperatonQueryParam(value = "decisionRequirementsDefinitionId")
+  @OperatonQueryParam("decisionRequirementsDefinitionId")
   public void setDecisionRequirementsDefinitionId(String decisionRequirementsDefinitionId) {
     this.decisionRequirementsDefinitionId = decisionRequirementsDefinitionId;
   }
 
-  @OperatonQueryParam(value = "decisionRequirementsDefinitionKey")
+  @OperatonQueryParam("decisionRequirementsDefinitionKey")
   public void setDecisionRequirementsDefinitionKey(String decisionRequirementsDefinitionKey) {
     this.decisionRequirementsDefinitionKey = decisionRequirementsDefinitionKey;
   }
@@ -201,12 +201,12 @@ public class DecisionDefinitionQueryDto extends AbstractQueryDto<DecisionDefinit
     this.includeDefinitionsWithoutTenantId = includeDefinitionsWithoutTenantId;
   }
 
-  @OperatonQueryParam(value = "versionTag")
+  @OperatonQueryParam("versionTag")
   public void setVersionTag(String versionTag) {
     this.versionTag = versionTag;
   }
 
-  @OperatonQueryParam(value = "versionTagLike")
+  @OperatonQueryParam("versionTagLike")
   public void setVersionTagLike(String versionTagLike) {
     this.versionTagLike = versionTagLike;
   }

@@ -280,7 +280,7 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
     return incidentId;
   }
 
-  @OperatonQueryParam(value = "incidentId")
+  @OperatonQueryParam("incidentId")
   public void setIncidentId(String incidentId) {
     this.incidentId = incidentId;
   }
@@ -289,7 +289,7 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
     return incidentType;
   }
 
-  @OperatonQueryParam(value = "incidentType")
+  @OperatonQueryParam("incidentType")
   public void setIncidentType(String incidentType) {
     this.incidentType = incidentType;
   }
@@ -298,7 +298,7 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
     return incidentMessage;
   }
 
-  @OperatonQueryParam(value = "incidentMessage")
+  @OperatonQueryParam("incidentMessage")
   public void setIncidentMessage(String incidentMessage) {
     this.incidentMessage = incidentMessage;
   }
@@ -307,7 +307,7 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
     return incidentMessageLike;
   }
 
-  @OperatonQueryParam(value = "incidentMessageLike")
+  @OperatonQueryParam("incidentMessageLike")
   public void setIncidentMessageLike(String incidentMessageLike) {
     this.incidentMessageLike = incidentMessageLike;
   }

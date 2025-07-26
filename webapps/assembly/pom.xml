@@ -79,9 +79,11 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest-core</artifactId>
     </dependency>
+    <!-- test dependencies -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>

@@ -39,8 +39,9 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 public class GroovyPaClassImportTest extends AbstractFoxPlatformIntegrationTest {
 
   public static final String SCRIPT_WITH_IMPORT =
-      "import org.operaton.bpm.integrationtest.functional.scriptengine.classes.CustomClass\n"
-    + "execution.setVariable('greeting', new CustomClass().greet())";
+      """
+    import org.operaton.bpm.integrationtest.functional.scriptengine.classes.CustomClass
+    execution.setVariable('greeting', new CustomClass().greet())""";
 
   public static final String GROOVY_MODULE_DEPENDENCY =
       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"

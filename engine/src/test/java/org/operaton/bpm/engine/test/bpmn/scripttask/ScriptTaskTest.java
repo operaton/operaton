@@ -484,8 +484,10 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
     Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
     assertThat(date.getTime()).isZero();
 
-    deployProcess(PYTHON, "import org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable\n" +
-      "execution.setVariable('myVar', org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));");
+    deployProcess(PYTHON, """
+      import org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable
+      execution.setVariable('myVar', org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));\
+      """);
 
     pi = runtimeService.startProcessInstanceByKey("testProcess");
 

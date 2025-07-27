@@ -21,7 +21,6 @@ import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +91,7 @@ class CockpitPluginAutoDeploymentIT {
   }
 
   void deployPlugin(String jarName) throws IOException {
-    Path runUserlibDir = Paths.get(baseDirectory, SpringBootManagedContainer.USERLIB_PATH);
+    Path runUserlibDir = Path.of(baseDirectory, SpringBootManagedContainer.USERLIB_PATH);
     String pluginHome = System.getProperty(EXAMPLE_PLUGIN_HOME);
 
     if (pluginHome == null || pluginHome.isEmpty()) {
@@ -100,7 +99,7 @@ class CockpitPluginAutoDeploymentIT {
           + "to the root directory of the plugin to deploy.");
     }
 
-    Path pluginPath = Paths.get(pluginHome, jarName).toAbsolutePath();
+    Path pluginPath = Path.of(pluginHome, jarName).toAbsolutePath();
     Path copy = Files.copy(pluginPath, runUserlibDir.resolve(pluginPath.getFileName()));
 
     deployedPlugins.add(copy.toString());
@@ -109,7 +108,7 @@ class CockpitPluginAutoDeploymentIT {
   void undeployPlugins() {
     for (String pluginPath : deployedPlugins) {
       try {
-        Files.delete(Paths.get(pluginPath));
+        Files.delete(Path.of(pluginPath));
       } catch (IOException e) {
         fail("unable to undeploy plugin " + pluginPath);
       }

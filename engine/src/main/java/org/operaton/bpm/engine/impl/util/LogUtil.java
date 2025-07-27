@@ -102,7 +102,7 @@ public class LogUtil {
         line.append(" CFG ");
       }
 
-      int threadId = logRecord.getThreadID();
+      long threadId = logRecord.getLongThreadID();
       String threadIndent = getThreadIndent(threadId);
 
       line.append(threadIndent);

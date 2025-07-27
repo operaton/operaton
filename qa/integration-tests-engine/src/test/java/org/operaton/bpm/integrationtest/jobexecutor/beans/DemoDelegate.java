@@ -19,6 +19,7 @@ package org.operaton.bpm.integrationtest.jobexecutor.beans;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -58,7 +59,7 @@ public class DemoDelegate implements JavaDelegate {
     insertVariable("charObjectVar", Character.valueOf('a'));
     insertVariable("dateObjectVar", new Date());
     insertVariable("nullable", null);
-    insertVariable("random", Double.valueOf(Math.random() * 100).intValue());
+    insertVariable("random", Double.valueOf(ThreadLocalRandom.current().nextDouble() * 100).intValue());
 
     char[] charArray = {'a','b','c','D'};
     insertVariable("charArrayVar", charArray);
@@ -113,6 +114,6 @@ public class DemoDelegate implements JavaDelegate {
   }
 
   private void insertVariable(String varName, Object value) {
-    execution.setVariable(varName + Double.valueOf(Math.random() * 10).intValue(), value);
+    execution.setVariable(varName + Double.valueOf(ThreadLocalRandom.current().nextDouble() * 10).intValue(), value);
   }
 }

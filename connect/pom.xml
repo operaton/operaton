@@ -13,7 +13,7 @@
   <name>Operaton - Connect - Root</name>
   <description>${project.name}</description>
   <properties>
-    <commons-codec.version>1.15</commons-codec.version>
+    <commons-codec.version>1.17.2</commons-codec.version>
     <connect.version.old>7.22.0</connect.version.old>
     <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>

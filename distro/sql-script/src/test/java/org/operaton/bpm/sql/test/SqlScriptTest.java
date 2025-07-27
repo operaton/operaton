@@ -27,7 +27,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -237,7 +236,7 @@ class SqlScriptTest {
     URL resource = SqlScriptTest.class.getClassLoader().getResource(baseDirectory + "sql/liquibase");
     Objects.requireNonNull(resource, "Changelog directory not found");
     URI changelogUri = resource.toURI();
-    return new DirectoryResourceAccessor(Paths.get(changelogUri));
+    return new DirectoryResourceAccessor(Path.of(changelogUri));
   }
 
   DatabaseSnapshot createCurrentDatabaseSnapshot() throws Exception {
@@ -287,7 +286,7 @@ class SqlScriptTest {
   }
 
   static boolean isScriptsFromPreviousVersionPresent() {
-    Path scriptsOldDir = Paths.get("target/test-classes/scripts-old");
+    Path scriptsOldDir = Path.of("target/test-classes/scripts-old");
     if (!Files.exists(scriptsOldDir)) {
       return false;
     }

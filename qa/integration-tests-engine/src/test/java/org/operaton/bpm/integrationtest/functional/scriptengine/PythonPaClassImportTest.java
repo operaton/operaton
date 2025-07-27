@@ -39,8 +39,9 @@ import org.junit.runner.RunWith;
 public class PythonPaClassImportTest extends AbstractFoxPlatformIntegrationTest {
 
   public static final String SCRIPT_WITH_IMPORT =
-      "from org.operaton.bpm.integrationtest.functional.scriptengine.classes import CustomClass\n"
-    + "execution.setVariable('greeting', CustomClass().greet())";
+      """
+    from org.operaton.bpm.integrationtest.functional.scriptengine.classes import CustomClass
+    execution.setVariable('greeting', CustomClass().greet())""";
 
   public static final String JYTHON_MODULE_DEPENDENCY =
       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"

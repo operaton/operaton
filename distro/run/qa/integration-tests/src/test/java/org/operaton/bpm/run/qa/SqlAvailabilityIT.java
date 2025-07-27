@@ -20,7 +20,6 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
@@ -29,7 +28,7 @@ class SqlAvailabilityIT {
 
   @Test
   void shouldFindSqlResources() {
-    Path sqlDir = Paths.get(SpringBootManagedContainer.getRunHome(), "configuration", "sql");
+    Path sqlDir = Path.of(SpringBootManagedContainer.getRunHome(), "configuration", "sql");
 
     Path createDir = sqlDir.resolve("create");
     Path dropDir = sqlDir.resolve("drop");

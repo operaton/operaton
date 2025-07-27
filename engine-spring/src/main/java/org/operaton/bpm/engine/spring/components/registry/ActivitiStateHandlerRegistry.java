@@ -62,7 +62,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
         leave(execution);
     }
 
-    protected String registrationKey(String stateName, String processName) {
+    protected String registrationKey(String processName, String stateName) {
         return (org.operaton.commons.utils.StringUtil.defaultString(processName) +
                 ":" + org.operaton.commons.utils.StringUtil.defaultString(stateName)).toLowerCase();
     }

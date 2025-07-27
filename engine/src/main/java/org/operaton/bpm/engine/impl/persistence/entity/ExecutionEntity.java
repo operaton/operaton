@@ -68,7 +68,6 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
@@ -1068,11 +1067,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   private void removeJobs() {
-    for (Job job : getJobs()) {
+    for (var job : getJobs()) {
       if (isReplacedByParent()) {
-        ((JobEntity) job).setExecution(getReplacedBy());
+        job.setExecution(getReplacedBy());
       } else {
-        ((JobEntity) job).delete();
+        job.delete();
       }
     }
   }

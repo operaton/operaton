@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
  */
 public class CmmnBehaviorLogger extends ProcessEngineLogger {
 
-  protected final String caseStateTransitionMessage = "Could not perform transition '{} on case execution with id '{}'.";
+  private static final String MSG_CANNOT_PERFORM_STATE_TRANSITION = "Could not perform transition '{} on case execution with id '{}'.";
 
   public ProcessEngineException ruleExpressionNotBooleanException(Object result) {
     return new ProcessEngineException(exceptionMessage(
@@ -43,7 +43,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
       String type) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "002",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: It is not possible to manually complete the case execution which is associated with an element of type {}.",
       transition,
       id,
@@ -78,7 +78,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   CaseIllegalStateTransitionException executionAlreadyCompletedException(String transition, String id) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "004",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: Case execution must be available or suspended, but was completed.",
       transition,
       id
@@ -89,7 +89,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   public CaseIllegalStateTransitionException resumeInactiveCaseException(String transition, String id) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "005",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: It is not possible to resume the case execution which parent is not active.",
       transition,
       id
@@ -99,7 +99,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   public CaseIllegalStateTransitionException illegalStateTransitionException(String transition, String id, String typeName) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "006",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: It is not possible to {} the case execution which is associated with a {}",
       transition,
       id,
@@ -111,7 +111,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   public CaseIllegalStateTransitionException alreadyStateCaseException(String transition, String id, String state) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "007",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
         "Reason: The case instance is already {}.",
       transition,
       id,
@@ -144,7 +144,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
       String acceptedState, String currentState) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "008",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
         "Reason: The case instance must be in state '{}' to {} it, but the state is '{}'.",
       transition,
       id,
@@ -157,7 +157,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   public CaseIllegalStateTransitionException notACaseInstanceException(String transition, String id) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "009",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: It is not possible to close a case execution which is not a case instance.",
       transition,
       id
@@ -167,7 +167,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   public CaseIllegalStateTransitionException isAlreadyInStateException(String transition, String id, CaseExecutionState state) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "010",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: The case execution is already in state '{}'.",
       transition,
       id,
@@ -180,7 +180,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
 
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "011",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: The case execution must be in state '{}' to {}, but it was in state '{}'",
       transition,
       id,
@@ -193,7 +193,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   public CaseIllegalStateTransitionException impossibleTransitionException(String transition, String id) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "012",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: The transition is not possible for this case instance.",
       transition,
       id
@@ -206,7 +206,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
       String childId, CaseExecutionState childState) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "013",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: There is a child case execution with id '{}' in state '{}'",
       transition,
       id,
@@ -218,7 +218,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   public CaseIllegalStateTransitionException wrongChildStateException(String transition, String id, String childId, String stateList) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "014",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: There is a child case execution with id '{}' which is in one of the following states: {}",
       transition,
       id,
@@ -230,7 +230,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   public PvmException transitCaseException(String transition, String id, CaseExecutionState currentState) {
     return new PvmException(exceptionMessage(
       "015",
-      caseStateTransitionMessage +
+      MSG_CANNOT_PERFORM_STATE_TRANSITION +
       "Reason: Expected case execution state to be {terminatingOnTermination|terminatingOnExit} but it was '{}'.",
       transition,
       id,

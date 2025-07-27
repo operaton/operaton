@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.filter;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.List;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.filter.FilterQuery;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
  */
 public class FilterQueryImpl extends AbstractQuery<FilterQuery, Filter> implements FilterQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String filterId;
   protected String resourceType;
   protected String name;

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import org.operaton.bpm.engine.impl.event.EventType;
@@ -37,7 +38,7 @@ import org.operaton.bpm.engine.runtime.ExecutionQuery;
 public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery, Execution>
   implements ExecutionQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String processDefinitionId;
   protected String processDefinitionKey;
   protected String businessKey;

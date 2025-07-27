@@ -16,12 +16,14 @@
  */
 package org.operaton.spin;
 
+import java.io.Serial;
+
 /**
  * @author Sebastian Menski
  */
 public class SpinRuntimeException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public SpinRuntimeException(String message) {
     super(message);

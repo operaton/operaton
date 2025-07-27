@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.impl.history.event.HistoricActivityInstanceEventEntity;
 
@@ -24,6 +27,6 @@ import org.operaton.bpm.engine.impl.history.event.HistoricActivityInstanceEventE
  */
 public class HistoricActivityInstanceEntity extends HistoricActivityInstanceEventEntity implements HistoricActivityInstance {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
 }

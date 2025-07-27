@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.repository;
 
 import java.io.InputStream;
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.ZipInputStream;
@@ -34,7 +35,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  */
 public class ProcessApplicationDeploymentBuilderImpl extends DeploymentBuilderImpl implements ProcessApplicationDeploymentBuilder {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final ProcessApplicationReference processApplicationReference;
   protected boolean isResumePreviousVersions = false;

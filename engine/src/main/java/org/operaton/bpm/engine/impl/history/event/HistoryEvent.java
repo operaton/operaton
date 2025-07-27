@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -47,7 +48,7 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
  */
 public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   // constants deprecated since 7.2
 

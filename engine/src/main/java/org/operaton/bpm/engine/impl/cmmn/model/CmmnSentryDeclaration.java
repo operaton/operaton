@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ import java.util.Map;
  */
 public class CmmnSentryDeclaration implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public static final String PLAN_ITEM_ON_PART = "planItemOnPart";
   public static final String IF_PART = "ifPart";

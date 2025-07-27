@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  */
 public class DeploymentMappings extends ArrayList<DeploymentMapping> {
 
-  private static final long serialVersionUID = -868922966819588407L;
+  @Serial private static final long serialVersionUID = -868922966819588407L;
 
   protected int overallIdCount;
 

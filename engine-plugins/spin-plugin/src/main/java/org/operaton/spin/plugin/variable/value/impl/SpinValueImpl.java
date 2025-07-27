@@ -19,6 +19,8 @@ package org.operaton.spin.plugin.variable.value.impl;
 import static org.operaton.spin.Spin.S;
 
 import org.operaton.bpm.engine.variable.impl.value.AbstractTypedValue;
+
+import java.io.Serial;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.Spin;
@@ -32,7 +34,7 @@ import org.operaton.spin.spi.DataFormat;
  */
 public abstract class SpinValueImpl extends AbstractTypedValue<Spin<?>> implements SpinValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String serializedValue;
   protected boolean isDeserialized;
   protected String dataFormatName;

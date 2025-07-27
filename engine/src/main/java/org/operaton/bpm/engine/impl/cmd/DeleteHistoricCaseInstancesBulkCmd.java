@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureEquals;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
 public class DeleteHistoricCaseInstancesBulkCmd implements Command<Void>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final List<String> caseInstanceIds;
 

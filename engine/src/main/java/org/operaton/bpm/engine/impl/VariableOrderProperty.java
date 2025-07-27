@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
  */
 public class VariableOrderProperty extends QueryOrderingProperty {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public VariableOrderProperty(String name, ValueType valueType) {
     super(QueryOrderingProperty.RELATION_VARIABLE, typeToQueryProperty(valueType));

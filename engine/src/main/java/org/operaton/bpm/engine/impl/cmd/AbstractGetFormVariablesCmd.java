@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public abstract class AbstractGetFormVariablesCmd implements Command<VariableMap>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public String resourceId;
   public Collection<String> formVariableNames;

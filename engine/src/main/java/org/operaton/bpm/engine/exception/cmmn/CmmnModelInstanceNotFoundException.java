@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.exception.cmmn;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 
 
@@ -27,7 +30,7 @@ import org.operaton.bpm.model.cmmn.CmmnModelInstance;
  */
 public class CmmnModelInstanceNotFoundException extends CaseException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public CmmnModelInstanceNotFoundException() {
     super();

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.client.exception;
 
+import java.io.Serial;
+
 /**
  * <p>Exception is thrown when a value could not be mapped</p>
  *
@@ -23,7 +25,7 @@ package org.operaton.bpm.client.exception;
  */
 public class ValueMapperException extends ExternalTaskClientException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ValueMapperException(String message) {
     super(message);

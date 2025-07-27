@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class TestPojo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String foo;
   protected Double bar;

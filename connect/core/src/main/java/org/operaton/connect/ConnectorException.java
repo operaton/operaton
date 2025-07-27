@@ -16,12 +16,14 @@
  */
 package org.operaton.connect;
 
+import java.io.Serial;
+
 /**
  * Base class for all connector exceptions
  */
 public class ConnectorException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ConnectorException(String message) {
     super(message);

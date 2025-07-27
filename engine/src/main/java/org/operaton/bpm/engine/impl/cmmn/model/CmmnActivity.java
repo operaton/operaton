@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.model;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +33,7 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  */
 public class CmmnActivity extends CoreActivity {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected List<CmmnActivity> activities = new ArrayList<>();
   protected Map<String, CmmnActivity> namedActivities = new HashMap<>();

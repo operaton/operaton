@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -24,6 +25,6 @@ import java.io.Serializable;
  */
 public class CustomSerializable implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
 }

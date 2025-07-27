@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import org.operaton.commons.utils.EnsureUtil;
  */
 public class EventSubscriptionJobDeclaration extends JobDeclaration<EventSubscriptionEntity, MessageEntity> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected EventSubscriptionDeclaration eventSubscriptionDeclaration;
 

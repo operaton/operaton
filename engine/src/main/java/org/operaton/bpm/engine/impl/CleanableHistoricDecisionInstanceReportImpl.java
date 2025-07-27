@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
 public class CleanableHistoricDecisionInstanceReportImpl extends AbstractQuery<CleanableHistoricDecisionInstanceReport, CleanableHistoricDecisionInstanceReportResult> implements CleanableHistoricDecisionInstanceReport {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String[] decisionDefinitionIdIn;
   protected String[] decisionDefinitionKeyIn;

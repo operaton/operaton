@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.history.event.HistoricJobLogEvent;
 
@@ -25,6 +28,6 @@ import org.operaton.bpm.engine.impl.history.event.HistoricJobLogEvent;
  */
 public class HistoricJobLogEventEntity extends HistoricJobLogEvent implements HistoricJobLog {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
 }

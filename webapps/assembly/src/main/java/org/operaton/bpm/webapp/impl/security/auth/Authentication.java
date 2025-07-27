@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.security.Principal;
 
@@ -35,7 +36,7 @@ public class Authentication implements Principal, Serializable {
 
   public static final Authentication ANONYMOUS = new Authentication(null, null);
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final String identityId;
 

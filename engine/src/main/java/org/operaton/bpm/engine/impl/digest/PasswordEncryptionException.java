@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.digest;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
@@ -31,7 +34,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public class PasswordEncryptionException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public PasswordEncryptionException(String message) {
     super(message);

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.exception.cmmn;
 
+import java.io.Serial;
+
 
 /**
  * <p>This is exception is thrown when a specific case definition is not found.</p>
@@ -25,7 +27,7 @@ package org.operaton.bpm.engine.exception.cmmn;
  */
 public class CaseDefinitionNotFoundException extends CaseException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public CaseDefinitionNotFoundException() {
   }

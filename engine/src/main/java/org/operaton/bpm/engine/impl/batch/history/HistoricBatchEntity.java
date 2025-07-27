@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.batch.history;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogManager;
 
 public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, DbEntity {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String type;
 

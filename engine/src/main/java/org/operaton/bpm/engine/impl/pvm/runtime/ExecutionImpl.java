@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +52,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
         ActivityExecution,
         PvmProcessInstance {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final AtomicInteger idGenerator = new AtomicInteger();
 

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP
 
 public class CleanableHistoricBatchReportImpl extends AbstractQuery<CleanableHistoricBatchReport, CleanableHistoricBatchReportResult> implements CleanableHistoricBatchReport {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Date currentTimestamp;
 

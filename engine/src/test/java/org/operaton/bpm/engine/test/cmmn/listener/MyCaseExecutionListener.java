@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.listener;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
  */
 public class MyCaseExecutionListener implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public void notify(DelegateCaseExecution caseExecution, String event) {
     String eventCounterName = event + "EventCounter";

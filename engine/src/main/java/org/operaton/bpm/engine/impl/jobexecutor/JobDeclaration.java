@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import static org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity.DEFAULT_EXCLUSIVE;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -46,7 +47,7 @@ import java.util.Date;
  */
 public abstract class JobDeclaration<S, T extends JobEntity> implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /** the id of the associated persistent jobDefinitionId */
   protected String jobDefinitionId;

@@ -16,12 +16,14 @@
  */
 package org.operaton.connect;
 
+import java.io.Serial;
+
 /**
  * Indicates an error during the request of a connector.
  */
 public class ConnectorRequestException extends ConnectorException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ConnectorRequestException(String message) {
     super(message);

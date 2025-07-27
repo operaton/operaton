@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import java.io.Serial;
+
 /**
  * Runtime exception indicating the requested class was not found or an error occurred
  * while loading the class.
@@ -24,7 +26,7 @@ package org.operaton.bpm.engine;
  */
 public class ClassLoadingException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final String className;
 

@@ -23,6 +23,7 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.FAI
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -30,7 +31,7 @@ import java.util.Date;
  */
 public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /** the business key of the case instance */
   protected String businessKey;

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
  */
 public class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String taskId;
 
   public GetIdentityLinksForTaskCmd(String taskId) {

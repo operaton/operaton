@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.impl.variable.serializer.ValueFields;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +39,7 @@ import java.util.List;
  */
 public class HistoricVariableInstanceEntity implements ValueFields, HistoricVariableInstance, DbEntity, HasDbRevision, HistoricEntity, Serializable, DbEntityLifecycleAware {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected String id;

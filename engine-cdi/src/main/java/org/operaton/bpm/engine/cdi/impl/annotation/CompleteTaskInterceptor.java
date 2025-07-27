@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.impl.annotation;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
@@ -37,7 +38,7 @@ import org.operaton.bpm.engine.cdi.annotation.CompleteTask;
 @CompleteTask
 public class CompleteTaskInterceptor implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Inject BusinessProcess businessProcess;
 

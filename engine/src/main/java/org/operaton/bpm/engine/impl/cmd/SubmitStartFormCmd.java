@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
@@ -42,7 +43,7 @@ import org.operaton.bpm.engine.variable.Variables;
  */
 public class SubmitStartFormCmd implements Command<ProcessInstance>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final String processDefinitionId;
   protected final String businessKey;

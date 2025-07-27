@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.externaltask;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class ExternalTaskCustomValue implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String testValue;
 

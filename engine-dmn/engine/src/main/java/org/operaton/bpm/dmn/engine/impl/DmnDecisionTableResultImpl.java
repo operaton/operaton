@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.dmn.engine.impl;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public static final DmnEngineLogger LOG = DmnLogger.ENGINE_LOGGER;
 

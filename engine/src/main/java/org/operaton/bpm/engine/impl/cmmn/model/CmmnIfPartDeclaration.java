@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.delegate.Expression;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.delegate.Expression;
  */
 public class CmmnIfPartDeclaration implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Expression condition;
 

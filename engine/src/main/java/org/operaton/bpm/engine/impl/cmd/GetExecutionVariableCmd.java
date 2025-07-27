@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  */
 public class GetExecutionVariableCmd implements Command<Object>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String executionId;
   protected String variableName;
   protected boolean isLocal;

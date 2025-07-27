@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 
@@ -24,7 +25,7 @@ import java.io.Serializable;
  */
 public class EventSubscriptionQueryValue implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String eventType;
   protected String eventName;

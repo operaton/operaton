@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.task.Task;
 
 public class NativeTaskQueryImpl extends AbstractNativeQuery<NativeTaskQuery, Task> implements NativeTaskQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public NativeTaskQueryImpl(CommandContext commandContext) {
     super(commandContext);

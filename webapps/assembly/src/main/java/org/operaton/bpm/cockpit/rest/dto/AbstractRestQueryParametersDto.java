@@ -27,6 +27,8 @@ import org.operaton.bpm.engine.variable.Variables;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response.Status;
+
+import java.io.Serial;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -41,7 +43,7 @@ import java.util.Map.Entry;
 public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters {
   protected static final String DEFAULT_ORDER = "RES.ID_ asc";
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected static final String SORT_ORDER_ASC_VALUE = "asc";
   protected static final String SORT_ORDER_DESC_VALUE = "desc";

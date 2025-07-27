@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.identity;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
@@ -26,7 +29,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public class IdentityProviderException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public IdentityProviderException(String message) {
     super(message);

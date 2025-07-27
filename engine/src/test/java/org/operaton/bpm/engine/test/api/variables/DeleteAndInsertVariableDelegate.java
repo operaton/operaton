@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 public class DeleteAndInsertVariableDelegate implements JavaDelegate, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

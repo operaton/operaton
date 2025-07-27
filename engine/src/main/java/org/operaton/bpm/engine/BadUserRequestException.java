@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import java.io.Serial;
+
 /**
  * <p>Exception resulting from a bad user request. A bad user request is
  * an interaction where the user requests some non-existing state or
@@ -32,7 +34,7 @@ package org.operaton.bpm.engine;
  */
 public class BadUserRequestException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public BadUserRequestException() {
   }

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map.Entry;
 
@@ -38,7 +39,7 @@ import java.util.Objects;
 public class ImmutablePair<L, R> implements Entry<L, R>, Serializable, Comparable<ImmutablePair<L, R>> {
 
   /** Serialization version */
-  private static final long serialVersionUID = -7043970803192830955L;
+  @Serial private static final long serialVersionUID = -7043970803192830955L;
 
   protected L left;
   protected R right;

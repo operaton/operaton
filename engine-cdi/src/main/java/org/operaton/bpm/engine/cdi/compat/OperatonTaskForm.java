@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.compat;
 
+import java.io.Serial;
+
+
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.enterprise.inject.Typed;
 import jakarta.inject.Named;
@@ -27,5 +30,5 @@ import org.operaton.bpm.engine.cdi.jsf.TaskForm;
 @Typed({OperatonTaskForm.class})
 public class OperatonTaskForm extends TaskForm {
 
-  private static final long serialVersionUID = 9042602064970870095L;
+  @Serial private static final long serialVersionUID = 9042602064970870095L;
 }

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.db.HasDbReferences;
  */
 public class MeterLogEntity implements DbEntity, HasDbReferences, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
 

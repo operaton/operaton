@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.w3c.dom.Node;
@@ -28,7 +31,7 @@ import org.w3c.dom.Node;
  */
 public class WrongDocumentException extends ModelException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public WrongDocumentException(Node nodeToAdd, DomDocument targetDocument) {
     super("Cannot add attribute '"+ nodeToAdd +"' to document '" + targetDocument + "' not created by document.");

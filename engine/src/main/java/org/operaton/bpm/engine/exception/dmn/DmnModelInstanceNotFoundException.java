@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.exception.dmn;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 
 
@@ -24,7 +27,7 @@ import org.operaton.bpm.model.dmn.DmnModelInstance;
  */
 public class DmnModelInstanceNotFoundException extends DecisionException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public DmnModelInstanceNotFoundException() {
     super();

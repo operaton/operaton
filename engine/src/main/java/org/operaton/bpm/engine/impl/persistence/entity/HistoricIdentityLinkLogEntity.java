@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.history.HistoricIdentityLinkLog;
 import org.operaton.bpm.engine.impl.history.event.HistoricIdentityLinkLogEventEntity;
 
@@ -25,5 +28,5 @@ import org.operaton.bpm.engine.impl.history.event.HistoricIdentityLinkLogEventEn
  *
  */
 public class HistoricIdentityLinkLogEntity extends HistoricIdentityLinkLogEventEntity implements HistoricIdentityLinkLog{
-	private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 }

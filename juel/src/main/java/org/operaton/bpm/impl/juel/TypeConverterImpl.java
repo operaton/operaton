@@ -18,6 +18,7 @@ package org.operaton.bpm.impl.juel;
 import jakarta.el.ELException;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -25,7 +26,7 @@ import java.math.BigInteger;
  * Type Conversions as described in EL 2.1 specification (section 1.17).
  */
 public class TypeConverterImpl implements TypeConverter {
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private static final String ERROR_COERCE_TYPE = "error.coerce.type";
   private static final String ERROR_COERCE_VALUE = "error.coerce.value";
 

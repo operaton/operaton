@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
 public class CleanableHistoricCaseInstanceReportImpl extends AbstractQuery<CleanableHistoricCaseInstanceReport, CleanableHistoricCaseInstanceReportResult> implements CleanableHistoricCaseInstanceReport {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String[] caseDefinitionIdIn;
   protected String[] caseDefinitionKeyIn;

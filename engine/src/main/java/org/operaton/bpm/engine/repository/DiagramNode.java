@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.repository;
 
+import java.io.Serial;
+
 /**
  * Stores position and dimensions of a diagram node.
  *
@@ -23,7 +25,7 @@ package org.operaton.bpm.engine.repository;
  */
 public class DiagramNode extends DiagramElement {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Double x = null;
   private Double y = null;

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 
 /**
@@ -23,7 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  */
 public class AsyncBeforeMessageJobDeclaration extends MessageJobDeclaration {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public static final String[] asyncBeforeOperations = new String[] {PvmAtomicOperation.TRANSITION_CREATE_SCOPE.getCanonicalName(),
     PvmAtomicOperation.PROCESS_START.getCanonicalName(), PvmAtomicOperation.ACTIVITY_START_CREATE_SCOPE.getCanonicalName()};

@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class DeleteHistoricTaskInstanceCmd implements Command<Object>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String taskId;
 
   public DeleteHistoricTaskInstanceCmd(String taskId) {

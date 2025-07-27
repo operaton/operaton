@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +38,7 @@ import org.operaton.bpm.engine.task.Event;
  */
 public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public static final String TYPE_EVENT = "event";
   public static final String TYPE_COMMENT = "comment";

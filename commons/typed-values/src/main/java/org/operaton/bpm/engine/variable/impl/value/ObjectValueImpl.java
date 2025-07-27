@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.variable.impl.value;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
@@ -26,7 +29,7 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
  */
 public class ObjectValueImpl extends AbstractTypedValue<Object> implements ObjectValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String objectTypeName;
 

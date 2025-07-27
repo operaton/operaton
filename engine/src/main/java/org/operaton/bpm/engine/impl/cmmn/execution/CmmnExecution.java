@@ -47,6 +47,7 @@ import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.*;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.*;
 
 /**
@@ -57,7 +58,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected transient CmmnCaseDefinition caseDefinition;
 

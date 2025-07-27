@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
+
 
 /**
  * <p>{@link HistoryEvent} signifying a top-level event in a process instance.</p>
@@ -26,7 +28,7 @@ package org.operaton.bpm.engine.impl.history.event;
  */
 public class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEvent {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /** the business key of the process instance */
   protected String businessKey;

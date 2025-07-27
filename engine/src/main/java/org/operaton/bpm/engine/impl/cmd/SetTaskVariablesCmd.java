@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
  */
 public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected boolean taskLocalVariablesUpdated = false;
 

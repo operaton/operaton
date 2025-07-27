@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  */
 public class ReadLocalVariableListener implements Serializable, ExecutionListener {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected List<VariableEvent> variableEvents = new ArrayList<>();
   protected String variableName;
@@ -65,7 +66,7 @@ public class ReadLocalVariableListener implements Serializable, ExecutionListene
 
   public static class VariableEvent implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     protected String variableName;
     protected Object variableValue;

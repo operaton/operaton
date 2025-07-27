@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.form;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.task.Task;
 
@@ -25,7 +28,7 @@ import org.operaton.bpm.engine.task.Task;
  */
 public class TaskFormDataImpl extends FormDataImpl implements TaskFormData {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Task task;
 

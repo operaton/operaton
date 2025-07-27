@@ -38,6 +38,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
 import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
@@ -58,7 +59,7 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   public static final int DEFAULT_RETRIES = 3;
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String executionId = null;
 

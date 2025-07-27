@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventJobHandler;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.Job;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -282,9 +281,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
 
     // delete timer start event jobs only if this is the latest version of the process definition.
     if(latestVersion != null && latestVersion.getId().equals(processDefinition.getId())) {
-      for (Job job : timerStartJobs) {
-        ((JobEntity)job).delete();
-      }
+      timerStartJobs.forEach(JobEntity::delete);
     }
   }
 

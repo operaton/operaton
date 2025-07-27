@@ -42,7 +42,7 @@ import org.w3c.dom.Element;
  */
 public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser {
 
-	private final String processEngineAttribute = "process-engine";
+	private static final String PROCESS_ENGINE_ATTRIBUTE = "process-engine";
 
   @Override
   public BeanDefinition parse(Element element, ParserContext parserContext) {
@@ -53,9 +53,9 @@ public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinit
 	}
 
 	private void configureProcessEngine(AbstractBeanDefinition abstractBeanDefinition, Element element) {
-		String procEngineRef = element.getAttribute(processEngineAttribute);
+		String procEngineRef = element.getAttribute(PROCESS_ENGINE_ATTRIBUTE);
 		if (StringUtils.hasText(procEngineRef))
-			abstractBeanDefinition.getPropertyValues().add(Conventions.attributeNameToPropertyName(processEngineAttribute), new RuntimeBeanReference(procEngineRef));
+			abstractBeanDefinition.getPropertyValues().add(Conventions.attributeNameToPropertyName(PROCESS_ENGINE_ATTRIBUTE), new RuntimeBeanReference(procEngineRef));
 	}
 
 	private void registerStateHandlerAnnotationBeanFactoryPostProcessor(Element element, ParserContext context) {

@@ -114,11 +114,8 @@ public class FeelEngineTest extends AbstractFoxPlatformIntegrationTest {
     List<String> resultsSmall = runtimeService.getActiveActivityIds(pi2.getId());
 
     // then
-    assertThat(resultsLarge).hasSize(1);
-    assertThat(resultsLarge).first().isEqualTo("taskRequestInvoice");
-
-    assertThat(resultsSmall).hasSize(1);
-    assertThat(resultsSmall).first().isEqualTo("taskApprove");
+    assertThat(resultsLarge).containsExactly("taskRequestInvoice");
+    assertThat(resultsSmall).containsExactly("taskApprove");
   }
 
   @Test
@@ -140,16 +137,13 @@ public class FeelEngineTest extends AbstractFoxPlatformIntegrationTest {
       jsonList.setListProperty(TEST_LIST);
       return Variables.createVariables()
                       .putValue("inputVar", Spin.JSON(jsonList.toExpectedJsonString()));
-
     } else if ("xml".equalsIgnoreCase(serializationType)) {
       XmlListSerializable<String> xmlList = new XmlListSerializable<>();
       xmlList.setListProperty(TEST_LIST);
       return Variables.createVariables()
                       .putValue("inputVar", Spin.XML(xmlList.toExpectedXmlString()));
-
     } else {
       return Variables.createVariables();
-
     }
   }
 }

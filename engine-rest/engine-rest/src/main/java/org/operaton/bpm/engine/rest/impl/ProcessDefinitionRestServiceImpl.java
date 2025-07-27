@@ -61,7 +61,7 @@ public class ProcessDefinitionRestServiceImpl extends AbstractRestProcessEngineA
         .singleResult();
 
     if(processDefinition == null){
-      String errorMessage = String.format("No matching process definition with key: %s and no tenant-id", processDefinitionKey);
+      String errorMessage = "No matching process definition with key: %s and no tenant-id".formatted(processDefinitionKey);
       throw new RestException(Status.NOT_FOUND, errorMessage);
 
     } else {
@@ -81,7 +81,7 @@ public class ProcessDefinitionRestServiceImpl extends AbstractRestProcessEngineA
         .singleResult();
 
     if (processDefinition == null) {
-      String errorMessage = String.format("No matching process definition with key: %s and tenant-id: %s", processDefinitionKey, tenantId);
+      String errorMessage = "No matching process definition with key: %s and tenant-id: %s".formatted(processDefinitionKey, tenantId);
       throw new RestException(Status.NOT_FOUND, errorMessage);
 
     } else {
@@ -178,7 +178,7 @@ public class ProcessDefinitionRestServiceImpl extends AbstractRestProcessEngineA
       dto.updateSuspensionState(getProcessEngine());
 
     } catch (IllegalArgumentException e) {
-      String message = String.format("Could not update the suspension state of Process Definitions due to: %s", e.getMessage()) ;
+      String message = "Could not update the suspension state of Process Definitions due to: %s".formatted(e.getMessage()) ;
       throw new InvalidRequestException(Status.BAD_REQUEST, e, message);
     }
   }

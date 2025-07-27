@@ -232,7 +232,7 @@ public class CsrfPreventionFilter implements Filter {
       || getTargetOrigin().getPort() != sourceURL.getPort()) {
 
       //If any part of the URL doesn't match, an error is reported
-      response.sendError(HttpServletResponse.SC_FORBIDDEN, String.format("CSRFPreventionFilter: Protocol/Host/Port does not fully match: (%s != %s) ", getTargetOrigin(), sourceURL));
+      response.sendError(HttpServletResponse.SC_FORBIDDEN, "CSRFPreventionFilter: Protocol/Host/Port does not fully match: (%s != %s) ".formatted(getTargetOrigin(), sourceURL));
       return false;
     }
 

@@ -197,10 +197,10 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
   @Override
   protected String toString(Job job) {
      return job != null ?
-       String.format("%s {" +
+       ("%s {" +
          "id='%s', " +
          "processInstanceId='%s', " +
-         "executionId='%s'}",
+         "executionId='%s'}").formatted(
          Job.class.getSimpleName(),
          job.getId(),
          job.getProcessInstanceId(),

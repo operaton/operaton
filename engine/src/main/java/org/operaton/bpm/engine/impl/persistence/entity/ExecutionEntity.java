@@ -1329,7 +1329,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       Collection<ExternalTaskEntity> externalTasks) {
 
     EnsureUtil.ensureNotEmpty(NullValueException.class,
-        String.format("Cannot restore state of process instance %s", processInstanceId),
+      "Cannot restore state of process instance %s".formatted(processInstanceId),
         "list of executions", executions);
 
     if(!isProcessInstanceExecution()) {

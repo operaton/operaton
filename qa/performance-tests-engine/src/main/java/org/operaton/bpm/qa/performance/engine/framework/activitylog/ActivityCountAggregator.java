@@ -163,7 +163,7 @@ public class ActivityCountAggregator extends TabularResultAggregator {
 
         row.add(started);
         row.add(sumMap.get(activity).getStarted());
-        row.add(String.format("%d (%.1f%%)", ended, endedFraction));
+        row.add("%d (%.1f%%)".formatted(ended, endedFraction));
         row.add(sumMap.get(activity).getEnded());
         row.add(avgDuration + " ms");
       }

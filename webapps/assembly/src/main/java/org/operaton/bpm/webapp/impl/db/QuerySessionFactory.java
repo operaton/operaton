@@ -96,7 +96,7 @@ public class QuerySessionFactory extends StandaloneProcessEngineConfiguration {
 
     StringBuilder builder = new StringBuilder();
     for (String mappingFile: mappings) {
-      builder.append(String.format("<mapper resource=\"%s\" />\n", mappingFile));
+      builder.append("<mapper resource=\"%s\" />\n".formatted(mappingFile));
     }
 
     String mappingsFileTemplate = """
@@ -113,7 +113,7 @@ public class QuerySessionFactory extends StandaloneProcessEngineConfiguration {
         	</mappers>
         </configuration>""";
 
-    return String.format(mappingsFileTemplate, builder.toString());
+    return mappingsFileTemplate.formatted(builder.toString());
   }
 
   public ProcessEngineConfigurationImpl getWrappedConfiguration() {

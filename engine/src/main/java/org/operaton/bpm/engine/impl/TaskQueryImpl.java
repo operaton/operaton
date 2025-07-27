@@ -1235,7 +1235,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   protected void ensureNotInOrQuery(String methodName) {
     if (isOrQueryActive) {
-      throw new ProcessEngineException(String.format("Invalid query usage: cannot set %s within 'or' query", methodName));
+      throw new ProcessEngineException("Invalid query usage: cannot set %s within 'or' query".formatted(methodName));
     }
   }
 

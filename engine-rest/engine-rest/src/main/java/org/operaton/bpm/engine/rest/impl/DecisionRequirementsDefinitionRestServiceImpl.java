@@ -82,7 +82,7 @@ public class DecisionRequirementsDefinitionRestServiceImpl extends AbstractRestP
       .withoutTenantId().latestVersion().singleResult();
 
     if (decisionRequirementsDefinition == null) {
-      String errorMessage = String.format("No matching decision requirements definition with key: %s and no tenant-id", decisionRequirementsDefinitionKey);
+      String errorMessage = "No matching decision requirements definition with key: %s and no tenant-id".formatted(decisionRequirementsDefinitionKey);
       throw new RestException(Status.NOT_FOUND, errorMessage);
 
     } else {
@@ -98,7 +98,7 @@ public class DecisionRequirementsDefinitionRestServiceImpl extends AbstractRestP
       .tenantIdIn(tenantId).latestVersion().singleResult();
 
     if (decisionRequirementsDefinition == null) {
-      String errorMessage = String.format("No matching decision requirements definition with key: %s and tenant-id: %s", decisionRequirementsDefinitionKey, tenantId);
+      String errorMessage = "No matching decision requirements definition with key: %s and tenant-id: %s".formatted(decisionRequirementsDefinitionKey, tenantId);
       throw new RestException(Status.NOT_FOUND, errorMessage);
 
     } else {

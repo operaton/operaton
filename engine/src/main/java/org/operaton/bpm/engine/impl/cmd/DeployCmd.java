@@ -380,9 +380,9 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
       String resourceName = resource.getName();
 
       if (existingResources != null && existingResources.containsKey(resourceName)) {
-        String message = String.format("Cannot add resource with id '%s' and name '%s' from "
-            + "deployment with id '%s' to new deployment because the new deployment contains "
-            + "already a resource with same name.", resource.getId(), resourceName, resource.getDeploymentId());
+        String message = ("Cannot add resource with id '%s' and name '%s' from "
+          + "deployment with id '%s' to new deployment because the new deployment contains "
+          + "already a resource with same name.").formatted(resource.getId(), resourceName, resource.getDeploymentId());
 
         throw new NotValidException(message);
       }
@@ -565,7 +565,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
       if (duplicate != null) {
         String deploymentId = resource.getDeploymentId();
         if (!deploymentId.equals(duplicate.getDeploymentId())) {
-          String message = String.format("The deployments with id '%s' and '%s' contain a resource with same name '%s'.", deploymentId, duplicate.getDeploymentId(), name);
+          String message = "The deployments with id '%s' and '%s' contain a resource with same name '%s'.".formatted(deploymentId, duplicate.getDeploymentId(), name);
           throw new NotValidException(message);
         }
       }

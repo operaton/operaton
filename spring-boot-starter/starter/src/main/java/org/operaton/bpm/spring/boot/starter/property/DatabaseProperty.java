@@ -69,7 +69,7 @@ public class DatabaseProperty {
    * @param schemaUpdate the schemaUpdate to set
    */
   public void setSchemaUpdate(String schemaUpdate) {
-    Assert.isTrue(SCHEMA_UPDATE_VALUES.contains(schemaUpdate), String.format("schemaUpdate: '%s' is not valid (%s)", schemaUpdate, SCHEMA_UPDATE_VALUES));
+    Assert.isTrue(SCHEMA_UPDATE_VALUES.contains(schemaUpdate), "schemaUpdate: '%s' is not valid (%s)".formatted(schemaUpdate, SCHEMA_UPDATE_VALUES));
     this.schemaUpdate = schemaUpdate;
   }
 

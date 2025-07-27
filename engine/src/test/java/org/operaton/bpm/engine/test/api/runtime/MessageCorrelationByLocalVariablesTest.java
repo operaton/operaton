@@ -266,7 +266,7 @@ public class MessageCorrelationByLocalVariablesTest {
     // when/then
     assertThatThrownBy(messageCorrelationBuilder::correlateWithResult)
       .isInstanceOf(MismatchingMessageCorrelationException.class)
-      .hasMessageContaining(String.format("Cannot correlate a message with name '%s' to a single execution", TEST_MESSAGE_NAME));
+      .hasMessageContaining("Cannot correlate a message with name '%s' to a single execution".formatted(TEST_MESSAGE_NAME));
 
   }
 

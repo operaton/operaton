@@ -1208,7 +1208,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
     case STATE_INIT:
     default:
-      throw new ProcessEngineException(String.format("Task %s cannot transition into state %s.", id, state));
+      throw new ProcessEngineException("Task %s cannot transition into state %s.".formatted(id, state));
     }
   }
 

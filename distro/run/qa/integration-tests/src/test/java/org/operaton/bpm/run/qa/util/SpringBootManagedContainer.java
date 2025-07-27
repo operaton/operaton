@@ -114,7 +114,7 @@ public class SpringBootManagedContainer {
 
       if (!isStarted(RAMP_UP_SECONDS * 1000)) {
         killProcess(false);
-        throw new TimeoutException(String.format("Managed Spring Boot application was not started within [%d] s", RAMP_UP_SECONDS));
+        throw new TimeoutException("Managed Spring Boot application was not started within [%d] s".formatted(RAMP_UP_SECONDS));
       }
     } catch (final Exception ex) {
       throw new RuntimeException("Could not start managed Spring Boot application!", ex);
@@ -220,7 +220,7 @@ public class SpringBootManagedContainer {
         log.warn("Attempt to terminate process with pid {} returned with exit code {}", pid, exitCode);
       }
     } catch (Exception e) {
-      String message = String.format("Couldn't kill process %s", pid);
+      String message = "Couldn't kill process %s".formatted(pid);
       if (failOnException) {
         throw new RuntimeException(message, e);
       } else {

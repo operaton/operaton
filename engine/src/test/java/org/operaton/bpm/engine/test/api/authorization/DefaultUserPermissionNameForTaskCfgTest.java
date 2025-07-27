@@ -74,7 +74,7 @@ class DefaultUserPermissionNameForTaskCfgTest {
     // if
     assertThatThrownBy(testProcessEngineCfg::initDefaultUserPermissionForTask)
         .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining(String.format("Invalid value '%s' for configuration property 'defaultUserPermissionNameForTask'.", "UNSUPPORTED"));
+        .hasMessageContaining("Invalid value '%s' for configuration property 'defaultUserPermissionNameForTask'.".formatted("UNSUPPORTED"));
   }
 
   @Test
@@ -87,7 +87,7 @@ class DefaultUserPermissionNameForTaskCfgTest {
     // if
     assertThatThrownBy(testProcessEngineCfg::initDefaultUserPermissionForTask)
         .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining(String.format("Invalid value 'null' for configuration property 'defaultUserPermissionNameForTask'."));
+        .hasMessageContaining("Invalid value 'null' for configuration property 'defaultUserPermissionNameForTask'.".formatted());
   }
 
   @Test
@@ -112,7 +112,7 @@ class DefaultUserPermissionNameForTaskCfgTest {
       final TestProcessEngineCfg testProcessEngineCfg = new TestProcessEngineCfg();
 
       engine = testProcessEngineCfg.setProcessEngineName("DefaultTaskPermissionsCfgTest-engine")
-        .setJdbcUrl(String.format("jdbc:h2:mem:%s", "DefaultTaskPermissionsCfgTest-engine-db"))
+        .setJdbcUrl("jdbc:h2:mem:%s".formatted("DefaultTaskPermissionsCfgTest-engine-db"))
         .setMetricsEnabled(false)
         .setJobExecutorActivate(false)
         .buildProcessEngine();

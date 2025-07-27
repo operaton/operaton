@@ -122,7 +122,7 @@ public class ResourceTypeUtil {
       }
     }
     throw new BadUserRequestException(
-        String.format("The permission '%s' is not valid for '%s' resource type.", permissionName, getResourceByType(resourceType))
+      "The permission '%s' is not valid for '%s' resource type.".formatted(permissionName, getResourceByType(resourceType))
         );
   }
 

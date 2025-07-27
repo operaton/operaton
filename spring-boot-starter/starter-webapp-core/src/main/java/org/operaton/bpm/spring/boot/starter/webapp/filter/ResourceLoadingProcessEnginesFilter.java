@@ -48,7 +48,7 @@ public class ResourceLoadingProcessEnginesFilter extends ProcessEnginesFilter im
     String appPath = trimChar(applicationPath, '/');
     if (requestUri.equals(appPath) && (!requestUri.isEmpty() || webappProperty.isIndexRedirectEnabled())) {
       // only redirect from index ("/") if index redirect is enabled
-      response.sendRedirect(String.format("%s%s/app/%s/", contextPath, applicationPath, DEFAULT_REDIRECT_APP));
+      response.sendRedirect("%s%s/app/%s/".formatted(contextPath, applicationPath, DEFAULT_REDIRECT_APP));
       return;
     }
 

@@ -246,7 +246,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
       variableMap = VariableValueDto.toMap(variables, getProcessEngine(), objectMapper);
 
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot set variables: %s", e.getMessage());
+      String errorMessage = "Cannot set variables: %s".formatted(e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     }
@@ -282,7 +282,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
     try {
       variableMap = VariableValueDto.toMap(variables, getProcessEngine(), objectMapper);
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot set variables: %s", e.getMessage());
+      String errorMessage = "Cannot set variables: %s".formatted(e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
     }
 

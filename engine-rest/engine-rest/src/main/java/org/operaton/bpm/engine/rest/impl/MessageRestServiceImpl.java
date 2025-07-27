@@ -69,7 +69,7 @@ public class MessageRestServiceImpl extends AbstractRestProcessEngineAware imple
           resultDtos.addAll(correlateWithVariablesEnabled(messageDto, correlation));
         }
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot deliver message: %s", e.getMessage());
+      String errorMessage = "Cannot deliver message: %s".formatted(e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     } catch (MismatchingMessageCorrelationException e) {

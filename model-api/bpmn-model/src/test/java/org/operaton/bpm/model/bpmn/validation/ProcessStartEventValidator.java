@@ -40,7 +40,7 @@ public class ProcessStartEventValidator implements ModelElementValidator<Process
     int startEventCount = startEvents.size();
 
     if(startEventCount != 1) {
-      validationResultCollector.addError(10, String.format("Process does not have exactly one start event. Got %d.", startEventCount));
+      validationResultCollector.addError(10, "Process does not have exactly one start event. Got %d.".formatted(startEventCount));
     }
   }
 

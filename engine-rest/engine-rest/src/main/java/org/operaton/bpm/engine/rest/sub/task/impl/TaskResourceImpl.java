@@ -115,18 +115,18 @@ public class TaskResourceImpl implements TaskResource {
       }
 
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot complete task %s: %s", taskId, e.getMessage());
+      String errorMessage = "Cannot complete task %s: %s".formatted(taskId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     } catch (AuthorizationException e) {
       throw e;
 
     } catch (FormFieldValidationException e) {
-      String errorMessage = String.format("Cannot complete task %s: %s", taskId, e.getMessage());
+      String errorMessage = "Cannot complete task %s: %s".formatted(taskId, e.getMessage());
       throw new RestException(Status.BAD_REQUEST, e, errorMessage);
 
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format("Cannot complete task %s: %s", taskId, e.getMessage());
+      String errorMessage = "Cannot complete task %s: %s".formatted(taskId, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
     }
   }
@@ -151,18 +151,18 @@ public class TaskResourceImpl implements TaskResource {
       }
 
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot submit task form %s: %s", taskId, e.getMessage());
+      String errorMessage = "Cannot submit task form %s: %s".formatted(taskId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     } catch (AuthorizationException e) {
       throw e;
 
     } catch (FormFieldValidationException e) {
-      String errorMessage = String.format("Cannot submit task form %s: %s", taskId, e.getMessage());
+      String errorMessage = "Cannot submit task form %s: %s".formatted(taskId, e.getMessage());
       throw new RestException(Status.BAD_REQUEST, e, errorMessage);
 
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format("Cannot submit task form %s: %s", taskId, e.getMessage());
+      String errorMessage = "Cannot submit task form %s: %s".formatted(taskId, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
     }
 
@@ -280,7 +280,7 @@ public class TaskResourceImpl implements TaskResource {
       taskService.resolveTask(taskId, variables);
 
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot resolve task %s: %s", taskId, e.getMessage());
+      String errorMessage = "Cannot resolve task %s: %s".formatted(taskId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     }

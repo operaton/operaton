@@ -56,14 +56,14 @@ public class DefaultElResolverLookup {
       // add all providers to a composite resolver
       CompositeELResolver compositeResolver = new CompositeELResolver();
       StringBuilder summary = new StringBuilder();
-      summary.append(String.format("ElResolvers found for Process Application %s", processApplication.getName()));
+      summary.append("ElResolvers found for Process Application %s".formatted(processApplication.getName()));
 
       for (ProcessApplicationElResolver processApplicationElResolver : sortedProviders) {
         ELResolver elResolver = processApplicationElResolver.getElResolver(processApplication);
 
         if (elResolver != null) {
           compositeResolver.add(elResolver);
-          summary.append(String.format("Class %s", processApplicationElResolver.getClass().getName()));
+          summary.append("Class %s".formatted(processApplicationElResolver.getClass().getName()));
         }
         else {
           LOG.noElResolverProvided(processApplication.getName(), processApplicationElResolver.getClass().getName());

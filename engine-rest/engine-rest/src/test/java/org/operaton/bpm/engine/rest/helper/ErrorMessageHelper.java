@@ -25,6 +25,6 @@ public class ErrorMessageHelper {
   protected static final String EXPECTED_CONVERSION_FAILURE_MESSAGE = "Cannot convert value '%s' of type '%s' to java type %s";
 
   public static String getExpectedFailingConversionMessage(Object value, String submittedValueType, Class<?> conversionClass) {
-    return String.format(EXPECTED_CONVERSION_FAILURE_MESSAGE, value, submittedValueType, conversionClass.getName());
+    return EXPECTED_CONVERSION_FAILURE_MESSAGE.formatted(value, submittedValueType, conversionClass.getName());
   }
 }

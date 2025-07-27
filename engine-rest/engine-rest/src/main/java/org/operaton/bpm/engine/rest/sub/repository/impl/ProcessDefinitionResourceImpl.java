@@ -130,11 +130,11 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       throw e;
 
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
+      String errorMessage = MSG_CANNOT_INSTANTIATE_PROCESS_DEF.formatted(processDefinitionId, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
 
     } catch (RestException e) {
-      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
+      String errorMessage = MSG_CANNOT_INSTANTIATE_PROCESS_DEF.formatted(processDefinitionId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     }
@@ -194,13 +194,13 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     } catch (AuthorizationException e) {
       throw e;
     } catch (FormFieldValidationException e) {
-      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
+      String errorMessage = MSG_CANNOT_INSTANTIATE_PROCESS_DEF.formatted(processDefinitionId, e.getMessage());
       throw new RestException(Status.BAD_REQUEST, e, errorMessage);
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
+      String errorMessage = MSG_CANNOT_INSTANTIATE_PROCESS_DEF.formatted(processDefinitionId, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
     } catch (RestException e) {
-      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
+      String errorMessage = MSG_CANNOT_INSTANTIATE_PROCESS_DEF.formatted(processDefinitionId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
     }
 
@@ -351,7 +351,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       dto.updateSuspensionState(engine);
 
     } catch (IllegalArgumentException e) {
-      String message = String.format("The suspension state of Process Definition with id %s could not be updated due to: %s", processDefinitionId, e.getMessage());
+      String message = "The suspension state of Process Definition with id %s could not be updated due to: %s".formatted(processDefinitionId, e.getMessage());
       throw new InvalidRequestException(Status.BAD_REQUEST, e, message);
     }
   }

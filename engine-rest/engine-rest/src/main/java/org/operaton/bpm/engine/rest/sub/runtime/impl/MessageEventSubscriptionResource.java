@@ -57,7 +57,7 @@ public class MessageEventSubscriptionResource implements EventSubscriptionResour
         .executionId(executionId).eventName(messageName).eventType(MESSAGE_EVENT_TYPE).singleResult();
 
     if (eventSubscription == null) {
-      String errorMessage = String.format("Message event subscription for execution %s named %s does not exist", executionId, messageName);
+      String errorMessage = "Message event subscription for execution %s named %s does not exist".formatted(executionId, messageName);
       throw new InvalidRequestException(Status.NOT_FOUND, errorMessage);
     }
 
@@ -76,11 +76,11 @@ public class MessageEventSubscriptionResource implements EventSubscriptionResour
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {
-      throw new RestException(Status.INTERNAL_SERVER_ERROR, e, String.format("Cannot trigger message %s for execution %s: %s",
+      throw new RestException(Status.INTERNAL_SERVER_ERROR, e, "Cannot trigger message %s for execution %s: %s".formatted(
         messageName, executionId, e.getMessage()));
 
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot trigger message %s for execution %s: %s", messageName, executionId, e.getMessage());
+      String errorMessage = "Cannot trigger message %s for execution %s: %s".formatted(messageName, executionId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     }

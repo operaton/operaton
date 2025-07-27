@@ -25,14 +25,14 @@ public class IndentityLogger extends ProcessEngineLogger {
   public void infoUserTemporarilyLocked(String userId, Date lockExpirationTime) {
     logInfo(
         "001",
-        String.format("The user with id '%s' is locked. The lock will expire at %s",
-            userId,
-            lockExpirationTime));
+      "The user with id '%s' is locked. The lock will expire at %s".formatted(
+        userId,
+        lockExpirationTime));
   }
   public void infoUserPermanentlyLocked(String userId) {
     logInfo(
         "002",
-        String.format("The user with id '%s' is permanently locked.",
-            userId));
+      "The user with id '%s' is permanently locked.".formatted(
+        userId));
   }
 }

@@ -57,7 +57,7 @@ public class OperatonBpmVersion implements Supplier<String> {
       .map(String::trim)
       .orElse("");
     this.isEnterprise = version.endsWith("-ee");
-    this.formattedVersion = String.format(VERSION_FORMAT, version);
+    this.formattedVersion = VERSION_FORMAT.formatted(version);
   }
 
   @Override

@@ -39,17 +39,17 @@ public class CaseDefinitionAssert extends AbstractProcessAssert<CaseDefinitionAs
   @Override
   protected String toString(CaseDefinition caseDefinition) {
     return caseDefinition != null ?
-        String.format("actual %s {" +
-          "id='%s', " +
-          "name='%s', " +
-          "resourcename='%s', " +
-          "deploymentId='%s'" +
-          "}",
-          CaseDefinition.class.getSimpleName(),
-          caseDefinition.getId(),
-          caseDefinition.getName(),
-          caseDefinition.getResourceName(),
-          caseDefinition.getDeploymentId())
+      ("actual %s {" +
+        "id='%s', " +
+        "name='%s', " +
+        "resourcename='%s', " +
+        "deploymentId='%s'" +
+        "}").formatted(
+        CaseDefinition.class.getSimpleName(),
+        caseDefinition.getId(),
+        caseDefinition.getName(),
+        caseDefinition.getResourceName(),
+        caseDefinition.getDeploymentId())
         : null;
   }
 

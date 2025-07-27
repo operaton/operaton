@@ -164,7 +164,7 @@ public class DeploymentResourceImpl extends AbstractRestProcessEngineAware imple
   }
 
   protected InvalidRequestException createInvalidRequestException(String action, Status status, ProcessEngineException cause) {
-    String errorMessage = String.format("Cannot %s deployment '%s': %s", action, deploymentId, cause.getMessage());
+    String errorMessage = "Cannot %s deployment '%s': %s".formatted(action, deploymentId, cause.getMessage());
     return new InvalidRequestException(status, cause, errorMessage);
   }
 

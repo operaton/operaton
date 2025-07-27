@@ -101,8 +101,8 @@ public class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetR
   @Override
   public SetRemovalTimeToHistoricProcessInstancesBuilder chunkSize(int chunkSize) {
     if (chunkSize > ProcessSetRemovalTimeJobHandler.MAX_CHUNK_SIZE || chunkSize <= 0) {
-      throw new BadUserRequestException(String.format("The value for chunk size should be between 1 and %s",
-          ProcessSetRemovalTimeJobHandler.MAX_CHUNK_SIZE));
+      throw new BadUserRequestException("The value for chunk size should be between 1 and %s".formatted(
+        ProcessSetRemovalTimeJobHandler.MAX_CHUNK_SIZE));
     }
 
     this.chunkSize = chunkSize;

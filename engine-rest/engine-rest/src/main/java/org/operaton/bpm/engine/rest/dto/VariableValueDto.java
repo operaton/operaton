@@ -86,7 +86,7 @@ public class VariableValueDto {
 
     ValueType valueType = valueTypeResolver.typeForName(fromRestApiTypeName(type));
     if(valueType == null) {
-      throw new RestException(Status.BAD_REQUEST, String.format("Unsupported value type '%s'", type));
+      throw new RestException(Status.BAD_REQUEST, "Unsupported value type '%s'".formatted(type));
     }
     else {
       if(valueType instanceof PrimitiveValueType primitiveValueType) {
@@ -106,7 +106,7 @@ public class VariableValueDto {
         }
         catch (Exception e) {
           throw new InvalidRequestException(Status.BAD_REQUEST, e,
-              String.format("Cannot convert value '%s' of type '%s' to java type %s", value, type, javaType.getName()));
+            "Cannot convert value '%s' of type '%s' to java type %s".formatted(value, type, javaType.getName()));
         }
       }
       else if(valueType instanceof SerializableValueType serializableValueType) {

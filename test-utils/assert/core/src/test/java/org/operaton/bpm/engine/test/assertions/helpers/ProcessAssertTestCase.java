@@ -45,7 +45,7 @@ public abstract class ProcessAssertTestCase {
       fail.when();
     } catch (AssertionError e) {
       if (e.getMessage().contains(messageContent)) {
-        System.out.println(String.format("AssertionError caught with message '%s' and expected content '%s'", e.getMessage(), messageContent));
+        System.out.println("AssertionError caught with message '%s' and expected content '%s'".formatted(e.getMessage(), messageContent));
         return;
       } else {
         fail("Error message should include '" + messageContent + "' but was: " + e.getMessage());
@@ -60,7 +60,7 @@ public abstract class ProcessAssertTestCase {
     } catch (Throwable e) {
       for (Class<? extends Throwable> t : exception) {
         if (t.isAssignableFrom(e.getClass())) {
-          System.out.println(String.format("caught " + e.getClass().getSimpleName() + " of expected type " + t.getSimpleName() + " with message '%s'", e.getMessage()));
+          System.out.println(("caught " + e.getClass().getSimpleName() + " of expected type " + t.getSimpleName() + " with message '%s'").formatted(e.getMessage()));
           return;
         }
       }

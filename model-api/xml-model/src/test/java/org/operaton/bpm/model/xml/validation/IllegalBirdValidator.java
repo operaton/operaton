@@ -39,7 +39,7 @@ public class IllegalBirdValidator implements ModelElementValidator<Bird> {
   public void validate(Bird bird, ValidationResultCollector validationResultCollector) {
 
     if(nameOfBird.equals(bird.getId())) {
-      validationResultCollector.addError(20, String.format("Bird %s is illegal", nameOfBird));
+      validationResultCollector.addError(20, "Bird %s is illegal".formatted(nameOfBird));
     }
 
   }

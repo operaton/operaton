@@ -91,7 +91,7 @@ public class ContentSecurityPolicyProvider extends HeaderSecurityProvider {
   public String getHeaderValue(final ServletContext servletContext) {
     final String nonce = generateNonce();
     servletContext.setAttribute(ATTR_CSP_FILTER_NONCE, nonce);
-    return value.replaceAll("\\" + HEADER_NONCE_PLACEHOLDER, String.format("'nonce-%s'", nonce));
+    return value.replaceAll("\\" + HEADER_NONCE_PLACEHOLDER, "'nonce-%s'".formatted(nonce));
   }
 
   protected String generateNonce() {

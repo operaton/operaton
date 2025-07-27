@@ -38,7 +38,7 @@ public class VariableResponseProvider {
     } else if (ValueType.FILE.equals(typedVariableValue.getType())) {
       return responseForFileVariable((FileValue) typedVariableValue);
     } else {
-      throw new InvalidRequestException(Response.Status.BAD_REQUEST, String.format("Value of variable with id %s is not a binary value.", id));
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Value of variable with id %s is not a binary value.".formatted(id));
     }
   }
 

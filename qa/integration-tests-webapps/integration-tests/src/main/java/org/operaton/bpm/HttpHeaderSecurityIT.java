@@ -104,7 +104,7 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
       }
     }
 
-    Assertions.fail(String.format("Header '%s' didn't match.\nExpected:\t%s \nActual:\t%s", expectedName, expectedValue, values));
+    Assertions.fail("Header '%s' didn't match.\nExpected:\t%s \nActual:\t%s".formatted(expectedName, expectedValue, values));
   }
 
 }

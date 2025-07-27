@@ -205,12 +205,12 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
   }
 
   protected InvalidRequestException createInvalidRequestException(String transition, Status status, ProcessEngineException cause) {
-    String errorMessage = String.format("Cannot %s case execution %s: %s", transition, caseExecutionId, cause.getMessage());
+    String errorMessage = "Cannot %s case execution %s: %s".formatted(transition, caseExecutionId, cause.getMessage());
     return new InvalidRequestException(status, cause, errorMessage);
   }
 
   protected RestException createRestException(String transition, Status status, ProcessEngineException cause) {
-    String errorMessage = String.format("Cannot %s case execution %s: %s", transition, caseExecutionId, cause.getMessage());
+    String errorMessage = "Cannot %s case execution %s: %s".formatted(transition, caseExecutionId, cause.getMessage());
     return new RestException(status, cause, errorMessage);
   }
 
@@ -241,7 +241,7 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
         }
 
       } catch (RestException e) {
-        String errorMessage = String.format("Cannot %s case execution %s due to invalid variable %s: %s", transition, caseExecutionId, variableName, e.getMessage());
+        String errorMessage = "Cannot %s case execution %s due to invalid variable %s: %s".formatted(transition, caseExecutionId, variableName, e.getMessage());
         throw new RestException(e.getStatus(), e, errorMessage);
 
       }

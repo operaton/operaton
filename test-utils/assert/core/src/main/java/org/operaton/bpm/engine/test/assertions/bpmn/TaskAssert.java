@@ -277,11 +277,11 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   @Override
   protected String toString(Task task) {
     return task != null ?
-      String.format("%s {" +
+      ("%s {" +
         "id='%s', " +
         "processInstanceId='%s', " +
         "taskDefinitionKey='%s', " +
-        "name='%s'}",
+        "name='%s'}").formatted(
         Task.class.getSimpleName(),
         task.getId(),
         task.getProcessInstanceId(),

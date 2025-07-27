@@ -103,7 +103,7 @@ public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters 
       if (sortOrder == null || sortOrder.isEmpty()) {
         sortOrder = SORT_ORDER_ASC_VALUE;
       }
-      return String.format("%s %s", getOrderByValue(sortBy), sortOrder);
+      return "%s %s".formatted(getOrderByValue(sortBy), sortOrder);
     }
     return DEFAULT_ORDER;
   }

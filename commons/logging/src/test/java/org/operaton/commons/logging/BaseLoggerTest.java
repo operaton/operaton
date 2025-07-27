@@ -46,7 +46,7 @@ public class BaseLoggerTest {
     String messageTemplate = "Some message '{}'";
 
     String formattedMessage = logger.formatMessageTemplate(ID, messageTemplate);
-    String expectedMessageTemplate = String.format("%s-%s%s %s", PROJECT_CODE, COMPONENT_ID, ID, messageTemplate);
+    String expectedMessageTemplate = "%s-%s%s %s".formatted(PROJECT_CODE, COMPONENT_ID, ID, messageTemplate);
 
     assertThat(formattedMessage).isEqualTo(expectedMessageTemplate);
   }
@@ -59,7 +59,7 @@ public class BaseLoggerTest {
     String parameter = "someParameter";
 
     String formattedMessage = logger.exceptionMessage(ID, messageTemplate, parameter);
-    String expectedMessageTemplate = String.format("%s-%s%s Some message 'someParameter'", PROJECT_CODE, COMPONENT_ID, ID);
+    String expectedMessageTemplate = "%s-%s%s Some message 'someParameter'".formatted(PROJECT_CODE, COMPONENT_ID, ID);
 
     assertThat(formattedMessage).isEqualTo(expectedMessageTemplate);
   }
@@ -73,7 +73,7 @@ public class BaseLoggerTest {
     String p2 = "someOtherParameter";
 
     String formattedMessage = logger.exceptionMessage(ID, messageTemplate, p1, p2);
-    String expectedMessageTemplate = String.format("%s-%s%s Some message 'someParameter' 'someOtherParameter'", PROJECT_CODE, COMPONENT_ID, ID);
+    String expectedMessageTemplate = "%s-%s%s Some message 'someParameter' 'someOtherParameter'".formatted(PROJECT_CODE, COMPONENT_ID, ID);
 
     assertThat(formattedMessage).isEqualTo(expectedMessageTemplate);
   }
@@ -83,7 +83,7 @@ public class BaseLoggerTest {
     ExampleLogger logger = LOG;
 
     String formattedMessage = logger.exceptionMessage(ID, SOME_MESSAGE);
-    String expectedMessageTemplate = String.format("%s-%s%s %s", PROJECT_CODE, COMPONENT_ID, ID, SOME_MESSAGE);
+    String expectedMessageTemplate = "%s-%s%s %s".formatted(PROJECT_CODE, COMPONENT_ID, ID, SOME_MESSAGE);
 
     assertThat(formattedMessage).isEqualTo(expectedMessageTemplate);
   }

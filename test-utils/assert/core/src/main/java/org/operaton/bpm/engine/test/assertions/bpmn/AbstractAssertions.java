@@ -49,8 +49,8 @@ public abstract class AbstractAssertions {
       init(processEngine);
       return processEngine;
     }
-    String message = processEngines.isEmpty() ? String.format("No ProcessEngine found to be registered with %s!", ProcessEngines.class.getSimpleName())
-      : String.format("%d ProcessEngines initialized. Call %s.init(ProcessEngine processEngine) first!", processEngines.size(), BpmnAwareTests.class.getSimpleName());
+    String message = processEngines.isEmpty() ? "No ProcessEngine found to be registered with %s!".formatted(ProcessEngines.class.getSimpleName())
+      : "%d ProcessEngines initialized. Call %s.init(ProcessEngine processEngine) first!".formatted(processEngines.size(), BpmnAwareTests.class.getSimpleName());
     throw new IllegalStateException(message);
   }
 

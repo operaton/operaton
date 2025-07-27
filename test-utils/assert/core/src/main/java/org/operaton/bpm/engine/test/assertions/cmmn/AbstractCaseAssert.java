@@ -523,11 +523,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     Assertions
         .assertThat(actualState)
         .overridingErrorMessage(
-            String.format(
-                "Expected %s to be in state '%s', but found it to be '%s'!",
-                toString(actual),
-                state,
-                CaseExecutionState.CASE_EXECUTION_STATES.get(actualState))).isEqualTo(state.getStateCode());
+      "Expected %s to be in state '%s', but found it to be '%s'!".formatted(
+        toString(actual),
+        state,
+        CaseExecutionState.CASE_EXECUTION_STATES.get(actualState))).isEqualTo(state.getStateCode());
     @SuppressWarnings("unchecked")
     S self = (S) this;
     return self;
@@ -544,7 +543,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     Assertions
         .assertThat(actual.getActivityType())
         .overridingErrorMessage(
-            String.format("Expected %s to be a '%s', but found it to be a '%s'!", toString(actual), type, actual.getActivityType()))
+          "Expected %s to be a '%s', but found it to be a '%s'!".formatted(toString(actual), type, actual.getActivityType()))
         .isEqualTo(type);
     @SuppressWarnings("unchecked")
     S self = (S) this;
@@ -593,19 +592,18 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   @Override
   protected String toString(A caseExecution) {
     if (caseExecution != null) {
-      return !actual.getCaseInstanceId().equals(actual.getId()) ? String.format(
-          "%s {id='%s', activityId='%s', caseInstanceId='%s'}",
-          caseExecution.getActivityType(),
-          caseExecution.getId(),
-          caseExecution.getActivityId(),
-          caseExecution.getCaseInstanceId())
-          : String.format(
-              "%s {id='%s', activityId='%s'" + (((CaseInstance) caseExecution).getBusinessKey() != null ? ", businessKey='%s'}"
-                  : "}"),
-              CaseInstance.class.getSimpleName(),
-              caseExecution.getId(),
-              caseExecution.getActivityId(),
-              ((CaseInstance) caseExecution).getBusinessKey());
+      return !actual.getCaseInstanceId().equals(actual.getId()) ? "%s {id='%s', activityId='%s', caseInstanceId='%s'}".formatted(
+        caseExecution.getActivityType(),
+        caseExecution.getId(),
+        caseExecution.getActivityId(),
+        caseExecution.getCaseInstanceId())
+          : (
+        "%s {id='%s', activityId='%s'" + (((CaseInstance) caseExecution).getBusinessKey() != null ? ", businessKey='%s'}"
+          : "}")).formatted(
+        CaseInstance.class.getSimpleName(),
+        caseExecution.getId(),
+        caseExecution.getActivityId(),
+        ((CaseInstance) caseExecution).getBusinessKey());
     }
     return null;
   }

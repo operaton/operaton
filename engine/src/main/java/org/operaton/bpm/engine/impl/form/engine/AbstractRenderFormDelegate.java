@@ -223,7 +223,7 @@ public abstract class AbstractRenderFormDelegate {
     if(!isReadOnly) {
       inputField
           .attribute(DATEPICKER_POPUP_ATTRIBUTE, DATE_FORMAT)
-          .attribute(IS_OPEN_ATTRIBUTE, String.format(DATE_FIELD_OPENED_ATTRIBUTE, formFieldId));
+          .attribute(IS_OPEN_ATTRIBUTE, DATE_FIELD_OPENED_ATTRIBUTE.formatted(formFieldId));
     }
 
     // <input ... />
@@ -246,7 +246,7 @@ public abstract class AbstractRenderFormDelegate {
       HtmlElementWriter buttonElement = new HtmlElementWriter(BUTTON_ELEMENT)
           .attribute(TYPE_ATTRIBUTE, BUTTON_BUTTON_TYPE)
           .attribute(CLASS_ATTRIBUTE, BUTTON_DEFAULT_CLASS)
-          .attribute(NG_CLICK_ATTRIBUTE, String.format(OPEN_DATEPICKER_FUNCTION_SNIPPET, formFieldId));
+          .attribute(NG_CLICK_ATTRIBUTE, OPEN_DATEPICKER_FUNCTION_SNIPPET.formatted(formFieldId));
 
       // <button>
       documentBuilder.startElement(buttonElement);
@@ -269,7 +269,7 @@ public abstract class AbstractRenderFormDelegate {
       HtmlElementWriter scriptElement = new HtmlElementWriter(SCRIPT_ELEMENT)
           .attribute(CAM_SCRIPT_ATTRIBUTE, null)
           .attribute(TYPE_ATTRIBUTE, TEXT_FORM_SCRIPT_TYPE)
-          .textContent(String.format(OPEN_DATEPICKER_SNIPPET, formFieldId, formFieldId));
+          .textContent(OPEN_DATEPICKER_SNIPPET.formatted(formFieldId, formFieldId));
 
       // <script ...> </script>
       documentBuilder
@@ -334,7 +334,7 @@ public abstract class AbstractRenderFormDelegate {
     HtmlElementWriter divElement = new HtmlElementWriter(DIV_ELEMENT);
 
     String formFieldId = formField.getId();
-    String ifExpression = String.format(INVALID_EXPRESSION + " && " + DIRTY_EXPRESSION, formFieldId, formFieldId);
+    String ifExpression = (INVALID_EXPRESSION + " && " + DIRTY_EXPRESSION).formatted(formFieldId, formFieldId);
 
     divElement
         .attribute(NG_IF_ATTRIBUTE, ifExpression)
@@ -359,7 +359,7 @@ public abstract class AbstractRenderFormDelegate {
 
     String formFieldId = formField.getId();
 
-    String expression = String.format(REQUIRED_ERROR_EXPRESSION, formFieldId);
+    String expression = REQUIRED_ERROR_EXPRESSION.formatted(formFieldId);
 
     divElement
         .attribute(NG_SHOW_ATTRIBUTE, expression)
@@ -376,7 +376,7 @@ public abstract class AbstractRenderFormDelegate {
 
     String formFieldId = formField.getId();
 
-    String expression = String.format(TYPE_ERROR_EXPRESSION, formFieldId);
+    String expression = TYPE_ERROR_EXPRESSION.formatted(formFieldId);
 
     String typeName = formField.getTypeName();
 
@@ -387,7 +387,7 @@ public abstract class AbstractRenderFormDelegate {
     divElement
         .attribute(NG_SHOW_ATTRIBUTE, expression)
         .attribute(CLASS_ATTRIBUTE, HELP_BLOCK_CLASS)
-        .textContent(String.format(TYPE_FIELD_MESSAGE, typeName));
+        .textContent(TYPE_FIELD_MESSAGE.formatted(typeName));
 
     documentBuilder
         .startElement(divElement)
@@ -399,7 +399,7 @@ public abstract class AbstractRenderFormDelegate {
 
     HtmlElementWriter firstDivElement = new HtmlElementWriter(DIV_ELEMENT);
 
-    String firstExpression = String.format(REQUIRED_ERROR_EXPRESSION + " && !" + DATE_ERROR_EXPRESSION, formFieldId, formFieldId);
+    String firstExpression = (REQUIRED_ERROR_EXPRESSION + " && !" + DATE_ERROR_EXPRESSION).formatted(formFieldId, formFieldId);
 
     firstDivElement
         .attribute(NG_SHOW_ATTRIBUTE, firstExpression)
@@ -412,7 +412,7 @@ public abstract class AbstractRenderFormDelegate {
 
     HtmlElementWriter secondDivElement = new HtmlElementWriter(DIV_ELEMENT);
 
-    String secondExpression = String.format(DATE_ERROR_EXPRESSION, formFieldId);
+    String secondExpression = DATE_ERROR_EXPRESSION.formatted(formFieldId);
 
     secondDivElement
         .attribute(NG_SHOW_ATTRIBUTE, secondExpression)

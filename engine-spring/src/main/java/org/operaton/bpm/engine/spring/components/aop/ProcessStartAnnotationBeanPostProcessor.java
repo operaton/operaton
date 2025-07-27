@@ -15,8 +15,6 @@
  */
 package org.operaton.bpm.engine.spring.components.aop;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.spring.annotations.ProcessVariable;
 import org.operaton.bpm.engine.spring.annotations.StartProcess;
@@ -40,8 +38,6 @@ import org.springframework.util.ClassUtils;
  * @since 5.3
  */
 public class ProcessStartAnnotationBeanPostProcessor extends ProxyConfig implements BeanPostProcessor, InitializingBean {
-
-	private final Log log = LogFactory.getLog(getClass()) ;
 
 	/**
 	 * the process engine as created by a {@link org.operaton.bpm.engine.spring.ProcessEngineFactoryBean}

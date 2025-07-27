@@ -162,7 +162,8 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
     String oldValue = script.getVariable("oldValue");
     Boolean newValue = script.getVariable("newValue");
 
-    assertThat(newValue).isNotEqualTo(oldValue);
+    assertThat(oldValue).isNotNull();
+    assertThat(newValue).isNotNull();
   }
 
   @Test

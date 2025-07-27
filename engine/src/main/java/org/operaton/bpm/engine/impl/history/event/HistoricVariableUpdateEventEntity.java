@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
 
 
 /**
@@ -24,7 +25,7 @@ package org.operaton.bpm.engine.impl.history.event;
  */
 public class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected int revision;
 

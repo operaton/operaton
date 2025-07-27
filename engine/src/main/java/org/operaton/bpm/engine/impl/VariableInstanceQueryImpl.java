@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class VariableInstanceQueryImpl extends AbstractVariableQueryImpl<Variabl
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String variableId;
   protected String variableName;

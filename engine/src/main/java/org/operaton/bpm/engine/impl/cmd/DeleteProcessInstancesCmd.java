@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class DeleteProcessInstancesCmd extends AbstractDeleteProcessInstanceCmd implements Command<Void>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected List<String> processInstanceIds;
 

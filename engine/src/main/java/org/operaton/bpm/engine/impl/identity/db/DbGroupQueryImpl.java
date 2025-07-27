@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.identity.db;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.identity.Group;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
  */
 public class DbGroupQueryImpl extends GroupQueryImpl {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public DbGroupQueryImpl() {
     super();

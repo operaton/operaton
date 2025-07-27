@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.iomapping;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -23,7 +24,7 @@ import java.io.Serializable;
  */
 public class OnePlusOneBean implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public String getSource() {
     return "return 1 + 1";

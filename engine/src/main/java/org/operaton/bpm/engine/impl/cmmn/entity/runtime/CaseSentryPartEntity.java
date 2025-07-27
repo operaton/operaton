@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.entity.runtime;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.db.HasDbRevision;
  */
 public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, HasDbRevision, HasDbReferences {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   // references
 

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.servicetask.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -23,7 +24,7 @@ import java.io.Serializable;
  */
 public class ValueBean implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private final String value;
 

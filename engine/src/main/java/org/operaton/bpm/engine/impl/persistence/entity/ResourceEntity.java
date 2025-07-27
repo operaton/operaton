@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.repository.Resource;
  */
 public class ResourceEntity implements Serializable, DbEntity, Resource {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected String name;

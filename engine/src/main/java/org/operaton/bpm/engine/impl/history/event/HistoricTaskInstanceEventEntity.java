@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ import java.util.Date;
  */
 public class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String taskId;
   protected String assignee;

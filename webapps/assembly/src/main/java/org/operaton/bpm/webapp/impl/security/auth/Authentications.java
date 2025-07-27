@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ import java.util.Map;
  */
 public class Authentications implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /**
    * holds the current authentication

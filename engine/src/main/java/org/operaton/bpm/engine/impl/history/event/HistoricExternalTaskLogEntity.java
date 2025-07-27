@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 
+import java.io.Serial;
 import java.util.Date;
 
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createExceptionByteArray;
@@ -32,7 +33,7 @@ import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
 
 public class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExternalTaskLog {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private static final String EXCEPTION_NAME = "historicExternalTaskLog.exceptionByteArray";
 
   protected Date timestamp;

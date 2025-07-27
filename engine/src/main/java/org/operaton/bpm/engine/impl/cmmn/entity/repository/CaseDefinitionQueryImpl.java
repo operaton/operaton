@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.entity.repository;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
 
+import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import org.operaton.bpm.engine.repository.CaseDefinitionQuery;
  */
 public class CaseDefinitionQueryImpl extends AbstractQuery<CaseDefinitionQuery, CaseDefinition> implements CaseDefinitionQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected String[] ids;

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -85,7 +86,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 @Named
 public class BusinessProcess implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Inject private ProcessEngine processEngine;
 

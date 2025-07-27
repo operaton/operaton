@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.plugin.variable.type.impl;
 
+import java.io.Serial;
+
+
 import org.operaton.spin.plugin.variable.SpinValues;
 import org.operaton.spin.plugin.variable.type.XmlValueType;
 import org.operaton.spin.plugin.variable.value.SpinValue;
@@ -28,7 +31,7 @@ import org.operaton.spin.xml.SpinXmlElement;
  */
 public class XmlValueTypeImpl extends SpinValueTypeImpl implements XmlValueType {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public XmlValueTypeImpl() {
     super(TYPE_NAME);

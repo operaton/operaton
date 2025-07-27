@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin.base.dto.query;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 
 public class ProcessDefinitionQueryDto extends AbstractRestQueryParametersDto<ProcessDefinitionDto> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String parentProcessDefinitionId;
   protected String superProcessDefinitionId;

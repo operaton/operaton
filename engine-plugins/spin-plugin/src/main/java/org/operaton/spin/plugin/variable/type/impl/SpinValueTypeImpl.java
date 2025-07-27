@@ -16,6 +16,7 @@
  */
 package org.operaton.spin.plugin.variable.type.impl;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ import org.operaton.spin.plugin.variable.value.builder.SpinValueBuilder;
  */
 public abstract class SpinValueTypeImpl extends AbstractValueTypeImpl implements SpinValueType {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected SpinValueTypeImpl(String name) {
     super(name);

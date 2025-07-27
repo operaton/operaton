@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.json;
 
+import java.io.Serial;
+
+
 import org.operaton.spin.spi.SpinDataFormatException;
 
 public class SpinJsonDataFormatException extends SpinDataFormatException {
@@ -28,6 +31,6 @@ public class SpinJsonDataFormatException extends SpinDataFormatException {
     super(message, cause);
   }
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
 }

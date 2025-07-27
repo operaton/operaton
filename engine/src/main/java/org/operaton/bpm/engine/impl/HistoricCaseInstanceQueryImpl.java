@@ -22,6 +22,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -39,7 +40,7 @@ import org.operaton.bpm.engine.impl.util.CompareUtil;
  */
 public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<HistoricCaseInstanceQuery, HistoricCaseInstance> implements HistoricCaseInstanceQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String caseInstanceId;
   protected Set<String> caseInstanceIds;
   protected String caseDefinitionId;

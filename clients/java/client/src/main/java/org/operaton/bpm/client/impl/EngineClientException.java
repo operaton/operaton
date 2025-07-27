@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.client.impl;
 
+import java.io.Serial;
+
 /**
  * @author Tassilo Weidner
  */
 public class EngineClientException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected EngineClientException(String message, Throwable e) {
     super(message, e);

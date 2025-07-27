@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.util.Collection;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.StartFormData;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
  */
 public class GetStartFormVariablesCmd extends AbstractGetFormVariablesCmd {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public GetStartFormVariablesCmd(String resourceId, Collection<String> formVariableNames, boolean deserializeObjectValues) {
     super(resourceId, formVariableNames, deserializeObjectValues);

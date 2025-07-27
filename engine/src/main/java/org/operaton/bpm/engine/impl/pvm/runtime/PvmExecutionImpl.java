@@ -52,6 +52,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
 import static org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState.ENDING;
 
+import java.io.Serial;
 import java.util.*;
 
 /**
@@ -62,7 +63,7 @@ import java.util.*;
 public abstract class PvmExecutionImpl extends CoreExecution implements
   ActivityExecution, PvmProcessInstance {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 

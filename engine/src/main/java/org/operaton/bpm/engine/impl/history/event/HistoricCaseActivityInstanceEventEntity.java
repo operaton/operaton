@@ -24,6 +24,7 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENA
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
 
+import java.io.Serial;
 import java.util.Date;
 
 
@@ -34,7 +35,7 @@ import java.util.Date;
  */
 public class HistoricCaseActivityInstanceEventEntity extends HistoricScopeInstanceEvent {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /** the id of the case activity */
   protected String caseActivityId;

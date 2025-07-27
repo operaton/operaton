@@ -18,6 +18,7 @@ package org.operaton.bpm.impl.juel;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
+import java.io.Serial;
 import java.util.Arrays;
 
 import jakarta.el.ELContext;
@@ -36,7 +37,7 @@ import jakarta.el.VariableMapper;
  * @author Christoph Beck
  */
 public final class TreeMethodExpression extends jakarta.el.MethodExpression {
-	private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
 	private final TreeBuilder builder;
 	private final Bindings bindings;

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.variable.impl.value;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -25,7 +28,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class AbstractTypedValue<T> implements TypedValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected T value;
 

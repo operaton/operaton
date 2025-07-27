@@ -20,6 +20,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
  */
 public class GetDeploymentResourceForIdCmd implements Command<InputStream>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String deploymentId;
   protected String resourceId;
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml;
 
+import java.io.Serial;
+
 /**
  * An Exception in the Core XML Model.
  *
@@ -24,7 +26,7 @@ package org.operaton.bpm.model.xml;
  */
 public class ModelException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ModelException() {
   }

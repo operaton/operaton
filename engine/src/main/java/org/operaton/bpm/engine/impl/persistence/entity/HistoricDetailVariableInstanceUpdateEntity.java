@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
 import java.util.Date;
 
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
@@ -38,7 +39,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariableUpdateEventEntity implements ValueFields, HistoricVariableUpdate, DbEntityLifecycleAware {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected TypedValueField typedValueField = new TypedValueField(this, false);

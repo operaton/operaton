@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.migration;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.BadUserRequestException;
 
 /**
@@ -26,7 +29,7 @@ import org.operaton.bpm.engine.BadUserRequestException;
  */
 public class MigrationPlanValidationException extends BadUserRequestException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final MigrationPlanValidationReport validationReport;
 

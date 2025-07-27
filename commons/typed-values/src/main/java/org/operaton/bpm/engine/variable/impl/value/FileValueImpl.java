@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.variable.impl.value;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serial;
 import java.nio.charset.Charset;
 
 import org.operaton.bpm.engine.variable.type.FileValueType;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.variable.value.FileValue;
  */
 public class FileValueImpl implements FileValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String mimeType;
   protected String filename;
   protected byte[] value;

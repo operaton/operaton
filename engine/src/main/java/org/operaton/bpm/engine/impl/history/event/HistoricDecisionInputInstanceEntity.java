@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
 import java.util.Date;
 
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class HistoricDecisionInputInstanceEntity extends HistoryEvent implements HistoricDecisionInputInstance, ValueFields {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String decisionInstanceId;
 

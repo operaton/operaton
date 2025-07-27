@@ -18,11 +18,14 @@ package org.operaton.bpm.cockpit.impl.plugin.base.dto.query;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessInstanceDto;
+
+import java.io.Serial;
 
 public class ProcessInstanceQueryDto extends AbstractProcessInstanceQueryDto<ProcessInstanceDto> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ProcessInstanceQueryDto() {
   }

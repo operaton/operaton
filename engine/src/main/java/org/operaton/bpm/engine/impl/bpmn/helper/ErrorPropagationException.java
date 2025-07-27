@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
+import java.io.Serial;
+
 public class ErrorPropagationException extends Exception {
 
-  private static final long serialVersionUID = 6462890072597455535L;
+  @Serial private static final long serialVersionUID = 6462890072597455535L;
 
   public ErrorPropagationException(Throwable cause) {
     super(cause);

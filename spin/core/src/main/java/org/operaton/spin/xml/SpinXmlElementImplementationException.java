@@ -16,6 +16,8 @@
  */
 package org.operaton.spin.xml;
 
+import java.io.Serial;
+
 /**
  * Indicates an error in the underlying xml tree element implementation.
  *
@@ -23,7 +25,7 @@ package org.operaton.spin.xml;
  */
 public class SpinXmlElementImplementationException extends SpinXmlElementException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public SpinXmlElementImplementationException(String message) {
     super(message);

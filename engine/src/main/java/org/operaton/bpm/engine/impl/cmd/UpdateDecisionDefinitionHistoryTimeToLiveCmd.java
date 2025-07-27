@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureGreaterThanOrEqual;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  */
 public class UpdateDecisionDefinitionHistoryTimeToLiveCmd implements Command<Void>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String decisionDefinitionId;
   protected Integer historyTimeToLive;

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.transformer;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
@@ -23,7 +26,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public class CmmnTransformException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public CmmnTransformException(String message, Throwable cause) {
     super(message, cause);

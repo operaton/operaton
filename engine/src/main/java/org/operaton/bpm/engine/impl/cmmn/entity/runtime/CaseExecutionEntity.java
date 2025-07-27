@@ -59,6 +59,7 @@ import org.operaton.bpm.model.xml.type.ModelElementType;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_DESCRIPTION;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_TYPE;
 
+import java.io.Serial;
 import java.util.*;
 
 /**
@@ -67,7 +68,7 @@ import java.util.*;
  */
 public class CaseExecutionEntity extends CmmnExecution implements CaseExecution, CaseInstance, DbEntity, HasDbRevision, HasDbReferences, VariablesProvider<VariableInstanceEntity> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   // current position /////////////////////////////////////////////////////////
 

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class GetTaskVariableCmdTyped implements Command<TypedValue>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String taskId;
   protected String variableName;
   protected boolean isLocal;

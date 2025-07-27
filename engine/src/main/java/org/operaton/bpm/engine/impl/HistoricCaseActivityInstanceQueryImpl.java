@@ -26,6 +26,7 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TER
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +42,7 @@ import org.operaton.bpm.engine.impl.util.CompareUtil;
  */
 public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<HistoricCaseActivityInstanceQuery, HistoricCaseActivityInstance> implements HistoricCaseActivityInstanceQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private static final String CASE_ACTIVITY_STATE = "caseActivityState";
 
   protected String[] caseActivityInstanceIds;

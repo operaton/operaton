@@ -19,11 +19,13 @@ package org.operaton.bpm.client.variable.impl.value;
 import static org.operaton.bpm.client.variable.ClientValues.XML;
 
 import org.operaton.bpm.client.variable.value.XmlValue;
+
+import java.io.Serial;
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl;
 
 public class XmlValueImpl extends PrimitiveTypeValueImpl<String> implements XmlValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public XmlValueImpl(String value) {
     super(value, XML);

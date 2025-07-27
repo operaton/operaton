@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.identity.TenantQuery;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 public class CreateTenantQueryCmd implements Command<TenantQuery>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Override
   public TenantQuery execute(CommandContext commandContext) {

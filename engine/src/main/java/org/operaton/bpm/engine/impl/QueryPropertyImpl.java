@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
@@ -25,7 +28,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  */
 public class QueryPropertyImpl implements QueryProperty {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String name;
 

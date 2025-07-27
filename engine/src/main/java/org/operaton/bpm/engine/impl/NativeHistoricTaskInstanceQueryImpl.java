@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
 public class NativeHistoricTaskInstanceQueryImpl extends AbstractNativeQuery<NativeHistoricTaskInstanceQuery, HistoricTaskInstance> implements NativeHistoricTaskInstanceQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public NativeHistoricTaskInstanceQueryImpl(CommandContext commandContext) {
     super(commandContext);

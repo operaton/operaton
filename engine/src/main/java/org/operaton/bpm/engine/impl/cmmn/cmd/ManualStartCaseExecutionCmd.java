@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class ManualStartCaseExecutionCmd extends StateTransitionCaseExecutionCmd {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ManualStartCaseExecutionCmd(String caseExecutionId, Map<String, Object> variables, Map<String, Object> variablesLocal,
       Collection<String> variableDeletions, Collection<String> variableLocalDeletions) {

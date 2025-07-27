@@ -18,6 +18,7 @@ package org.operaton.bpm.engine;
 
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +36,7 @@ import java.util.List;
  */
 public class AuthorizationException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final String userId;
   protected final List<MissingAuthorization> missingAuthorizations;

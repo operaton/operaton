@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.variable.serializer;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class DefaultVariableSerializers implements Serializable, VariableSerializers {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected List<TypedValueSerializer<?>> serializerList = new ArrayList<>();
   protected Map<String, TypedValueSerializer<?>> serializerMap = new HashMap<>();

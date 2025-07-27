@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.filter.Filter;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  */
 public class SaveFilterCmd implements Command<Filter>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Filter filter;
 

@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -90,7 +91,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
    * </ol>
    */
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private static final String KEY_TASK_CANDIDATE_GROUP = "taskCandidateGroup";
   private static final String KEY_TASK_CANDIDATE_USER = "taskCandidateUser";
   private static final String KEY_TASK_CANDIDATE_GROUP_IN = "taskCandidateGroupIn";

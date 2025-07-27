@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.plugin.variable.value.impl;
 
+import java.io.Serial;
+
+
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.type.XmlValueType;
@@ -29,7 +32,7 @@ import org.operaton.spin.xml.SpinXmlElement;
  */
 public class XmlValueImpl extends SpinValueImpl implements XmlValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public XmlValueImpl(SpinXmlElement value) {
     this(value, null, value.getDataFormatName(), true);

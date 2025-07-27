@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.entity.runtime;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -36,7 +37,7 @@ import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
  */
 public class CaseInstanceQueryImpl extends AbstractVariableQueryImpl<CaseInstanceQuery, CaseInstance> implements CaseInstanceQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String caseExecutionId;
   protected String businessKey;

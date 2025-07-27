@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.client.exception;
 
+import java.io.Serial;
+
 public class DataFormatException extends ExternalTaskClientException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public DataFormatException(String message) {
     super(message);

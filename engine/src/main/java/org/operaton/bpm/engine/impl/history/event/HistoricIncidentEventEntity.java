@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
 import java.util.Date;
 
 import org.operaton.bpm.engine.history.IncidentState;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.history.IncidentState;
  */
 public class HistoricIncidentEventEntity extends HistoryEvent {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Date createTime;
   protected Date endTime;

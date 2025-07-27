@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +46,7 @@ import org.operaton.bpm.engine.impl.db.DbEntity;
 public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevision, HasDbReferences, Serializable {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected int revision;

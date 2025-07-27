@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
  */
 public class CreateCaseInstanceCmd implements Command<CaseInstance>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String caseDefinitionKey;
   protected String caseDefinitionId;
   protected Map<String, Object> variables;

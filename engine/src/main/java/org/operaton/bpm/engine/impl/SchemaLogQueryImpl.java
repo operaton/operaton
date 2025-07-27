@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  */
 public class SchemaLogQueryImpl extends AbstractQuery<SchemaLogQuery, SchemaLogEntry> implements SchemaLogQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private static final QueryProperty TIMESTAMP_PROPERTY = new QueryPropertyImpl("TIMESTAMP_");
 
   protected String version;

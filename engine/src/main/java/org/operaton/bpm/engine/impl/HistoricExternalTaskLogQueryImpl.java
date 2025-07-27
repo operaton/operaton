@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 
+import java.io.Serial;
 import java.util.List;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmptyString;
@@ -32,7 +33,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class HistoricExternalTaskLogQueryImpl extends AbstractQuery<HistoricExternalTaskLogQuery, HistoricExternalTaskLog> implements HistoricExternalTaskLogQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private static final String VAR_ACTIVITY_IDS = "activityIds";
   private static final String VAR_ACTIVITY_INSTANCE_IDS = "activityInstanceIds";
   private static final String VAR_ERROR_MESSAGE = "errorMessage";

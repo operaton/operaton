@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.dmn.cmd;
 
 import java.io.InputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.repository.DecisionDefinition;
  */
 public class GetDeploymentDecisionDiagramCmd implements Command<InputStream>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String decisionDefinitionId;
 

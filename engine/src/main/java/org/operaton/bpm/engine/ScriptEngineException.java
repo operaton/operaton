@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import java.io.Serial;
+
 /**
  * <p>Base exception resulting from a script engine interaction.</p>
  *
@@ -23,7 +25,7 @@ package org.operaton.bpm.engine;
  */
 public class ScriptEngineException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ScriptEngineException() {
   }

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.variable.impl;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class VariableMapImpl implements VariableMap, Serializable, VariableContext {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Map<String, TypedValue> variables = new HashMap<>();
 

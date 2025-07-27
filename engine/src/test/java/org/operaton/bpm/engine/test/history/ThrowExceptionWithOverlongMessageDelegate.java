@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class ThrowExceptionWithOverlongMessageDelegate implements JavaDelegate, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String exceptionMessage;
 
   public ThrowExceptionWithOverlongMessageDelegate(String exceptionMessage) {

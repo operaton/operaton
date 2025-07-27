@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.plugin.variable.value.impl;
 
+import java.io.Serial;
+
+
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.plugin.variable.type.JsonValueType;
@@ -29,7 +32,7 @@ import org.operaton.spin.spi.DataFormat;
  */
 public class JsonValueImpl extends SpinValueImpl implements JsonValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public JsonValueImpl(String value) {
     this(null, value, DataFormats.JSON_DATAFORMAT_NAME, false);

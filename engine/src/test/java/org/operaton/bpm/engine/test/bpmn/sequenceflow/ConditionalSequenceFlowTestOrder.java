@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.sequenceflow;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 
@@ -26,7 +27,7 @@ import java.io.Serializable;
  */
 public class ConditionalSequenceFlowTestOrder implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected int price;
 

@@ -22,6 +22,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.io.InputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,7 +65,7 @@ import org.operaton.bpm.model.dmn.DmnModelInstance;
  */
 public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final String DEPLOYMENT_ID = "deploymentId";
   private static final String MODEL_INSTANCE = "modelInstance";

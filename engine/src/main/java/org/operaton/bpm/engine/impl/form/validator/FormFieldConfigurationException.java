@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.form.validator;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.form.FormException;
 
 /**
@@ -23,7 +26,7 @@ import org.operaton.bpm.engine.impl.form.FormException;
  */
 public class FormFieldConfigurationException extends FormException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final String configuration;
 

@@ -17,6 +17,9 @@
 package org.operaton.bpm.engine;
 
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.util.xml.Element;
 
 /**
@@ -24,7 +27,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
  */
 public class BpmnParseException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected final Element element;
 
   public BpmnParseException(String message, Element element) {

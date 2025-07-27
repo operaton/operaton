@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.impl.annotation;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -43,7 +44,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 @StartProcess("")
 public class StartProcessInterceptor implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Inject BusinessProcess businessProcess;
 

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import org.operaton.bpm.engine.identity.Group;
+
+import java.io.Serial;
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
@@ -28,7 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
  */
 public abstract class GroupQueryImpl extends AbstractQuery<GroupQuery, Group> implements GroupQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String id;
   protected String[] ids;
   protected String name;

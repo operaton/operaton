@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.webapp.impl;
 
+import java.io.Serial;
+
 /**
  * <p>Thrown if the webapp is configured incorrectly</p>
  *
@@ -24,7 +26,7 @@ package org.operaton.bpm.webapp.impl;
  */
 public class IllegalWebAppConfigurationException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public IllegalWebAppConfigurationException(String string) {
     super(string);

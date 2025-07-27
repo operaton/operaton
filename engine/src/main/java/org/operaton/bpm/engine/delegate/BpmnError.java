@@ -21,6 +21,8 @@ import org.operaton.bpm.engine.impl.bpmn.parser.Error;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 
+import java.io.Serial;
+
 
 /**
  * Special exception that can be used to throw a BPMN Error from
@@ -37,7 +39,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
  */
 public class BpmnError extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private String errorCode;
   private String errorMessage;

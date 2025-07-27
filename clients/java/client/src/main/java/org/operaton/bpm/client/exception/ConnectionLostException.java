@@ -17,6 +17,7 @@
 package org.operaton.bpm.client.exception;
 
 import java.io.IOException;
+import java.io.Serial;
 
 /**
  * <p>Exception is thrown if the connection could not be established</p>
@@ -25,7 +26,7 @@ import java.io.IOException;
  */
 public class ConnectionLostException extends ExternalTaskClientException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ConnectionLostException(String message, IOException e) {
     super(message, e);

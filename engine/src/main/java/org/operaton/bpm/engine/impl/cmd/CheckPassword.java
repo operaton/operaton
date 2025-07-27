@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class CheckPassword implements Command<Boolean>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   String userId;
   String password;

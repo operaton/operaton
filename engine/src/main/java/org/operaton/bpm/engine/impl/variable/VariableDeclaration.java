@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.variable;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 @Deprecated(since = "1.0")
 public class VariableDeclaration implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String name;
   protected String type;

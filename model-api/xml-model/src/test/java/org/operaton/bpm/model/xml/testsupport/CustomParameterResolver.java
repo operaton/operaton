@@ -29,7 +29,7 @@ public class CustomParameterResolver implements BeforeEachMethodAdapter, Paramet
                 .contains("ParameterizedTestParameterResolver")
         )
         .findFirst();
-    if (!resolverOptional.isPresent()) {
+    if (resolverOptional.isEmpty()) {
       throw new IllegalStateException(
           "ParameterizedTestParameterResolver missed in the registry. Probably it's not a Parameterized Test");
     } else {

@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -246,7 +247,7 @@ class HistoricTaskReportTest {
   }
 
   protected BpmnModelInstance createProcessWithUserTask(String key) {
-    double random = Math.random();
+    double random = ThreadLocalRandom.current().nextDouble();
     return Bpmn.createExecutableProcess(key)
       .name("name_" + key)
       .startEvent()

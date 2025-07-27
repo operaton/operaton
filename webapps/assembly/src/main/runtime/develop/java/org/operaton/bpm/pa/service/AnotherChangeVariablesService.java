@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -76,7 +77,7 @@ public class AnotherChangeVariablesService implements JavaDelegate {
     variables.put("bytesVar", bytes);
     variables.put("value1", "blub");
 
-    int random = (int)(Math.random() * 100);
+    int random = (int)(ThreadLocalRandom.current().nextDouble() * 100);
     variables.put("random", random);
 
     variables.put("failingSerializable", failingSerializable);

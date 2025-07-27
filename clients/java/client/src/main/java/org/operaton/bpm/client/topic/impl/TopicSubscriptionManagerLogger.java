@@ -36,7 +36,7 @@ public class TopicSubscriptionManagerLogger extends ExternalTaskClientLogger {
   public void exceptionWhileExecutingExternalTaskHandler(String topicName, Throwable e) {
     logError(
       "002",
-      String.format("Exception while executing external task handler '%s'.", topicName), e);
+      "Exception while executing external task handler '%s'.".formatted(topicName), e);
   }
 
   protected void exceptionWhileShuttingDown(InterruptedException e) {
@@ -47,7 +47,7 @@ public class TopicSubscriptionManagerLogger extends ExternalTaskClientLogger {
   protected void exceptionOnExternalTaskServiceMethodInvocation(String topicName, ExternalTaskClientException e) {
     logError(
       "004",
-      String.format("Exception on external task service method invocation for topic '%s':", topicName), e);
+      "Exception on external task service method invocation for topic '%s':".formatted(topicName), e);
   }
 
   protected void exceptionWhileExecutingBackoffStrategyMethod(Throwable e) {
@@ -63,19 +63,19 @@ public class TopicSubscriptionManagerLogger extends ExternalTaskClientLogger {
   public void taskHandlerIsNull(String topicName) {
     logError(
       "007",
-      String.format("Task handler is null for topic '%s'.", topicName));
+      "Task handler is null for topic '%s'.".formatted(topicName));
   }
 
   protected void fetchAndLock(List<TopicRequestDto> subscriptions) {
     logDebug(
       "008",
-      String.format("Fetch and lock new external tasks for %d topics", subscriptions.size()));
+      "Fetch and lock new external tasks for %d topics".formatted(subscriptions.size()));
   }
 
   protected void timeout(long waitTime) {
     logDebug(
       "009",
-      String.format("Timed out after %d ms without a signal.", waitTime));
+      "Timed out after %d ms without a signal.".formatted(waitTime));
   }
 
 }

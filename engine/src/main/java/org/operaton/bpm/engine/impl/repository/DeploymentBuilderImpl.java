@@ -22,6 +22,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.io.InputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,7 +65,7 @@ import org.operaton.bpm.model.dmn.DmnModelInstance;
  */
 public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final String DEPLOYMENT_ID = "deploymentId";
   private static final String MODEL_INSTANCE = "modelInstance";
@@ -239,7 +240,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   @Override
   public DeploymentBuilder name(String name) {
     if (nameFromDeployment != null && !nameFromDeployment.isEmpty()) {
-      String message = String.format("Cannot set the deployment name to '%s', because the property 'nameForDeployment' has been already set to '%s'.", name, nameFromDeployment);
+      String message = "Cannot set the deployment name to '%s', because the property 'nameForDeployment' has been already set to '%s'.".formatted(name, nameFromDeployment);
       throw new NotValidException(message);
     }
     deployment.setName(name);
@@ -250,7 +251,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   public DeploymentBuilder nameFromDeployment(String deploymentId) {
     String name = deployment.getName();
     if (name != null && !name.isEmpty()) {
-      String message = String.format("Cannot set the given deployment id '%s' to get the name from it, because the deployment name has been already set to '%s'.", deploymentId, name);
+      String message = "Cannot set the given deployment id '%s' to get the name from it, because the deployment name has been already set to '%s'.".formatted(deploymentId, name);
       throw new NotValidException(message);
     }
     nameFromDeployment = deploymentId;

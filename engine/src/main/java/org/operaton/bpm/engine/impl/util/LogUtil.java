@@ -45,7 +45,7 @@ public class LogUtil {
 
   }
   private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-  private static Map<Integer, String> threadIndents = new HashMap<>();
+  private static Map<Long, String> threadIndents = new HashMap<>();
   private static ThreadLogMode threadLogMode = ThreadLogMode.NONE;
 
   private LogUtil() {
@@ -127,8 +127,8 @@ public class LogUtil {
       return line.toString();
     }
 
-    protected static String getThreadIndent(int threadId) {
-      Integer threadIdInteger = threadId;
+    protected static String getThreadIndent(long threadId) {
+      Long threadIdInteger = threadId;
       if (threadLogMode==ThreadLogMode.NONE) {
         return "";
       }

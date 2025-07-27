@@ -21,6 +21,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -38,7 +39,7 @@ import org.operaton.bpm.engine.impl.util.CompareUtil;
  */
 public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, HistoricJobLog> implements HistoricJobLogQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected String jobId;

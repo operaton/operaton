@@ -119,8 +119,8 @@ public class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
     assertThat(exception)
       .isInstanceOf(NullValueException.class)
       .hasMessage(
-        String.format("Cannot restore state of process instance %s: list of executions is empty",
-            mainTask.getProcessInstanceId()));
+      "Cannot restore state of process instance %s: list of executions is empty".formatted(
+        mainTask.getProcessInstanceId()));
   }
 
 }

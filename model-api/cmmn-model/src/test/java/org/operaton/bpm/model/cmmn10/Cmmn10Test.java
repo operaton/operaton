@@ -17,7 +17,7 @@
 package org.operaton.bpm.model.cmmn10;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Collection;
 
@@ -44,6 +44,7 @@ import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.TimerEvent;
 import org.operaton.bpm.model.cmmn.instance.UserEvent;
+import org.operaton.bpm.model.xml.ModelValidationException;
 
 /**
  * @author Roman Smirnov
@@ -184,13 +185,8 @@ class Cmmn10Test {
     HumanTask humanTask = modelInstance.newInstance(HumanTask.class);
     casePlanModel.getPlanItemDefinitions().add(humanTask);
 
-    try {
-      Cmmn.writeModelToStream(System.out, modelInstance);
-      fail("cannot save cmmn 1.0 model");
-    }
-    catch (Exception e) {
-      // expected exception
-    }
+    assertThatThrownBy(() -> Cmmn.writeModelToStream(System.out, modelInstance), "save cmmn 1.0 model should fail")
+        .isInstanceOf(ModelValidationException.class);
   }
 
   @Test
@@ -209,13 +205,8 @@ class Cmmn10Test {
     Event event = modelInstance.newInstance(Event.class);
     casePlanModel.getPlanItemDefinitions().add(event);
 
-    try {
-      Cmmn.writeModelToStream(System.out, modelInstance);
-      fail("cannot save cmmn 1.1 model");
-    }
-    catch (Exception e) {
-      // expected exception
-    }
+    assertThatThrownBy(() -> Cmmn.writeModelToStream(System.out, modelInstance), "save cmmn 1.1 model should fail")
+        .isInstanceOf(ModelValidationException.class);
   }
 
   protected CmmnModelInstance getCmmnModelInstance() {

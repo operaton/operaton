@@ -17,6 +17,7 @@
 package org.operaton.bpm.container.impl.threading.ra.outbound;
 
 import java.io.PrintWriter;
+import java.io.Serial;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -39,7 +40,7 @@ import javax.security.auth.Subject;
   )
 public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnectionFactory, ResourceAdapterAssociation {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected transient ResourceAdapter ra;
   protected transient PrintWriter logwriter;

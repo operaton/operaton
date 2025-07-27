@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  */
 public class UpdateCommentCmd implements Command<Object>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String taskId;
   protected String commentId;
   protected String processInstanceId;

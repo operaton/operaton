@@ -16,25 +16,25 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.PriorityBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
 
   protected ProcessInstance processInstance;
@@ -49,27 +49,27 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
       .addAsResource("org/operaton/bpm/integrationtest/jobexecutor/JobPrioritizationTest.intermediateMessage.bpmn20.xml");
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     if (processInstance != null) {
       runtimeService.deleteProcessInstance(processInstance.getId(), "");
     }
   }
 
   @Test
-  public void testPriorityOnProcessElement() {
+  void testPriorityOnProcessElement() {
     // given
     processInstance = runtimeService.startProcessInstanceByKey("priorityProcess");
 
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
     // then
-    Assert.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
 
   }
 
   @Test
-  public void testPriorityOnProcessStart() {
+  void testPriorityOnProcessStart() {
 
     // given
     processInstance = runtimeService.startProcessInstanceByKey("serviceTaskProcess");
@@ -77,11 +77,11 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
     // then
-    Assert.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
   }
 
   @Test
-  public void testPriorityOnModification() {
+  void testPriorityOnModification() {
 
     // given
     processInstance = runtimeService.startProcessInstanceByKey("serviceTaskProcess");
@@ -97,11 +97,11 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
 
     // then
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    Assert.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
   }
 
   @Test
-  public void testPriorityOnInstantiationAtActivity() {
+  void testPriorityOnInstantiationAtActivity() {
 
     // when
     processInstance = runtimeService.createProcessInstanceByKey("serviceTaskProcess")
@@ -110,11 +110,11 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
 
     // then
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    Assert.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
   }
 
   @Test
-  public void testPriorityOnAsyncAfterUserTask() {
+  void testPriorityOnAsyncAfterUserTask() {
     // given
     processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess");
     Task task = taskService.createTaskQuery().singleResult();
@@ -124,11 +124,11 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
 
     // then
     Job asyncAfterJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    Assert.assertEquals(PriorityBean.PRIORITY, asyncAfterJob.getPriority());
+    Assertions.assertEquals(PriorityBean.PRIORITY, asyncAfterJob.getPriority());
   }
 
   @Test
-  public void testPriorityOnAsyncAfterIntermediateCatchEvent() {
+  void testPriorityOnAsyncAfterIntermediateCatchEvent() {
     // given
     processInstance = runtimeService.startProcessInstanceByKey("intermediateMessageProcess");
 
@@ -137,7 +137,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
 
     // then
     Job asyncAfterJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    Assert.assertEquals(PriorityBean.PRIORITY, asyncAfterJob.getPriority());
+    Assertions.assertEquals(PriorityBean.PRIORITY, asyncAfterJob.getPriority());
   }
 
 }

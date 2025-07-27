@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.plugin.variable.type.impl;
 
+import java.io.Serial;
+
+
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.plugin.variable.SpinValues;
 import org.operaton.spin.plugin.variable.type.JsonValueType;
@@ -28,7 +31,7 @@ import org.operaton.spin.plugin.variable.value.builder.JsonValueBuilder;
  */
 public class JsonValueTypeImpl extends SpinValueTypeImpl implements JsonValueType {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public JsonValueTypeImpl() {
     super(TYPE_NAME);

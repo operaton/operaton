@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.authorization.Authorization;
  */
 public class UserAuthentication extends Authentication {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected List<String> groupIds;
 

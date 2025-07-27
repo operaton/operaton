@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Date;
  */
 public class HistoricScopeInstanceEvent extends HistoryEvent {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Long durationInMillis;
   protected Date startTime;

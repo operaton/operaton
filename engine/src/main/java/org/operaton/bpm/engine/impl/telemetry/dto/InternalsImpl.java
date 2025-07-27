@@ -36,11 +36,11 @@ public class InternalsImpl implements Internals {
   public static final String SERIALIZED_DATA_COLLECTION_START_DATE = "data-collection-start-date";
 
   protected DatabaseImpl database;
-  @SerializedName(value = SERIALIZED_APPLICATION_SERVER)
+  @SerializedName(SERIALIZED_APPLICATION_SERVER)
   protected ApplicationServerImpl applicationServer;
-  @SerializedName(value = SERIALIZED_CAMUNDA_INTEGRATION)
+  @SerializedName(SERIALIZED_CAMUNDA_INTEGRATION)
   protected Set<String> operatonIntegration;
-  @SerializedName(value = SERIALIZED_DATA_COLLECTION_START_DATE)
+  @SerializedName(SERIALIZED_DATA_COLLECTION_START_DATE)
   protected Date dataCollectionStartDate;
   protected Map<String, Command> commands;
   protected Map<String, Metric> metrics;

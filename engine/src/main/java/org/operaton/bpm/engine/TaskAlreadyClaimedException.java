@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import java.io.Serial;
+
 
 /**
  * This exception is thrown when you try to claim a task that is already claimed
@@ -26,7 +28,7 @@ package org.operaton.bpm.engine;
  */
 public class TaskAlreadyClaimedException extends ProcessEngineException {
 
-    private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
     /**
      * the id of the task that is already claimed

@@ -40,8 +40,8 @@ class PropertiesUtilTest {
     PropertiesUtil.getProperties(invalidFile);
 
     // then
-    String logMessage = String.format("Could not find the '%s' file on the classpath. " +
-        "If you have removed it, please restore it.", invalidFile);
+    String logMessage = ("Could not find the '%s' file on the classpath. " +
+      "If you have removed it, please restore it.").formatted(invalidFile);
     assertThat(loggingRule.getFilteredLog(logMessage)).hasSize(1);
   }
 }

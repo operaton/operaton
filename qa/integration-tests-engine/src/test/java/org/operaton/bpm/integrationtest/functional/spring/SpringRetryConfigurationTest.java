@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.functional.spring;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -24,14 +32,6 @@ import org.operaton.bpm.integrationtest.functional.spring.beans.RetryConfig;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * <p>Integration test that makes sure the shared container managed process engine is able to resolve
@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class SpringRetryConfigurationTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -89,7 +89,7 @@ public class SpringRetryConfigurationTest extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveRetryConfigBean() {
+  void testResolveRetryConfigBean() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testRetry");
 
@@ -108,7 +108,7 @@ public class SpringRetryConfigurationTest extends AbstractFoxPlatformIntegration
 
     // then
     job = query.singleResult();
-    Assert.assertEquals(6, job.getRetries());
+    Assertions.assertEquals(6, job.getRetries());
   }
 
 }

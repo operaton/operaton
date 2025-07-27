@@ -56,7 +56,7 @@ public class CaseDefinitionRestServiceImpl extends AbstractRestProcessEngineAwar
         .singleResult();
 
     if (caseDefinition == null) {
-      String errorMessage = String.format("No matching case definition with key: %s and no tenant-id", caseDefinitionKey);
+      String errorMessage = "No matching case definition with key: %s and no tenant-id".formatted(caseDefinitionKey);
       throw new RestException(Status.NOT_FOUND, errorMessage);
 
     } else {
@@ -76,7 +76,7 @@ public class CaseDefinitionRestServiceImpl extends AbstractRestProcessEngineAwar
         .singleResult();
 
     if (caseDefinition == null) {
-      String errorMessage = String.format("No matching case definition with key: %s and tenant-id: %s", caseDefinitionKey, tenantId);
+      String errorMessage = "No matching case definition with key: %s and tenant-id: %s".formatted(caseDefinitionKey, tenantId);
       throw new RestException(Status.NOT_FOUND, errorMessage);
 
     } else {

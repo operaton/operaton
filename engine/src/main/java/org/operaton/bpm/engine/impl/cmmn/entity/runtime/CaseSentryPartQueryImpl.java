@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.entity.runtime;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
  */
 public class CaseSentryPartQueryImpl extends AbstractQuery<CaseSentryPartQueryImpl, CaseSentryPartEntity> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected String caseInstanceId;

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.variable.impl.value;
 
+import java.io.Serial;
 import java.util.Date;
 
 import org.operaton.bpm.engine.variable.type.PrimitiveValueType;
@@ -37,7 +38,7 @@ import org.operaton.bpm.engine.variable.value.StringValue;
  */
 public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements PrimitiveValue<T> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public PrimitiveTypeValueImpl(T value, PrimitiveValueType type) {
     super(value, type);
@@ -88,7 +89,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
 
   public static class BooleanValueImpl extends PrimitiveTypeValueImpl<Boolean> implements BooleanValue {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public BooleanValueImpl(Boolean value) {
       super(value, ValueType.BOOLEAN);
@@ -102,7 +103,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
 
   public static class BytesValueImpl extends PrimitiveTypeValueImpl<byte[]> implements BytesValue {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public BytesValueImpl(byte[] value) {
       super(value, ValueType.BYTES);
@@ -116,7 +117,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
 
   public static class DateValueImpl extends PrimitiveTypeValueImpl<Date> implements DateValue {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public DateValueImpl(Date value) {
       super(value, ValueType.DATE);
@@ -130,7 +131,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
 
   public static class DoubleValueImpl extends PrimitiveTypeValueImpl<Double> implements DoubleValue {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public DoubleValueImpl(Double value) {
       super(value, ValueType.DOUBLE);
@@ -144,7 +145,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
 
   public static class IntegerValueImpl extends PrimitiveTypeValueImpl<Integer> implements IntegerValue {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public IntegerValueImpl(Integer value) {
       super(value, ValueType.INTEGER);
@@ -158,7 +159,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
 
   public static class LongValueImpl extends PrimitiveTypeValueImpl<Long> implements LongValue {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public LongValueImpl(Long value) {
       super(value, ValueType.LONG);
@@ -172,7 +173,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
 
   public static class ShortValueImpl extends PrimitiveTypeValueImpl<Short> implements ShortValue {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public ShortValueImpl(Short value) {
       super(value, ValueType.SHORT);
@@ -186,7 +187,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
 
   public static class StringValueImpl extends PrimitiveTypeValueImpl<String> implements StringValue {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public StringValueImpl(String value) {
       super(value, ValueType.STRING);
@@ -200,7 +201,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
 
   public static class NumberValueImpl extends PrimitiveTypeValueImpl<Number> implements NumberValue {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public NumberValueImpl(Number value) {
       super(value, ValueType.NUMBER);

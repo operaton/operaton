@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 public class OperatonFormDefinitionEntity implements OperatonFormDefinition,
     ResourceDefinitionEntity<OperatonFormDefinitionEntity>, DbEntity, HasDbRevision, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected int revision = 1;

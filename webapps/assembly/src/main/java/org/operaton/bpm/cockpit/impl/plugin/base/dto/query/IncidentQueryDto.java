@@ -18,6 +18,7 @@ package org.operaton.bpm.cockpit.impl.plugin.base.dto.query;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
  */
 public class IncidentQueryDto extends AbstractRestQueryParametersDto<IncidentDto> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final String SORT_BY_INCIDENT_TIMESTAMP = "incidentTimestamp";
   private static final String SORT_BY_INCIDENT_MESSAGE = "incidentMessage";

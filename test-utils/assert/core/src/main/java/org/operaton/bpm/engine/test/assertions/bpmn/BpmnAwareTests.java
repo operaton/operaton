@@ -35,7 +35,6 @@ import org.operaton.bpm.model.bpmn.instance.Gateway;
 
 import java.util.*;
 
-import static java.lang.String.format;
 import static java.util.Collections.emptyMap;
 
 /**
@@ -284,16 +283,16 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static Map<String, Object> withVariables(final String key, final Object value, final Object... furtherKeyValuePairs) {
     if (key == null)
-      throw new IllegalArgumentException(format("Illegal call of withVariables(key = '%s', value = '%s', ...) - key must not be null!", key, value));
+      throw new IllegalArgumentException("Illegal call of withVariables(key = '%s', value = '%s', ...) - key must not be null!".formatted(key, value));
     final Map<String, Object> map = new HashMap<>();
     map.put(key, value);
     if (furtherKeyValuePairs != null) {
       if (furtherKeyValuePairs.length % 2 != 0) {
-        throw new IllegalArgumentException(format("Illegal call of withVariables() - must have an even number of arguments, but found length = %s!", furtherKeyValuePairs.length + 2));
+        throw new IllegalArgumentException("Illegal call of withVariables() - must have an even number of arguments, but found length = %s!".formatted(furtherKeyValuePairs.length + 2));
       }
       for (int i = 0; i < furtherKeyValuePairs.length; i += 2) {
         if (!(furtherKeyValuePairs[i] instanceof String))
-          throw new IllegalArgumentException(format("Illegal call of withVariables() - keys must be strings, found object of type '%s'!", furtherKeyValuePairs[i] != null ? furtherKeyValuePairs[i].getClass().getName() : null));
+          throw new IllegalArgumentException("Illegal call of withVariables() - keys must be strings, found object of type '%s'!".formatted(furtherKeyValuePairs[i] != null ? furtherKeyValuePairs[i].getClass().getName() : null));
         map.put((String) furtherKeyValuePairs[i], furtherKeyValuePairs[i + 1]);
       }
     }
@@ -844,9 +843,9 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static Task claim(Task task, String assigneeUserId) {
     if (task == null || assigneeUserId == null)
-      throw new IllegalArgumentException(format("Illegal call " +
+      throw new IllegalArgumentException(("Illegal call " +
         "of claim(task = '%s', assigneeUserId = '%s') - both must " +
-        "not be null!", task, assigneeUserId));
+        "not be null!").formatted(task, assigneeUserId));
     taskService().claim(task.getId(), assigneeUserId);
     return taskQuery().taskId(task.getId()).singleResult();
   }
@@ -860,9 +859,9 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static Task unclaim(Task task) {
     if (task == null)
-      throw new IllegalArgumentException(format("Illegal call " +
+      throw new IllegalArgumentException(("Illegal call " +
         "of unclaim(task = '%s') - task must " +
-        "not be null!", task));
+        "not be null!").formatted(task));
     taskService().claim(task.getId(), null);
     return taskQuery().taskId(task.getId()).singleResult();
   }
@@ -879,7 +878,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static void complete(Task task, Map<String, Object> variables) {
     if (task == null || variables == null)
-      throw new IllegalArgumentException(format("Illegal call of complete(task = '%s', variables = '%s') - both must not be null!", task, variables));
+      throw new IllegalArgumentException("Illegal call of complete(task = '%s', variables = '%s') - both must not be null!".formatted(task, variables));
     taskService().complete(task.getId(), variables);
   }
 
@@ -931,7 +930,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static void complete(ExternalTask externalTask, Map<String, Object> variables) {
     if (externalTask == null || variables == null) {
-      throw new IllegalArgumentException(format("Illegal call of completeExternalTask(externalTask = '%s', variables = '%s') - both must not be null!", externalTask, variables));
+      throw new IllegalArgumentException("Illegal call of completeExternalTask(externalTask = '%s', variables = '%s') - both must not be null!".formatted(externalTask, variables));
     }
     complete(externalTask, variables, emptyMap());
   }
@@ -958,14 +957,14 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static void complete(ExternalTask externalTask, Map<String, Object> variables, Map<String, Object> localVariables) {
     if (externalTask == null || (variables == null && localVariables == null)) {
-      throw new IllegalArgumentException(format("Illegal call of completeExternalTask(externalTask = '%s', variables = '%s', localvariables = '%s') - provide external task and either variables or local variables.", externalTask, variables, localVariables));
+      throw new IllegalArgumentException("Illegal call of completeExternalTask(externalTask = '%s', variables = '%s', localvariables = '%s') - provide external task and either variables or local variables.".formatted(externalTask, variables, localVariables));
     }
     List<LockedExternalTask> lockedTasks = fetchAndLock(externalTask.getTopicName(), DEFAULT_WORKER_EXTERNAL_TASK, 1);
     if (lockedTasks.isEmpty()) {
-      throw new NotFoundException(format("No lockable external task found for externalTask = '%s', variables = '%s', localVariables = '%s'", externalTask, variables, localVariables));
+      throw new NotFoundException("No lockable external task found for externalTask = '%s', variables = '%s', localVariables = '%s'".formatted(externalTask, variables, localVariables));
     }
     if (!lockedTasks.get(0).getId().equals(externalTask.getId())) {
-      throw new IllegalStateException(format("Multiple external tasks found for externalTask = '%s', variables = '%s', localVariables = '%s'", externalTask, variables, localVariables));
+      throw new IllegalStateException("Multiple external tasks found for externalTask = '%s', variables = '%s', localVariables = '%s'".formatted(externalTask, variables, localVariables));
     }
     complete(lockedTasks.get(0), variables, localVariables);
   }
@@ -984,7 +983,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static List<LockedExternalTask> fetchAndLock(String topic, String workerId, int maxResults) {
     if (workerId == null || topic == null) {
-      throw new IllegalArgumentException(format("Illegal call of fetchAndLock(topic = '%s', workerId = '%s', maxResults = '%s') - all must not be null!", topic, workerId, maxResults));
+      throw new IllegalArgumentException("Illegal call of fetchAndLock(topic = '%s', workerId = '%s', maxResults = '%s') - all must not be null!".formatted(topic, workerId, maxResults));
     }
     return externalTaskService().fetchAndLock(maxResults, workerId)
       .topic(topic, DEFAULT_LOCK_DURATION_EXTERNAL_TASK)
@@ -1018,7 +1017,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static void complete(LockedExternalTask lockedExternalTask, Map<String, Object> variables) {
     if (lockedExternalTask == null || variables == null) {
-      throw new IllegalArgumentException(format("Illegal call of completeExternalTask(lockedExternalTask = '%s', variables = '%s') - both must not be null!", lockedExternalTask, variables));
+      throw new IllegalArgumentException("Illegal call of completeExternalTask(lockedExternalTask = '%s', variables = '%s') - both must not be null!".formatted(lockedExternalTask, variables));
     }
     complete(lockedExternalTask, variables, emptyMap());
   }
@@ -1040,7 +1039,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static void complete(LockedExternalTask lockedExternalTask, Map<String, Object> variables, Map<String, Object> localVariables) {
     if (lockedExternalTask == null || (variables == null && localVariables == null)) {
-      throw new IllegalArgumentException(format("Illegal call of completeExternalTask(lockedExternalTask = '%s', variables = '%s', localVariables = '%s') - provide locked external task and either variables or local variables.", lockedExternalTask, variables, localVariables));
+      throw new IllegalArgumentException("Illegal call of completeExternalTask(lockedExternalTask = '%s', variables = '%s', localVariables = '%s') - provide locked external task and either variables or local variables.".formatted(lockedExternalTask, variables, localVariables));
     }
     externalTaskService().complete(lockedExternalTask.getId(), lockedExternalTask.getWorkerId(), variables, localVariables);
   }
@@ -1052,10 +1051,10 @@ public class BpmnAwareTests extends AbstractAssertions {
    */
   public static void execute(Job job) {
     if (job == null)
-      throw new IllegalArgumentException(format("Illegal call of execute(job = '%s') - must not be null!", job));
+      throw new IllegalArgumentException("Illegal call of execute(job = '%s') - must not be null!".formatted(job));
     Job current = jobQuery().jobId(job.getId()).singleResult();
     if (current == null)
-      throw new IllegalStateException(format("Illegal state when calling execute(job = '%s') - job does not exist anymore!", job));
+      throw new IllegalStateException("Illegal state when calling execute(job = '%s') - job does not exist anymore!".formatted(job));
     managementService().executeJob(job.getId());
   }
 

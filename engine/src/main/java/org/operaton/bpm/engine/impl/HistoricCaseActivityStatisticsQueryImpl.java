@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.HistoricCaseActivityStatistics;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 public class HistoricCaseActivityStatisticsQueryImpl extends AbstractQuery<HistoricCaseActivityStatisticsQuery, HistoricCaseActivityStatistics> implements
     HistoricCaseActivityStatisticsQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String caseDefinitionId;
 

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +55,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private final String jobId;
   private final boolean creationDateBased;

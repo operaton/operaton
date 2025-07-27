@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.application;
 
+import java.io.Serial;
+
 /**
  * <p>Checked exception thrown by a {@link ProcessApplicationReference} if the referenced
  * process application is unavailable.</p>
@@ -25,7 +27,7 @@ package org.operaton.bpm.application;
  */
 public class ProcessApplicationUnavailableException extends Exception {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ProcessApplicationUnavailableException() {
     super();

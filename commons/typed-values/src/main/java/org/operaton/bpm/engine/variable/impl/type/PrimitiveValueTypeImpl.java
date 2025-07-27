@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.variable.impl.type;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +49,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl implements PrimitiveValueType {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Class<?> javaType;
 
@@ -88,7 +89,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class BooleanTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public BooleanTypeImpl() {
       super(Boolean.class);
@@ -103,7 +104,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class BytesTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public BytesTypeImpl() {
       super("bytes", byte[].class);
@@ -118,7 +119,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class DateTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public DateTypeImpl() {
       super(Date.class);
@@ -133,7 +134,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class DoubleTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public DoubleTypeImpl() {
       super(Double.class);
@@ -177,7 +178,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class IntegerTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public IntegerTypeImpl() {
       super(Integer.class);
@@ -233,7 +234,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class LongTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public LongTypeImpl() {
       super(Long.class);
@@ -290,7 +291,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class NullTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public NullTypeImpl() {
       super("null", NullType.class);
@@ -305,7 +306,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class ShortTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public ShortTypeImpl() {
       super(Short.class);
@@ -361,7 +362,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class StringTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public StringTypeImpl() {
       super(String.class);
@@ -375,7 +376,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   public static class NumberTypeImpl extends PrimitiveValueTypeImpl {
 
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public NumberTypeImpl() {
       super(Number.class);

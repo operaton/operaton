@@ -16,12 +16,14 @@
  */
 package org.operaton.spin.json;
 
+import java.io.Serial;
+
 /**
  * @author Stefan Hentschel
  */
 public class SpinJsonPropertyException extends SpinJsonException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public SpinJsonPropertyException(String message) {
     super(message);

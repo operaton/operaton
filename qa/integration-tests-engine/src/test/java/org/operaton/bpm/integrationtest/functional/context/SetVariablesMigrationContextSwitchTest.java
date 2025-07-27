@@ -16,6 +16,22 @@
  */
 package org.operaton.bpm.integrationtest.functional.context;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Collections;
+import java.util.List;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.Asset;
+import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -29,24 +45,7 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Collections;
-import java.util.List;
-
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.Asset;
-import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
 
   public static BpmnModelInstance oneTaskProcess(String key) {
@@ -85,7 +84,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldDeserializeObjectVariable_Async() {
+  void shouldDeserializeObjectVariable_Async() {
     // given
     ProcessDefinition sourceDefinition = repositoryService
         .createProcessDefinitionQuery()
@@ -135,7 +134,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void shouldDeserializeObjectVariable_Sync() {
+  void shouldDeserializeObjectVariable_Sync() {
     // given
     ProcessDefinition sourceDefinition = repositoryService
         .createProcessDefinitionQuery()

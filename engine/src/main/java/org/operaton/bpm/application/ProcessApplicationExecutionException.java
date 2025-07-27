@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.application;
 
+import java.io.Serial;
+
 
 /**
  * @author Daniel Meyer
@@ -23,7 +25,7 @@ package org.operaton.bpm.application;
  */
 public class ProcessApplicationExecutionException extends Exception {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ProcessApplicationExecutionException() {
     super();

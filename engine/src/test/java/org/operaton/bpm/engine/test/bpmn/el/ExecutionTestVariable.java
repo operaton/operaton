@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.el;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
  */
 public class ExecutionTestVariable implements Serializable{
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public void testMethod(DelegateExecution delegateExecution) {
     delegateExecution.setVariable("testVar", "myValue");

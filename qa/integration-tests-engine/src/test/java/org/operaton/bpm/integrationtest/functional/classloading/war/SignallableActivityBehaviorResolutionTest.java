@@ -16,6 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.war;
 
+import static org.assertj.core.api.Assertions.fail;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleSignallableActivityBehavior;
@@ -23,24 +33,13 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.fail;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  *
  *
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -66,7 +65,7 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClass() {
+  void testResolveClass() {
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleSignallableActivityBehavior");
@@ -85,19 +84,19 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClassFromJobExecutor() {
+  void testResolveClassFromJobExecutor() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 
-    Assert.assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    Assertions.assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assert.assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    Assertions.assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
 
     runtimeService.signal(processInstance.getId());
 
-    Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    Assertions.assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
 
   }
 

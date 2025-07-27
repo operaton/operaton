@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Date;
 
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
  */
 public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<HistoricIncidentQuery, HistoricIncident> implements HistoricIncidentQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected String incidentType;

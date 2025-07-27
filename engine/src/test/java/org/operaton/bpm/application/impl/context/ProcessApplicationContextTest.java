@@ -18,7 +18,6 @@ package org.operaton.bpm.application.impl.context;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -151,13 +150,9 @@ class ProcessApplicationContextTest {
     try {
       ProcessApplicationContext.setCurrentProcessApplication(nonExistingName);
 
-      try {
-        getCurrentContextApplication();
-        fail("should not succeed");
-
-      } catch (ProcessEngineException e) {
-        assertThat(e.getMessage()).contains("A process application with name '" + nonExistingName + "' is not registered");
-      }
+      assertThatThrownBy(this::getCurrentContextApplication)
+          .isInstanceOf(ProcessEngineException.class)
+          .hasMessageContaining("A process application with name '" + nonExistingName + "' is not registered");
 
     } finally {
       ProcessApplicationContext.clear();

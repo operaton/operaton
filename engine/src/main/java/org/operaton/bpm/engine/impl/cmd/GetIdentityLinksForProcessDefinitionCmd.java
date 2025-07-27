@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -32,7 +33,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class GetIdentityLinksForProcessDefinitionCmd implements Command<List<IdentityLink>>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String processDefinitionId;
 
   public GetIdentityLinksForProcessDefinitionCmd(String processDefinitionId) {

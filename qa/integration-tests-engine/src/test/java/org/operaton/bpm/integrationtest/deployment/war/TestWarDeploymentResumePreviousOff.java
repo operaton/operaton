@@ -15,28 +15,28 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.deployment.war;
-import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 import java.util.Set;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestWarDeploymentResumePreviousOff extends AbstractFoxPlatformIntegrationTest {
 
   private static final String PA1 = "PA1";
@@ -56,15 +56,15 @@ public class TestWarDeploymentResumePreviousOff extends AbstractFoxPlatformInteg
   }
 
   @Test
-  @OperateOnDeployment(value=PA2)
-  public void testDeployProcessArchive() {
+  @OperateOnDeployment(PA2)
+  void deployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    Assert.assertEquals(2, count);
+    Assertions.assertEquals(2, count);
 
     // validate registrations:
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin.base.dto.query;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 
 public class ProcessDefinitionQueryDto extends AbstractRestQueryParametersDto<ProcessDefinitionDto> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String parentProcessDefinitionId;
   protected String superProcessDefinitionId;
@@ -57,7 +58,7 @@ public class ProcessDefinitionQueryDto extends AbstractRestQueryParametersDto<Pr
     return parentProcessDefinitionId;
   }
 
-  @OperatonQueryParam(value="parentProcessDefinitionId")
+  @OperatonQueryParam("parentProcessDefinitionId")
   public void setParentProcessDefinitionId(String parentProcessDefinitionId) {
     this.parentProcessDefinitionId = parentProcessDefinitionId;
   }
@@ -66,7 +67,7 @@ public class ProcessDefinitionQueryDto extends AbstractRestQueryParametersDto<Pr
     return superProcessDefinitionId;
   }
 
-  @OperatonQueryParam(value="superProcessDefinitionId")
+  @OperatonQueryParam("superProcessDefinitionId")
   public void setSuperProcessDefinitionId(String superProcessDefinitionId) {
     this.superProcessDefinitionId = superProcessDefinitionId;
   }
@@ -84,7 +85,7 @@ public class ProcessDefinitionQueryDto extends AbstractRestQueryParametersDto<Pr
     return businessKey;
   }
 
-  @OperatonQueryParam(value="businessKey")
+  @OperatonQueryParam("businessKey")
   public void setBusinessKey(String businessKey) {
     this.businessKey = businessKey;
   }

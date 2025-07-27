@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,7 @@ import org.operaton.bpm.engine.query.NativeQuery;
 public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> implements Command<Object>, NativeQuery<T, U>,
         Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private enum ResultType {
     LIST, LIST_PAGE, SINGLE_RESULT, COUNT

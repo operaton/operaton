@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
 
 /**
@@ -24,7 +27,7 @@ import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
  */
 public class LdapAuthenticationException extends IdentityProviderException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public LdapAuthenticationException(String message, Throwable cause) {
     super(message, cause);

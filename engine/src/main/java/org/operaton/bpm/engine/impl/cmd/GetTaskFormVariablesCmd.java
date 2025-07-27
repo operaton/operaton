@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.Collection;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -37,7 +38,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
  */
 public class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public GetTaskFormVariablesCmd(String taskId, Collection<String> variableNames, boolean deserializeObjectValues) {
     super(taskId, variableNames, deserializeObjectValues);

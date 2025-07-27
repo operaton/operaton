@@ -16,24 +16,24 @@
  */
 package org.operaton.bpm.integrationtest.jboss;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestJobExecutorActivateFalse_JBOSS extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name="deployment1")
@@ -42,7 +42,7 @@ public class TestJobExecutorActivateFalse_JBOSS extends AbstractFoxPlatformInteg
   }
 
   @Test
-  public void shouldNotActiateJobExecutor() {
+  void shouldNotActiateJobExecutor() {
 
     ProcessEngine processEngine = processEngineService.getProcessEngine("jobExecutorActivate-FALSE-engine");
     ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();

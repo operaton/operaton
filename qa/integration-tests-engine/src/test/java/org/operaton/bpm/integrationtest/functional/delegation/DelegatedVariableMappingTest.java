@@ -16,28 +16,29 @@
  */
 package org.operaton.bpm.integrationtest.functional.delegation;
 
-import org.operaton.bpm.integrationtest.functional.delegation.beans.DelegateVarMapping;
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
+import org.operaton.bpm.integrationtest.functional.delegation.beans.DelegateVarMapping;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestConstants;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name = "mainDeployment")
@@ -99,7 +100,7 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testDelegateVariableMapping() {
+  void testDelegateVariableMapping() {
     //given
     runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
     testDelegation();
@@ -107,7 +108,7 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
 
   @Test
   @OperateOnDeployment("mainDeployment")
-  public void testDelegateVariableMappingExpression() {
+  void testDelegateVariableMappingExpression() {
     runtimeService.startProcessInstanceByKey("callSubProcessExpr");
     testDelegation();
   }

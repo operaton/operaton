@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ import java.util.Map;
  */
 public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefinition, ResourceDefinitionEntity<CaseDefinitionEntity>, DbEntity, HasDbRevision {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected int revision = 1;

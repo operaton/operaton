@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 
 /**
@@ -24,7 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
  */
 public class LdapUserEntity extends UserEntity {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String dn;
 

@@ -77,6 +77,7 @@ import org.operaton.bpm.model.bpmn.instance.FlowElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
+import java.io.Serial;
 import java.util.*;
 
 /**
@@ -86,7 +87,7 @@ import java.util.*;
  */
 public class ExecutionEntity extends PvmExecutionImpl implements Execution, ProcessInstance, DbEntity, HasDbRevision, HasDbReferences, VariablesProvider<VariableInstanceEntity> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -1329,7 +1330,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       Collection<ExternalTaskEntity> externalTasks) {
 
     EnsureUtil.ensureNotEmpty(NullValueException.class,
-        String.format("Cannot restore state of process instance %s", processInstanceId),
+      "Cannot restore state of process instance %s".formatted(processInstanceId),
         "list of executions", executions);
 
     if(!isProcessInstanceExecution()) {

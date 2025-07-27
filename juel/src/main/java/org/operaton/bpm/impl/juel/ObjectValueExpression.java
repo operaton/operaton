@@ -15,6 +15,9 @@
  */
 package org.operaton.bpm.impl.juel;
 
+import java.io.Serial;
+
+
 import jakarta.el.ELContext;
 import jakarta.el.ELException;
 
@@ -25,7 +28,7 @@ import jakarta.el.ELException;
  * @author Christoph Beck
  */
 public final class ObjectValueExpression extends jakarta.el.ValueExpression {
-	private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
 	private final TypeConverter converter;
 	private final Object object;

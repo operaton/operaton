@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.error;
 
+import java.io.Serial;
+
 /**
  * @author Daniel Meyer
  *
  */
 public class MySpecializedException extends MyBusinessException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public MySpecializedException(String message) {
     super(message);

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.identity.db;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.identity.User;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
  */
 public class DbUserQueryImpl extends UserQueryImpl {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public DbUserQueryImpl(CommandExecutor commandExecutor) {
     super(commandExecutor);

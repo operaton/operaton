@@ -93,7 +93,7 @@ public class SpinScriptEnv {
   }
 
   protected static String loadScriptEnv(String language, String extension) {
-    String scriptEnvPath = String.format(ENV_PATH_TEMPLATE, language, extension);
+    String scriptEnvPath = ENV_PATH_TEMPLATE.formatted(language, extension);
     InputStream envResource = SpinScriptException.class.getClassLoader().getResourceAsStream(scriptEnvPath);
 
     if(envResource == null) {

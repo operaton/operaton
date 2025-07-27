@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.client.exception;
 
+import java.io.Serial;
+
 /**
  * <p>Exception is thrown in case the HTTP status code is not known by the client.</p>
  *
@@ -23,7 +25,7 @@ package org.operaton.bpm.client.exception;
  */
 public class UnknownHttpErrorException extends RestException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public UnknownHttpErrorException(String message, RestException restException) {
     super(message, restException);

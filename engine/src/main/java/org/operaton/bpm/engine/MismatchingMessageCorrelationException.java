@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine;
 
+import java.io.Serial;
 import java.util.Map;
 
 /**
@@ -24,7 +25,7 @@ import java.util.Map;
 public class MismatchingMessageCorrelationException extends
     ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public MismatchingMessageCorrelationException(String message) {
     super(message);

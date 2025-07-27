@@ -40,6 +40,7 @@ You can contribute code that fixes bugs and/or implements features. Here is how 
 1. Select a ticket that you would like to implement. Have a look at [our backlog](https://github.com/operaton/operaton/issues) if you need inspiration. Be aware that some of the issues need good knowledge of the surrounding code.
 1. Looking for some low hanging fruits? Check out the [good first issues](https://github.com/operaton/operaton/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 1. Tell us in the ticket comments that you want to work on your ticket. This is also the place where you can ask questions.
+1. Check existing Architectural Decision Records (ADRs): Before implementing significant changes, review our [ADRs in docs/decisions/](docs/decisions/) to understand existing architectural decisions that may affect your implementation. If your change conflicts with or extends an existing decision, consider whether a new ADR is needed.
 1. Check your code changes against our [contribution checklist](#contribution-checklist)
 1. [Create a pull request](https://github.com/operaton/operaton/pulls). Note that you can already do this before you have finished your implementation if you would like feedback on your work in progress.
 

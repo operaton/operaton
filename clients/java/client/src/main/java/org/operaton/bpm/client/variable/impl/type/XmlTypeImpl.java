@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.client.variable.impl.type;
 
+import java.io.Serial;
 import java.util.Map;
 
 import org.operaton.bpm.client.variable.ClientValues;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.variable.impl.type.PrimitiveValueTypeImpl;
 
 public class XmlTypeImpl extends PrimitiveValueTypeImpl {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public static final String XML_TYPE_NAME = "xml";
 

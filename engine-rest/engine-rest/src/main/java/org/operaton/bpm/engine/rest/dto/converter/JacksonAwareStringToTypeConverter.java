@@ -38,7 +38,7 @@ public abstract class JacksonAwareStringToTypeConverter<T> implements StringToTy
     try {
       return objectMapper.readValue(value, typeClass);
     } catch (JsonProcessingException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, String.format("Cannot convert value %s to java type %s",
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Cannot convert value %s to java type %s".formatted(
         value, typeClass.getName()));
     }
   }

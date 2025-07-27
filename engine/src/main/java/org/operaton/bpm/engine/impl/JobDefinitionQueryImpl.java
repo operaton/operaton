@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.management.JobDefinitionQuery;
  */
 public class JobDefinitionQueryImpl extends AbstractQuery<JobDefinitionQuery, JobDefinition> implements JobDefinitionQuery, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected String[] activityIds;

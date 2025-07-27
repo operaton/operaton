@@ -26,7 +26,7 @@ public class EqualTransformer implements FeelToJuelTransformer {
   @Override
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     String juelEndpoint = transform.transformEndpoint(feelExpression, inputName);
-    return String.format("%s == %s", inputName, juelEndpoint);
+    return "%s == %s".formatted(inputName, juelEndpoint);
   }
 
 }

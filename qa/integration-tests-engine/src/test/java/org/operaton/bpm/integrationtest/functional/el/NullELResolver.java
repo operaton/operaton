@@ -18,6 +18,7 @@ package org.operaton.bpm.integrationtest.functional.el;
 
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationElResolver;
+
 import jakarta.el.ELResolver;
 
 /**

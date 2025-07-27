@@ -19,6 +19,7 @@ package org.operaton.spin.impl;
 import org.operaton.spin.Spin;
 import org.operaton.spin.SpinList;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,7 +28,7 @@ import java.util.Collection;
  */
 public class SpinListImpl<E extends Spin<?>> extends ArrayList<E> implements SpinList<E> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public SpinListImpl() {
     super();

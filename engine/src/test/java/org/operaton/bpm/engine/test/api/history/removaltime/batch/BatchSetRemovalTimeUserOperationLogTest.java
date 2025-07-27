@@ -27,6 +27,8 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -36,6 +38,7 @@ import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
+import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricProcessInstancesBuilder;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
@@ -231,8 +234,15 @@ class BatchSetRemovalTimeUserOperationLogTest {
     assertThat(userOperationLogEntry.getNewValue()).isEqualTo("2");
   }
 
-  @Test
-  void shouldWriteUserOperationLogForProcessInstances_AsyncTrue() {
+  @ParameterizedTest
+  @CsvSource({
+          "async,true",
+          "hierarchical,true",
+          "hierarchicalFalse,false",
+          "updateInChunks,true",
+          "updateInChunksFalse,false"
+  })
+  void shouldWriteUserOperationLogForProcessInstances (String property, String expectedNewValue) {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -240,117 +250,36 @@ class BatchSetRemovalTimeUserOperationLogTest {
 
     HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
 
+    SetRemovalTimeToHistoricProcessInstancesBuilder builder = historyService.setRemovalTimeToHistoricProcessInstances()
+            .clearedRemovalTime()
+            .byQuery(historicProcessInstanceQuery);
+    switch (property) {
+      case "hierarchical":
+        builder.hierarchical();
+        break;
+      case "hierarchicalFalse":
+        property = "hierarchical";
+        break;
+      case "updateInChunks":
+        builder.updateInChunks();
+        break;
+      case "updateInChunksFalse":
+        property = "updateInChunks";
+        break;
+      default:
+        break;
+    }
+
     // when
-    historyService.setRemovalTimeToHistoricProcessInstances()
-      .clearedRemovalTime()
-      .byQuery(historicProcessInstanceQuery)
-      .executeAsync();
+    builder.executeAsync();
 
     UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery()
-      .property("async")
-      .singleResult();
+            .property(property)
+            .singleResult();
 
     // then
     assertThat(userOperationLogEntry.getOrgValue()).isNull();
-    assertThat(userOperationLogEntry.getNewValue()).isEqualTo("true");
-  }
-
-  @Test
-  void shouldWriteUserOperationLogForProcessInstances_HierarchicalTrue() {
-    // given
-    testRule.process().serviceTask().deploy().start();
-
-    identityService.setAuthenticatedUserId("aUserId");
-
-    HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-
-    // when
-    historyService.setRemovalTimeToHistoricProcessInstances()
-      .clearedRemovalTime()
-      .byQuery(historicProcessInstanceQuery)
-      .hierarchical()
-      .executeAsync();
-
-    UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery()
-      .property("hierarchical")
-      .singleResult();
-
-    // then
-    assertThat(userOperationLogEntry.getOrgValue()).isNull();
-    assertThat(userOperationLogEntry.getNewValue()).isEqualTo("true");
-  }
-
-  @Test
-  void shouldWriteUserOperationLogForProcessInstances_HierarchicalFalse() {
-    // given
-    testRule.process().serviceTask().deploy().start();
-
-    identityService.setAuthenticatedUserId("aUserId");
-
-    HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-
-    // when
-    historyService.setRemovalTimeToHistoricProcessInstances()
-      .clearedRemovalTime()
-      .byQuery(historicProcessInstanceQuery)
-      .executeAsync();
-
-    UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery()
-      .property("hierarchical")
-      .singleResult();
-
-    // then
-    assertThat(userOperationLogEntry.getOrgValue()).isNull();
-    assertThat(userOperationLogEntry.getNewValue()).isEqualTo("false");
-  }
-
-  @Test
-  void shouldWriteUserOperationLogForProcessInstances_UpdateInChunksTrue() {
-    // given
-    testRule.process().serviceTask().deploy().start();
-
-    identityService.setAuthenticatedUserId("aUserId");
-
-    HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-
-    // when
-    historyService.setRemovalTimeToHistoricProcessInstances()
-      .clearedRemovalTime()
-      .byQuery(historicProcessInstanceQuery)
-      .updateInChunks()
-      .executeAsync();
-
-    UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery()
-      .property("updateInChunks")
-      .singleResult();
-
-    // then
-    assertThat(userOperationLogEntry.getOrgValue()).isNull();
-    assertThat(userOperationLogEntry.getNewValue()).isEqualTo("true");
-  }
-
-  @Test
-  void shouldWriteUserOperationLogForProcessInstances_UpdateInChunksFalse() {
-    // given
-    testRule.process().serviceTask().deploy().start();
-
-    identityService.setAuthenticatedUserId("aUserId");
-
-    HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-
-    // when
-    historyService.setRemovalTimeToHistoricProcessInstances()
-      .clearedRemovalTime()
-      .byQuery(historicProcessInstanceQuery)
-      .executeAsync();
-
-    UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery()
-      .property("updateInChunks")
-      .singleResult();
-
-    // then
-    assertThat(userOperationLogEntry.getOrgValue()).isNull();
-    assertThat(userOperationLogEntry.getNewValue()).isEqualTo("false");
+    assertThat(userOperationLogEntry.getNewValue()).isEqualTo(expectedNewValue);
   }
 
   @Test

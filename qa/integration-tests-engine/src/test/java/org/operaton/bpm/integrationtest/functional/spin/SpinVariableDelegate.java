@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
+import org.junit.jupiter.api.Assertions;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.junit.Assert;
 
 /**
  * @author Daniel Meyer
@@ -30,7 +30,7 @@ public class SpinVariableDelegate implements JavaDelegate {
   public void execute(DelegateExecution execution) throws Exception {
 
     XmlSerializable xmlSerializable = (XmlSerializable) execution.getVariable("xmlSerializable");
-    Assert.assertEquals("value", xmlSerializable.getProperty());
+    Assertions.assertEquals("value", xmlSerializable.getProperty());
 
   }
 

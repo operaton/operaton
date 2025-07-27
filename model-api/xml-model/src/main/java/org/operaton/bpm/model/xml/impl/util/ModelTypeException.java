@@ -18,6 +18,7 @@ package org.operaton.bpm.model.xml.impl.util;
 
 import org.operaton.bpm.model.xml.ModelException;
 
+import java.io.Serial;
 import java.lang.reflect.Type;
 
 /**
@@ -28,7 +29,7 @@ import java.lang.reflect.Type;
  */
 public class ModelTypeException extends ModelException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ModelTypeException(String message) {
     super(message);

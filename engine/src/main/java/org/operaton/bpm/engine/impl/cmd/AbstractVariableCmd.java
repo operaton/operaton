@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.runtime.Callback;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -30,7 +31,7 @@ import java.io.Serializable;
  */
 public abstract class AbstractVariableCmd implements Command<Void>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected CommandContext commandContext;
   protected String entityId;

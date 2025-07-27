@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.exception;
 
+import java.io.Serial;
+
 import jakarta.ws.rs.core.Response.Status;
 
 public class RestException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private final Status status;
 

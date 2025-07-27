@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.exception.dmn;
 
+import java.io.Serial;
+
 
 /**
  * <p>This exception is thrown when a specific decision definition is not found.</p>
  */
 public class DecisionDefinitionNotFoundException extends DecisionException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public DecisionDefinitionNotFoundException() {
   }

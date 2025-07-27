@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.batch.BatchMonitorJobHandler.BatchMonitorJobConfiguration;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ConstantValueProvider;
@@ -31,7 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
  */
 public class BatchMonitorJobDeclaration extends JobDeclaration<BatchEntity, MessageEntity> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public BatchMonitorJobDeclaration() {
     super(BatchMonitorJobHandler.TYPE);

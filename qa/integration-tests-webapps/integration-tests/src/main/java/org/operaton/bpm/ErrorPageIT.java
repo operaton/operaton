@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
-import org.junit.Before;
-import org.junit.Test;
 
 public class ErrorPageIT extends AbstractWebIntegrationTest {
 
-  @Before
+  @BeforeEach
   public void createClient() throws Exception {
     createClient(getWebappCtxPath());
   }

@@ -34,11 +34,11 @@ public class InternalsDto {
   public static final String SERIALIZED_TELEMETRY_DATA_COLLECTION_START_DATE = "data-collection-start-date";
 
   protected DatabaseDto database;
-  @JsonProperty(value = SERIALIZED_APPLICATION_SERVER)
+  @JsonProperty(SERIALIZED_APPLICATION_SERVER)
   protected ApplicationServerDto applicationServer;
-  @JsonProperty(value = SERIALIZED_CAMUNDA_INTEGRATION)
+  @JsonProperty(SERIALIZED_CAMUNDA_INTEGRATION)
   protected Set<String> operatonIntegration;
-  @JsonProperty(value = SERIALIZED_TELEMETRY_DATA_COLLECTION_START_DATE)
+  @JsonProperty(SERIALIZED_TELEMETRY_DATA_COLLECTION_START_DATE)
   protected Date dataCollectionStartDate;
   protected Map<String, CommandDto> commands;
   protected Map<String, MetricDto> metrics;

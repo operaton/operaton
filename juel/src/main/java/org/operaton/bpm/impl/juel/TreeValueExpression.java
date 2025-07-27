@@ -23,6 +23,7 @@ import jakarta.el.VariableMapper;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
+import java.io.Serial;
 
 /**
  * A value expression is ready to be evaluated (by calling either
@@ -34,7 +35,7 @@ import java.io.PrintWriter;
  * @author Christoph Beck
  */
 public final class TreeValueExpression extends jakarta.el.ValueExpression {
-	private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
 	private final TreeBuilder builder;
 	private final Bindings bindings;

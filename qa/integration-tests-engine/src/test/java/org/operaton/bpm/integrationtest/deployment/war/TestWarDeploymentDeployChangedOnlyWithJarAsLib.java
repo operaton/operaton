@@ -16,6 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
@@ -23,23 +33,12 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  *
  * @author Roman Smirnov
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxPlatformIntegrationTest {
 
   private static final String PA1 = "PA1";
@@ -109,8 +108,8 @@ public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxP
   }
 
   @Test
-  @OperateOnDeployment(value=PA2)
-  public void testDeployProcessArchive() {
+  @OperateOnDeployment(PA2)
+  void deployProcessArchive() {
     ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
     assertThat(processEngine).isNotNull();
 

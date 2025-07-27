@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import java.io.Serial;
+
 
 /**
  * Exception that is thrown when the Activiti engine discovers a mismatch between the
@@ -27,7 +29,7 @@ package org.operaton.bpm.engine;
  */
 public class WrongDbException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   final String libraryVersion;
   final String dbVersion;

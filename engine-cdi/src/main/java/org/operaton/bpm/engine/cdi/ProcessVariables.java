@@ -68,7 +68,7 @@ public class ProcessVariables {
   protected Object getProcessVariable(InjectionPoint ip) {
     String processVariableName = getVariableName(ip);
 
-    logger.fine(() -> String.format("Getting process variable '%s' from ProcessInstance[%s].", processVariableName, businessProcess.getProcessInstanceId()));
+    logger.fine(() -> "Getting process variable '%s' from ProcessInstance[%s].".formatted(processVariableName, businessProcess.getProcessInstanceId()));
 
     return businessProcess.getVariable(processVariableName);
   }
@@ -81,7 +81,7 @@ public class ProcessVariables {
   protected TypedValue getProcessVariableTyped(InjectionPoint ip) {
     String processVariableName = getVariableTypedName(ip);
 
-    logger.fine(() -> String.format("Getting typed process variable '%s' from ProcessInstance[%s].", processVariableName, businessProcess.getProcessInstanceId()));
+    logger.fine(() -> "Getting typed process variable '%s' from ProcessInstance[%s].".formatted(processVariableName, businessProcess.getProcessInstanceId()));
 
     return businessProcess.getVariableTyped(processVariableName);
   }
@@ -122,7 +122,7 @@ public class ProcessVariables {
   protected Object getProcessVariableLocal(InjectionPoint ip) {
     String processVariableName = getVariableLocalName(ip);
 
-    logger.fine(() -> String.format("Getting local process variable '%s' from ProcessInstance[%s].", processVariableName, businessProcess.getProcessInstanceId()));
+    logger.fine(() -> "Getting local process variable '%s' from ProcessInstance[%s].".formatted(processVariableName, businessProcess.getProcessInstanceId()));
 
     return businessProcess.getVariableLocal(processVariableName);
   }
@@ -135,7 +135,7 @@ public class ProcessVariables {
   protected TypedValue getProcessVariableLocalTyped(InjectionPoint ip) {
     String processVariableName = getVariableLocalTypedName(ip);
 
-    logger.fine(() -> String.format("Getting local typed process variable '%s' from ProcessInstance[%s].", processVariableName, businessProcess.getProcessInstanceId()));
+    logger.fine(() -> "Getting local typed process variable '%s' from ProcessInstance[%s].".formatted(processVariableName, businessProcess.getProcessInstanceId()));
 
     return businessProcess.getVariableLocalTyped(processVariableName);
   }

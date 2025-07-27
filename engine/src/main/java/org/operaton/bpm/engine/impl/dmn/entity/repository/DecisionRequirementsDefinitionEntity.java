@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.dmn.entity.repository;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionRequirementsGraphImpl;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 
 public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirementsGraphImpl implements DecisionRequirementsDefinition, ResourceDefinitionEntity<DecisionRequirementsDefinitionEntity>, DbEntity, HasDbRevision, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected int revision = 1;

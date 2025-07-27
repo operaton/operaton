@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.process;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,7 +44,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmTransition;
  */
 public abstract class ScopeImpl extends CoreActivity implements PvmScope {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected boolean isSubProcessScope = false;
 

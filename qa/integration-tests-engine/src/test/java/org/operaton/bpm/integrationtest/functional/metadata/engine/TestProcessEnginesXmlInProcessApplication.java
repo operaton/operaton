@@ -16,18 +16,17 @@
  */
 package org.operaton.bpm.integrationtest.functional.metadata.engine;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-
-import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
 /**
@@ -35,7 +34,7 @@ import org.junit.runner.RunWith;
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestProcessEnginesXmlInProcessApplication extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -53,7 +52,7 @@ public class TestProcessEnginesXmlInProcessApplication extends AbstractFoxPlatfo
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngineService.getProcessEngine("engine1")).isNotNull();
   }
 

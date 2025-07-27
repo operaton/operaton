@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.error;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.delegate.BpmnError;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class BpmnErrorBean implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public void throwBpmnError() {
     throw new BpmnError("23", "This is a business fault, which can be caught by a BPMN Error Event.");

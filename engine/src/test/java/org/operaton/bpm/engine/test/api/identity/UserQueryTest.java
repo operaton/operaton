@@ -377,8 +377,8 @@ class UserQueryTest {
   void testNativeQueryOrLike() {
     String searchPattern = "%frog";
 
-    String fromWhereClauses = String.format("FROM %s WHERE FIRST_ LIKE #{searchPattern} OR LAST_ LIKE #{searchPattern} OR EMAIL_ LIKE #{searchPattern}",
-        managementService.getTableName(UserEntity.class));
+    String fromWhereClauses = "FROM %s WHERE FIRST_ LIKE #{searchPattern} OR LAST_ LIKE #{searchPattern} OR EMAIL_ LIKE #{searchPattern}".formatted(
+      managementService.getTableName(UserEntity.class));
 
     assertThat(identityService.createNativeUserQuery().sql("SELECT * " + fromWhereClauses).parameter("searchPattern", searchPattern).list()).hasSize(1);
     assertThat(identityService.createNativeUserQuery().sql("SELECT count(*) " + fromWhereClauses).parameter("searchPattern", searchPattern).count()).isEqualTo(1);

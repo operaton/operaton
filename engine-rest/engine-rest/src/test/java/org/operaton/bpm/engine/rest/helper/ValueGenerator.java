@@ -37,7 +37,7 @@ public class ValueGenerator {
 
   public String getValue(String key) {
     if (!values.containsKey(key)) {
-      String nextValue = String.format(valueFormat, counter++);
+      String nextValue = valueFormat.formatted(counter++);
       values.put(key, nextValue);
     }
 

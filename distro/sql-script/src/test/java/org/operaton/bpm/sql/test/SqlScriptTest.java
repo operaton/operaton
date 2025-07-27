@@ -191,7 +191,7 @@ class SqlScriptTest {
   }
 
   void executeSqlScript(String baseDirectory, String sqlFolder, String sqlScript) throws LiquibaseException {
-    String scriptFileName = String.format("%ssql/%s/%s_%s.sql", baseDirectory, sqlFolder, databaseType, sqlScript);
+    String scriptFileName = "%ssql/%s/%s_%s.sql".formatted(baseDirectory, sqlFolder, databaseType, sqlScript);
     InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(scriptFileName);
     if (resourceAsStream == null) {
       fail("SQL script not found: " + scriptFileName);

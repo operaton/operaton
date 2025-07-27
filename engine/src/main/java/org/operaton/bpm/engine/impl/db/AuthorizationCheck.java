@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.db;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.authorization.Permissions;
  */
 public class AuthorizationCheck implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /**
    * If true authorization check is enabled. for This switch is

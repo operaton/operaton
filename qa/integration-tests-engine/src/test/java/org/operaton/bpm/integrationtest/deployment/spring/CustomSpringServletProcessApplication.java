@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.deployment.spring;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.PreUndeploy;
 import org.operaton.bpm.engine.spring.application.SpringServletProcessApplication;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

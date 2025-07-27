@@ -18,16 +18,22 @@ package org.operaton.bpm.integrationtest.functional.ejb.request;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.functional.cdi.beans.RequestScopedDelegateBean;
-import org.operaton.bpm.integrationtest.functional.ejb.request.beans.*;
+import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounter;
+import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterDelegateBean;
+import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterDelegateBeanLocal;
+import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterService;
+import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterServiceBean;
+import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterServiceLocal;
+import org.operaton.bpm.integrationtest.functional.ejb.request.beans.RequestScopedSFSBDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
@@ -43,7 +49,7 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class JobExecutorRequestContextLocalInvocationTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name="pa", order=2)
@@ -75,7 +81,7 @@ public class JobExecutorRequestContextLocalInvocationTest extends AbstractFoxPla
 
   @Test
   @OperateOnDeployment("pa")
-  public void testRequestContextPropagationEjbLocal() {
+  void testRequestContextPropagationEjbLocal() {
 
     // This fails with  WELD-001303 No active contexts for scope type jakarta.enterprise.context.RequestScoped as well
 
@@ -92,7 +98,7 @@ public class JobExecutorRequestContextLocalInvocationTest extends AbstractFoxPla
 
     Object variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // -> the same bean instance was invoked 2 times!
-    Assert.assertEquals(2, variable);
+    Assertions.assertEquals(2, variable);
 
     Task task = taskService.createTaskQuery()
       .processInstanceId(pi.getProcessInstanceId())
@@ -103,7 +109,7 @@ public class JobExecutorRequestContextLocalInvocationTest extends AbstractFoxPla
 
     variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // now it's '1' again! -> new instance of the bean
-    Assert.assertEquals(1, variable);
+    Assertions.assertEquals(1, variable);
   }
 
 }

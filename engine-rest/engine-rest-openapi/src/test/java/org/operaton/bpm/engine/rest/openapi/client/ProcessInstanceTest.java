@@ -52,8 +52,8 @@ class ProcessInstanceTest {
             .replace("8080", String.valueOf(wireMock.getPort())));
     // Dynamically set the basePath for the API to match WireMock's port
     var basePath = URI.create(api.getApiClient().getBasePath());
-    String newBasePath = String.format("%s://%s:%d%s",
-            basePath.getScheme(), basePath.getHost(), wireMock.getPort(), basePath.getPath());
+    String newBasePath = "%s://%s:%d%s".formatted(
+      basePath.getScheme(), basePath.getHost(), wireMock.getPort(), basePath.getPath());
     api.getApiClient().setBasePath(newBasePath);
 
     WireMock.configureFor(wireMock.getPort());

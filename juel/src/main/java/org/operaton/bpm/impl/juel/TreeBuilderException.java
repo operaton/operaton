@@ -15,6 +15,9 @@
  */
 package org.operaton.bpm.impl.juel;
 
+import java.io.Serial;
+
+
 import jakarta.el.ELException;
 
 
@@ -24,7 +27,7 @@ import jakarta.el.ELException;
  * @author Christoph Beck
  */
 public class TreeBuilderException extends ELException {
-	private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
 	private final String expression;
 	private final int position;

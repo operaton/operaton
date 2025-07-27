@@ -191,7 +191,7 @@ class MetricsRestServiceTest extends AbstractAdminPluginTest {
     // given
     queryParameters.add("subscriptionStartDate", new DateTime().withYear(2020).withMonthOfYear(1).withDayOfMonth(1).toString());
     queryParameters.add("groupBy", "year");
-    queryParameters.add("metrics", String.format("%s,%s", Metrics.PROCESS_INSTANCES, Metrics.FLOW_NODE_INSTANCES));
+    queryParameters.add("metrics", "%s,%s".formatted(Metrics.PROCESS_INSTANCES, Metrics.FLOW_NODE_INSTANCES));
 
     // generate metrics for all available meters
     var metricNames = metricsRegistry.getDbMeters().keySet();

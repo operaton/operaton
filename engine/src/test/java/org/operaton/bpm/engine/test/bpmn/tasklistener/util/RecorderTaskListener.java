@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  */
 public class RecorderTaskListener implements TaskListener, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final List<RecorderTaskListener.RecordedTaskEvent> recordedEvents = new ArrayList<>();
   private static final LinkedList<String> orderedEvents = new LinkedList<>();

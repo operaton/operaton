@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import java.io.Serial;
+
 
 /**
  * Exception that is thrown when an optimistic locking occurs in the datastore
@@ -26,7 +28,7 @@ package org.operaton.bpm.engine;
  */
 public class OptimisticLockingException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public OptimisticLockingException(String message) {
     super(message);

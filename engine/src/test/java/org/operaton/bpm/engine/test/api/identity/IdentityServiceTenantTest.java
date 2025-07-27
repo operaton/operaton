@@ -139,7 +139,7 @@ class IdentityServiceTenantTest {
       identityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
     }
   }
 
@@ -153,7 +153,7 @@ class IdentityServiceTenantTest {
 
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
     }
   }
 
@@ -172,7 +172,7 @@ class IdentityServiceTenantTest {
       identityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
     }
   }
 
@@ -194,7 +194,7 @@ class IdentityServiceTenantTest {
 
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
     }
   }
 

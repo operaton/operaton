@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.batch;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.batch.Batch;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 
 public class BatchQueryImpl extends AbstractQuery<BatchQuery, Batch> implements BatchQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String batchId;
   protected String type;

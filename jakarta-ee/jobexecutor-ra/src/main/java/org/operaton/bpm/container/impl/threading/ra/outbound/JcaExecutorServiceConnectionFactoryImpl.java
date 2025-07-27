@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.container.impl.threading.ra.outbound;
 
+import java.io.Serial;
+
 import javax.naming.Reference;
 import jakarta.resource.ResourceException;
 import jakarta.resource.spi.ConnectionManager;
-
-
 
 
 /**
@@ -30,7 +30,7 @@ import jakarta.resource.spi.ConnectionManager;
  */
 public class JcaExecutorServiceConnectionFactoryImpl implements JcaExecutorServiceConnectionFactory {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Reference reference;
   protected JcaExecutorServiceManagedConnectionFactory mcf;

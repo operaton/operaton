@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * the client but does not include a processes.xml
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestWarDeploymentWithoutProcessesXml extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -43,7 +43,7 @@ public class TestWarDeploymentWithoutProcessesXml extends AbstractFoxPlatformInt
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(ProgrammaticBeanLookup.lookup(ProcessEngine.class)).isNotNull();
   }
 

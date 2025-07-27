@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.beans;
 
-import jakarta.inject.Named;
-
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
+
+import jakarta.inject.Named;
 
 /**
  * @author Roman Smirnov
  *
  */
-@Named(value = "caseExecutionListener")
+@Named("caseExecutionListener")
 public class ExampleCaseExecutionListener implements CaseExecutionListener {
 
   @Override

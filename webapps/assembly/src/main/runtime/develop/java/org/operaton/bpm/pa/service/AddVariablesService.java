@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -61,7 +62,7 @@ public class AddVariablesService implements JavaDelegate {
     variables.put("aByteVar", aByte);
     variables.put("value1", "xyz");
 
-    int random = (int)(Math.random() * 100);
+    int random = (int)(ThreadLocalRandom.current().nextDouble() * 100);
     variables.put("random", random);
 
     CockpitVariable cockpitVar = new CockpitVariable("test", "cockpitVariableValue");

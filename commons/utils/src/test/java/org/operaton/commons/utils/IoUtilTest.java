@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -69,12 +70,8 @@ public class IoUtilTest {
 
   @Test
   void shouldFailGetFileContentAsStringWithGarbageAsFilename() {
-    try {
-      IoUtil.fileAsString("asd123");
-      fail("Expected: IoUtilException");
-    } catch (IoUtilException e) {
-      // happy way
-    }
+    assertThatThrownBy(() -> IoUtil.fileAsString("asd123"))
+        .isInstanceOf(IoUtilException.class);
   }
 
   @Test
@@ -95,12 +92,8 @@ public class IoUtilTest {
 
   @Test
   void shouldFailGetFileContentAsStreamWithGarbageAsFilename() {
-    try {
-      IoUtil.fileAsStream("asd123");
-      fail("Expected: IoUtilException");
-    } catch(IoUtilException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> IoUtil.fileAsStream("asd123"))
+        .isInstanceOf(IoUtilException.class);
   }
 
   @Test
@@ -114,22 +107,14 @@ public class IoUtilTest {
 
   @Test
   void shouldFailGetFileFromClassPathWithGarbage() {
-    try {
-      IoUtil.getClasspathFile("asd123");
-      fail("Expected: IoUtilException");
-    } catch(IoUtilException e) {
-      // happy way
-    }
+    assertThatThrownBy(() -> IoUtil.getClasspathFile("asd123"))
+        .isInstanceOf(IoUtilException.class);
   }
 
   @Test
   void shouldFailGetFileFromClassPathWithNull() {
-    try {
-      IoUtil.getClasspathFile(null);
-      fail("Expected: IoUtilException");
-    } catch(IoUtilException e) {
-      // happy way
-    }
+    assertThatThrownBy(() -> IoUtil.getClasspathFile(null))
+        .isInstanceOf(IoUtilException.class);
   }
 
   @Test

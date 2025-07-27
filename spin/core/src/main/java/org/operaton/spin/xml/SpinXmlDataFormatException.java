@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.xml;
 
+import java.io.Serial;
+
+
 import org.operaton.spin.spi.SpinDataFormatException;
 
 /**
@@ -24,7 +27,7 @@ import org.operaton.spin.spi.SpinDataFormatException;
  */
 public class SpinXmlDataFormatException extends SpinDataFormatException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public SpinXmlDataFormatException(String message, Throwable cause) {
     super(message, cause);

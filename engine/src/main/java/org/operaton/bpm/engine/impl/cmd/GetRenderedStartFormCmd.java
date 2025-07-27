@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.ScriptEvaluationException;
@@ -40,7 +41,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
  */
 public class GetRenderedStartFormCmd implements Command<Object>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String processDefinitionId;
   protected String formEngineName;
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;

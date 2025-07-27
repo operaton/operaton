@@ -80,10 +80,10 @@ public class ExternalTaskAssert extends AbstractProcessAssert<ExternalTaskAssert
   @Override
   protected String toString(ExternalTask task) {
     return task != null ?
-      String.format("%s {" +
-          "id='%s', " +
-          "processInstanceId='%s', " +
-          "topicName='%s'}",
+      ("%s {" +
+        "id='%s', " +
+        "processInstanceId='%s', " +
+        "topicName='%s'}").formatted(
         ExternalTask.class.getSimpleName(),
         task.getId(),
         task.getProcessInstanceId(),

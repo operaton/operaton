@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class UpdateAndReplaceValueDelegate implements JavaDelegate, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public static final String NEW_ELEMENT = "new element";
 

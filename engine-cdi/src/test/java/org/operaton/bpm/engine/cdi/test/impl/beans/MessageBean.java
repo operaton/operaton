@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.beans;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -28,7 +29,7 @@ import jakarta.inject.Named;
 @ApplicationScoped
 public class MessageBean implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private String message;
 

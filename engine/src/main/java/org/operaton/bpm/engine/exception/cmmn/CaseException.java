@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.exception.cmmn;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
@@ -27,7 +30,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public class CaseException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public CaseException() {
     super();

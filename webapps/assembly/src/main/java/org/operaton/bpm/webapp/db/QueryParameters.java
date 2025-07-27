@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.webapp.db;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 
 /**
@@ -23,7 +26,7 @@ import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
  */
 public abstract class QueryParameters extends ListQueryParameterObject {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected boolean historyEnabled = true;
   protected boolean maxResultsLimitEnabled = true;

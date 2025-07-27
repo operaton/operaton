@@ -90,7 +90,7 @@ public class BatchStatisticsQueryDto extends AbstractQueryDto<BatchStatisticsQue
     this.suspended = suspended;
   }
 
-  @OperatonQueryParam(value="createdBy")
+  @OperatonQueryParam("createdBy")
   public void setCreateUserId(String userId) {
     this.userId = userId;
   }

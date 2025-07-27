@@ -57,6 +57,6 @@ public class TestResultFormatter implements ValidationResultFormatter {
 
   @Override
   public int getFormattedSuffixWithOmittedResultsSize(int count) {
-    return String.format(OMITTED_RESULTS_SUFFIX_FORMAT, count).getBytes().length;
+    return OMITTED_RESULTS_SUFFIX_FORMAT.formatted(count).getBytes().length;
   }
 }

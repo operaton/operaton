@@ -43,11 +43,11 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
   @Override
   protected String toString(ProcessDefinition processDefinition) {
     return processDefinition != null ?
-      String.format("%s {" +
+      ("%s {" +
         "id='%s', " +
         "name='%s', " +
         "description='%s', " +
-        "deploymentId='%s'}",
+        "deploymentId='%s'}").formatted(
         ProcessDefinition.class.getSimpleName(),
         processDefinition.getId(),
         processDefinition.getName(),

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.model.xml;
 
+import java.io.Serial;
 import java.util.Collection;
 
 /**
@@ -28,7 +29,7 @@ import java.util.Collection;
  */
 public class UnsupportedModelOperationException extends UnsupportedOperationException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public UnsupportedModelOperationException(String operationName, String reason) {
     super("The operation " + operationName + " is unsupported: " + reason + ".");

@@ -30,12 +30,13 @@ import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.io.Serial;
 import java.util.*;
 
 public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceDto>
   extends AbstractRestQueryParametersDto<T> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final String SORT_BY_PROCESS_INSTANCE_START_TIME = "startTime";
 
@@ -79,7 +80,7 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
     return processDefinitionId;
   }
 
-  @OperatonQueryParam(value="processDefinitionId")
+  @OperatonQueryParam("processDefinitionId")
   public void setProcessDefinitionId(String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }
@@ -88,7 +89,7 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
     return parentProcessDefinitionId;
   }
 
-  @OperatonQueryParam(value="parentProcessDefinitionId")
+  @OperatonQueryParam("parentProcessDefinitionId")
   public void setParentProcessDefinitionId(String parentProcessDefinitionId) {
     this.parentProcessDefinitionId = parentProcessDefinitionId;
   }
@@ -110,7 +111,7 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
     return parentProcessInstanceId;
   }
 
-  @OperatonQueryParam(value="parentProcessInstanceId")
+  @OperatonQueryParam("parentProcessInstanceId")
   public void setParentProcessInstanceId(String parentProcessInstanceId) {
     this.parentProcessInstanceId = parentProcessInstanceId;
   }
@@ -137,7 +138,7 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
     return businessKey;
   }
 
-  @OperatonQueryParam(value="businessKey")
+  @OperatonQueryParam("businessKey")
   public void setBusinessKey(String businessKey) {
     this.businessKey = businessKey;
   }

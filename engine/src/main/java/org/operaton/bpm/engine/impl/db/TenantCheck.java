@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.db;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TenantCheck implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /**
    * If <code>true</code> then the process engine performs tenant checks to

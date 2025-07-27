@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.core.instance;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -34,7 +37,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
  */
 public abstract class CoreExecution extends AbstractVariableScope implements BaseDelegateExecution {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final CoreLogger LOG = ProcessEngineLogger.CORE_LOGGER;
 

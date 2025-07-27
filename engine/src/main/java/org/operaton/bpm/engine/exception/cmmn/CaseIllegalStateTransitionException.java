@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.exception.cmmn;
 
+import java.io.Serial;
+
 
 /**
  * <p>This is exception is thrown when a state transition on a case execution
@@ -26,7 +28,7 @@ package org.operaton.bpm.engine.exception.cmmn;
  */
 public class CaseIllegalStateTransitionException extends CaseException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public CaseIllegalStateTransitionException() {
   }

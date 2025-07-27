@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.interceptor.AtomicOperationInvocation;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -34,7 +37,7 @@ public class MessageJobDeclaration extends JobDeclaration<AtomicOperationInvocat
   public static final String ASYNC_BEFORE = "async-before";
   public static final String ASYNC_AFTER = "async-after";
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String[] operationIdentifier;
 

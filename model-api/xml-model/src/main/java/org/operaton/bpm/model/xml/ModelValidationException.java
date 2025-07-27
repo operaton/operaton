@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml;
 
+import java.io.Serial;
+
 
 /**
  * Thrown when an error is encountered during the model validation.
@@ -25,7 +27,7 @@ package org.operaton.bpm.model.xml;
  */
 public class ModelValidationException extends ModelException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ModelValidationException() {
   }

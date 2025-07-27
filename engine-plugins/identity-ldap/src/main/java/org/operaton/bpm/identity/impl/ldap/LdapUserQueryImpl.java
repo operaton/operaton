@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.impl.UserQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ import java.util.List;
  */
 public class LdapUserQueryImpl extends UserQueryImpl {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private final LdapConfiguration ldapConfiguration;
 
   public LdapUserQueryImpl(LdapConfiguration ldapConfiguration) {

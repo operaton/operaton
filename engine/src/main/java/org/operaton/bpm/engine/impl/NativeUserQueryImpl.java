@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 import org.operaton.bpm.engine.identity.NativeUserQuery;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
  */
 public class NativeUserQueryImpl extends AbstractNativeQuery<NativeUserQuery, User> implements NativeUserQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public NativeUserQueryImpl(CommandContext commandContext) {
     super(commandContext);

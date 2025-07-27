@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.Foo;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooDataFormat;
@@ -26,20 +34,11 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestConstants;
 import org.operaton.spin.spi.DataFormatProvider;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class PaDataFormatAndPostDeployTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -61,7 +60,7 @@ public class PaDataFormatAndPostDeployTest extends AbstractFoxPlatformIntegratio
   }
 
   @Test
-  public void shouldDeployApp() {
+  void shouldDeployApp() {
     assertThat(BpmPlatform.getProcessApplicationService()
       .getProcessApplicationInfo(PaDataformatAndPostDeployApp.PA_NAME)).isNotNull();
   }

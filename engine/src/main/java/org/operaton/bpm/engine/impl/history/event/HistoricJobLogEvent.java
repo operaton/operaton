@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.impl.history.event;
+import java.io.Serial;
 import java.util.Date;
 
 import org.operaton.bpm.engine.history.JobState;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.util.StringUtil;
  */
 public class HistoricJobLogEvent extends HistoryEvent {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Date timestamp;
 

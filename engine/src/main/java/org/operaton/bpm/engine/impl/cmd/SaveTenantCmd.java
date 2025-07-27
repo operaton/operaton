@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureWhitelistedResourceId;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.identity.Tenant;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 public class SaveTenantCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected Tenant tenant;
 
   public SaveTenantCmd(Tenant tenant) {

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.task.Attachment;
  */
 public class GetTaskAttachmentsCmd implements Command<List<Attachment>>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String taskId;
 
   public GetTaskAttachmentsCmd(String taskId) {

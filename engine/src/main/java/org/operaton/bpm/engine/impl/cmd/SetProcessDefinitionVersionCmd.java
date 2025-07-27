@@ -20,6 +20,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
@@ -79,7 +80,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
  */
 public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private final String processInstanceId;
   private final Integer processDefinitionVersion;

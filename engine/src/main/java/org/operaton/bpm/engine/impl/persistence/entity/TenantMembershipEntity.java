@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.db.DbEntity;
  */
 public class TenantMembershipEntity implements Serializable, DbEntity {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected TenantEntity tenant;
   protected UserEntity user;

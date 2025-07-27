@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class EventBasedGatewayTest extends AbstractGatewayTest<EventBasedGateway> {
 
@@ -48,19 +48,9 @@ class EventBasedGatewayTest extends AbstractGatewayTest<EventBasedGateway> {
   @Test
   void shouldFailSetAsyncAfterToEventBasedGateway() {
     // fetching should fail
-    try {
-      gateway.isOperatonAsyncAfter();
-      fail("Expected: UnsupportedOperationException");
-    } catch(UnsupportedOperationException ex) {
-      // True
-    }
+    assertThatThrownBy(() -> gateway.isOperatonAsyncAfter()).isInstanceOf(UnsupportedOperationException.class);
 
     // set the attribute should fail to!
-    try {
-      gateway.setOperatonAsyncAfter(false);
-      fail("Expected: UnsupportedOperationException");
-    } catch(UnsupportedOperationException ex) {
-      // True
-    }
+    assertThatThrownBy(() -> gateway.setOperatonAsyncAfter(false)).isInstanceOf(UnsupportedOperationException.class);
   }
 }

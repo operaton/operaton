@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.model;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
  */
 public abstract class CoreActivity extends CoreModelElement {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected IoMapping ioMapping;
 

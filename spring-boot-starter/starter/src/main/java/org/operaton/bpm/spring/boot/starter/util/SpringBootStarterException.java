@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.util;
 
+import java.io.Serial;
+
 /**
  * Runtime exception that is the superclass of all exceptions in the spring boot started.
  */
 public class SpringBootStarterException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public SpringBootStarterException() {
     super();

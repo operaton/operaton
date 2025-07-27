@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
 import java.util.Date;
+
 /**
  *
  * @author Deivarayan Azhagappan
@@ -24,7 +26,7 @@ import java.util.Date;
  */
 public class HistoricIdentityLinkLogEventEntity extends HistoryEvent {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Date time;
 

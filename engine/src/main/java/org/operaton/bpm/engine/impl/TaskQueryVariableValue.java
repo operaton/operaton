@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 
 
 /**
@@ -25,7 +26,7 @@ package org.operaton.bpm.engine.impl;
  */
 public class TaskQueryVariableValue extends QueryVariableValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected boolean isProcessInstanceVariable;
 

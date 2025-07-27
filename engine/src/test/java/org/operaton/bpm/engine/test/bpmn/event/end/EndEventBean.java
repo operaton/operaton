@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class EndEventBean implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public JavaDelegate getJavaDelegate() {
     return new DummyServiceTask();

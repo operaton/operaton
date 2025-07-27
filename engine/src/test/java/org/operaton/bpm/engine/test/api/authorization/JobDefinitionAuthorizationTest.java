@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
@@ -26,9 +28,6 @@ import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResul
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.management.JobDefinition;
@@ -123,18 +122,14 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
 
-    try {
-      // when
-      managementService.suspendJobDefinitionById(jobDefinitionId);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(jobDefinitionId),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -175,18 +170,14 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     suspendJobDefinitionById(jobDefinitionId);
 
-    try {
-      // when
-      managementService.activateJobDefinitionById(jobDefinitionId);
-      fail("Exception expected: It should not be possible to activate a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(jobDefinitionId),
+            "It should not be possible to activate a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -230,20 +221,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
 
-    try {
-      // when
-      managementService.suspendJobDefinitionById(jobDefinitionId, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(jobDefinitionId, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -255,20 +242,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE);
 
-    try {
-      // when
-      managementService.suspendJobDefinitionById(jobDefinitionId, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(jobDefinitionId, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -347,20 +330,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
 
-    try {
-      // when
-      managementService.activateJobDefinitionById(jobDefinitionId, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(jobDefinitionId, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -373,20 +352,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE);
 
-    try {
-      // when
-      managementService.activateJobDefinitionById(jobDefinitionId, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(jobDefinitionId, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -464,18 +439,14 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
 
-    try {
-      // when
-      managementService.suspendJobDefinitionByProcessDefinitionId(processDefinitionId);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(processDefinitionId),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -516,18 +487,14 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     suspendJobDefinitionByProcessDefinitionId(processDefinitionId);
 
-    try {
-      // when
-      managementService.activateJobDefinitionByProcessDefinitionId(processDefinitionId);
-      fail("Exception expected: It should not be possible to activate a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(processDefinitionId),
+            "It should not be possible to activate a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -572,20 +539,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
 
-    try {
-      // when
-      managementService.suspendJobDefinitionByProcessDefinitionId(processDefinitionId, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(processDefinitionId, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -597,20 +560,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE);
 
-    try {
-      // when
-      managementService.suspendJobDefinitionByProcessDefinitionId(processDefinitionId, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(processDefinitionId, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -689,20 +648,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
 
-    try {
-      // when
-      managementService.activateJobDefinitionByProcessDefinitionId(processDefinitionId, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(processDefinitionId, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -715,20 +670,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE);
 
-    try {
-      // when
-      managementService.activateJobDefinitionByProcessDefinitionId(processDefinitionId, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(processDefinitionId, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -803,20 +754,13 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
   @Test
   void testSuspendByProcessDefinitionKeyWithoutAuthorization() {
-    // given
-
-    try {
-      // when
-      managementService.suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -854,18 +798,14 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
 
-    try {
-      // when
-      managementService.activateJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY),
+            "It should not be possible to activate a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -907,20 +847,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
 
-    try {
-      // when
-      managementService.suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -931,20 +867,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE);
 
-    try {
-      // when
-      managementService.suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1019,20 +951,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
 
-    try {
-      // when
-      managementService.activateJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1044,20 +972,16 @@ class JobDefinitionAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE);
 
-    try {
-      // when
-      managementService.activateJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY, true);
-      fail("Exception expected: It should not be possible to suspend a job definition");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(TIMER_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when + then
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY, true),
+            "It should not be possible to suspend a job definition")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(TIMER_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test

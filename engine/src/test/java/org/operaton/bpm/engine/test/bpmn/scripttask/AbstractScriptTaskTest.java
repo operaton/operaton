@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.bpmn.scripttask;
 
 import static org.assertj.core.api.Assertions.fail;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +81,7 @@ public abstract class AbstractScriptTaskTest {
 
   protected String getNormalizedResourcePath(String classPathResource) {
     try {
-      return Paths.get(getClass().getResource(classPathResource).toURI()).toString().replace('\\', '/');
+      return Path.of(getClass().getResource(classPathResource).toURI()).toString().replace('\\', '/');
     } catch (Exception e) {
       fail("Cannot read path of '" + classPathResource + "': " + e.getMessage());
       return null;

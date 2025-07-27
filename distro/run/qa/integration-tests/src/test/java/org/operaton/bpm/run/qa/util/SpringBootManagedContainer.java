@@ -26,7 +26,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,7 +71,7 @@ public class SpringBootManagedContainer {
     }
     InputStream defaultYml = SpringBootManagedContainer.class.getClassLoader().getResourceAsStream(BASE_TEST_APPLICATION_YML);
     createConfigurationYml(APPLICATION_YML_PATH, defaultYml);
-    Path resourcesPath = Paths.get(baseDirectory, RESOURCES_PATH);
+    Path resourcesPath = Path.of(baseDirectory, RESOURCES_PATH);
     resourcesPath.toFile().mkdir();
   }
 
@@ -87,7 +86,7 @@ public class SpringBootManagedContainer {
           + "to the root directory of the run distribution to test.");
     }
 
-    return Paths.get(runHomeDirectory).toAbsolutePath().toString();
+    return Path.of(runHomeDirectory).toAbsolutePath().toString();
   }
 
   public void start() {
@@ -235,7 +234,7 @@ public class SpringBootManagedContainer {
 
   public void replaceConfigurationYml(String filePath, InputStream source) {
     try {
-      Files.deleteIfExists(Paths.get(baseDirectory, filePath));
+      Files.deleteIfExists(Path.of(baseDirectory, filePath));
       createConfigurationYml(filePath, source);
     } catch (IOException e) {
       log.error("Could not replace " + filePath, e);
@@ -245,7 +244,7 @@ public class SpringBootManagedContainer {
   public void createConfigurationYml(String filePath, InputStream source) {
     try {
 
-      Path testYmlPath = Paths.get(baseDirectory, filePath);
+      Path testYmlPath = Path.of(baseDirectory, filePath);
 
       Files.copy(source, testYmlPath);
       configurationFiles.add(testYmlPath.toFile());

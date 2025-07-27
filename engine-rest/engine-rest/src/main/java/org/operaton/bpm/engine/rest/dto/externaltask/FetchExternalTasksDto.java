@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQueryTopicBuilder;
 import org.operaton.bpm.engine.externaltask.FetchAndLockBuilder;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.rest.dto.SortingDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 

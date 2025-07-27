@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.batch.BatchElementConfiguration;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 
 public abstract class AbstractSetExternalTaskRetriesCmd<T> implements Command<T> {
 

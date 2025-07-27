@@ -20,7 +20,7 @@ package org.operaton.bpm.engine.impl.externaltask;
 import static org.operaton.bpm.engine.impl.Direction.ASCENDING;
 import static org.operaton.bpm.engine.impl.Direction.DESCENDING;
 import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.CREATE_TIME;
-import static org.operaton.bpm.engine.impl.util.CollectionUtil.getLastElement;
+import static org.operaton.commons.utils.CollectionUtil.getLastElement;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 

@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.impl.history.event.UserOperationLogEntryEventEnti
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 
 import java.util.Collections;

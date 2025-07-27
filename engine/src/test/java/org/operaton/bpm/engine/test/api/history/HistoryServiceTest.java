@@ -50,7 +50,7 @@ import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.task.Task;

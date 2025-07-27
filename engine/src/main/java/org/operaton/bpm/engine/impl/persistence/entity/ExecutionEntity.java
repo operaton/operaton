@@ -63,7 +63,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 import org.operaton.bpm.engine.impl.tree.ExecutionTopDownWalker;
 import org.operaton.bpm.engine.impl.util.BitMaskUtil;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;

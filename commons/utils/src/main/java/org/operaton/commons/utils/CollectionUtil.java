@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.impl.util;
+package org.operaton.commons.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,14 +35,19 @@ import java.util.Set;
 public class CollectionUtil {
 
   // No need to instantiate
-  private CollectionUtil() {}
+  private CollectionUtil() {
+  }
 
   /**
    * Helper method that creates a singleton map.
-   *
+   * <p>
    * Alternative for Collections.singletonMap(), since that method returns a
    * generic typed map <K,T> depending on the input type, but we often need a
    * <String, Object> map.
+   *
+   * @param key   The key for the map.
+   * @param value The value associated with the key.
+   * @return A map containing a single entry with the specified key and value.
    */
   public static Map<String, Object> singletonMap(String key, Object value) {
     Map<String, Object> map = new HashMap<>();
@@ -52,6 +57,12 @@ public class CollectionUtil {
 
   /**
    * Arrays.asList cannot be reliably used for SQL parameters on MyBatis < 3.3.0
+   *
+   *  @throws NullPointerException if the elements is null
+   *
+   * @param <T>    The type of elements in the array.
+   * @param values The array to be converted.
+   * @return An ArrayList containing the elements of the array.
    */
   public static <T> List<T> asArrayList(T[] values) {
     ArrayList<T> result = new ArrayList<>();
@@ -60,6 +71,14 @@ public class CollectionUtil {
     return result;
   }
 
+  /**
+   * Creates a new HashSet containing the specified elements.
+   *
+   *  @throws NullPointerException if the elements is null
+   * @param <T>      The type of elements.
+   * @param elements The elements to be added to the set.
+   * @return A HashSet containing the provided elements.
+   */
   public static <T> Set<T> asHashSet(T... elements) {
     Set<T> set = new HashSet<>();
     Collections.addAll(set, elements);
@@ -67,12 +86,31 @@ public class CollectionUtil {
     return set;
   }
 
+  /**
+   * Adds a value to a list associated with the specified key in a map of lists.
+   *
+   * @throws NullPointerException if map is null
+   * @throws UnsupportedOperationException if the map is read-only
+   * @param <S>   The type of the key.
+   * @param <T>   The type of the value.
+   * @param map   The map to which the value will be added.
+   * @param key   The key for the map entry.
+   * @param value The value to be added to the list.
+   */
   public static <S, T> void addToMapOfLists(Map<S, List<T>> map, S key, T value) {
-    map
-      .computeIfAbsent(key, k -> new ArrayList<>())
-      .add(value);
+    map.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
   }
 
+  /**
+   * Merges two maps of lists. Values from the second map are added to the first map.
+   *
+   * @throws NullPointerException if either map is null, or if toAdd contains null lists
+   * @throws UnsupportedOperationException if the destination map is read-only
+   * @param <S>   The type of the key.
+   * @param <T>   The type of the value.
+   * @param map   The map to which values will be added.
+   * @param toAdd The map containing values to be merged.
+   */
   public static <S, T> void mergeMapsOfLists(Map<S, List<T>> map, Map<S, List<T>> toAdd) {
     for (Entry<S, List<T>> entry : toAdd.entrySet()) {
       for (T listener : entry.getValue()) {
@@ -81,12 +119,28 @@ public class CollectionUtil {
     }
   }
 
+  /**
+   * Adds a value to a map of sets. If the key does not exist, a new set is created.
+   *
+   * @param <S>   The type of the key.
+   * @param <T>   The type of the value.
+   * @param map   The map to which the value will be added.
+   * @param key   The key for the map entry.
+   * @param value The value to be added to the set.
+   */
   public static <S, T> void addToMapOfSets(Map<S, Set<T>> map, S key, T value) {
-    map
-      .computeIfAbsent(key, k -> new HashSet<>())
-      .add(value);
+    map.computeIfAbsent(key, k -> new HashSet<>()).add(value);
   }
 
+  /**
+   * Adds a collection of values to a map of sets. If the key does not exist, a new set is created.
+   *
+   * @param <S>    The type of the key.
+   * @param <T>    The type of the values.
+   * @param map    The map to which the values will be added.
+   * @param key    The key for the map entry.
+   * @param values The collection of values to be added to the set.
+   */
   public static <S, T> void addCollectionToMapOfSets(Map<S, Set<T>> map, S key, Collection<T> values) {
     Set<T> set = map.computeIfAbsent(key, k -> new HashSet<>());
     set.addAll(values);
@@ -95,6 +149,11 @@ public class CollectionUtil {
   /**
    * Chops a list into non-view sublists of length partitionSize. Note: the argument list
    * may be included in the result.
+   *
+   * @param <T>           The type of elements in the list.
+   * @param list          The list to be partitioned.
+   * @param partitionSize The size of each partition.
+   * @return A list of sublists, each of size partitionSize (except possibly the last one).
    */
   public static <T> List<List<T>> partition(List<T> list, final int partitionSize) {
     List<List<T>> parts = new ArrayList<>();
@@ -113,6 +172,13 @@ public class CollectionUtil {
     return parts;
   }
 
+  /**
+   * Converts an iterator into a list.
+   *
+   * @param <T>      The type of elements in the iterator.
+   * @param iterator The iterator to be converted.
+   * @return A list containing all elements from the iterator.
+   */
   public static <T> List<T> collectInList(Iterator<T> iterator) {
     List<T> result = new ArrayList<>();
     while (iterator.hasNext()) {
@@ -121,6 +187,13 @@ public class CollectionUtil {
     return result;
   }
 
+  /**
+   * Retrieves the last element from an iterable. If the iterable is a list, the last element is accessed directly.
+   *
+   * @param <T>      The type of elements in the iterable.
+   * @param elements The iterable from which the last element is retrieved.
+   * @return The last element, or null if the iterable is empty.
+   */
   public static <T> T getLastElement(final Iterable<T> elements) {
     T lastElement = null;
 
@@ -135,10 +208,22 @@ public class CollectionUtil {
     return lastElement;
   }
 
+  /**
+   * Checks if a collection is null or empty.
+   *
+   * @param collection The collection to check.
+   * @return True if the collection is null or empty, false otherwise.
+   */
   public static boolean isEmpty(Collection<?> collection) {
     return collection == null || collection.isEmpty();
   }
 
+  /**
+   * Checks if a collection is not null and contains elements.
+   *
+   * @param collection The collection to check.
+   * @return True if the collection is not null and contains elements, false otherwise.
+   */
   public static boolean hasElements(Collection<?> collection) {
     return !isEmpty(collection);
   }

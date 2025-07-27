@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
 import org.operaton.bpm.engine.history.HistoricExternalTaskLogQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 
 import java.io.Serial;
 import java.util.List;

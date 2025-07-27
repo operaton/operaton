@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
 import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.impl.util.StringUtil;

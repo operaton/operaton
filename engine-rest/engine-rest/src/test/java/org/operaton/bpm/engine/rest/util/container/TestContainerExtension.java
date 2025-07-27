@@ -26,15 +26,15 @@ public class TestContainerExtension implements BeforeAllCallback, AfterAllCallba
   public void beforeAll(ExtensionContext context) throws Exception {
     lookUpContainerSpecifics();
     delegate = containerSpecifics.getExtension(context.getRequiredTestClass());
-    if (delegate instanceof BeforeAllCallback) {
-      ((BeforeAllCallback) delegate).beforeAll(context);
+    if (delegate instanceof BeforeAllCallback callback) {
+      callback.beforeAll(context);
     }
   }
 
   @Override
   public void afterAll(ExtensionContext context) throws Exception {
-    if (delegate instanceof AfterAllCallback) {
-      ((AfterAllCallback) delegate).afterAll(context);
+    if (delegate instanceof AfterAllCallback callback) {
+      callback.afterAll(context);
     }
   }
 

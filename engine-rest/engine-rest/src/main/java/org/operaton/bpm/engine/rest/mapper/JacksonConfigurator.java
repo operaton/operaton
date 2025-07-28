@@ -35,7 +35,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 public class JacksonConfigurator implements ContextResolver<ObjectMapper> {
 
   public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-  public static String dateFormatString = DEFAULT_DATE_FORMAT;
+  private static String dateFormatString = DEFAULT_DATE_FORMAT;
 
   public static ObjectMapper configureObjectMapper(ObjectMapper mapper) {
     SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
@@ -53,8 +53,11 @@ public class JacksonConfigurator implements ContextResolver<ObjectMapper> {
     return configureObjectMapper(new ObjectMapper());
   }
 
-  public static void setDateFormatString(String dateFormatString) {
-    JacksonConfigurator.dateFormatString = dateFormatString;
+  public static void setDateFormatString(String dateFormat) {
+    dateFormatString = dateFormat;
   }
 
+  public static String getDateFormatString() {
+    return dateFormatString;
+  }
 }

@@ -164,7 +164,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
   @Override
   public void afterPropertiesSet() {
         Assert.notNull(this.processEngine, "the 'processEngine' can't be null");
-        logger.info("this bean contains a processEngine reference. " + this.processEngine);
-        logger.info("starting " + getClass().getName());
+        logger.info(() -> "this bean contains a processEngine reference. " + this.processEngine);
+        logger.info(() -> "starting " + getClass().getName());
     }
 }

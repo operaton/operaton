@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByActivityId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByDeploymentId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByExecutionId;
@@ -46,12 +45,12 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.history.HistoricJobLogQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
@@ -118,11 +117,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.logId(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.logId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("historicJobLogId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -142,11 +139,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.jobId(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.jobId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("jobId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -154,12 +149,10 @@ class HistoricJobLogQueryTest {
   void testQueryByJobExceptionMessage() {
     runtimeService.startProcessInstanceByKey("process");
     String jobId = managementService.createJobQuery().singleResult().getId();
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+
+    assertThatThrownBy(() -> managementService.executeJob(jobId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasStackTraceContaining(FailingDelegate.EXCEPTION_MESSAGE);
 
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().jobExceptionMessage(FailingDelegate.EXCEPTION_MESSAGE);
 
@@ -172,11 +165,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.jobExceptionMessage(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.jobExceptionMessage(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("jobExceptionMessage is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -184,12 +175,10 @@ class HistoricJobLogQueryTest {
   void testQueryByFailedActivityId() {
     runtimeService.startProcessInstanceByKey("process");
     String jobId = managementService.createJobQuery().singleResult().getId();
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+
+    assertThatThrownBy(() -> managementService.executeJob(jobId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasStackTraceContaining(FailingDelegate.EXCEPTION_MESSAGE);
 
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().failedActivityIdIn("serviceTask");
 
@@ -204,27 +193,21 @@ class HistoricJobLogQueryTest {
 
     String[] nullValue = null;
 
-    try {
-      query.failedActivityIdIn(nullValue);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.failedActivityIdIn(nullValue))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("activityIds is null");
 
     String[] activityIdsContainsNull = {"a", null, "b"};
 
-    try {
-      query.failedActivityIdIn(activityIdsContainsNull);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.failedActivityIdIn(activityIdsContainsNull))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("activityIds contains null value");
 
     String[] activityIdsContainsEmptyString = {"a", "", "b"};
 
-    try {
-      query.failedActivityIdIn(activityIdsContainsEmptyString);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.failedActivityIdIn(activityIdsContainsEmptyString))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("activityIds contains empty string");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -244,11 +227,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.jobDefinitionId(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.jobDefinitionId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("jobDefinitionId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -267,11 +248,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.jobDefinitionType(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.jobDefinitionType(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("jobDefinitionType is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -290,11 +269,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.jobDefinitionConfiguration(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.jobDefinitionConfiguration(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("jobDefinitionConfiguration is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -315,27 +292,21 @@ class HistoricJobLogQueryTest {
 
     String[] nullValue = null;
 
-    try {
-      query.activityIdIn(nullValue);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.activityIdIn(nullValue))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("activityIds is null");
 
     String[] activityIdsContainsNull = {"a", null, "b"};
 
-    try {
-      query.activityIdIn(activityIdsContainsNull);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.activityIdIn(activityIdsContainsNull))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("activityIds contains null value");
 
     String[] activityIdsContainsEmptyString = {"a", "", "b"};
 
-    try {
-      query.activityIdIn(activityIdsContainsEmptyString);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.activityIdIn(activityIdsContainsEmptyString))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("activityIds contains empty string");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -357,27 +328,21 @@ class HistoricJobLogQueryTest {
 
     String[] nullValue = null;
 
-    try {
-      query.executionIdIn(nullValue);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.executionIdIn(nullValue))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("executionIds is null");
 
     String[] executionIdsContainsNull = {"a", null, "b"};
 
-    try {
-      query.executionIdIn(executionIdsContainsNull);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.executionIdIn(executionIdsContainsNull))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("executionIds contains null value");
 
     String[] executionIdsContainsEmptyString = {"a", "", "b"};
 
-    try {
-      query.executionIdIn(executionIdsContainsEmptyString);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.executionIdIn(executionIdsContainsEmptyString))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("executionIds contains empty string");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -397,11 +362,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.processInstanceId(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.processInstanceId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("processInstanceId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -421,11 +384,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.processDefinitionId(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.processDefinitionId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("processDefinitionId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -445,11 +406,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.processDefinitionKey(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.processDefinitionKey(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("processDefinitionKey is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -587,11 +546,9 @@ class HistoricJobLogQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.deploymentId(null);
-      fail("exception expected");
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> query.deploymentId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("deploymentId is null");
   }
 
   @Deployment
@@ -666,12 +623,10 @@ class HistoricJobLogQueryTest {
   void testQueryByFailureLog() {
     runtimeService.startProcessInstanceByKey("process");
     String jobId = managementService.createJobQuery().singleResult().getId();
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+
+    assertThatThrownBy(() -> managementService.executeJob(jobId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasStackTraceContaining(FailingDelegate.EXCEPTION_MESSAGE);
 
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().failureLog();
 
@@ -912,7 +867,7 @@ class HistoricJobLogQueryTest {
 
     // delete job /////////////////////////////////////////////////////////
 
-    processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
+    runtimeService.startProcessInstanceByKey("process").getId();
     jobId = managementService.createJobQuery().singleResult().getId();
 
     testRule.executeAvailableJobs();

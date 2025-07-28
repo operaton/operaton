@@ -34,7 +34,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historic
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogPartiallyByOccurence;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -599,11 +598,9 @@ class HistoricJobLogQueryTest {
   @Test
   void testQueryByJobPriority() {
     // given 5 process instances with 5 jobs
-    List<ProcessInstance> processInstances = new ArrayList<>();
-
     for (int i = 0; i < 5; i++) {
-      processInstances.add(runtimeService.startProcessInstanceByKey("process",
-          Variables.createVariables().putValue("priority", i)));
+      runtimeService.startProcessInstanceByKey("process",
+          Variables.createVariables().putValue("priority", i));
     }
 
     // then the creation logs can be filtered by priority of the jobs

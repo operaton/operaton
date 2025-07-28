@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.CompensationBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Incident;
 

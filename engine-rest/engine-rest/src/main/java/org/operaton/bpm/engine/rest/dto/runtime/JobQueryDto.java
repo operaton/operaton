@@ -28,7 +28,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto;

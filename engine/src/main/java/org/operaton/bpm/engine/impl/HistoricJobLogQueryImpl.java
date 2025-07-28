@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.history.HistoricJobLogQuery;
 import org.operaton.bpm.engine.history.JobState;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
 
 /**

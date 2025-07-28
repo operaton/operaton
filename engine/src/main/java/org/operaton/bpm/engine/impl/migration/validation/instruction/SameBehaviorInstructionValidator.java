@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.impl.bpmn.behavior.CaseCallActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 
 import java.util.*;
 

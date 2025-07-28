@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.rest.dto.batch;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static org.operaton.bpm.engine.impl.util.CollectionUtil.hasElements;
+import static org.operaton.commons.utils.CollectionUtil.hasElements;
 
 import java.util.ArrayList;
 import java.util.List;

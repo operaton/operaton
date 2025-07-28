@@ -64,7 +64,7 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguratio
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailVariableInstanceUpdateEntity;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;

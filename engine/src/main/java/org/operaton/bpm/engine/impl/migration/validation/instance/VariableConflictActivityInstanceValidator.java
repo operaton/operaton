@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.migration.instance.MigratingInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingVariableInstance;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * Validates that when an activity instance has a variable with the same name twice (as a scope execution variable and

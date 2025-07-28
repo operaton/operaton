@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 
 import java.util.*;

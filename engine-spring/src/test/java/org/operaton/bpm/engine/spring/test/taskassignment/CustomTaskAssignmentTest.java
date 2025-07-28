@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.spring.test.taskassignment;
 
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
 

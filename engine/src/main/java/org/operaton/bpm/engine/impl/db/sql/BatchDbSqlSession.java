@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbBulkOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbEntityOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 

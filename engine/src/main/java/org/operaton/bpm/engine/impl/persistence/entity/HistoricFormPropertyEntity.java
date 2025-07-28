@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.io.Serial;
 
-
+import java.util.Optional;
 import org.operaton.bpm.engine.history.HistoricFormField;
 import org.operaton.bpm.engine.history.HistoricFormProperty;
 import org.operaton.bpm.engine.impl.history.event.HistoricFormPropertyEventEntity;
@@ -33,11 +33,7 @@ public class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity 
 
   @Override
   public String getPropertyValue() {
-    if(propertyValue != null) {
-      return propertyValue.toString();
-    } else {
-      return null;
-    }
+    return Optional.ofNullable(propertyValue).orElse(null);
   }
 
   @Override

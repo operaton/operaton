@@ -88,13 +88,13 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
 
             String businessKey = this.processBusinessKey(invocation);
 
-            log.info("variables for the started process: " + vars.toString());
+            log.info(() -> "variables for the started process: " + vars.toString());
 
             RuntimeService runtimeService = this.processEngine.getRuntimeService();
             ProcessInstance pi;
             if (null != businessKey && StringUtils.hasText(businessKey)) {
                 pi = runtimeService.startProcessInstanceByKey(processKey, businessKey, vars);
-                log.info("the business key for the started process is '" + businessKey + "' ");
+                log.info(() -> "the business key for the started process is '" + businessKey + "' ");
             } else {
                 pi = runtimeService.startProcessInstanceByKey(processKey, vars);
             }

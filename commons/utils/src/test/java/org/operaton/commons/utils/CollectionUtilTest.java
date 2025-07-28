@@ -16,6 +16,7 @@
 
 package org.operaton.commons.utils;
 
+import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -35,7 +36,8 @@ class CollectionUtilTest {
   @Test
   void singletonMapShouldCreateMapWithOneEntry() {
     Map<String, Object> map = CollectionUtil.singletonMap("key", "value");
-    assertThat(map).isInstanceOf(HashMap.class).hasSize(1).containsEntry("key", "value");
+    Map.Entry<String, String>  expectedEntry = entry("key", "value");
+    assertThat(map).isInstanceOf(HashMap.class).hasSize(1).containsExactly(expectedEntry);
   }
 
   @Test
@@ -44,11 +46,13 @@ class CollectionUtilTest {
     List<String> list = CollectionUtil.asArrayList(array);
     assertThat(list).isInstanceOf(ArrayList.class).hasSize(3).containsExactly("a", "b", "c");
   }
+
   @Test
-  void asArrayListShouldThrowExceptionOnNullElements() {
+  void asArrayListShouldThrowExceptionOnNullArray() {
     assertThatThrownBy(() -> CollectionUtil.asArrayList(null))
         .isInstanceOf(NullPointerException.class);
   }
+
   @Test
   void asHashSetShouldConvertElementsToUniqueSet() {
     Set<String> set = CollectionUtil.asHashSet("a", "b", "a");
@@ -57,7 +61,7 @@ class CollectionUtilTest {
   }
 
   @Test
-  void asHashSetShouldThrowExceptionOnNullElements() {
+  void asHashSetShouldThrowExceptionOnNullVarargs() {
     assertThatThrownBy(() -> CollectionUtil.asHashSet(null))
         .isInstanceOf(NullPointerException.class);
   }
@@ -94,6 +98,13 @@ class CollectionUtilTest {
   }
 
   @Test
+  void addToMapOfListsShouldThrowUnsupportedOperationException() {
+    Map<String, List<String>> map = Collections.unmodifiableMap(new HashMap<>());
+    assertThatThrownBy(() -> CollectionUtil.addToMapOfLists(map, "key", "value"))
+        .isInstanceOf(UnsupportedOperationException.class);
+  }
+
+  @Test
   void mergeMapsOfListsShouldCombineTwoMapsPreservingValues() {
     Map<String, List<String>> map1 = new HashMap<>();
     Map<String, List<String>> map2 = new HashMap<>();
@@ -109,6 +120,21 @@ class CollectionUtilTest {
   }
 
   @Test
+  void mergeMapsOfListsShouldGenerateExceptions() {
+    Map<String, List<String>> map1 = Collections.unmodifiableMap(new HashMap<>());
+    Map<String, List<String>> map2 = new HashMap<>();
+    CollectionUtil.addToMapOfLists(map2, "key1", "value1");
+    CollectionUtil.addToMapOfLists(map2, "key2", "value2");
+
+    assertThatThrownBy(() -> CollectionUtil.mergeMapsOfLists(map1, map2))
+        .isInstanceOf(UnsupportedOperationException.class);
+    assertThatThrownBy(() -> CollectionUtil.mergeMapsOfLists(null, map2))
+        .isInstanceOf(NullPointerException.class);
+    assertThatThrownBy(() -> CollectionUtil.mergeMapsOfLists(map1, null))
+        .isInstanceOf(NullPointerException.class);
+  }
+
+  @Test
   void addToMapOfSetsShouldHandleDuplicatesAndMultipleKeys() {
     Map<String, Set<String>> map = new HashMap<>();
 
@@ -118,6 +144,51 @@ class CollectionUtilTest {
 
     assertThat(map.get("key1")).hasSize(2).containsExactlyInAnyOrder("value1", "value2");
     assertThat(map.get("key2")).hasSize(1).containsExactly("value3");
+  }
+
+  @Test
+  void addToMapOfSetsShouldHandelExceptions() {
+   Map<String, Set<String>> map = Collections.unmodifiableMap(new HashMap<>());
+
+    assertThatThrownBy(() -> CollectionUtil.addToMapOfSets(map, "key", "value"))
+        .isInstanceOf(UnsupportedOperationException.class);
+    assertThatThrownBy(() -> CollectionUtil.addToMapOfSets(null, "key", "value"))
+        .isInstanceOf(NullPointerException.class);
+  }
+
+  @Test
+  void addCollectionToMapOfSetsShouldEliminateDuplicates() {
+    Map<String, Set<String>> map = new HashMap<>();
+
+    Collection<String> values = Arrays.asList("a", "b", "c", "a");
+    CollectionUtil.addCollectionToMapOfSets(map, "key", values);
+
+    assertThat(map).hasSize(1).containsKey("key");
+    assertThat(map.get("key")).hasSize(3).containsExactlyInAnyOrder("a", "b", "c");
+  }
+
+  @Test
+  void addCollectionToMapOfSetsShouldMergeNewValuesWithExistingSet() {
+    Map<String, Set<String>> map = new HashMap<>();
+
+    Collection<String> buildValues = Arrays.asList("a", "b", "c");
+    CollectionUtil.addCollectionToMapOfSets(map, "key", buildValues);
+    Collection<String> appendValues = Arrays.asList("a", "d", "e");
+    CollectionUtil.addCollectionToMapOfSets(map, "key", appendValues);
+
+    assertThat(map).hasSize(1).containsKey("key");
+    assertThat(map.get("key")).hasSize(5).containsExactlyInAnyOrder("a", "b", "c", "d", "e");
+  }
+
+  @Test
+  void addCollectionToMapOfSetsShouldGenerateExceptions() {
+    Map<String, Set<String>> map = Collections.unmodifiableMap(new HashMap<>());
+    Collection<String> values = Arrays.asList("a", "b", "c");
+
+    assertThatThrownBy(() -> CollectionUtil.addCollectionToMapOfSets(map, "key", values))
+        .isInstanceOf(UnsupportedOperationException.class);
+    assertThatThrownBy(() -> CollectionUtil.addCollectionToMapOfSets(null, "key", values))
+        .isInstanceOf(NullPointerException.class);
   }
 
   @Test
@@ -143,27 +214,9 @@ class CollectionUtilTest {
   }
 
   @Test
-  void addCollectionToMapOfSetsShouldEliminateDuplicates() {
-    Map<String, Set<String>> map = new HashMap<>();
-
-    Collection<String> values = Arrays.asList("a", "b", "c", "a");
-    CollectionUtil.addCollectionToMapOfSets(map, "key", values);
-
-    assertThat(map).hasSize(1).containsKey("key");
-    assertThat(map.get("key")).hasSize(3).containsExactlyInAnyOrder("a", "b", "c");
-  }
-
-  @Test
-  void addCollectionToMapOfSetsShouldMergeNewValuesWithExistingSet() {
-    Map<String, Set<String>> map = new HashMap<>();
-
-    Collection<String> buildValues = Arrays.asList("a", "b", "c");
-    CollectionUtil.addCollectionToMapOfSets(map, "key", buildValues);
-    Collection<String> appendValues = Arrays.asList("a", "d", "e");
-    CollectionUtil.addCollectionToMapOfSets(map, "key", appendValues);
-
-    assertThat(map).hasSize(1).containsKey("key");
-    assertThat(map.get("key")).hasSize(5).containsExactlyInAnyOrder("a", "b", "c", "d", "e");
+  void partitionShouldGenerateException() {
+    assertThatThrownBy(() -> CollectionUtil.partition(null, 2))
+        .isInstanceOf(NullPointerException.class);
   }
 
   @Test

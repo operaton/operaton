@@ -1622,11 +1622,11 @@ class FullHistoryTest {
 
     String caseInstanceId = caseInstance.getId();
 
-    String humanTask = caseService
+    assertThat(caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1")
         .singleResult()
-        .getId();
+    ).isNotNull();
     String taskId = taskService.createTaskQuery().singleResult().getId();
 
     caseService.setVariable(caseInstanceId, "aVariable", "aValue");

@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.Variables;
@@ -33,6 +32,8 @@ import org.operaton.bpm.integrationtest.functional.cdi.beans.CaseVariableBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -73,11 +74,11 @@ public class CdiBeanCaseTaskResolutionTest extends AbstractFoxPlatformIntegratio
     CaseInstance caseInstance = caseService.withCaseDefinitionByKey("callingCase")
         .create();
 
-    CaseExecution caseTaskInstance = caseService.createCaseExecutionQuery().activityId("PI_CaseTask_1")
-        .singleResult();
+    assertThat(caseService.createCaseExecutionQuery().activityId("PI_CaseTask_1").singleResult())
+        .isNotNull();
 
-    CaseExecution calledCaseHumanTaskInstance = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1")
-        .singleResult();
+    assertThat(caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult())
+        .isNotNull();
 
     Task calledCaseTask = taskService.createTaskQuery().singleResult();
 

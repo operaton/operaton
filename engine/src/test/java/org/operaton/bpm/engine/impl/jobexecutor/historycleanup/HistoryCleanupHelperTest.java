@@ -1,13 +1,13 @@
 package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class HistoryCleanupHelperTest {
+import org.junit.jupiter.api.Test;
+
+class HistoryCleanupHelperTest {
   @Test
-  public void testlistMinuteChunks(){
+  void testlistMinuteChunks(){
     assertThat(
       HistoryCleanupHelper.listMinuteChunks(1))
     .isEqualTo(new int[][] {
@@ -23,7 +23,7 @@ public class HistoryCleanupHelperTest {
   }
 
   @Test
-  public void testlistMinuteChunksInvalidArguments(){
+  void testlistMinuteChunksInvalidArguments(){
     assertThrows(IllegalArgumentException.class, () -> HistoryCleanupHelper.listMinuteChunks(0));
     assertThrows(IllegalArgumentException.class, () -> HistoryCleanupHelper.listMinuteChunks(61));
   }

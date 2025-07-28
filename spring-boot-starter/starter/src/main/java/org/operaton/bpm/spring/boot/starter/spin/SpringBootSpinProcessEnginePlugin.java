@@ -49,9 +49,9 @@ public class SpringBootSpinProcessEnginePlugin extends SpinProcessEnginePlugin {
     List<DataFormatConfigurator> configurators = new ArrayList<>();
 
     // add the auto-config Jackson Java 8 module configurators
-    dataFormatConfiguratorJsr310.ifPresent(configurator -> configurators.add(configurator));
-    dataFormatConfiguratorParameterNames.ifPresent(configurator -> configurators.add(configurator));
-    dataFormatConfiguratorJdk8.ifPresent(configurator -> configurators.add(configurator));
+    dataFormatConfiguratorJsr310.ifPresent(configurators::add);
+    dataFormatConfiguratorParameterNames.ifPresent(configurators::add);
+    dataFormatConfiguratorJdk8.ifPresent(configurators::add);
 
     // next, add any configurators defined in the spring.factories file
     configurators.addAll(SpringFactoriesLoader.loadFactories(DataFormatConfigurator.class, classloader));

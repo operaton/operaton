@@ -30,13 +30,16 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 /**
  * @author Svetlana Dorokhova.
  */
-public abstract class HistoryCleanupHelper {
+public class HistoryCleanupHelper {
 
   private static final SimpleDateFormat TIME_FORMAT_WITHOUT_SECONDS = new SimpleDateFormat("yyyy-MM-ddHH:mm");
 
   private static final SimpleDateFormat TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE = new SimpleDateFormat("yyyy-MM-ddHH:mmZ");
 
   private static final SimpleDateFormat DATE_FORMAT_WITHOUT_TIME = new SimpleDateFormat("yyyy-MM-dd");
+
+  private HistoryCleanupHelper () {
+  }
 
   /**
    * Returns the max retries used for cleanup jobs. If the configuration is null, the default value used will be

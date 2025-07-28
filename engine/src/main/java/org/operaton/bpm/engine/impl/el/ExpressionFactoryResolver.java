@@ -26,7 +26,10 @@ import org.operaton.bpm.impl.juel.ExpressionFactoryImpl;
  *
  * @author Frederik Heremans
  */
-public abstract class ExpressionFactoryResolver {
+public class ExpressionFactoryResolver {
+  private ExpressionFactoryResolver() {
+    // private constructor to prevent instantiation
+  }
 
   public static ExpressionFactory resolveExpressionFactory() {
     // Return instance of custom JUEL implementation

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.variables.beans;
 
+import java.util.Objects;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 
@@ -24,5 +25,6 @@ public class GetDeserializableVariableDelegate implements JavaDelegate{
   @Override
   public void execute(DelegateExecution execution) throws Exception {
     SerializableVariable variable = (SerializableVariable) execution.getVariable("var1");
+    Objects.requireNonNull(variable);
   }
 }

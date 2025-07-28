@@ -46,11 +46,10 @@ class TaskListenerTest extends CmmnTest {
       .create()
       .getId();
 
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+    assertThat(caseService
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()).isNotNull();
 
     // then
     VariableInstanceQuery query = runtimeService
@@ -98,11 +97,10 @@ class TaskListenerTest extends CmmnTest {
       .create()
       .getId();
 
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+    assertThat(caseService
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()).isNotNull();
 
     // when
 
@@ -409,11 +407,10 @@ class TaskListenerTest extends CmmnTest {
       .create()
       .getId();
 
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+    assertThat(caseService
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()).isNotNull();
 
     // when
     processEngineConfiguration
@@ -588,11 +585,11 @@ class TaskListenerTest extends CmmnTest {
         .create()
         .getId();
 
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+    assertThat(caseService
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()).isNotNull();
+
 
     // then
     VariableInstanceQuery query = runtimeService
@@ -765,11 +762,10 @@ class TaskListenerTest extends CmmnTest {
         .create()
         .getId();
 
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+    assertThat(caseService
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()).isNotNull();
 
     // then
     VariableInstanceQuery query = runtimeService
@@ -1196,11 +1192,10 @@ class TaskListenerTest extends CmmnTest {
       .create()
       .getId();
 
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+    assertThat(caseService
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()).isNotNull();
 
     // then
     VariableInstanceQuery query = runtimeService
@@ -1226,11 +1221,10 @@ class TaskListenerTest extends CmmnTest {
       .create()
       .getId();
 
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+    assertThat(caseService
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()).isNotNull();
 
     // then
     VariableInstanceQuery query = runtimeService

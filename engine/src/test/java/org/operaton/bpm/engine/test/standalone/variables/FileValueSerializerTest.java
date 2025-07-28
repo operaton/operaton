@@ -39,7 +39,6 @@ import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.operaton.bpm.engine.variable.value.builder.FileValueBuilder;
 
 /**
  * @author Ronny Bräunlich

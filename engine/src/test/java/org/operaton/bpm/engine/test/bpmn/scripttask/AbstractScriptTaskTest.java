@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.bpmn.scripttask;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 

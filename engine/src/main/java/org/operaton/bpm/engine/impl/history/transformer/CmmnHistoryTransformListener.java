@@ -16,29 +16,22 @@
  */
 package org.operaton.bpm.engine.impl.history.transformer;
 
-import java.util.List;
-
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
 import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformListener;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.CmmnHistoryEventProducer;
-import org.operaton.bpm.model.cmmn.instance.Case;
 import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
 import org.operaton.bpm.model.cmmn.instance.CaseTask;
 import org.operaton.bpm.model.cmmn.instance.DecisionTask;
-import org.operaton.bpm.model.cmmn.instance.Definitions;
 import org.operaton.bpm.model.cmmn.instance.EventListener;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
 import org.operaton.bpm.model.cmmn.instance.Milestone;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.ProcessTask;
-import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.Stage;
 import org.operaton.bpm.model.cmmn.instance.Task;
 

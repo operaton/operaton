@@ -25,8 +25,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.fail;
-
 class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTestCase {
 
   @Test

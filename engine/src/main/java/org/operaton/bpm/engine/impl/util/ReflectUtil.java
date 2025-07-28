@@ -41,7 +41,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public abstract class ReflectUtil {
+public class ReflectUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
@@ -54,6 +54,10 @@ public abstract class ReflectUtil {
     charEncodings.put("Ä", "%C3%84");
     charEncodings.put("Ö", "%C3%96");
     charEncodings.put("Ü", "%C3%9C");
+  }
+
+  private ReflectUtil() {
+    // utility class
   }
 
   public static ClassLoader getClassLoader() {

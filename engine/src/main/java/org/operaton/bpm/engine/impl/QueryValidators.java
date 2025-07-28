@@ -25,6 +25,10 @@ import org.operaton.bpm.engine.impl.context.Context;
  */
 public class QueryValidators {
 
+  private QueryValidators() {
+    // utility class
+  }
+
   public static class AdhocQueryValidator<T extends AbstractQuery<?, ?>> implements Validator<T> {
 
     @SuppressWarnings("rawtypes")

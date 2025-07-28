@@ -62,7 +62,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public abstract class ProcessEngines {
+public class ProcessEngines {
 
   private static final ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 
@@ -73,6 +73,10 @@ public abstract class ProcessEngines {
   protected static volatile Map<String, ProcessEngineInfo> processEngineInfosByName = new ConcurrentHashMap<>();
   protected static volatile Map<String, ProcessEngineInfo> processEngineInfosByResourceUrl = new ConcurrentHashMap<>();
   protected static volatile List<ProcessEngineInfo> processEngineInfos = new CopyOnWriteArrayList<>();
+
+  private ProcessEngines() {
+    // prevent instantiation
+  }
 
   public static synchronized void init() {
     init(true);

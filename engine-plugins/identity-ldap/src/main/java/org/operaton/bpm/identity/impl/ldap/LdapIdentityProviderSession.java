@@ -77,10 +77,12 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
   // Session Lifecycle //////////////////////////////////
 
+  @Override
   public void flush() {
     // nothing to do
   }
 
+  @Override
   public void close() {
     ldapClient.closeLdapCtx();
   }

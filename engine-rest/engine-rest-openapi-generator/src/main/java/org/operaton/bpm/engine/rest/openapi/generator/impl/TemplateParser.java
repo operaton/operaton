@@ -49,7 +49,7 @@ public class TemplateParser {
   private static final String VERSION_DEVELOP = "develop";
   private static final String VERSION_LATEST = "latest";
   private static final String DATA_DOCS_VERSION = "docsVersion";
-  private static final String DATA_CAMBPM_VERSION = "cambpmVersion";
+  private static final String DATA_OPERATONBPM_VERSION = "operatonbpmVersion";
 
   public static void main(String[] args) throws IOException, TemplateException {
 
@@ -133,7 +133,7 @@ public class TemplateParser {
 
     if (version != null) {
       // operatonbpmVersion = 7.X.Y
-      templateData.put("operatonbpmVersion", version);
+      templateData.put(DATA_OPERATONBPM_VERSION, version);
 
       if (version.contains("SNAPSHOT")) {
         templateData.put(DATA_DOCS_VERSION, VERSION_DEVELOP);
@@ -145,7 +145,7 @@ public class TemplateParser {
       }
     } else {
       // only for debug cases
-      templateData.put("operatonbpmVersion", VERSION_DEVELOP);
+      templateData.put(DATA_OPERATONBPM_VERSION, VERSION_DEVELOP);
       templateData.put(DATA_DOCS_VERSION, VERSION_DEVELOP);
     }
   }

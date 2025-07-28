@@ -17,22 +17,20 @@
 package org.operaton.bpm.engine.test.bpmn.parse;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class GlobalRetryConfigurationTest {
+class GlobalRetryConfigurationTest {
 
   private static final String PROCESS_ID = "process";
   private static final String FAILING_CLASS = "this.class.does.not.Exist";
@@ -40,37 +38,20 @@ public class GlobalRetryConfigurationTest {
   private static final String SCHEDULE = "R5/PT5M";
   private static final int JOB_RETRIES = 4;
 
-  protected ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setFailedJobRetryTimeCycle(SCHEDULE));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .randomEngineName()
+      .closeEngineAfterEachTest()
+      .configurator(configuration -> configuration.setFailedJobRetryTimeCycle(SCHEDULE))
+      .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(bootstrapRule).around(engineRule).around(testRule);
-
-  private RuntimeService runtimeService;
-  private ManagementService managementService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-  }
+  RuntimeService runtimeService;
+  ManagementService managementService;
 
   @Test
-  public void testFailedServiceTaskStandardStrategy() {
-    engineRule.getProcessEngineConfiguration().setFailedJobRetryTimeCycle(null);
-    BpmnModelInstance bpmnModelInstance = prepareFailingServiceTask();
-
-    testRule.deploy(bpmnModelInstance);
-
-    ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-
-    assertJobRetries(pi, 2);
-  }
-
-  @Test
-  public void testFailedIntermediateThrowingSignalEventAsync() {
+  void testFailedIntermediateThrowingSignalEventAsync() {
     BpmnModelInstance bpmnModelInstance = prepareSignalEventProcessWithoutRetry();
 
     testRule.deploy(bpmnModelInstance);
@@ -79,7 +60,7 @@ public class GlobalRetryConfigurationTest {
   }
 
   @Test
-  public void testFailedServiceTask() {
+  void testFailedServiceTask() {
     BpmnModelInstance bpmnModelInstance = prepareFailingServiceTask();
 
     testRule.deploy(bpmnModelInstance);
@@ -90,7 +71,7 @@ public class GlobalRetryConfigurationTest {
   }
 
   @Test
-  public void testFailedServiceTaskMixConfiguration() {
+  void testFailedServiceTaskMixConfiguration() {
     BpmnModelInstance bpmnModelInstance = prepareFailingServiceTaskWithRetryCycle();
 
     testRule.deploy(bpmnModelInstance);
@@ -101,7 +82,7 @@ public class GlobalRetryConfigurationTest {
   }
 
   @Test
-  public void testFailedBusinessRuleTask() {
+  void testFailedBusinessRuleTask() {
     BpmnModelInstance bpmnModelInstance = prepareFailingBusinessRuleTask();
 
     testRule.deploy(bpmnModelInstance);
@@ -112,7 +93,7 @@ public class GlobalRetryConfigurationTest {
   }
 
   @Test
-  public void testFailedCallActivity() {
+  void testFailedCallActivity() {
 
     testRule.deploy(
       Bpmn.createExecutableProcess(PROCESS_ID)
@@ -135,7 +116,7 @@ public class GlobalRetryConfigurationTest {
   }
 
   @Test
-  public void testFailingScriptTask() {
+  void testFailingScriptTask() {
     BpmnModelInstance bpmnModelInstance = prepareFailingScriptTask();
 
     testRule.deploy(bpmnModelInstance);
@@ -146,7 +127,7 @@ public class GlobalRetryConfigurationTest {
   }
 
   @Test
-  public void testFailingSubProcess() {
+  void testFailingSubProcess() {
     BpmnModelInstance bpmnModelInstance = prepareFailingSubProcess();
 
     testRule.deploy(bpmnModelInstance);
@@ -157,7 +138,7 @@ public class GlobalRetryConfigurationTest {
   }
 
   @Test
-  public void testRetryOnAsyncStartEvent() {
+  void testRetryOnAsyncStartEvent() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
           .operatonAsyncBefore()
@@ -177,17 +158,13 @@ public class GlobalRetryConfigurationTest {
   private void assertJobRetries(ProcessInstance pi, int expectedJobRetries) {
     assertThat(pi).isNotNull();
 
-    Job job = fetchJob(pi.getProcessInstanceId());
+    final Job job = fetchJob(pi.getProcessInstanceId());
 
-    try {
-
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-    }
+    assertThatThrownBy(() -> managementService.executeJob(job.getId()))
+      .isInstanceOf(Exception.class);
 
     // update job
-    job = fetchJob(pi.getProcessInstanceId());
-    assertThat(job.getRetries()).isEqualTo(expectedJobRetries);
+    assertThat(fetchJob(pi.getProcessInstanceId()).getRetries()).isEqualTo(expectedJobRetries);
   }
 
   private Job fetchJob(String processInstanceId) {

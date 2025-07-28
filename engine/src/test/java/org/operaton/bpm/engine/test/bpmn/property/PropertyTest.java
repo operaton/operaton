@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.engine.test.bpmn.property;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
 
 /**
  * @author Joram Barrez
  */
-public class PropertyTest extends PluggableProcessEngineTest {
+class PropertyTest {
 
 
   @Deployment
   @Test
-  public void testUserTaskSrcProperty() {
+  void testUserTaskSrcProperty() {
 
     // DO NOT DELETE: WILL BE REACTIVATED SOON!
     // http://jira.codehaus.org/browse/ACT-88
@@ -70,7 +69,7 @@ public class PropertyTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUserTaskSrcExprProperty() {
+  void testUserTaskSrcExprProperty() {
 
 //    // Start the process -> waits in usertask
 //    final String address = "TestStreet 123 90210 Beverly-Hills";
@@ -95,7 +94,7 @@ public class PropertyTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUserTaskDstProperty() {
+  void testUserTaskDstProperty() {
 
 //    ProcessInstance pi = deployer.getProcessService().startProcessInstanceByKey("testUserTaskDstProperty");
 //    List<Execution> childExecutions = deployer.getProcessService().findChildExecutions(pi.getId());
@@ -120,7 +119,7 @@ public class PropertyTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUserTaskDstExprProperty() {
+  void testUserTaskDstExprProperty() {
 
 //    Order order = new Order();
 //    Map<String, Object> vars = new HashMap<String, Object>();
@@ -153,7 +152,7 @@ public class PropertyTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUserTaskLinkProperty() {
+  void testUserTaskLinkProperty() {
 
 //    // Start the process -> waits in usertask
 //    Map<String, Object> vars = new HashMap<String, Object>();
@@ -185,7 +184,7 @@ public class PropertyTest extends PluggableProcessEngineTest {
 
   }
 
-  // @Test public void testUserTaskLinkExprProperty() {
+  // @Test void testUserTaskLinkExprProperty() {
   // deployProcessForThisTestMethod();
   //
   // // Start the process -> waits in usertask

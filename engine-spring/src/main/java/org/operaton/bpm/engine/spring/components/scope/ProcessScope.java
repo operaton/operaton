@@ -83,7 +83,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
         ExecutionEntity executionEntity = null;
         try {
-            logger.fine("returning scoped object having beanName '" + name + "' for conversation ID '" + this.getConversationId() + "'. ");
+            logger.fine(() -> "returning scoped object having beanName '" + name + "' for conversation ID '" + this.getConversationId() + "'. ");
 
             ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
             executionEntity = (ExecutionEntity) processInstance;
@@ -93,16 +93,17 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
                 scopedObject = objectFactory.getObject();
                 if (scopedObject instanceof ScopedObject sc) {
                     scopedObject = sc.getTargetObject();
-                    logger.fine("de-referencing " + ScopedObject.class.getName() + "#targetObject before persisting variable");
+                    logger.fine(() -> "de-referencing " + ScopedObject.class.getName() + "#targetObject before persisting variable");
                 }
                 persistVariable(name, scopedObject);
             }
             return createDirtyCheckingProxy(name, scopedObject);
         } catch (Throwable th) {
-            logger.warning("couldn't return value from process scope! " + StringUtil.getStackTrace(th));
+            logger.warning(() -> "couldn't return value from process scope! " + StringUtil.getStackTrace(th));
         } finally {
             if (executionEntity != null) {
-                logger.fine("set variable '" + name + "' on executionEntity# " + executionEntity.getId());
+              String executionEntityId = executionEntity.getId();
+              logger.fine(() -> "set variable '" + name + "' on executionEntity# " + executionEntityId);
             }
         }
         return null;
@@ -212,7 +213,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
   @Override
   public void destroy() throws Exception {
-        logger.info(ProcessScope.class.getName() + "#destroy() called ...");
+        logger.info(() -> ProcessScope.class.getName() + "#destroy() called ...");
     }
 
   @Override

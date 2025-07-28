@@ -50,11 +50,9 @@ class ExternalTaskQueryByPriorityTest {
   void testOrderByPriority() {
     // given five jobs with priorities from 1 to 5
     //each process has two external tasks - one with priority expression and one without priority
-    List<ProcessInstance> instances = new ArrayList<>();
-
     for (int i = 0; i < 5; i++) {
-      instances.add(runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
-          Variables.createVariables().putValue("priority", i)));
+      runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
+          Variables.createVariables().putValue("priority", i));
     }
 
     // then querying and ordering by priority works
@@ -67,11 +65,9 @@ class ExternalTaskQueryByPriorityTest {
   void testFilterByExternalTaskPriorityLowerThanOrEquals() {
     // given five jobs with priorities from 1 to 5
     //each process has two external tasks - one with priority expression and one without priority
-    List<ProcessInstance> instances = new ArrayList<>();
-
     for (int i = 0; i < 5; i++) {
-      instances.add(runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
-          Variables.createVariables().putValue("priority", i)));
+      runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
+          Variables.createVariables().putValue("priority", i));
     }
 
     // when making an external task query and filtering by priority
@@ -88,11 +84,9 @@ class ExternalTaskQueryByPriorityTest {
   @Test
   void testFilterByExternalTaskPriorityLowerThanOrEqualsAndHigherThanOrEqual() {
     // given five jobs with priorities from 1 to 5
-    List<ProcessInstance> instances = new ArrayList<>();
-
     for (int i = 0; i < 5; i++) {
-      instances.add(runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
-          Variables.createVariables().putValue("priority", i)));
+      runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
+          Variables.createVariables().putValue("priority", i));
     }
 
     // when making an external task query and filtering by disjunctive external task priority

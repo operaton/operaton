@@ -33,7 +33,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 
 /**
@@ -186,8 +186,9 @@ public class ChildElementCollectionTest extends TestModelTest {
     Collection<FlightPartnerRef> flightPartners = Arrays.asList(birdoRef, daisyRef, pluckyRef);
 
     // directly test collection methods and not use the appropriate assertion methods
-    assertThat(flightPartnerRefs).hasSize(2);
-    assertThat(flightPartnerRefs).contains(daisyRef);
+    assertThat(flightPartnerRefs)
+      .hasSize(2)
+      .contains(daisyRef);
     assertThat(flightPartnerRefs.toArray()).isEqualTo(new Object[]{daisyRef, pluckyRef});
     assertThat(flightPartnerRefs.toArray(new FlightPartnerRef[1])).isEqualTo(new FlightPartnerRef[]{daisyRef, pluckyRef});
 
@@ -210,13 +211,8 @@ public class ChildElementCollectionTest extends TestModelTest {
     assertThat(flightPartnerRefs.removeAll(flightPartners)).isTrue();
     assertThat(flightPartnerRefs).isEmpty();
 
-    try {
-      flightPartnerRefs.retainAll(flightPartners);
-      fail("retainAll method is not implemented");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(UnsupportedModelOperationException.class);
-    }
+    assertThatThrownBy(() -> flightPartnerRefs.retainAll(flightPartners))
+      .isInstanceOf(UnsupportedModelOperationException.class);
 
     flightPartnerRefs.addAll(flightPartners);
     assertThat(flightPartnerRefs).isNotEmpty();

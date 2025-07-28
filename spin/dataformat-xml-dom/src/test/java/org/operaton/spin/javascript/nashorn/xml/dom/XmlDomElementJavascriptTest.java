@@ -44,8 +44,7 @@ class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
     execute = false
   )
   public void cannotAppendNullChildElement() {
-    assertThrows(RuntimeException.class, () ->
-      failingWithException());
+    assertThrows(RuntimeException.class, this::failingWithException);
   }
 
   /**
@@ -64,8 +63,7 @@ class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
     execute = false
   )
   public void cannotRemoveANullChildElement() {
-    assertThrows(RuntimeException.class, () ->
-      failingWithException());
+    assertThrows(RuntimeException.class, this::failingWithException);
   }
 
 }

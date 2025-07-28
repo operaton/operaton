@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 
 /**
  * Represents a default priority provider, which contains some functionality to evaluate the priority.
- * Can be used as base class for other priority providers. *
+ * Can be used as base class for other priority providers.
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  * @param <T> the type of the param to determine the priority

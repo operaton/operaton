@@ -19,17 +19,18 @@ package org.operaton.bpm.engine.test.standalone.pvm.activities;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tom Baeyens
  */
 public class WaitState implements SignallableActivityBehavior {
+  private static final Logger LOG = LoggerFactory.getLogger(WaitState.class);
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
-    "some debug point".toString();
-
+    LOG.debug("Executing wait state activity: {}", execution.getActivity().getId());
   }
 
   @Override

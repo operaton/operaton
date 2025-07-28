@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
@@ -71,13 +72,13 @@ public class SpinValueMapper extends JavaCustomValueMapper {
                          field -> spinJsonToVal(node.prop(field), innerValueMapper)));
       return innerValueMapper.apply(pairs);
 
-    } else if (node.isArray()) {
+    } else if (TRUE.equals(node.isArray())) {
       List<Val> values = node.elements()
           .stream()
           .map(e -> spinJsonToVal(e, innerValueMapper)).toList();
       return innerValueMapper.apply(values);
 
-    } else if (node.isNull()) {
+    } else if (TRUE.equals(node.isNull())) {
       return innerValueMapper.apply(null);
 
     } else {

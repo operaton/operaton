@@ -23,33 +23,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class IdGeneratorDataSourceTest {
+class IdGeneratorDataSourceTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/api/cfg/IdGeneratorDataSourceTest.operaton.cfg.xml");
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .configurationResource("org/operaton/bpm/engine/test/api/cfg/IdGeneratorDataSourceTest.operaton.cfg.xml")
+      .build();
 
-  protected RuntimeService runtimeService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-  }
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testIdGeneratorDataSource() {
+  void testIdGeneratorDataSource() {
     var threadPool = newFixedThreadPool(20);
     List<Future<?>> tasks = new ArrayList<>();
 

@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -25,28 +31,18 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestHelper.ThreadControl;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test cases for handling of new jobs created while a job is executed
  *
  * @author Thorben Lindhauer
  */
-public class JobExecutorFollowUpTest {
+class JobExecutorFollowUpTest {
 
   protected static final BpmnModelInstance TWO_TASKS_PROCESS = Bpmn.createExecutableProcess("process")
     .startEvent()
@@ -87,9 +83,13 @@ public class JobExecutorFollowUpTest {
       .endEvent()
       .done();
 
-  protected boolean skipFlushControl = true;
-  protected ProcessEngineBootstrapRule bootstrapRule =
-      new ProcessEngineBootstrapRule(cfg -> {
+  protected static boolean skipFlushControl = true;
+  
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .randomEngineName()
+      .closeEngineAfterEachTest()
+      .configurator(cfg -> {
         cfg.setJobExecutor(buildControllableJobExecutor());
         cfg.setCommandContextFactory(new CommandContextFactory() {
           @Override
@@ -97,9 +97,10 @@ public class JobExecutorFollowUpTest {
             return new ControllableCommandContext(cfg, executionThread, skipFlushControl);
           }
         });
-      });
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+      })
+      .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected static ControllableJobExecutor buildControllableJobExecutor() {
     ControllableJobExecutor jobExecutor = new ControllableJobExecutor();
@@ -107,9 +108,6 @@ public class JobExecutorFollowUpTest {
     jobExecutor.proceedAndWaitOnShutdown(false);
     return jobExecutor;
   }
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(bootstrapRule).around(engineRule).around(testHelper);
 
   protected ControllableJobExecutor jobExecutor;
   protected ThreadControl acquisitionThread;
@@ -119,8 +117,8 @@ public class JobExecutorFollowUpTest {
   protected long defaultJobExecutorPriorityRangeMin;
   protected long defaultJobExecutorPriorityRangeMax;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     jobExecutor = (ControllableJobExecutor)
         ((ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration()).getJobExecutor();
     jobExecutor.setMaxJobsPerAcquisition(2);
@@ -132,8 +130,8 @@ public class JobExecutorFollowUpTest {
     defaultJobExecutorPriorityRangeMax = configuration.getJobExecutorPriorityRangeMax();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     jobExecutor.shutdown();
 
     configuration.setJobExecutorPriorityRangeMin(defaultJobExecutorPriorityRangeMin);
@@ -141,7 +139,7 @@ public class JobExecutorFollowUpTest {
   }
 
   @Test
-  public void shouldExecuteExclusiveFollowUpJobInSameProcessInstance() {
+  void shouldExecuteExclusiveFollowUpJobInSameProcessInstance() {
     testHelper.deploy(TWO_TASKS_PROCESS);
 
     // given
@@ -183,7 +181,7 @@ public class JobExecutorFollowUpTest {
   }
 
   @Test
-  public void shouldExecuteExclusiveFollowUpJobInDifferentProcessInstance() {
+  void shouldExecuteExclusiveFollowUpJobInDifferentProcessInstance() {
     testHelper.deploy(CALL_ACTIVITY_PROCESS, ONE_TASK_PROCESS);
 
     // given
@@ -218,7 +216,7 @@ public class JobExecutorFollowUpTest {
   }
 
   @Test
-  public void shouldNotExecuteExclusiveFollowUpJobWithOutOfRangePriority() {
+  void shouldNotExecuteExclusiveFollowUpJobWithOutOfRangePriority() {
     // given
     // first job priority = 20, second job priority = 10
     testHelper.deploy(TWO_TASKS_DIFFERENT_PRIORITIES_PROCESS);

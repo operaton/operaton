@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -30,12 +37,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.assertj.core.groups.Tuple;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.Mockito;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.EntityTypes;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -51,6 +62,7 @@ import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CallActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.core.model.CallableElement;
 import org.operaton.bpm.engine.impl.history.event.UserOperationLogEntryEventEntity;
@@ -78,35 +90,43 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.TestExecutionListener;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * @author Frederik Heremans
  * @author Joram Barrez
  * @author Roman Smirnov
  */
-public class RepositoryServiceTest extends PluggableProcessEngineTest {
+class RepositoryServiceTest {
 
   private static final String NAMESPACE = "xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'";
   private static final String TARGET_NAMESPACE = "targetNamespace='" + BpmnParse.OPERATON_BPMN_EXTENSIONS_NS + "'";
 
-  private boolean enforceHistoryTimeToLiveBefore;
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  HistoryService historyService;
+  IdentityService identityService;
 
-  @Before
-  public void setUp() {
+  boolean enforceHistoryTimeToLiveBefore;
+
+  @BeforeEach
+  void setUp() {
     this.enforceHistoryTimeToLiveBefore = processEngineConfiguration.isEnforceHistoryTimeToLive();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(commandContext -> {
       commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerActivateProcessDefinitionHandler.TYPE);
@@ -127,7 +147,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testUTF8DeploymentMethod() throws IOException {
+  void testUTF8DeploymentMethod() throws IOException {
     //given utf8 charset
     Charset utf8Charset = StandardCharsets.UTF_8;
     Charset defaultCharset = processEngineConfiguration.getDefaultCharset();
@@ -165,7 +185,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources = {
   "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testStartProcessInstanceById() {
+  void testStartProcessInstanceById() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions).hasSize(1);
 
@@ -177,7 +197,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources={
     "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testFindProcessDefinitionById() {
+  void testFindProcessDefinitionById() {
     List<ProcessDefinition> definitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(definitions).hasSize(1);
 
@@ -193,7 +213,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
   @Test
-  public void testDeleteDeploymentWithRunningInstances() {
+  void testDeleteDeploymentWithRunningInstances() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions).hasSize(1);
     ProcessDefinition processDefinition = processDefinitions.get(0);
@@ -212,7 +232,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeleteDeploymentSkipCustomListeners() {
+  void testDeleteDeploymentSkipCustomListeners() {
     DeploymentBuilder deploymentBuilder =
         repositoryService
           .createDeployment()
@@ -237,7 +257,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeleteDeploymentSkipCustomTaskListeners() {
+  void testDeleteDeploymentSkipCustomTaskListeners() {
     DeploymentBuilder deploymentBuilder =
         repositoryService
           .createDeployment()
@@ -263,7 +283,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeleteDeploymentSkipIoMappings() {
+  void testDeleteDeploymentSkipIoMappings() {
     DeploymentBuilder deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/api/repository/RepositoryServiceTest.testDeleteDeploymentSkipIoMappings.bpmn20.xml");
 
@@ -276,7 +296,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeleteDeploymentWithoutSkipIoMappings() {
+  void testDeleteDeploymentWithoutSkipIoMappings() {
     DeploymentBuilder deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/api/repository/RepositoryServiceTest.testDeleteDeploymentSkipIoMappings.bpmn20.xml");
 
@@ -297,7 +317,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeleteDeploymentNullDeploymentId() {
+  void testDeleteDeploymentNullDeploymentId() {
     try {
       repositoryService.deleteDeployment(null);
       fail("ProcessEngineException expected");
@@ -307,7 +327,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeleteDeploymentCascadeNullDeploymentId() {
+  void testDeleteDeploymentCascadeNullDeploymentId() {
     try {
       repositoryService.deleteDeployment(null, true);
       fail("ProcessEngineException expected");
@@ -318,7 +338,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
   @Test
-  public void testDeleteDeploymentCascadeWithRunningInstances() {
+  void testDeleteDeploymentCascadeWithRunningInstances() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions).hasSize(1);
     ProcessDefinition processDefinition = processDefinitions.get(0);
@@ -333,7 +353,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/repository/one.cmmn"})
   @Test
-  public void testDeleteDeploymentClearsCache() {
+  void testDeleteDeploymentClearsCache() {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
 
     // fetch definition ids
@@ -361,7 +381,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testFindDeploymentResourceNamesNullDeploymentId() {
+  void testFindDeploymentResourceNamesNullDeploymentId() {
     try {
       repositoryService.getDeploymentResourceNames(null);
       fail("ProcessEngineException expected");
@@ -371,7 +391,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testFindDeploymentResourcesNullDeploymentId() {
+  void testFindDeploymentResourcesNullDeploymentId() {
     try {
       repositoryService.getDeploymentResources(null);
       fail("ProcessEngineException expected");
@@ -382,7 +402,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeploymentWithDelayedProcessDefinitionActivation() {
+  void testDeploymentWithDelayedProcessDefinitionActivation() {
 
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
@@ -426,7 +446,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeploymentWithDelayedProcessDefinitionAndJobDefinitionActivation() {
+  void testDeploymentWithDelayedProcessDefinitionAndJobDefinitionActivation() {
 
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
@@ -479,7 +499,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
   @Test
-  public void testGetResourceAsStreamUnexistingResourceInExistingDeployment() {
+  void testGetResourceAsStreamUnexistingResourceInExistingDeployment() {
     // Get hold of the deployment id
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
     var deploymentId = deployment.getId();
@@ -494,7 +514,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
   @Test
-  public void testGetResourceAsStreamUnexistingDeployment() {
+  void testGetResourceAsStreamUnexistingDeployment() {
 
     try {
       repositoryService.getResourceAsStream("unexistingdeployment", "org/operaton/bpm/engine/test/api/unexistingProcess.bpmn.xml");
@@ -506,7 +526,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
 
   @Test
-  public void testGetResourceAsStreamNullArguments() {
+  void testGetResourceAsStreamNullArguments() {
     try {
       repositoryService.getResourceAsStream(null, "resource");
       fail("ProcessEngineException expected");
@@ -524,7 +544,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.cmmn" })
   @Test
-  public void testGetCaseDefinition() {
+  void testGetCaseDefinition() {
     CaseDefinitionQuery query = repositoryService.createCaseDefinitionQuery();
 
     CaseDefinition caseDefinition = query.singleResult();
@@ -537,7 +557,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetCaseDefinitionByInvalidId() {
+  void testGetCaseDefinitionByInvalidId() {
     try {
       repositoryService.getCaseDefinition("invalid");
     } catch (NotFoundException e) {
@@ -554,7 +574,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.cmmn" })
   @Test
-  public void testGetCaseModel() {
+  void testGetCaseModel() {
     CaseDefinitionQuery query = repositoryService.createCaseDefinitionQuery();
 
     CaseDefinition caseDefinition = query.singleResult();
@@ -573,7 +593,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetCaseModelByInvalidId() {
+  void testGetCaseModelByInvalidId() {
     try {
       repositoryService.getCaseModel("invalid");
     } catch (ProcessEngineException e) {
@@ -590,7 +610,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.dmn" })
   @Test
-  public void testGetDecisionDefinition() {
+  void testGetDecisionDefinition() {
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
 
     DecisionDefinition decisionDefinition = query.singleResult();
@@ -603,7 +623,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetDecisionDefinitionByInvalidId() {
+  void testGetDecisionDefinitionByInvalidId() {
     try {
       repositoryService.getDecisionDefinition("invalid");
       fail("");
@@ -621,7 +641,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/drg.dmn" })
   @Test
-  public void testGetDecisionRequirementsDefinition() {
+  void testGetDecisionRequirementsDefinition() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     DecisionRequirementsDefinition decisionRequirementsDefinition = query.singleResult();
@@ -634,7 +654,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetDecisionRequirementsDefinitionByInvalidId() {
+  void testGetDecisionRequirementsDefinitionByInvalidId() {
     try {
       repositoryService.getDecisionRequirementsDefinition("invalid");
       fail("");
@@ -652,7 +672,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.dmn" })
   @Test
-  public void testGetDecisionModel() {
+  void testGetDecisionModel() {
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
 
     DecisionDefinition decisionDefinition = query.singleResult();
@@ -671,7 +691,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetDecisionModelByInvalidId() {
+  void testGetDecisionModelByInvalidId() {
     try {
       repositoryService.getDecisionModel("invalid");
     } catch (ProcessEngineException e) {
@@ -688,7 +708,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/drg.dmn" })
   @Test
-  public void testGetDecisionRequirementsModel() {
+  void testGetDecisionRequirementsModel() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     DecisionRequirementsDefinition decisionRequirementsDefinition = query.singleResult();
@@ -706,7 +726,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetDecisionRequirementsModelByInvalidId() {
+  void testGetDecisionRequirementsModelByInvalidId() {
     try {
       repositoryService.getDecisionRequirementsModel("invalid");
     } catch (ProcessEngineException e) {
@@ -724,7 +744,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/drg.dmn",
                            "org/operaton/bpm/engine/test/repository/drg.png" })
   @Test
-  public void testGetDecisionRequirementsDiagram() {
+  void testGetDecisionRequirementsDiagram() {
 
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
@@ -737,7 +757,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetDecisionRequirementsDiagramByInvalidId() {
+  void testGetDecisionRequirementsDiagramByInvalidId() {
     try {
       repositoryService.getDecisionRequirementsDiagram("invalid");
     } catch (ProcessEngineException e) {
@@ -752,7 +772,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployRevisedProcessAfterDeleteOnOtherProcessEngine() {
+  void testDeployRevisedProcessAfterDeleteOnOtherProcessEngine() {
 
     // Setup both process engines
     ProcessEngine processEngine1 = new StandaloneProcessEngineConfiguration().setProcessEngineName("reboot-test-schema")
@@ -816,7 +836,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeploymentPersistence() {
+  void testDeploymentPersistence() {
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
       .createDeployment()
       .name("strings")
@@ -849,7 +869,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testProcessDefinitionPersistence() {
+  void testProcessDefinitionPersistence() {
     String deploymentId = repositoryService
       .createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml")
@@ -869,7 +889,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/dmn/Example.dmn"})
   @Test
-  public void testDecisionDefinitionUpdateTimeToLiveWithUserOperationLog() {
+  void testDecisionDefinitionUpdateTimeToLiveWithUserOperationLog() {
     //given
     identityService.setAuthenticatedUserId("userId");
     DecisionDefinition decisionDefinition = findOnlyDecisionDefinition();
@@ -906,7 +926,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/dmn/Example.dmn"})
   @Test
-  public void testDecisionDefinitionUpdateTimeToLiveNull() {
+  void testDecisionDefinitionUpdateTimeToLiveNull() {
     //given
     DecisionDefinition decisionDefinition = findOnlyDecisionDefinition();
 
@@ -921,7 +941,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/dmn/Example.dmn"})
   @Test
-  public void testDecisionDefinitionUpdateTimeToLiveNegative() {
+  void testDecisionDefinitionUpdateTimeToLiveNegative() {
     //given
     DecisionDefinition decisionDefinition = findOnlyDecisionDefinition();
     var decisionDefinitionId = decisionDefinition.getId();
@@ -938,7 +958,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionUpdateTimeToLive() {
+  void testProcessDefinitionUpdateTimeToLive() {
     //given
     ProcessDefinition processDefinition = findOnlyProcessDefinition();
 
@@ -953,7 +973,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionUpdateTimeToLiveNull() {
+  void testProcessDefinitionUpdateTimeToLiveNull() {
     //given
     ProcessDefinition processDefinition = findOnlyProcessDefinition();
 
@@ -968,7 +988,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionUpdateTimeToLiveNegative() {
+  void testProcessDefinitionUpdateTimeToLiveNegative() {
     //given
     ProcessDefinition processDefinition = findOnlyProcessDefinition();
     var processDefinitionId = processDefinition.getId();
@@ -986,18 +1006,18 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionUpdateHistoryTimeToLiveWithUserOperationLog() {
+  void testProcessDefinitionUpdateHistoryTimeToLiveWithUserOperationLog() {
     //given
     ProcessDefinition processDefinition = findOnlyProcessDefinition();
     Integer timeToLiveOrgValue = processDefinition.getHistoryTimeToLive();
-    processEngine.getIdentityService().setAuthenticatedUserId("userId");
+    identityService.setAuthenticatedUserId("userId");
 
     //when
     Integer timeToLiveNewValue = 6;
     repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinition.getId(), timeToLiveNewValue);
 
     //then
-    List<UserOperationLogEntry> opLogEntries = processEngine.getHistoryService().createUserOperationLogQuery().list();
+    List<UserOperationLogEntry> opLogEntries = historyService.createUserOperationLogQuery().list();
     assertThat(opLogEntries).hasSize(1);
     final UserOperationLogEntryEventEntity userOperationLogEntry = (UserOperationLogEntryEventEntity)opLogEntries.get(0);
 
@@ -1011,7 +1031,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetProcessModelByInvalidId() {
+  void testGetProcessModelByInvalidId() {
     try {
       repositoryService.getProcessModel("invalid");
       fail("");
@@ -1021,7 +1041,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetProcessModelByNullId() {
+  void testGetProcessModelByNullId() {
     try {
       repositoryService.getProcessModel(null);
       fail("");
@@ -1033,7 +1053,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCaseDefinitionUpdateHistoryTimeToLiveWithUserOperationLog() {
+  void testCaseDefinitionUpdateHistoryTimeToLiveWithUserOperationLog() {
     // given
     identityService.setAuthenticatedUserId("userId");
 
@@ -1070,7 +1090,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testUpdateHistoryTimeToLiveNull() {
+  void testUpdateHistoryTimeToLiveNull() {
     // given
     // there exists a deployment containing a case definition with key "oneTaskCase"
 
@@ -1087,7 +1107,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void shouldFailToUpdateHistoryTimeToLiveOnCaseDefinitionHTTLUpdate() {
+  void shouldFailToUpdateHistoryTimeToLiveOnCaseDefinitionHTTLUpdate() {
     // given
     CaseDefinition caseDefinition = findOnlyCaseDefinition();
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
@@ -1101,7 +1121,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldFailToUpdateHistoryTimeToLiveOnProcessDefinitionHTTLUpdate() {
+  void shouldFailToUpdateHistoryTimeToLiveOnProcessDefinitionHTTLUpdate() {
     // given
     ProcessDefinition processDefinition = findOnlyProcessDefinition();
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
@@ -1116,7 +1136,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/dmn/Example.dmn"})
   @Test
-  public void shouldFailToUpdateHistoryTimeToLiveOnDecisionDefinitionHTTLUpdate() {
+  void shouldFailToUpdateHistoryTimeToLiveOnDecisionDefinitionHTTLUpdate() {
     // given
     DecisionDefinition decisionDefinition = findOnlyDecisionDefinition();
     String decisionDefinitionId = decisionDefinition.getId();
@@ -1131,7 +1151,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testUpdateHistoryTimeToLiveNegative() {
+  void testUpdateHistoryTimeToLiveNegative() {
     // given
     // there exists a deployment containing a case definition with key "oneTaskCase"
 
@@ -1149,7 +1169,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testUpdateHistoryTimeToLiveInCache() {
+  void testUpdateHistoryTimeToLiveInCache() {
     // given
     // there exists a deployment containing a case definition with key "oneTaskCase"
 
@@ -1190,7 +1210,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testProcessDefinitionIntrospection() {
+  void testProcessDefinitionIntrospection() {
     String deploymentId = repositoryService
       .createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml")
@@ -1229,7 +1249,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testProcessDefinitionQuery() {
+  void testProcessDefinitionQuery() {
     String deployment1Id = repositoryService
       .createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml")
@@ -1258,7 +1278,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetProcessDefinitions() {
+  void testGetProcessDefinitions() {
     List<String> deploymentIds = new ArrayList<>();
     deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='IDR' name='Insurance Damage Report 1' isExecutable='true'><startEvent id='start'/></process></definitions>")));
     deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='IDR' name='Insurance Damage Report 2' isExecutable='true'><startEvent id='start'/></process></definitions>")));
@@ -1310,7 +1330,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployIdenticalProcessDefinitions() {
+  void testDeployIdenticalProcessDefinitions() {
     List<String> deploymentIds = new ArrayList<>();
     deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + "><process id='IDR' name='Insurance Damage Report' isExecutable='true'><startEvent id='start'/></process></definitions>")));
     deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + "><process id='IDR' name='Insurance Damage Report' isExecutable='true'><startEvent id='start'/></process></definitions>")));
@@ -1347,7 +1367,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     "org/operaton/bpm/engine/test/api/repository/first-process.bpmn20.xml",
     "org/operaton/bpm/engine/test/api/repository/three_.cmmn"
   })
-  public void shouldReturnStaticCalledProcessDefinitions() {
+  void shouldReturnStaticCalledProcessDefinitions() {
     //given
     testRule.deploy("org/operaton/bpm/engine/test/api/repository/second-process.bpmn20.xml");
     testRule.deployForTenant("someTenant", "org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml");
@@ -1385,7 +1405,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/repository/dynamic-call-activities.bpmn" })
-  public void shouldNotTryToResolveDynamicCalledElementBinding() {
+  void shouldNotTryToResolveDynamicCalledElementBinding() {
     //given
     ProcessDefinition processDefinition = repositoryService
       .createProcessDefinitionQuery()
@@ -1420,7 +1440,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/repository/first-process.bpmn20.xml" )
-  public void shouldReturnEmptyListIfNoCallActivityExists(){
+  void shouldReturnEmptyListIfNoCallActivityExists(){
     //given
     ProcessDefinition processDefinition = repositoryService
       .createProcessDefinitionQuery()
@@ -1437,7 +1457,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/repository/nested-call-activities.bpmn",
       "org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml" })
-  public void shouldReturnCalledProcessDefinitionsForNestedCallActivities() {
+  void shouldReturnCalledProcessDefinitionsForNestedCallActivities() {
     //given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("nested-call-activities")
@@ -1456,13 +1476,13 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetStaticCallActivityMappingShouldThrowIfProcessDoesNotExist(){
+  void testGetStaticCallActivityMappingShouldThrowIfProcessDoesNotExist(){
     //given //when //then
     assertThatExceptionOfType(NotFoundException.class).isThrownBy(() -> repositoryService.getStaticCalledProcessDefinitions("notExistingId"));
   }
 
   @Test
-  public void shouldReturnCorrectProcessesForCallActivityWithTenantId(){
+  void shouldReturnCorrectProcessesForCallActivityWithTenantId(){
     //given
     final String processOne = "org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml";
     final String processTwo = "org/operaton/bpm/engine/test/api/repository/processTwo.bpmn20.xml";

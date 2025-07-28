@@ -113,7 +113,9 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
   }
 
   @Override
+  @SuppressWarnings("java:S1192")
   public HistoricJobLogQuery activityIdIn(String... activityIds) {
+    ensureNotNull(NotValidException.class, "activityIds", activityIds);
     List<String> activityIdList = CollectionUtil.asArrayList(activityIds);
     ensureNotContainsNull("activityIds", activityIdList);
     ensureNotContainsEmptyString("activityIds", activityIdList);
@@ -122,7 +124,9 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
   }
 
   @Override
+  @SuppressWarnings("java:S1192")
   public HistoricJobLogQuery failedActivityIdIn(String... activityIds) {
+    ensureNotNull(NotValidException.class, "activityIds", activityIds);
     List<String> activityIdList = CollectionUtil.asArrayList(activityIds);
     ensureNotContainsNull("activityIds", activityIdList);
     ensureNotContainsEmptyString("activityIds", activityIdList);
@@ -131,7 +135,9 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
   }
 
   @Override
+  @SuppressWarnings("java:S1192")
   public HistoricJobLogQuery executionIdIn(String... executionIds) {
+    ensureNotNull(NotValidException.class, "executionIds", executionIds);
     List<String> executionIdList = CollectionUtil.asArrayList(executionIds);
     ensureNotContainsNull("executionIds", executionIdList);
     ensureNotContainsEmptyString("executionIds", executionIdList);

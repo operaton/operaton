@@ -367,11 +367,16 @@ class BpmnDeploymentTest {
     String bpmnResourceName = "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml";
     String bpmnResourceName2 = "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService2.bpmn20.xml";
     // when
-    assertThatThrownBy(() -> testRule.deploy(repositoryService.createDeployment()
-        .enableDuplicateFiltering(false)
-        .addClasspathResource(bpmnResourceName)
-        .addClasspathResource(bpmnResourceName2)
-        .name("duplicateAtTheSameTime")));
+    var deploymentBuilder = repositoryService.createDeployment()
+      .enableDuplicateFiltering(false)
+      .addClasspathResource(bpmnResourceName)
+      .addClasspathResource(bpmnResourceName2)
+      .name("duplicateAtTheSameTime");
+
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("The deployment contains definitions with the same key 'emptyProcess' (id attribute), this is not allowed");
+
     // then
     assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }

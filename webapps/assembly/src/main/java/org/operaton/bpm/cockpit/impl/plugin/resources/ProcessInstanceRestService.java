@@ -94,17 +94,6 @@ public class ProcessInstanceRestService extends AbstractPluginResource {
     return getCommandExecutor().executeCommand(new QueryProcessInstancesCountCmd(queryParameter));
   }
 
-  private void paginate(ProcessInstanceQueryDto queryParameter, Integer firstResult, Integer maxResults) {
-    if (firstResult == null) {
-      firstResult = 0;
-    }
-    if (maxResults == null) {
-      maxResults = Integer.MAX_VALUE;
-    }
-    queryParameter.setFirstResult(firstResult);
-    queryParameter.setMaxResults(maxResults);
-  }
-
   private void injectEngineConfig(ProcessInstanceQueryDto parameter) {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl) getProcessEngine()).getProcessEngineConfiguration();
@@ -153,6 +142,17 @@ public class ProcessInstanceRestService extends AbstractPluginResource {
       paginate(queryParameter, firstResult, maxResults);
       configureExecutionQuery(queryParameter);
       return getQueryService().executeQuery("selectRunningProcessInstancesIncludingIncidents", queryParameter);
+    }
+
+    private void paginate(ProcessInstanceQueryDto queryParameter, Integer firstResult, Integer maxResults) {
+      if (firstResult == null) {
+        firstResult = 0;
+      }
+      if (maxResults == null) {
+        maxResults = Integer.MAX_VALUE;
+      }
+      queryParameter.setFirstResult(firstResult);
+      queryParameter.setMaxResults(maxResults);
     }
   }
 

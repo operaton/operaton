@@ -81,16 +81,16 @@ public class LaunchThread extends Thread {
     try {
       Process process = processBuilder.start();
 
-      consoleStream = process.getInputStream();
-      BufferedReader consoleReader = new BufferedReader(new InputStreamReader(consoleStream));
-      String consoleLine = "";
-      while ( (consoleLine!=null) && (msg==null || !consoleLine.contains(msg))) {
-        consoleLine = consoleReader.readLine();
+      try (var consoleReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+        String consoleLine = "";
+        while ((consoleLine != null) && (msg == null || !consoleLine.contains(msg))) {
+          consoleLine = consoleReader.readLine();
 
-        if (consoleLine!=null) {
-          task.log("  " + consoleLine);
-        } else {
-          task.log("launched process completed");
+          if (consoleLine != null) {
+            task.log("  " + consoleLine);
+          } else {
+            task.log("launched process completed");
+          }
         }
       }
     } catch (Exception e) {

@@ -18,7 +18,6 @@ package org.operaton.bpm.webapp.impl.filter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
@@ -100,13 +99,7 @@ public abstract class AbstractTemplateFilter implements Filter {
    */
   protected String getWebResourceContents(String name) throws IOException {
 
-    InputStream is = null;
-
-    try {
-      is = filterConfig.getServletContext().getResourceAsStream(name);
-
-      BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
+    try (var reader =  new BufferedReader(new InputStreamReader(filterConfig.getServletContext().getResourceAsStream(name)))) {
       StringWriter writer = new StringWriter();
       String line = null;
 
@@ -116,10 +109,6 @@ public abstract class AbstractTemplateFilter implements Filter {
       }
 
       return writer.toString();
-    } finally {
-      if (is != null) {
-        try { is.close(); } catch (IOException e) { }
-      }
     }
   }
 }

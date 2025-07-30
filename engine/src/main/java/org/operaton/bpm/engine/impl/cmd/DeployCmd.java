@@ -465,8 +465,9 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
 
     ResourceManager resourceManager = commandContext.getResourceManager();
 
-    for (String deploymentId : resourcesByName.keySet()) {
-      Set<String> resourceNames = resourcesByName.get(deploymentId);
+    for (var entry: resourcesByName.entrySet()) {
+      String deploymentId = entry.getKey();
+      Set<String> resourceNames = entry.getValue();
 
       String[] resourceNameArray = resourceNames.toArray(new String[resourceNames.size()]);
       List<ResourceEntity> resources = resourceManager.findResourceByDeploymentIdAndResourceNames(deploymentId, resourceNameArray);

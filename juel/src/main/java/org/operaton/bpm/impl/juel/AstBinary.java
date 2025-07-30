@@ -131,6 +131,10 @@ public class AstBinary extends AstRightValue {
 
   @Override
   public AstNode getChild(int i) {
-		return i == 0 ? left : i == 1 ? right : null;
+		return switch (i) {
+			case 0 -> left;
+			case 1 -> right;
+			default -> null;
+		};
 	}
 }

@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.test.Deployment;
 import org.subethamail.wiser.WiserMessage;
 

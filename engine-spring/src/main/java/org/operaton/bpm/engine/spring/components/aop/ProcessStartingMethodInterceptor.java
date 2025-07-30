@@ -88,13 +88,13 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
 
             String businessKey = this.processBusinessKey(invocation);
 
-            log.info("variables for the started process: " + vars.toString());
+            log.info(() -> "variables for the started process: " + vars.toString());
 
             RuntimeService runtimeService = this.processEngine.getRuntimeService();
             ProcessInstance pi;
             if (null != businessKey && StringUtils.hasText(businessKey)) {
                 pi = runtimeService.startProcessInstanceByKey(processKey, businessKey, vars);
-                log.info("the business key for the started process is '" + businessKey + "' ");
+                log.info(() -> "the business key for the started process is '" + businessKey + "' ");
             } else {
                 pi = runtimeService.startProcessInstanceByKey(processKey, vars);
             }
@@ -164,8 +164,8 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
         Map<ProcessVariable, Object> vars = this.mapOfAnnotationValues(ProcessVariable.class, invocation);
 
         Map<String, Object> varNameToValueMap = new HashMap<>();
-        for (ProcessVariable processVariable : vars.keySet()) {
-            varNameToValueMap.put(processVariable.value(), vars.get(processVariable));
+        for (var entry : vars.entrySet()) {
+            varNameToValueMap.put(entry.getKey().value(), entry.getValue());
         }
         return varNameToValueMap;
 

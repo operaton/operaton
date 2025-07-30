@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -24,7 +25,7 @@ import java.util.Date;
  */
 public class HistoricFormPropertyEventEntity extends HistoricDetailEventEntity {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String propertyId;
   protected String propertyValue;

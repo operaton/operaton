@@ -243,7 +243,7 @@ public class LdapTestEnvironment {
 
     // record more than a page in this group
     for (int i = 1; i <= additionalNumberOfUsers; i++) {
-      String lastName = "fisher" + String.format("%04d", i);
+      String lastName = "fisher" + "%04d".formatted(i);
       createUserUid("jan.fisher." + lastName,
               OFFICE_BERKELEY,
               "jan",
@@ -253,13 +253,13 @@ public class LdapTestEnvironment {
 
     // Create a lot of groups
     for (int i = 1; i <= additionalNumberOfGroups; i++) {
-      String groupName = "Paris" + String.format("%04d", i);
+      String groupName = "Paris" + "%04d".formatted(i);
       createGroup(groupName);
     }
 
     // Create a lot of roles
     for (int i = 1; i <= additionalNumberOfRoles; i++) {
-      String roleName = "Support" + String.format("%04d", i);
+      String roleName = "Support" + "%04d".formatted(i);
       createRole(roleName, dnFozzie);
     }
 

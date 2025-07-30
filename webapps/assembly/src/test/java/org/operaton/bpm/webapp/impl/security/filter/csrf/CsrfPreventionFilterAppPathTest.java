@@ -57,7 +57,6 @@ public class CsrfPreventionFilterAppPathTest extends CsrfPreventionFilterTest {
   void shouldCheckNonModifyingRequestTokenGenerationWithRootContextPathAndEmptyAppPath()
     throws IOException, ServletException {
     // given
-    MockServletContext mockServletContext = new MockServletContext();
     ServletContextUtil.setAppPath("", mockServletContext);
 
     MockHttpSession session = new MockHttpSession();

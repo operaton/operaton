@@ -1184,9 +1184,6 @@ class FullHistoryTest {
     variables.put("stringVar", "stringValue");
     variables.put("booleanVar", true);
     Date date = Calendar.getInstance().getTime();
-    Calendar otherCal = Calendar.getInstance();
-    otherCal.add(Calendar.DAY_OF_MONTH, 1);
-    Date otherDate = otherCal.getTime();
     variables.put("dateVar", date);
     variables.put("nullVar", null);
 
@@ -1622,11 +1619,11 @@ class FullHistoryTest {
 
     String caseInstanceId = caseInstance.getId();
 
-    String humanTask = caseService
+    assertThat(caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1")
         .singleResult()
-        .getId();
+    ).isNotNull();
     String taskId = taskService.createTaskQuery().singleResult().getId();
 
     caseService.setVariable(caseInstanceId, "aVariable", "aValue");

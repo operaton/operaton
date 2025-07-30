@@ -24,13 +24,14 @@ import org.operaton.bpm.engine.variable.impl.value.FileValueImpl;
 import static org.operaton.bpm.engine.variable.type.ValueType.FILE;
 
 import java.io.InputStream;
+import java.io.Serial;
 
 /**
  * @author Tassilo Weidner
  */
 public class DeferredFileValueImpl extends FileValueImpl implements DeferredFileValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected static final ExternalTaskClientLogger LOG = ExternalTaskClientLogger.CLIENT_LOGGER;
 

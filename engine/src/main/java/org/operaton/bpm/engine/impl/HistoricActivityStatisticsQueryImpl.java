@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 import org.operaton.bpm.engine.history.HistoricActivityStatistics;
@@ -31,7 +32,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class HistoricActivityStatisticsQueryImpl extends AbstractQuery<HistoricActivityStatisticsQuery, HistoricActivityStatistics> implements HistoricActivityStatisticsQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String processDefinitionId;
 

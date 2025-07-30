@@ -80,9 +80,9 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 
   protected String toString(
     CaseExecution caseExecution) {
-    return caseExecution != null ? String.format("%s {"
-        + "id='%s', " + "caseDefinitionId='%s', " + "activityType='%s'"
-        + "}", caseExecution.getClass().getSimpleName(),
+    return caseExecution != null ? ("%s {"
+      + "id='%s', " + "caseDefinitionId='%s', " + "activityType='%s'"
+      + "}").formatted(caseExecution.getClass().getSimpleName(),
       caseExecution.getId(),
       caseExecution.getCaseDefinitionId(),
       caseExecution.getActivityType()) : null;

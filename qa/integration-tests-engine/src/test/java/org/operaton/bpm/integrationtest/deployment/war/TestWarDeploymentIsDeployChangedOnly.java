@@ -21,22 +21,22 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.List;
 import java.util.Set;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestWarDeploymentIsDeployChangedOnly extends AbstractFoxPlatformIntegrationTest {
 
   private static final String PA1 = "PA1";
@@ -58,14 +58,14 @@ public class TestWarDeploymentIsDeployChangedOnly extends AbstractFoxPlatformInt
 
   @Test
   @OperateOnDeployment(PA2)
-  public void testDeployProcessArchive() {
+  void deployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    Assert.assertEquals(1, count);
+    Assertions.assertEquals(1, count);
 
     // validate registrations:
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();

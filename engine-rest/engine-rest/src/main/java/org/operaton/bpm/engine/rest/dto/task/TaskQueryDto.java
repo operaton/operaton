@@ -604,7 +604,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
   @Deprecated(since = "1.0")
   @OperatonQueryParam(value = "created", converter = DateConverter.class)
   public void setCreated(Date createdOn) {
-    this.createdOn = createdOn;
+    setCreatedOn(createdOn);
   }
 
   @OperatonQueryParam("createdOnExpression")

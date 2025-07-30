@@ -17,18 +17,19 @@
 package org.operaton.bpm.integrationtest.jobexecutor;
 
 import java.util.function.Supplier;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.FailingSLSB;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -40,37 +41,37 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void testJobRetriesDecremented() {
+  void testJobRetriesDecremented() {
     runtimeService.startProcessInstanceByKey("theProcess");
     Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
-    Assert.assertEquals(1, createQuery.get().withRetriesLeft().count());
+    Assertions.assertEquals(1, createQuery.get().withRetriesLeft().count());
 
     waitForJobExecutorToProcessAllJobs();
 
     // now the retries = 0
 
-    Assert.assertEquals(0, createQuery.get().withRetriesLeft().count());
-    Assert.assertEquals(1, createQuery.get().noRetriesLeft().count());
+    Assertions.assertEquals(0, createQuery.get().withRetriesLeft().count());
+    Assertions.assertEquals(1, createQuery.get().noRetriesLeft().count());
 
   }
 
   @Test
-  public void testJobRetriesDecremented_multiple() {
+  void testJobRetriesDecremented_multiple() {
 
     for(int i = 0; i < 50; i++) {
       runtimeService.startProcessInstanceByKey("theProcess");
     }
     Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
-    Assert.assertEquals(50, createQuery.get().withRetriesLeft().count());
+    Assertions.assertEquals(50, createQuery.get().withRetriesLeft().count());
 
     waitForJobExecutorToProcessAllJobs(6 * 60 * 1000);
 
     // now the retries = 0
 
-    Assert.assertEquals(0, createQuery.get().withRetriesLeft().count());
-    Assert.assertEquals(51, createQuery.get().noRetriesLeft().count());
+    Assertions.assertEquals(0, createQuery.get().withRetriesLeft().count());
+    Assertions.assertEquals(51, createQuery.get().noRetriesLeft().count());
 
   }
 

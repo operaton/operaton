@@ -73,6 +73,7 @@ class CaseServiceStageTest {
         .activityId("PI_Stage_1")
         .singleResult()
         .getId();
+    assertThat(caseExecutionId).isNotNull();
 
     // then
 
@@ -739,6 +740,7 @@ class CaseServiceStageTest {
         .activityId("PI_Stage_1")
         .singleResult()
         .getId();
+    assertThat(caseExecutionId).isNotNull();
 
     // when
 
@@ -791,6 +793,7 @@ class CaseServiceStageTest {
         .activityId("PI_Stage_1")
         .singleResult()
         .getId();
+    assertThat(caseExecutionId).isNotNull();
 
     // when
     caseService

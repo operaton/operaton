@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2;
 
-import static java.lang.String.format;
 import static org.mockito.Mockito.when;
 
 import java.time.Duration;
@@ -62,7 +61,7 @@ public abstract class AbstractSpringSecurityIT {
 
   @BeforeEach
   public void setup() throws Exception {
-    baseUrl = format("http://localhost:%d", port);
+    baseUrl = "http://localhost:%d".formatted(port);
   }
 
   protected static Object getBeanForClass(Class<?> type, WebApplicationContext context) {

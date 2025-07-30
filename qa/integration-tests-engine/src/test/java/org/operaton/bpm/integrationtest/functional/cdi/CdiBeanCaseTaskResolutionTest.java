@@ -16,8 +16,15 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi;
 
-import org.junit.Ignore;
-import org.operaton.bpm.engine.runtime.CaseExecution;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.Variables;
@@ -25,21 +32,15 @@ import org.operaton.bpm.integrationtest.functional.cdi.beans.CaseVariableBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-@RunWith(Arquillian.class)
-@Ignore("https://github.com/operaton/operaton/issues/616")
+@ExtendWith(ArquillianExtension.class)
+@Disabled("https://github.com/operaton/operaton/issues/616")
 public class CdiBeanCaseTaskResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name="pa1")
@@ -69,15 +70,15 @@ public class CdiBeanCaseTaskResolutionTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBeanInCmmnCase() {
+  void testResolveBeanInCmmnCase() {
     CaseInstance caseInstance = caseService.withCaseDefinitionByKey("callingCase")
         .create();
 
-    CaseExecution caseTaskInstance = caseService.createCaseExecutionQuery().activityId("PI_CaseTask_1")
-        .singleResult();
+    assertThat(caseService.createCaseExecutionQuery().activityId("PI_CaseTask_1").singleResult())
+        .isNotNull();
 
-    CaseExecution calledCaseHumanTaskInstance = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1")
-        .singleResult();
+    assertThat(caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult())
+        .isNotNull();
 
     Task calledCaseTask = taskService.createTaskQuery().singleResult();
 
@@ -91,6 +92,6 @@ public class CdiBeanCaseTaskResolutionTest extends AbstractFoxPlatformIntegratio
 
     // then
     String variable = (String) caseService.getVariable(caseInstance.getId(), "var");
-    Assert.assertEquals("valuevalue", variable);
+    Assertions.assertEquals("valuevalue", variable);
   }
 }

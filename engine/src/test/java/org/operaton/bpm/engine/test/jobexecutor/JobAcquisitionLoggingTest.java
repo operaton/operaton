@@ -16,45 +16,38 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-public class JobAcquisitionLoggingTest {
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().watch(
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+
+class JobAcquisitionLoggingTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch(
       "org.operaton.bpm.engine.jobexecutor", Level.DEBUG);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule).around(loggingRule);
-
-  protected RuntimeService runtimeService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
+  RuntimeService runtimeService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml" })
-  public void shouldLogJobsAttemptingToAcquire() {
+  void shouldLogJobsAttemptingToAcquire() {
     // Given three jobs
     for (int i = 0; i < 3; i++) {
       runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
@@ -76,7 +69,7 @@ public class JobAcquisitionLoggingTest {
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml" })
-  public void shouldLogFailedAcquisitionLocks() {
+  void shouldLogFailedAcquisitionLocks() {
     // Given three jobs
     for (int i = 0; i < 3; i++) {
       runtimeService.startProcessInstanceByKey("simpleAsyncProcess");

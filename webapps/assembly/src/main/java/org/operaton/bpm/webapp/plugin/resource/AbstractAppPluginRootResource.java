@@ -216,13 +216,13 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
   }
 
   protected InputStream getWebResourceAsStream(String assetDirectory, String fileName) {
-    String resourceName = String.format("/%s/%s", assetDirectory, fileName);
+    String resourceName = "/%s/%s".formatted(assetDirectory, fileName);
 
     return servletContext.getResourceAsStream(resourceName);
   }
 
   protected InputStream getClasspathResourceAsStream(AppPlugin plugin, String assetDirectory, String fileName) {
-    String resourceName = String.format("%s/%s", assetDirectory, fileName);
+    String resourceName = "%s/%s".formatted(assetDirectory, fileName);
     return plugin.getClass().getClassLoader().getResourceAsStream(resourceName);
   }
 

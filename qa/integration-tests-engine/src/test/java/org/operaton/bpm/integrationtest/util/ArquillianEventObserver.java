@@ -22,9 +22,9 @@ import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.operaton.impl.test.utils.testcontainers.OperatonDb2ContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider;
-import org.operaton.impl.test.utils.testcontainers.OperatonOracleContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMariaDBContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMySqlContainerProvider;
+import org.operaton.impl.test.utils.testcontainers.OperatonOracleContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonPostgreSQLContainerProvider;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 

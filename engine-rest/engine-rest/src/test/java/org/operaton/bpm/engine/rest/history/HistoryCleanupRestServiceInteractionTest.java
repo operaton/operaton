@@ -161,7 +161,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
     when(processEngineConfigurationImplMock.getBatchWindowManager()).thenReturn(new DefaultBatchWindowManager());
     when(processEngineConfigurationImplMock.isHistoryCleanupEnabled()).thenReturn(true);
 
-    SimpleDateFormat sdf = new SimpleDateFormat(JacksonConfigurator.dateFormatString);
+    SimpleDateFormat sdf = new SimpleDateFormat(JacksonConfigurator.getDateFormatString());
     Date now = sdf.parse("2017-09-01T22:00:00.000+0000");
 
     ClockUtil.setCurrentTime(now);
@@ -196,7 +196,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
     when(processEngineConfigurationImplMock.getBatchWindowManager()).thenReturn(new DefaultBatchWindowManager());
     when(processEngineConfigurationImplMock.isHistoryCleanupEnabled()).thenReturn(true);
 
-    SimpleDateFormat sdf = new SimpleDateFormat(JacksonConfigurator.dateFormatString);
+    SimpleDateFormat sdf = new SimpleDateFormat(JacksonConfigurator.getDateFormatString());
     Date now = sdf.parse("2017-09-01T22:00:00.000+0200");
     ClockUtil.setCurrentTime(now);
 

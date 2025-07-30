@@ -74,7 +74,6 @@ public class ProcessBuilder extends AbstractProcessBuilder<ProcessBuilder> {
   }
 
   protected void setEventSubProcessCoordinates(BpmnShape targetBpmnShape) {
-    SubProcess eventSubProcess = (SubProcess) targetBpmnShape.getBpmnElement();
     Bounds targetBounds = targetBpmnShape.getBounds();
     double lowestheight = 0;
 

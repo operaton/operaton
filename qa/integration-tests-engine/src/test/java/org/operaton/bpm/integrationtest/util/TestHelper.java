@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
-import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,8 +26,11 @@ import java.nio.channels.ReadableByteChannel;
 
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
+import org.operaton.bpm.engine.impl.util.IoUtil;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 
 public abstract class TestHelper {

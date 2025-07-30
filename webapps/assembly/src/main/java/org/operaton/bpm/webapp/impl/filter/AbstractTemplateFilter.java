@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.webapp.impl.filter;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -32,6 +28,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.operaton.commons.utils.IoUtil;
 
 /**
  * A {@link Filter} implementation that can be used to realize basic templating.
@@ -96,30 +93,14 @@ public abstract class AbstractTemplateFilter implements Filter {
    *
    * @return the resource contents
    *
-   * @throws IOException
+   * @throws IOException when the resource was not found or could not be read
    */
   protected String getWebResourceContents(String name) throws IOException {
-
-    InputStream is = null;
-
-    try {
-      is = filterConfig.getServletContext().getResourceAsStream(name);
-
-      BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
-      StringWriter writer = new StringWriter();
-      String line = null;
-
-      while ((line = reader.readLine()) != null) {
-        writer.write(line);
-        writer.append("\n");
+    try (var is = filterConfig.getServletContext().getResourceAsStream(name)) {
+      if (is == null) {
+        throw new IOException("Resource not found: " + name);
       }
-
-      return writer.toString();
-    } finally {
-      if (is != null) {
-        try { is.close(); } catch (IOException e) { }
-      }
+      return IoUtil.inputStreamAsString(is);
     }
   }
 }

@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.execution;
 
+import java.io.Serial;
+
 /**
  * @author Roman Smirnov
  *
  */
 public class CaseSentryPartImpl extends CmmnSentryPart {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected CaseExecutionImpl caseInstance;
   protected CaseExecutionImpl caseExecution;

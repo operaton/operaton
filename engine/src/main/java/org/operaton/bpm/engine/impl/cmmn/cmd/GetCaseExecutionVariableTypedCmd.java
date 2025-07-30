@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.exception.cmmn.CaseExecutionNotFoundException;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class GetCaseExecutionVariableTypedCmd implements Command<TypedValue>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String caseExecutionId;
   protected String variableName;

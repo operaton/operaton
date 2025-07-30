@@ -75,7 +75,7 @@ import org.operaton.bpm.engine.impl.identity.db.DbUserQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Session;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 

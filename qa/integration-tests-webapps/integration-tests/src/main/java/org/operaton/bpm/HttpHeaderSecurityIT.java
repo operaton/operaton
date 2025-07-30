@@ -16,28 +16,31 @@
  */
 package org.operaton.bpm;
 
-import jakarta.ws.rs.core.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import jakarta.ws.rs.core.MultivaluedMap;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import jakarta.ws.rs.core.Response;
 
 public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
 
   public static final String CSP_VALUE = "base-uri 'self';script-src 'nonce-([-_a-zA-Z\\d]*)' 'strict-dynamic' 'unsafe-eval' https: 'self' 'unsafe-inline';style-src 'unsafe-inline' 'self';default-src 'self';img-src 'self' data:;block-all-mixed-content;form-action 'self';frame-ancestors 'none';object-src 'none';sandbox allow-forms allow-scripts allow-same-origin allow-popups allow-downloads";
 
-  @Before
+  @BeforeEach
   public void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
-  @Test(timeout=10000)
+  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfXssProtectionHeader() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
@@ -50,7 +53,7 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     assertHeaderPresent("X-XSS-Protection", "1; mode=block", response);
   }
 
-  @Test(timeout=10000)
+  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfContentSecurityPolicyHeader() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
@@ -63,7 +66,7 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     assertHeaderPresent("Content-Security-Policy", CSP_VALUE, response);
   }
 
-  @Test(timeout=10000)
+  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfContentTypeOptions() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
@@ -76,7 +79,7 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     assertHeaderPresent("X-Content-Type-Options", "nosniff", response);
   }
 
-  @Test(timeout=10000)
+  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
   public void shouldCheckAbsenceOfHsts() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
@@ -101,7 +104,7 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
       }
     }
 
-    Assert.fail(String.format("Header '%s' didn't match.\nExpected:\t%s \nActual:\t%s", expectedName, expectedValue, values));
+    Assertions.fail("Header '%s' didn't match.\nExpected:\t%s \nActual:\t%s".formatted(expectedName, expectedValue, values));
   }
 
 }

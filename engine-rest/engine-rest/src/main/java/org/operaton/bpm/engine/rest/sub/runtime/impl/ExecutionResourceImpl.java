@@ -71,7 +71,7 @@ public class ExecutionResourceImpl implements ExecutionResource {
       runtimeService.signal(executionId, variables);
 
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot signal execution %s: %s", executionId, e.getMessage());
+      String errorMessage = "Cannot signal execution %s: %s".formatted(executionId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     } catch (AuthorizationException e) {

@@ -30,12 +30,13 @@ import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.io.Serial;
 import java.util.*;
 
 public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceDto>
   extends AbstractRestQueryParametersDto<T> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final String SORT_BY_PROCESS_INSTANCE_START_TIME = "startTime";
 

@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest;
 import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -32,7 +32,9 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import io.restassured.response.Response;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTest {
+import jakarta.ws.rs.core.Response.Status;
+
+class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTest {
   @RegisterExtension
   public static TestContainerExtension rule = new TestContainerExtension();
 
@@ -63,7 +65,8 @@ import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRes
     String content = response.asString();
     List<Map<String, Object>> topicNames = from(content).getList("");
 
-    assertEquals("allTopics", topicNames.get(0));
+    assertThat(topicNames).first()
+      .isInstanceOf(String.class).isEqualTo("allTopics");
   }
 
   @Test
@@ -82,7 +85,8 @@ import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRes
     String content = response.asString();
     List<Map<String, Object>> topicNames = from(content).getList("");
 
-    assertEquals("lockedTasks", topicNames.get(0));
+    assertThat(topicNames).first()
+      .isInstanceOf(String.class).isEqualTo("lockedTasks");
   }
 
   @Test
@@ -101,7 +105,8 @@ import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRes
     String content = response.asString();
     List<Map<String, Object>> topicNames = from(content).getList("");
 
-    assertEquals("unlockedTasks", topicNames.get(0));
+    assertThat(topicNames).first()
+      .isInstanceOf(String.class).isEqualTo("unlockedTasks");
   }
 
   @Test
@@ -120,7 +125,8 @@ import jakarta.ws.rs.core.Response.Status;public class ExternalTaskTopicNamesRes
     String content = response.asString();
     List<Map<String, Object>> topicNames = from(content).getList("");
 
-    assertEquals("withRetriesLeft", topicNames.get(0));
+    assertThat(topicNames).first()
+      .isInstanceOf(String.class).isEqualTo("withRetriesLeft");
   }
 
 }

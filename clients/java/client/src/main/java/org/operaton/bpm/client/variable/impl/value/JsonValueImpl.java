@@ -19,11 +19,13 @@ package org.operaton.bpm.client.variable.impl.value;
 import static org.operaton.bpm.client.variable.ClientValues.JSON;
 
 import org.operaton.bpm.client.variable.value.JsonValue;
+
+import java.io.Serial;
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl;
 
 public class JsonValueImpl extends PrimitiveTypeValueImpl<String> implements JsonValue {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public JsonValueImpl(String value) {
     super(value, JSON);

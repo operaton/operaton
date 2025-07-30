@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;

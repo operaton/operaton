@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.logging.Level;
@@ -42,7 +43,7 @@ public class TaskForm implements Serializable {
   private static final String REQUEST_PARAM_PROCESS_DEFINITION_KEY = "processDefinitionKey";
   private static Logger log = Logger.getLogger(TaskForm.class.getName());
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String url;
 
@@ -180,10 +181,8 @@ public class TaskForm implements Serializable {
     }
 
     Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    String processDefinitionKey = requestParameterMap.get(REQUEST_PARAM_PROCESS_DEFINITION_KEY);
-    String callbackUrl = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
-    this.url = callbackUrl;
-    this.processDefinitionKey = processDefinitionKey;
+    this.url = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
+    this.processDefinitionKey = requestParameterMap.get(REQUEST_PARAM_PROCESS_DEFINITION_KEY);
     beginConversation();
   }
 

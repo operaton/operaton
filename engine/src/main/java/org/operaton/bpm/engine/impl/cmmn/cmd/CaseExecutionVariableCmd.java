@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class CaseExecutionVariableCmd implements Command<Void>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String caseExecutionId;
   protected Map<String, Object> variables;

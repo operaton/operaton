@@ -31,13 +31,13 @@ public class MybatisJoinHelper {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected static final String DEFAULT_ORDER = "RES.ID_ asc";
-  public static Map<String, MyBatisTableMapping> mappings = new HashMap<>();
+  private static final Map<String, MyBatisTableMapping> MAPPINGS = new HashMap<>();
 
   static {
-    mappings.put(QueryOrderingProperty.RELATION_VARIABLE, new VariableTableMapping());
-    mappings.put(QueryOrderingProperty.RELATION_PROCESS_DEFINITION, new ProcessDefinitionTableMapping());
-    mappings.put(QueryOrderingProperty.RELATION_CASE_DEFINITION, new CaseDefinitionTableMapping());
-    mappings.put(QueryOrderingProperty.RELATION_DEPLOYMENT, new DeploymentTableMapping());
+    MAPPINGS.put(QueryOrderingProperty.RELATION_VARIABLE, new VariableTableMapping());
+    MAPPINGS.put(QueryOrderingProperty.RELATION_PROCESS_DEFINITION, new ProcessDefinitionTableMapping());
+    MAPPINGS.put(QueryOrderingProperty.RELATION_CASE_DEFINITION, new CaseDefinitionTableMapping());
+    MAPPINGS.put(QueryOrderingProperty.RELATION_DEPLOYMENT, new DeploymentTableMapping());
   }
 
   private MybatisJoinHelper() {
@@ -106,7 +106,7 @@ public class MybatisJoinHelper {
   }
 
   protected static MyBatisTableMapping getTableMapping(String relation) {
-    MyBatisTableMapping mapping = mappings.get(relation);
+    MyBatisTableMapping mapping = MAPPINGS.get(relation);
 
     if (mapping == null) {
       throw LOG.missingRelationMappingException(relation);

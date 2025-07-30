@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.form.FormDefinition;
 import org.operaton.bpm.engine.impl.form.handler.TaskFormHandler;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * Container for task definition information gathered at parsing time.

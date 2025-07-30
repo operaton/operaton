@@ -16,6 +16,20 @@
  */
 package org.operaton.bpm.integrationtest.functional.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.Asset;
+import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -26,26 +40,12 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.Asset;
-import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.io.ByteArrayOutputStream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import java.util.Arrays;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegrationTest {
 
   public static final BpmnModelInstance oneTaskProcess(String key) {
@@ -114,7 +114,7 @@ public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegr
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testCallStartListenerInTargetContext() {
+  void testCallStartListenerInTargetContext() {
     // given
     ProcessDefinition sourceDefinition = repositoryService
         .createProcessDefinitionQuery()
@@ -144,7 +144,7 @@ public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegr
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testCallEndListenerInTargetContext() {
+  void testCallEndListenerInTargetContext() {
     // given
     ProcessDefinition sourceDefinition = repositoryService
         .createProcessDefinitionQuery()

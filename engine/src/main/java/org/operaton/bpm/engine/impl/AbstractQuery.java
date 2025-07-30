@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -51,7 +52,7 @@ import org.joda.time.DateTime;
  */
 public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryParameterObject implements Command<Object>, Query<T,U>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public static final String SORTORDER_ASC = "asc";
   public static final String SORTORDER_DESC = "desc";

@@ -50,7 +50,7 @@ public class OperatonBpmProperties {
 
     final Set<String> patterns = new HashSet<>();
     for (String suffix : suffixes) {
-      patterns.add(String.format("%s**/*.%s", CLASSPATH_ALL_URL_PREFIX, suffix));
+      patterns.add("%s**/*.%s".formatted(CLASSPATH_ALL_URL_PREFIX, suffix));
     }
 
     return patterns.toArray(new String[patterns.size()]);

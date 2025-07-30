@@ -16,11 +16,14 @@
  */
 package org.operaton.bpm.model.dmn;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.model.xml.ModelException;
 
 public class DmnModelException extends ModelException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public DmnModelException() {
   }

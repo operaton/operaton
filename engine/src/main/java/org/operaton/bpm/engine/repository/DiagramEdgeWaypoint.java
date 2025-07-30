@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.repository;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 
@@ -26,7 +27,7 @@ import java.io.Serializable;
  */
 public class DiagramEdgeWaypoint implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Double x = null;
   private Double y = null;

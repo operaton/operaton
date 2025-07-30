@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class NativeHistoricVariableInstanceQueryImpl extends AbstractNativeQuery
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected boolean isCustomObjectDeserializationEnabled = true;
 

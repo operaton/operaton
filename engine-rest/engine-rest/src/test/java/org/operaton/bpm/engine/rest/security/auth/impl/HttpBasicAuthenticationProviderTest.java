@@ -36,7 +36,7 @@ class HttpBasicAuthenticationProviderTest {
   private static final String PASSWORD = "password";
 
   private static final String CREDENTIALS =
-      Base64.getEncoder().encodeToString(String.format("%s:%s", USER_ID, PASSWORD).getBytes());
+      Base64.getEncoder().encodeToString("%s:%s".formatted(USER_ID, PASSWORD).getBytes());
 
   private static final String AUTHORIZATION_HEADER = BASIC_AUTH_HEADER_PREFIX + CREDENTIALS;
 

@@ -27,7 +27,10 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 /**
  * @author Svetlana Dorokhova.
  */
-public abstract class ModificationUtil {
+public class ModificationUtil {
+  private ModificationUtil() {
+    // utility class
+  }
 
   public static void handleChildRemovalInScope(ExecutionEntity removedExecution) {
     ActivityImpl activity = removedExecution.getActivity();

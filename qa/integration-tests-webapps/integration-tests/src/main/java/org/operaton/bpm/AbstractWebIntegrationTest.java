@@ -16,20 +16,23 @@
  */
 package org.operaton.bpm;
 
+import java.util.List;
+import java.util.logging.Logger;
+
+import org.glassfish.jersey.client.ClientConfig;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.operaton.bpm.util.TestUtil;
+
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.List;
-import java.util.logging.Logger;
-import org.glassfish.jersey.client.ClientConfig;
-import org.junit.After;
-import org.junit.Before;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.operaton.bpm.util.TestUtil;
 
 /**
  *
@@ -69,13 +72,13 @@ public abstract class AbstractWebIntegrationTest {
   // current response under test
   protected Response response;
 
-  @Before
+  @BeforeEach
   public void before() throws Exception {
     testProperties = new TestProperties(48080);
     testUtil = new TestUtil(testProperties);
   }
 
-  @After
+  @AfterEach
   public void destroyClient() {
     client.close();
     if (response != null) {

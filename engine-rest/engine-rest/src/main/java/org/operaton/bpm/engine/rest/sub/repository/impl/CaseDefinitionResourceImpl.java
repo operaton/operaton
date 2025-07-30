@@ -123,23 +123,23 @@ public class CaseDefinitionResourceImpl implements CaseDefinitionResource {
           .create();
 
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot instantiate case definition %s: %s", caseDefinitionId, e.getMessage());
+      String errorMessage = "Cannot instantiate case definition %s: %s".formatted(caseDefinitionId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     } catch (NotFoundException e) {
-      String errorMessage = String.format("Cannot instantiate case definition %s: %s", caseDefinitionId, e.getMessage());
+      String errorMessage = "Cannot instantiate case definition %s: %s".formatted(caseDefinitionId, e.getMessage());
       throw new InvalidRequestException(Status.NOT_FOUND, e, errorMessage);
 
     } catch (NotValidException e) {
-      String errorMessage = String.format("Cannot instantiate case definition %s: %s", caseDefinitionId, e.getMessage());
+      String errorMessage = "Cannot instantiate case definition %s: %s".formatted(caseDefinitionId, e.getMessage());
       throw new InvalidRequestException(Status.BAD_REQUEST, e, errorMessage);
 
     } catch (NotAllowedException e) {
-      String errorMessage = String.format("Cannot instantiate case definition %s: %s", caseDefinitionId, e.getMessage());
+      String errorMessage = "Cannot instantiate case definition %s: %s".formatted(caseDefinitionId, e.getMessage());
       throw new InvalidRequestException(Status.FORBIDDEN, e, errorMessage);
 
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format("Cannot instantiate case definition %s: %s", caseDefinitionId, e.getMessage());
+      String errorMessage = "Cannot instantiate case definition %s: %s".formatted(caseDefinitionId, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
 
     }

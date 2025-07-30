@@ -16,7 +16,18 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
+
 import java.util.concurrent.Callable;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.Variables;
@@ -28,17 +39,8 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.spi.DataFormatConfigurator;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
-import static org.junit.Assert.assertEquals;
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name = "pa3")
@@ -76,7 +78,7 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
    */
   @Test
   @OperateOnDeployment("pa3")
-  public void test() throws Exception {
+  void test() throws Exception {
 
     final ProcessInstance processInstance = withProcessApplicationContext(() -> {
       final XmlSerializable variable = new XmlSerializable();

@@ -111,7 +111,7 @@ class ModelValidationTest {
         .hasLineCount(5)
         .describedAs(
             "shall contain only one error/warning and mention the count of the missing ones")
-        .endsWith(String.format(TestResultFormatter.OMITTED_RESULTS_SUFFIX_FORMAT, 5));
+        .endsWith(TestResultFormatter.OMITTED_RESULTS_SUFFIX_FORMAT.formatted(5));
   }
 
   @Test
@@ -136,7 +136,7 @@ class ModelValidationTest {
         .hasLineCount(5)
         .describedAs(
             "shall contain only one error/warning and mention the count of the missing ones")
-        .endsWith(String.format(TestResultFormatter.OMITTED_RESULTS_SUFFIX_FORMAT, 6));
+        .endsWith(TestResultFormatter.OMITTED_RESULTS_SUFFIX_FORMAT.formatted(6));
   }
 
   @Test

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.client.exception;
 
+import java.io.Serial;
+
 /**
  * <p>Exception is thrown if the task has been canceled and therefore does not exist anymore</p>
  *
@@ -23,7 +25,7 @@ package org.operaton.bpm.client.exception;
  */
 public class NotFoundException extends RestException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public NotFoundException(String message, RestException restException) {
     super(message, restException);

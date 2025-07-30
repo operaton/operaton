@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.integrationtest.functional.slf4j;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.NOPLoggerFactory;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class Slf4jClassloadingTest extends AbstractFoxPlatformIntegrationTest {
 
   public static final String JDK14_LOGGER_FACTORY = "org.slf4j.jul.JDK14LoggerFactory";
@@ -47,7 +47,7 @@ public class Slf4jClassloadingTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void shouldNotUseNopLoggerFactory() {
+  void shouldNotUseNopLoggerFactory() {
     ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
 
     // verify that a SLF4J backend is used which is not the NOP logger
@@ -59,7 +59,7 @@ public class Slf4jClassloadingTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void shouldBeAbleToLogMessageWithFormatParameters() {
+  void shouldBeAbleToLogMessageWithFormatParameters() {
     TestLogger logger = TestLogger.INSTANCE;
 
     // verify that we can use different formatting methods

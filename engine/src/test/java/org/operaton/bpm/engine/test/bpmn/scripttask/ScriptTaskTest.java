@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ScriptCompilationException;
 import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.exception.NullValueException;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -484,8 +484,10 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
     Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
     assertThat(date.getTime()).isZero();
 
-    deployProcess(PYTHON, "import org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable\n" +
-      "execution.setVariable('myVar', org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));");
+    deployProcess(PYTHON, """
+      import org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable
+      execution.setVariable('myVar', org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));\
+      """);
 
     pi = runtimeService.startProcessInstanceByKey("testProcess");
 

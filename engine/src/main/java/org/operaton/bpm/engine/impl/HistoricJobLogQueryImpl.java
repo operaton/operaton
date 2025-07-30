@@ -21,6 +21,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.history.HistoricJobLogQuery;
 import org.operaton.bpm.engine.history.JobState;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
 
 /**
@@ -38,7 +39,7 @@ import org.operaton.bpm.engine.impl.util.CompareUtil;
  */
 public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, HistoricJobLog> implements HistoricJobLogQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected String jobId;
@@ -112,7 +113,9 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
   }
 
   @Override
+  @SuppressWarnings("java:S1192")
   public HistoricJobLogQuery activityIdIn(String... activityIds) {
+    ensureNotNull(NotValidException.class, "activityIds", activityIds);
     List<String> activityIdList = CollectionUtil.asArrayList(activityIds);
     ensureNotContainsNull("activityIds", activityIdList);
     ensureNotContainsEmptyString("activityIds", activityIdList);
@@ -121,7 +124,9 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
   }
 
   @Override
+  @SuppressWarnings("java:S1192")
   public HistoricJobLogQuery failedActivityIdIn(String... activityIds) {
+    ensureNotNull(NotValidException.class, "activityIds", activityIds);
     List<String> activityIdList = CollectionUtil.asArrayList(activityIds);
     ensureNotContainsNull("activityIds", activityIdList);
     ensureNotContainsEmptyString("activityIds", activityIdList);
@@ -130,7 +135,9 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
   }
 
   @Override
+  @SuppressWarnings("java:S1192")
   public HistoricJobLogQuery executionIdIn(String... executionIds) {
+    ensureNotNull(NotValidException.class, "executionIds", executionIds);
     List<String> executionIdList = CollectionUtil.asArrayList(executionIds);
     ensureNotContainsNull("executionIds", executionIdList);
     ensureNotContainsEmptyString("executionIds", executionIdList);

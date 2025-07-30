@@ -18,12 +18,13 @@ package org.operaton.bpm.engine;
 
 import org.operaton.bpm.engine.impl.bpmn.parser.ResourceReportImpl;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParseException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final List<ResourceReport> resourceReports;
 

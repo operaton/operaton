@@ -16,22 +16,23 @@
  */
 package org.operaton.bpm;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-import java.util.Arrays;
-import java.util.Collection;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-@RunWith(Parameterized.class)
+@Parameterized
 public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
 
   @Parameter(0)
@@ -40,12 +41,12 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   @Parameter(1)
   public boolean assetAllowed;
 
-  @Before
+  @BeforeEach
   public void createClient() throws Exception {
     createClient(getWebappCtxPath());
   }
 
-  @Parameters(name = "Test instance: {index}. Asset: {0}, Allowed: {1}")
+  @Parameters(name = "Asset: {0}, Allowed: {1}")
   public static Collection<Object[]> getAssets() {
     return Arrays.asList(new Object[][]{
         {"app/plugin.js", true},

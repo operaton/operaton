@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,7 +105,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public static final String DELETE_REASON_COMPLETED = "completed";
   public static final String DELETE_REASON_DELETED   = "deleted";
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected int revision;
@@ -1208,7 +1209,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
     case STATE_INIT:
     default:
-      throw new ProcessEngineException(String.format("Task %s cannot transition into state %s.", id, state));
+      throw new ProcessEngineException("Task %s cannot transition into state %s.".formatted(id, state));
     }
   }
 

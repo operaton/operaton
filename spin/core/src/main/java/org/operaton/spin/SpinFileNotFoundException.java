@@ -16,12 +16,14 @@
  */
 package org.operaton.spin;
 
+import java.io.Serial;
+
 /**
  * @author Sebastian Menski
  */
 public class SpinFileNotFoundException extends SpinRuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public SpinFileNotFoundException(String message) {
     super(message);

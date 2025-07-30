@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.task.Attachment;
  */
 public class SaveAttachmentCmd implements Command<Object>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected Attachment attachment;
 
   public SaveAttachmentCmd(Attachment attachment) {

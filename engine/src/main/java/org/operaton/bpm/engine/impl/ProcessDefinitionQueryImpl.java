@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
-
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -52,7 +52,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
 public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQuery, ProcessDefinition>
   implements ProcessDefinitionQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String id;
   protected String[] ids;
   protected String category;

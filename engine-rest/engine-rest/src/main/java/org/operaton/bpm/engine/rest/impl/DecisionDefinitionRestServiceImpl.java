@@ -51,7 +51,7 @@ public class DecisionDefinitionRestServiceImpl extends AbstractRestProcessEngine
         .singleResult();
 
     if (decisionDefinition == null) {
-      String errorMessage = String.format("No matching decision definition with key: %s and no tenant-id", decisionDefinitionKey);
+      String errorMessage = "No matching decision definition with key: %s and no tenant-id".formatted(decisionDefinitionKey);
       throw new RestException(Status.NOT_FOUND, errorMessage);
 
     } else {
@@ -71,7 +71,7 @@ public class DecisionDefinitionRestServiceImpl extends AbstractRestProcessEngine
         .singleResult();
 
     if (decisionDefinition == null) {
-      String errorMessage = String.format("No matching decision definition with key: %s and tenant-id: %s", decisionDefinitionKey, tenantId);
+      String errorMessage = "No matching decision definition with key: %s and tenant-id: %s".formatted(decisionDefinitionKey, tenantId);
       throw new RestException(Status.NOT_FOUND, errorMessage);
 
     } else {

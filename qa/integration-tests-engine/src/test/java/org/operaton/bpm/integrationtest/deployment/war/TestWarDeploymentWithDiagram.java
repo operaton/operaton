@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
+import java.io.IOException;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestHelper;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.io.IOException;
 
 
 /**
  * @author Falko Menge
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestWarDeploymentWithDiagram extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -44,14 +44,14 @@ public class TestWarDeploymentWithDiagram extends AbstractFoxPlatformIntegration
   }
 
   @Test
-  public void testDeployProcessArchive() throws IOException {
+  void testDeployProcessArchive() throws IOException {
     String expectedDiagramResource = "/org/operaton/bpm/integrationtest/testDeployProcessArchive.png";
     String processDefinitionKey = "testDeployProcessArchive";
     TestHelper.assertDiagramIsDeployed(true, getClass(), expectedDiagramResource, processDefinitionKey);
   }
 
   @Test
-  public void testInvoiceProcess() throws IOException {
+  void testInvoiceProcess() throws IOException {
     String expectedDiagramResource = "/org/operaton/bpm/integrationtest/invoice-it.jpg";
     String processDefinitionKey = "invoice-it";
     TestHelper.assertDiagramIsDeployed(true, getClass(), expectedDiagramResource, processDefinitionKey);

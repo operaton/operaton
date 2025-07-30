@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import java.io.Serial;
+
 /**
  * <p>Exception resulting from a error during a script compilation.</p>
  *
@@ -23,7 +25,7 @@ package org.operaton.bpm.engine;
  */
 public class ScriptCompilationException extends ScriptEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ScriptCompilationException() {
   }

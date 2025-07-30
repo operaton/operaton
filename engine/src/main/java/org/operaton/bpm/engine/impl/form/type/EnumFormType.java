@@ -52,7 +52,7 @@ public class EnumFormType extends SimpleFormFieldType {
   @Override
   public TypedValue convertValue(TypedValue propertyValue) {
     Object value = propertyValue.getValue();
-    if(value == null || String.class.isInstance(value)) {
+    if(value == null || value instanceof String) {
       validateValue(value);
       return Variables.stringValue((String) value, propertyValue.isTransient());
     }
@@ -71,7 +71,7 @@ public class EnumFormType extends SimpleFormFieldType {
     return values;
   }
 
-  //////////////////// deprecated ////////////////////////////////////////
+  // ////////////////// deprecated ////////////////////////////////////////
 
   @Override
   public Object convertFormValueToModelValue(Object propertyValue) {

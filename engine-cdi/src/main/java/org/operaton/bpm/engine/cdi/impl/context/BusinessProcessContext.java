@@ -71,9 +71,9 @@ public class BusinessProcessContext implements Context {
     if (variable != null) {
 
       if(businessProcess.isAssociated()) {
-        logger.fine(() -> String.format("Getting instance of bean '%s' from Execution[%s].", variableName, businessProcess.getExecutionId()));
+        logger.fine(() -> "Getting instance of bean '%s' from Execution[%s].".formatted(variableName, businessProcess.getExecutionId()));
       } else {
-        logger.fine(() -> String.format("Getting instance of bean '%s' from transient bean store.", variableName));
+        logger.fine(() -> "Getting instance of bean '%s' from transient bean store.".formatted(variableName));
       }
 
       return (T) variable;
@@ -98,17 +98,17 @@ public class BusinessProcessContext implements Context {
     if (variable != null) {
 
       if(businessProcess.isAssociated()) {
-        logger.fine(() -> String.format("Getting instance of bean '%s' from Execution[%s].", variableName, businessProcess.getExecutionId()));
+        logger.fine(() -> "Getting instance of bean '%s' from Execution[%s].".formatted(variableName, businessProcess.getExecutionId()));
       } else {
-        logger.fine(() -> String.format("Getting instance of bean '%s' from transient bean store.", variableName));
+        logger.fine(() -> "Getting instance of bean '%s' from transient bean store.".formatted(variableName));
       }
 
       return (T) variable;
     } else {
       if(businessProcess.isAssociated()) {
-        logger.fine(() -> String.format("Creating instance of bean '%s' in business process context representing Execution[%s].", variableName, businessProcess.getExecutionId()));
+        logger.fine(() -> "Creating instance of bean '%s' in business process context representing Execution[%s].".formatted(variableName, businessProcess.getExecutionId()));
       } else {
-        logger.fine(() -> String.format("Creating instance of bean '%s' in transient bean store.", variableName));
+        logger.fine(() -> "Creating instance of bean '%s' in transient bean store.".formatted(variableName));
       }
 
       businessProcess.setVariable(variableName, beanInstance);

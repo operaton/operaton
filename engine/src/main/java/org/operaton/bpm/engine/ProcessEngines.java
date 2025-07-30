@@ -62,17 +62,21 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public abstract class ProcessEngines {
+public class ProcessEngines {
 
   private static final ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 
   public static final String NAME_DEFAULT = "default";
 
-  protected static volatile boolean isInitialized = false;
-  protected static volatile Map<String, ProcessEngine> processEngines = new ConcurrentHashMap<>();
-  protected static volatile Map<String, ProcessEngineInfo> processEngineInfosByName = new ConcurrentHashMap<>();
-  protected static volatile Map<String, ProcessEngineInfo> processEngineInfosByResourceUrl = new ConcurrentHashMap<>();
-  protected static volatile List<ProcessEngineInfo> processEngineInfos = new CopyOnWriteArrayList<>();
+  private static volatile boolean isInitialized = false;
+  private static volatile Map<String, ProcessEngine> processEngines = new ConcurrentHashMap<>();
+  private static final Map<String, ProcessEngineInfo> PROCESS_ENGINE_INFOS_BY_NAME = new ConcurrentHashMap<>();
+  private static final Map<String, ProcessEngineInfo> PROCESS_ENGINE_INFOS_BY_RESOURCE_URL = new ConcurrentHashMap<>();
+  private static final List<ProcessEngineInfo> PROCESS_ENGINE_INFOS = new CopyOnWriteArrayList<>();
+
+  private ProcessEngines() {
+    // prevent instantiation
+  }
 
   public static synchronized void init() {
     init(true);
@@ -141,8 +145,8 @@ public abstract class ProcessEngines {
 
       String processEngineName = processEngine.getName();
       ProcessEngineInfo processEngineInfo = new ProcessEngineInfoImpl(processEngineName, resource.toString(), null);
-      processEngineInfosByName.put(processEngineName, processEngineInfo);
-      processEngineInfosByResourceUrl.put(resource.toString(), processEngineInfo);
+      PROCESS_ENGINE_INFOS_BY_NAME.put(processEngineName, processEngineInfo);
+      PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.put(resource.toString(), processEngineInfo);
 
     } catch (Exception e) {
       throw new ProcessEngineException("couldn't initialize process engine from spring configuration resource "+resource.toString()+": "+e.getMessage(), e);
@@ -173,17 +177,17 @@ public abstract class ProcessEngines {
   }
 
   private static ProcessEngineInfo initProcessEngineFromResource(URL resourceUrl) {
-    ProcessEngineInfo processEngineInfo = processEngineInfosByResourceUrl.get(resourceUrl.toString());
+    ProcessEngineInfo processEngineInfo = PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.get(resourceUrl.toString());
     // if there is an existing process engine info
     if (processEngineInfo!=null) {
       // remove that process engine from the member fields
-      processEngineInfos.remove(processEngineInfo);
+      PROCESS_ENGINE_INFOS.remove(processEngineInfo);
       if (processEngineInfo.getException()==null) {
         String processEngineName = processEngineInfo.getName();
         processEngines.remove(processEngineName);
-        processEngineInfosByName.remove(processEngineName);
+        PROCESS_ENGINE_INFOS_BY_NAME.remove(processEngineName);
       }
-      processEngineInfosByResourceUrl.remove(processEngineInfo.getResourceUrl());
+      PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.remove(processEngineInfo.getResourceUrl());
     }
 
     String resourceUrlString = resourceUrl.toString();
@@ -194,13 +198,13 @@ public abstract class ProcessEngines {
       LOG.initializingProcessEngine(processEngine.getName());
       processEngineInfo = new ProcessEngineInfoImpl(processEngineName, resourceUrlString, null);
       processEngines.put(processEngineName, processEngine);
-      processEngineInfosByName.put(processEngineName, processEngineInfo);
+      PROCESS_ENGINE_INFOS_BY_NAME.put(processEngineName, processEngineInfo);
     } catch (Throwable e) {
       LOG.exceptionWhileInitializingProcessengine(e);
       processEngineInfo = new ProcessEngineInfoImpl(null, resourceUrlString, getExceptionString(e));
     }
-    processEngineInfosByResourceUrl.put(resourceUrlString, processEngineInfo);
-    processEngineInfos.add(processEngineInfo);
+    PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.put(resourceUrlString, processEngineInfo);
+    PROCESS_ENGINE_INFOS.add(processEngineInfo);
     return processEngineInfo;
   }
 
@@ -227,7 +231,7 @@ public abstract class ProcessEngines {
 
   /** Get initialization results. */
   public static List<ProcessEngineInfo> getProcessEngineInfos() {
-    return processEngineInfos;
+    return PROCESS_ENGINE_INFOS;
   }
 
   /** Get initialization results. Only info will be available for process engines
@@ -235,7 +239,7 @@ public abstract class ProcessEngines {
    * is available for engines which were registered programmatically.
   */
   public static ProcessEngineInfo getProcessEngineInfo(String processEngineName) {
-    return processEngineInfosByName.get(processEngineName);
+    return PROCESS_ENGINE_INFOS_BY_NAME.get(processEngineName);
   }
 
   public static ProcessEngine getDefaultProcessEngine() {
@@ -293,9 +297,9 @@ public abstract class ProcessEngines {
         }
       }
 
-      processEngineInfosByName.clear();
-      processEngineInfosByResourceUrl.clear();
-      processEngineInfos.clear();
+      PROCESS_ENGINE_INFOS_BY_NAME.clear();
+      PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.clear();
+      PROCESS_ENGINE_INFOS.clear();
 
       isInitialized = false;
     }

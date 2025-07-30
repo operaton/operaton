@@ -15,10 +15,7 @@
  */
 package org.operaton.bpm.impl.juel;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -32,7 +29,7 @@ import jakarta.el.ValueExpression;
  * @author Christoph Beck
  */
 public class Bindings implements TypeConverter {
-	private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
 	private static final Method[] NO_FUNCTIONS = new Method[0];
 	private static final ValueExpression[] NO_VARIABLES = new ValueExpression[0];
@@ -41,7 +38,7 @@ public class Bindings implements TypeConverter {
 	 * Wrap a {@link Method} for serialization.
 	 */
 	private static class MethodWrapper implements Serializable {
-		private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
 		private transient Method method;
 		private MethodWrapper(Method method) {

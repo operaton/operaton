@@ -1090,19 +1090,8 @@ public class ProcessBuilderTest {
     var eventBasedGatewayBuilder = Bpmn.createProcess()
       .startEvent()
       .eventBasedGateway();
-    try {
-      eventBasedGatewayBuilder.operatonAsyncAfter();
-      fail("Expected UnsupportedOperationException");
-    } catch(UnsupportedOperationException ex) {
-      // happy path
-    }
-
-    try {
-      eventBasedGatewayBuilder.operatonAsyncAfter(true) ;
-      fail("Expected UnsupportedOperationException");
-    } catch(UnsupportedOperationException ex) {
-      // happy ending :D
-    }
+    assertThatThrownBy(eventBasedGatewayBuilder::operatonAsyncAfter).isInstanceOf(UnsupportedOperationException.class);
+    assertThatThrownBy(() -> eventBasedGatewayBuilder.operatonAsyncAfter(true)).isInstanceOf(UnsupportedOperationException.class);
   }
 
   @Test
@@ -3140,12 +3129,9 @@ public class ProcessBuilderTest {
       .boundaryEvent()
       .compensateEventDefinition();
 
-    try {
-      compensateEventDefinitionBuilder.activityRef("nonExistingTask");
-      fail("should fail");
-    } catch (BpmnModelException e) {
-      assertThat(e).hasMessageContaining("Activity with id 'nonExistingTask' does not exist");
-    }
+    assertThatThrownBy(() -> compensateEventDefinitionBuilder.activityRef("nonExistingTask"))
+        .isInstanceOf(BpmnModelException.class)
+        .hasMessageContaining("Activity with id 'nonExistingTask' does not exist");
   }
 
   @Test
@@ -3168,12 +3154,9 @@ public class ProcessBuilderTest {
       .boundaryEvent("boundary")
       .compensateEventDefinition();
 
-    try {
-      compensateEventDefinitionBuilder.activityRef("subProcessTask");
-      fail("should fail");
-    } catch (BpmnModelException e) {
-      assertThat(e).hasMessageContaining("Activity with id 'subProcessTask' must be in the same scope as 'boundary'");
-    }
+    assertThatThrownBy(() -> compensateEventDefinitionBuilder.activityRef("subProcessTask"))
+        .isInstanceOf(BpmnModelException.class)
+        .hasMessageContaining("Activity with id 'subProcessTask' must be in the same scope as 'boundary'");
   }
 
   @Test
@@ -3520,13 +3503,9 @@ public class ProcessBuilderTest {
       .userTask()
       .endEvent();
 
-    try {
-      eventSubProcess.subProcessDone();
-      fail("eventSubProcess has returned a builder after completion");
-    } catch (BpmnModelException e) {
-      assertThat(e).hasMessageContaining("Unable to find a parent subProcess.");
-
-    }
+    assertThatThrownBy(eventSubProcess::subProcessDone, "eventSubProcess has returned a builder after completion")
+        .isInstanceOf(BpmnModelException.class)
+        .hasMessageContaining("Unable to find a parent subProcess.");
   }
 
   @Test

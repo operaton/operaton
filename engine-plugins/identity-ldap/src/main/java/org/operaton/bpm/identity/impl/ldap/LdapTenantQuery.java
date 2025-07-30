@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
+import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
  */
 public class LdapTenantQuery extends TenantQueryImpl {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public LdapTenantQuery() {
     super();

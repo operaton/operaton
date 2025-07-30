@@ -21,6 +21,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -31,7 +32,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class GetExternalTaskErrorDetailsCmd implements Command<String>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private final String externalTaskId;
 
   public GetExternalTaskErrorDetailsCmd(String externalTaskId) {

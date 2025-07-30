@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.webapp.impl.db;
 
+import java.io.ByteArrayInputStream;
+import java.util.Collections;
+import java.util.List;
+import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,8 +31,9 @@ class QuerySessionFactoryTest {
 
   @RegisterExtension
   static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder()
-          .randomEngineName()
-          .configurationResource("operaton-skip-check.cfg.xml").build();
+    .randomEngineName()
+    .configurationResource("operaton-skip-check.cfg.xml")
+    .build();
 
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
@@ -47,10 +50,33 @@ class QuerySessionFactoryTest {
     assertThat(querySessionFactory.getWrappedConfiguration()).isEqualTo(processEngineConfiguration);
     assertThat(querySessionFactory.getDatabaseType()).isEqualTo(processEngineConfiguration.getDatabaseType());
     assertThat(querySessionFactory.getDataSource()).isEqualTo(processEngineConfiguration.getDataSource());
-    assertThat(querySessionFactory.getDatabaseTablePrefix()).isEqualTo(processEngineConfiguration.getDatabaseTablePrefix());
+    assertThat(querySessionFactory.getDatabaseTablePrefix()).isEqualTo(
+      processEngineConfiguration.getDatabaseTablePrefix());
     assertThat(querySessionFactory.getSkipIsolationLevelCheck()).isTrue();
     assertThat(querySessionFactory.getHistoryLevel()).isEqualTo(processEngineConfiguration.getHistoryLevel());
     assertThat(querySessionFactory.getHistory()).isEqualTo(processEngineConfiguration.getHistory());
 
+  }
+
+  @Test
+  void buildMappingsShouldBuildValidXml() throws Exception {
+    // given
+    QuerySessionFactory querySessionFactory = new QuerySessionFactory();
+    processEngineConfiguration = processEngineExtension.getProcessEngineConfiguration();
+    querySessionFactory.initFromProcessEngineConfiguration(processEngineConfiguration, Collections.emptyList());
+    var mappingFiles = List.of("foo/mapping1.xml", "bar/mapping2.xml");
+    var documentBuildFactory = DocumentBuilderFactory.newDefaultInstance();
+    var builder = documentBuildFactory.newDocumentBuilder();
+
+    // when
+    String mappings = querySessionFactory.buildMappings(mappingFiles);
+
+    // then
+    var document = builder.parse(new ByteArrayInputStream(mappings.getBytes()));
+    assertThat(document.getDocumentElement().getNodeName()).isEqualTo("configuration");
+
+    assertThat(mappings)
+      .contains("<mapper resource=\"foo/mapping1.xml\" />\n")
+      .contains("<mapper resource=\"bar/mapping2.xml\" />\n");
   }
 }

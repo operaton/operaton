@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb.local.bean;
 
+import org.operaton.bpm.BpmPlatform;
+
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
-
-import org.operaton.bpm.BpmPlatform;
 
 /**
  * A SLSB with a local business interface

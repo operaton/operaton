@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.client.variable.impl;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class DefaultValueMappers<T extends TypedValue> implements Serializable, 
 
   protected static final ExternalTaskClientLogger LOG = ExternalTaskClientLogger.CLIENT_LOGGER;
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected List<ValueMapper<? extends TypedValue>> serializerList = new ArrayList<>();
   protected String defaultSerializationFormat;

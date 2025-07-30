@@ -166,8 +166,8 @@ class ReferenceTest extends BpmnModelTest {
     assertThat(messageEventDefinition.getMessage()).isNotNull();
     assertThat(messageEventDefinition.getMessage()).isEqualTo(message);
 
-    StartEvent startEvent = bpmnModelInstance.getModelElementById("start-event");
-    Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
+    StartEvent start = bpmnModelInstance.getModelElementById("start-event");
+    Collection<EventDefinition> eventDefinitionRefs = start.getEventDefinitionRefs();
     assertThat(eventDefinitionRefs)
       .isNotEmpty()
       .contains(messageEventDefinition);

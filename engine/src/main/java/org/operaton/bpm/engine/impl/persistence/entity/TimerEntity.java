@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class TimerEntity extends JobEntity {
 
   public static final String TYPE = "timer";
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String repeat;
 

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoEntity;
  */
 public class SetUserInfoCmd implements Command<Object>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String userId;
   protected String userPassword;
   protected String type;

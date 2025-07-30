@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.model;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionImpl;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnCaseInstance;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
@@ -27,7 +30,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class CmmnCaseDefinition extends CmmnActivity {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public CmmnCaseDefinition(String id) {
     super(id, null);

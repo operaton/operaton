@@ -16,23 +16,23 @@
  */
 package org.operaton.bpm.integrationtest.deployment.callbacks;
 
-import org.operaton.bpm.integrationtest.deployment.callbacks.apps.CustomEjbProcessApplication;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPa;
+
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.integrationtest.deployment.callbacks.apps.CustomEjbProcessApplication;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
-
-import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPa;
 
 /**
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class EjbPALifecycleCallbacksTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -48,7 +48,7 @@ public class EjbPALifecycleCallbacksTest extends AbstractFoxPlatformIntegrationT
 
   @Test
   @SuppressWarnings("java:S2699")
-  public void testPaLifecycleCallbacks() {
+  void testPaLifecycleCallbacks() {
     // if we get here, everything is all right :)
   }
 

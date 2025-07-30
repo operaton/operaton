@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
 
-import static java.lang.String.format;
-
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
@@ -175,7 +173,7 @@ public class CmmnAwareTests extends BpmnAwareTests {
    */
   public static void complete(CaseExecution caseExecution, Map<String, Object> variables) {
     if (caseExecution == null || variables == null) {
-      throw new IllegalArgumentException(format("Illegal call of complete(caseExecution = '%s', variables = '%s') - both must not be null!", caseExecution, variables));
+      throw new IllegalArgumentException("Illegal call of complete(caseExecution = '%s', variables = '%s') - both must not be null!".formatted(caseExecution, variables));
     }
     caseService().completeCaseExecution(caseExecution.getId(), variables);
   }

@@ -41,7 +41,7 @@ public class ArchiveInvoiceService implements JavaDelegate {
       throw new ProcessEngineException("Could not archive invoice...");
     }
     else {
-      LOGGER.info("\n\n  ... Now archiving invoice "+execution.getVariable("invoiceNumber")
+      LOGGER.info(() -> "\n\n  ... Now archiving invoice "+execution.getVariable("invoiceNumber")
           +", filename: "+invoiceDocumentVar.getFilename()+" \n\n");
     }
   }

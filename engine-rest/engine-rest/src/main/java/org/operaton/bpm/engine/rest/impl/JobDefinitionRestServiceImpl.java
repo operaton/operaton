@@ -100,7 +100,7 @@ public class JobDefinitionRestServiceImpl extends AbstractRestProcessEngineAware
       dto.updateSuspensionState(getProcessEngine());
 
     } catch (IllegalArgumentException e) {
-      String message = String.format("Could not update the suspension state of Job Definitions due to: %s", e.getMessage()) ;
+      String message = "Could not update the suspension state of Job Definitions due to: %s".formatted(e.getMessage()) ;
       throw new InvalidRequestException(Status.BAD_REQUEST, e, message);
     }
   }

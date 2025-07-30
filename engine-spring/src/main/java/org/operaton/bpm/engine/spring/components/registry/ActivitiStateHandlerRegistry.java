@@ -62,7 +62,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
         leave(execution);
     }
 
-    protected String registrationKey(String stateName, String processName) {
+    protected String registrationKey(String processName, String stateName) {
         return (org.operaton.commons.utils.StringUtil.defaultString(processName) +
                 ":" + org.operaton.commons.utils.StringUtil.defaultString(stateName)).toLowerCase();
     }
@@ -164,7 +164,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
   @Override
   public void afterPropertiesSet() {
         Assert.notNull(this.processEngine, "the 'processEngine' can't be null");
-        logger.info("this bean contains a processEngine reference. " + this.processEngine);
-        logger.info("starting " + getClass().getName());
+        logger.info(() -> "this bean contains a processEngine reference. " + this.processEngine);
+        logger.info(() -> "starting " + getClass().getName());
     }
 }

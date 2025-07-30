@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.variable.impl.type;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ import org.operaton.bpm.engine.variable.value.builder.FileValueBuilder;
  */
 public class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValueType {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public FileValueTypeImpl() {
     super("file");

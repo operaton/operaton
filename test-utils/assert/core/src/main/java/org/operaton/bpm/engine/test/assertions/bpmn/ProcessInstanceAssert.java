@@ -72,10 +72,10 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   @Override
   protected String toString(ProcessInstance processInstance) {
     return processInstance != null ?
-      String.format("%s {" +
+      ("%s {" +
         "id='%s', " +
         "processDefinitionId='%s', " +
-        "businessKey='%s'}",
+        "businessKey='%s'}").formatted(
         ProcessInstance.class.getSimpleName(),
         processInstance.getId(),
         processInstance.getProcessDefinitionId(),
@@ -342,8 +342,12 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     Map<String, Object> vars = vars();
     var message = new StringBuilder();
     message.append("Expecting %s to hold ");
-    message.append(shouldHaveVariables ? "process variables"
-      + (shouldHaveSpecificVariables ? " %s, " : ", ") : "no variables at all, ");
+    if (shouldHaveVariables) {
+      message.append("process variables");
+      message.append((shouldHaveSpecificVariables ? " %s, " : ", "));
+    } else {
+      message.append("no variables at all, ");
+    }
     message.append("instead we found it to hold ");
     message.append(vars.isEmpty() ? "no variables at all." : "the variables %s.");
     if (vars.isEmpty() && getCurrent() == null)

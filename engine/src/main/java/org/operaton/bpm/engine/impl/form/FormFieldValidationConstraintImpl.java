@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
  */
 public class FormFieldValidationConstraintImpl implements FormFieldValidationConstraint, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String name;
   protected String configuration;

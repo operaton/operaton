@@ -46,6 +46,6 @@ public abstract class AbstractHistoryLevel implements HistoryLevel {
 
   @Override
   public String toString() {
-    return String.format("%s(name=%s, id=%d)", getClass().getSimpleName(), getName(), getId());
+    return "%s(name=%s, id=%d)".formatted(getClass().getSimpleName(), getName(), getId());
   }
 }

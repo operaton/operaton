@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 
@@ -81,15 +80,10 @@ class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createComment(TASK_ID, processInstanceId, "aComment");
 
-    try {
-      // when
-      taskService.deleteProcessInstanceComments(processInstanceId);
-      fail("Exception expected: It should not be possible to delete a comment.");
-    } catch (AuthorizationException e) {
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'UPDATE'",
-          e.getMessage());
-    }
+    // when + then
+    assertThatThrownBy(() -> taskService.deleteProcessInstanceComments(processInstanceId),"It should not be possible to delete a comment.")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'UPDATE'");
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -198,15 +192,9 @@ class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createComment(null, processInstanceId, "aComment");
 
-    try {
-      // when
-      taskService.deleteProcessInstanceComments(processInstanceId);
-      fail("Exception expected: It should not be possible to delete a comment.");
-    } catch (AuthorizationException e) {
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'UPDATE'",
-          e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.deleteProcessInstanceComments(processInstanceId), "It should not be possible to delete a comment.")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'UPDATE'");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")

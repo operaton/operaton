@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.json;
 
+import java.io.Serial;
+
+
 import org.operaton.spin.SpinRuntimeException;
 
 /**
@@ -23,7 +26,7 @@ import org.operaton.spin.SpinRuntimeException;
  */
 public class SpinJsonPathException extends SpinRuntimeException {
 
-    private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
     public SpinJsonPathException(String message) {
         super(message);

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.variable.impl.type;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuild
  */
 public class ObjectTypeImpl extends AbstractValueTypeImpl implements SerializableValueType {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public static final String TYPE_NAME = "object";
 

@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.impl.history.event.HistoricVariableUpdateEventEnt
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;

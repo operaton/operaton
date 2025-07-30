@@ -17,6 +17,8 @@
 package org.operaton.bpm.engine.cdi.impl.event;
 
 import jakarta.enterprise.inject.spi.BeanManager;
+
+import java.io.Serial;
 import java.lang.annotation.Annotation;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
@@ -31,7 +33,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  */
 public class CdiEventListener extends AbstractCdiEventListener {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Override
   protected void fireEvent(BusinessProcessEvent event, Annotation[] qualifiers) {

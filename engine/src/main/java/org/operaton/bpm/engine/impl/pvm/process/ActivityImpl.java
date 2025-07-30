@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +38,7 @@ import java.util.Map;
  */
 public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected List<TransitionImpl> outgoingTransitions = new ArrayList<>();
   protected Map<String, TransitionImpl> namedOutgoingTransitions = new HashMap<>();

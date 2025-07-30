@@ -82,12 +82,12 @@ public abstract class AbstractVariablesResource implements VariableResource {
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format("Cannot get %s variable %s: %s", getResourceTypeName(), variableName, e.getMessage());
+      String errorMessage = "Cannot get %s variable %s: %s".formatted(getResourceTypeName(), variableName, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
     }
 
     if (value == null) {
-      String errorMessage = String.format("%s variable with name %s does not exist", getResourceTypeName(), variableName);
+      String errorMessage = "%s variable with name %s does not exist".formatted(getResourceTypeName(), variableName);
       throw new InvalidRequestException(Status.NOT_FOUND, errorMessage);
     }
     return value;
@@ -108,15 +108,15 @@ public abstract class AbstractVariablesResource implements VariableResource {
 
     } catch (RestException e) {
       throw new InvalidRequestException(e.getStatus(), e,
-        String.format("Cannot put %s variable %s: %s", getResourceTypeName(), variableName, e.getMessage()));
+        "Cannot put %s variable %s: %s".formatted(getResourceTypeName(), variableName, e.getMessage()));
     } catch (BadUserRequestException e) {
       throw new RestException(Status.BAD_REQUEST, e,
-        String.format("Cannot put %s variable %s: %s", getResourceTypeName(), variableName, e.getMessage()));
+        "Cannot put %s variable %s: %s".formatted(getResourceTypeName(), variableName, e.getMessage()));
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e,
-          String.format("Cannot put %s variable %s: %s", getResourceTypeName(), variableName, e.getMessage()));
+        "Cannot put %s variable %s: %s".formatted(getResourceTypeName(), variableName, e.getMessage()));
     }
   }
 
@@ -161,7 +161,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
       } catch (AuthorizationException e) {
         throw e;
       } catch (ProcessEngineException e) {
-        String errorMessage = String.format("Cannot put %s variable %s: %s", getResourceTypeName(), variableKey, e.getMessage());
+        String errorMessage = "Cannot put %s variable %s: %s".formatted(getResourceTypeName(), variableKey, e.getMessage());
         throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
       }
     }
@@ -227,7 +227,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format("Cannot delete %s variable %s: %s", getResourceTypeName(), variableName, e.getMessage());
+      String errorMessage = "Cannot delete %s variable %s: %s".formatted(getResourceTypeName(), variableName, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
     }
 
@@ -240,7 +240,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
       variableModifications = VariableValueDto.toMap(patch.getModifications(), engine, objectMapper);
 
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot modify variables for %s: %s", getResourceTypeName(), e.getMessage());
+      String errorMessage = "Cannot modify variables for %s: %s".formatted(getResourceTypeName(), e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     }
@@ -252,7 +252,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format("Cannot modify variables for %s %s: %s", getResourceTypeName(), resourceId, e.getMessage());
+      String errorMessage = "Cannot modify variables for %s %s: %s".formatted(getResourceTypeName(), resourceId, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
     }
 

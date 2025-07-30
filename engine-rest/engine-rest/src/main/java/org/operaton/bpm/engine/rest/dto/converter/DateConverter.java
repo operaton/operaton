@@ -26,9 +26,9 @@ public class DateConverter extends JacksonAwareStringToTypeConverter<Date> {
   @Override
   public Date convertQueryParameterToType(String value) {
     if (value != null && (value.startsWith("\"") || value.endsWith("\""))) {
-      throw new InvalidRequestException(Response.Status.BAD_REQUEST, String
-          .format("Cannot convert value %s to java type %s because of double quotes", value,
-              java.util.Date.class.getName()));
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Cannot convert value %s to java type %s because of double quotes"
+        .formatted(value,
+          java.util.Date.class.getName()));
     }
     return mapToType("\"" + value + "\"", Date.class);
   }

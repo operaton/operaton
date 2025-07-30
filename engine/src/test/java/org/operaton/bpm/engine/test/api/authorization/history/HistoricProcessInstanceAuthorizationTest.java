@@ -258,18 +258,14 @@ class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest {
     taskService.complete(taskId);
     enableAuthorization();
 
-    try {
-      // when
-      historyService.deleteHistoricProcessInstance(processInstanceId);
-      fail("Exception expected: It should not be possible to delete the historic process instance");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE_HISTORY.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(
+        () -> historyService.deleteHistoricProcessInstance(processInstanceId),
+        "It should not be possible to delete the historic process instance")
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE_HISTORY.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -516,15 +512,9 @@ class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest {
         .createHistoricProcessInstanceReport()
         .processDefinitionIdIn(processInstance1.getProcessDefinitionId(), processInstance2.getProcessDefinitionId());
 
-    // when
-    try {
-      historicProcessInstanceReport.duration(PeriodUnit.MONTH);
-
-      // then
-      fail("Exception expected: It should not be possible to create a historic process instance report");
-    } catch (AuthorizationException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicProcessInstanceReport.duration(PeriodUnit.MONTH),
+        "It should not be possible to create a historic process instance report"
+    ).isInstanceOf(AuthorizationException.class);
   }
 
   @Test

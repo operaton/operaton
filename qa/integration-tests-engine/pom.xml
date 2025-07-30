@@ -39,8 +39,8 @@
       <type>pom</type>
     </dependency>
     <dependency>
-      <groupId>org.jboss.arquillian.junit</groupId>
-      <artifactId>arquillian-junit-container</artifactId>
+      <groupId>org.jboss.arquillian.junit5</groupId>
+      <artifactId>arquillian-junit5-container</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -53,18 +53,11 @@
       <artifactId>operaton-test-utils-testcontainers</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
-
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -135,8 +128,8 @@
           <groupId>org.springframework</groupId>
         </exclusion>
         <exclusion>
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter</artifactId>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -158,8 +151,8 @@
           <artifactId>juel-impl</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter</artifactId>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -178,7 +171,7 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <classifier>junit4</classifier>
+      <classifier>junit5</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -356,8 +349,8 @@
           <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
         </dependency>
         <dependency>
-          <groupId>org.jboss.arquillian.junit</groupId>
-          <artifactId>arquillian-junit-container</artifactId>
+          <groupId>org.jboss.arquillian.junit5</groupId>
+          <artifactId>arquillian-junit5-container</artifactId>
           <scope>test</scope>
         </dependency>
         <dependency>
@@ -404,13 +397,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <dependencies>
-              <dependency>
-                <groupId>org.apache.maven.surefire</groupId>
-                <artifactId>surefire-junit47</artifactId>
-                <version>3.5.2</version>
-              </dependency>
-            </dependencies>
             <configuration>
               <failIfNoTests>true</failIfNoTests>
               <excludes>

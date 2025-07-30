@@ -16,25 +16,28 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import jakarta.ws.rs.core.MediaType;
-
 import jakarta.ws.rs.core.Response;
-import org.junit.Before;
-import org.junit.Test;
 
 public class CsrfPreventionIT extends AbstractWebIntegrationTest {
 
-  @Before
+  @BeforeEach
   public void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
-  @Test(timeout=10000)
+  @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfCsrfPreventionCookie() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
@@ -54,7 +57,7 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
     assertTrue(xsrfCookieValue.contains(";SameSite=Lax"));
   }
 
-  @Test(timeout=10000)
+  @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
   public void shouldRejectModifyingRequest() {
     // given
     String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());

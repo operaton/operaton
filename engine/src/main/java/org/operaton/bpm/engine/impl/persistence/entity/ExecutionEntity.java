@@ -63,12 +63,11 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 import org.operaton.bpm.engine.impl.tree.ExecutionTopDownWalker;
 import org.operaton.bpm.engine.impl.util.BitMaskUtil;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
@@ -77,6 +76,7 @@ import org.operaton.bpm.model.bpmn.instance.FlowElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
+import java.io.Serial;
 import java.util.*;
 
 /**
@@ -86,7 +86,7 @@ import java.util.*;
  */
 public class ExecutionEntity extends PvmExecutionImpl implements Execution, ProcessInstance, DbEntity, HasDbRevision, HasDbReferences, VariablesProvider<VariableInstanceEntity> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -1067,11 +1067,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   private void removeJobs() {
-    for (Job job : getJobs()) {
+    for (var job : getJobs()) {
       if (isReplacedByParent()) {
-        ((JobEntity) job).setExecution(getReplacedBy());
+        job.setExecution(getReplacedBy());
       } else {
-        ((JobEntity) job).delete();
+        job.delete();
       }
     }
   }
@@ -1329,7 +1329,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       Collection<ExternalTaskEntity> externalTasks) {
 
     EnsureUtil.ensureNotEmpty(NullValueException.class,
-        String.format("Cannot restore state of process instance %s", processInstanceId),
+      "Cannot restore state of process instance %s".formatted(processInstanceId),
         "list of executions", executions);
 
     if(!isProcessInstanceExecution()) {

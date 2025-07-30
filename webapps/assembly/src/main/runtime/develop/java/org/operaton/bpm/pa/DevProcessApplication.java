@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.LinkedList;
@@ -544,7 +545,7 @@ public class DevProcessApplication extends ServletProcessApplication {
   }
 
   protected int getRandomBetween(int min, int max) {
-    return (int)(Math.random() * (max - min) + min);
+    return (int)(ThreadLocalRandom.current().nextDouble() * (max - min) + min);
   }
 
   protected void createDeployment(ProcessEngine engine, String deploymentName, BpmnModelInstance model) {

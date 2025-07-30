@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
@@ -42,7 +43,7 @@ import java.util.Map;
  */
 public class EventSubscriptionDeclaration implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected final EventType eventType;
   protected final Expression eventName;

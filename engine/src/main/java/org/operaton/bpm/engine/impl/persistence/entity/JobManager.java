@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventSubprocessJobHandler;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.runtime.Job;
 

@@ -1919,7 +1919,7 @@ class HistoricProcessInstanceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
   void shouldNotRetrieveInstanceWhenQueryByActivityIdInWithFailingSubprocess() {
     // given
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
+    runtimeService.startProcessInstanceByKey("failingSubProcess");
 
     testHelper.executeAvailableJobs();
 
@@ -2276,7 +2276,7 @@ class HistoricProcessInstanceTest {
     taskService.complete(tasks.get(0).getId());
     taskService.complete(tasks.get(1).getId());
 
-    ProcessInstance processWithoutIncident = runtimeService.startProcessInstanceByKey("failingProcess");
+    runtimeService.startProcessInstanceByKey("failingProcess");
 
     List<String> queriedProcessInstances = Arrays.asList(processWithIncident1.getId(), processWithIncident2.getId());
 
@@ -2459,7 +2459,7 @@ class HistoricProcessInstanceTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.putValue("foo", "bar"))
         .getProcessInstanceId();
-    String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess",
+    runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.putValue("bar", "foo"))
         .getProcessInstanceId();
 
@@ -2481,7 +2481,7 @@ class HistoricProcessInstanceTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.putValue("foo", "bar"))
         .getProcessInstanceId();
-    String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess",
+    runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.putValue("bar", "foo"))
         .getProcessInstanceId();
 
@@ -2577,7 +2577,7 @@ class HistoricProcessInstanceTest {
   void shouldQueryByVariableValue_10() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess", "a-business-key").getProcessInstanceId();
-    String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+    runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
 
     // WHEN
     List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()

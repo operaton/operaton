@@ -418,6 +418,7 @@ class CaseServiceProcessTaskTest {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
+    assertThat(processTaskId).isNotNull();
 
     String taskId = queryTask().getId();
 

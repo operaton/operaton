@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -23,7 +24,7 @@ import java.io.Serializable;
  */
 public class CompensateEventDefinition implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String activityRef;
   protected boolean waitForCompletion;

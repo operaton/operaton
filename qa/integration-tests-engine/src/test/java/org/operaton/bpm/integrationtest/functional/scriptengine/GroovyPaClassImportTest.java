@@ -17,30 +17,31 @@
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.integrationtest.functional.scriptengine.classes.CustomClass;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class GroovyPaClassImportTest extends AbstractFoxPlatformIntegrationTest {
 
   public static final String SCRIPT_WITH_IMPORT =
-      "import org.operaton.bpm.integrationtest.functional.scriptengine.classes.CustomClass\n"
-    + "execution.setVariable('greeting', new CustomClass().greet())";
+      """
+    import org.operaton.bpm.integrationtest.functional.scriptengine.classes.CustomClass
+    execution.setVariable('greeting', new CustomClass().greet())""";
 
   public static final String GROOVY_MODULE_DEPENDENCY =
       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
@@ -82,7 +83,7 @@ public class GroovyPaClassImportTest extends AbstractFoxPlatformIntegrationTest 
 
   @Test
   @OperateOnDeployment("pa1")
-  public void shouldSetVariable() {
+  void shouldSetVariable() {
     // first start process 1 (this creates and caches the groovy engine)
     runtimeService.startProcessInstanceByKey("process1").getId();
 

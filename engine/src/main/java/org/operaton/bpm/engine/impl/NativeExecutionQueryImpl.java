@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.runtime.NativeExecutionQuery;
 
 public class NativeExecutionQueryImpl extends AbstractNativeQuery<NativeExecutionQuery, Execution> implements NativeExecutionQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public NativeExecutionQueryImpl(CommandContext commandContext) {
     super(commandContext);

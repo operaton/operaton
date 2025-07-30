@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.util.Map;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
  */
 public abstract class AbstractSetVariableCmd extends AbstractVariableCmd {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected Map<String, ? extends Object> variables;
 

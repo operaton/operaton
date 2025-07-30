@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
+import java.io.Serial;
+
 public class ProcessApplicationStoppedEvent extends ProcessApplicationEvent {
 
-  private static final long serialVersionUID = 8052917038949847157L;
+  @Serial private static final long serialVersionUID = 8052917038949847157L;
 
   public ProcessApplicationStoppedEvent(Object source) {
     super(source);

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.variables;
 
 import java.io.ObjectInputStream;
+import java.io.Serial;
 
 /**
  * @author Daniel Meyer
@@ -28,7 +29,7 @@ public class FailingJavaSerializable extends JavaSerializable {
     super(property);
   }
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private void readObject(ObjectInputStream ois) {
     throw new RuntimeException("Exception while deserializing object.");

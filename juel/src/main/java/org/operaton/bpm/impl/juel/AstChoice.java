@@ -19,7 +19,9 @@ import jakarta.el.ELContext;
 import jakarta.el.ELException;
 
 public class AstChoice extends AstRightValue {
-	private final AstNode question, yes, no;
+	private final AstNode question;
+	private final AstNode yes;
+	private final AstNode no;
 
 	public AstChoice(AstNode question, AstNode yes, AstNode no) {
 		this.question = question;
@@ -54,6 +56,11 @@ public class AstChoice extends AstRightValue {
 
   @Override
   public AstNode getChild(int i) {
-		return i == 0 ? question : i == 1 ? yes : i == 2 ? no : null;
+		return switch (i) {
+			case 0 -> question;
+			case 1 -> yes;
+			case 2 -> no;
+			default -> null;
+		};
 	}
 }

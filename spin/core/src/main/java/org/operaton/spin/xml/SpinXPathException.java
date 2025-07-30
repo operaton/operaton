@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.xml;
 
+import java.io.Serial;
+
+
 import org.operaton.spin.SpinRuntimeException;
 
 /**
@@ -25,7 +28,7 @@ import org.operaton.spin.SpinRuntimeException;
  */
 public class SpinXPathException extends SpinRuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public SpinXPathException(String message, Throwable cause) {
     super(message, cause);

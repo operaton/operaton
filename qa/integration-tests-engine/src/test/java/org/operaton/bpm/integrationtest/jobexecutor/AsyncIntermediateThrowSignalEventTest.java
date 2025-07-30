@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class AsyncIntermediateThrowSignalEventTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -38,7 +38,7 @@ public class AsyncIntermediateThrowSignalEventTest extends AbstractFoxPlatformIn
   }
 
   @Test
-  public void testAsyncSignalEvent() {
+  void testAsyncSignalEvent() {
     ProcessInstance piCatchSignal = runtimeService.startProcessInstanceByKey("catchSignal");
 
     ProcessInstance piThrowSignal = runtimeService.startProcessInstanceByKey("throwSignal");

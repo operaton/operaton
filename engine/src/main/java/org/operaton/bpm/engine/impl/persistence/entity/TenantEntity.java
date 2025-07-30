@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.db.HasDbRevision;
 
 public class TenantEntity implements Tenant, Serializable, DbEntity, HasDbRevision {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected String name;

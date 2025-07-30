@@ -932,7 +932,7 @@ class IdentityServiceTest {
       identityService.saveUser(user);
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "User", invalidId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("User", invalidId));
     }
   }
 
@@ -946,7 +946,7 @@ class IdentityServiceTest {
 
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "User", invalidId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("User", invalidId));
     }
   }
 
@@ -958,7 +958,7 @@ class IdentityServiceTest {
       identityService.saveGroup(group);
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Group", invalidId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Group", invalidId));
     }
   }
 
@@ -972,7 +972,7 @@ class IdentityServiceTest {
 
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Group", invalidId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Group", invalidId));
     }
   }
 
@@ -1007,7 +1007,7 @@ class IdentityServiceTest {
       processEngineIdentityService.saveUser(user);
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "User", invalidUserId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("User", invalidUserId));
     }
 
     Group johnsGroup = processEngineIdentityService.newGroup("johnsGroup");
@@ -1016,7 +1016,7 @@ class IdentityServiceTest {
       processEngineIdentityService.saveGroup(johnsGroup);
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Group", invalidGroupId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Group", invalidGroupId));
     }
 
     Tenant tenant = processEngineIdentityService.newTenant(invalidTenantId);
@@ -1024,7 +1024,7 @@ class IdentityServiceTest {
       processEngineIdentityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidTenantId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidTenantId));
     }
   }
 
@@ -1048,7 +1048,7 @@ class IdentityServiceTest {
       processEngineIdentityService.saveUser(user);
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "User", invalidUserId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("User", invalidUserId));
     }
 
     Group group = processEngineIdentityService.newGroup(invalidGroupId);
@@ -1058,7 +1058,7 @@ class IdentityServiceTest {
       processEngineIdentityService.saveGroup(group);
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Group", invalidGroupId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Group", invalidGroupId));
     }
 
     Tenant tenant = processEngineIdentityService.newTenant(invalidTenantId);
@@ -1067,7 +1067,7 @@ class IdentityServiceTest {
       processEngineIdentityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidTenantId));
+      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidTenantId));
     }
   }
 

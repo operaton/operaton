@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.repository;
 
+import java.io.Serial;
 import java.util.List;
 
 
@@ -26,7 +27,7 @@ import java.util.List;
  */
 public class DiagramEdge extends DiagramElement {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private List<DiagramEdgeWaypoint> waypoints;
 

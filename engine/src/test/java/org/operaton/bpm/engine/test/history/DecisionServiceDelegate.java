@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 
 public class DecisionServiceDelegate implements JavaDelegate, CaseExecutionListener, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

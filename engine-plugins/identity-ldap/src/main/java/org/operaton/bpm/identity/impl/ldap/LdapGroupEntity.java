@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 
 /**
@@ -24,7 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
  */
 public class LdapGroupEntity extends GroupEntity {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String dn;
 

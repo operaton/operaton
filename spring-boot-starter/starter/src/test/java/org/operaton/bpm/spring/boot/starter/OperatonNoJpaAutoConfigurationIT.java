@@ -32,8 +32,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 @SpringBootTest(classes = {TestApplication.class},
   webEnvironment = WebEnvironment.NONE,
@@ -56,12 +56,8 @@ class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfiguration
     TestEntity testEntity = testEntityRepository.save(new TestEntity());
     Map<String, Object> variables = new HashMap<>();
     variables.put("test", testEntity);
-    try {
-      runtimeService.startProcessInstanceByKey("TestProcess", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e).isNotNull();
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("TestProcess", variables), "ProcessEngineException is expected when JPA is disabled.")
+        .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

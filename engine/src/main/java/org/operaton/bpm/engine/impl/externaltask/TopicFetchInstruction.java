@@ -22,6 +22,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ import java.util.Map;
  */
 public class TopicFetchInstruction implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String topicName;
   protected String businessKey;

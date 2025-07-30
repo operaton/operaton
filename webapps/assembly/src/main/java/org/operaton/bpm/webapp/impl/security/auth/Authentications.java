@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ import java.util.Map;
  */
 public class Authentications implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /**
    * holds the current authentication
@@ -49,10 +50,7 @@ public class Authentications implements Serializable {
   /**
    * holds an entry for each processEngine->userId pair currently authenticated
    */
-  protected Map<String, UserAuthentication> authentications = new HashMap<>();
-
-  public Authentications() {
-  }
+  private final Map<String, UserAuthentication> engineName2UserAuthentication = new HashMap<>();
 
   /**
    * Returns an {@link Authentication} for a provided process engine name or "null".
@@ -63,7 +61,7 @@ public class Authentications implements Serializable {
    * "null" if no user is authenticated for this process engine.
    */
   public Authentication getAuthenticationForProcessEngine(String engineName) {
-    return authentications.get(engineName);
+    return engineName2UserAuthentication.get(engineName);
   }
 
   /**
@@ -73,7 +71,7 @@ public class Authentications implements Serializable {
    * @param authentication the authentication to add
    */
   public void addOrReplace(UserAuthentication authentication) {
-    authentications.put(authentication.getProcessEngineName(), authentication);
+    engineName2UserAuthentication.put(authentication.getProcessEngineName(), authentication);
   }
 
   /**
@@ -84,14 +82,14 @@ public class Authentications implements Serializable {
    * @return the removed user authentication
    */
   public UserAuthentication removeByEngineName(String engineName) {
-    return authentications.remove(engineName);
+    return engineName2UserAuthentication.remove(engineName);
   }
 
   /**
    * @return all active {@link Authentication Authentications}.
    */
   public List<UserAuthentication> getAuthentications() {
-    return new ArrayList<>(authentications.values());
+    return new ArrayList<>(engineName2UserAuthentication.values());
   }
 
   /**

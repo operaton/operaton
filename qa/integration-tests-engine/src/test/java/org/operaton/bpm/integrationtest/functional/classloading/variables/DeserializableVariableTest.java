@@ -16,6 +16,17 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.variables;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -25,17 +36,6 @@ import org.operaton.bpm.integrationtest.functional.classloading.variables.beans.
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Ensures that process variables can be deserialized on a
@@ -43,7 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Nikola Koevski
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class DeserializableVariableTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -68,7 +68,7 @@ public class DeserializableVariableTest extends AbstractFoxPlatformIntegrationTe
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testVariableDeserializationOnProcessApplicationRestart() {
+  void testVariableDeserializationOnProcessApplicationRestart() {
     // given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testDeserializeVariable");
 

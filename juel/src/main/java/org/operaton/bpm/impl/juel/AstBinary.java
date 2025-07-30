@@ -92,7 +92,8 @@ public class AstBinary extends AstRightValue {
 	};
 
 	private final Operator operator;
-	private final AstNode left, right;
+	private final AstNode left;
+	private final AstNode right;
 
 	public AstBinary(AstNode left, AstNode right, Operator operator) {
 		this.left = left;
@@ -130,6 +131,10 @@ public class AstBinary extends AstRightValue {
 
   @Override
   public AstNode getChild(int i) {
-		return i == 0 ? left : i == 1 ? right : null;
+		return switch (i) {
+			case 0 -> left;
+			case 1 -> right;
+			default -> null;
+		};
 	}
 }

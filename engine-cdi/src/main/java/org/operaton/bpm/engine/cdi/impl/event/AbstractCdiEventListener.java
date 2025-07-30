@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.impl.event;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
  */
 public abstract class AbstractCdiEventListener implements TaskListener, ExecutionListener, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private static final Logger LOGGER = Logger.getLogger(AbstractCdiEventListener.class.getName());
 
   protected abstract void fireEvent(BusinessProcessEvent event, Annotation[] qualifiers);

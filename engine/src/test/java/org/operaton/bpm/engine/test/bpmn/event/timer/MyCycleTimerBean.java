@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class MyCycleTimerBean implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String cycle;
 

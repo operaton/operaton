@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -25,16 +33,8 @@ import org.operaton.bpm.integrationtest.functional.cdi.beans.RetryConfig;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class CdiRetryConfigurationTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -60,7 +60,7 @@ public class CdiRetryConfigurationTest extends AbstractFoxPlatformIntegrationTes
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveBean() {
+  void testResolveBean() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testRetry");
 
@@ -79,6 +79,6 @@ public class CdiRetryConfigurationTest extends AbstractFoxPlatformIntegrationTes
 
      // then
      job = query.singleResult();
-     Assert.assertEquals(6, job.getRetries());
+     Assertions.assertEquals(6, job.getRetries());
   }
 }

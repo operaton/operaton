@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.ByteArrayInputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -80,7 +81,7 @@ import org.operaton.bpm.model.cmmn.instance.Case;
  */
 public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
   private static final TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
 
@@ -380,9 +381,9 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
       String resourceName = resource.getName();
 
       if (existingResources != null && existingResources.containsKey(resourceName)) {
-        String message = String.format("Cannot add resource with id '%s' and name '%s' from "
-            + "deployment with id '%s' to new deployment because the new deployment contains "
-            + "already a resource with same name.", resource.getId(), resourceName, resource.getDeploymentId());
+        String message = ("Cannot add resource with id '%s' and name '%s' from "
+          + "deployment with id '%s' to new deployment because the new deployment contains "
+          + "already a resource with same name.").formatted(resource.getId(), resourceName, resource.getDeploymentId());
 
         throw new NotValidException(message);
       }
@@ -464,8 +465,9 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
 
     ResourceManager resourceManager = commandContext.getResourceManager();
 
-    for (String deploymentId : resourcesByName.keySet()) {
-      Set<String> resourceNames = resourcesByName.get(deploymentId);
+    for (var entry: resourcesByName.entrySet()) {
+      String deploymentId = entry.getKey();
+      Set<String> resourceNames = entry.getValue();
 
       String[] resourceNameArray = resourceNames.toArray(new String[resourceNames.size()]);
       List<ResourceEntity> resources = resourceManager.findResourceByDeploymentIdAndResourceNames(deploymentId, resourceNameArray);
@@ -565,7 +567,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
       if (duplicate != null) {
         String deploymentId = resource.getDeploymentId();
         if (!deploymentId.equals(duplicate.getDeploymentId())) {
-          String message = String.format("The deployments with id '%s' and '%s' contain a resource with same name '%s'.", deploymentId, duplicate.getDeploymentId(), name);
+          String message = "The deployments with id '%s' and '%s' contain a resource with same name '%s'.".formatted(deploymentId, duplicate.getDeploymentId(), name);
           throw new NotValidException(message);
         }
       }

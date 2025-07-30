@@ -135,12 +135,12 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
   }
 
   protected InvalidRequestException createInvalidRequestException(String transition, Status status, ProcessEngineException cause) {
-    String errorMessage = String.format("Cannot %s case instance %s: %s", transition, caseInstanceId, cause.getMessage());
+    String errorMessage = "Cannot %s case instance %s: %s".formatted(transition, caseInstanceId, cause.getMessage());
     return new InvalidRequestException(status, cause, errorMessage);
   }
 
   protected RestException createRestException(String transition, Status status, ProcessEngineException cause) {
-    String errorMessage = String.format("Cannot %s case instance %s: %s", transition, caseInstanceId, cause.getMessage());
+    String errorMessage = "Cannot %s case instance %s: %s".formatted(transition, caseInstanceId, cause.getMessage());
     return new RestException(status, cause, errorMessage);
   }
 
@@ -168,7 +168,7 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
           commandBuilder.setVariable(variableName, variableValue.toTypedValue(engine, objectMapper));
         }
       } catch (RestException e) {
-        String errorMessage = String.format("Cannot %s case instance %s due to invalid variable %s: %s", transition, caseInstanceId, variableName, e.getMessage());
+        String errorMessage = "Cannot %s case instance %s due to invalid variable %s: %s".formatted(transition, caseInstanceId, variableName, e.getMessage());
         throw new RestException(e.getStatus(), e, errorMessage);
       }
     }

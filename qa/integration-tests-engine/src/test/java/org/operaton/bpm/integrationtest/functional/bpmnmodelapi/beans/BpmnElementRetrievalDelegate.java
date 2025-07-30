@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.integrationtest.functional.bpmnmodelapi.beans;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Named;
-
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.FlowElement;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 
 /**
  * @author Daniel Meyer

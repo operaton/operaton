@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.integrationtest.deployment.cfg;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>This test ensures that we can use a custom location for the <em>processes.xml</em> file.</p>
@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -52,7 +52,7 @@ public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformInteg
   }
 
   @Test
-  public void testDeployProcessArchive() {
+  void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createProcessDefinitionQuery()

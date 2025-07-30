@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
 import java.util.Date;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
  */
 public class UserOperationLogEntryEventEntity extends HistoryEvent implements UserOperationLogEntry {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String operationId;
   protected String operationType;

@@ -45,7 +45,7 @@ public abstract class AbstractAppPlugin implements AppPlugin {
    */
   @Override
   public String getAssetDirectory() {
-    return String.format("plugin-webapp/%s", getId());
+    return "plugin-webapp/%s".formatted(getId());
   }
 
   @Override

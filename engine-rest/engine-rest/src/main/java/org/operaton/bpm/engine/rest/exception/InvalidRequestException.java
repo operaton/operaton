@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.exception;
 
+import java.io.Serial;
+
 import jakarta.ws.rs.core.Response.Status;
 
 /**
@@ -27,7 +29,7 @@ import jakarta.ws.rs.core.Response.Status;
  */
 public class InvalidRequestException extends RestException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public InvalidRequestException(Status status, String message) {
     super(status, message);

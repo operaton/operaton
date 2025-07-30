@@ -40,6 +40,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
@@ -1317,29 +1319,14 @@ class HistoryCleanupTest {
       .hasMessageContaining("historyCleanupBatchThreshold");
   }
 
-  @Test
-  void testConfigurationFailureMalformedHistoryTimeToLive() {
-    processEngineConfiguration.setHistoryTimeToLive("PP5555DDDD");
-
-    // when/then
-    assertThatThrownBy(() -> processEngineConfiguration.initHistoryCleanup())
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("historyTimeToLive");
-  }
-
-  @Test
-  void testConfigurationFailureInvalidHistoryTimeToLive() {
-    processEngineConfiguration.setHistoryTimeToLive("invalidValue");
-
-    // when/then
-    assertThatThrownBy(() -> processEngineConfiguration.initHistoryCleanup())
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("historyTimeToLive");
-  }
-
-  @Test
-  void testConfigurationFailureNegativeHistoryTimeToLive() {
-    processEngineConfiguration.setHistoryTimeToLive("-6");
+  @ParameterizedTest(name = "{index} - {0}")
+  @CsvSource({
+    "Malformed value, PP5555DDDD",
+    "Invalid value, invalidValue",
+    "Negative value, -6"
+  })
+  void testConfigurationFailure (@SuppressWarnings("unused") String testName, String historyTimeToLive) {
+    processEngineConfiguration.setHistoryTimeToLive(historyTimeToLive);
 
     // when/then
     assertThatThrownBy(() -> processEngineConfiguration.initHistoryCleanup())

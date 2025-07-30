@@ -16,30 +16,28 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.war;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleCaseExecutionListener;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @author Roman Smirnov
  *
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -63,7 +61,7 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveCaseExecutionListenerClass() {
+  void testResolveCaseExecutionListenerClass() {
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleCaseExecutionListener");
@@ -89,14 +87,14 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
         .caseInstanceIdIn(caseInstanceId);
 
     assertThat(query.singleResult()).isNotNull();
-    Assert.assertEquals("listener-notified", query.singleResult().getValue());
+    Assertions.assertEquals("listener-notified", query.singleResult().getValue());
 
     caseService
       .withCaseExecution(caseInstanceId)
       .removeVariable("listener")
       .execute();
 
-    Assert.assertEquals(0, query.count());
+    Assertions.assertEquals(0, query.count());
 
     // the delegate expression listener should execute successfully
     caseService
@@ -104,7 +102,7 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
       .complete();
 
     assertThat(query.singleResult()).isNotNull();
-    Assert.assertEquals("listener-notified", query.singleResult().getValue());
+    Assertions.assertEquals("listener-notified", query.singleResult().getValue());
 
   }
 

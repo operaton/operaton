@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class SimpleSerializableBean implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected int intProperty;
 

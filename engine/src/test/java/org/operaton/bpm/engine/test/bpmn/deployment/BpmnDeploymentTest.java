@@ -16,61 +16,75 @@
  */
 package org.operaton.bpm.engine.test.bpmn.deployment;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.io.InputStream;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.ReadOnlyProcessDefinition;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.bpm.engine.repository.*;
+import org.operaton.bpm.engine.repository.DeploymentBuilder;
+import org.operaton.bpm.engine.repository.DeploymentHandlerFactory;
+import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.engine.repository.Resource;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.WatchLogger;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.operaton.commons.testing.WatchLogger;
-
-import java.io.InputStream;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
  * @author Joram Barrez
  * @author Thorben Lindhauer
  */
-public class BpmnDeploymentTest extends PluggableProcessEngineTest {
+class BpmnDeploymentTest {
 
   protected static final String CMD_LOGGER = "org.operaton.bpm.engine.cmd";
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
-  protected DeploymentHandlerFactory defaultDeploymentHandlerFactory;
-  protected DeploymentHandlerFactory customDeploymentHandlerFactory;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  
+  DeploymentHandlerFactory defaultDeploymentHandlerFactory;
+  DeploymentHandlerFactory customDeploymentHandlerFactory;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     defaultDeploymentHandlerFactory = processEngineConfiguration.getDeploymentHandlerFactory();
     customDeploymentHandlerFactory = new VersionedDeploymentHandlerFactory();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setDeploymentHandlerFactory(defaultDeploymentHandlerFactory);
   }
 
   @Deployment
   @Test
-  public void testGetBpmnXmlFileThroughService() {
+  void testGetBpmnXmlFileThroughService() {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
 
@@ -104,7 +118,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     return new String(bytes);
   }
 
-  public void FAILING_testViolateProcessDefinitionIdMaximumLength() {
+  void FAILING_testViolateProcessDefinitionIdMaximumLength() {
     // given
     DeploymentBuilder deployment = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/deployment/processWithLongId.bpmn20.xml");
@@ -116,7 +130,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeploySameFileTwice() {
+  void testDeploySameFileTwice() {
     String bpmnResourceName = "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml";
     testRule.deploy(repositoryService.createDeployment()
         .enableDuplicateFiltering(false)
@@ -138,7 +152,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldNotFilterDuplicateWithSameFileDeployedTwiceWithoutDeploymentName() {
+  void shouldNotFilterDuplicateWithSameFileDeployedTwiceWithoutDeploymentName() {
     // given
     String bpmnResourceName = "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml";
     testRule.deploy(repositoryService.createDeployment()
@@ -155,7 +169,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
 
   @Test
   @WatchLogger(loggerNames = CMD_LOGGER, level = "WARN")
-  public void shouldLogWarningForDuplicateFilteringWithoutName() {
+  void shouldLogWarningForDuplicateFilteringWithoutName() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process").startEvent().endEvent().done();
 
@@ -172,7 +186,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
 
   @Test
   @WatchLogger(loggerNames = CMD_LOGGER, level = "WARN")
-  public void shouldLogWarningForDuplicateFilteringWithoutPreviousDeploymentName() {
+  void shouldLogWarningForDuplicateFilteringWithoutPreviousDeploymentName() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process").startEvent().endEvent().done();
 
@@ -191,7 +205,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDuplicateFilteringDefaultBehavior() {
+  void testDuplicateFilteringDefaultBehavior() {
     // given
     BpmnModelInstance oldModel = Bpmn.createExecutableProcess("versionedProcess")
       .operatonVersionTag("3").done();
@@ -215,7 +229,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDuplicateFilteringCustomBehavior() {
+  void testDuplicateFilteringCustomBehavior() {
     // given
     processEngineConfiguration.setDeploymentHandlerFactory(customDeploymentHandlerFactory);
     BpmnModelInstance oldModel = Bpmn.createExecutableProcess("versionedProcess")
@@ -246,7 +260,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testPartialChangesDeployAll() {
+  void testPartialChangesDeployAll() {
     BpmnModelInstance model1 = Bpmn.createExecutableProcess("process1").startEvent().done();
     BpmnModelInstance model2 = Bpmn.createExecutableProcess("process2").startEvent().done();
     DeploymentWithDefinitions deployment1 = testRule.deploy(repositoryService.createDeployment()
@@ -274,7 +288,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testPartialChangesDeployChangedOnly() {
+  void testPartialChangesDeployChangedOnly() {
     BpmnModelInstance model1 = Bpmn.createExecutableProcess("process1").startEvent().done();
     BpmnModelInstance model2 = Bpmn.createExecutableProcess("process2").startEvent().done();
     DeploymentWithDefinitions deployment1 = testRule.deploy(repositoryService.createDeployment()
@@ -323,7 +337,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testPartialChangesRedeployOldVersion() {
+  void testPartialChangesRedeployOldVersion() {
     // deployment 1 deploys process version 1
     BpmnModelInstance model1 = Bpmn.createExecutableProcess("process1").startEvent().done();
     testRule.deploy(repositoryService.createDeployment()
@@ -348,22 +362,27 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployTwoProcessesWithDuplicateIdAtTheSameTime() {
+  void testDeployTwoProcessesWithDuplicateIdAtTheSameTime() {
     // given
     String bpmnResourceName = "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml";
     String bpmnResourceName2 = "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService2.bpmn20.xml";
     // when
-    assertThatThrownBy(() -> testRule.deploy(repositoryService.createDeployment()
-        .enableDuplicateFiltering(false)
-        .addClasspathResource(bpmnResourceName)
-        .addClasspathResource(bpmnResourceName2)
-        .name("duplicateAtTheSameTime")));
+    var deploymentBuilder = repositoryService.createDeployment()
+      .enableDuplicateFiltering(false)
+      .addClasspathResource(bpmnResourceName)
+      .addClasspathResource(bpmnResourceName2)
+      .name("duplicateAtTheSameTime");
+
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("The deployment contains definitions with the same key 'emptyProcess' (id attribute), this is not allowed");
+
     // then
     assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Test
-  public void testDeployDifferentFiles() {
+  void testDeployDifferentFiles() {
     String bpmnResourceName = "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml";
     testRule.deploy(repositoryService.createDeployment()
         .enableDuplicateFiltering(false)
@@ -387,7 +406,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDiagramCreationDisabled() {
+  void testDiagramCreationDisabled() {
     testRule.deploy(repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseDiagramInterchangeElements.bpmn20.xml"));
 
@@ -410,7 +429,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testProcessDiagramResource.jpg"
   })
   @Test
-  public void testProcessDiagramResource() {
+  void testProcessDiagramResource() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     assertThat(processDefinition.getResourceName()).isEqualTo("org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testProcessDiagramResource.bpmn20.xml");
@@ -433,7 +452,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
           "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testMultipleDiagramResourcesProvided.c.jpg"
         })
   @Test
-  public void testMultipleDiagramResourcesProvided() {
+  void testMultipleDiagramResourcesProvided() {
     ProcessDefinition processA = repositoryService.createProcessDefinitionQuery().processDefinitionKey("a").singleResult();
     ProcessDefinition processB = repositoryService.createProcessDefinitionQuery().processDefinitionKey("b").singleResult();
     ProcessDefinition processC = repositoryService.createProcessDefinitionQuery().processDefinitionKey("c").singleResult();
@@ -445,14 +464,14 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testProcessDefinitionDescription() {
+  void testProcessDefinitionDescription() {
     String id = repositoryService.createProcessDefinitionQuery().singleResult().getId();
     ReadOnlyProcessDefinition processDefinition = ((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition(id);
     assertThat(processDefinition.getDescription()).isEqualTo("This is really good process documentation!");
   }
 
   @Test
-  public void testDeployInvalidExpression() {
+  void testDeployInvalidExpression() {
     // given
     // ACT-1391: Deploying a process with invalid expressions inside should cause the deployment to fail, since
     // the process is not deployed and useless
@@ -469,7 +488,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml"})
   @Test
-  public void testDeploymentIdOfResource() {
+  void testDeploymentIdOfResource() {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
 
     List<Resource> resources = repositoryService.getDeploymentResources(deploymentId);
@@ -480,7 +499,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployBpmnModelInstance() {
+  void testDeployBpmnModelInstance() {
 
     // given
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo").startEvent().userTask().endEvent().done();
@@ -494,7 +513,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployAndGetProcessDefinition() {
+  void testDeployAndGetProcessDefinition() {
 
     // given process model
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo").startEvent().userTask().endEvent().done();
@@ -519,7 +538,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployNonExecutableProcess() {
+  void testDeployNonExecutableProcess() {
 
     // given non executable process definition
     final BpmnModelInstance modelInstance = Bpmn.createProcess("foo").startEvent().userTask().endEvent().done();

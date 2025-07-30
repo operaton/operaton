@@ -28,7 +28,10 @@ import java.net.URL;
 /**
  * @author Tom Baeyens
  */
-public abstract class ReflectUtil {
+public class ReflectUtil {
+  private ReflectUtil () {
+    // utility class
+  }
 
   public static InputStream getResourceAsStream(String name) {
     // Try the current Thread context class loader

@@ -36,6 +36,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
@@ -47,7 +48,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   // current position /////////////////////////////////////////////////////////
 

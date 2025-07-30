@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.error;
 
+import java.io.Serial;
+
 public class MyBusinessException extends Exception {
 
-  private static final long serialVersionUID = -8849430031097301135L;
+  @Serial private static final long serialVersionUID = -8849430031097301135L;
 
   public MyBusinessException(String message) {
     super(message);

@@ -24,7 +24,7 @@ import org.operaton.bpm.model.bpmn.instance.Task;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -99,19 +99,11 @@ class QueryTest {
   @Test
   void testSingleResult() {
     assertThat(startSucceeding.singleResult().getId()).isEqualTo("user");
-    try {
-      gateway1Succeeding.singleResult();
-      fail("gateway1 has more than one succeeding flow node");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(BpmnModelException.class).hasMessageEndingWith("<2>");
-    }
-    try {
-      gateway2Succeeding.singleResult();
-      fail("gateway2 has more than one succeeding flow node");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(BpmnModelException.class).hasMessageEndingWith("<3>");
-    }
+    assertThatThrownBy(() -> gateway1Succeeding.singleResult(), "gateway1 has more than one succeeding flow node")
+        .isInstanceOf(BpmnModelException.class)
+        .hasMessageEndingWith("<2>");
+    assertThatThrownBy(() -> gateway2Succeeding.singleResult(), "gateway2 has more than one succeeding flow node")
+        .isInstanceOf(BpmnModelException.class)
+        .hasMessageEndingWith("<3>");
   }
 }

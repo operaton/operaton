@@ -121,9 +121,9 @@ public class CsrfPreventionFilter implements Filter {
       Class<?> clazz = Class.forName(randomClass);
       randomSource = (Random) clazz.getConstructor().newInstance();
 
-      String targetOrigin = filterConfig.getInitParameter("targetOrigin");
-      if (!isBlank(targetOrigin)) {
-        setTargetOrigin(targetOrigin);
+      String targetOriginParam = filterConfig.getInitParameter("targetOrigin");
+      if (!isBlank(targetOriginParam)) {
+        setTargetOrigin(targetOriginParam);
       }
 
       String customDenyStatus = filterConfig.getInitParameter("denyStatus");
@@ -232,7 +232,7 @@ public class CsrfPreventionFilter implements Filter {
       || getTargetOrigin().getPort() != sourceURL.getPort()) {
 
       //If any part of the URL doesn't match, an error is reported
-      response.sendError(HttpServletResponse.SC_FORBIDDEN, String.format("CSRFPreventionFilter: Protocol/Host/Port does not fully match: (%s != %s) ", getTargetOrigin(), sourceURL));
+      response.sendError(HttpServletResponse.SC_FORBIDDEN, "CSRFPreventionFilter: Protocol/Host/Port does not fully match: (%s != %s) ".formatted(getTargetOrigin(), sourceURL));
       return false;
     }
 
@@ -381,7 +381,7 @@ public class CsrfPreventionFilter implements Filter {
    * @return the generated token
    */
   protected String generateCSRFToken() {
-    byte random[] = new byte[16];
+    byte[] random = new byte[16];
 
     // Render the result as a String of hexadecimal digits
     StringBuilder buffer = new StringBuilder();
@@ -445,7 +445,7 @@ public class CsrfPreventionFilter implements Filter {
     Set<String> urlSet = new HashSet<>();
 
     if (urlString != null && !urlString.isEmpty()) {
-      String values[] = urlString.split(",");
+      String[] values = urlString.split(",");
       for (String value : values) {
         urlSet.add(value.trim());
       }

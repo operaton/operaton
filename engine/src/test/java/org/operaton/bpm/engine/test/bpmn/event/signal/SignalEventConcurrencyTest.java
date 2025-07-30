@@ -18,6 +18,11 @@ package org.operaton.bpm.engine.test.bpmn.event.signal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.Mockito;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -28,39 +33,29 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestHelper;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.mockito.Mockito;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
+class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule();
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .randomEngineName()
+      .closeEngineAfterAllTests()
+      .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected EventHandler signalEventHandler;
-  protected EventHandler evSpy;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  
+  EventHandler signalEventHandler;
+  EventHandler evSpy;
 
   @Override
-  @Before
+  @BeforeEach
   public void init() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
     super.init();
 
     // create a spy from the default SignalEventHandler & set it in the config
@@ -69,15 +64,15 @@ public class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
     processEngineConfiguration.getEventHandlers().put("signal", evSpy);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.getEventHandlers().put("signal", signalEventHandler);
   }
 
   @Test
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventConcurrencyTest.testSignalWithCompletedExecution.bpmn20.xml" })
-  public void shouldThrowExceptionWhenSignallingWithCompletedExecution() {
+  void shouldThrowExceptionWhenSignallingWithCompletedExecution() {
 
     runtimeService.startProcessInstanceByKey("mainProcess");
 
@@ -119,8 +114,8 @@ public class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
     assertThat(exception)
       .isInstanceOf(NullValueException.class)
       .hasMessage(
-        String.format("Cannot restore state of process instance %s: list of executions is empty",
-            mainTask.getProcessInstanceId()));
+      "Cannot restore state of process instance %s: list of executions is empty".formatted(
+        mainTask.getProcessInstanceId()));
   }
 
 }

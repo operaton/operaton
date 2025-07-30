@@ -28,13 +28,14 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DecisionDefinitionEntity extends DmnDecisionImpl implements DecisionDefinition, ResourceDefinitionEntity<DecisionDefinitionEntity>, DbEntity, HasDbRevision, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 

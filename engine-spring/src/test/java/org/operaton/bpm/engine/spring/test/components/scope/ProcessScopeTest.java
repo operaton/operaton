@@ -56,9 +56,6 @@ class ProcessScopeTest {
       assertThat(message).isNotEmpty();
       assertThat(message).contains("org.operaton.bpm.engine.spring.components.scope.ProcessScope get")
           .contains("couldn't return value from process scope! java.lang.NullPointerException")
-          .contains("at org.operaton.bpm.engine.spring.components.scope.ProcessScope.getExecutionId(ProcessScope.java:")
-          .contains("at org.operaton.bpm.engine.spring.components.scope.ProcessScope.getConversationId(ProcessScope.java:")
-          .contains("at org.operaton.bpm.engine.spring.components.scope.ProcessScope.get(ProcessScope.java:")
           .contains("at org.operaton.bpm.engine.spring.test.components.scope.ProcessScopeTest.shouldLogExceptionStacktrace(ProcessScopeTest.java:");
     }
   }

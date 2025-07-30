@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.test.cmmn.tasklistener.util;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -25,7 +28,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  */
 public class MySpecialTaskListener extends MyTaskListener implements TaskListener {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Override
   public void notify(DelegateTask delegateTask) {

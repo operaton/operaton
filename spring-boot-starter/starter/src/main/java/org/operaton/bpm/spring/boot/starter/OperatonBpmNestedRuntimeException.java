@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
+import java.io.Serial;
+
+
 import org.springframework.core.NestedRuntimeException;
 
 /**
@@ -26,7 +29,7 @@ import org.springframework.core.NestedRuntimeException;
  */
 public class OperatonBpmNestedRuntimeException extends NestedRuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /**
    * Construct an exception with the specified detail message and nested exception.

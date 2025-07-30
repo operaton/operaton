@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.impl.util.CollectionUtil;
+import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;

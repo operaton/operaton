@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.exception.NotAllowedException;
 
 /**
@@ -27,7 +30,7 @@ import org.operaton.bpm.engine.exception.NotAllowedException;
  */
 public class SuspendedEntityInteractionException extends NotAllowedException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public SuspendedEntityInteractionException(String message) {
     super(message);

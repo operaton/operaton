@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 public class NativeProcessInstanceQueryImpl extends AbstractNativeQuery<NativeProcessInstanceQuery, ProcessInstance> implements NativeProcessInstanceQuery {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public NativeProcessInstanceQueryImpl(CommandContext commandContext) {
     super(commandContext);

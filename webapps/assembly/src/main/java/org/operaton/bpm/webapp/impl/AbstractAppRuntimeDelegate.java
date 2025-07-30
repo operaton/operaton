@@ -82,7 +82,7 @@ public abstract class AbstractAppRuntimeDelegate<T extends AppPlugin> implements
     try {
       return loader.iterator().next();
     } catch (NoSuchElementException e) {
-      String message = String.format("No implementation for the %s spi found on classpath", ProcessEngineProvider.class.getName());
+      String message = "No implementation for the %s spi found on classpath".formatted(ProcessEngineProvider.class.getName());
       throw new IllegalStateException(message, e);
     }
   }

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.beans;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.inject.Named;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;
 @BusinessProcessScoped
 public class ProcessScopedMessageBean implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private String message;
 

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
 
 
@@ -29,7 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
  */
 public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /** the id of the activity */
   protected String activityId;

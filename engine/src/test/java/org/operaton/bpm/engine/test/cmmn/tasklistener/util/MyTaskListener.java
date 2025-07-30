@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.tasklistener.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.delegate.DelegateTask;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.delegate.DelegateTask;
  */
 public class MyTaskListener implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public void notify(DelegateTask task, String event) {
     String eventCounterName = event + "EventCounter";

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  */
 public class SetLocalVariableListener implements ExecutionListener, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String variableName;
   protected String variableValue;

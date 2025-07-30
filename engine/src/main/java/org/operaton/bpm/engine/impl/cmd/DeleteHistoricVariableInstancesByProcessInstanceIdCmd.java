@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEn
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -38,7 +39,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Command<Void>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private final String processInstanceId;
 
   public DeleteHistoricVariableInstancesByProcessInstanceIdCmd(String processInstanceId) {

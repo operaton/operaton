@@ -25,12 +25,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.Page;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobsCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -42,38 +49,52 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
+class DeploymentAwareJobExecutorTest {
 
   private static final String OTHER_PROCESS_ENGINE_NAME = "otherProcessEngineName";
-  protected ProcessEngine otherProcessEngine = null;
 
-  @Before
-  public void setUp() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  
+  Object otherProcessEngine = null; // "ProcessEngine" but untyped to protect from ProcessEngineExtension
+
+  ProcessEngine processEngine;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+
+  @BeforeEach
+  void setUp() {
     processEngineConfiguration.setJobExecutorDeploymentAware(true);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setJobExecutorDeploymentAware(false);
     closeDownProcessEngine();
   }
 
   protected void closeDownProcessEngine() {
     if (otherProcessEngine != null) {
-      otherProcessEngine.close();
-      ProcessEngines.unregister(otherProcessEngine);
+      getOtherProcessEngine().close();
+      ProcessEngines.unregister(getOtherProcessEngine());
       otherProcessEngine = null;
     }
   }
 
+  private ProcessEngine getOtherProcessEngine() {
+    return (ProcessEngine) otherProcessEngine;
+  }
+
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
   @Test
-  public void testProcessingOfJobsWithMatchingDeployment() {
+  void testProcessingOfJobsWithMatchingDeployment() {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
@@ -105,7 +126,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
   @Test
-  public void testExplicitDeploymentRegistration() {
+  void testExplicitDeploymentRegistration() {
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     String otherDeploymentId =
@@ -126,9 +147,8 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testRegistrationOfNonExistingDeployment() {
+  void testRegistrationOfNonExistingDeployment() {
     String nonExistingDeploymentId = "some non-existing id";
-    var managementService = processEngine.getManagementService();
 
     try {
       managementService.registerDeploymentForJobExecutor(nonExistingDeploymentId);
@@ -141,7 +161,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
   @Test
-  public void testDeploymentUnregistrationOnUndeployment() {
+  void testDeploymentUnregistrationOnUndeployment() {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     assertThat(managementService.getRegisteredDeployments()).hasSize(1);
 
@@ -152,7 +172,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
   @Test
-  public void testNoUnregistrationOnFailingUndeployment() {
+  void testNoUnregistrationOnFailingUndeployment() {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
@@ -167,7 +187,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
   @Test
-  public void testExplicitDeploymentUnregistration() {
+  void testExplicitDeploymentUnregistration() {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
@@ -178,7 +198,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testJobsWithoutDeploymentIdAreAlwaysProcessed() {
+  void testJobsWithoutDeploymentIdAreAlwaysProcessed() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
 
     String messageId = commandExecutor.execute(commandContext -> {
@@ -217,7 +237,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     }
 
     // 2. deploy again
-    RepositoryService otherRepositoryService = otherProcessEngine.getRepositoryService();
+    RepositoryService otherRepositoryService = getOtherProcessEngine().getRepositoryService();
 
     String deploymentId = otherRepositoryService.createDeployment()
       .addClasspathResource(resource)
@@ -225,14 +245,14 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
     // 3. start instance (i.e. create job)
     ProcessDefinition newDefinition = otherRepositoryService.createProcessDefinitionQuery().deploymentId(deploymentId).singleResult();
-    otherProcessEngine.getRuntimeService().startProcessInstanceById(newDefinition.getId());
+    getOtherProcessEngine().getRuntimeService().startProcessInstanceById(newDefinition.getId());
 
     return deploymentId;
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/jobexecutor/processWithTimerCatch.bpmn20.xml")
   @Test
-  public void testIntermediateTimerEvent() {
+  void testIntermediateTimerEvent() {
 
 
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -258,7 +278,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
   @Deployment(resources="org/operaton/bpm/engine/test/jobexecutor/processWithTimerStart.bpmn20.xml")
   @Test
-  public void testTimerStartEvent() {
+  void testTimerStartEvent() {
 
     Set<String> registeredDeployments = processEngineConfiguration.getRegisteredDeployments();
 

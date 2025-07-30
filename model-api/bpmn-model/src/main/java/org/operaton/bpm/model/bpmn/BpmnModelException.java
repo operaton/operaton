@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.model.bpmn;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.model.xml.ModelException;
 
 /**
@@ -26,7 +29,7 @@ import org.operaton.bpm.model.xml.ModelException;
  */
 public class BpmnModelException extends ModelException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public BpmnModelException() {
   }

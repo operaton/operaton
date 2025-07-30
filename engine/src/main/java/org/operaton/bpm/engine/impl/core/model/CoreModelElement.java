@@ -20,6 +20,7 @@ import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.delegate.VariableListener;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
@@ -31,7 +32,7 @@ import java.util.*;
  */
 public abstract class CoreModelElement implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected String name;

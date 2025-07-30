@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.util.Collection;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  */
 public class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public RemoveExecutionVariablesCmd(String executionId, Collection<String> variableNames, boolean isLocal) {
     super(executionId, variableNames, isLocal);

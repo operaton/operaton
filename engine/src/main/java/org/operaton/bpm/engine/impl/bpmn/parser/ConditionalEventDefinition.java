@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class ConditionalEventDefinition extends EventSubscriptionDeclaration implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   protected String conditionAsString;
   protected final Condition condition;

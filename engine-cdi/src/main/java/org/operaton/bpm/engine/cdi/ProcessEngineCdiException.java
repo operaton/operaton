@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi;
 
+import java.io.Serial;
+
+
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
@@ -25,7 +28,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public class ProcessEngineCdiException extends ProcessEngineException {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   public ProcessEngineCdiException(String message, Throwable cause) {
     super(message, cause);

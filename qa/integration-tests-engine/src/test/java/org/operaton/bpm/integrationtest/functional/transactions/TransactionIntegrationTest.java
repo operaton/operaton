@@ -15,22 +15,21 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.functional.transactions;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.functional.transactions.beans.FailingDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import jakarta.inject.Inject;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import jakarta.transaction.Status;
 import jakarta.transaction.UserTransaction;
 
@@ -40,7 +39,7 @@ import jakarta.transaction.UserTransaction;
  *
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
@@ -60,7 +59,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
   private RuntimeService runtimeService;
 
   @Test
-  public void testProcessFailure() throws Exception {
+  void testProcessFailure() throws Exception {
 
     /* if we start a transaction here and then start
      * a process instance which synchronously invokes a java delegate,
@@ -83,7 +82,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       }
 
       // assert that now our transaction is marked rollback-only:
-      Assert.assertEquals(Status.STATUS_MARKED_ROLLBACK, utx.getStatus());
+      Assertions.assertEquals(Status.STATUS_MARKED_ROLLBACK, utx.getStatus());
 
     } finally {
       // make sure we always rollback
@@ -92,7 +91,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
   }
 
   @Test
-  public void testApplicationFailure() throws Exception {
+  void testApplicationFailure() throws Exception {
 
     /* if we start a transaction here and then successfully start
      * a process instance, if our transaction is rolled back,
@@ -105,7 +104,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       String id = runtimeService.startProcessInstanceByKey("testApplicationFailure").getId();
 
       // assert that the transaction is in good shape:
-      Assert.assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
+      Assertions.assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
 
       // now rollback the transaction (simmulating an application failure after the process engine is done).
       utx.rollback();
@@ -128,7 +127,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
 
 
   @Test
-  public void testTxSuccess() throws Exception {
+  void testTxSuccess() throws Exception {
 
     try {
       utx.begin();
@@ -136,7 +135,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       String id = runtimeService.startProcessInstanceByKey("testTxSuccess").getId();
 
       // assert that the transaction is in good shape:
-      Assert.assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
+      Assertions.assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
 
       // the process instance is visible form our tx:
       ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()

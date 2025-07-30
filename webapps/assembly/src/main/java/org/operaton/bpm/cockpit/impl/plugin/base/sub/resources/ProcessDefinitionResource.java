@@ -66,16 +66,6 @@ public class ProcessDefinitionResource extends AbstractPluginResource {
     return getCommandExecutor().executeCommand(new QueryCalledProcessDefinitionsCmd(queryParameter));
   }
 
-  private void injectEngineConfig(ProcessDefinitionQueryDto parameter) {
-
-    ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl) getProcessEngine()).getProcessEngineConfiguration();
-    if (processEngineConfiguration.getHistoryLevel().equals(HistoryLevel.HISTORY_LEVEL_NONE)) {
-      parameter.setHistoryEnabled(false);
-    }
-
-    parameter.initQueryVariableValues(processEngineConfiguration.getVariableSerializers(), processEngineConfiguration.getDatabaseType());
-  }
-
   protected void configureExecutionQuery(ProcessDefinitionQueryDto query) {
     configureAuthorizationCheck(query);
     configureTenantCheck(query);
@@ -98,6 +88,16 @@ public class ProcessDefinitionResource extends AbstractPluginResource {
       configureExecutionQuery(queryParameter);
       queryParameter.disableMaxResultsLimit();
       return getQueryService().executeQuery("selectCalledProcessDefinitions", queryParameter);
+    }
+
+    private void injectEngineConfig(ProcessDefinitionQueryDto parameter) {
+
+      ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl) getProcessEngine()).getProcessEngineConfiguration();
+      if (processEngineConfiguration.getHistoryLevel().equals(HistoryLevel.HISTORY_LEVEL_NONE)) {
+        parameter.setHistoryEnabled(false);
+      }
+
+      parameter.initQueryVariableValues(processEngineConfiguration.getVariableSerializers(), processEngineConfiguration.getDatabaseType());
     }
   }
 }

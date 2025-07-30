@@ -114,7 +114,11 @@ public class AstMethod extends AstNode {
 
   @Override
   public Node getChild(int i) {
-		return i == 0 ? property : i == 1 ? params : null;
+		return switch (i) {
+			case 0 -> property;
+			case 1 -> params;
+			default -> null;
+		};
 	}
 
 	@Override

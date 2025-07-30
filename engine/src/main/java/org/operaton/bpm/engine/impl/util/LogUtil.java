@@ -135,14 +135,7 @@ public class LogUtil {
       if (threadLogMode==ThreadLogMode.PRINT_ID) {
         return ""+threadId;
       }
-      String threadIndent = threadIndents.get(threadIdInteger);
-      if (threadIndent == null) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("  ".repeat(threadIndents.size()));
-        threadIndent = stringBuilder.toString();
-        threadIndents.put(threadIdInteger, threadIndent);
-      }
-      return threadIndent;
+      return threadIndents.computeIfAbsent(threadIdInteger, i -> "  ".repeat(threadIndents.size()));
     }
 
   }

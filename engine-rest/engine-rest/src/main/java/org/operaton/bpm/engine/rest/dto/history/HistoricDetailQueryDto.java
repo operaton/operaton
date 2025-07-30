@@ -92,32 +92,32 @@ public class HistoricDetailQueryDto extends AbstractQueryDto<HistoricDetailQuery
     super(objectMapper, queryParameters);
   }
 
-  @OperatonQueryParam(value = "processInstanceId")
+  @OperatonQueryParam("processInstanceId")
   public void setProcessInstanceId(String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
 
-  @OperatonQueryParam(value = "executionId")
+  @OperatonQueryParam("executionId")
   public void setExecutionId(String executionId) {
     this.executionId = executionId;
   }
 
-  @OperatonQueryParam(value = "activityInstanceId")
+  @OperatonQueryParam("activityInstanceId")
   public void setActivityInstanceId(String activityInstanceId) {
     this.activityInstanceId = activityInstanceId;
   }
 
-  @OperatonQueryParam(value = "caseInstanceId")
+  @OperatonQueryParam("caseInstanceId")
   public void setCaseInstanceId(String caseInstanceId) {
     this.caseInstanceId = caseInstanceId;
   }
 
-  @OperatonQueryParam(value = "caseExecutionId")
+  @OperatonQueryParam("caseExecutionId")
   public void setCaseExecutionId(String caseExecutionId) {
     this.caseExecutionId = caseExecutionId;
   }
 
-  @OperatonQueryParam(value = "variableInstanceId")
+  @OperatonQueryParam("variableInstanceId")
   public void setVariableInstanceId(String variableInstanceId) {
     this.variableInstanceId = variableInstanceId;
   }
@@ -127,12 +127,12 @@ public class HistoricDetailQueryDto extends AbstractQueryDto<HistoricDetailQuery
     this.variableTypeIn = variableTypeIn;
   }
 
-  @OperatonQueryParam(value="variableNameLike")
+  @OperatonQueryParam("variableNameLike")
   public void setVariableNameLike(String variableNameLike) {
      this.variableNameLike = variableNameLike;
    }
 
-  @OperatonQueryParam(value = "taskId")
+  @OperatonQueryParam("taskId")
   public void setTaskId(String taskId) {
     this.taskId = taskId;
   }
@@ -167,7 +167,7 @@ public class HistoricDetailQueryDto extends AbstractQueryDto<HistoricDetailQuery
     this.processInstanceIdIn = processInstanceIdIn;
   }
 
-  @OperatonQueryParam(value = "userOperationId")
+  @OperatonQueryParam("userOperationId")
   public void setUserOperationId(String userOperationId) {
     this.userOperationId = userOperationId;
   }

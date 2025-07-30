@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
  * @author Roman Smirnov
  *
  */
-@Named(value = "caseExecutionListener")
+@Named("caseExecutionListener")
 public class ExampleCaseExecutionListener implements CaseExecutionListener {
 
   @Override

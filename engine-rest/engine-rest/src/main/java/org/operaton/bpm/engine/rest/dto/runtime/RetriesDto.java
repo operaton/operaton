@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest.dto.runtime;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
-@JsonIgnoreProperties(value = { "dueDateSet" })
+@JsonIgnoreProperties("dueDateSet")
 public class RetriesDto {
 
   protected Integer retries;

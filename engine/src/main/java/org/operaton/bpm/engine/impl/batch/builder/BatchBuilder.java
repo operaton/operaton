@@ -120,7 +120,7 @@ public class BatchBuilder {
     }
   }
 
-  @SuppressWarnings(value = "unchecked")
+  @SuppressWarnings("unchecked")
   protected BatchEntity configure(BatchEntity batch) {
     ProcessEngineConfigurationImpl engineConfig = commandContext.getProcessEngineConfiguration();
 

@@ -109,7 +109,7 @@ public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxP
   }
 
   @Test
-  @OperateOnDeployment(value=PA2)
+  @OperateOnDeployment(PA2)
   public void testDeployProcessArchive() {
     ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
     assertThat(processEngine).isNotNull();

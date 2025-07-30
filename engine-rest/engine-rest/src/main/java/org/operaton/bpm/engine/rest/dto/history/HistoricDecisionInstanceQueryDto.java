@@ -179,7 +179,7 @@ public class HistoricDecisionInstanceQueryDto extends AbstractQueryDto<HistoricD
     this.evaluatedAfter = evaluatedAfter;
   }
 
-  @OperatonQueryParam(value = "userId")
+  @OperatonQueryParam("userId")
   public void setUserId(String userId) {
     this.userId = userId;
   }
@@ -204,7 +204,7 @@ public class HistoricDecisionInstanceQueryDto extends AbstractQueryDto<HistoricD
     this.disableCustomObjectDeserialization = disableCustomObjectDeserialization;
   }
 
-  @OperatonQueryParam(value = "rootDecisionInstanceId")
+  @OperatonQueryParam("rootDecisionInstanceId")
   public void setRootDecisionInstanceId(String rootDecisionInstanceId) {
     this.rootDecisionInstanceId = rootDecisionInstanceId;
   }
@@ -214,12 +214,12 @@ public class HistoricDecisionInstanceQueryDto extends AbstractQueryDto<HistoricD
     this.rootDecisionInstancesOnly = rootDecisionInstancesOnly;
   }
 
-  @OperatonQueryParam(value = "decisionRequirementsDefinitionId")
+  @OperatonQueryParam("decisionRequirementsDefinitionId")
   public void setDecisionRequirementsDefinitionId(String decisionRequirementsDefinitionId) {
     this.decisionRequirementsDefinitionId = decisionRequirementsDefinitionId;
   }
 
-  @OperatonQueryParam(value = "decisionRequirementsDefinitionKey")
+  @OperatonQueryParam("decisionRequirementsDefinitionKey")
   public void setDecisionRequirementsDefinitionKey(String decisionRequirementsDefinitionKey) {
     this.decisionRequirementsDefinitionKey = decisionRequirementsDefinitionKey;
   }

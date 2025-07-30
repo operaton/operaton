@@ -121,9 +121,9 @@ public class CsrfPreventionFilter implements Filter {
       Class<?> clazz = Class.forName(randomClass);
       randomSource = (Random) clazz.getConstructor().newInstance();
 
-      String targetOrigin = filterConfig.getInitParameter("targetOrigin");
-      if (!isBlank(targetOrigin)) {
-        setTargetOrigin(targetOrigin);
+      String targetOriginParam = filterConfig.getInitParameter("targetOrigin");
+      if (!isBlank(targetOriginParam)) {
+        setTargetOrigin(targetOriginParam);
       }
 
       String customDenyStatus = filterConfig.getInitParameter("denyStatus");

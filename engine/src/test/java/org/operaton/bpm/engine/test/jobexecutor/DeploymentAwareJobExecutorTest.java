@@ -149,7 +149,6 @@ class DeploymentAwareJobExecutorTest {
   @Test
   void testRegistrationOfNonExistingDeployment() {
     String nonExistingDeploymentId = "some non-existing id";
-    var managementService = processEngine.getManagementService();
 
     try {
       managementService.registerDeploymentForJobExecutor(nonExistingDeploymentId);

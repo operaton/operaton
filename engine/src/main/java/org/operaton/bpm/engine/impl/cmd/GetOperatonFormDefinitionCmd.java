@@ -41,11 +41,11 @@ public class GetOperatonFormDefinitionCmd implements Command<OperatonFormDefinit
     String key = operatonFormRef.getKey();
     OperatonFormDefinitionEntity definition = null;
     OperatonFormDefinitionManager manager = commandContext.getOperatonFormDefinitionManager();
-    if (binding.equals(DefaultFormHandler.FORM_REF_BINDING_DEPLOYMENT)) {
+    if (DefaultFormHandler.FORM_REF_BINDING_DEPLOYMENT.equals(binding)) {
       definition = manager.findDefinitionByDeploymentAndKey(deploymentId, key);
-    } else if (binding.equals(DefaultFormHandler.FORM_REF_BINDING_LATEST)) {
+    } else if (DefaultFormHandler.FORM_REF_BINDING_LATEST.equals(binding)) {
       definition = manager.findLatestDefinitionByKey(key);
-    } else if (binding.equals(DefaultFormHandler.FORM_REF_BINDING_VERSION)) {
+    } else if (DefaultFormHandler.FORM_REF_BINDING_VERSION.equals(binding)) {
       definition = manager.findDefinitionByKeyVersionAndTenantId(key, operatonFormRef.getVersion(), null);
     } else {
       throw new BadUserRequestException("Unsupported binding type for operatonFormRef. Expected to be one of "

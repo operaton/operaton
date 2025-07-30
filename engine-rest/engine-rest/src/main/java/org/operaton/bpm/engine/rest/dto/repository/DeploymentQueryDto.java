@@ -171,13 +171,13 @@ public class DeploymentQueryDto extends AbstractQueryDto<DeploymentQuery> {
 
   @Override
   protected void applySortBy(DeploymentQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_ID_VALUE)) {
+    if (SORT_BY_ID_VALUE.equals(sortBy)) {
       query.orderByDeploymentId();
-    } else if (sortBy.equals(SORT_BY_NAME_VALUE)) {
+    } else if (SORT_BY_NAME_VALUE.equals(sortBy)) {
       query.orderByDeploymentName();
-    } else if (sortBy.equals(SORT_BY_DEPLOYMENT_TIME_VALUE)) {
+    } else if (SORT_BY_DEPLOYMENT_TIME_VALUE.equals(sortBy)) {
       query.orderByDeploymentTime();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

@@ -137,11 +137,11 @@ class CleanableHistoricProcessInstanceReportTest {
     // then
     assertThat(reportResults).hasSize(3);
     for (CleanableHistoricProcessInstanceReportResult result : reportResults) {
-      if (result.getProcessDefinitionKey().equals(PROCESS_DEFINITION_KEY)) {
+      if (PROCESS_DEFINITION_KEY.equals(result.getProcessDefinitionKey())) {
         checkResultNumbers(result, 10, 20);
-      } else if (result.getProcessDefinitionKey().equals(THIRD_PROCESS_DEFINITION_KEY)) {
+      } else if (THIRD_PROCESS_DEFINITION_KEY.equals(result.getProcessDefinitionKey())) {
         checkResultNumbers(result, 0, 10);
-      } else if (result.getProcessDefinitionKey().equals(FOURTH_PROCESS_DEFINITION_KEY)) {
+      } else if (FOURTH_PROCESS_DEFINITION_KEY.equals(result.getProcessDefinitionKey())) {
         checkResultNumbers(result, 10, 10);
       }
     }

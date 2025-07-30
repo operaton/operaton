@@ -1119,7 +1119,7 @@ public class OperatonExtensionsTest {
     OperatonMap map = inputParameter.getValue();
     assertThat(map.getOperatonEntries()).hasSize(2);
     for (OperatonEntry entry : map.getOperatonEntries()) {
-      if (entry.getOperatonKey().equals("foo")) {
+      if ("foo".equals(entry.getOperatonKey())) {
         assertThat(entry.getTextContent()).isEqualTo("bar");
       } else {
         assertThat(entry.getOperatonKey()).isEqualTo("hello");

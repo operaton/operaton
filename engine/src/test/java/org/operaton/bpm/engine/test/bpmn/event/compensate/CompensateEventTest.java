@@ -378,7 +378,7 @@ class CompensateEventTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if (!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
     }
 
@@ -387,7 +387,7 @@ class CompensateEventTest {
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
-    if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if (!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(6);
     }
 
@@ -407,7 +407,7 @@ class CompensateEventTest {
 
     runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if (!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
     }
 
@@ -428,7 +428,7 @@ class CompensateEventTest {
 
     runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if (!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
     }
 
@@ -449,7 +449,7 @@ class CompensateEventTest {
     // to a static list
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess", variables);
 
-    if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if (!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count()).isEqualTo(flights.size());
     }
 
@@ -651,7 +651,7 @@ class CompensateEventTest {
   void testCompensationEndEventWithScope() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if (!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count()).isEqualTo(5);
     }
@@ -664,7 +664,7 @@ class CompensateEventTest {
   void testCompensationEndEventWithActivityRef() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if (!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count()).isZero();
     }

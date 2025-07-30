@@ -243,7 +243,7 @@ class ParallelGatewayTest {
     assertThat(instance.getActivityName()).isEqualTo("Process1");
     ActivityInstance[] childActivityInstances = instance.getChildActivityInstances();
     for (ActivityInstance activityInstance : childActivityInstances) {
-      if (activityInstance.getActivityId().equals("SubProcess_1")) {
+      if ("SubProcess_1".equals(activityInstance.getActivityId())) {
         ActivityInstance[] instances = activityInstance.getChildActivityInstances();
         for (ActivityInstance activityInstance2 : instances) {
           assertThat(activityInstance2.getActivityName()).isIn("Inner User Task 1", "Inner User Task 2");

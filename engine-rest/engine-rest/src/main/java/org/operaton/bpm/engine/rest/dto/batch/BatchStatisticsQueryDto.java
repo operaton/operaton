@@ -160,13 +160,13 @@ public class BatchStatisticsQueryDto extends AbstractQueryDto<BatchStatisticsQue
   }
 
   protected void applySortBy(BatchStatisticsQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_BATCH_ID_VALUE)) {
+    if (SORT_BY_BATCH_ID_VALUE.equals(sortBy)) {
       query.orderById();
     }
-    else if (sortBy.equals(SORT_BY_TENANT_ID_VALUE)) {
+    else if (SORT_BY_TENANT_ID_VALUE.equals(sortBy)) {
       query.orderByTenantId();
     }
-    else if (sortBy.equals(SORT_BY_START_TIME_VALUE)) {
+    else if (SORT_BY_START_TIME_VALUE.equals(sortBy)) {
       query.orderByStartTime();
     }
   }

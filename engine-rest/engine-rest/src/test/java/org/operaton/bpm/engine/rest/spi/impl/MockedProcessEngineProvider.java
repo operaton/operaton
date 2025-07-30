@@ -105,11 +105,11 @@ public class MockedProcessEngineProvider implements ProcessEngineProvider {
 
   @Override
   public ProcessEngine getProcessEngine(String name) {
-    if (name.equals(MockProvider.NON_EXISTING_PROCESS_ENGINE_NAME)) {
+    if (MockProvider.NON_EXISTING_PROCESS_ENGINE_NAME.equals(name)) {
       return null;
     }
 
-    if (name.equals("default")) {
+    if ("default".equals(name)) {
       return getDefaultProcessEngine();
     }
 

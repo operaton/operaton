@@ -2346,10 +2346,10 @@ class HistoricVariableInstanceTest {
     int deletedCounter = 0;
 
     for (HistoricVariableInstance variable : variables) {
-      if (variable.getName().equals("initial")) {
+      if ("initial".equals(variable.getName())) {
         assertThat(variable.getState()).isEqualTo(HistoricVariableInstance.STATE_CREATED);
         createdCounter += 1;
-      } else if (variable.getName().equals("bar")) {
+      } else if ("bar".equals(variable.getName())) {
         assertThat(variable.getState()).isEqualTo(HistoricVariableInstance.STATE_DELETED);
         deletedCounter += 1;
       }

@@ -1125,7 +1125,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       .handleInvocation(listenerInvocation);
     } catch (Exception ex) {
       // exceptions on delete events are never handled as BPMN errors
-      if (isBpmnTask && !eventName.equals(EVENTNAME_DELETE)) {
+      if (isBpmnTask && !EVENTNAME_DELETE.equals(eventName)) {
         try {
           BpmnExceptionHandler.propagateException((ActivityExecution) currentExecution, ex);
           return false;
@@ -1475,7 +1475,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       String formRefValue = (String) formRef.getValue(this);
       if (formRefValue != null) {
         OperatonFormRefImpl camFormRef = new OperatonFormRefImpl(formRefValue, formRefBinding);
-        if (formRefBinding.equals(FORM_REF_BINDING_VERSION) && formRefVersion != null) {
+        if (FORM_REF_BINDING_VERSION.equals(formRefBinding) && formRefVersion != null) {
           String formRefVersionValue = (String) formRefVersion.getValue(this);
           camFormRef.setVersion(Integer.parseInt(formRefVersionValue));
         }

@@ -158,7 +158,7 @@ class ModelValidationTest {
       assertThat(element).isNotNull();
       assertThat(validationResults).isNotNull();
 
-      if (element.getId().equals("tweety")) {
+      if ("tweety".equals(element.getId())) {
         assertThat(validationResults).hasSize(2);
         ValidationResult error = validationResults.remove(0);
         assertThat(error.getType()).isEqualTo(ValidationResultType.ERROR);

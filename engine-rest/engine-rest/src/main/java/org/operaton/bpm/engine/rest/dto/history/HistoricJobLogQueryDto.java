@@ -317,35 +317,35 @@ public class HistoricJobLogQueryDto extends AbstractQueryDto<HistoricJobLogQuery
 
   @Override
   protected void applySortBy(HistoricJobLogQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_TIMESTAMP)) {
+    if (SORT_BY_TIMESTAMP.equals(sortBy)) {
       query.orderByTimestamp();
-    } else if (sortBy.equals(SORT_BY_JOB_ID)) {
+    } else if (SORT_BY_JOB_ID.equals(sortBy)) {
       query.orderByJobId();
-    } else if (sortBy.equals(SORT_BY_JOB_DUE_DATE)) {
+    } else if (SORT_BY_JOB_DUE_DATE.equals(sortBy)) {
       query.orderByJobDueDate();
-    } else if (sortBy.equals(SORT_BY_JOB_RETRIES)) {
+    } else if (SORT_BY_JOB_RETRIES.equals(sortBy)) {
       query.orderByJobRetries();
-    } else if (sortBy.equals(SORT_BY_JOB_PRIORITY)) {
+    } else if (SORT_BY_JOB_PRIORITY.equals(sortBy)) {
       query.orderByJobPriority();
-    } else if (sortBy.equals(SORT_BY_JOB_DEFINITION_ID)) {
+    } else if (SORT_BY_JOB_DEFINITION_ID.equals(sortBy)) {
       query.orderByJobDefinitionId();
-    } else if (sortBy.equals(SORT_BY_ACTIVITY_ID)) {
+    } else if (SORT_BY_ACTIVITY_ID.equals(sortBy)) {
       query.orderByActivityId();
-    } else if (sortBy.equals(SORT_BY_EXECUTION_ID)) {
+    } else if (SORT_BY_EXECUTION_ID.equals(sortBy)) {
       query.orderByExecutionId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_ID)) {
+    } else if (SORT_BY_PROCESS_INSTANCE_ID.equals(sortBy)) {
       query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_ID)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_ID.equals(sortBy)) {
       query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_KEY)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_KEY.equals(sortBy)) {
       query.orderByProcessDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_DEPLOYMENT_ID)) {
+    } else if (SORT_BY_DEPLOYMENT_ID.equals(sortBy)) {
       query.orderByDeploymentId();
-    } else if (sortBy.equals(SORT_PARTIALLY_BY_OCCURRENCE)) {
+    } else if (SORT_PARTIALLY_BY_OCCURRENCE.equals(sortBy)) {
       query.orderPartiallyByOccurrence();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
-    } else if (sortBy.equals(SORT_BY_HOSTNAME)) {
+    } else if (SORT_BY_HOSTNAME.equals(sortBy)) {
       query.orderByHostname();
     }
   }

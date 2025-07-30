@@ -51,7 +51,7 @@ public class DefaultTaskFormHandler extends DefaultFormHandler implements TaskFo
       Object formRefKeyValue = operatonFormDefinitionKey.getValue(task);
       if(formRefKeyValue != null) {
         OperatonFormRefImpl ref = new OperatonFormRefImpl(formRefKeyValue.toString(), operatonFormDefinitionBinding);
-        if(operatonFormDefinitionBinding.equals(FORM_REF_BINDING_VERSION) && operatonFormDefinitionVersion != null) {
+        if(FORM_REF_BINDING_VERSION.equals(operatonFormDefinitionBinding) && operatonFormDefinitionVersion != null) {
           Object formRefVersionValue = operatonFormDefinitionVersion.getValue(task);
           if(formRefVersionValue != null) {
             ref.setVersion(Integer.parseInt((String)formRefVersionValue));

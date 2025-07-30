@@ -112,16 +112,16 @@ public class HistoricBatchQueryDto extends AbstractQueryDto<HistoricBatchQuery> 
   }
 
   protected void applySortBy(HistoricBatchQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_BATCH_ID_VALUE)) {
+    if (SORT_BY_BATCH_ID_VALUE.equals(sortBy)) {
       query.orderById();
     }
-    if (sortBy.equals(SORT_BY_BATCH_START_TIME_VALUE)) {
+    if (SORT_BY_BATCH_START_TIME_VALUE.equals(sortBy)) {
       query.orderByStartTime();
     }
-    if (sortBy.equals(SORT_BY_BATCH_END_TIME_VALUE)) {
+    if (SORT_BY_BATCH_END_TIME_VALUE.equals(sortBy)) {
       query.orderByEndTime();
     }
-    if (sortBy.equals(SORT_BY_TENANT_ID_VALUE)) {
+    if (SORT_BY_TENANT_ID_VALUE.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

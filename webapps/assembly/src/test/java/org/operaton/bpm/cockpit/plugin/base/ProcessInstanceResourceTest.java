@@ -140,9 +140,9 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
     String secondActivityInstanceId = null;
 
     for (ActivityInstance child : processInstanceActivityInstance.getChildActivityInstances()) {
-      if (child.getActivityId().equals("firstCallActivity")) {
+      if ("firstCallActivity".equals(child.getActivityId())) {
         firstActivityInstanceId = child.getId();
-      } else if (child.getActivityId().equals("secondCallActivity")) {
+      } else if ("secondCallActivity".equals(child.getActivityId())) {
         secondActivityInstanceId = child.getId();
       } else {
         fail("Unexpected activity instance with activity id: " + child.getActivityId() + " and instance id: " + child.getId());

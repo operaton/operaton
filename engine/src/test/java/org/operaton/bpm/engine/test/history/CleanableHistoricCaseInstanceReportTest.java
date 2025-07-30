@@ -189,13 +189,13 @@ class CleanableHistoricCaseInstanceReportTest {
     // then
     assertThat(reportResults).hasSize(4);
     for (CleanableHistoricCaseInstanceReportResult result : reportResults) {
-      if (result.getCaseDefinitionKey().equals(CASE_DEFINITION_KEY)) {
+      if (CASE_DEFINITION_KEY.equals(result.getCaseDefinitionKey())) {
         checkResultNumbers(result, 10, 20);
-      } else if (result.getCaseDefinitionKey().equals(SECOND_CASE_DEFINITION_KEY)) {
+      } else if (SECOND_CASE_DEFINITION_KEY.equals(result.getCaseDefinitionKey())) {
         checkResultNumbers(result, 0, 10);
-      } else if (result.getCaseDefinitionKey().equals(THIRD_CASE_DEFINITION_KEY)) {
+      } else if (THIRD_CASE_DEFINITION_KEY.equals(result.getCaseDefinitionKey())) {
         checkResultNumbers(result, 10, 10);
-      } else if (result.getCaseDefinitionKey().equals(FORTH_CASE_DEFINITION_KEY)) {
+      } else if (FORTH_CASE_DEFINITION_KEY.equals(result.getCaseDefinitionKey())) {
         checkResultNumbers(result, 0, 0);
       }
     }

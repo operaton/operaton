@@ -53,7 +53,7 @@ public class IntervalTransformer implements FeelToJuelTransformer {
   }
 
   protected String transformLowerEndpointComparator(String startIntervalSymbol) {
-    if (startIntervalSymbol.equals("[")) {
+    if ("[".equals(startIntervalSymbol)) {
       return ">=";
     }
     else {
@@ -62,7 +62,7 @@ public class IntervalTransformer implements FeelToJuelTransformer {
   }
 
   protected String transformUpperEndpointComparator(String stopIntervalSymbol) {
-    if (stopIntervalSymbol.equals("]")) {
+    if ("]".equals(stopIntervalSymbol)) {
       return "<=";
     }
     else {

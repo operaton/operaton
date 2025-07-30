@@ -106,13 +106,13 @@ class CleanableHistoricDecisionInstanceReportTest {
     // then
     assertThat(reportResults).hasSize(4);
     for (CleanableHistoricDecisionInstanceReportResult result : reportResults) {
-      if (result.getDecisionDefinitionKey().equals(DECISION_DEFINITION_KEY)) {
+      if (DECISION_DEFINITION_KEY.equals(result.getDecisionDefinitionKey())) {
         checkResultNumbers(result, 10, 20);
-      } else if (result.getDecisionDefinitionKey().equals(SECOND_DECISION_DEFINITION_KEY)) {
+      } else if (SECOND_DECISION_DEFINITION_KEY.equals(result.getDecisionDefinitionKey())) {
         checkResultNumbers(result, 0, 10);
-      } else if (result.getDecisionDefinitionKey().equals(THIRD_DECISION_DEFINITION_KEY)) {
+      } else if (THIRD_DECISION_DEFINITION_KEY.equals(result.getDecisionDefinitionKey())) {
         checkResultNumbers(result, 10, 10);
-      } else if (result.getDecisionDefinitionKey().equals(FOURTH_DECISION_DEFINITION_KEY)) {
+      } else if (FOURTH_DECISION_DEFINITION_KEY.equals(result.getDecisionDefinitionKey())) {
         checkResultNumbers(result, 0, 0);
       }
     }

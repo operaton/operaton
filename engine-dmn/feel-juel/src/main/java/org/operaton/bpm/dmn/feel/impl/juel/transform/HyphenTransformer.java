@@ -20,7 +20,7 @@ public class HyphenTransformer implements FeelToJuelTransformer {
 
   @Override
   public boolean canTransform(String feelExpression) {
-    return feelExpression.equals("-");
+    return "-".equals(feelExpression);
   }
 
   @Override

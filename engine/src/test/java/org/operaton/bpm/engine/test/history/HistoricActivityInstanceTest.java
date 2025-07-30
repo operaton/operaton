@@ -429,7 +429,7 @@ class HistoricActivityInstanceTest {
     List<HistoricActivityInstance> instances = query.list();
 
     for (HistoricActivityInstance instance : instances) {
-      if (!instance.getActivityId().equals("innerEnd") && !instance.getActivityId().equals("end1") && !instance.getActivityId().equals("end2")) {
+      if (!"innerEnd".equals(instance.getActivityId()) && !"end1".equals(instance.getActivityId()) && !"end2".equals(instance.getActivityId())) {
         fail("Unexpected instance with activity id " + instance.getActivityId() + " found.");
       }
     }
@@ -451,7 +451,7 @@ class HistoricActivityInstanceTest {
     List<HistoricActivityInstance> instances = query.list();
 
     for (HistoricActivityInstance instance : instances) {
-      if (!instance.getActivityId().equals("subprocess") && !instance.getActivityId().equals("userTask1") && !instance.getActivityId().equals("userTask2")) {
+      if (!"subprocess".equals(instance.getActivityId()) && !"userTask1".equals(instance.getActivityId()) && !"userTask2".equals(instance.getActivityId())) {
         fail("Unexpected instance with activity id " + instance.getActivityId() + " found.");
       }
     }

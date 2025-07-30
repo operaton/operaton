@@ -177,7 +177,7 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
   }
 
   protected boolean isValidValueForResumePreviousBy(String resumePreviousBy) {
-    return resumePreviousBy.equals(ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME) || resumePreviousBy.equals(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY);
+    return ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME.equals(resumePreviousBy) || ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY.equals(resumePreviousBy);
   }
 
   protected Map<String, byte[]> findResources(final ClassLoader processApplicationClassloader, String paResourceRoot, String[] additionalResourceSuffixes) {

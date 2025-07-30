@@ -241,7 +241,7 @@ class TransactionSubProcessTest {
     assertThat(activeActivityIds).contains("afterCancellation");
 
     // if we have history, we check that the invocation of the compensation handlers is recorded in history.
-    if(!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if(!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery()
           .activityId("undoBookFlight")
           .count()).isEqualTo(1);
@@ -299,7 +299,7 @@ class TransactionSubProcessTest {
     assertThat(activeActivityIds).contains("afterCancellation");
 
     // if we have history, we check that the invocation of the compensation handlers is recorded in history.
-    if(!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if(!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery()
           .activityId("undoBookFlight")
           .count()).isEqualTo(1);
@@ -359,7 +359,7 @@ class TransactionSubProcessTest {
     assertThat(activeActivityIds).contains("afterInnerCancellation");
 
     // if we have history, we check that the invocation of the compensation handlers is recorded in history.
-    if(!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
+    if(!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery()
           .activityId("innerTxundoBookHotel")
           .count()).isEqualTo(5);

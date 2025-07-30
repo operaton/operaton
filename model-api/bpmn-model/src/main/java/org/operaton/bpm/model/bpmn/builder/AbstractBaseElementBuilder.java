@@ -194,7 +194,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
     Definitions definitions = modelInstance.getDefinitions();
     Error error = createChild(definitions, Error.class);
     error.setErrorCode(errorCode);
-    if(errorMessage != null && !errorMessage.equals("")) {
+    if(errorMessage != null && !"".equals(errorMessage)) {
       error.setOperatonErrorMessage(errorMessage);
     }
 

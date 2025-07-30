@@ -114,16 +114,16 @@ public class FilterQueryDto extends AbstractQueryDto<FilterQuery> {
   }
 
   protected void applySortBy(FilterQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_ID_VALUE)) {
+    if (SORT_BY_ID_VALUE.equals(sortBy)) {
       query.orderByFilterId();
     }
-    else if (sortBy.equals(SORT_BY_RESOURCE_TYPE_VALUE)) {
+    else if (SORT_BY_RESOURCE_TYPE_VALUE.equals(sortBy)) {
       query.orderByFilterResourceType();
     }
-    else if (sortBy.equals(SORT_BY_NAME_VALUE)) {
+    else if (SORT_BY_NAME_VALUE.equals(sortBy)) {
       query.orderByFilterName();
     }
-    else if (sortBy.equals(SORT_BY_OWNER_VALUE)) {
+    else if (SORT_BY_OWNER_VALUE.equals(sortBy)) {
       query.orderByFilterOwner();
     }
   }

@@ -534,19 +534,19 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(EQUALS_OPERATOR_NAME)) {
+        if (EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueEquals(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OPERATOR_NAME.equals(op)) {
           query.variableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueGreaterThanOrEqual(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OPERATOR_NAME.equals(op)) {
           query.variableValueLessThan(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueLessThanOrEqual(variableName, variableValue);
-        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (NOT_EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(LIKE_OPERATOR_NAME)) {
+        } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.variableValueLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
@@ -601,25 +601,25 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
 
   @Override
   protected void applySortBy(HistoricProcessInstanceQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_ID_VALUE)) {
+    if (SORT_BY_PROCESS_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_ID_VALUE)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_ID_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_KEY_VALUE)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_KEY_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_NAME_VALUE)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_NAME_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionName();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_VERSION_VALUE)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_VERSION_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionVersion();
-    } else if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_BUSINESS_KEY_VALUE)) {
+    } else if (SORT_BY_PROCESS_INSTANCE_BUSINESS_KEY_VALUE.equals(sortBy)) {
       query.orderByProcessInstanceBusinessKey();
-    } else if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_START_TIME_VALUE)) {
+    } else if (SORT_BY_PROCESS_INSTANCE_START_TIME_VALUE.equals(sortBy)) {
       query.orderByProcessInstanceStartTime();
-    } else if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_END_TIME_VALUE)) {
+    } else if (SORT_BY_PROCESS_INSTANCE_END_TIME_VALUE.equals(sortBy)) {
       query.orderByProcessInstanceEndTime();
-    } else if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_DURATION_VALUE)) {
+    } else if (SORT_BY_PROCESS_INSTANCE_DURATION_VALUE.equals(sortBy)) {
       query.orderByProcessInstanceDuration();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

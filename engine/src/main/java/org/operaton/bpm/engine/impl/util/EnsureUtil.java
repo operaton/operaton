@@ -405,15 +405,15 @@ public final class EnsureUtil {
   protected static String determineResourceWhitelistPattern(ProcessEngineConfiguration processEngineConfiguration, String resourceType) {
     String resourcePattern = null;
 
-    if (resourceType.equals("User")) {
+    if ("User".equals(resourceType)) {
       resourcePattern = processEngineConfiguration.getUserResourceWhitelistPattern();
     }
 
-    if (resourceType.equals("Group")) {
+    if ("Group".equals(resourceType)) {
       resourcePattern =  processEngineConfiguration.getGroupResourceWhitelistPattern();
     }
 
-    if (resourceType.equals("Tenant")) {
+    if ("Tenant".equals(resourceType)) {
       resourcePattern =  processEngineConfiguration.getTenantResourceWhitelistPattern();
     }
 

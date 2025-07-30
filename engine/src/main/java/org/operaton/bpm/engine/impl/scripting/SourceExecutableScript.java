@@ -99,7 +99,7 @@ public class SourceExecutableScript extends CompiledExecutableScript {
   }
 
   public CompiledScript compile(ScriptEngine scriptEngine, String language, String src) {
-    if (scriptEngine instanceof Compilable compilingEngine && !scriptEngine.getFactory().getLanguageName().equalsIgnoreCase("ecmascript")) {
+    if (scriptEngine instanceof Compilable compilingEngine && !"ecmascript".equalsIgnoreCase(scriptEngine.getFactory().getLanguageName())) {
       try {
         CompiledScript compiledScript = compilingEngine.compile(src);
 

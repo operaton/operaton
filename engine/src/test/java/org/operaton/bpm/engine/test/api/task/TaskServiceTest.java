@@ -3442,7 +3442,7 @@ class TaskServiceTest {
     List<Task> list = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     assertThat(list).hasSize(2);
     for (Task taskAfterThrow : list) {
-      if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !taskAfterThrow.getTaskDefinitionKey().equals("after-301")) {
+      if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !"after-301".equals(taskAfterThrow.getTaskDefinitionKey())) {
         fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
             + "after-301");
       }
@@ -3482,7 +3482,7 @@ class TaskServiceTest {
     List<Task> list = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     assertThat(list).hasSize(2);
     for (Task taskAfterThrow : list) {
-      if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !taskAfterThrow.getTaskDefinitionKey().equals("after-303")) {
+      if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !"after-303".equals(taskAfterThrow.getTaskDefinitionKey())) {
         fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
             + "after-303");
       }
@@ -3522,7 +3522,7 @@ class TaskServiceTest {
     List<Task> list = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     assertThat(list).hasSize(2);
     for (Task taskAfterThrow : list) {
-      if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !taskAfterThrow.getTaskDefinitionKey().equals("after-305")) {
+      if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !"after-305".equals(taskAfterThrow.getTaskDefinitionKey())) {
         fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
             + "after-305");
       }

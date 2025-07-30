@@ -153,7 +153,7 @@ public class ContainerBasedAuthenticationFilter implements Filter {
     }
 
     Matcher apiStaticPluginPattern = API_STATIC_PLUGIN_PATTERN.matcher(requestUri);
-    if (requestMethod.equals("GET") && apiStaticPluginPattern.matches()) {
+    if ("GET".equals(requestMethod) && apiStaticPluginPattern.matches()) {
       return null;
     }
 

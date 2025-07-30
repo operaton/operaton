@@ -41,7 +41,7 @@ class VariableInstanceQueryForOracleTest {
   @Test
   void testQueryWhen0InstancesActive() {
     // given
-    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
 
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery().list();
@@ -51,7 +51,7 @@ class VariableInstanceQueryForOracleTest {
   @Test
   void testQueryWhen1InstanceActive() {
     // given
-    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     RuntimeService runtimeService = engineRule.getRuntimeService();
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
 
@@ -69,7 +69,7 @@ class VariableInstanceQueryForOracleTest {
   @Test
   void testQueryWhen1000InstancesActive() {
     // given
-    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     RuntimeService runtimeService = engineRule.getRuntimeService();
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     String[] ids = new String[1000];
@@ -91,7 +91,7 @@ class VariableInstanceQueryForOracleTest {
   @Test
   void testQueryWhen1001InstancesActive() {
     // given
-    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     RuntimeService runtimeService = engineRule.getRuntimeService();
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     String[] ids = new String[1001];
@@ -113,7 +113,7 @@ class VariableInstanceQueryForOracleTest {
   @Test
   void testQueryWhen2001InstancesActive() {
     // given
-    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     RuntimeService runtimeService = engineRule.getRuntimeService();
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     String[] ids = new String[2001];

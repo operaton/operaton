@@ -43,9 +43,9 @@ public class BooleanDataTypeTransformer implements DmnDataTypeTransformer {
   }
 
   protected boolean transformString(String value) {
-    if (value.equalsIgnoreCase("true")) {
+    if ("true".equalsIgnoreCase(value)) {
       return true;
-    } else if (value.equalsIgnoreCase("false")) {
+    } else if ("false".equalsIgnoreCase(value)) {
       return false;
     } else {
       throw new IllegalArgumentException();

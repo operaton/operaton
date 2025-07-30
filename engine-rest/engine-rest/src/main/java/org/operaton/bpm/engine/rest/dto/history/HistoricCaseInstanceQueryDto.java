@@ -343,19 +343,19 @@ public class HistoricCaseInstanceQueryDto extends AbstractQueryDto<HistoricCaseI
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(EQUALS_OPERATOR_NAME)) {
+        if (EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueEquals(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OPERATOR_NAME.equals(op)) {
           query.variableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueGreaterThanOrEqual(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OPERATOR_NAME.equals(op)) {
           query.variableValueLessThan(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueLessThanOrEqual(variableName, variableValue);
-        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (NOT_EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(LIKE_OPERATOR_NAME)) {
+        } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.variableValueLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
@@ -366,19 +366,19 @@ public class HistoricCaseInstanceQueryDto extends AbstractQueryDto<HistoricCaseI
 
   @Override
   protected void applySortBy(HistoricCaseInstanceQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_CASE_INSTANCE_ID_VALUE)) {
+    if (SORT_BY_CASE_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByCaseInstanceId();
-    } else if (sortBy.equals(SORT_BY_CASE_DEFINITION_ID_VALUE)) {
+    } else if (SORT_BY_CASE_DEFINITION_ID_VALUE.equals(sortBy)) {
       query.orderByCaseDefinitionId();
-    } else if (sortBy.equals(SORT_BY_CASE_INSTANCE_BUSINESS_KEY_VALUE)) {
+    } else if (SORT_BY_CASE_INSTANCE_BUSINESS_KEY_VALUE.equals(sortBy)) {
       query.orderByCaseInstanceBusinessKey();
-    } else if (sortBy.equals(SORT_BY_CASE_INSTANCE_CREATE_TIME_VALUE)) {
+    } else if (SORT_BY_CASE_INSTANCE_CREATE_TIME_VALUE.equals(sortBy)) {
       query.orderByCaseInstanceCreateTime();
-    } else if (sortBy.equals(SORT_BY_CASE_INSTANCE_CLOSE_TIME_VALUE)) {
+    } else if (SORT_BY_CASE_INSTANCE_CLOSE_TIME_VALUE.equals(sortBy)) {
       query.orderByCaseInstanceCloseTime();
-    } else if (sortBy.equals(SORT_BY_CASE_INSTANCE_DURATION_VALUE)) {
+    } else if (SORT_BY_CASE_INSTANCE_DURATION_VALUE.equals(sortBy)) {
       query.orderByCaseInstanceDuration();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

@@ -121,9 +121,9 @@ public class TenantQueryDto extends AbstractQueryDto<TenantQuery> {
 
   @Override
   protected void applySortBy(TenantQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_TENANT_ID_VALUE)) {
+    if (SORT_BY_TENANT_ID_VALUE.equals(sortBy)) {
       query.orderByTenantId();
-    } else if (sortBy.equals(SORT_BY_TENANT_NAME_VALUE)) {
+    } else if (SORT_BY_TENANT_NAME_VALUE.equals(sortBy)) {
       query.orderByTenantName();
     }
   }

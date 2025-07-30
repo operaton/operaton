@@ -1077,7 +1077,7 @@ class IdentityServiceAuthorizationsTest {
     assertThat(salesUser).hasSize(2);
 
     for (User user : salesUser) {
-      if (!user.getId().equals("demo") && !user.getId().equals("john")) {
+      if (!"demo".equals(user.getId()) && !"john".equals(user.getId())) {
         fail("Unexpected user for group sales: " + user.getId());
       }
     }
@@ -1086,7 +1086,7 @@ class IdentityServiceAuthorizationsTest {
     assertThat(accountingUser).hasSize(2);
 
     for (User user : accountingUser) {
-      if (!user.getId().equals("demo") && !user.getId().equals("mary")) {
+      if (!"demo".equals(user.getId()) && !"mary".equals(user.getId())) {
         fail("Unexpected user for group accounting: " + user.getId());
       }
     }
@@ -1095,7 +1095,7 @@ class IdentityServiceAuthorizationsTest {
     assertThat(managementUser).hasSize(2);
 
     for (User user : managementUser) {
-      if (!user.getId().equals("demo") && !user.getId().equals("peter")) {
+      if (!"demo".equals(user.getId()) && !"peter".equals(user.getId())) {
         fail("Unexpected user for group management: " + user.getId());
       }
     }

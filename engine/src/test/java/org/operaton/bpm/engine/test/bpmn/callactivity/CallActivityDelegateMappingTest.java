@@ -155,7 +155,7 @@ class CallActivityDelegateMappingTest {
       taskService.complete(taskBeforeSubProcess.getId());
       fail("Exeption expected!");
     } catch (ProcessEngineException pex) { //then
-      assertThat(pex.getMessage().equalsIgnoreCase("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.")
+      assertThat("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.".equalsIgnoreCase(pex.getMessage())
           || pex.getMessage().contains("1234")).isTrue();
     }
 
@@ -224,7 +224,7 @@ class CallActivityDelegateMappingTest {
       taskService.complete(taskInSubProcess.getId());
       fail("Exeption expected!");
     } catch (ProcessEngineException pex) { //then
-      assertThat(pex.getMessage().equalsIgnoreCase("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.")
+      assertThat("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.".equalsIgnoreCase(pex.getMessage())
           || pex.getMessage().contains("1234")).isTrue();
     }
 

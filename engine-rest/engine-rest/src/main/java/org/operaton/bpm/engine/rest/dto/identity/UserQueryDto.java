@@ -174,13 +174,13 @@ public class UserQueryDto extends AbstractQueryDto<UserQuery> {
 
   @Override
   protected void applySortBy(UserQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_USER_ID_VALUE)) {
+    if (SORT_BY_USER_ID_VALUE.equals(sortBy)) {
       query.orderByUserId();
-    } else if (sortBy.equals(SORT_BY_USER_FIRSTNAME_VALUE)) {
+    } else if (SORT_BY_USER_FIRSTNAME_VALUE.equals(sortBy)) {
       query.orderByUserFirstName();
-    } else if (sortBy.equals(SORT_BY_USER_LASTNAME_VALUE)) {
+    } else if (SORT_BY_USER_LASTNAME_VALUE.equals(sortBy)) {
       query.orderByUserLastName();
-    } else if (sortBy.equals(SORT_BY_USER_EMAIL_VALUE)) {
+    } else if (SORT_BY_USER_EMAIL_VALUE.equals(sortBy)) {
       query.orderByUserEmail();
     }
   }

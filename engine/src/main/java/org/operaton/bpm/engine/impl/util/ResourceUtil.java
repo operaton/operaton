@@ -56,7 +56,7 @@ public final class ResourceUtil {
 
     byte[] resourceBytes = null;
 
-    if (resourceType.equals("classpath")) {
+    if ("classpath".equals(resourceType)) {
       InputStream resourceAsStream = null;
       try {
         resourceAsStream = ReflectUtil.getResourceAsStream(resourceLocation);
@@ -67,7 +67,7 @@ public final class ResourceUtil {
         IoUtil.closeSilently(resourceAsStream);
       }
     }
-    else if (resourceType.equals("deployment")) {
+    else if ("deployment".equals(resourceType)) {
       ResourceEntity resourceEntity = deployment.getResource(resourceLocation);
       if (resourceEntity != null) {
         resourceBytes = resourceEntity.getBytes();

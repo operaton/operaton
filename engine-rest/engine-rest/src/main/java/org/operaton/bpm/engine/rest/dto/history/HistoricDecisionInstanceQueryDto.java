@@ -337,9 +337,9 @@ public class HistoricDecisionInstanceQueryDto extends AbstractQueryDto<HistoricD
 
   @Override
   protected void applySortBy(HistoricDecisionInstanceQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_EVALUATION_TIME_VALUE)) {
+    if (SORT_BY_EVALUATION_TIME_VALUE.equals(sortBy)) {
       query.orderByEvaluationTime();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

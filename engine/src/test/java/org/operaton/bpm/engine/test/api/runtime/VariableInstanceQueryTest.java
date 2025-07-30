@@ -100,10 +100,10 @@ class VariableInstanceQueryTest {
 
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getId()).isNotNull();
-      if (variableInstance.getName().equals("intVar")) {
+      if ("intVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("intVar");
         assertThat(variableInstance.getValue()).isEqualTo(123);
-      } else if (variableInstance.getName().equals("stringVar")) {
+      } else if ("stringVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
@@ -434,11 +434,11 @@ class VariableInstanceQueryTest {
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getName()).isEqualTo("stringVar");
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
-      if (variableInstance.getValue().equals("test123")) {
+      if ("test123".equals(variableInstance.getValue())) {
         assertThat(variableInstance.getValue()).isEqualTo("test123");
-      } else if (variableInstance.getValue().equals("test456")) {
+      } else if ("test456".equals(variableInstance.getValue())) {
         assertThat(variableInstance.getValue()).isEqualTo("test456");
-      } else if (variableInstance.getValue().equals("test789")) {
+      } else if ("test789".equals(variableInstance.getValue())) {
         assertThat(variableInstance.getValue()).isEqualTo("test789");
       } else {
         fail("A non expected value occurred: " + variableInstance.getValue());
@@ -1478,7 +1478,7 @@ class VariableInstanceQueryTest {
       if (variableInstance.getValue().equals((short) 999)) {
         assertThat(variableInstance.getValue()).isEqualTo((short) 999);
         assertThat(variableInstance.getTypeName()).isEqualTo("short");
-      } else if (variableInstance.getValue().equals("abc")) {
+      } else if ("abc".equals(variableInstance.getValue())) {
         assertThat(variableInstance.getValue()).isEqualTo("abc");
         assertThat(variableInstance.getTypeName()).isEqualTo("string");
       } else {
@@ -1510,10 +1510,10 @@ class VariableInstanceQueryTest {
 
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
-      if (variableInstance.getName().equals("myVar")) {
+      if ("myVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("myVar");
         assertThat(variableInstance.getValue()).isEqualTo("test123");
-      } else if (variableInstance.getName().equals("stringVar")) {
+      } else if ("stringVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
@@ -1545,10 +1545,10 @@ class VariableInstanceQueryTest {
 
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
-      if (variableInstance.getName().equals("myVar")) {
+      if ("myVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("myVar");
         assertThat(variableInstance.getValue()).isEqualTo("test123");
-      } else if (variableInstance.getName().equals("stringVar")) {
+      } else if ("stringVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
@@ -1598,10 +1598,10 @@ class VariableInstanceQueryTest {
 
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
-      if (variableInstance.getName().equals("myVar")) {
+      if ("myVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("myVar");
         assertThat(variableInstance.getValue()).isEqualTo("test123");
-      } else if (variableInstance.getName().equals("stringVar")) {
+      } else if ("stringVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
@@ -1636,10 +1636,10 @@ class VariableInstanceQueryTest {
 
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
-      if (variableInstance.getName().equals("myVar")) {
+      if ("myVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("myVar");
         assertThat(variableInstance.getValue()).isEqualTo("test123");
-      } else if (variableInstance.getName().equals("stringVar")) {
+      } else if ("stringVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
@@ -1726,10 +1726,10 @@ class VariableInstanceQueryTest {
 
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
-      if (variableInstance.getName().equals("taskVariable")) {
+      if ("taskVariable".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("taskVariable");
         assertThat(variableInstance.getValue()).isEqualTo("aCustomValue");
-      } else if (variableInstance.getName().equals("anotherTaskVariable")) {
+      } else if ("anotherTaskVariable".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("anotherTaskVariable");
         assertThat(variableInstance.getValue()).isEqualTo("aCustomValue");
       } else {
@@ -1898,10 +1898,10 @@ class VariableInstanceQueryTest {
 
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
-      if (variableInstance.getName().equals("myVar")) {
+      if ("myVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("myVar");
         assertThat(variableInstance.getValue()).isEqualTo("test123");
-      } else if (variableInstance.getName().equals("stringVar")) {
+      } else if ("stringVar".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
@@ -1919,10 +1919,10 @@ class VariableInstanceQueryTest {
 
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
-      if (variableInstance.getName().equals("taskVariable")) {
+      if ("taskVariable".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("taskVariable");
         assertThat(variableInstance.getValue()).isEqualTo("aCustomValue");
-      } else if (variableInstance.getName().equals("anotherTaskVariable")) {
+      } else if ("anotherTaskVariable".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("anotherTaskVariable");
         assertThat(variableInstance.getValue()).isEqualTo("aCustomValue");
       } else {
@@ -2193,39 +2193,39 @@ class VariableInstanceQueryTest {
   private void checkVariables(List<VariableInstance> variableInstances) {
     assertThat(variableInstances).isNotEmpty();
     for (VariableInstance instance : variableInstances) {
-      if (instance.getName().equals("nrOfInstances")) {
+      if ("nrOfInstances".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("nrOfInstances");
         assertThat(instance.getTypeName()).isEqualTo("integer");
-      } else if (instance.getName().equals("nrOfCompletedInstances")) {
+      } else if ("nrOfCompletedInstances".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("nrOfCompletedInstances");
         assertThat(instance.getTypeName()).isEqualTo("integer");
-      } else if (instance.getName().equals("nrOfActiveInstances")) {
+      } else if ("nrOfActiveInstances".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("nrOfActiveInstances");
         assertThat(instance.getTypeName()).isEqualTo("integer");
-      } else if (instance.getName().equals("loopCounter")) {
+      } else if ("loopCounter".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("loopCounter");
         assertThat(instance.getTypeName()).isEqualTo("integer");
-      } else if (instance.getName().equals("nullVar")) {
+      } else if ("nullVar".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("nullVar");
         assertThat(instance.getTypeName()).isEqualTo("null");
-      } else if (instance.getName().equals("integerVar")) {
+      } else if ("integerVar".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("integerVar");
         assertThat(instance.getTypeName()).isEqualTo("integer");
-      } else if (instance.getName().equals("dateVar")) {
+      } else if ("dateVar".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("dateVar");
         assertThat(instance.getTypeName()).isEqualTo("date");
-      } else if (instance.getName().equals("stringVar")) {
+      } else if ("stringVar".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("stringVar");
         assertThat(instance.getTypeName()).isEqualTo("string");
-      } else if (instance.getName().equals("shortVar")) {
+      } else if ("shortVar".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("shortVar");
         assertThat(instance.getTypeName()).isEqualTo("short");
-      } else if (instance.getName().equals("longVar")) {
+      } else if ("longVar".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("longVar");
         assertThat(instance.getTypeName()).isEqualTo("long");
-      } else if (instance.getName().equals("byteVar")) {
+      } else if ("byteVar".equals(instance.getName())) {
         assertThat(instance.getTypeName()).isEqualTo("bytes");
-      } else if (instance.getName().equals("serializableVar")) {
+      } else if ("serializableVar".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("serializableVar");
         try {
           instance.getValue();
@@ -2491,12 +2491,12 @@ class VariableInstanceQueryTest {
     assertThat(results).hasSize(2);
 
     for (VariableInstance variableInstance : results) {
-      if(variableInstance.getName().equals("customSerializable")) {
+      if("customSerializable".equals(variableInstance.getName())) {
         assertThat(variableInstance.getValue())
           .isNotNull()
           .isInstanceOf(CustomSerializable.class);
       }
-      if(variableInstance.getName().equals("failingSerializable")) {
+      if("failingSerializable".equals(variableInstance.getName())) {
         // no value was fetched
         assertThat(variableInstance.getValue()).isNull();
         // error message is present
@@ -2561,10 +2561,10 @@ class VariableInstanceQueryTest {
     assertThat(result).hasSize(2);
 
     for (VariableInstance variableInstance : result) {
-      if (variableInstance.getName().equals("aVariableName")) {
+      if ("aVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("aVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("abc");
-      } else if (variableInstance.getName().equals("anotherVariableName")) {
+      } else if ("anotherVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("xyz");
       } else {
@@ -2627,10 +2627,10 @@ class VariableInstanceQueryTest {
     assertThat(result).hasSize(2);
 
     for (VariableInstance variableInstance : result) {
-      if (variableInstance.getName().equals("aVariableName")) {
+      if ("aVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("aVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("abc");
-      } else if (variableInstance.getName().equals("anotherVariableName")) {
+      } else if ("anotherVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("xyz");
       } else {
@@ -2694,10 +2694,10 @@ class VariableInstanceQueryTest {
     assertThat(result).hasSize(2);
 
     for (VariableInstance variableInstance : result) {
-      if (variableInstance.getName().equals("aVariableName")) {
+      if ("aVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("aVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("abc");
-      } else if (variableInstance.getName().equals("anotherVariableName")) {
+      } else if ("anotherVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("xyz");
       } else {

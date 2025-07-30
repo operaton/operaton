@@ -251,9 +251,9 @@ public class RuntimeServiceTest {
     Set<RecordedEvent> startEvents = new HashSet<>();
     Set<RecordedEvent> endEvents = new HashSet<>();
     for (RecordedEvent event : recordedEvents) {
-      if(event.getEventName().equals(ExecutionListener.EVENTNAME_START)){
+      if(ExecutionListener.EVENTNAME_START.equals(event.getEventName())){
         startEvents.add(event);
-      } else if(event.getEventName().equals(ExecutionListener.EVENTNAME_END)){
+      } else if(ExecutionListener.EVENTNAME_END.equals(event.getEventName())){
         endEvents.add(event);
       }
     }
@@ -655,10 +655,10 @@ public class RuntimeServiceTest {
 
     Task parallelUserTask = null;
     for (Task task : tasks) {
-      if (!task.getName().equals("ParallelUserTask") && !task.getName().equals("MainUserTask")) {
+      if (!"ParallelUserTask".equals(task.getName()) && !"MainUserTask".equals(task.getName())) {
         fail("Expected: <ParallelUserTask> or <MainUserTask> but was <" + task.getName() + ">.");
       }
-      if (task.getName().equals("ParallelUserTask")) {
+      if ("ParallelUserTask".equals(task.getName())) {
         parallelUserTask = task;
       }
     }
@@ -677,10 +677,10 @@ public class RuntimeServiceTest {
 
     Task beforeErrorUserTask = null;
     for (Task task : tasks) {
-      if (!task.getName().equals("BeforeError") && !task.getName().equals("MainUserTask")) {
+      if (!"BeforeError".equals(task.getName()) && !"MainUserTask".equals(task.getName())) {
         fail("Expected: <BeforeError> or <MainUserTask> but was <" + task.getName() + ">.");
       }
-      if (task.getName().equals("BeforeError")) {
+      if ("BeforeError".equals(task.getName())) {
         beforeErrorUserTask = task;
       }
     }
@@ -696,10 +696,10 @@ public class RuntimeServiceTest {
 
     Task afterErrorUserTask = null;
     for (Task task : tasks) {
-      if (!task.getName().equals("AfterError") && !task.getName().equals("MainUserTask")) {
+      if (!"AfterError".equals(task.getName()) && !"MainUserTask".equals(task.getName())) {
         fail("Expected: <AfterError> or <MainUserTask> but was <" + task.getName() + ">.");
       }
-      if (task.getName().equals("AfterError")) {
+      if ("AfterError".equals(task.getName())) {
         afterErrorUserTask = task;
       }
     }

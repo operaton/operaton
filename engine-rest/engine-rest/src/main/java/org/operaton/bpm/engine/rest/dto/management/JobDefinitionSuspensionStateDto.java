@@ -91,7 +91,7 @@ public class JobDefinitionSuspensionStateDto extends SuspensionStateDto {
 
     UpdateJobDefinitionSuspensionStateBuilder updateSuspensionStateBuilder = createUpdateSuspensionStateBuilder(engine);
 
-    if (executionDate != null && !executionDate.equals("")) {
+    if (executionDate != null && !"".equals(executionDate)) {
       Date delayedExecutionDate = DateTimeUtil.parseDate(executionDate);
 
       updateSuspensionStateBuilder.executionDate(delayedExecutionDate);

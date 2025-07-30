@@ -129,7 +129,7 @@ public class PasswordPolicyUserDataTest {
 
     methods.forEach(method -> {
       String methodName = method.getName();
-      if (methodName.startsWith("set") && !methodName.equals("setPassword")) {
+      if (methodName.startsWith("set") && !"setPassword".equals(methodName)) {
         User user = identityService.newUser("");
 
         try {

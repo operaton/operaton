@@ -484,19 +484,19 @@ class BpmnParseTest {
 
     for (ActivityImpl activity : processDefinitionEntity.getActivities()) {
 
-      if (activity.getId().equals("theStart")) {
+      if ("theStart".equals(activity.getId())) {
         assertActivityBounds(activity, 70, 255, 30, 30);
-      } else if (activity.getId().equals("task1")) {
+      } else if ("task1".equals(activity.getId())) {
         assertActivityBounds(activity, 176, 230, 100, 80);
-      } else if (activity.getId().equals("gateway1")) {
+      } else if ("gateway1".equals(activity.getId())) {
         assertActivityBounds(activity, 340, 250, 40, 40);
-      } else if (activity.getId().equals("task2")) {
+      } else if ("task2".equals(activity.getId())) {
         assertActivityBounds(activity, 445, 138, 100, 80);
-      } else if (activity.getId().equals("gateway2")) {
+      } else if ("gateway2".equals(activity.getId())) {
         assertActivityBounds(activity, 620, 250, 40, 40);
-      } else if (activity.getId().equals("task3")) {
+      } else if ("task3".equals(activity.getId())) {
         assertActivityBounds(activity, 453, 304, 100, 80);
-      } else if (activity.getId().equals("theEnd")) {
+      } else if ("theEnd".equals(activity.getId())) {
         assertActivityBounds(activity, 713, 256, 28, 28);
       }
 
@@ -504,19 +504,19 @@ class BpmnParseTest {
         assertThat(((TransitionImpl) sequenceFlow).getWaypoints()).hasSizeGreaterThanOrEqualTo(4);
 
         TransitionImpl transitionImpl = (TransitionImpl) sequenceFlow;
-        if (transitionImpl.getId().equals("flowStartToTask1")) {
+        if ("flowStartToTask1".equals(transitionImpl.getId())) {
           assertSequenceFlowWayPoints(transitionImpl, 100, 270, 176, 270);
-        } else if (transitionImpl.getId().equals("flowTask1ToGateway1")) {
+        } else if ("flowTask1ToGateway1".equals(transitionImpl.getId())) {
           assertSequenceFlowWayPoints(transitionImpl, 276, 270, 340, 270);
-        } else if (transitionImpl.getId().equals("flowGateway1ToTask2")) {
+        } else if ("flowGateway1ToTask2".equals(transitionImpl.getId())) {
           assertSequenceFlowWayPoints(transitionImpl, 360, 250, 360, 178, 445, 178);
-        } else if (transitionImpl.getId().equals("flowGateway1ToTask3")) {
+        } else if ("flowGateway1ToTask3".equals(transitionImpl.getId())) {
           assertSequenceFlowWayPoints(transitionImpl, 360, 290, 360, 344, 453, 344);
-        } else if (transitionImpl.getId().equals("flowTask2ToGateway2")) {
+        } else if ("flowTask2ToGateway2".equals(transitionImpl.getId())) {
           assertSequenceFlowWayPoints(transitionImpl, 545, 178, 640, 178, 640, 250);
-        } else if (transitionImpl.getId().equals("flowTask3ToGateway2")) {
+        } else if ("flowTask3ToGateway2".equals(transitionImpl.getId())) {
           assertSequenceFlowWayPoints(transitionImpl, 553, 344, 640, 344, 640, 290);
-        } else if (transitionImpl.getId().equals("flowGateway2ToEnd")) {
+        } else if ("flowGateway2ToEnd".equals(transitionImpl.getId())) {
           assertSequenceFlowWayPoints(transitionImpl, 660, 270, 713, 270);
         }
 
@@ -537,9 +537,9 @@ class BpmnParseTest {
 
     // Test that the conditions has been resolved
     for (PvmTransition transition : activity.getOutgoingTransitions()) {
-      if (transition.getDestination().getId().equals("Task_2")) {
+      if ("Task_2".equals(transition.getDestination().getId())) {
         assertThat(transition.getProperty("conditionText")).isEqualTo("#{approved}");
-      } else if (transition.getDestination().getId().equals("Task_3")) {
+      } else if ("Task_3".equals(transition.getDestination().getId())) {
         assertThat(transition.getProperty("conditionText")).isEqualTo("#{!approved}");
       } else {
         fail("Something went wrong");

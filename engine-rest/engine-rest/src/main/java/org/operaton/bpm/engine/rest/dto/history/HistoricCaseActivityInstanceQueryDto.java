@@ -304,27 +304,27 @@ public class HistoricCaseActivityInstanceQueryDto extends AbstractQueryDto<Histo
   }
 
   protected void applySortBy(HistoricCaseActivityInstanceQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_HISTORIC_ACTIVITY_INSTANCE_ID_VALUE)) {
+    if (SORT_BY_HISTORIC_ACTIVITY_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByHistoricCaseActivityInstanceId();
-    } else if (sortBy.equals(SORT_BY_CASE_INSTANCE_ID_VALUE)) {
+    } else if (SORT_BY_CASE_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByCaseInstanceId();
-    } else if (sortBy.equals(SORT_BY_CASE_EXECUTION_ID_VALUE)) {
+    } else if (SORT_BY_CASE_EXECUTION_ID_VALUE.equals(sortBy)) {
       query.orderByCaseExecutionId();
-    } else if (sortBy.equals(SORT_BY_CASE_ACTIVITY_ID_VALUE)) {
+    } else if (SORT_BY_CASE_ACTIVITY_ID_VALUE.equals(sortBy)) {
       query.orderByCaseActivityId();
-    } else if (sortBy.equals(SORT_BY_CASE_ACTIVITY_NAME_VALUE)) {
+    } else if (SORT_BY_CASE_ACTIVITY_NAME_VALUE.equals(sortBy)) {
       query.orderByCaseActivityName();
-    } else if (sortBy.equals(SORT_BY_CASE_ACTIVITY_TYPE_VALUE)) {
+    } else if (SORT_BY_CASE_ACTIVITY_TYPE_VALUE.equals(sortBy)) {
       query.orderByCaseActivityType();
-    } else if (sortBy.equals(SORT_BY_HISTORIC_CASE_ACTIVITY_INSTANCE_CREATE_TIME_VALUE)) {
+    } else if (SORT_BY_HISTORIC_CASE_ACTIVITY_INSTANCE_CREATE_TIME_VALUE.equals(sortBy)) {
       query.orderByHistoricCaseActivityInstanceCreateTime();
-    } else if (sortBy.equals(SORT_BY_HISTORIC_CASE_ACTIVITY_INSTANCE_END_TIME_VALUE)) {
+    } else if (SORT_BY_HISTORIC_CASE_ACTIVITY_INSTANCE_END_TIME_VALUE.equals(sortBy)) {
       query.orderByHistoricCaseActivityInstanceEndTime();
-    } else if (sortBy.equals(SORT_BY_HISTORIC_CASE_ACTIVITY_INSTANCE_DURATION_VALUE)) {
+    } else if (SORT_BY_HISTORIC_CASE_ACTIVITY_INSTANCE_DURATION_VALUE.equals(sortBy)) {
       query.orderByHistoricCaseActivityInstanceDuration();
-    } else if (sortBy.equals(SORT_BY_CASE_DEFINITION_ID_VALUE)) {
+    } else if (SORT_BY_CASE_DEFINITION_ID_VALUE.equals(sortBy)) {
       query.orderByCaseDefinitionId();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

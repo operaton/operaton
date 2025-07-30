@@ -276,10 +276,10 @@ class ProcessDefinitionStatisticsQueryTest {
     assertThat(statistics).hasSize(2);
 
     for (ProcessDefinitionStatistics result : statistics) {
-      if (result.getKey().equals("ExampleProcess")) {
+      if ("ExampleProcess".equals(result.getKey())) {
         assertThat(result.getInstances()).isEqualTo(1);
         assertThat(result.getFailedJobs()).isEqualTo(1);
-      } else if (result.getKey().equals("callExampleSubProcess")) {
+      } else if ("callExampleSubProcess".equals(result.getKey())) {
         assertThat(result.getInstances()).isEqualTo(1);
         assertThat(result.getFailedJobs()).isZero();
       } else {
@@ -485,9 +485,9 @@ class ProcessDefinitionStatisticsQueryTest {
     ProcessDefinitionStatistics exampleSubProcessStaticstics = null;
 
     for (ProcessDefinitionStatistics current : statistics) {
-      if (current.getKey().equals("callExampleSubProcess")) {
+      if ("callExampleSubProcess".equals(current.getKey())) {
         callExampleSubProcessStaticstics = current;
-      } else if (current.getKey().equals("ExampleProcess")) {
+      } else if ("ExampleProcess".equals(current.getKey())) {
         exampleSubProcessStaticstics = current;
       } else {
         fail(current.getKey() + " was not expected.");
@@ -650,11 +650,11 @@ class ProcessDefinitionStatisticsQueryTest {
 
     for (ProcessDefinitionStatistics definitionResult : statistics) {
 
-      if (definitionResult.getKey().equals("callExampleSubProcess")) {
+      if ("callExampleSubProcess".equals(definitionResult.getKey())) {
         // there is no root incidents
         assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
-      } else if (definitionResult.getKey().equals("ExampleProcess")) {
+      } else if ("ExampleProcess".equals(definitionResult.getKey())) {
         // there is one root incident
         assertThat(definitionResult.getIncidentStatistics()).isNotEmpty();
         assertThat(definitionResult.getIncidentStatistics()).hasSize(1);

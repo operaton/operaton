@@ -42,13 +42,13 @@ class TimerEventDefinitionTest extends AbstractEventDefinitionTest {
     for (TimerEventDefinition eventDefinition : eventDefinitions) {
       String id = eventDefinition.getId();
       String textContent = null;
-      if (id.equals("date")) {
+      if ("date".equals(id)) {
         textContent = eventDefinition.getTimeDate().getTextContent();
       }
-      else if (id.equals("duration")) {
+      else if ("duration".equals(id)) {
         textContent = eventDefinition.getTimeDuration().getTextContent();
       }
-      else if (id.equals("cycle")) {
+      else if ("cycle".equals(id)) {
         textContent = eventDefinition.getTimeCycle().getTextContent();
       }
 

@@ -396,23 +396,23 @@ public class ProcessDefinitionQueryDto extends AbstractQueryDto<ProcessDefinitio
 
   @Override
   protected void applySortBy(ProcessDefinitionQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_CATEGORY_VALUE)) {
+    if (SORT_BY_CATEGORY_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionCategory();
-    } else if (sortBy.equals(SORT_BY_KEY_VALUE)) {
+    } else if (SORT_BY_KEY_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_ID_VALUE)) {
+    } else if (SORT_BY_ID_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_VERSION_VALUE)) {
+    } else if (SORT_BY_VERSION_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionVersion();
-    } else if (sortBy.equals(SORT_BY_NAME_VALUE)) {
+    } else if (SORT_BY_NAME_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionName();
-    } else if (sortBy.equals(SORT_BY_DEPLOYMENT_ID_VALUE)) {
+    } else if (SORT_BY_DEPLOYMENT_ID_VALUE.equals(sortBy)) {
       query.orderByDeploymentId();
-    } else if (sortBy.equals(SORT_BY_DEPLOY_TIME_VALUE)) {
+    } else if (SORT_BY_DEPLOY_TIME_VALUE.equals(sortBy)) {
       query.orderByDeploymentTime();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
-    } else if (sortBy.equals(SORT_BY_VERSION_TAG)) {
+    } else if (SORT_BY_VERSION_TAG.equals(sortBy)) {
       query.orderByVersionTag();
     }
   }

@@ -264,10 +264,10 @@ class CaseServiceCaseInstanceTest {
             .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
-      if (variableInstance.getName().equals("aVariableName")) {
+      if ("aVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("aVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("aVariableValue");
-      } else if (variableInstance.getName().equals("anotherVariableName")) {
+      } else if ("anotherVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
         assertThat(variableInstance.getValue()).isEqualTo(999);
       } else {
@@ -310,10 +310,10 @@ class CaseServiceCaseInstanceTest {
             .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
-      if (variableInstance.getName().equals("aVariableName")) {
+      if ("aVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("aVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("aVariableValue");
-      } else if (variableInstance.getName().equals("anotherVariableName")) {
+      } else if ("anotherVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
         assertThat(variableInstance.getValue()).isEqualTo(999);
       } else {
@@ -357,10 +357,10 @@ class CaseServiceCaseInstanceTest {
             .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
-      if (variableInstance.getName().equals("aVariableName")) {
+      if ("aVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("aVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("aVariableValue");
-      } else if (variableInstance.getName().equals("anotherVariableName")) {
+      } else if ("anotherVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
         assertThat(variableInstance.getValue()).isEqualTo(999);
       } else {
@@ -408,10 +408,10 @@ class CaseServiceCaseInstanceTest {
             .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
-      if (variableInstance.getName().equals("aVariableName")) {
+      if ("aVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("aVariableName");
         assertThat(variableInstance.getValue()).isEqualTo("aVariableValue");
-      } else if (variableInstance.getName().equals("anotherVariableName")) {
+      } else if ("anotherVariableName".equals(variableInstance.getName())) {
         assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
         assertThat(variableInstance.getValue()).isEqualTo(999);
       } else {

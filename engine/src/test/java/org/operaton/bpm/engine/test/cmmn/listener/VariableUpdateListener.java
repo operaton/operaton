@@ -28,8 +28,8 @@ public class VariableUpdateListener implements CaseVariableListener {
 
   @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
-    if (variableInstance.getName().equals("variable")) {
-      if (variableInstance.getValue().equals("value1")) {
+    if ("variable".equals(variableInstance.getName())) {
+      if ("value1".equals(variableInstance.getValue())) {
         variableInstance.getSourceExecution().setVariable("variable", "value2");
       } else {
         // ignore

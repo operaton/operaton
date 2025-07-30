@@ -36,11 +36,11 @@ public class CustomValidatorWithDetail implements FormFieldValidator {
       return true;
     }
 
-    if (submittedValue.equals("A") || submittedValue.equals("B")) {
+    if ("A".equals(submittedValue) || "B".equals(submittedValue)) {
       return true;
     }
 
-    if (submittedValue.equals("C")) {
+    if ("C".equals(submittedValue)) {
       // instead of returning false, use an exception to specify details about
       // what went wrong
       throw new FormFieldValidationException("EXPIRED", "Unable to validate " + submittedValue);

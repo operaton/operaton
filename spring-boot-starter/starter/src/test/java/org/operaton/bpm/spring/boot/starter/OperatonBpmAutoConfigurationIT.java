@@ -76,7 +76,7 @@ class OperatonBpmAutoConfigurationIT {
 
     boolean isJacksonJsonDataFormat = serializers.stream().anyMatch(s ->
         s instanceof SpinObjectValueSerializer
-        && s.getSerializationDataformat().equals("application/json"));
+        && "application/json".equals(s.getSerializationDataformat()));
 
     // then
     assertThat(plugins.stream().anyMatch(SpinProcessEnginePlugin.class::isInstance)).isTrue();

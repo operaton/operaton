@@ -200,19 +200,19 @@ public class JobDefinitionQueryDto extends AbstractQueryDto<JobDefinitionQuery> 
 
   @Override
   protected void applySortBy(JobDefinitionQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_JOB_DEFINITION_ID)) {
+    if (SORT_BY_JOB_DEFINITION_ID.equals(sortBy)) {
       query.orderByJobDefinitionId();
-    } else if (sortBy.equals(SORT_BY_ACTIVITY_ID)) {
+    } else if (SORT_BY_ACTIVITY_ID.equals(sortBy)) {
       query.orderByActivityId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_ID)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_ID.equals(sortBy)) {
       query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_KEY)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_KEY.equals(sortBy)) {
       query.orderByProcessDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_JOB_TYPE)) {
+    } else if (SORT_BY_JOB_TYPE.equals(sortBy)) {
       query.orderByJobType();
-    } else if (sortBy.equals(SORT_BY_JOB_CONFIGURATION)) {
+    } else if (SORT_BY_JOB_CONFIGURATION.equals(sortBy)) {
       query.orderByJobConfiguration();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

@@ -143,9 +143,9 @@ public abstract class AbstractQueryDto<T extends Query<?, ?>>  extends AbstractS
 
   protected void applySortOrder(T query, String sortOrder) {
     if (sortOrder != null) {
-      if (sortOrder.equals(SORT_ORDER_ASC_VALUE)) {
+      if (SORT_ORDER_ASC_VALUE.equals(sortOrder)) {
         query.asc();
-      } else if (sortOrder.equals(SORT_ORDER_DESC_VALUE)) {
+      } else if (SORT_ORDER_DESC_VALUE.equals(sortOrder)) {
         query.desc();
       }
     }

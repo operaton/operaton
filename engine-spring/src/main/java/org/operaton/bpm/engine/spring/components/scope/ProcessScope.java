@@ -152,7 +152,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
                 String methodName = methodInvocation.getMethod().getName();
 
                 logger.info(() -> "method invocation for " + methodName + ".");
-                if (methodName.equals("toString"))
+                if ("toString".equals(methodName))
                     return "SharedProcessInstance";
 
 

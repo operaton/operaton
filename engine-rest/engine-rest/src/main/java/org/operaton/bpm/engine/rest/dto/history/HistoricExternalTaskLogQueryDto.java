@@ -278,31 +278,31 @@ public class HistoricExternalTaskLogQueryDto extends AbstractQueryDto<HistoricEx
 
   @Override
   protected void applySortBy(HistoricExternalTaskLogQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_TIMESTAMP)) {
+    if (SORT_BY_TIMESTAMP.equals(sortBy)) {
       query.orderByTimestamp();
-    } else if (sortBy.equals(SORT_BY_EXTERNAL_TASK_ID)) {
+    } else if (SORT_BY_EXTERNAL_TASK_ID.equals(sortBy)) {
       query.orderByExternalTaskId();
-    } else if (sortBy.equals(SORT_BY_RETRIES)) {
+    } else if (SORT_BY_RETRIES.equals(sortBy)) {
       query.orderByRetries();
-    } else if (sortBy.equals(SORT_BY_PRIORITY)) {
+    } else if (SORT_BY_PRIORITY.equals(sortBy)) {
       query.orderByPriority();
-    } else if (sortBy.equals(SORT_BY_TOPIC_NAME)) {
+    } else if (SORT_BY_TOPIC_NAME.equals(sortBy)) {
       query.orderByTopicName();
-    } else if (sortBy.equals(SORT_BY_WORKER_ID)) {
+    } else if (SORT_BY_WORKER_ID.equals(sortBy)) {
       query.orderByWorkerId();
-    } else if (sortBy.equals(SORT_BY_ACTIVITY_ID)) {
+    } else if (SORT_BY_ACTIVITY_ID.equals(sortBy)) {
       query.orderByActivityId();
-    }else if (sortBy.equals(SORT_BY_ACTIVITY_INSTANCE_ID)) {
+    }else if (SORT_BY_ACTIVITY_INSTANCE_ID.equals(sortBy)) {
       query.orderByActivityInstanceId();
-    } else if (sortBy.equals(SORT_BY_EXECUTION_ID)) {
+    } else if (SORT_BY_EXECUTION_ID.equals(sortBy)) {
       query.orderByExecutionId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_ID)) {
+    } else if (SORT_BY_PROCESS_INSTANCE_ID.equals(sortBy)) {
       query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_ID)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_ID.equals(sortBy)) {
       query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_KEY)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_KEY.equals(sortBy)) {
       query.orderByProcessDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

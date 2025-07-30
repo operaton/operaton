@@ -200,25 +200,25 @@ public class HistoricIdentityLinkLogQueryDto extends AbstractQueryDto<HistoricId
 
   @Override
   protected void applySortBy(HistoricIdentityLinkLogQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_TIME)) {
+    if (SORT_BY_TIME.equals(sortBy)) {
       query.orderByTime();
-    } else if (sortBy.equals(SORT_BY_TYPE)) {
+    } else if (SORT_BY_TYPE.equals(sortBy)) {
       query.orderByType();
-    } else if (sortBy.equals(SORT_BY_USER_ID)) {
+    } else if (SORT_BY_USER_ID.equals(sortBy)) {
       query.orderByUserId();
-    } else if (sortBy.equals(SORT_BY_GROUP_ID)) {
+    } else if (SORT_BY_GROUP_ID.equals(sortBy)) {
       query.orderByGroupId();
-    } else if (sortBy.equals(SORT_BY_TASK_ID)) {
+    } else if (SORT_BY_TASK_ID.equals(sortBy)) {
       query.orderByTaskId();
-    } else if (sortBy.equals(SORT_BY_OPERATION_TYPE)) {
+    } else if (SORT_BY_OPERATION_TYPE.equals(sortBy)) {
       query.orderByOperationType();
-    } else if (sortBy.equals(SORT_BY_ASSIGNER_ID)) {
+    } else if (SORT_BY_ASSIGNER_ID.equals(sortBy)) {
       query.orderByAssignerId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_ID)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_ID.equals(sortBy)) {
       query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_KEY)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_KEY.equals(sortBy)) {
       query.orderByProcessDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

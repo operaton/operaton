@@ -27,7 +27,7 @@ public class CustomValidator implements FormFieldValidator {
 
   @Override
   public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext) {
-    return submittedValue == null || submittedValue.equals("validValue");
+    return submittedValue == null || "validValue".equals(submittedValue);
   }
 
 }

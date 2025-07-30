@@ -30,9 +30,9 @@ public class Decision implements ActivityBehavior {
   public void execute(ActivityExecution execution) throws Exception {
     PvmTransition transition = null;
     String creditRating = (String) execution.getVariable("creditRating");
-    if (creditRating.equals("AAA+")) {
+    if ("AAA+".equals(creditRating)) {
       transition = execution.getActivity().findOutgoingTransition("wow");
-    } else if (creditRating.equals("Aaa-")) {
+    } else if ("Aaa-".equals(creditRating)) {
       transition = execution.getActivity().findOutgoingTransition("nice");
     } else {
       transition = execution.getActivity().findOutgoingTransition("default");

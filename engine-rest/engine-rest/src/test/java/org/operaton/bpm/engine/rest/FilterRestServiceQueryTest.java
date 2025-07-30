@@ -323,23 +323,23 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
 
   protected void verifyQueryMockSorting(String sortBy, String sortOrder) {
     InOrder inOrder = inOrder(mockedQuery);
-    if (sortBy.equals(FilterQueryDto.SORT_BY_ID_VALUE)) {
+    if (FilterQueryDto.SORT_BY_ID_VALUE.equals(sortBy)) {
       inOrder.verify(mockedQuery).orderByFilterId();
     }
-    else if (sortBy.equals(FilterQueryDto.SORT_BY_RESOURCE_TYPE_VALUE)) {
+    else if (FilterQueryDto.SORT_BY_RESOURCE_TYPE_VALUE.equals(sortBy)) {
       inOrder.verify(mockedQuery).orderByFilterResourceType();
     }
-    else if (sortBy.equals(FilterQueryDto.SORT_BY_NAME_VALUE)) {
+    else if (FilterQueryDto.SORT_BY_NAME_VALUE.equals(sortBy)) {
       inOrder.verify(mockedQuery).orderByFilterName();
     }
-    else if (sortBy.equals(FilterQueryDto.SORT_BY_OWNER_VALUE)) {
+    else if (FilterQueryDto.SORT_BY_OWNER_VALUE.equals(sortBy)) {
       inOrder.verify(mockedQuery).orderByFilterOwner();
     }
 
-    if (sortOrder.equals(AbstractQuery.SORTORDER_ASC)) {
+    if (AbstractQuery.SORTORDER_ASC.equals(sortOrder)) {
       inOrder.verify(mockedQuery).asc();
     }
-    else if (sortOrder.equals(AbstractQuery.SORTORDER_DESC)) {
+    else if (AbstractQuery.SORTORDER_DESC.equals(sortOrder)) {
       inOrder.verify(mockedQuery).desc();
     }
   }

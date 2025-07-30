@@ -136,11 +136,11 @@ public class GroupQueryDto extends AbstractQueryDto<GroupQuery> {
 
   @Override
   protected void applySortBy(GroupQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_GROUP_ID_VALUE)) {
+    if (SORT_BY_GROUP_ID_VALUE.equals(sortBy)) {
       query.orderByGroupId();
-    } else if (sortBy.equals(SORT_BY_GROUP_NAME_VALUE)) {
+    } else if (SORT_BY_GROUP_NAME_VALUE.equals(sortBy)) {
       query.orderByGroupName();
-    } else if (sortBy.equals(SORT_BY_GROUP_TYPE_VALUE)) {
+    } else if (SORT_BY_GROUP_TYPE_VALUE.equals(sortBy)) {
       query.orderByGroupType();
     }
   }

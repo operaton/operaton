@@ -441,7 +441,7 @@ class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     //on query without name also
      metrics = managementService.createMetricsQuery().interval();
      for (MetricIntervalValue intervalValue : metrics) {
-       if (intervalValue.getName().equalsIgnoreCase(ACTIVTY_INSTANCE_START)) {
+       if (ACTIVTY_INSTANCE_START.equalsIgnoreCase(intervalValue.getName())) {
         newValue = intervalValue.getValue();
          assertThat(newValue).isEqualTo(value + 3);
         break;

@@ -239,19 +239,19 @@ public class CaseDefinitionQueryDto extends AbstractQueryDto<CaseDefinitionQuery
 
   @Override
   protected void applySortBy(CaseDefinitionQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_CATEGORY_VALUE)) {
+    if (SORT_BY_CATEGORY_VALUE.equals(sortBy)) {
       query.orderByCaseDefinitionCategory();
-    } else if (sortBy.equals(SORT_BY_KEY_VALUE)) {
+    } else if (SORT_BY_KEY_VALUE.equals(sortBy)) {
       query.orderByCaseDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_ID_VALUE)) {
+    } else if (SORT_BY_ID_VALUE.equals(sortBy)) {
       query.orderByCaseDefinitionId();
-    } else if (sortBy.equals(SORT_BY_VERSION_VALUE)) {
+    } else if (SORT_BY_VERSION_VALUE.equals(sortBy)) {
       query.orderByCaseDefinitionVersion();
-    } else if (sortBy.equals(SORT_BY_NAME_VALUE)) {
+    } else if (SORT_BY_NAME_VALUE.equals(sortBy)) {
       query.orderByCaseDefinitionName();
-    } else if (sortBy.equals(SORT_BY_DEPLOYMENT_ID_VALUE)) {
+    } else if (SORT_BY_DEPLOYMENT_ID_VALUE.equals(sortBy)) {
       query.orderByDeploymentId();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

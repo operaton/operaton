@@ -142,11 +142,11 @@ class CleanableHistoricBatchReportTest {
     List<CleanableHistoricBatchReportResult> list = historyService.createCleanableHistoricBatchReport().list();
     assertThat(list).hasSize(3);
     for (CleanableHistoricBatchReportResult result : list) {
-      if (result.getBatchType().equals("instance-migration")) {
+      if ("instance-migration".equals(result.getBatchType())) {
         checkResultNumbers(result, 4, 8, defaultTTL);
-      } else if (result.getBatchType().equals("instance-modification")) {
+      } else if ("instance-modification".equals(result.getBatchType())) {
         checkResultNumbers(result, 0, 1, modOperationsTTL);
-      } else if (result.getBatchType().equals("instance-deletion")) {
+      } else if ("instance-deletion".equals(result.getBatchType())) {
         checkResultNumbers(result, 11, 18, defaultTTL);
       }
     }
@@ -218,11 +218,11 @@ class CleanableHistoricBatchReportTest {
     List<CleanableHistoricBatchReportResult> list = historyService.createCleanableHistoricBatchReport().list();
     assertThat(list).hasSize(3);
     for (CleanableHistoricBatchReportResult result : list) {
-      if (result.getBatchType().equals("instance-migration")) {
+      if ("instance-migration".equals(result.getBatchType())) {
         checkResultNumbers(result, 0, 8, null);
-      } else if (result.getBatchType().equals("instance-modification")) {
+      } else if ("instance-modification".equals(result.getBatchType())) {
         checkResultNumbers(result, 1, 1, modOperationsTTL);
-      } else if (result.getBatchType().equals("instance-deletion")) {
+      } else if ("instance-deletion".equals(result.getBatchType())) {
         checkResultNumbers(result, delOperationsTTL, 18, delOperationsTTL);
       }
     }

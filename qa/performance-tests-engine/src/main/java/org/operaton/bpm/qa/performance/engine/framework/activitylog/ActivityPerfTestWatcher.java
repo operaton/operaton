@@ -92,7 +92,7 @@ public class ActivityPerfTestWatcher implements PerfTestWatcher {
     for (HistoricActivityInstance activityInstance : activityInstances) {
       if (watchAllActivities || activityIds.contains(activityInstance.getActivityId())) {
         ActivityPerfTestResult result = new ActivityPerfTestResult(activityInstance);
-        if (activityInstance.getActivityType().equals("startEvent")) {
+        if ("startEvent".equals(activityInstance.getActivityType())) {
           result.setStartTime(startTime);
         }
         activityResults.add(result);

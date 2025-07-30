@@ -68,10 +68,10 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
       return;
     }
 
-    if(execution.getEventName().equals(EVENTNAME_START)) {
+    if(EVENTNAME_START.equals(execution.getEventName())) {
       addActivityInstanceId(execution, startedActivityInstances);
 
-    } else if(execution.getEventName().equals(EVENTNAME_END)) {
+    } else if(EVENTNAME_END.equals(execution.getEventName())) {
       addActivityInstanceId(execution, endedActivityInstances);
     }
 

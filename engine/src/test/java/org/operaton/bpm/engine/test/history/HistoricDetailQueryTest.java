@@ -887,7 +887,7 @@ class HistoricDetailQueryTest {
       String variableValue = detail.getTextValue();
       if (variableValue.equals(initalValue)) {
         assertThat(detail.getVariableName()).isEqualTo("foo");
-      } else if (variableValue.equals("listener invoked")) {
+      } else if ("listener invoked".equals(variableValue)) {
         assertThat(detail.getVariableName()).isEqualTo("listener");
       } else {
         fail("illegal variable value:" + variableValue);
@@ -928,7 +928,7 @@ class HistoricDetailQueryTest {
       assertThat(detail.isInitial()).isTrue();
       if (variableValue.equals(initalValue)) {
         assertThat(detail.getVariableName()).isEqualTo("foo");
-      } else if (variableValue.equals("listener invoked")) {
+      } else if ("listener invoked".equals(variableValue)) {
         assertThat(detail.getVariableName()).isEqualTo("listener");
       } else {
         fail("illegal variable value:" + variableValue);
@@ -969,7 +969,7 @@ class HistoricDetailQueryTest {
       assertThat(detail.isInitial()).isTrue();
       if (variableValue.equals(initalValue)) {
         assertThat(detail.getVariableName()).isEqualTo("foo");
-      } else if (variableValue.equals("listener invoked")) {
+      } else if ("listener invoked".equals(variableValue)) {
         assertThat(detail.getVariableName()).isEqualTo("listener");
       } else {
         fail("illegal variable value:" + variableValue);

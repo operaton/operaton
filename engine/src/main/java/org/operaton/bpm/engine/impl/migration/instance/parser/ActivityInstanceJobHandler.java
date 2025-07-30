@@ -108,7 +108,7 @@ public class ActivityInstanceJobHandler implements MigratingDependentInstancePar
   }
 
   protected static boolean isTimerJob(JobEntity job) {
-    return job != null && job.getType().equals(TimerEntity.TYPE);
+    return job != null && TimerEntity.TYPE.equals(job.getType());
   }
 
   protected static boolean isNoTimeoutListenerOrMigrates(JobEntity job, JobHandlerConfiguration jobHandlerConfiguration,

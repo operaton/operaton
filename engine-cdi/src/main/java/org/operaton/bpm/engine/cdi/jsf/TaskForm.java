@@ -181,10 +181,8 @@ public class TaskForm implements Serializable {
     }
 
     Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    String processDefinitionKey = requestParameterMap.get(REQUEST_PARAM_PROCESS_DEFINITION_KEY);
-    String callbackUrl = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
-    this.url = callbackUrl;
-    this.processDefinitionKey = processDefinitionKey;
+    this.url = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
+    this.processDefinitionKey = requestParameterMap.get(REQUEST_PARAM_PROCESS_DEFINITION_KEY);
     beginConversation();
   }
 

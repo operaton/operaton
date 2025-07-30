@@ -1184,9 +1184,6 @@ class FullHistoryTest {
     variables.put("stringVar", "stringValue");
     variables.put("booleanVar", true);
     Date date = Calendar.getInstance().getTime();
-    Calendar otherCal = Calendar.getInstance();
-    otherCal.add(Calendar.DAY_OF_MONTH, 1);
-    Date otherDate = otherCal.getTime();
     variables.put("dateVar", date);
     variables.put("nullVar", null);
 

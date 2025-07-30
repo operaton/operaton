@@ -67,22 +67,17 @@ public abstract class AuthorizationTest extends AbstractCockpitPluginTest {
   @AfterEach
   public void tearDown() {
     disableAuthorization();
-    for (User user : identityService.createUserQuery().list()) {
-      identityService.deleteUser(user.getId());
-    }
-    for (Group group : identityService.createGroupQuery().list()) {
-      identityService.deleteGroup(group.getId());
-    }
-    for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
-      authorizationService.deleteAuthorization(authorization.getId());
-    }
+    identityService.createUserQuery().list().stream().map(User::getId).forEach(identityService::deleteUser);
+    identityService.createGroupQuery().list().stream().map(Group::getId).forEach(identityService::deleteGroup);
+    authorizationService.createAuthorizationQuery().list().stream().map(Authorization::getId)
+        .forEach(authorizationService::deleteAuthorization);
   }
 
   // user ////////////////////////////////////////////////////////////////
 
   protected User createUser(String userId) {
-    User user = identityService.newUser(userId);
-    identityService.saveUser(user);
+    User newUser = identityService.newUser(userId);
+    identityService.saveUser(newUser);
 
     // give user all permission to manipulate authorizations
     Authorization authorization = createGrantAuthorization(AUTHORIZATION, ANY);
@@ -96,15 +91,15 @@ public abstract class AuthorizationTest extends AbstractCockpitPluginTest {
     authorization.addPermission(Permissions.ALL);
     saveAuthorization(authorization);
 
-    return user;
+    return newUser;
   }
 
   // group //////////////////////////////////////////////////////////////
 
   protected Group createGroup(String groupId) {
-    Group group = identityService.newGroup(groupId);
-    identityService.saveGroup(group);
-    return group;
+    Group newGroup = identityService.newGroup(groupId);
+    identityService.saveGroup(newGroup);
+    return newGroup;
   }
 
   // authorization ///////////////////////////////////////////////////////

@@ -56,6 +56,11 @@ public class AstChoice extends AstRightValue {
 
   @Override
   public AstNode getChild(int i) {
-		return i == 0 ? question : i == 1 ? yes : i == 2 ? no : null;
+		return switch (i) {
+			case 0 -> question;
+			case 1 -> yes;
+			case 2 -> no;
+			default -> null;
+		};
 	}
 }

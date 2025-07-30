@@ -222,7 +222,7 @@ public abstract class Parse extends DefaultHandler {
     for (Problem warning : warnings) {
       builder.append("\n* ");
       builder.append(warning.getMessage());
-      builder.append(" | resource " + name);
+      builder.append(" | resource ").append(name);
       builder.append(warning.toString());
     }
     LOG.logParseWarnings(builder.toString());
@@ -233,7 +233,7 @@ public abstract class Parse extends DefaultHandler {
     for (Problem error : errors) {
       strb.append("\n* ");
       strb.append(error.getMessage());
-      strb.append(" | resource " + name);
+      strb.append(" | resource ").append(name);
       strb.append(error.toString());
     }
     throw LOG.exceptionDuringParsing(strb.toString(), name, errors, warnings);

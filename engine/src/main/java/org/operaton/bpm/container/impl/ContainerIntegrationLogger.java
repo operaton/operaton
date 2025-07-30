@@ -178,7 +178,8 @@ public class ContainerIntegrationLogger extends ProcessEngineLogger {
     builder.append("Deployment summary for process archive '" + deploymentName + "': \n");
     builder.append("\n");
     for (String resourceName : deploymentResourceNames) {
-      builder.append("        " + resourceName);
+      builder.append("        ");
+      builder.append(resourceName);
       builder.append("\n");
     }
 

@@ -33,9 +33,9 @@ import org.operaton.bpm.engine.impl.form.type.EnumFormType;
 import org.operaton.bpm.engine.impl.form.type.StringFormType;
 
 /**
- * <p>A simple {@link FormEngine} implementaiton which renders
+ * <p>A simple {@link FormEngine} implementation which renders
  * forms as HTML such that they can be used as embedded forms
- * inside operaton Tasklist.</p>
+ * inside Operaton Tasklist.</p>
  *
  * @author Daniel Meyer
  *

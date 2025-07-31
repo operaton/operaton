@@ -263,11 +263,11 @@ public class HistoricVariableInstanceQueryDto extends AbstractQueryDto<HistoricV
 
   @Override
   protected void applySortBy(HistoricVariableInstanceQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_ID_VALUE)) {
+    if (SORT_BY_PROCESS_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_VARIABLE_NAME_VALUE)) {
+    } else if (SORT_BY_VARIABLE_NAME_VALUE.equals(sortBy)) {
       query.orderByVariableName();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

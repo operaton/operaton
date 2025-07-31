@@ -49,11 +49,11 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
   public String getNamespaceURI(String prefix) {
     ensureNotNull("Prefix", prefix);
 
-    if(prefix.equals(XMLConstants.XML_NS_PREFIX)) {
+    if(XMLConstants.XML_NS_PREFIX.equals(prefix)) {
       return XMLConstants.XML_NS_URI;
     }
 
-    if(prefix.equals(XMLConstants.XMLNS_ATTRIBUTE)) {
+    if(XMLConstants.XMLNS_ATTRIBUTE.equals(prefix)) {
       return XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
     }
 
@@ -61,7 +61,7 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
      * TODO: This only works for the root element. Every child element with a 'xmlns'-attribute will be ignored
      * So you need to specify an own prefix for the child elements default namespace uri
      */
-    if(prefix.equals(XMLConstants.DEFAULT_NS_PREFIX)) {
+    if(XMLConstants.DEFAULT_NS_PREFIX.equals(prefix)) {
       return element.namespace();
     }
 
@@ -76,11 +76,11 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
   public String getPrefix(String namespaceURI) {
     ensureNotNull("Namespace URI", namespaceURI);
 
-    if(namespaceURI.equals(XMLConstants.XML_NS_URI)) {
+    if(XMLConstants.XML_NS_URI.equals(namespaceURI)) {
       return XMLConstants.XML_NS_PREFIX;
     }
 
-    if(namespaceURI.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI)) {
+    if(XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(namespaceURI)) {
       return XMLConstants.XMLNS_ATTRIBUTE;
     }
 
@@ -109,13 +109,13 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
     ensureNotNull("Namespace URI", namespaceURI);
 
     List<String> list = new ArrayList<>();
-    if(namespaceURI.equals(XMLConstants.XML_NS_URI)) {
+    if(XMLConstants.XML_NS_URI.equals(namespaceURI)) {
       list.add(XMLConstants.XML_NS_PREFIX);
       return Collections.unmodifiableList(list).iterator();
     }
 
 
-    if(namespaceURI.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI)) {
+    if(XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(namespaceURI)) {
       list.add(XMLConstants.XMLNS_ATTRIBUTE);
       return Collections.unmodifiableList(list).iterator();
     }

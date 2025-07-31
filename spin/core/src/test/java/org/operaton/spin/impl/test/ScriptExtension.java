@@ -80,7 +80,7 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
 
     script = getScript(context);
     collectScriptVariables(context);
-    if (scriptEngine.getFactory().getLanguageName().equalsIgnoreCase("ruby")) {
+    if ("ruby".equalsIgnoreCase(scriptEngine.getFactory().getLanguageName())) {
       variables.put("org.jruby.embed.clear.variables", true);
     }
     boolean execute = isExecuteScript(context);

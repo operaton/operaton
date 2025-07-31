@@ -71,7 +71,7 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
 
     // then
     assertEquals(403, response.getStatus());
-    assertTrue(getXsrfTokenHeader(response).equals("Required"));
+    assertTrue("Required".equals(getXsrfTokenHeader(response)));
   }
 
 }

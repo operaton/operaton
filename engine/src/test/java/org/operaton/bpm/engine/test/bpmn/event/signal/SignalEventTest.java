@@ -231,7 +231,7 @@ class SignalEventTest {
     assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
-      if (!task.getName().equals("My User Task") && !task.getName().equals("My Second User Task")) {
+      if (!"My User Task".equals(task.getName()) && !"My Second User Task".equals(task.getName())) {
         fail("Expected: <My User Task> or <My Second User Task> but was <" + task.getName() + ">.");
       }
     }
@@ -264,7 +264,7 @@ class SignalEventTest {
     assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
-      if (!task.getName().equals("Approve") && !task.getName().equals("Review")) {
+      if (!"Approve".equals(task.getName()) && !"Review".equals(task.getName())) {
         fail("Expected: <Approve> or <Review> but was <" + task.getName() + ">.");
       }
     }

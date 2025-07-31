@@ -40,7 +40,7 @@ class DeploymentAwareJobExecutorForOracleTest {
   @Test
   void testFindAcquirableJobsWhen0InstancesDeployed() {
     // given
-    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
 
     // then
     findAcquirableJobs();
@@ -49,7 +49,7 @@ class DeploymentAwareJobExecutorForOracleTest {
   @Test
   void testFindAcquirableJobsWhen1InstanceDeployed() {
     // given
-    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     // when
     testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     // then
@@ -59,7 +59,7 @@ class DeploymentAwareJobExecutorForOracleTest {
   @Test
   void testFindAcquirableJobsWhen1000InstancesDeployed() {
     // given
-    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     // when
     for (int i=0; i<1000; i++) {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
@@ -71,7 +71,7 @@ class DeploymentAwareJobExecutorForOracleTest {
   @Test
   void testFindAcquirableJobsWhen1001InstancesDeployed() {
     // given
-    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     // when
     for (int i=0; i<1001; i++) {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
@@ -83,7 +83,7 @@ class DeploymentAwareJobExecutorForOracleTest {
   @Test
   void testFindAcquirableJobsWhen2000InstancesDeployed() {
     // given
-    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     // when
     for (int i=0; i<2000; i++) {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);

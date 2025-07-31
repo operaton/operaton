@@ -86,10 +86,10 @@ public abstract class TimerChangeProcessDefinitionSuspensionStateJobHandler impl
     public UpdateProcessDefinitionSuspensionStateBuilderImpl createBuilder() {
       UpdateProcessDefinitionSuspensionStateBuilderImpl builder = new UpdateProcessDefinitionSuspensionStateBuilderImpl();
 
-      if (by.equals(JOB_HANDLER_CFG_PROCESS_DEFINITION_ID)) {
+      if (JOB_HANDLER_CFG_PROCESS_DEFINITION_ID.equals(by)) {
         builder.byProcessDefinitionId(processDefinitionId);
 
-      } else if (by.equals(JOB_HANDLER_CFG_PROCESS_DEFINITION_KEY)) {
+      } else if (JOB_HANDLER_CFG_PROCESS_DEFINITION_KEY.equals(by)) {
         builder.byProcessDefinitionKey(processDefinitionKey);
 
         if (isTenantIdSet) {

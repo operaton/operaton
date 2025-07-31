@@ -111,7 +111,7 @@ public class CleanableHistoricDecisionInstanceReportDto extends AbstractQueryDto
 
   @Override
   protected void applySortBy(CleanableHistoricDecisionInstanceReport query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_FINISHED_VALUE)) {
+    if (SORT_BY_FINISHED_VALUE.equals(sortBy)) {
       query.orderByFinished();
     }
   }

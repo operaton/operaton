@@ -104,7 +104,7 @@ public class ModificationInstructionBuilder {
     json.put("variables", variables);
     json.put("transitionId", transitionId);
 
-    if (type.equals("cancel") && isFlagSet) {
+    if ("cancel".equals(type) && isFlagSet) {
       json.put("cancelCurrentActiveActivityInstances", cancelCurrentActiveActivityInstances);
     }
     return json;

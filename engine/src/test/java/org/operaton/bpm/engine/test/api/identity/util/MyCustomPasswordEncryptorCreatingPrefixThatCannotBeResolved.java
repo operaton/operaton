@@ -29,7 +29,7 @@ public class MyCustomPasswordEncryptorCreatingPrefixThatCannotBeResolved impleme
 
   @Override
   public boolean check(String password, String encrypted) {
-    return password.equals("xxx");
+    return "xxx".equals(password);
   }
 
   @Override

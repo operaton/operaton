@@ -533,9 +533,9 @@ class VariableListenerTest extends CmmnTest {
         boolean update1Processed = false;
         boolean update2Processed = false;
 
-        if (!update1Processed && update.getValue().equals("value1")) {
+        if (!update1Processed && "value1".equals(update.getValue())) {
           update1Processed = true;
-        } else if (!update2Processed && update.getValue().equals("value2")) {
+        } else if (!update2Processed && "value2".equals(update.getValue())) {
           update2Processed = true;
         } else {
           fail("unexpected variable update");

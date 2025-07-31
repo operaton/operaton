@@ -110,10 +110,10 @@ public class BatchQueryDto extends AbstractQueryDto<BatchQuery> {
   }
 
   protected void applySortBy(BatchQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_BATCH_ID_VALUE)) {
+    if (SORT_BY_BATCH_ID_VALUE.equals(sortBy)) {
       query.orderById();
     }
-    else if (sortBy.equals(SORT_BY_TENANT_ID_VALUE)) {
+    else if (SORT_BY_TENANT_ID_VALUE.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

@@ -77,7 +77,7 @@ public class SchemaLogQueryDto extends AbstractQueryDto<SchemaLogQuery>{
 
   @Override
   protected void applySortBy(SchemaLogQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if(sortBy.equals(SORT_BY_TIMESTAMP_VALUE)) {
+    if(SORT_BY_TIMESTAMP_VALUE.equals(sortBy)) {
       query.orderByTimestamp();
     }
   }

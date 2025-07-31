@@ -115,10 +115,10 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 
         if (referenceIdentifier != null && referenceIdentifier.equals(getId()) && reference instanceof AttributeReference attributeReference) {
           String attributeName = attributeReference.getReferenceSourceAttribute().getAttributeName();
-          if (attributeName.equals(BPMN_ATTRIBUTE_SOURCE_REF)) {
+          if (BPMN_ATTRIBUTE_SOURCE_REF.equals(attributeName)) {
             getOutgoing().add((SequenceFlow) sourceElement);
           }
-          else if (attributeName.equals(BPMN_ATTRIBUTE_TARGET_REF)) {
+          else if (BPMN_ATTRIBUTE_TARGET_REF.equals(attributeName)) {
             getIncoming().add((SequenceFlow) sourceElement);
           }
         }

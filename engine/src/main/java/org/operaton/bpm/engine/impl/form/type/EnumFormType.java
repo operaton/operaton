@@ -43,7 +43,7 @@ public class EnumFormType extends SimpleFormFieldType {
 
   @Override
   public Object getInformation(String key) {
-    if (key.equals("values")) {
+    if ("values".equals(key)) {
       return values;
     }
     return null;

@@ -187,9 +187,9 @@ public class EventSubscriptionQueryDto extends AbstractQueryDto<EventSubscriptio
 
   @Override
   protected void applySortBy(EventSubscriptionQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_CREATED)) {
+    if (SORT_BY_CREATED.equals(sortBy)) {
       query.orderByCreated();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

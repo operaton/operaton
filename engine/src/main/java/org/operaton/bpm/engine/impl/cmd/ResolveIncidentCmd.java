@@ -50,7 +50,7 @@ public class ResolveIncidentCmd implements Command<Void> {
     EnsureUtil.ensureNotNull(NotFoundException.class, "Cannot find an incident with id '" + incidentId + "'",
         "incident", incident);
 
-    if (incident.getIncidentType().equals("failedJob") || incident.getIncidentType().equals("failedExternalTask")) {
+    if ("failedJob".equals(incident.getIncidentType()) || "failedExternalTask".equals(incident.getIncidentType())) {
       throw new BadUserRequestException("Cannot resolve an incident of type " + incident.getIncidentType());
     }
 

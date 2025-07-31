@@ -52,7 +52,7 @@ class PersistenceExceptionTest {
 
   @Test
   void testPersistenceExceptionContainsRealCause() {
-    assumeFalse(engineRule.getProcessEngineConfiguration().getDatabaseType().equals(DbSqlSessionFactory.MARIADB));
+    assumeFalse(DbSqlSessionFactory.MARIADB.equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     StringBuffer longString = new StringBuffer();
     for (int i = 0; i < 100; i++) {
       longString.append("tensymbols");

@@ -186,7 +186,7 @@ public class CustomHistoryLevelIncidentTest {
 
     List<Job> list = managementService.createJobQuery().list();
     for (Job job : list) {
-      if (((JobEntity) job).getJobHandlerType().equals("instance-migration")) {
+      if ("instance-migration".equals(((JobEntity) job).getJobHandlerType())) {
         managementService.setJobRetries(job.getId(), 1);
       }
     }
@@ -222,7 +222,7 @@ public class CustomHistoryLevelIncidentTest {
 
     List<Job> list = managementService.createJobQuery().list();
     for (Job job : list) {
-      if (((JobEntity) job).getJobHandlerType().equals("instance-migration")) {
+      if ("instance-migration".equals(((JobEntity) job).getJobHandlerType())) {
         managementService.setJobRetries(job.getId(), 1);
       }
     }

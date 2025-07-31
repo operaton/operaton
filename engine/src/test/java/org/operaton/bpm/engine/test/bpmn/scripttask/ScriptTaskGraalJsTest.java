@@ -51,7 +51,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   @BeforeEach
   void setup() {
     spinEnabled = processEngineConfiguration.getEnvScriptResolvers().stream()
-                    .anyMatch(resolver -> resolver.getClass().getSimpleName().equals("SpinScriptEnvResolver"));
+                    .anyMatch(resolver -> "SpinScriptEnvResolver".equals(resolver.getClass().getSimpleName()));
     defaultScriptEngineResolver = processEngineConfiguration.getScriptEngineResolver();
     processEngineConfiguration.setConfigureScriptEngineHostAccess(configureHostAccess);
     processEngineConfiguration.setEnableScriptEngineLoadExternalResources(enableExternalResources);

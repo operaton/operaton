@@ -329,37 +329,37 @@ public class HistoricIncidentQueryDto extends AbstractQueryDto<HistoricIncidentQ
 
   @Override
   protected void applySortBy(HistoricIncidentQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_INCIDENT_ID)) {
+    if (SORT_BY_INCIDENT_ID.equals(sortBy)) {
       query.orderByIncidentId();
-    } else if (sortBy.equals(SORT_BY_INCIDENT_MESSAGE)) {
+    } else if (SORT_BY_INCIDENT_MESSAGE.equals(sortBy)) {
       query.orderByIncidentMessage();
-    } else if (sortBy.equals(SORT_BY_CREATE_TIME)) {
+    } else if (SORT_BY_CREATE_TIME.equals(sortBy)) {
       query.orderByCreateTime();
-    } else if (sortBy.equals(SORT_BY_END_TIME)) {
+    } else if (SORT_BY_END_TIME.equals(sortBy)) {
       query.orderByEndTime();
-    } else if (sortBy.equals(SORT_BY_INCIDENT_TYPE)) {
+    } else if (SORT_BY_INCIDENT_TYPE.equals(sortBy)) {
       query.orderByIncidentType();
-    } else if (sortBy.equals(SORT_BY_EXECUTION_ID)) {
+    } else if (SORT_BY_EXECUTION_ID.equals(sortBy)) {
       query.orderByExecutionId();
-    } else if (sortBy.equals(SORT_BY_ACTIVITY_ID)) {
+    } else if (SORT_BY_ACTIVITY_ID.equals(sortBy)) {
       query.orderByActivityId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_ID)) {
+    } else if (SORT_BY_PROCESS_INSTANCE_ID.equals(sortBy)) {
       query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_KEY)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_KEY.equals(sortBy)) {
       query.orderByProcessDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_ID)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_ID.equals(sortBy)) {
       query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_CAUSE_INCIDENT_ID)) {
+    } else if (SORT_BY_CAUSE_INCIDENT_ID.equals(sortBy)) {
       query.orderByCauseIncidentId();
-    } else if (sortBy.equals(SORT_BY_ROOT_CAUSE_INCIDENT_ID)) {
+    } else if (SORT_BY_ROOT_CAUSE_INCIDENT_ID.equals(sortBy)) {
       query.orderByRootCauseIncidentId();
-    } else if (sortBy.equals(SORT_BY_CONFIGURATION)) {
+    } else if (SORT_BY_CONFIGURATION.equals(sortBy)) {
       query.orderByConfiguration();
-    } else if (sortBy.equals(SORT_BY_HISTORY_CONFIGURATION)) {
+    } else if (SORT_BY_HISTORY_CONFIGURATION.equals(sortBy)) {
       query.orderByHistoryConfiguration();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
-    } else if (sortBy.equals(SORT_BY_INCIDENT_STATE)) {
+    } else if (SORT_BY_INCIDENT_STATE.equals(sortBy)) {
       query.orderByIncidentState();
     }
   }

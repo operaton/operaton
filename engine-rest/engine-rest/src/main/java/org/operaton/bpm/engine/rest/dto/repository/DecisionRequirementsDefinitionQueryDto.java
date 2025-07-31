@@ -226,19 +226,19 @@ public class DecisionRequirementsDefinitionQueryDto extends AbstractQueryDto<Dec
 
   @Override
   protected void applySortBy(DecisionRequirementsDefinitionQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_CATEGORY_VALUE)) {
+    if (SORT_BY_CATEGORY_VALUE.equals(sortBy)) {
       query.orderByDecisionRequirementsDefinitionCategory();
-    } else if (sortBy.equals(SORT_BY_KEY_VALUE)) {
+    } else if (SORT_BY_KEY_VALUE.equals(sortBy)) {
       query.orderByDecisionRequirementsDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_ID_VALUE)) {
+    } else if (SORT_BY_ID_VALUE.equals(sortBy)) {
       query.orderByDecisionRequirementsDefinitionId();
-    } else if (sortBy.equals(SORT_BY_VERSION_VALUE)) {
+    } else if (SORT_BY_VERSION_VALUE.equals(sortBy)) {
       query.orderByDecisionRequirementsDefinitionVersion();
-    } else if (sortBy.equals(SORT_BY_NAME_VALUE)) {
+    } else if (SORT_BY_NAME_VALUE.equals(sortBy)) {
       query.orderByDecisionRequirementsDefinitionName();
-    } else if (sortBy.equals(SORT_BY_DEPLOYMENT_ID_VALUE)) {
+    } else if (SORT_BY_DEPLOYMENT_ID_VALUE.equals(sortBy)) {
       query.orderByDeploymentId();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

@@ -60,7 +60,7 @@ public class CleanableHistoricBatchReportDto extends AbstractQueryDto<CleanableH
 
   @Override
   protected void applySortBy(CleanableHistoricBatchReport query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_FINISHED_VALUE)) {
+    if (SORT_BY_FINISHED_VALUE.equals(sortBy)) {
       query.orderByFinishedBatchOperation();
     }
   }

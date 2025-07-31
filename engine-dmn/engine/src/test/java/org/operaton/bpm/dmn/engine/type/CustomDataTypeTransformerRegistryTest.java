@@ -70,7 +70,7 @@ class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
 
     @Override
     public DmnDataTypeTransformer getTransformer(String typeName) {
-      if (typeName.equals("custom")) {
+      if ("custom".equals(typeName)) {
         return new CustomDataTypeTransformer();
       } else {
         return defaultRegistry.getTransformer(typeName);

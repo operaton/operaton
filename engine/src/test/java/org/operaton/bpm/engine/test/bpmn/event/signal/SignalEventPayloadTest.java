@@ -77,7 +77,7 @@ class SignalEventPayloadTest {
     assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
-      if(variable.getName().equals("payloadVar1Target")) {
+      if("payloadVar1Target".equals(variable.getName())) {
         assertThat(variable.getValue()).isEqualTo("payloadVal1");
       } else {
         assertThat(variable.getValue()).isEqualTo("payloadVal2");
@@ -111,7 +111,7 @@ class SignalEventPayloadTest {
     assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
-      if(variable.getName().equals("payloadVar1Target")) {
+      if("payloadVar1Target".equals(variable.getName())) {
         assertThat(variable.getValue()).isEqualTo("payloadVal1");
       } else {
         assertThat(variable.getValue()).isEqualTo("payloadVal2");
@@ -172,7 +172,7 @@ class SignalEventPayloadTest {
     assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
-      if(variable.getName().equals("payloadVar1")) {
+      if("payloadVar1".equals(variable.getName())) {
         assertThat(variable.getValue()).isEqualTo("payloadVal1");
       } else {
         assertThat(variable.getValue()).isEqualTo("payloadVal2");

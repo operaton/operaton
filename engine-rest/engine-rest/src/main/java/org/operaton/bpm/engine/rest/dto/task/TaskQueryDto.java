@@ -1375,19 +1375,19 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(EQUALS_OPERATOR_NAME)) {
+        if (EQUALS_OPERATOR_NAME.equals(op)) {
           query.taskVariableValueEquals(variableName, variableValue);
-        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (NOT_EQUALS_OPERATOR_NAME.equals(op)) {
           query.taskVariableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OPERATOR_NAME.equals(op)) {
           query.taskVariableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.taskVariableValueGreaterThanOrEquals(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OPERATOR_NAME.equals(op)) {
           query.taskVariableValueLessThan(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.taskVariableValueLessThanOrEquals(variableName, variableValue);
-        } else if (op.equals(LIKE_OPERATOR_NAME)) {
+        } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.taskVariableValueLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid task variable comparator specified: " + op);
@@ -1402,21 +1402,21 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(EQUALS_OPERATOR_NAME)) {
+        if (EQUALS_OPERATOR_NAME.equals(op)) {
           query.processVariableValueEquals(variableName, variableValue);
-        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (NOT_EQUALS_OPERATOR_NAME.equals(op)) {
           query.processVariableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OPERATOR_NAME.equals(op)) {
           query.processVariableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.processVariableValueGreaterThanOrEquals(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OPERATOR_NAME.equals(op)) {
           query.processVariableValueLessThan(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.processVariableValueLessThanOrEquals(variableName, variableValue);
-        } else if (op.equals(LIKE_OPERATOR_NAME)) {
+        } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.processVariableValueLike(variableName, String.valueOf(variableValue));
-        } else if (op.equals(NOT_LIKE_OPERATOR_NAME)) {
+        } else if (NOT_LIKE_OPERATOR_NAME.equals(op)) {
           query.processVariableValueNotLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid process variable comparator specified: " + op);
@@ -1431,19 +1431,19 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(EQUALS_OPERATOR_NAME)) {
+        if (EQUALS_OPERATOR_NAME.equals(op)) {
           query.caseInstanceVariableValueEquals(variableName, variableValue);
-        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (NOT_EQUALS_OPERATOR_NAME.equals(op)) {
           query.caseInstanceVariableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OPERATOR_NAME.equals(op)) {
           query.caseInstanceVariableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.caseInstanceVariableValueGreaterThanOrEquals(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OPERATOR_NAME.equals(op)) {
           query.caseInstanceVariableValueLessThan(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.caseInstanceVariableValueLessThanOrEquals(variableName, variableValue);
-        } else if (op.equals(LIKE_OPERATOR_NAME)) {
+        } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.caseInstanceVariableValueLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid case variable comparator specified: " + op);
@@ -1457,58 +1457,58 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
 
   @Override
   protected void applySortBy(TaskQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_ID_VALUE)) {
+    if (SORT_BY_PROCESS_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_CASE_INSTANCE_ID_VALUE)) {
+    } else if (SORT_BY_CASE_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByCaseInstanceId();
-    } else if (sortBy.equals(SORT_BY_DUE_DATE_VALUE)) {
+    } else if (SORT_BY_DUE_DATE_VALUE.equals(sortBy)) {
       query.orderByDueDate();
-    } else if (sortBy.equals(SORT_BY_FOLLOW_UP_VALUE)) {
+    } else if (SORT_BY_FOLLOW_UP_VALUE.equals(sortBy)) {
       query.orderByFollowUpDate();
-    } else if (sortBy.equals(SORT_BY_EXECUTION_ID_VALUE)) {
+    } else if (SORT_BY_EXECUTION_ID_VALUE.equals(sortBy)) {
       query.orderByExecutionId();
-    } else if (sortBy.equals(SORT_BY_CASE_EXECUTION_ID_VALUE)) {
+    } else if (SORT_BY_CASE_EXECUTION_ID_VALUE.equals(sortBy)) {
       query.orderByCaseExecutionId();
-    } else if (sortBy.equals(SORT_BY_ASSIGNEE_VALUE)) {
+    } else if (SORT_BY_ASSIGNEE_VALUE.equals(sortBy)) {
       query.orderByTaskAssignee();
-    } else if (sortBy.equals(SORT_BY_CREATE_TIME_VALUE)) {
+    } else if (SORT_BY_CREATE_TIME_VALUE.equals(sortBy)) {
       query.orderByTaskCreateTime();
-    } else if (sortBy.equals(SORT_BY_LAST_UPDATED_VALUE)) {
+    } else if (SORT_BY_LAST_UPDATED_VALUE.equals(sortBy)) {
       query.orderByLastUpdated();
-    } else if (sortBy.equals(SORT_BY_DESCRIPTION_VALUE)) {
+    } else if (SORT_BY_DESCRIPTION_VALUE.equals(sortBy)) {
       query.orderByTaskDescription();
-    } else if (sortBy.equals(SORT_BY_ID_VALUE)) {
+    } else if (SORT_BY_ID_VALUE.equals(sortBy)) {
       query.orderByTaskId();
-    } else if (sortBy.equals(SORT_BY_NAME_VALUE)) {
+    } else if (SORT_BY_NAME_VALUE.equals(sortBy)) {
       query.orderByTaskName();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID_VALUE)) {
+    } else if (SORT_BY_TENANT_ID_VALUE.equals(sortBy)) {
       query.orderByTenantId();
-    } else if (sortBy.equals(SORT_BY_NAME_CASE_INSENSITIVE_VALUE)) {
+    } else if (SORT_BY_NAME_CASE_INSENSITIVE_VALUE.equals(sortBy)) {
       query.orderByTaskNameCaseInsensitive();
-    } else if (sortBy.equals(SORT_BY_PRIORITY_VALUE)) {
+    } else if (SORT_BY_PRIORITY_VALUE.equals(sortBy)) {
       query.orderByTaskPriority();
 
-    } else if (sortBy.equals(SORT_BY_PROCESS_VARIABLE)) {
+    } else if (SORT_BY_PROCESS_VARIABLE.equals(sortBy)) {
       String variableName = getVariableName(parameters);
       String valueTypeName = getValueTypeName(parameters);
       query.orderByProcessVariable(variableName, getValueTypeByName(valueTypeName, engine));
 
-    } else if (sortBy.equals(SORT_BY_EXECUTION_VARIABLE)) {
+    } else if (SORT_BY_EXECUTION_VARIABLE.equals(sortBy)) {
       String variableName = getVariableName(parameters);
       String valueTypeName = getValueTypeName(parameters);
       query.orderByExecutionVariable(variableName, getValueTypeByName(valueTypeName, engine));
 
-    } else if (sortBy.equals(SORT_BY_TASK_VARIABLE)) {
+    } else if (SORT_BY_TASK_VARIABLE.equals(sortBy)) {
       String variableName = getVariableName(parameters);
       String valueTypeName = getValueTypeName(parameters);
       query.orderByTaskVariable(variableName, getValueTypeByName(valueTypeName, engine));
 
-    } else if (sortBy.equals(SORT_BY_CASE_INSTANCE_VARIABLE)) {
+    } else if (SORT_BY_CASE_INSTANCE_VARIABLE.equals(sortBy)) {
       String variableName = getVariableName(parameters);
       String valueTypeName = getValueTypeName(parameters);
       query.orderByCaseInstanceVariable(variableName, getValueTypeByName(valueTypeName, engine));
 
-    } else if (sortBy.equals(SORT_BY_CASE_EXECUTION_VARIABLE)) {
+    } else if (SORT_BY_CASE_EXECUTION_VARIABLE.equals(sortBy)) {
       String variableName = getVariableName(parameters);
       String valueTypeName = getValueTypeName(parameters);
       query.orderByCaseExecutionVariable(variableName, getValueTypeByName(valueTypeName, engine));

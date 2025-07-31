@@ -65,7 +65,7 @@ public class ProcessDefinitionSuspensionStateDto extends SuspensionStateDto {
     RepositoryService repositoryService = engine.getRepositoryService();
 
     Date delayedExecutionDate = null;
-    if (executionDate != null && !executionDate.equals("")) {
+    if (executionDate != null && !"".equals(executionDate)) {
       delayedExecutionDate = DateTimeUtil.parseDate(executionDate);
     }
 

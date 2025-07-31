@@ -259,9 +259,9 @@ public class JobQueryDto extends AbstractQueryDto<JobQuery> {
           throw new InvalidRequestException(e.getStatus(), e, "Invalid " + fieldName() + " format: " + e.getMessage());
         }
 
-        if (op.equals(ConditionQueryParameterDto.GREATER_THAN_OPERATOR_NAME)) {
+        if (ConditionQueryParameterDto.GREATER_THAN_OPERATOR_NAME.equals(op)) {
           setGreaterThan(date);
-        } else if (op.equals(ConditionQueryParameterDto.LESS_THAN_OPERATOR_NAME)) {
+        } else if (ConditionQueryParameterDto.LESS_THAN_OPERATOR_NAME.equals(op)) {
           setLowerThan(date);
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid " + fieldName() + " comparator specified: " + op);
@@ -422,23 +422,23 @@ public class JobQueryDto extends AbstractQueryDto<JobQuery> {
 
   @Override
   protected void applySortBy(JobQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_JOB_ID_VALUE)) {
+    if (SORT_BY_JOB_ID_VALUE.equals(sortBy)) {
       query.orderByJobId();
-    } else if (sortBy.equals(SORT_BY_EXECUTION_ID_VALUE)) {
+    } else if (SORT_BY_EXECUTION_ID_VALUE.equals(sortBy)) {
       query.orderByExecutionId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_ID_VALUE)) {
+    } else if (SORT_BY_PROCESS_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_ID_VALUE)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_ID_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_KEY_VALUE)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_KEY_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_JOB_RETRIES_VALUE)) {
+    } else if (SORT_BY_JOB_RETRIES_VALUE.equals(sortBy)) {
       query.orderByJobRetries();
-    } else if (sortBy.equals(SORT_BY_JOB_DUEDATE_VALUE)) {
+    } else if (SORT_BY_JOB_DUEDATE_VALUE.equals(sortBy)) {
       query.orderByJobDuedate();
-    } else if (sortBy.equals(SORT_BY_JOB_PRIORITY_VALUE)) {
+    } else if (SORT_BY_JOB_PRIORITY_VALUE.equals(sortBy)) {
       query.orderByJobPriority();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

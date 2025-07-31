@@ -453,7 +453,7 @@ public class BpmnParse extends Parse {
     if (this.importers.containsKey(importType)) {
       return this.importers.get(importType);
     } else {
-      if (importType.equals("http://schemas.xmlsoap.org/wsdl/")) {
+      if ("http://schemas.xmlsoap.org/wsdl/".equals(importType)) {
         Class<?> wsdlImporterClass;
         try {
           wsdlImporterClass = Class.forName("org.operaton.bpm.engine.impl.webservice.CxfWSDLImporter", true, Thread.currentThread().getContextClassLoader());
@@ -776,7 +776,7 @@ public class BpmnParse extends Parse {
   protected HashMap<String, Element> filterIntermediateCatchEvents(List<Element> activityElements) {
     HashMap<String, Element> intermediateCatchEvents = new HashMap<>();
     for(Element activityElement : activityElements) {
-      if (activityElement.getTagName().equals(ActivityTypes.INTERMEDIATE_EVENT_CATCH)) {
+      if (ActivityTypes.INTERMEDIATE_EVENT_CATCH.equals(activityElement.getTagName())) {
         intermediateCatchEvents.put(activityElement.attribute("id"), activityElement);
       }
     }
@@ -1124,7 +1124,7 @@ public class BpmnParse extends Parse {
 
       // parse isInterrupting
       String isInterruptingAttr = startEventElement.attribute(INTERRUPTING);
-      boolean isInterrupting = isInterruptingAttr.equalsIgnoreCase(TRUE);
+      boolean isInterrupting = TRUE.equalsIgnoreCase(isInterruptingAttr);
 
       if (isInterrupting) {
         scopeActivity.setActivityStartBehavior(ActivityStartBehavior.INTERRUPT_EVENT_SCOPE);
@@ -1405,39 +1405,39 @@ public class BpmnParse extends Parse {
       isMultiInstance = true;
     }
 
-    if (activityElement.getTagName().equals(ActivityTypes.GATEWAY_EXCLUSIVE)) {
+    if (ActivityTypes.GATEWAY_EXCLUSIVE.equals(activityElement.getTagName())) {
       activity = parseExclusiveGateway(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.GATEWAY_INCLUSIVE)) {
+    } else if (ActivityTypes.GATEWAY_INCLUSIVE.equals(activityElement.getTagName())) {
       activity = parseInclusiveGateway(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.GATEWAY_PARALLEL)) {
+    } else if (ActivityTypes.GATEWAY_PARALLEL.equals(activityElement.getTagName())) {
       activity = parseParallelGateway(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.TASK_SCRIPT)) {
+    } else if (ActivityTypes.TASK_SCRIPT.equals(activityElement.getTagName())) {
       activity = parseScriptTask(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.TASK_SERVICE)) {
+    } else if (ActivityTypes.TASK_SERVICE.equals(activityElement.getTagName())) {
       activity = parseServiceTask(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.TASK_BUSINESS_RULE)) {
+    } else if (ActivityTypes.TASK_BUSINESS_RULE.equals(activityElement.getTagName())) {
       activity = parseBusinessRuleTask(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.TASK)) {
+    } else if (ActivityTypes.TASK.equals(activityElement.getTagName())) {
       activity = parseTask(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.TASK_MANUAL_TASK)) {
+    } else if (ActivityTypes.TASK_MANUAL_TASK.equals(activityElement.getTagName())) {
       activity = parseManualTask(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.TASK_USER_TASK)) {
+    } else if (ActivityTypes.TASK_USER_TASK.equals(activityElement.getTagName())) {
       activity = parseUserTask(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.TASK_SEND_TASK)) {
+    } else if (ActivityTypes.TASK_SEND_TASK.equals(activityElement.getTagName())) {
       activity = parseSendTask(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.TASK_RECEIVE_TASK)) {
+    } else if (ActivityTypes.TASK_RECEIVE_TASK.equals(activityElement.getTagName())) {
       activity = parseReceiveTask(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.SUB_PROCESS)) {
+    } else if (ActivityTypes.SUB_PROCESS.equals(activityElement.getTagName())) {
       activity = parseSubProcess(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.CALL_ACTIVITY)) {
+    } else if (ActivityTypes.CALL_ACTIVITY.equals(activityElement.getTagName())) {
       activity = parseCallActivity(activityElement, scopeElement, isMultiInstance);
-    } else if (activityElement.getTagName().equals(ActivityTypes.INTERMEDIATE_EVENT_THROW)) {
+    } else if (ActivityTypes.INTERMEDIATE_EVENT_THROW.equals(activityElement.getTagName())) {
       activity = parseIntermediateThrowEvent(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.GATEWAY_EVENT_BASED)) {
+    } else if (ActivityTypes.GATEWAY_EVENT_BASED.equals(activityElement.getTagName())) {
       activity = parseEventBasedGateway(activityElement, parentElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.TRANSACTION)) {
+    } else if (ActivityTypes.TRANSACTION.equals(activityElement.getTagName())) {
       activity = parseTransaction(activityElement, scopeElement);
-    } else if (activityElement.getTagName().equals(ActivityTypes.SUB_PROCESS_AD_HOC) || activityElement.getTagName().equals(ActivityTypes.GATEWAY_COMPLEX)) {
+    } else if (ActivityTypes.SUB_PROCESS_AD_HOC.equals(activityElement.getTagName()) || ActivityTypes.GATEWAY_COMPLEX.equals(activityElement.getTagName())) {
       addWarning("Ignoring unsupported activity type", activityElement);
     }
 
@@ -1767,7 +1767,7 @@ public class BpmnParse extends Parse {
 
     ScopeImpl hostActivity = activity.getEventScope();
     for (ActivityImpl sibling : activity.getFlowScope().getActivities()) {
-      if (sibling.getProperty(BpmnProperties.TYPE.getName()).equals("compensationBoundaryCatch") && sibling.getEventScope().equals(hostActivity) && sibling != activity) {
+      if ("compensationBoundaryCatch".equals(sibling.getProperty(BpmnProperties.TYPE.getName())) && sibling.getEventScope().equals(hostActivity) && sibling != activity) {
         addError("multiple boundary events with compensateEventDefinition not supported on same activity", compensateEventDefinition, activity.getId());
       }
     }
@@ -2067,7 +2067,7 @@ public class BpmnParse extends Parse {
 
   protected boolean isCompensationHandler(Element activityElement) {
     String isForCompensation = activityElement.attribute(PROPERTYNAME_IS_FOR_COMPENSATION);
-    return isForCompensation != null && isForCompensation.equalsIgnoreCase(TRUE);
+    return TRUE.equalsIgnoreCase(isForCompensation);
   }
 
   /**
@@ -2139,7 +2139,7 @@ public class BpmnParse extends Parse {
       if (activity.getId().equals(sourceRef)) {
         Element sibling = siblingsMap.get(targetRef);
         if (sibling != null) {
-          if (sibling.getTagName().equals(ActivityTypes.INTERMEDIATE_EVENT_CATCH)) {
+          if (ActivityTypes.INTERMEDIATE_EVENT_CATCH.equals(sibling.getTagName())) {
             ActivityImpl catchEventActivity = parseIntermediateCatchEvent(sibling, scope, activity);
 
             if (catchEventActivity != null) {
@@ -2286,11 +2286,11 @@ public class BpmnParse extends Parse {
     String resultVariableName = parseResultVariable(serviceTaskElement);
 
     if (type != null) {
-      if (type.equalsIgnoreCase("mail")) {
+      if ("mail".equalsIgnoreCase(type)) {
         parseEmailServiceTask(activity, serviceTaskElement, parseFieldDeclarations(serviceTaskElement));
-      } else if (type.equalsIgnoreCase("shell")) {
+      } else if ("shell".equalsIgnoreCase(type)) {
         parseShellServiceTask(activity, serviceTaskElement, parseFieldDeclarations(serviceTaskElement));
-      } else if (type.equalsIgnoreCase("external")) {
+      } else if ("external".equalsIgnoreCase(type)) {
         parseExternalServiceTask(activity, serviceTaskElement, operatonPropertiesElement);
       } else {
         addError("Invalid usage of type attribute on " + elementName + ": '" + type + "'", serviceTaskElement);
@@ -2575,13 +2575,13 @@ public class BpmnParse extends Parse {
     boolean toDefined = false;
     boolean textOrHtmlDefined = false;
     for (FieldDeclaration fieldDeclaration : fieldDeclarations) {
-      if (fieldDeclaration.getName().equals("to")) {
+      if ("to".equals(fieldDeclaration.getName())) {
         toDefined = true;
       }
-      if (fieldDeclaration.getName().equals("html")) {
+      if ("html".equals(fieldDeclaration.getName())) {
         textOrHtmlDefined = true;
       }
-      if (fieldDeclaration.getName().equals("text")) {
+      if ("text".equals(fieldDeclaration.getName())) {
         textOrHtmlDefined = true;
       }
     }
@@ -2602,10 +2602,10 @@ public class BpmnParse extends Parse {
       FixedValue fieldFixedValue = (FixedValue) fieldDeclaration.getValue();
       String fieldValue = fieldFixedValue.getExpressionText();
 
-      shellCommandDefined |= fieldName.equals("command");
+      shellCommandDefined |= "command".equals(fieldName);
 
-      if ((fieldName.equals("wait") || fieldName.equals("redirectError") || fieldName.equals("cleanEnv")) && !fieldValue.equalsIgnoreCase(TRUE)
-          && !fieldValue.equalsIgnoreCase(FALSE)) {
+      if (("wait".equals(fieldName) || "redirectError".equals(fieldName) || "cleanEnv".equals(fieldName)) && !TRUE.equalsIgnoreCase(fieldValue)
+          && !FALSE.equalsIgnoreCase(fieldValue)) {
         addError("undefined value for shell " + fieldName + " parameter :" + fieldValue, serviceTaskElement);
       }
 
@@ -3166,7 +3166,7 @@ public class BpmnParse extends Parse {
           }
         }
       } else if (cancelEventDefinition != null) {
-        if (scope.getProperty(BpmnProperties.TYPE.getName()) == null || !scope.getProperty(BpmnProperties.TYPE.getName()).equals(TRANSACTION_TAG)) {
+        if (scope.getProperty(BpmnProperties.TYPE.getName()) == null || !TRANSACTION_TAG.equals(scope.getProperty(BpmnProperties.TYPE.getName()))) {
           addError("end event with cancelEventDefinition only supported inside transaction subprocess", cancelEventDefinition, activityId);
         } else {
           activity.getProperties().set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_CANCEL);
@@ -3261,7 +3261,7 @@ public class BpmnParse extends Parse {
       // The boundary event is attached to an activity, reference by the
       // 'attachedToRef' attribute
       String attachedToRef = boundaryEventElement.attribute("attachedToRef");
-      if (attachedToRef == null || attachedToRef.equals("")) {
+      if (attachedToRef == null || "".equals(attachedToRef)) {
         addError("AttachedToRef is required when using a timerEventDefinition", boundaryEventElement);
       }
 
@@ -4415,7 +4415,7 @@ public class BpmnParse extends Parse {
     String resource = conditionExprElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, PROPERTYNAME_RESOURCE);
     if (type != null) {
       String value = type.contains(":") ? resolveName(type) : BpmnParser.BPMN20_NS + ":" + type;
-      if (!value.equals(ATTRIBUTEVALUE_T_FORMAL_EXPRESSION)) {
+      if (!ATTRIBUTEVALUE_T_FORMAL_EXPRESSION.equals(value)) {
         addError("Invalid type, only tFormalExpression is currently supported", conditionExprElement, ancestorElementId);
       }
     }
@@ -4839,14 +4839,14 @@ public class BpmnParse extends Parse {
 
     if (!(tagName.toLowerCase().contains("task")
         || tagName.contains("Event")
-        || tagName.equals(TRANSACTION_TAG)
-        || tagName.equals(SUB_PROCESS_TAG)
-        || tagName.equals("callActivity"))) {
+        || TRANSACTION_TAG.equals(tagName)
+        || SUB_PROCESS_TAG.equals(tagName)
+        || "callActivity".equals(tagName))) {
       addError("operaton:inputOutput mapping unsupported for element type '" + tagName + "'.", activityElement);
       return false;
     }
 
-    if (tagName.equals(SUB_PROCESS_TAG) && TRUE.equals(activityElement.attribute("triggeredByEvent"))) {
+    if (SUB_PROCESS_TAG.equals(tagName) && TRUE.equals(activityElement.attribute("triggeredByEvent"))) {
       addError("operaton:inputOutput mapping unsupported for element type '" + tagName + "' with attribute 'triggeredByEvent = true'.", activityElement);
       return false;
     }
@@ -4861,7 +4861,7 @@ public class BpmnParse extends Parse {
   protected boolean checkActivityOutputParameterSupported(Element activityElement, ActivityImpl activity) {
     String tagName = activityElement.getTagName();
 
-    if (tagName.equals("endEvent")) {
+    if ("endEvent".equals(tagName)) {
       addError("operaton:outputParameter not allowed for element type '" + tagName + "'.", activityElement);
       return true;
     } else if (getMultiInstanceScope(activity) != null) {

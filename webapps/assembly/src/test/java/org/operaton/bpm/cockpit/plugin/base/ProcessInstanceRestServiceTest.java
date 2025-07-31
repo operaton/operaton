@@ -368,11 +368,11 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       String incidentType = incident.getIncidentType();
       assertThat(incidentType).isNotNull();
 
-      if (incidentType.equals("failedJob")) {
+      if ("failedJob".equals(incidentType)) {
         assertThat(incident.getIncidentCount()).isEqualTo(2);
-      } else if (incidentType.equals("anIncident")) {
+      } else if ("anIncident".equals(incidentType)) {
         assertThat(incident.getIncidentCount()).isEqualTo(3);
-      } else if (incidentType.equals("anotherIncident")) {
+      } else if ("anotherIncident".equals(incidentType)) {
         assertThat(incident.getIncidentCount()).isEqualTo(5);
       } else {
         fail(incidentType + " not expected.");

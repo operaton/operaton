@@ -126,10 +126,10 @@ public abstract class AbstractDeploymentHelper {
   }
 
   public static JavaArchive[] getJodaTimeModuleForServer(String server) {
-    if (server.equals("tomcat") ||
-        server.equals("websphere9") ||
-        server.equals("weblogic") ||
-        server.equals("glassfish")) {
+    if ("tomcat".equals(server) ||
+        "websphere9".equals(server) ||
+        "weblogic".equals(server) ||
+        "glassfish".equals(server)) {
       return Maven.configureResolver()
           .workOffline()
           .loadPomFromFile("pom.xml")
@@ -137,7 +137,7 @@ public abstract class AbstractDeploymentHelper {
           .using(new RejectDependenciesStrategy(false,
               "joda-time:joda-time"))
           .as(JavaArchive.class);
-    } else if (server.equals("jboss")) {
+    } else if ("jboss".equals(server)) {
       return Maven.configureResolver()
           .workOffline()
           .loadPomFromFile("pom.xml")
@@ -153,10 +153,10 @@ public abstract class AbstractDeploymentHelper {
   }
 
   public static JavaArchive[] getSpinJacksonJsonDataFormatForServer(String server) {
-    if (server.equals("tomcat") ||
-        server.equals("websphere9") ||
-        server.equals("weblogic") ||
-        server.equals("glassfish")) {
+    if ("tomcat".equals(server) ||
+        "websphere9".equals(server) ||
+        "weblogic".equals(server) ||
+        "glassfish".equals(server)) {
       return Maven.configureResolver()
           .workOffline()
           .loadPomFromFile("pom.xml")

@@ -49,12 +49,12 @@ class SchemaLogUpgradeScriptPatternTest extends SchemaLogTestCase {
       assertThat(nameParts[1]).isEqualTo("engine");
       String minorVersion = nameParts[2];
       assertThat(isMinorLevel(minorVersion)).isTrue();
-      if (nameParts[3].equals("to")) {
+      if ("to".equals(nameParts[3])) {
         // minor update
         assertThat(nameParts[4]).isIn(getPossibleNextVersions(minorVersion));
 
         assertThat(nameParts).hasSize(5);
-      } else if (nameParts[3].equals("patch")) {
+      } else if ("patch".equals(nameParts[3])) {
         // patch update
         String basePatchVersion = nameParts[4];
         assertThat(isPatchLevel(basePatchVersion)).as("unexpected patch version pattern for file: " + file).isTrue();

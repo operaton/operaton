@@ -50,7 +50,7 @@ public class DefaultFailedJobParseListener implements BpmnParseListener {
   @Override
   public void parseStartEvent(Element startEventElement, ScopeImpl scope, ActivityImpl startEventActivity) {
     String type = startEventActivity.getProperties().get(BpmnProperties.TYPE);
-    if (type != null && type.equals(START_TIMER_EVENT) || isAsync(startEventActivity)) {
+    if (START_TIMER_EVENT.equals(type) || isAsync(startEventActivity)) {
       this.setFailedJobRetryTimeCycleValue(startEventElement, startEventActivity);
     }
   }
@@ -58,7 +58,7 @@ public class DefaultFailedJobParseListener implements BpmnParseListener {
   @Override
   public void parseBoundaryEvent(Element boundaryEventElement, ScopeImpl scopeElement, ActivityImpl nestedActivity) {
     String type = nestedActivity.getProperties().get(BpmnProperties.TYPE);
-    if ((type != null && type.equals(BOUNDARY_TIMER)) || isAsync(nestedActivity)) {
+    if ((BOUNDARY_TIMER.equals(type)) || isAsync(nestedActivity)) {
       setFailedJobRetryTimeCycleValue(boundaryEventElement, nestedActivity);
     }
   }
@@ -74,7 +74,7 @@ public class DefaultFailedJobParseListener implements BpmnParseListener {
   @Override
   public void parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity) {
     String type = activity.getProperties().get(BpmnProperties.TYPE);
-    if (type != null && type.equals(INTERMEDIATE_TIMER) || isAsync(activity)) {
+    if (INTERMEDIATE_TIMER.equals(type) || isAsync(activity)) {
       this.setFailedJobRetryTimeCycleValue(intermediateEventElement, activity);
     }
   }

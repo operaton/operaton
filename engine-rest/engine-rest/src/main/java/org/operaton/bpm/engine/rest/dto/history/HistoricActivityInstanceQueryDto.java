@@ -262,29 +262,29 @@ public class HistoricActivityInstanceQueryDto extends AbstractQueryDto<HistoricA
 
   @Override
   protected void applySortBy(HistoricActivityInstanceQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_HISTORIC_ACTIVITY_INSTANCE_ID_VALUE)) {
+    if (SORT_BY_HISTORIC_ACTIVITY_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByHistoricActivityInstanceId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_ID_VALUE)) {
+    } else if (SORT_BY_PROCESS_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_PROCESS_DEFINITION_ID_VALUE)) {
+    } else if (SORT_BY_PROCESS_DEFINITION_ID_VALUE.equals(sortBy)) {
       query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_EXECUTION_ID_VALUE)) {
+    } else if (SORT_BY_EXECUTION_ID_VALUE.equals(sortBy)) {
       query.orderByExecutionId();
-    } else if (sortBy.equals(SORT_BY_ACTIVITY_ID_VALUE)) {
+    } else if (SORT_BY_ACTIVITY_ID_VALUE.equals(sortBy)) {
       query.orderByActivityId();
-    } else if (sortBy.equals(SORT_BY_ACTIVITY_NAME_VALUE)) {
+    } else if (SORT_BY_ACTIVITY_NAME_VALUE.equals(sortBy)) {
       query.orderByActivityName();
-    } else if (sortBy.equals(SORT_BY_ACTIVITY_TYPE_VALUE)) {
+    } else if (SORT_BY_ACTIVITY_TYPE_VALUE.equals(sortBy)) {
       query.orderByActivityType();
-    } else if (sortBy.equals(SORT_BY_HISTORIC_ACTIVITY_INSTANCE_START_TIME_VALUE)) {
+    } else if (SORT_BY_HISTORIC_ACTIVITY_INSTANCE_START_TIME_VALUE.equals(sortBy)) {
       query.orderByHistoricActivityInstanceStartTime();
-    } else if (sortBy.equals(SORT_BY_HISTORIC_ACTIVITY_INSTANCE_END_TIME_VALUE)) {
+    } else if (SORT_BY_HISTORIC_ACTIVITY_INSTANCE_END_TIME_VALUE.equals(sortBy)) {
       query.orderByHistoricActivityInstanceEndTime();
-    } else if (sortBy.equals(SORT_BY_HISTORIC_ACTIVITY_INSTANCE_DURATION_VALUE)) {
+    } else if (SORT_BY_HISTORIC_ACTIVITY_INSTANCE_DURATION_VALUE.equals(sortBy)) {
       query.orderByHistoricActivityInstanceDuration();
-    } else if (sortBy.equals(SORT_PARTIALLY_BY_OCCURRENCE)) {
+    } else if (SORT_PARTIALLY_BY_OCCURRENCE.equals(sortBy)) {
       query.orderPartiallyByOccurrence();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

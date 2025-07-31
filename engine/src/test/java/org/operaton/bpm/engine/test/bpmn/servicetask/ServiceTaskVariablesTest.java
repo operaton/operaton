@@ -69,7 +69,7 @@ class ServiceTaskVariablesTest {
       Variable v = (Variable) execution.getVariable("variable");
       synchronized (ServiceTaskVariablesTest.class) {
         // we expect this to be 'true'
-        isNullInDelegate2 = (v.value != null && v.value.equals("delegate1"));
+        isNullInDelegate2 = ("delegate1".equals(v.value));
       }
       v.value = "delegate2";
     }
@@ -83,7 +83,7 @@ class ServiceTaskVariablesTest {
       Variable v = (Variable) execution.getVariable("variable");
       synchronized (ServiceTaskVariablesTest.class) {
         // we expect this to be 'true' as well
-        isNullInDelegate3 = (v.value != null && v.value.equals("delegate2"));
+        isNullInDelegate3 = ("delegate2".equals(v.value));
       }
     }
 

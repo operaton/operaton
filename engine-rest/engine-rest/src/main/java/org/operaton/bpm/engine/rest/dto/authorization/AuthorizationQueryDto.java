@@ -124,9 +124,9 @@ public class AuthorizationQueryDto extends AbstractQueryDto<AuthorizationQuery> 
 
   @Override
   protected void applySortBy(AuthorizationQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_RESOURCE_ID)) {
+    if (SORT_BY_RESOURCE_ID.equals(sortBy)) {
       query.orderByResourceId();
-    } else if (sortBy.equals(SORT_BY_RESOURCE_TYPE)) {
+    } else if (SORT_BY_RESOURCE_TYPE.equals(sortBy)) {
       query.orderByResourceType();
     }
   }

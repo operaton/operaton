@@ -68,7 +68,7 @@ public class LogUtil {
         LogManager.getLogManager().readConfiguration(inputStream);
 
         String redirectCommons = LogManager.getLogManager().getProperty("redirect.commons.logging");
-        if ((redirectCommons != null) && (!redirectCommons.equalsIgnoreCase("false"))) {
+        if ((redirectCommons != null) && (!"false".equalsIgnoreCase(redirectCommons))) {
           System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.Jdk14Logger");
         }
       }

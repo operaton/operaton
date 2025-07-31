@@ -180,19 +180,19 @@ public class VariableInstanceQueryDto extends AbstractQueryDto<VariableInstanceQ
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(EQUALS_OPERATOR_NAME)) {
+        if (EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueEquals(varName, variableValue);
-        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OPERATOR_NAME.equals(op)) {
           query.variableValueGreaterThan(varName, variableValue);
-        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (GREATER_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueGreaterThanOrEqual(varName, variableValue);
-        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OPERATOR_NAME.equals(op)) {
           query.variableValueLessThan(varName, variableValue);
-        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (LESS_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueLessThanOrEqual(varName, variableValue);
-        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (NOT_EQUALS_OPERATOR_NAME.equals(op)) {
           query.variableValueNotEquals(varName, variableValue);
-        } else if (op.equals(LIKE_OPERATOR_NAME)) {
+        } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.variableValueLike(varName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
@@ -238,13 +238,13 @@ public class VariableInstanceQueryDto extends AbstractQueryDto<VariableInstanceQ
 
   @Override
   protected void applySortBy(VariableInstanceQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_VARIABLE_NAME_VALUE)) {
+    if (SORT_BY_VARIABLE_NAME_VALUE.equals(sortBy)) {
       query.orderByVariableName();
-    } else if (sortBy.equals(SORT_BY_VARIABLE_TYPE_VALUE)) {
+    } else if (SORT_BY_VARIABLE_TYPE_VALUE.equals(sortBy)) {
       query.orderByVariableType();
-    } else if (sortBy.equals(SORT_BY_ACTIVITY_INSTANCE_ID_VALUE)) {
+    } else if (SORT_BY_ACTIVITY_INSTANCE_ID_VALUE.equals(sortBy)) {
       query.orderByActivityInstanceId();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

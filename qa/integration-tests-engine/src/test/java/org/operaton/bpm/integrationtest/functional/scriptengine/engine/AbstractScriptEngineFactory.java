@@ -82,7 +82,7 @@ public abstract class AbstractScriptEngineFactory implements ScriptEngineFactory
 
   @Override
   public Object getParameter(String key) {
-    if (key.equals("THREADING")) {
+    if ("THREADING".equals(key)) {
       return "MULTITHREADED";
     }
     return null;

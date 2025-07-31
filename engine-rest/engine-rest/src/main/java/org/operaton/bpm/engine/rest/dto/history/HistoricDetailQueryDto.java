@@ -280,21 +280,21 @@ public class HistoricDetailQueryDto extends AbstractQueryDto<HistoricDetailQuery
 
   @Override
   protected void applySortBy(HistoricDetailQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_PROCESS_INSTANCE_ID)) {
+    if (SORT_BY_PROCESS_INSTANCE_ID.equals(sortBy)) {
       query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_VARIABLE_NAME)) {
+    } else if (SORT_BY_VARIABLE_NAME.equals(sortBy)) {
       query.orderByVariableName();
-    } else if (sortBy.equals(SORT_BY_VARIABLE_TYPE)) {
+    } else if (SORT_BY_VARIABLE_TYPE.equals(sortBy)) {
       query.orderByVariableType();
-    } else if (sortBy.equals(SORT_BY_VARIABLE_REVISION)) {
+    } else if (SORT_BY_VARIABLE_REVISION.equals(sortBy)) {
       query.orderByVariableRevision();
-    } else if (sortBy.equals(SORT_BY_FORM_PROPERTY_ID)) {
+    } else if (SORT_BY_FORM_PROPERTY_ID.equals(sortBy)) {
       query.orderByFormPropertyId();
-    } else if (sortBy.equals(SORT_BY_TIME)) {
+    } else if (SORT_BY_TIME.equals(sortBy)) {
       query.orderByTime();
-    } else if (sortBy.equals(SORT_PARTIALLY_BY_OCCURENCE)) {
+    } else if (SORT_PARTIALLY_BY_OCCURENCE.equals(sortBy)) {
       query.orderPartiallyByOccurrence();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
+    } else if (SORT_BY_TENANT_ID.equals(sortBy)) {
       query.orderByTenantId();
     }
   }

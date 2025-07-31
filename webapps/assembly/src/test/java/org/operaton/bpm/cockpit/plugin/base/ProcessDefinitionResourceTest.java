@@ -119,9 +119,9 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     assertThat(dto.getCalledFromActivityIds()).hasSize(2);
 
     for (String activityId : dto.getCalledFromActivityIds()) {
-      if (activityId.equals("firstCallActivity")) {
+      if ("firstCallActivity".equals(activityId)) {
         assertThat(activityId).isEqualTo("firstCallActivity");
-      } else if (activityId.equals("secondCallActivity")) {
+      } else if ("secondCallActivity".equals(activityId)) {
         assertThat(activityId).isEqualTo("secondCallActivity");
       } else {
         fail("Unexpected activity id:" + activityId);
@@ -162,9 +162,9 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     assertThat(dto1.getCalledFromActivityIds()).hasSize(2);
 
     for (String activityId : dto1.getCalledFromActivityIds()) {
-      if (activityId.equals("firstCallActivity")) {
+      if ("firstCallActivity".equals(activityId)) {
         assertThat(activityId).isEqualTo("firstCallActivity");
-      } else if (activityId.equals("secondCallActivity")) {
+      } else if ("secondCallActivity".equals(activityId)) {
         assertThat(activityId).isEqualTo("secondCallActivity");
       } else {
         fail("Unexpected activity id:" + activityId);

@@ -200,7 +200,7 @@ public class HistoryParseListener implements BpmnParseListener {
   @Override
   public void parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity) {
     // do not write history for link events
-    if(!activity.getProperty("type").equals("intermediateLinkCatch")) {
+    if(!"intermediateLinkCatch".equals(activity.getProperty("type"))) {
       addActivityHandlers(activity);
     }
   }

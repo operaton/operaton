@@ -41,7 +41,7 @@ public class ThrowsExceptionBehavior implements ActivityBehavior {
   }
 
   protected void executeLogic(String value) {
-    if (value.equals("throw-exception")) {
+    if ("throw-exception".equals(value)) {
       throw new RuntimeException();
     }
   }

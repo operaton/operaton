@@ -106,7 +106,7 @@ public class DemoDelegate implements JavaDelegate {
 
     if (null != fail) {
       String failString = (String) fail.getValue(execution);
-      if (null != failString && failString.equals("true")) {
+      if ("true".equals(failString)) {
         log.info("I'm failing now!.");
         throw new RuntimeException("I'm supposed to fail" + new Random().nextInt(5));
       }

@@ -45,7 +45,7 @@ public class DefaultStartFormHandler extends DefaultFormHandler implements Start
       startFormData.setFormKey(formKey.getExpressionText());
     } else if (operatonFormDefinitionKey != null && operatonFormDefinitionBinding != null) {
       OperatonFormRefImpl ref = new OperatonFormRefImpl(operatonFormDefinitionKey.getExpressionText(), operatonFormDefinitionBinding);
-      if (operatonFormDefinitionBinding.equals(FORM_REF_BINDING_VERSION) && operatonFormDefinitionVersion != null) {
+      if (FORM_REF_BINDING_VERSION.equals(operatonFormDefinitionBinding) && operatonFormDefinitionVersion != null) {
         ref.setVersion(Integer.parseInt(operatonFormDefinitionVersion.getExpressionText()));
       }
       startFormData.setOperatonFormRef(ref);

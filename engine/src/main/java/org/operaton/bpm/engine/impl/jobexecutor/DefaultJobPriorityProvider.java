@@ -38,8 +38,9 @@ public class DefaultJobPriorityProvider extends DefaultPriorityProvider<JobDecla
   protected Long getSpecificPriority(ExecutionEntity execution, JobDeclaration<?, ?> param, String jobDefinitionId) {
     Long specificPriority = null;
     JobDefinitionEntity jobDefinition = getJobDefinitionFor(jobDefinitionId);
-    if (jobDefinition != null)
+    if (jobDefinition != null) {
       specificPriority = jobDefinition.getOverridingJobPriority();
+    }
 
     if (specificPriority == null) {
       ParameterValueProvider priorityProvider = param.getJobPriorityProvider();

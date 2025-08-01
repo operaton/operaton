@@ -54,8 +54,9 @@ public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinit
 
 	private void configureProcessEngine(AbstractBeanDefinition abstractBeanDefinition, Element element) {
 		String procEngineRef = element.getAttribute(PROCESS_ENGINE_ATTRIBUTE);
-		if (StringUtils.hasText(procEngineRef))
-			abstractBeanDefinition.getPropertyValues().add(Conventions.attributeNameToPropertyName(PROCESS_ENGINE_ATTRIBUTE), new RuntimeBeanReference(procEngineRef));
+    if (StringUtils.hasText(procEngineRef)) {
+      abstractBeanDefinition.getPropertyValues().add(Conventions.attributeNameToPropertyName(PROCESS_ENGINE_ATTRIBUTE), new RuntimeBeanReference(procEngineRef));
+    }
 	}
 
 	private void registerStateHandlerAnnotationBeanFactoryPostProcessor(Element element, ParserContext context) {

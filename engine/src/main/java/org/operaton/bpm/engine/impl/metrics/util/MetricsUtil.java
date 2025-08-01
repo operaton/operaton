@@ -30,7 +30,9 @@ public class MetricsUtil {
    * @return the internal name
    */
   public static String resolveInternalName(final String publicName) {
-    if (publicName == null) return null;
+    if (publicName == null) {
+      return null;
+    }
     return switch (publicName) {
       case Metrics.TASK_USERS -> Metrics.UNIQUE_TASK_WORKERS;
       case Metrics.PROCESS_INSTANCES -> Metrics.ROOT_PROCESS_INSTANCE_START;
@@ -47,7 +49,9 @@ public class MetricsUtil {
    * @return the public name
    */
   public static String resolvePublicName(final String internalName) {
-    if (internalName == null) return null;
+    if (internalName == null) {
+      return null;
+    }
     return switch (internalName) {
     case Metrics.UNIQUE_TASK_WORKERS -> Metrics.TASK_USERS;
     case Metrics.ROOT_PROCESS_INSTANCE_START -> Metrics.PROCESS_INSTANCES;

@@ -177,8 +177,9 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
 
     @Override
     public String getDisplayName(int invocationIndex) {
-      if ("".equals(displayNameFormat))
+      if ("".equals(displayNameFormat)) {
         return "Parameters: " + Arrays.toString(parameters);
+      }
       return MessageFormat.format(displayNameFormat, parameters);
     }
 

@@ -346,8 +346,9 @@ public class Variables {
     }
     if (untypedValue instanceof TypedValue typedvalue) {
       return untypedValue(typedvalue, typedvalue.isTransient());
+    } else {
+      return untypedValue(untypedValue, false);
     }
-    else return untypedValue(untypedValue, false);
   }
 
   /**

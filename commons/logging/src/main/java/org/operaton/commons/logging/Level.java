@@ -38,7 +38,9 @@ public enum Level {
    * @return the parsed log level
    */
   public static Level parse(String value, Level defaultLevel) {
-    if (value == null) return defaultLevel;
+    if (value == null) {
+      return defaultLevel;
+    }
     try {
       return valueOf(value.trim().toUpperCase());
     } catch (IllegalArgumentException e) {

@@ -67,8 +67,9 @@ public enum Attribute {
     final Map<String, Attribute> map = new HashMap<String, Attribute>();
     for (Attribute element : values()) {
       final String name = element.getLocalName();
-      if (name != null)
+      if (name != null) {
         map.put(name, element);
+      }
     }
     MAP = map;
   }

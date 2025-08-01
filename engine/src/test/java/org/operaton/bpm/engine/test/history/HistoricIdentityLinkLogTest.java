@@ -454,13 +454,15 @@ class HistoricIdentityLinkLogTest {
   }
 
   public void addUserIdentityLinks(String taskId) {
-    for (int userIndex = 1; userIndex <= NUMBER_OF_USERS; userIndex++)
+    for (int userIndex = 1;userIndex <= NUMBER_OF_USERS;userIndex++) {
       taskService.addUserIdentityLink(taskId, A_USER_ID + userIndex, IdentityLinkType.OWNER);
+    }
   }
 
   public void deleteUserIdentityLinks(String taskId) {
-    for (int userIndex = 1; userIndex <= NUMBER_OF_USERS; userIndex++)
+    for (int userIndex = 1;userIndex <= NUMBER_OF_USERS;userIndex++) {
       taskService.deleteUserIdentityLink(taskId, A_USER_ID + userIndex, IdentityLinkType.OWNER);
+    }
   }
 
   protected ProcessInstance startProcessInstance(String key) {

@@ -35,28 +35,37 @@ public class ProcessEngineTestsWithVariablesTest {
   public void initProcessEngineTestsWithVariablesTest(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
 
     expectedMap = new HashMap<>();
-    if (key1 != null)
+    if (key1 != null) {
       expectedMap.put(key1, value1);
-    if (key2 != null)
+    }
+    if (key2 != null) {
       expectedMap.put(key2, value2);
-    if (key3 != null)
+    }
+    if (key3 != null) {
       expectedMap.put(key3, value3);
+    }
 
     keys = new ArrayList<>();
-    if (key1 != null)
+    if (key1 != null) {
       keys.add(key1);
-    if (key2 != null)
+    }
+    if (key2 != null) {
       keys.add(key2);
-    if (key3 != null)
+    }
+    if (key3 != null) {
       keys.add(key3);
+    }
 
     values = new ArrayList<>();
-    if (key1 != null)
+    if (key1 != null) {
       values.add(value1);
-    if (key2 != null)
+    }
+    if (key2 != null) {
       values.add(value2);
-    if (key3 != null)
+    }
+    if (key3 != null) {
       values.add(value3);
+    }
 
   }
 
@@ -108,8 +117,9 @@ public class ProcessEngineTestsWithVariablesTest {
     initProcessEngineTestsWithVariablesTest(key1, value1, key2, value2, key3, value3);
     // Given we replace all values with a null pointer
     int idx = values.size();
-    while (idx > 0)
+    while (idx > 0) {
       values.set(--idx, null);
+    }
     // When we construct the variables map
     Map<String, Object> returnedMap = returnedMap(keys, values);
     // Then we expect the keys to match the expectedMap keys
@@ -120,12 +130,13 @@ public class ProcessEngineTestsWithVariablesTest {
 
   private static Map<String, Object> returnedMap(List<Object> keys, List<Object> values) {
     Map<String, Object> returnedMap;
-    if (keys.size() > 2)
+    if (keys.size() > 2) {
       returnedMap = withVariables((String) keys.get(0), values.get(0), keys.get(1), values.get(1), keys.get(2), values.get(2));
-    else if (keys.size() > 1)
+    } else if (keys.size() > 1) {
       returnedMap = withVariables((String) keys.get(0), values.get(0), keys.get(1), values.get(1));
-    else
+    } else {
       returnedMap = withVariables((String) keys.get(0), values.get(0));
+    }
     return returnedMap;
   }
 

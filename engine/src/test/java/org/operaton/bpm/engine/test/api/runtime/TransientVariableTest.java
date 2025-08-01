@@ -765,7 +765,9 @@ class TransientVariableTest {
         // variable 'j' is a transient null
         if (i != 'j' ) {
           assertThat(value).isNotNull();
-        } else assertThat(value).isNull();
+        } else {
+          assertThat(value).isNull();
+        }
       }
     }
   }

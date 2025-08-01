@@ -38,8 +38,9 @@ public class SingleResultDecisionResultMapper implements DecisionResultMapper {
       DmnDecisionResultEntries singleResult = decisionResult.getSingleResult();
       if (singleResult != null) {
         return singleResult.getEntryMap();
-      } else
+      } else {
         return Variables.untypedNullValue();
+      }
     } catch (DmnEngineException e) {
       throw LOG.decisionResultMappingException(decisionResult, this, e);
     }

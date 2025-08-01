@@ -465,7 +465,9 @@ class AuthCacheTest {
   // helpers ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   protected ProcessEngine[] setupEngineMock(String... engines) {
-    if (engines.length == 0) engines = new String[]{"engine1"};
+    if (engines.length == 0) {
+      engines = new String[]{"engine1"};
+    }
 
     mockedAuthenticationUtil = mockStatic(AuthenticationUtil.class);
     mockedProcessEngineUtil = mockStatic(ProcessEngineUtil.class);
@@ -486,7 +488,9 @@ class AuthCacheTest {
   }
 
   protected Authentications setupAuth(String... engines) {
-    if (engines.length == 0) engines = new String[]{"engine1"};
+    if (engines.length == 0) {
+      engines = new String[]{"engine1"};
+    }
 
     Authentications authentications = new Authentications();
     List<String> enginesAsList = Arrays.asList(engines);

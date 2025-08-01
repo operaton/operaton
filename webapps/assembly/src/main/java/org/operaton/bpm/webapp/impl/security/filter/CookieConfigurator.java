@@ -85,7 +85,7 @@ public class CookieConfigurator {
   }
 
   public String getCookieName(String defaultName) {
-    return !hasText(cookieName) ? defaultName : cookieName;
+    return hasText(cookieName) ? cookieName : defaultName;
   }
 
   static String getSameSiteCookieValueInitValue(String sameSiteCookieValueInitParam, String sameSiteCookieOptionInitParam) {

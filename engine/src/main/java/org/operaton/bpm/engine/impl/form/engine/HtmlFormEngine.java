@@ -318,7 +318,7 @@ public class HtmlFormEngine implements FormEngine {
     HtmlElementWriter inputField = new HtmlElementWriter(INPUT_ELEMENT, true);
     addCommonFormFieldAttributes(formField, inputField);
 
-    String inputType = !isBoolean(formField) ? TEXT_INPUT_TYPE : CHECKBOX_INPUT_TYPE;
+    String inputType = isBoolean(formField) ? CHECKBOX_INPUT_TYPE : TEXT_INPUT_TYPE;
 
     inputField.attribute(TYPE_ATTRIBUTE, inputType);
 

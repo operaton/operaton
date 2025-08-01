@@ -30,7 +30,7 @@ public abstract class PvmAtomicOperationInterruptScope implements PvmAtomicOpera
   public void execute(PvmExecutionImpl execution) {
     PvmActivity interruptingActivity = getInterruptingActivity(execution);
 
-    PvmExecutionImpl scopeExecution = !execution.isScope() ? execution.getParent() : execution;
+    PvmExecutionImpl scopeExecution = execution.isScope() ? execution : execution.getParent();
 
     if (scopeExecution != execution) {
       // remove the current execution before interrupting and continuing executing the interrupted activity

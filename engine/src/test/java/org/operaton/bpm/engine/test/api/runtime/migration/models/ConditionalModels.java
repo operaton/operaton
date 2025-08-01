@@ -19,8 +19,9 @@ package org.operaton.bpm.engine.test.api.runtime.migration.models;
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class ConditionalModels {
-
+public final class ConditionalModels {
+  private ConditionalModels() {
+  }
 
   public static final String CONDITIONAL_PROCESS_KEY= "processKey";
   public static final String SUB_PROCESS_ID = "subProcess";
@@ -30,7 +31,4 @@ public class ConditionalModels {
   public static final String CONDITION_ID = "conditionCatch";
   public static final String VAR_CONDITION = "${variable == 1}";
   public static final String USER_TASK_ID = "userTask";
-
-  private ConditionalModels() {
-  }
 }

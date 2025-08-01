@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.interceptor.ProcessDataContext;
 
-public class ExecuteJobHelper {
+public final class ExecuteJobHelper {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
@@ -127,6 +127,7 @@ public class ExecuteJobHelper {
   protected static SuccessfulJobListener createSuccessfulJobListener(CommandExecutor commandExecutor) {
     return new SuccessfulJobListener();
   }
+
   public interface ExceptionLoggingHandler {
     void exceptionWhileExecutingJob(String jobId, Throwable exception);
 

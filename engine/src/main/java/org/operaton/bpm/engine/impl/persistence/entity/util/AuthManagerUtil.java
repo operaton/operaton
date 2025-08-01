@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 
-public class AuthManagerUtil {
+public final class AuthManagerUtil {
 
   private AuthManagerUtil() {
   }

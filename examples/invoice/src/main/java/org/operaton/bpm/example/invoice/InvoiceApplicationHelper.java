@@ -35,7 +35,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.logging.Logger;
 
-public class InvoiceApplicationHelper {
+public final class InvoiceApplicationHelper {
 
   private static final Logger LOGGER = Logger.getLogger(InvoiceApplicationHelper.class.getName());
 

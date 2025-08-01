@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  * @author Daniel Meyer
  *
  */
-public class AuthHelper {
+public final class AuthHelper {
 
   private AuthHelper() {
   }

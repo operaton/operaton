@@ -23,7 +23,7 @@ package org.operaton.bpm.container.impl.deployment;
  * @author Daniel Meyer
  *
  */
-public class Attachments {
+public final class Attachments {
 
   public static final String PROCESS_APPLICATION = "processApplication";
   public static final String PROCESSES_XML_RESOURCES = "processesXmlList";

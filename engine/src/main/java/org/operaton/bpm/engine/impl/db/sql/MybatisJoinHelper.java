@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
 /**
  * @author Thorben Lindhauer
  */
-public class MybatisJoinHelper {
+public final class MybatisJoinHelper {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected static final String DEFAULT_ORDER = "RES.ID_ asc";

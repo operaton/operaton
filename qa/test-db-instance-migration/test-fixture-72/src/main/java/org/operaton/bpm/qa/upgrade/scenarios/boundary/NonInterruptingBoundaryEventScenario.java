@@ -28,7 +28,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class NonInterruptingBoundaryEventScenario {
+public final class NonInterruptingBoundaryEventScenario {
 
   private NonInterruptingBoundaryEventScenario() {
   }

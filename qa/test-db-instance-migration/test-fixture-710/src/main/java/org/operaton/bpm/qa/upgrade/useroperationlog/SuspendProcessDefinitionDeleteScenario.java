@@ -30,7 +30,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  * @author Yana.Vasileva
  *
  */
-public class SuspendProcessDefinitionDeleteScenario {
+public final class SuspendProcessDefinitionDeleteScenario {
 
   private SuspendProcessDefinitionDeleteScenario() {
   }

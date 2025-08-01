@@ -23,7 +23,7 @@ import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 import org.operaton.bpm.qa.upgrade.Times;
 
-public class EmptyStringVariableScenario {
+public final class EmptyStringVariableScenario {
 
   public static final String PROCESS_DEF_KEY = "oneTaskProcess";
 

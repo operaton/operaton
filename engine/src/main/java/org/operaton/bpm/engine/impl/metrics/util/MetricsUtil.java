@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.impl.metrics.util;
 
 import org.operaton.bpm.engine.management.Metrics;
 
-public class MetricsUtil {
+public final class MetricsUtil {
 
   private MetricsUtil() {
   }

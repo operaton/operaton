@@ -29,7 +29,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 /**
  * @author Tassilo Weidner
  */
-public class SetJobRetriesBatchScenario {
+public final class SetJobRetriesBatchScenario {
 
   private SetJobRetriesBatchScenario() {
   }

@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * @author Tassilo Weidner
  */
-public class DeleteHistoricDecisionsBatchScenario {
+public final class DeleteHistoricDecisionsBatchScenario {
 
   private DeleteHistoricDecisionsBatchScenario() {
   }

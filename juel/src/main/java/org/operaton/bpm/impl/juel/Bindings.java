@@ -34,10 +34,10 @@ public class Bindings implements TypeConverter {
 	private static final Method[] NO_FUNCTIONS = new Method[0];
 	private static final ValueExpression[] NO_VARIABLES = new ValueExpression[0];
 
-	/**
-	 * Wrap a {@link Method} for serialization.
-	 */
-	private static class MethodWrapper implements Serializable {
+  /**
+   * Wrap a {@link Method} for serialization.
+   */
+  private static final class MethodWrapper implements Serializable {
     @Serial private static final long serialVersionUID = 1L;
 
 		private transient Method method;

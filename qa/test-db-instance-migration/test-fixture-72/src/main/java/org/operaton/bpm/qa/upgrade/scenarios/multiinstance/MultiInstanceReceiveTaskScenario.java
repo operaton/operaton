@@ -26,7 +26,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class MultiInstanceReceiveTaskScenario {
+public final class MultiInstanceReceiveTaskScenario {
 
   private MultiInstanceReceiveTaskScenario() {
   }

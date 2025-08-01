@@ -27,7 +27,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  * @author Yana.Vasileva
  *
  */
-public class CreateStandaloneTaskDeleteScenario {
+public final class CreateStandaloneTaskDeleteScenario {
 
   private CreateStandaloneTaskDeleteScenario() {
   }

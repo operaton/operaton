@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author: Johannes Heinemann
  */
-public class EncodingUtil {
+public final class EncodingUtil {
 
   public static final Charset DEFAULT_ENCODING = getDefaultEncoding();
 

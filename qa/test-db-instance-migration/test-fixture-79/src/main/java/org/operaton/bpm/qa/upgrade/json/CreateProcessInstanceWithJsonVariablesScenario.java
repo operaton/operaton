@@ -33,7 +33,7 @@ import org.operaton.bpm.qa.upgrade.json.beans.RegularCustomer;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 import static org.junit.Assert.assertEquals;
 
-public class CreateProcessInstanceWithJsonVariablesScenario {
+public final class CreateProcessInstanceWithJsonVariablesScenario {
 
   private CreateProcessInstanceWithJsonVariablesScenario() {
   }

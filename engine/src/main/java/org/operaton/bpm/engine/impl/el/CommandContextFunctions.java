@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Sebastian Menski
  */
-public class CommandContextFunctions {
+public final class CommandContextFunctions {
   public static final String CURRENT_USER = "currentUser";
   public static final String CURRENT_USER_GROUPS = "currentUserGroups";
 

@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Tassilo Weidner
  */
-public class MigrationBatchScenario {
+public final class MigrationBatchScenario {
 
   private MigrationBatchScenario() {
   }

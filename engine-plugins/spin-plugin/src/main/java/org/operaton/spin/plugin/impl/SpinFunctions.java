@@ -28,7 +28,7 @@ package org.operaton.spin.plugin.impl;
  * @author Daniel Meyer
  *
  */
-public class SpinFunctions {
+public final class SpinFunctions {
   public static final String S = "S";
   public static final String XML = "XML";
   public static final String JSON = "JSON";

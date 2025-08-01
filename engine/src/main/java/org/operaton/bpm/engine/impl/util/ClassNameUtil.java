@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Tom Baeyens
  */
-public class ClassNameUtil {
+public final class ClassNameUtil {
 
   protected static final Map<Class<?>, String> cachedNames = new ConcurrentHashMap<>();
 

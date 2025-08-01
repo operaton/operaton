@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.diagnostics;
 
-public class OperatonIntegration {
+public final class OperatonIntegration {
 
   public static final String SPRING_BOOT_STARTER = "spring-boot-starter";
   public static final String CAMUNDA_BPM_RUN = "operaton-bpm-run";

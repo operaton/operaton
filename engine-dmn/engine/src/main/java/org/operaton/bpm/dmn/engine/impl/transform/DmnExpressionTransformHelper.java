@@ -27,7 +27,7 @@ import org.operaton.bpm.model.dmn.instance.LiteralExpression;
 import org.operaton.bpm.model.dmn.instance.Text;
 import org.operaton.bpm.model.dmn.instance.UnaryTests;
 
-public class DmnExpressionTransformHelper {
+public final class DmnExpressionTransformHelper {
 
   private DmnExpressionTransformHelper() {
   }

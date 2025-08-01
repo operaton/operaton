@@ -27,7 +27,7 @@ import org.operaton.bpm.container.impl.jboss.extension.handler.ProcessEngineRemo
 import org.jboss.as.controller.AttributeDefinition;
 import org.jboss.as.controller.PersistentResourceDefinition;
 
-public class ProcessEngineDefinition extends PersistentResourceDefinition {
+public final class ProcessEngineDefinition extends PersistentResourceDefinition {
 
   public static final ProcessEngineDefinition INSTANCE = new ProcessEngineDefinition();
 

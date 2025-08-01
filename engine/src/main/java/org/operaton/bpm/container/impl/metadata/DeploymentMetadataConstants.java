@@ -22,7 +22,7 @@ package org.operaton.bpm.container.impl.metadata;
  * @author Daniel Meyer
  *
  */
-public class DeploymentMetadataConstants {
+public final class DeploymentMetadataConstants {
 
   public static final String NAME = "name";
   public static final String TENANT_ID = "tenantId";

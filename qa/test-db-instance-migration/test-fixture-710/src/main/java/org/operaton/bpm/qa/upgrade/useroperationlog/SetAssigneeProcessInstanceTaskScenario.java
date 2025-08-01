@@ -30,7 +30,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  * @author Yana.Vasileva
  *
  */
-public class SetAssigneeProcessInstanceTaskScenario {
+public final class SetAssigneeProcessInstanceTaskScenario {
 
   private SetAssigneeProcessInstanceTaskScenario() {
   }

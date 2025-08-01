@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
 
-public class ProcessApplicationContextUtil {
+public final class ProcessApplicationContextUtil {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 

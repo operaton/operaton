@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class SetVariablesScenario {
+public final class SetVariablesScenario {
 
   private SetVariablesScenario() {
   }

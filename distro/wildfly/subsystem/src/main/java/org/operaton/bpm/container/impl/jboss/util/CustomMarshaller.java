@@ -28,7 +28,7 @@ import org.jboss.as.controller.ObjectTypeAttributeDefinition;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.Property;
 
-public class CustomMarshaller {
+public final class CustomMarshaller {
   private CustomMarshaller() {
   }
 
@@ -149,7 +149,7 @@ public class CustomMarshaller {
   /**
    * Marshall a list of objects.
    */
-  private static class ObjectListMarshaller extends AttributeMarshaller {
+  private static final class ObjectListMarshaller extends AttributeMarshaller {
     private ObjectListMarshaller() {}
 
     @Override

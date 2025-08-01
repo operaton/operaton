@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Daniel Meyer
  *
  */
-public class ActivityInstanceAssert {
+public final class ActivityInstanceAssert {
 
   public static class ActivityInstanceAssertThatClause {
 

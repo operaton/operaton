@@ -29,7 +29,7 @@ import org.operaton.bpm.container.impl.jboss.extension.handler.JobExecutorRemove
 import org.jboss.as.controller.AttributeDefinition;
 import org.jboss.as.controller.PersistentResourceDefinition;
 
-public class JobExecutorDefinition extends PersistentResourceDefinition {
+public final class JobExecutorDefinition extends PersistentResourceDefinition {
 
   public static final JobExecutorDefinition INSTANCE = new JobExecutorDefinition();
 

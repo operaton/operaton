@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
  * @author Thorben Lindhauer
  *
  */
-public class AsyncProcessModels {
+public final class AsyncProcessModels {
   private AsyncProcessModels() {
   }
 

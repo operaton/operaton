@@ -26,7 +26,7 @@ import org.jboss.msc.service.ServiceName;
  * Provides method abstractions to make our subsystem compatible with different JBoss versions.
  * This affects mainly EAP versions.
  */
-public class JBossCompatibilityExtension {
+public final class JBossCompatibilityExtension {
 
   /**
    * The service name of the root application server service.

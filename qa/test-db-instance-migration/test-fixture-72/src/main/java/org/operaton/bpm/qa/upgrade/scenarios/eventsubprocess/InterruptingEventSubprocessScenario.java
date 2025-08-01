@@ -26,7 +26,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class InterruptingEventSubprocessScenario {
+public final class InterruptingEventSubprocessScenario {
 
   private InterruptingEventSubprocessScenario() {
   }

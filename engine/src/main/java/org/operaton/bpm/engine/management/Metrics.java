@@ -20,7 +20,7 @@ package org.operaton.bpm.engine.management;
  * @author Daniel Meyer
  *
  */
-public class Metrics {
+public final class Metrics {
 
   public static final String ACTIVTY_INSTANCE_START = "activity-instance-start";
   public static final String ACTIVTY_INSTANCE_END = "activity-instance-end";

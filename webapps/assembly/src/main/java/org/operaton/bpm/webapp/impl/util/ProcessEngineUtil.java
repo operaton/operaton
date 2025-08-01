@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
 
-public class ProcessEngineUtil {
+public final class ProcessEngineUtil {
 
   private ProcessEngineUtil() {
   }

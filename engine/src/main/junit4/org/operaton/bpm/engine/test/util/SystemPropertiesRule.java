@@ -24,7 +24,7 @@ import org.junit.runner.Description;
 /**
  * Restores the system properties after a test
  */
-public class SystemPropertiesRule extends TestWatcher {
+public final class SystemPropertiesRule extends TestWatcher {
 
   protected Properties originalProperties;
 

@@ -34,7 +34,7 @@ import java.util.Map.Entry;
 /**
  * @author Daniel Meyer
  */
-public class CompensationUtil {
+public final class CompensationUtil {
 
   private CompensationUtil() {
   }

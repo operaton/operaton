@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.tree.OutputVariablesPropagator;
 /**
  * Helper class handling the propagation of BPMN Errors.
  */
-public class BpmnExceptionHandler {
+public final class BpmnExceptionHandler {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 

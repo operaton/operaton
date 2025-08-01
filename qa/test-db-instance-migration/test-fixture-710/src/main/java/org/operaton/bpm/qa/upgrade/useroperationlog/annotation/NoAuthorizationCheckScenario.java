@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class NoAuthorizationCheckScenario {
+public final class NoAuthorizationCheckScenario {
 
   private NoAuthorizationCheckScenario() {
   }

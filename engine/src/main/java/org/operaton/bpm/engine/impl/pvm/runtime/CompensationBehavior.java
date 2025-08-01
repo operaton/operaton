@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
  *
  * @author Thorben Lindhauer
  */
-public class CompensationBehavior {
+public final class CompensationBehavior {
 
   private CompensationBehavior() {
   }

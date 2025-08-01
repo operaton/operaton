@@ -20,7 +20,7 @@ package org.operaton.bpm.engine.test.util;
 /**
  * Class modeling a property of an object having getters / setters. Allows for value retrieval using reflection.
  */
-public class ObjectProperty {
+public final class ObjectProperty {
 
   private final Object object;
   private final String propertyName;

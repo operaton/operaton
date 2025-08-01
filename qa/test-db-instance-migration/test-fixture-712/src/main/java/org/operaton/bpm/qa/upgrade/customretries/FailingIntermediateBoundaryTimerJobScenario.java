@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class FailingIntermediateBoundaryTimerJobScenario {
+public final class FailingIntermediateBoundaryTimerJobScenario {
 
   private FailingIntermediateBoundaryTimerJobScenario() {
   }

@@ -27,7 +27,7 @@ import org.operaton.spin.xml.SpinXmlElement;
  * @author Roman Smirnov
  *
  */
-public class SpinValues {
+public final class SpinValues {
 
   private SpinValues() {
   }

@@ -26,7 +26,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class SequentialMultiInstanceSubprocessScenario {
+public final class SequentialMultiInstanceSubprocessScenario {
 
   private SequentialMultiInstanceSubprocessScenario() {
   }

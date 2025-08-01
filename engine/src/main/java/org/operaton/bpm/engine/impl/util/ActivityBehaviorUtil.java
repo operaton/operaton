@@ -29,7 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class ActivityBehaviorUtil {
+public final class ActivityBehaviorUtil {
 
   private ActivityBehaviorUtil() {
   }

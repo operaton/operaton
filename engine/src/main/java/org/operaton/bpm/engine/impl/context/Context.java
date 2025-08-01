@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
-public class Context {
+public final class Context {
   protected static ThreadLocal<Deque<CommandContext>> commandContextThreadLocal = new ThreadLocal<>();
 
   protected static ThreadLocal<Deque<CommandInvocationContext>> commandInvocationContextThreadLocal = new ThreadLocal<>();

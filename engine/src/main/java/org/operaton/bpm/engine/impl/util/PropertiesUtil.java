@@ -22,7 +22,7 @@ import java.util.Properties;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
-public class PropertiesUtil {
+public final class PropertiesUtil {
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 

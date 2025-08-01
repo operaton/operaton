@@ -30,7 +30,7 @@ import org.junit.Assert;
  * @author Daniel Meyer
  *
  */
-public class ActivityInstanceAssert {
+public final class ActivityInstanceAssert {
   private ActivityInstanceAssert() {
   }
 
@@ -105,6 +105,7 @@ public class ActivityInstanceAssert {
     }
 
   }
+
   public static class ActivityInstanceTreeBuilder {
 
     protected ExpectedActivityInstance rootInstance;

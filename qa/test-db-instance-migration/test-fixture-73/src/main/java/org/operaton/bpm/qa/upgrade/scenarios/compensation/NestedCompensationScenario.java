@@ -27,7 +27,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class NestedCompensationScenario {
+public final class NestedCompensationScenario {
 
   private NestedCompensationScenario() {
   }

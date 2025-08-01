@@ -24,7 +24,7 @@ import org.joda.time.DateTimeUtils;
 /**
  * @author Joram Barrez
  */
-public class ClockUtil {
+public final class ClockUtil {
 
   private ClockUtil() {
   }

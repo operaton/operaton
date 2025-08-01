@@ -28,7 +28,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class NonInterruptingEventSubprocessScenario {
+public final class NonInterruptingEventSubprocessScenario {
 
   private NonInterruptingEventSubprocessScenario() {
   }

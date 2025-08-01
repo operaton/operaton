@@ -32,7 +32,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.*;
 
-public class AuthenticationUtil {
+public final class AuthenticationUtil {
 
   protected static final WebappLogger LOGGER = WebappLogger.INSTANCE;
 

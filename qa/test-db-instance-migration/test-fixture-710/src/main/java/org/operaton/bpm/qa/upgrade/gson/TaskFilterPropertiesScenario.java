@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * @author Tassilo Weidner
  */
-public class TaskFilterPropertiesScenario {
+public final class TaskFilterPropertiesScenario {
 
   private TaskFilterPropertiesScenario() {
   }

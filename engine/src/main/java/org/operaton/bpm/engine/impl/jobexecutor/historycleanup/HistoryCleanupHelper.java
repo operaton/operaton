@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 /**
  * @author Svetlana Dorokhova.
  */
-public class HistoryCleanupHelper {
+public final class HistoryCleanupHelper {
 
   private static final SimpleDateFormat TIME_FORMAT_WITHOUT_SECONDS = new SimpleDateFormat("yyyy-MM-ddHH:mm");
 

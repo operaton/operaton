@@ -26,7 +26,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class AsyncParallelMultiInstanceScenario {
+public final class AsyncParallelMultiInstanceScenario {
   private AsyncParallelMultiInstanceScenario() {
   }
 

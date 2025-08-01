@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <p>
  * It also provides useful cleanup and assertion methods for test cases.
  */
-public class TestMdcFacade {
+public final class TestMdcFacade {
 
   private final Map<String, String> keyValuePairs;
 

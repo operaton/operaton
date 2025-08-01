@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 
 import static java.text.MessageFormat.format;
 
-public class URLEncodingUtil {
+public final class URLEncodingUtil {
 
   private URLEncodingUtil() {
   }

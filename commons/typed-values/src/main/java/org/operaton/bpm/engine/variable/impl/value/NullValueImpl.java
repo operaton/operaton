@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Daniel Meyer
  *
  */
-public class NullValueImpl implements TypedValue {
+public final class NullValueImpl implements TypedValue {
 
   @Serial private static final long serialVersionUID = 1L;
 

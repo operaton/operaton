@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Tassilo Weidner
  */
-public class HistoryCleanupScenario {
+public final class HistoryCleanupScenario {
 
   static final Date FIXED_DATE = new Date(1363608000000L);
 

@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author Tassilo Weidner
  */
-public class RestartProcessInstanceBatchScenario {
+public final class RestartProcessInstanceBatchScenario {
 
   private RestartProcessInstanceBatchScenario() {
   }

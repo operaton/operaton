@@ -27,7 +27,7 @@ import java.util.List;
  * @author Daniel Meyer
  *
  */
-public class CsvUtil {
+public final class CsvUtil {
 
   private CsvUtil() {
   }

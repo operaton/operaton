@@ -29,7 +29,7 @@ import org.springframework.core.io.Resource;
 /**
  * @author Tom Baeyens
  */
-public class BeansConfigurationHelper {
+public final class BeansConfigurationHelper {
 
   private BeansConfigurationHelper() {
   }

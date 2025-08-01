@@ -30,7 +30,7 @@ import org.jboss.msc.service.ServiceTarget;
  * @author Daniel Meyer
  *
  */
-public class BindingUtil {
+public final class BindingUtil {
 
   private BindingUtil() {
   }

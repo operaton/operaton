@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author Tassilo Weidner
  */
-public class SetExternalTaskRetriesBatchScenario {
+public final class SetExternalTaskRetriesBatchScenario {
 
   private SetExternalTaskRetriesBatchScenario() {
   }

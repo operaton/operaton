@@ -20,7 +20,7 @@ package org.operaton.bpm.engine.rest.util;
  * @author Daniel Meyer
  *
  */
-public class PathUtil {
+public final class PathUtil {
 
   private PathUtil() {
   }

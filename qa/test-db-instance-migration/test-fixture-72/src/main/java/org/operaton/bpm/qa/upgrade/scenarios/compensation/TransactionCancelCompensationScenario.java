@@ -28,7 +28,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class TransactionCancelCompensationScenario {
+public final class TransactionCancelCompensationScenario {
 
   private TransactionCancelCompensationScenario() {
   }

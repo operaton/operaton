@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class HistoricInstancePermissionsWithoutProcDefKeyScenario {
+public final class HistoricInstancePermissionsWithoutProcDefKeyScenario {
 
   private HistoricInstancePermissionsWithoutProcDefKeyScenario() {
   }

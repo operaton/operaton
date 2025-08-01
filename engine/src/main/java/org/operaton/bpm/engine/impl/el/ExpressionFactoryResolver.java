@@ -20,13 +20,12 @@ import jakarta.el.ExpressionFactory;
 import org.operaton.bpm.impl.juel.ExpressionFactoryImpl;
 
 
-
 /**
  * Class used to get hold of a {@link ExpressionFactory}.
  *
  * @author Frederik Heremans
  */
-public class ExpressionFactoryResolver {
+public final class ExpressionFactoryResolver {
   private ExpressionFactoryResolver() {
     // private constructor to prevent instantiation
   }

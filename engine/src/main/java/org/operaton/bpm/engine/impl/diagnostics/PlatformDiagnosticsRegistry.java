@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.impl.diagnostics;
 
 import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
 
-public class PlatformDiagnosticsRegistry {
+public final class PlatformDiagnosticsRegistry {
 
   protected static ApplicationServerImpl applicationServer;
 

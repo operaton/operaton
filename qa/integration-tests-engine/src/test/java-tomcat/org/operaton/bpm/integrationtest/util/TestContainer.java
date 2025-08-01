@@ -23,7 +23,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
  *
  * @author Daniel Meyer
  */
-public class TestContainer {
+public final class TestContainer {
 
   private TestContainer() {
   }

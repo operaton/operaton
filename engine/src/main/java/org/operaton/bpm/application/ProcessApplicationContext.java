@@ -55,7 +55,7 @@ import org.operaton.bpm.application.impl.ProcessApplicationIdentifier;
  *
  * @author Thorben Lindhauer
  */
-public class ProcessApplicationContext {
+public final class ProcessApplicationContext {
 
   private ProcessApplicationContext() {
   }

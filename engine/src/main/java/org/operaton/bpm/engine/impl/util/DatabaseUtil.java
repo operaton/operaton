@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 
-public class DatabaseUtil {
+public final class DatabaseUtil {
 
   private DatabaseUtil() {
   }

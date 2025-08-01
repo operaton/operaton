@@ -24,7 +24,7 @@ import java.security.PrivilegedAction;
  *
  * @author Daniel Meyer
  */
-public class Tccl {
+public final class Tccl {
   private Tccl() {
   }
 

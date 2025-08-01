@@ -32,7 +32,7 @@ import java.util.Date;
  * servlets of the Operaton Webapp. This util class holds the methods to get and set the
  * application path.
  */
-public class ServletContextUtil {
+public final class ServletContextUtil {
 
   protected static final String APP_PATH_ATTR_NAME =
     "org.operaton.bpm.spring.boot.starter.webapp.applicationPath";

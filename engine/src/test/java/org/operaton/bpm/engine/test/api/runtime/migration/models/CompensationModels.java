@@ -28,7 +28,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
  * @author Thorben Lindhauer
  *
  */
-public class CompensationModels {
+public final class CompensationModels {
   private CompensationModels() {
   }
 

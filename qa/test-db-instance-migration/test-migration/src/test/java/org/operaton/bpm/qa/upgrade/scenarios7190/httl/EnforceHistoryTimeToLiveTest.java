@@ -114,7 +114,7 @@ public class EnforceHistoryTimeToLiveTest {
     });
   }
 
-  static class Assert {
+  static final class Assert {
     private Assert() {
     }
 

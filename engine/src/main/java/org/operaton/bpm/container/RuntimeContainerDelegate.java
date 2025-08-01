@@ -89,7 +89,7 @@ public interface RuntimeContainerDelegate {
   /**
    * Holder of the current {@link RuntimeContainerDelegate} instance.
    */
-  class RuntimeContainerDelegateInstance {
+  final class RuntimeContainerDelegateInstance {
 
     // hide
     private RuntimeContainerDelegateInstance() {}

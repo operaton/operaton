@@ -28,7 +28,7 @@ import java.nio.file.Files;
 /**
  * @author Daniel Meyer
  */
-public class JsonUtil {
+public final class JsonUtil {
 
   private static ObjectMapper mapper;
 

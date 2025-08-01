@@ -23,7 +23,9 @@ import org.jboss.as.controller.registry.AttributeAccess;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 
-public class SubsystemAttributeDefinitons {
+public final class SubsystemAttributeDefinitons {
+    private SubsystemAttributeDefinitons() {
+    }
 
     public static final String DEFAULT_DATASOURCE = "java:jboss/datasources/ExampleDS";
     public static final String DEFAULT_HISTORY_LEVEL = "audit";
@@ -173,8 +175,4 @@ public class SubsystemAttributeDefinitons {
         PROPERTIES,
         PLUGINS
     };
-
-  private SubsystemAttributeDefinitons() {
-  }
-
 }

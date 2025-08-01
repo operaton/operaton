@@ -39,7 +39,6 @@ import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
 
-
 /** Helper for initializing and closing process engines in server environments.
  * <br>
  * All created {@link ProcessEngine}s will be registered with this class.
@@ -62,7 +61,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class ProcessEngines {
+public final class ProcessEngines {
 
   private static final ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 

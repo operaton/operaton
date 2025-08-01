@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class CreateSetProcessInstanceVariablesBatchScenario {
+public final class CreateSetProcessInstanceVariablesBatchScenario {
 
   private CreateSetProcessInstanceVariablesBatchScenario() {
   }

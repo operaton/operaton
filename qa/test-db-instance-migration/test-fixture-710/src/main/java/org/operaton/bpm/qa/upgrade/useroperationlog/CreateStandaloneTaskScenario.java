@@ -27,7 +27,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  * @author Yana.Vasileva
  *
  */
-public class CreateStandaloneTaskScenario {
+public final class CreateStandaloneTaskScenario {
 
   private CreateStandaloneTaskScenario() {
   }

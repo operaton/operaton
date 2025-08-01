@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.test.Deployment;
  * @author Thorben Lindhauer
  *
  */
-public class DeployProcessWithoutIsExecutableAttributeScenario {
+public final class DeployProcessWithoutIsExecutableAttributeScenario {
 
   private DeployProcessWithoutIsExecutableAttributeScenario() {
   }

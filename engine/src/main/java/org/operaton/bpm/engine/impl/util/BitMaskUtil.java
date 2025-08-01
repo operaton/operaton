@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  *
  * @author Frederik Heremans
  */
-public class BitMaskUtil {
+public final class BitMaskUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 

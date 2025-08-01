@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * @author Danny Gräf
  */
-public class OperationLogQueryProperty {
+public final class OperationLogQueryProperty {
 
   public static final QueryProperty TIMESTAMP = new QueryPropertyImpl("TIMESTAMP_");
 

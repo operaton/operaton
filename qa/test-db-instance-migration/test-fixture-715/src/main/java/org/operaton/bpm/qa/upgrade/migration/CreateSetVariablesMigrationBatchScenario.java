@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class CreateSetVariablesMigrationBatchScenario {
+public final class CreateSetVariablesMigrationBatchScenario {
 
   private CreateSetVariablesMigrationBatchScenario() {
   }

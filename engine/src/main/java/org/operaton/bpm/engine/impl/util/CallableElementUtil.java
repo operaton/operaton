@@ -33,7 +33,7 @@ import static org.operaton.bpm.engine.impl.ProcessEngineLogger.UTIL_LOGGER;
  * @author Roman Smirnov
  *
  */
-public class CallableElementUtil {
+public final class CallableElementUtil {
 
   private CallableElementUtil() {
   }

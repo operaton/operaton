@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.Response.Status;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-public class EngineUtil {
+public final class EngineUtil {
 
   private EngineUtil() {
   }

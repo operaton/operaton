@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class ExclusiveOverProcessHierarchiesScenario {
+public final class ExclusiveOverProcessHierarchiesScenario {
 
     private ExclusiveOverProcessHierarchiesScenario() {
     }

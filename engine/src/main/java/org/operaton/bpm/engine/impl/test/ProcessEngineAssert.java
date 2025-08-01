@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.impl.test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
-public class ProcessEngineAssert {
+public final class ProcessEngineAssert {
 
   private ProcessEngineAssert() {
   }

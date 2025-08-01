@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class StartProcessIntanceWithInitialVariablesScenario {
+public final class StartProcessIntanceWithInitialVariablesScenario {
 
   private StartProcessIntanceWithInitialVariablesScenario() {
   }

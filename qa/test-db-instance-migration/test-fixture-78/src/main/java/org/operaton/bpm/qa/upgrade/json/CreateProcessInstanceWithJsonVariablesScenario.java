@@ -32,7 +32,7 @@ import org.operaton.bpm.qa.upgrade.json.beans.OrderDetails;
 import org.operaton.bpm.qa.upgrade.json.beans.RegularCustomer;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 
-public class CreateProcessInstanceWithJsonVariablesScenario {
+public final class CreateProcessInstanceWithJsonVariablesScenario {
 
   private CreateProcessInstanceWithJsonVariablesScenario() {
   }

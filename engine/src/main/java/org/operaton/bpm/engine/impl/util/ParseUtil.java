@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.impl.el.Expression;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
 import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
 
-public class ParseUtil {
+public final class ParseUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 

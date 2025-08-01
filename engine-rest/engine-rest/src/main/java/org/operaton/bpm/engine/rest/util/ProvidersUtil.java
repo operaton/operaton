@@ -26,7 +26,7 @@ import jakarta.ws.rs.ext.Providers;
  * @author Thorben Lindhauer
  *
  */
-public class ProvidersUtil {
+public final class ProvidersUtil {
 
   private ProvidersUtil() {
   }

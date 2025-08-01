@@ -20,7 +20,7 @@ package org.operaton.bpm.application.impl;
  * @author Thorben Lindhauer
  *
  */
-public class ProcessApplicationContextImpl {
+public final class ProcessApplicationContextImpl {
 
   protected static ThreadLocal<ProcessApplicationIdentifier> currentProcessApplication =
       new ThreadLocal<>();

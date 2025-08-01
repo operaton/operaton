@@ -38,7 +38,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  *
  * @author Thorben Lindhauer
  */
-public class JobMigrationScenario {
+public final class JobMigrationScenario {
 
   private JobMigrationScenario() {
   }

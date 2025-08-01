@@ -19,7 +19,7 @@ package org.operaton.bpm.webapp.impl.util;
 /**
  * Common logic that is used in servlet filters.
  */
-public class ServletFilterUtil {
+public final class ServletFilterUtil {
   private ServletFilterUtil() {
   }
 

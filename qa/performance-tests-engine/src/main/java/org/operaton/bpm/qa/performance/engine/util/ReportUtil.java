@@ -26,7 +26,7 @@ import java.io.File;
  * @author Daniel Meyer
  *
  */
-public class ReportUtil {
+public final class ReportUtil {
 
   private ReportUtil() {
   }

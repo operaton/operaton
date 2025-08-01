@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  * @author roman.smirnov
  * @author nico.rehwaldt
  */
-public class Cockpit {
+public final class Cockpit {
 
   private Cockpit() {
   }

@@ -24,7 +24,7 @@ import java.util.Date;
  * @author Thorben Lindhauer
  *
  */
-public class AssertUtil {
+public final class AssertUtil {
 
   private AssertUtil() {
   }

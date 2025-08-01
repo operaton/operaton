@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * Collection of helper methods to construct types.
  */
-public class TypeHelper {
+public final class TypeHelper {
 
   private TypeHelper() {
   }

@@ -22,7 +22,7 @@ package org.operaton.bpm.welcome;
  * @author Daniel Meyer
  *
  */
-public class Welcome {
+public final class Welcome {
 
   private Welcome() {
   }

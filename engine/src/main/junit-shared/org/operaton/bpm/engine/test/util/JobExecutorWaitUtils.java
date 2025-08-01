@@ -48,7 +48,7 @@ import static org.awaitility.Awaitility.await;
  * for instantiation.
  * </p>
  */
-public class JobExecutorWaitUtils {
+public final class JobExecutorWaitUtils {
 
   public static final long CHECK_INTERVAL_MS = 250L;
   public static final long JOBS_WAIT_TIMEOUT_MS = 20_000L;

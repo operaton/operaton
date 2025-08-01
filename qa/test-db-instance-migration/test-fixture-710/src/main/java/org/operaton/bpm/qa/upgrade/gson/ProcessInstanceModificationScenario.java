@@ -25,7 +25,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 /**
  * @author Tassilo Weidner
  */
-public class ProcessInstanceModificationScenario {
+public final class ProcessInstanceModificationScenario {
 
   private ProcessInstanceModificationScenario() {
   }

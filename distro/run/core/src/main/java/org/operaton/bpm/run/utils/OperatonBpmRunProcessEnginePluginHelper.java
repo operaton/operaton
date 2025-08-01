@@ -27,7 +27,7 @@ import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterException;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterPropertyHelper;
 
-public class OperatonBpmRunProcessEnginePluginHelper {
+public final class OperatonBpmRunProcessEnginePluginHelper {
 
   protected static final OperatonBpmRunLogger LOG = OperatonBpmRunLogger.LOG;
 

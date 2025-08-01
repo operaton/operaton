@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
-public class ApplicationContextPathUtil {
+public final class ApplicationContextPathUtil {
   private ApplicationContextPathUtil() {
   }
 

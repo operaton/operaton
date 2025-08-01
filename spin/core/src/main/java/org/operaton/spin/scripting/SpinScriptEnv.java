@@ -34,7 +34,7 @@ import java.util.Map;
  * @author Daniel Meyer
  *
  */
-public class SpinScriptEnv {
+public final class SpinScriptEnv {
 
   private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
 

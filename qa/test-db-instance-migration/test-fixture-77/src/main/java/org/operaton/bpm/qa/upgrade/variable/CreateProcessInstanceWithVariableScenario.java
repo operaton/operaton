@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class CreateProcessInstanceWithVariableScenario {
+public final class CreateProcessInstanceWithVariableScenario {
 
   private CreateProcessInstanceWithVariableScenario() {
   }

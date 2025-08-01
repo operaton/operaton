@@ -30,7 +30,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class ParallelMultiInstanceCompensationScenario {
+public final class ParallelMultiInstanceCompensationScenario {
 
   private ParallelMultiInstanceCompensationScenario() {
   }

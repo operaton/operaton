@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.apache.http.client.config.RequestConfig.Builder;
 
-public class ParseUtil {
+public final class ParseUtil {
 
   protected static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 

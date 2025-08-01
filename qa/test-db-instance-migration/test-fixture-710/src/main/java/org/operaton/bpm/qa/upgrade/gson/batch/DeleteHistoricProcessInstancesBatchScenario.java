@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Tassilo Weidner
  */
-public class DeleteHistoricProcessInstancesBatchScenario {
+public final class DeleteHistoricProcessInstancesBatchScenario {
 
   private DeleteHistoricProcessInstancesBatchScenario() {
   }

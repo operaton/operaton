@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Tassilo Weidner
  */
-public class UpdateProcessInstanceSuspendStateBatchScenario {
+public final class UpdateProcessInstanceSuspendStateBatchScenario {
 
   private UpdateProcessInstanceSuspendStateBatchScenario() {
   }

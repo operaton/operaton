@@ -20,7 +20,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import org.operaton.bpm.engine.form.OperatonFormRef;
 
-public class ContentTypeUtil {
+public final class ContentTypeUtil {
 
   private static final String SUFFIX_FORM_FILE = ".form";
 

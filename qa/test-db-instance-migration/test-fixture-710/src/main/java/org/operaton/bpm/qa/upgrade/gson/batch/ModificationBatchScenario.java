@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author Tassilo Weidner
  */
-public class ModificationBatchScenario {
+public final class ModificationBatchScenario {
 
   private ModificationBatchScenario() {
   }

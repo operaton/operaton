@@ -25,7 +25,7 @@ import java.util.Date;
 /**
  * @author Tassilo Weidner
  */
-public class TimerChangeProcessDefinitionScenario {
+public final class TimerChangeProcessDefinitionScenario {
 
   protected static final Date FIXED_DATE_ONE = new Date(1363608000000L);
   protected static final Date FIXED_DATE_TWO = new Date(1363608500000L);

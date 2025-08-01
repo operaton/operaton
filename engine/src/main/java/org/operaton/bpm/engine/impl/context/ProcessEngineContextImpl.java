@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.context;
 
-public class ProcessEngineContextImpl {
+public final class ProcessEngineContextImpl {
 
   private ProcessEngineContextImpl() {
   }

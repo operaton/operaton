@@ -29,7 +29,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class ProcessWithParallelGatewayAndServiceTaskScenario {
+public final class ProcessWithParallelGatewayAndServiceTaskScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithParallelGatewayAndServiceTask";
 

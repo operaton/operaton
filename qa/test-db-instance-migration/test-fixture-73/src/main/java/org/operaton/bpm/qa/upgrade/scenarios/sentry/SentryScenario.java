@@ -28,7 +28,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  * @author Roman Smirnov
  *
  */
-public class SentryScenario {
+public final class SentryScenario {
 
   private SentryScenario() {
   }

@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class JobFailureLogScenario {
+public final class JobFailureLogScenario {
 
   private JobFailureLogScenario() {
   }

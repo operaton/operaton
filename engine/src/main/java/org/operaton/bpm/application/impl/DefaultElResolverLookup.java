@@ -31,14 +31,14 @@ import java.util.ServiceLoader;
  * @author Daniel Meyer
  *
  */
-public class DefaultElResolverLookup {
+public final class DefaultElResolverLookup {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   private DefaultElResolverLookup() {
   }
 
-  public static final ELResolver lookupResolver(AbstractProcessApplication processApplication) {
+  public static ELResolver lookupResolver(AbstractProcessApplication processApplication) {
 
     ServiceLoader<ProcessApplicationElResolver> providers = ServiceLoader.load(ProcessApplicationElResolver.class);
     List<ProcessApplicationElResolver> sortedProviders = new ArrayList<>();

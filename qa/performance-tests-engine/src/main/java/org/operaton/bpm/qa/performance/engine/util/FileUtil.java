@@ -27,7 +27,7 @@ import java.nio.file.Files;
  * @author Daniel Meyer, Ingo Richtsmeier
  *
  */
-public class FileUtil {
+public final class FileUtil {
 
   private FileUtil() {
   }

@@ -58,7 +58,7 @@ import java.util.concurrent.Callable;
  *  }
  * </pre>
  */
-public class ProcessEngineContext {
+public final class ProcessEngineContext {
 
   private ProcessEngineContext() {
   }

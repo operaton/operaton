@@ -27,7 +27,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class ProcessWithUserTaskScenario {
+public final class ProcessWithUserTaskScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithUserTask";
 

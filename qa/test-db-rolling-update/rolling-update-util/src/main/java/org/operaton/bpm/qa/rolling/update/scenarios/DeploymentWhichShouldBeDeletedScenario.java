@@ -26,7 +26,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class DeploymentWhichShouldBeDeletedScenario {
+public final class DeploymentWhichShouldBeDeletedScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithAsyncServiceTask";
 

@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
  * @author Tobias Metzke
  *
  */
-public class PermissionConverter {
+public final class PermissionConverter {
 
   private PermissionConverter() {
   }

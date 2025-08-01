@@ -24,7 +24,7 @@ import java.util.List;
  * @author Roman Smirnov
  *
  */
-public class TaskReportResultToCsvConverter {
+public final class TaskReportResultToCsvConverter {
 
   protected static final String DELIMITER = ",";
   protected static final String NEW_LINE_SEPARATOR = "\n";

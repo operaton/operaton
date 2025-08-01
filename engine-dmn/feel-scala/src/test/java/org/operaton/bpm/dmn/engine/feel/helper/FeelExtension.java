@@ -50,7 +50,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  * through the getters of the {@code feelExtension} (see {@link #getFunctionProvider()}).
  * </p>
  */
-public class FeelExtension implements AfterEachCallback {
+public final class FeelExtension implements AfterEachCallback {
 
   private FunctionProvider functionProvider;
   private ScalaFeelEngine feelEngine;

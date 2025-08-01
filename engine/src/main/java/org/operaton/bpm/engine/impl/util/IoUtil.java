@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Frederik Heremans
  * @author Joram Barrez
  */
-public class IoUtil {
+public final class IoUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 

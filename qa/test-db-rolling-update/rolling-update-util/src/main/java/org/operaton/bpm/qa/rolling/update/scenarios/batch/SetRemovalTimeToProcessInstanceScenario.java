@@ -25,7 +25,7 @@ import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 import org.operaton.bpm.qa.upgrade.Times;
 
-public class SetRemovalTimeToProcessInstanceScenario {
+public final class SetRemovalTimeToProcessInstanceScenario {
 
   public static final String PROCESS_DEF_KEY = "oneTaskProcess";
 

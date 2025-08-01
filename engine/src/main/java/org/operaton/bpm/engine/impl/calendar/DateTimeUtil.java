@@ -37,7 +37,7 @@ import org.joda.time.format.ISODateTimeFormat;
  *
  * @see CAM-1170
  */
-public class DateTimeUtil {
+public final class DateTimeUtil {
 
   private static final DateTimeZone JVM_DEFAULT_DATE_TIME_ZONE = DateTimeZone.forTimeZone(TimeZone.getDefault());
 

@@ -28,7 +28,7 @@ import java.net.URL;
 /**
  * @author Tom Baeyens
  */
-public class ReflectUtil {
+public final class ReflectUtil {
   private ReflectUtil () {
     // utility class
   }

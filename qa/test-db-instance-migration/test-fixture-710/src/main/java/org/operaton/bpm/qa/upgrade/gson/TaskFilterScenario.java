@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Tassilo Weidner
  */
-public class TaskFilterScenario {
+public final class TaskFilterScenario {
 
   private TaskFilterScenario() {
   }

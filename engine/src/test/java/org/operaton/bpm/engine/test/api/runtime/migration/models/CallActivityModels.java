@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Thorben Lindhauer
  *
  */
-public class CallActivityModels {
+public final class CallActivityModels {
 
   private CallActivityModels() {
   }

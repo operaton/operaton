@@ -60,7 +60,7 @@ import java.util.*;
  * @author Daniel Meyer
  * @since 7.3
  */
-public class LegacyBehavior {
+public final class LegacyBehavior {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 

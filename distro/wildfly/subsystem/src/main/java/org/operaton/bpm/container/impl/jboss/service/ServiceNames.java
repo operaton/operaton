@@ -25,20 +25,15 @@ import org.jboss.msc.service.ServiceName;
  * @author Daniel Meyer
  *
  */
-public class ServiceNames {
+public final class ServiceNames {
 
   private static final ServiceName BPM_PLATFORM = ServiceName.of("org", "operaton", "bpm", "platform");
-
   private static final ServiceName PROCESS_ENGINE = BPM_PLATFORM.append("process-engine");
   private static final ServiceName JOB_EXECUTOR = BPM_PLATFORM.append("job-executor");
   private static final ServiceName DEFAULT_PROCESS_ENGINE = PROCESS_ENGINE.append("default");
-
   private static final ServiceName MSC_RUNTIME_CONTAINER_DELEGATE = BPM_PLATFORM.append("runtime-container");
-
   private static final ServiceName PROCESS_APPLICATION = BPM_PLATFORM.append("process-application");
-
   private static final ServiceName PROCESS_APPLICATION_MODULE = BPM_PLATFORM.append("process-application-module");
-
   private static final ServiceName BPM_PLATFORM_PLUGINS = BPM_PLATFORM.append("bpm-platform-plugins");
 
   private ServiceNames() {

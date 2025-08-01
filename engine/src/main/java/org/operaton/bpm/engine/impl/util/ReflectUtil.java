@@ -41,7 +41,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public class ReflectUtil {
+public final class ReflectUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 

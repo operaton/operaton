@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.tree.OutputVariablesPropagator;
 /**
  * Helper class handling the propagation of escalation.
  */
-public class EscalationHandler {
+public final class EscalationHandler {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 

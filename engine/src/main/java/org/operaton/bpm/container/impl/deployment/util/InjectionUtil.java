@@ -39,7 +39,7 @@ import java.util.List;
  * @author Daniel Meyer
  *
  */
-public class InjectionUtil {
+public final class InjectionUtil {
 
   private InjectionUtil() {
   }

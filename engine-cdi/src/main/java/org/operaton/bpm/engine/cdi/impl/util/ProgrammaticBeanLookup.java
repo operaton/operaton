@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  * @author Mark Struberg
  */
-public class ProgrammaticBeanLookup {
+public final class ProgrammaticBeanLookup {
 
   public static final Logger LOG = Logger.getLogger(ProgrammaticBeanLookup.class.getName());
 

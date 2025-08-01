@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.rest.dto.migration.MigrationPlanValidationExcepti
 /**
  * @author Svetlana Dorokhova.
  */
-public class ExceptionHandlerHelper {
+public final class ExceptionHandlerHelper {
 
   protected static final ExceptionLogger LOGGER = ExceptionLogger.REST_LOGGER;
   protected static final ExceptionHandlerHelper INSTANCE = new ExceptionHandlerHelper();

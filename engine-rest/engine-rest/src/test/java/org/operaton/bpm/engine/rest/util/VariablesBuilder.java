@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.variable.type.SerializableValueType;
  * @author Thorben Lindhauer
  *
  */
-public class VariablesBuilder {
+public final class VariablesBuilder {
 
   private final Map<String, Object> variables;
 

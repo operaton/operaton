@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
  * @author Daniel Meyer
  *
  */
-public class PropertyHelper {
+public final class PropertyHelper {
 
   protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 

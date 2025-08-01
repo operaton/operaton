@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
  * @author Christopher Zell <christopher.zell@camunda.com>
  * @since 7.5
  */
-public class HistoryEventProcessor {
+public final class HistoryEventProcessor {
 
   private HistoryEventProcessor() {
   }

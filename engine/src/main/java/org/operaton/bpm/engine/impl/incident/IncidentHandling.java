@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.impl.incident;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.runtime.Incident;
 
-public class IncidentHandling {
+public final class IncidentHandling {
 
   private IncidentHandling() {
   }

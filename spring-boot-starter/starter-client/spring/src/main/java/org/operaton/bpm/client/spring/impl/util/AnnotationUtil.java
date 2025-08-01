@@ -23,7 +23,7 @@ import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
-public class AnnotationUtil {
+public final class AnnotationUtil {
 
   private AnnotationUtil() {
   }

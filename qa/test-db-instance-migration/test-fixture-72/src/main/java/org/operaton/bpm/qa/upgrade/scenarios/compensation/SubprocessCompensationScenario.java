@@ -28,7 +28,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class SubprocessCompensationScenario {
+public final class SubprocessCompensationScenario {
 
   private SubprocessCompensationScenario() {
   }

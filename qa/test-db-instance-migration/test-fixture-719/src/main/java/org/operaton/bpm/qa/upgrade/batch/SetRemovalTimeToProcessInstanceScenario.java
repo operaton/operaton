@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-public class SetRemovalTimeToProcessInstanceScenario {
+public final class SetRemovalTimeToProcessInstanceScenario {
 
   private SetRemovalTimeToProcessInstanceScenario() {
   }

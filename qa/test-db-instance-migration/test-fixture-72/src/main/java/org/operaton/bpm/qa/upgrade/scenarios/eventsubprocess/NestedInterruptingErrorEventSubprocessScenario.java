@@ -26,7 +26,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class NestedInterruptingErrorEventSubprocessScenario {
+public final class NestedInterruptingErrorEventSubprocessScenario {
 
   private NestedInterruptingErrorEventSubprocessScenario() {
   }

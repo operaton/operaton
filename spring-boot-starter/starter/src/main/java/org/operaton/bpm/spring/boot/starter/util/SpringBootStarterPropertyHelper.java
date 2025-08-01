@@ -26,7 +26,7 @@ import org.springframework.boot.context.properties.source.ConfigurationPropertyN
 import org.springframework.boot.context.properties.source.ConfigurationPropertySource;
 import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
 
-public class SpringBootStarterPropertyHelper {
+public final class SpringBootStarterPropertyHelper {
 
   protected static final SpringBootProcessEngineLogger LOG = SpringBootProcessEngineLogger.LOG;
 

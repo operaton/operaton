@@ -26,7 +26,7 @@ import static org.operaton.bpm.engine.impl.AbstractDefinitionDeployer.DIAGRAM_SU
 import java.net.URL;
 import java.util.Map;
 
-public class ProcessApplicationScanningUtil {
+public final class ProcessApplicationScanningUtil {
 
   private ProcessApplicationScanningUtil() {
   }

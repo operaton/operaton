@@ -19,7 +19,7 @@ package org.operaton.bpm.qa.upgrade.httl;
 
 import org.operaton.bpm.engine.test.Deployment;
 
-public class EnforceHistoryTimeToLiveScenario {
+public final class EnforceHistoryTimeToLiveScenario {
 
   private EnforceHistoryTimeToLiveScenario() {
   }

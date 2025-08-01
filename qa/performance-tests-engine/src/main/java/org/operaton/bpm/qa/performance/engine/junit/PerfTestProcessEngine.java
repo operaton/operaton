@@ -37,7 +37,7 @@ import org.apache.tomcat.jdbc.pool.PoolProperties;
  * @author Daniel Meyer
  *
  */
-public class PerfTestProcessEngine {
+public final class PerfTestProcessEngine {
 
   public static final String PROPERTIES_FILE_NAME = "perf-test-config.properties";
 

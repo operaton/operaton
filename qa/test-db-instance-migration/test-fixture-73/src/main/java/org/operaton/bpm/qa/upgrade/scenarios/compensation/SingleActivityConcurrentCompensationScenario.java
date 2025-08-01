@@ -28,7 +28,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class SingleActivityConcurrentCompensationScenario {
+public final class SingleActivityConcurrentCompensationScenario {
 
   private SingleActivityConcurrentCompensationScenario() {
   }

@@ -28,7 +28,7 @@ import org.jboss.as.controller.AttributeDefinition;
 import org.jboss.as.controller.PersistentResourceDefinition;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 
-public class JobAcquisitionDefinition extends PersistentResourceDefinition {
+public final class JobAcquisitionDefinition extends PersistentResourceDefinition {
 
   public static final JobAcquisitionDefinition INSTANCE = new JobAcquisitionDefinition();
 

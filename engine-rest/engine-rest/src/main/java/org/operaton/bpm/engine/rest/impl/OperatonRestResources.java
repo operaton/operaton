@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.rest.mapper.MultipartPayloadProvider;
  * @author Daniel Meyer
  *
  */
-public class OperatonRestResources {
+public final class OperatonRestResources {
 
   private static final Set<Class<?>> RESOURCE_CLASSES = new HashSet<>();
 

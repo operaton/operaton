@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.TaskService;
  *
  * @author Joram Barrez
  */
-public class IdentityLinkType {
+public final class IdentityLinkType {
 
   /* Activiti native roles */
 

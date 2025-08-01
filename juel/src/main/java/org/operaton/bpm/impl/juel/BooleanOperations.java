@@ -24,7 +24,7 @@ import java.util.Set;
 
 import jakarta.el.ELException;
 
-public class BooleanOperations {
+public final class BooleanOperations {
 	private static final Set<Class<? extends Number>> SIMPLE_INTEGER_TYPES = new HashSet<>();
 	private static final Set<Class<? extends Number>> SIMPLE_FLOAT_TYPES = new HashSet<>();
 

@@ -27,7 +27,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 /**
  * @author Tassilo Weidner
  */
-public class TaskFilterVariablesScenario {
+public final class TaskFilterVariablesScenario {
 
   private TaskFilterVariablesScenario() {
   }

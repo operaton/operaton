@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
  * @author Roman Smirnov
  *
  */
-public class ReportResultToCsvConverter {
+public final class ReportResultToCsvConverter {
   protected static final String DELIMITER = ",";
 
   protected static final String NEW_LINE_SEPARATOR = "\n";

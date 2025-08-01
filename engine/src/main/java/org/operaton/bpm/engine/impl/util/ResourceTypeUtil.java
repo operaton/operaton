@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.authorization.SystemPermissions;
 import org.operaton.bpm.engine.authorization.TaskPermissions;
 import org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions;
 
-public class ResourceTypeUtil {
+public final class ResourceTypeUtil {
 
   private ResourceTypeUtil() {
   }

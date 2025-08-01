@@ -19,7 +19,7 @@ package org.operaton.impl.test.utils.testcontainers;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
-public class TestcontainersHelper {
+public final class TestcontainersHelper {
 
   private TestcontainersHelper() {
   }

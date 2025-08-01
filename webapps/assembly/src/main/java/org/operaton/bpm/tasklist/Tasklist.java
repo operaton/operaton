@@ -22,7 +22,7 @@ package org.operaton.bpm.tasklist;
  * @author Roman Smirnov
  *
  */
-public class Tasklist {
+public final class Tasklist {
 
   /**
    * The {@link TasklistRuntimeDelegate} is an delegate that will be

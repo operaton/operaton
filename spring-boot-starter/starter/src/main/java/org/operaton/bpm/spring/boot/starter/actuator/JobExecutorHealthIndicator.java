@@ -44,7 +44,7 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
     builder.withDetail("jobExecutor", Details.from(jobExecutor));
   }
 
-  public static class Details {
+  public static final class Details {
 
     private final String name;
     private final String lockOwner;

@@ -28,7 +28,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class ProcessWithCallActivityScenario {
+public final class ProcessWithCallActivityScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithCallActivity";
 

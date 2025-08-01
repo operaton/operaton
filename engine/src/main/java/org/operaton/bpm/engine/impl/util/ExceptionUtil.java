@@ -40,7 +40,7 @@ import org.apache.ibatis.executor.BatchExecutorException;
  * @author Roman Smirnov
  * @author Askar Akhmerov
  */
-public class ExceptionUtil {
+public final class ExceptionUtil {
 
   public static final String PERSISTENCE_EXCEPTION_MESSAGE = "An exception occurred in the " +
       "persistence layer. Please check the server logs for a detailed message and the entire " +

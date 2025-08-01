@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.impl.core.model.PropertyListKey;
  * @author Roman Smirnov
  *
  */
-public class CmmnProperties {
+public final class CmmnProperties {
 
   public static final PropertyListKey<String> REPEAT_ON_STANDARD_EVENTS = new PropertyListKey<>("repeatOnStandardEvents");
 

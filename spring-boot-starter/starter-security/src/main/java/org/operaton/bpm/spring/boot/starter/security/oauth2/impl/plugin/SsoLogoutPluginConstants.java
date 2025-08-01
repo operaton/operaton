@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin;
 
-public class SsoLogoutPluginConstants {
+public final class SsoLogoutPluginConstants {
 
   public static final String ID = "sso-logout-plugin";
 

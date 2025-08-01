@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Roman Smirnov
  *
  */
-public class DecisionEvaluationUtil {
+public final class DecisionEvaluationUtil {
 
   public static final String DECISION_RESULT_VARIABLE = "decisionResult";
 

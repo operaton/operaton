@@ -22,7 +22,7 @@ package org.operaton.bpm.container.impl.tomcat.deployment;
  * @author Daniel Meyer
  *
  */
-public class TomcatAttachments {
+public final class TomcatAttachments {
 
   public static final String SERVER = "server";
 

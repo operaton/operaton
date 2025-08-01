@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.spring.components.config.xml.StateHandlerAnnotati
  * @author Josh Long
  * @since 5.3
   */
-public class ActivitiContextUtils {
+public final class ActivitiContextUtils {
 
 	public static final String ANNOTATION_STATE_HANDLER_BEAN_FACTORY_POST_PROCESSOR_BEAN_NAME= StateHandlerAnnotationBeanFactoryPostProcessor.class.getName().toLowerCase();
 	/**

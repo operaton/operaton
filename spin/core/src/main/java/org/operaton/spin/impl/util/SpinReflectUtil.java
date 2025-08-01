@@ -24,7 +24,7 @@ import org.operaton.spin.spi.DataFormat;
  * @author Daniel Meyer
  *
  */
-public class SpinReflectUtil {
+public final class SpinReflectUtil {
 
   private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
 

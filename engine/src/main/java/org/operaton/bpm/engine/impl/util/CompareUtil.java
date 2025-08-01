@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Filip Hrisafov
  */
-public class CompareUtil {
+public final class CompareUtil {
 
   private CompareUtil() {
   }

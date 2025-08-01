@@ -22,7 +22,7 @@ import javax.naming.NamingException;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 
-public class BeanManagerLookup {
+public final class BeanManagerLookup {
 
   /** holds a local beanManager if no jndi is available */
   public static BeanManager localInstance;

@@ -29,7 +29,7 @@ import java.util.Map;
  *
  * @author Nils Preusker - n.preusker@gmail.com
  */
-public class Mocks {
+public final class Mocks {
 
   private static final ThreadLocal<Map<String, Object>> mockContainer = new ThreadLocal<>();
 

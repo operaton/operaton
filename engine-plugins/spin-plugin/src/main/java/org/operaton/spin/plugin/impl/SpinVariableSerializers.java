@@ -30,7 +30,7 @@ import org.operaton.spin.xml.SpinXmlElement;
  * @author Thorben Lindhauer
  *
  */
-public class SpinVariableSerializers {
+public final class SpinVariableSerializers {
 
   private SpinVariableSerializers() {
   }

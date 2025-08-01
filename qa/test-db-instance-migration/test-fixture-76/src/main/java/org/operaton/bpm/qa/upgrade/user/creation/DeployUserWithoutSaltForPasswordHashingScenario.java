@@ -23,7 +23,7 @@ import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 import org.operaton.bpm.qa.upgrade.Times;
 
-public class DeployUserWithoutSaltForPasswordHashingScenario {
+public final class DeployUserWithoutSaltForPasswordHashingScenario {
 
   protected static final String USER_NAME = "kermit";
   protected static final String USER_PWD = "password";

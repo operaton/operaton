@@ -23,7 +23,7 @@ import java.util.Arrays;
 /**
  * Class modeling a method invocation using reflection.
  */
-public class MethodInvocation {
+public final class MethodInvocation {
 
   private final Object object;
   private final Method method;

@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
  * @author Daniel Meyer
  *
  */
-public class FormPropertyHelper {
+public final class FormPropertyHelper {
 
   private FormPropertyHelper() {
   }

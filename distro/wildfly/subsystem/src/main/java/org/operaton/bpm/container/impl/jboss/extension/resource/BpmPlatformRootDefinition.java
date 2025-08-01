@@ -29,7 +29,7 @@ import org.jboss.as.controller.PersistentResourceDefinition;
 import org.jboss.as.controller.operations.common.GenericSubsystemDescribeHandler;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 
-public class BpmPlatformRootDefinition extends PersistentResourceDefinition {
+public final class BpmPlatformRootDefinition extends PersistentResourceDefinition {
 
   public static final BpmPlatformRootDefinition INSTANCE = new BpmPlatformRootDefinition();
 

@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * Class to preserve the state of a given set of jobs and restore them in case they've been locked.
  */
-public class JobState {
+public final class JobState {
 
     private final CommandExecutor commandExecutor;
     private final Map<String, Date> lockExpirationTimeByJobIdMap;

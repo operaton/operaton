@@ -26,7 +26,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Thorben Lindhauer
  *
  */
-public class NestedInterruptingEventSubprocessParallelScenario {
+public final class NestedInterruptingEventSubprocessParallelScenario {
 
   private NestedInterruptingEventSubprocessParallelScenario() {
   }

@@ -22,7 +22,7 @@ package org.operaton.bpm.admin;
  * @author Daniel Meyer
  *
  */
-public class Admin {
+public final class Admin {
   private Admin() {
   }
 

@@ -27,13 +27,13 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
 @RunWith(ArchUnitRunner.class)
 @AnalyzeClasses(
-    importOptions = {
-        ImportOption.DoNotIncludeJars.class,
-        ImportOption.DoNotIncludeTests.class
-    },
-    packages = "org.operaton.bpm"
+  importOptions = {
+    ImportOption.DoNotIncludeJars.class,
+    ImportOption.DoNotIncludeTests.class
+  },
+  packages = "org.operaton.bpm"
 )
-public class ArchRulesTest {
+public final class ArchRulesTest {
 
   private ArchRulesTest() {
   }

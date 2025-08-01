@@ -40,7 +40,9 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * @see Properties
  *
  */
-public class BpmnProperties {
+public final class BpmnProperties {
+  private BpmnProperties() {
+  }
 
   public static final PropertyKey<String> TYPE = new PropertyKey<>("type");
 
@@ -80,6 +82,4 @@ public class BpmnProperties {
 
   public static final PropertyListKey<OperatonErrorEventDefinition> CAMUNDA_ERROR_EVENT_DEFINITION = new PropertyListKey<>("operatonErrorEventDefinition");
 
-  private BpmnProperties() {
-  }
 }

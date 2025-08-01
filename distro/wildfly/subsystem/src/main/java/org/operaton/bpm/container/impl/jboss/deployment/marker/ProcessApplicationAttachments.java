@@ -33,7 +33,7 @@ import org.jboss.jandex.AnnotationInstance;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationAttachments {
+public final class ProcessApplicationAttachments {
 
   private static final AttachmentKey<Boolean> MARKER = AttachmentKey.create(Boolean.class);
   private static final AttachmentKey<Boolean> PART_OF_MARKER = AttachmentKey.create(Boolean.class);
@@ -41,6 +41,9 @@ public class ProcessApplicationAttachments {
   private static final AttachmentKey<ComponentDescription> PA_COMPONENT = AttachmentKey.create(ComponentDescription.class);
   private static final AttachmentKey<AnnotationInstance> POST_DEPLOY_METHOD = AttachmentKey.create(AnnotationInstance.class);
   private static final AttachmentKey<AnnotationInstance> PRE_UNDEPLOY_METHOD = AttachmentKey.create(AnnotationInstance.class);
+
+  private ProcessApplicationAttachments() {
+  }
 
   /**
    * Attach the parsed ProcessesXml file to a deployment unit.
@@ -138,7 +141,4 @@ public class ProcessApplicationAttachments {
     return deploymentUnit.getAttachment(PRE_UNDEPLOY_METHOD);
   }
 
-  private ProcessApplicationAttachments() {
-
-  }
 }

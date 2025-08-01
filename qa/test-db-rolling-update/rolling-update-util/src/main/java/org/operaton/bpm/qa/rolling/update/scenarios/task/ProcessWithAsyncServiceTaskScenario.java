@@ -26,7 +26,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class ProcessWithAsyncServiceTaskScenario {
+public final class ProcessWithAsyncServiceTaskScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithAsyncServiceTask";
 

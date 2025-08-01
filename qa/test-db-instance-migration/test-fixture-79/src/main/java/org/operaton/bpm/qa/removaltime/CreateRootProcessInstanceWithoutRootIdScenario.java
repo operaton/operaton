@@ -24,7 +24,7 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 /**
  * @author Tassilo Weidner
  */
-public class CreateRootProcessInstanceWithoutRootIdScenario {
+public final class CreateRootProcessInstanceWithoutRootIdScenario {
 
   private CreateRootProcessInstanceWithoutRootIdScenario() {
   }

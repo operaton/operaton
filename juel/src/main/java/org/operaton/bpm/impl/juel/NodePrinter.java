@@ -23,7 +23,7 @@ import java.util.Stack;
  *
  * @author Christoph Beck
  */
-public class NodePrinter {
+public final class NodePrinter {
 	private NodePrinter() {
 	}
 

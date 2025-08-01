@@ -35,7 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * @author nico.rehwaldt
  */
-public class FilterRules {
+public final class FilterRules {
 
   private FilterRules() {
   }

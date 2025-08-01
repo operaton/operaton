@@ -23,13 +23,13 @@ import org.operaton.bpm.engine.impl.context.Context;
  * @author Thorben Lindhauer
  *
  */
-public class QueryValidators {
+public final class QueryValidators {
 
   private QueryValidators() {
     // utility class
   }
 
-  public static class AdhocQueryValidator<T extends AbstractQuery<?, ?>> implements Validator<T> {
+  public static final class AdhocQueryValidator<T extends AbstractQuery<?, ?>> implements Validator<T> {
 
     @SuppressWarnings("rawtypes")
     public static final AdhocQueryValidator INSTANCE = new AdhocQueryValidator();
@@ -53,7 +53,7 @@ public class QueryValidators {
 
   }
 
-  public static class StoredQueryValidator<T extends AbstractQuery<?, ?>> implements Validator<T> {
+  public static final class StoredQueryValidator<T extends AbstractQuery<?, ?>> implements Validator<T> {
 
     @SuppressWarnings("rawtypes")
     public static final StoredQueryValidator INSTANCE = new StoredQueryValidator();

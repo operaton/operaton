@@ -21,7 +21,7 @@ import org.slf4j.MDC;
 /**
  * Facade for the SLF4j MDC
  */
-public class MdcAccess {
+public final class MdcAccess {
 
   private MdcAccess() {
   }

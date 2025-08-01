@@ -25,7 +25,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 
-public class CertificateHelper {
+public final class CertificateHelper {
   private CertificateHelper() {
   }
 
@@ -38,6 +38,7 @@ public class CertificateHelper {
       throw new RuntimeException("Could not change SSL TrustManager to accept arbitrary certificates", ex);
     }
   }
+
   private static class DefaultTrustManager implements X509TrustManager {
 
 

@@ -32,7 +32,7 @@ import java.util.Set;
  *
  * @author Joram Barrez
  */
-public class CollectionUtil {
+public final class CollectionUtil {
 
   // No need to instantiate
   private CollectionUtil() {

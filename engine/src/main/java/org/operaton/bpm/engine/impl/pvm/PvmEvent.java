@@ -20,7 +20,7 @@ package org.operaton.bpm.engine.impl.pvm;
 /**
  * @author Tom Baeyens
  */
-public class PvmEvent {
+public final class PvmEvent {
 
   public static final String EVENTNAME_START = "start";
   public static final String EVENTNAME_END = "end";

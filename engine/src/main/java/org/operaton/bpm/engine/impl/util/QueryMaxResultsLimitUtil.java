@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 
-public class QueryMaxResultsLimitUtil {
+public final class QueryMaxResultsLimitUtil {
 
   private QueryMaxResultsLimitUtil() {
   }

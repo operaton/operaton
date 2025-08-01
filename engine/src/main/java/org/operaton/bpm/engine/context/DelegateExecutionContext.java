@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class DelegateExecutionContext {
+public final class DelegateExecutionContext {
 
   private DelegateExecutionContext() {
   }

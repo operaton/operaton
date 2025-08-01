@@ -30,7 +30,7 @@ import java.util.List;
  * @author Roman Smirnov
  *
  */
-public class ClassDelegateUtil {
+public final class ClassDelegateUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 

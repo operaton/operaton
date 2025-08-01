@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Daniel Meyer
  *
  */
-public class EmptyVariableContext implements VariableContext {
+public final class EmptyVariableContext implements VariableContext {
 
   public static final EmptyVariableContext INSTANCE = new EmptyVariableContext();
 

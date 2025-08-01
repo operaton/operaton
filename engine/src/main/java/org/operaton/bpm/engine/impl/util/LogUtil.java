@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
  * @deprecated Use slf4j instead.
  */
 @Deprecated(forRemoval = true, since = "1.0")
-public class LogUtil {
+public final class LogUtil {
 
 
   public enum ThreadLogMode {

@@ -31,7 +31,7 @@ import java.util.List;
  * @author Daniel Meyer
  *
  */
-public class SecurityActions {
+public final class SecurityActions {
 
   private SecurityActions() {
   }
@@ -93,6 +93,7 @@ public class SecurityActions {
     }
 
   }
+
   public interface SecurityAction<T> {
     T execute() throws IOException, ServletException;
 

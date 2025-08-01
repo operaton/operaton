@@ -16,10 +16,15 @@
  */
 package org.operaton.bpm.dmn.engine.hitpolicy;
 
+import java.util.Objects;
+import java.util.stream.Stream;
+import org.assertj.core.api.Condition;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.hitpolicy.DmnHitPolicyException;
-import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.engine.test.asserts.DmnDecisionTableResultAssert;
@@ -63,6 +68,10 @@ class HitPolicyTest extends DmnEngineTest {
   private static final String COLLECT_MAX_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.max.compound.dmn";
   private static final String COLLECT_COUNT_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.count.single.dmn";
   private static final String COLLECT_COUNT_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.count.compound.dmn";
+  private static final String PRIORITY_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.priority.compound.dmn";
+  private static final String OUTPUT_ORDER_SINGLE_WITH_VALUES = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.output_order.single.dmn";
+  private static final String PRIORITY_SINGLE_NAMED_OUTPUT = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.priority.single.named_output.dmn";
+  private static final String PRIORITY_SINGLE_NAMELESS_OUTPUT = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.priority.single.nameless_output.dmn";
 
   @Test
   @DecisionResource(resource = DEFAULT_SINGLE)
@@ -301,13 +310,6 @@ class HitPolicyTest extends DmnEngineTest {
   }
 
   @Test
-  void priorityHitPolicySingleOutputNoMatchingRule() {
-    assertThatThrownBy(() -> parseDecisionsFromFile(PRIORITY_SINGLE))
-      .isInstanceOf(DmnTransformException.class)
-      .hasMessageStartingWith("DMN-02004");
-  }
-
-  @Test
   @DecisionResource(resource = FIRST_SINGLE)
   void firstHitPolicySingleOutputNoMatchingRule() {
     assertThatDecisionTableResult(false, false, false, "a", "b", "c")
@@ -423,13 +425,6 @@ class HitPolicyTest extends DmnEngineTest {
     assertThatDecisionTableResult(true, true, true, "c", "b", "a")
       .hasSingleResult()
       .containsOnly(entry("out1", "c"), entry("out2", "c"), entry("out3", "c"));
-  }
-
-  @Test
-  void outputOrderHitPolicyNotSupported() {
-    assertThatThrownBy(() -> parseDecisionsFromFile(OUTPUT_ORDER_SINGLE))
-      .isInstanceOf(DmnTransformException.class)
-      .hasMessageStartingWith("DMN-02004");
   }
 
   @Test
@@ -1208,6 +1203,90 @@ class HitPolicyTest extends DmnEngineTest {
       .isInstanceOf(DmnHitPolicyException.class)
       .hasMessageStartingWith("DMN-03003");
   }
+
+  @ParameterizedTest
+  @CsvSource({
+    "17, High, true, Approved, Standard",
+    "19, Low, true, Approved, Basic",
+    "10, Low, true, Declined, Standard"
+  })
+  @DecisionResource(resource = PRIORITY_COMPOUND)
+  void priorityCompoundRule(long age, String riskCategory, boolean isAffordable, String approvedDeclined, String rate) {
+    variables.putValue("Age", age);
+    variables.putValue("RiskCategory", riskCategory);
+    variables.putValue("isAffordable", isAffordable);
+    DmnDecisionTableResult result = evaluateDecisionTable();
+    Assertions.assertNotNull(result);
+    assertThat(result)
+      .hasSingleResult()
+      .containsEntry("Approved/Declined", approvedDeclined)
+      .containsEntry("Rate", rate);
+  }
+
+  @ParameterizedTest
+  @MethodSource("generateOutputOrderData")
+  @DecisionResource(resource = OUTPUT_ORDER_SINGLE_WITH_VALUES)
+  void outputOrderSingleWithValues(int age, List<String> approval) {
+    variables.putValue("Age", age);
+    DmnDecisionTableResult result = evaluateDecisionTable();
+    assertThat(result).hasSize(2).has(new Condition<>(){
+      @Override
+      public boolean matches(DmnDecisionTableResult value) {
+        List<Object> actual = value.getResultList().stream().map(e -> e.get(null)).toList();
+        if (approval.size() != actual.size()) {
+          return false;
+        }
+        for (int i = 0; i < approval.size(); i++) {
+          if (!Objects.equals(approval.get(i), actual.get(i))) {
+            return false;
+          }
+        }
+        return true;
+      }
+    });
+  }
+
+  private static Stream<Arguments> generateOutputOrderData() {
+    return Stream.of(Arguments.of(17, List.of("Approved", "Declined")),
+      Arguments.of(19, List.of("Approved", "Approved")),
+      Arguments.of(10, List.of("Approved", "Declined")));
+  }
+
+  // Priority Hit Policy
+
+  @ParameterizedTest
+  @CsvSource({
+    "High, Declined",
+    "Low, Approved"
+  })
+  @DecisionResource(resource = PRIORITY_SINGLE_NAMED_OUTPUT)
+  void testPrioritySingleOutputNamed(String riskCategory, String action) {
+    variables.putValue("RiskCategory", riskCategory);
+    DmnDecisionTableResult result = evaluateDecisionTable();
+    assertThat(result).hasSingleResult().containsEntry("Action", action);
+  }
+
+  @ParameterizedTest
+  @CsvSource({
+    "High, Declined",
+    "Low, Approved"
+  })
+  @DecisionResource(resource = PRIORITY_SINGLE_NAMELESS_OUTPUT)
+  void testPrioritySingleOutputNameless(String riskCategory, String action) {
+    variables.putValue("RiskCategory", riskCategory);
+    DmnDecisionTableResult result = evaluateDecisionTable();
+    assertThat(result).hasSingleResult().hasSingleEntry(action);
+  }
+
+
+
+  // Output Order Hit Policy
+
+
+
+
+
+
 
   // helper methods
 

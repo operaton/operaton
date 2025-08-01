@@ -1,0 +1,36 @@
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
+xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+id="Definitions_1215v40" name="DRD" namespace="http://camunda.org/schema/1.0/dmn"
+xmlns:modeler="http://camunda.org/schema/modeler/1.0"
+exporter="Camunda Modeler" exporterVersion="5.34.0"
+modeler:executionPlatform="Camunda Platform"
+modeler:executionPlatformVersion="7.23.0">
+  <decision id="decision1" name="RiskDecision">
+    <decisionTable hitPolicy="PRIORITY" id="decisionTable1">
+      <input id="input1" label="Risk Category">
+        <inputExpression id="inputExpression1" typeRef="string">
+          <text>RiskCategory</text>
+        </inputExpression>
+      </input>
+      <output id="output1" typeRef="string">
+        <outputValues>
+          <text>"Declined", "ManualReviewed", "Approved"</text>
+        </outputValues>
+     </output>
+      <rule id="rule1">
+        <inputEntry><text>"High"</text></inputEntry>
+        <outputEntry><text>"ManualReviewed"</text></outputEntry>
+      </rule>
+      <rule id="rule2">
+        <inputEntry><text>"High"</text></inputEntry>
+        <outputEntry><text>"Declined"</text></outputEntry>
+      </rule>
+      <rule id="rule3">
+        <inputEntry><text>"Low"</text></inputEntry>
+        <outputEntry><text>"Approved"</text></outputEntry>
+       </rule>
+    </decisionTable>
+  </decision>
+</definitions>

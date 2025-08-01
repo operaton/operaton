@@ -92,14 +92,14 @@ public abstract class ConcurrencyTestHelper {
 
   public static class ThreadControl {
 
-    protected volatile boolean syncAvailable = false;
+    protected volatile boolean syncAvailable;
 
     protected Thread executingThread;
 
     protected volatile boolean reportFailure;
     protected volatile Exception exception;
 
-    protected boolean ignoreSync = false;
+    protected boolean ignoreSync;
 
     public ThreadControl() {
     }

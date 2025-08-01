@@ -33,7 +33,7 @@ public class ExecutionVariableSnapshotObserver implements ExecutionObserver {
   protected ExecutionEntity execution;
 
   protected boolean localVariables = true;
-  protected boolean deserializeValues = false;
+  protected boolean deserializeValues;
 
   public ExecutionVariableSnapshotObserver(ExecutionEntity executionEntity) {
     this(executionEntity, true, false);

@@ -28,7 +28,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class SampleServiceBean implements JavaDelegate {
 
-  private boolean called = false;
+  private boolean called;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

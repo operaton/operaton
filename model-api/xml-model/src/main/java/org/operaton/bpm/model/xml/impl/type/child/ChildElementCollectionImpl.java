@@ -43,7 +43,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
   private final ModelElementType parentElementType;
 
   /** the minimal count of child elements in the collection */
-  private int minOccurs = 0;
+  private int minOccurs;
 
   /**
    * the maximum count of child elements in the collection.

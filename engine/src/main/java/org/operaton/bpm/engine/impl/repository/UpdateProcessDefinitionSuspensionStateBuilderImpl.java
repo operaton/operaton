@@ -40,11 +40,11 @@ public class UpdateProcessDefinitionSuspensionStateBuilderImpl implements Update
   protected String processDefinitionKey;
   protected String processDefinitionId;
 
-  protected boolean includeProcessInstances = false;
+  protected boolean includeProcessInstances;
   protected Date executionDate;
 
   protected String processDefinitionTenantId;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
 
   public UpdateProcessDefinitionSuspensionStateBuilderImpl(CommandExecutor commandExecutor) {
     this.commandExecutor = commandExecutor;

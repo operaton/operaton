@@ -35,7 +35,7 @@ public class StandaloneTransactionContext implements TransactionContext {
   private static final TransactionLogger LOG = ProcessEngineLogger.TX_LOGGER;
 
   protected CommandContext commandContext;
-  protected Map<TransactionState, List<TransactionListener>> stateTransactionListeners = null;
+  protected Map<TransactionState, List<TransactionListener>> stateTransactionListeners;
   private TransactionState lastTransactionState;
 
   public StandaloneTransactionContext(CommandContext commandContext) {

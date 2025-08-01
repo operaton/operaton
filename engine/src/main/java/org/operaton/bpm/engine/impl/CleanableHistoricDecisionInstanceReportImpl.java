@@ -36,8 +36,8 @@ public class CleanableHistoricDecisionInstanceReportImpl extends AbstractQuery<C
   protected String[] decisionDefinitionIdIn;
   protected String[] decisionDefinitionKeyIn;
   protected String[] tenantIdIn;
-  protected boolean isTenantIdSet = false;
-  protected boolean isCompact = false;
+  protected boolean isTenantIdSet;
+  protected boolean isCompact;
 
   protected Date currentTimestamp;
 

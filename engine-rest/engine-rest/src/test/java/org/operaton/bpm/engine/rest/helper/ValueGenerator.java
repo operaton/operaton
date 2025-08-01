@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class ValueGenerator {
 
-  protected int counter = 0;
+  protected int counter;
   protected Map<String, String> values = new HashMap<>();
   protected String valueFormat;
 

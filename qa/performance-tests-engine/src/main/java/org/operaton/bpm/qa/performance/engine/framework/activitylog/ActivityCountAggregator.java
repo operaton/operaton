@@ -179,9 +179,9 @@ public class ActivityCountAggregator extends TabularResultAggregator {
   }
 
   static class ActivityCount {
-    int started = 0;
-    int ended = 0;
-    long duration = 0;
+    int started;
+    int ended;
+    long duration;
 
     public void incrementStarted() {
       ++started;

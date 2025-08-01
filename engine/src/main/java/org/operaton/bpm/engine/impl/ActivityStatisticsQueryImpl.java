@@ -32,7 +32,7 @@ public class ActivityStatisticsQueryImpl extends
     AbstractQuery<ActivityStatisticsQuery, ActivityStatistics> implements ActivityStatisticsQuery{
 
   protected static final long serialVersionUID = 1L;
-  protected boolean includeFailedJobs = false;
+  protected boolean includeFailedJobs;
   protected String processDefinitionId;
   protected boolean includeIncidents;
   protected String includeIncidentsForType;

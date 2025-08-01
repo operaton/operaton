@@ -44,10 +44,10 @@ public class AuthorizationQueryImpl extends AbstractQuery<AuthorizationQuery, Au
   protected String[] groupIds;
   protected int resourceType;
   protected String resourceId;
-  protected int permission = 0;
+  protected int permission;
   protected Integer authorizationType;
-  protected boolean queryByPermission = false;
-  protected boolean queryByResourceType = false;
+  protected boolean queryByPermission;
+  protected boolean queryByResourceType;
 
   private Set<Resource> resourcesIntersection = new HashSet<>();
 

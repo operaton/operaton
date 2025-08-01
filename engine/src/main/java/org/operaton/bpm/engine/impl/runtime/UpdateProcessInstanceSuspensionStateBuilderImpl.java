@@ -47,7 +47,7 @@ public class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdatePr
   protected String processDefinitionId;
 
   protected String processDefinitionTenantId;
-  protected boolean isProcessDefinitionTenantIdSet = false;
+  protected boolean isProcessDefinitionTenantIdSet;
 
   public UpdateProcessInstanceSuspensionStateBuilderImpl(CommandExecutor commandExecutor) {
     this.commandExecutor = commandExecutor;

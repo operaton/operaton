@@ -38,18 +38,18 @@ public class AuthorizationCheck implements Serializable {
    * useful when implementing a query which may perform an authorization check
    * only under certain circumstances.
    */
-  protected boolean isAuthorizationCheckEnabled = false;
+  protected boolean isAuthorizationCheckEnabled;
 
   /**
    * If true authorization check is performed.
    */
-  protected boolean shouldPerformAuthorizatioCheck = false;
+  protected boolean shouldPerformAuthorizatioCheck;
 
   /**
    * Indicates if the revoke authorization checks are enabled or not.
    * The authorization checks without checking revoke permissions are much more faster.
    */
-  protected boolean isRevokeAuthorizationCheckEnabled = false;
+  protected boolean isRevokeAuthorizationCheckEnabled;
 
   /** the id of the user to check permissions for */
   protected String authUserId;
@@ -63,7 +63,7 @@ public class AuthorizationCheck implements Serializable {
 
   protected CompositePermissionCheck permissionChecks = new CompositePermissionCheck();
 
-  protected boolean historicInstancePermissionsEnabled = false;
+  protected boolean historicInstancePermissionsEnabled;
 
   protected boolean useLeftJoin = true;
 

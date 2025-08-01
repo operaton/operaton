@@ -33,9 +33,9 @@ public class CorrelationMessageDto {
   private boolean withoutTenantId;
   private String processInstanceId;
 
-  private boolean all = false;
-  private boolean resultEnabled = false;
-  private boolean variablesInResultEnabled = false;
+  private boolean all;
+  private boolean resultEnabled;
+  private boolean variablesInResultEnabled;
 
   public String getMessageName() {
     return messageName;

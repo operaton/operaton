@@ -30,7 +30,7 @@ public class StartProcessInstanceDto {
   protected List<ProcessInstanceModificationInstructionDto> startInstructions;
   protected boolean skipCustomListeners;
   protected boolean skipIoMappings;
-  protected boolean withVariablesInReturn = false;
+  protected boolean withVariablesInReturn;
 
   public Map<String, VariableValueDto> getVariables() {
     return variables;

@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.tree.SingleReferenceWalker;
  */
 public class MigratingScopeInstanceBottomUpWalker extends SingleReferenceWalker<MigratingScopeInstance> {
 
-  protected MigratingScopeInstance parent = null;
+  protected MigratingScopeInstance parent;
 
   public MigratingScopeInstanceBottomUpWalker(MigratingScopeInstance initialElement) {
     super(initialElement);

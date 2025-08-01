@@ -37,8 +37,8 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
 
-  protected ProcessEngine defaultProcessEngine = null;
-  protected ProcessEngine processEngine = null;
+  protected ProcessEngine defaultProcessEngine;
+  protected ProcessEngine processEngine;
 
   @Before
   public void init() {

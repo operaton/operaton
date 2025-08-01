@@ -77,8 +77,8 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   protected transient RepositoryServiceImpl repositoryService;
   protected DeploymentEntity deployment = new DeploymentEntity();
-  protected boolean isDuplicateFilterEnabled = false;
-  protected boolean deployChangedOnly = false;
+  protected boolean isDuplicateFilterEnabled;
+  protected boolean deployChangedOnly;
   protected Date processDefinitionsActivationDate;
 
   protected String nameFromDeployment;

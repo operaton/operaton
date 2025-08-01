@@ -24,7 +24,7 @@ public class ValidatingMigrationInstructionImpl implements ValidatingMigrationIn
 
   protected ActivityImpl sourceActivity;
   protected ActivityImpl targetActivity;
-  protected boolean updateEventTrigger = false;
+  protected boolean updateEventTrigger;
 
   public ValidatingMigrationInstructionImpl(ActivityImpl sourceActivity, ActivityImpl targetActivity, boolean updateEventTrigger) {
     this.sourceActivity = sourceActivity;

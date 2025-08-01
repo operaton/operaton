@@ -27,7 +27,7 @@ public abstract class DomXmlNodeIterator<T extends SpinXmlNode> implements Itera
 
   private static final DomXmlLogger LOG = DomXmlLogger.XML_DOM_LOGGER;
 
-  protected int index = 0;
+  protected int index;
 
   @Override
   public boolean hasNext() {

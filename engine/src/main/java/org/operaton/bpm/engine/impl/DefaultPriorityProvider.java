@@ -35,12 +35,12 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
   /**
    * The default priority.
    */
-  public static long DEFAULT_PRIORITY = 0;
+  public static long DEFAULT_PRIORITY;
 
   /**
    * The default priority in case of resolution failure.
    */
-  public static long DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE = 0;
+  public static long DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE;
 
   /**
    * Returns the default priority.

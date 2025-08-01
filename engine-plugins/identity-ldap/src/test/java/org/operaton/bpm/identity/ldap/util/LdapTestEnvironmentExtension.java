@@ -23,10 +23,10 @@ public class LdapTestEnvironmentExtension implements BeforeEachCallback, AfterEa
 
   protected LdapTestEnvironment ldapTestEnvironment;
 
-  protected int additionalNumberOfUsers = 0;
-  protected int additionnalNumberOfGroups = 0;
-  protected int additionalNumberOfRoles = 0;
-  protected boolean posix = false;
+  protected int additionalNumberOfUsers;
+  protected int additionnalNumberOfGroups;
+  protected int additionalNumberOfRoles;
+  protected boolean posix;
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {

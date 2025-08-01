@@ -50,11 +50,11 @@ public class EventSubscriptionDeclaration implements Serializable {
   protected final CallableElement eventPayload;
 
   protected boolean async;
-  protected String activityId = null;
-  protected String eventScopeActivityId = null;
+  protected String activityId;
+  protected String eventScopeActivityId;
   protected boolean isStartEvent;
 
-  protected EventSubscriptionJobDeclaration jobDeclaration = null;
+  protected EventSubscriptionJobDeclaration jobDeclaration;
 
   public EventSubscriptionDeclaration(Expression eventExpression, EventType eventType) {
     this.eventName = eventExpression;

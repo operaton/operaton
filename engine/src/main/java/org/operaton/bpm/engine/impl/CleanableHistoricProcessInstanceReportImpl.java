@@ -36,8 +36,8 @@ public class CleanableHistoricProcessInstanceReportImpl extends AbstractQuery<Cl
   protected String[] processDefinitionIdIn;
   protected String[] processDefinitionKeyIn;
   protected String[] tenantIdIn;
-  protected boolean isTenantIdSet = false;
-  protected boolean isCompact = false;
+  protected boolean isTenantIdSet;
+  protected boolean isCompact;
 
   protected Date currentTimestamp;
 

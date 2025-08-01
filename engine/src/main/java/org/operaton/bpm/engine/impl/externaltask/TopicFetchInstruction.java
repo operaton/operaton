@@ -43,15 +43,15 @@ public class TopicFetchInstruction implements Serializable {
   protected String processDefinitionKey;
   protected String[] processDefinitionKeys;
   protected String processDefinitionVersionTag;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
   protected List<String> variablesToFetch;
 
   protected List<QueryVariableValue> filterVariables;
   protected long lockDuration;
-  protected boolean deserializeVariables = false;
-  protected boolean localVariables = false;
-  protected boolean includeExtensionProperties = false;
+  protected boolean deserializeVariables;
+  protected boolean localVariables;
+  protected boolean includeExtensionProperties;
 
   public TopicFetchInstruction(String topicName, long lockDuration) {
     this.topicName = topicName;

@@ -261,7 +261,7 @@ class TopicSubscriptionManagerForTesting extends TopicSubscriptionManager {
 
 // Testing class to count the numbers of "execute" calls for a specific task
 class RecordingExternalTaskHandler implements ExternalTaskHandler {
-	private int executeCount = 0;
+	private int executeCount;
 
 	@Override
 	public void execute(ExternalTask externalTask, ExternalTaskService externalTaskService) {

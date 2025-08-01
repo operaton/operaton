@@ -24,9 +24,9 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  */
 public class TaskDeleteListener implements TaskListener {
 
-  public static int eventCounter = 0;
-  public static String lastTaskDefinitionKey = null;
-  public static String lastDeleteReason = null;
+  public static int eventCounter;
+  public static String lastTaskDefinitionKey;
+  public static String lastDeleteReason;
 
   @Override
   public void notify(DelegateTask delegateTask) {

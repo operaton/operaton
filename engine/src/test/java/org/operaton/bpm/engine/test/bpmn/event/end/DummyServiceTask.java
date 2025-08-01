@@ -25,9 +25,9 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class DummyServiceTask implements JavaDelegate {
 
-  public static boolean wasExecuted = false;
-  public static boolean expressionWasExecuted = false;
-  public static boolean delegateExpressionWasExecuted = false;
+  public static boolean wasExecuted;
+  public static boolean expressionWasExecuted;
+  public static boolean delegateExpressionWasExecuted;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

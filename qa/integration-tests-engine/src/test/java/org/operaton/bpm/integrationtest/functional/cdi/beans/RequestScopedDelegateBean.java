@@ -32,7 +32,7 @@ import jakarta.inject.Named;
 @RequestScoped
 public class RequestScopedDelegateBean implements JavaDelegate {
 
-  private int invocationCounter = 0;
+  private int invocationCounter;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

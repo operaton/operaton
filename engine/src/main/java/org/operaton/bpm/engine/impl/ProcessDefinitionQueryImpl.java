@@ -68,7 +68,7 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
   protected String resourceName;
   protected String resourceNameLike;
   protected Integer version;
-  protected boolean latest = false;
+  protected boolean latest;
   protected SuspensionState suspensionState;
   protected String authorizationUserId;
   protected List<String> cachedCandidateGroups;
@@ -81,20 +81,20 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
   protected String eventSubscriptionName;
   protected String eventSubscriptionType;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
-  protected boolean includeDefinitionsWithoutTenantId = false;
+  protected boolean includeDefinitionsWithoutTenantId;
 
-  protected boolean isVersionTagSet = false;
+  protected boolean isVersionTagSet;
   protected String versionTag;
   protected String versionTagLike;
 
-  protected boolean isStartableInTasklist = false;
-  protected boolean isNotStartableInTasklist = false;
-  protected boolean startablePermissionCheck = false;
+  protected boolean isStartableInTasklist;
+  protected boolean isNotStartableInTasklist;
+  protected boolean startablePermissionCheck;
   // for internal use
   protected List<PermissionCheck> processDefinitionCreatePermissionChecks = new ArrayList<>();
-  private boolean shouldJoinDeploymentTable = false;
+  private boolean shouldJoinDeploymentTable;
 
   public ProcessDefinitionQueryImpl() {
   }

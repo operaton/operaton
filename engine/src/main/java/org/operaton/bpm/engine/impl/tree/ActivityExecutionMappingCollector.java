@@ -38,7 +38,7 @@ public class ActivityExecutionMappingCollector implements TreeVisitor<ActivityEx
   private final Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = new HashMap<>();
 
   private final ActivityExecution initialExecution;
-  private boolean initialized = false;
+  private boolean initialized;
 
   public ActivityExecutionMappingCollector(ActivityExecution execution) {
     this.initialExecution = execution;

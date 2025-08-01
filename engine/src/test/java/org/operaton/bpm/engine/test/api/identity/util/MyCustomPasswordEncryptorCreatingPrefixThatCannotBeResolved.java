@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.impl.digest.PasswordEncryptor;
 
 public class MyCustomPasswordEncryptorCreatingPrefixThatCannotBeResolved implements PasswordEncryptor {
 
-  protected int counter = 0;
+  protected int counter;
 
   @Override
   public String encrypt(String password) {

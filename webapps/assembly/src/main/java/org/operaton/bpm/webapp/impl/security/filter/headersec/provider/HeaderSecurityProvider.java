@@ -25,8 +25,8 @@ import java.util.Map;
  */
 public abstract class HeaderSecurityProvider {
 
-  protected boolean disabled = false;
-  protected String value = null;
+  protected boolean disabled;
+  protected String value;
   protected Map<String, String> initParams = new HashMap<>();
 
   public abstract Map<String, String> initParams();

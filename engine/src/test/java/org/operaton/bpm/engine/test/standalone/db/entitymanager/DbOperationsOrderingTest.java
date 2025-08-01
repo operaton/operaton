@@ -41,24 +41,24 @@ class DbOperationsOrderingTest {
   protected ExposingDbEntityManager entityManager;
 
   // setup some entities
-  ExecutionEntity execution1 = null;
-  ExecutionEntity execution2 = null;
-  ExecutionEntity execution3 = null;
-  ExecutionEntity execution4 = null;
-  ExecutionEntity execution5 = null;
-  ExecutionEntity execution6 = null;
-  ExecutionEntity execution7 = null;
-  ExecutionEntity execution8 = null;
+  ExecutionEntity execution1;
+  ExecutionEntity execution2;
+  ExecutionEntity execution3;
+  ExecutionEntity execution4;
+  ExecutionEntity execution5;
+  ExecutionEntity execution6;
+  ExecutionEntity execution7;
+  ExecutionEntity execution8;
 
-  TaskEntity task1 = null;
-  TaskEntity task2 = null;
-  TaskEntity task3 = null;
-  TaskEntity task4 = null;
+  TaskEntity task1;
+  TaskEntity task2;
+  TaskEntity task3;
+  TaskEntity task4;
 
-  VariableInstanceEntity variable1 = null;
-  VariableInstanceEntity variable2 = null;
-  VariableInstanceEntity variable3 = null;
-  VariableInstanceEntity variable4 = null;
+  VariableInstanceEntity variable1;
+  VariableInstanceEntity variable2;
+  VariableInstanceEntity variable3;
+  VariableInstanceEntity variable4;
 
 
   @BeforeEach

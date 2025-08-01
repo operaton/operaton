@@ -31,7 +31,7 @@ public class CallableElementParameter {
   protected ParameterValueProvider sourceValueProvider;
   protected String target;
   protected boolean allVariables;
-  protected boolean readLocal = false;
+  protected boolean readLocal;
 
   // source ////////////////////////////////////////////////////////
 

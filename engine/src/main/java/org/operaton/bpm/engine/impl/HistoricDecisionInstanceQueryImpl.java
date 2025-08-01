@@ -64,14 +64,14 @@ public class HistoricDecisionInstanceQueryImpl extends AbstractQuery<HistoricDec
 
   protected String userId;
 
-  protected boolean includeInput = false;
-  protected boolean includeOutputs = false;
+  protected boolean includeInput;
+  protected boolean includeOutputs;
 
   protected boolean isByteArrayFetchingEnabled = true;
   protected boolean isCustomObjectDeserializationEnabled = true;
 
   protected String rootDecisionInstanceId;
-  protected boolean rootDecisionInstancesOnly = false;
+  protected boolean rootDecisionInstancesOnly;
 
   protected String decisionRequirementsDefinitionId;
   protected String decisionRequirementsDefinitionKey;

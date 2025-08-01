@@ -28,15 +28,15 @@ import org.operaton.bpm.engine.repository.CaseDefinition;
  */
 public class MockCaseDefinitionBuilder {
 
-  private String id = null;
-  private String key = null;
-  private String category = null;
-  private String name = null;
-  private int version = 0;
-  private String resource = null;
-  protected String diagramResource = null;
-  private String deploymentId = null;
-  private String tenantId = null;
+  private String id;
+  private String key;
+  private String category;
+  private String name;
+  private int version;
+  private String resource;
+  protected String diagramResource;
+  private String deploymentId;
+  private String tenantId;
 
   public MockCaseDefinitionBuilder id(String id) {
     this.id = id;

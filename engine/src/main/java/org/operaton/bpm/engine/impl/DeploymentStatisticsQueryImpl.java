@@ -30,8 +30,8 @@ public class DeploymentStatisticsQueryImpl extends AbstractQuery<DeploymentStati
 implements DeploymentStatisticsQuery {
 
   protected static final long serialVersionUID = 1L;
-  protected boolean includeFailedJobs = false;
-  protected boolean includeIncidents = false;
+  protected boolean includeFailedJobs;
+  protected boolean includeIncidents;
   protected String includeIncidentsForType;
 
   // for internal use

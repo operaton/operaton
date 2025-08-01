@@ -42,7 +42,7 @@ public class JuelExpressionManager implements ExpressionManager, ElProviderCompa
   protected Map<String, Method> functions = new HashMap<>();
   protected ExpressionFactory expressionFactory;
   protected Map<Object, Object> beans;
-  protected volatile boolean initialized = false;
+  protected volatile boolean initialized;
   protected ELResolver elResolver;
   protected FunctionMapper functionMapper;
   // Default implementation (does nothing)

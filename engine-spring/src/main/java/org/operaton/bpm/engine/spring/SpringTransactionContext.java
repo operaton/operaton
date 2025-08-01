@@ -34,7 +34,7 @@ public class SpringTransactionContext implements TransactionContext {
 
   protected PlatformTransactionManager transactionManager;
   protected CommandContext commandContext;
-  protected TransactionState lastTransactionState = null;
+  protected TransactionState lastTransactionState;
 
   public SpringTransactionContext(PlatformTransactionManager transactionManager, CommandContext commandContext) {
     this.transactionManager = transactionManager;

@@ -38,7 +38,7 @@ public class ProcessApplicationDeploymentBuilderImpl extends DeploymentBuilderIm
   @Serial private static final long serialVersionUID = 1L;
 
   protected final ProcessApplicationReference processApplicationReference;
-  protected boolean isResumePreviousVersions = false;
+  protected boolean isResumePreviousVersions;
   protected String resumePreviousVersionsBy = ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY;
 
   public ProcessApplicationDeploymentBuilderImpl(RepositoryServiceImpl repositoryService, ProcessApplicationReference reference) {

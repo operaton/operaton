@@ -42,8 +42,8 @@ public class HttpClientExtension implements AfterEachCallback {
   public static final String WEBAPP_URL = "http://localhost:" + PORT_PLACEHOLDER_WEBAPP_URL +
       "/operaton/app/tasklist/default";
 
-  protected Integer port = null;
-  protected HttpURLConnection connection = null;
+  protected Integer port;
+  protected HttpURLConnection connection;
   protected boolean followRedirects;
 
   public HttpClientExtension() {

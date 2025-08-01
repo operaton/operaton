@@ -399,7 +399,7 @@ public class ProcessEngineTestRule extends TestWatcher {
   }
 
   protected static class InterruptTask extends TimerTask {
-    protected boolean timeLimitExceeded = false;
+    protected boolean timeLimitExceeded;
     protected Thread thread;
     public InterruptTask(Thread thread) {
       this.thread = thread;

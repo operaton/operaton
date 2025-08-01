@@ -36,7 +36,7 @@ public final class JobExecutorAssert {
   private String processInstanceId;
   private long timeoutMillis = JobExecutorWaitUtils.JOBS_WAIT_TIMEOUT_MS;
   private long checkIntervalMillis = JobExecutorWaitUtils.CHECK_INTERVAL_MS;
-  private boolean shutdownExecutorAfter = false;
+  private boolean shutdownExecutorAfter;
 
   private JobExecutorAssert() {
   }

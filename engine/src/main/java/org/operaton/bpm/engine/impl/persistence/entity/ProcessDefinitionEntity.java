@@ -66,7 +66,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   protected String tenantId;
   protected String versionTag;
   protected Integer historyTimeToLive;
-  protected boolean isIdentityLinksInitialized = false;
+  protected boolean isIdentityLinksInitialized;
   protected List<IdentityLinkEntity> definitionIdentityLinkEntities = new ArrayList<>();
   protected Set<Expression> candidateStarterUserIdExpressions = new HashSet<>();
   protected Set<Expression> candidateStarterGroupIdExpressions = new HashSet<>();
@@ -74,7 +74,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   // firstVersion is true, when version == 1 or when
   // this definition does not have any previous definitions
-  protected boolean firstVersion = false;
+  protected boolean firstVersion;
   protected String previousProcessDefinitionId;
 
   public ProcessDefinitionEntity() {

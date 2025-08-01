@@ -21,10 +21,10 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 public class DummyActivityBehavior extends TaskActivityBehavior {
 
-  public static boolean wasExecuted = false;
+  public static boolean wasExecuted;
 
-  public static String currentActivityId = null;
-  public static String currentActivityName = null;
+  public static String currentActivityId;
+  public static String currentActivityName;
 
   @Override
   public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {

@@ -63,7 +63,7 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
   protected String caseDefinitionKey;
   protected String[] caseActivityIds;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
 
   public HistoricCaseInstanceQueryImpl() {

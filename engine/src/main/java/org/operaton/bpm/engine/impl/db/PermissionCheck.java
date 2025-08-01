@@ -40,7 +40,7 @@ public class PermissionCheck {
   /** query parameter for resource Id. Is injected as RAW parameter into the query */
   protected String resourceIdQueryParam;
 
-  protected Long authorizationNotFoundReturnValue = null;
+  protected Long authorizationNotFoundReturnValue;
 
   public Permission getPermission() {
     return permission;

@@ -35,8 +35,8 @@ public class CleanableHistoricCaseInstanceReportImpl extends AbstractQuery<Clean
   protected String[] caseDefinitionIdIn;
   protected String[] caseDefinitionKeyIn;
   protected String[] tenantIdIn;
-  protected boolean isTenantIdSet = false;
-  protected boolean isCompact = false;
+  protected boolean isTenantIdSet;
+  protected boolean isCompact;
 
   protected Date currentTimestamp;
 

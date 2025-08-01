@@ -177,7 +177,7 @@ public class BatchSetRemovalTimeRule extends BatchRule {
         .operatonHistoryTimeToLiveString(null);
 
     StartEventBuilder startEventBuilder = builder.startEvent();
-    ProcessBuilder rootProcessBuilder = null;
+    ProcessBuilder rootProcessBuilder;
     Integer ttl;
     CallActivityBuilder callActivityBuilder;
 

@@ -40,10 +40,10 @@ public class SetJobRetriesBuilderImpl implements SetJobRetriesBuilder {
   protected Integer retries;
   protected Date dueDate;
 
-  protected boolean isDueDateSet = false;
-  boolean byJobId = false;
-  boolean byJobIds = false;
-  boolean byJobDefinitionId = false;
+  protected boolean isDueDateSet;
+  boolean byJobId;
+  boolean byJobIds;
+  boolean byJobDefinitionId;
 
   public SetJobRetriesBuilderImpl(CommandExecutor commandExecutor, int retries) {
     this.commandExecutor = commandExecutor;

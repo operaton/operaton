@@ -114,12 +114,12 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
    *   stay in the scope execution
    * </p>
    */
-  protected boolean isConcurrentLocal = false;
+  protected boolean isConcurrentLocal;
 
   /**
    * Determines whether this variable is stored in the data base.
    */
-  protected boolean isTransient = false;
+  protected boolean isTransient;
 
   // transient properties
   protected ExecutionEntity execution;

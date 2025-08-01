@@ -140,7 +140,7 @@ public class SectionedHtmlReportBuilder {
 
     private final String text;
     private int colspan = 1;
-    private boolean header = false;
+    private boolean header;
 
     public TableCell(String text) {
       this(text, false);

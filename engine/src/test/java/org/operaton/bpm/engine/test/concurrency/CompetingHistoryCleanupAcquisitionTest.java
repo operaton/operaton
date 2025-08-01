@@ -54,7 +54,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
 
   private static final Date CURRENT_DATE = new GregorianCalendar(2023, Calendar.MARCH, 18, 12, 0, 0).getTime();
 
-  protected static ThreadControl cleanupThread = null;
+  protected static ThreadControl cleanupThread;
 
   protected static ThreadLocal<Boolean> syncBeforeFlush = new ThreadLocal<>();
 

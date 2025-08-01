@@ -46,7 +46,7 @@ public class MessageEventReceivedCmd implements Command<Void>, Serializable {
   protected final Map<String, Object> processVariablesLocal;
   protected final Map<String, Object> processVariablesToTriggeredScope;
   protected final String messageName;
-  protected boolean exclusive = false;
+  protected boolean exclusive;
 
   public MessageEventReceivedCmd(String messageName, String executionId, Map<String, Object> processVariables) {
     this(messageName, executionId, processVariables, null, null);

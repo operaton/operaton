@@ -48,16 +48,16 @@ public class MyResourceAuthorizationProvider implements ResourceAuthorizationPro
   public static String addUserIdentityLinkUser;
 
   // delete user identity link
-  public static String deleteUserIdentityLinkType = null;
-  public static String deleteUserIdentityLinkUser = null;
+  public static String deleteUserIdentityLinkType;
+  public static String deleteUserIdentityLinkUser;
 
   // add group identity link
   public static String addGroupIdentityLinkType;
   public static String addGroupIdentityLinkGroup;
 
   // delete group identity link
-  public static String deleteGroupIdentityLinkType = null;
-  public static String deleteGroupIdentityLinkGroup = null;
+  public static String deleteGroupIdentityLinkType;
+  public static String deleteGroupIdentityLinkGroup;
 
   @Override
   public AuthorizationEntity[] newUser(User user) {

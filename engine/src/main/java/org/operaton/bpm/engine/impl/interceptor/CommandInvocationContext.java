@@ -43,7 +43,7 @@ public class CommandInvocationContext {
 
   protected Throwable throwable;
   protected Command< ? > command;
-  protected boolean isExecuting = false;
+  protected boolean isExecuting;
   protected List<AtomicOperationInvocation> queuedInvocations = new ArrayList<>();
   protected BpmnStackTrace bpmnStackTrace = new BpmnStackTrace();
   protected ProcessDataContext processDataContext;

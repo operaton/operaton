@@ -49,7 +49,7 @@ public abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStat
   protected String processDefinitionKey;
 
   protected String processDefinitionTenantId;
-  protected boolean isProcessDefinitionTenantIdSet = false;
+  protected boolean isProcessDefinitionTenantIdSet;
 
   protected AbstractSetProcessInstanceStateCmd(UpdateProcessInstanceSuspensionStateBuilderImpl builder) {
     super(true, null);

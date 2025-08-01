@@ -65,7 +65,7 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
   protected boolean isTenantIdSet;
 
   protected String[] processInstanceIds;
-  protected boolean includeDeleted = false;
+  protected boolean includeDeleted;
 
   protected boolean isByteArrayFetchingEnabled = true;
   protected boolean isCustomObjectDeserializationEnabled = true;

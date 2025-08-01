@@ -27,7 +27,7 @@ public class MigrationInstructionImpl implements MigrationInstruction {
   protected String sourceActivityId;
   protected String targetActivityId;
 
-  protected boolean updateEventTrigger = false;
+  protected boolean updateEventTrigger;
 
   public MigrationInstructionImpl(String sourceActivityId, String targetActivityId) {
     this(sourceActivityId, targetActivityId, false);

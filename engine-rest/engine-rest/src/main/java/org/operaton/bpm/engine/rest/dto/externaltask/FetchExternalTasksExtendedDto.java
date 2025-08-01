@@ -21,7 +21,7 @@ package org.operaton.bpm.engine.rest.dto.externaltask;
  */
 public class FetchExternalTasksExtendedDto extends FetchExternalTasksDto {
 
-  protected Long asyncResponseTimeout = null;
+  protected Long asyncResponseTimeout;
 
   public void setAsyncResponseTimeout(Long asyncResponseTimeout) {
     this.asyncResponseTimeout = asyncResponseTimeout;

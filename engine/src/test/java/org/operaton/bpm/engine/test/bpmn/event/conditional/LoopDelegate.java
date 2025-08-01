@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class LoopDelegate implements JavaDelegate {
 
-  private static int instanceCount = 0;
+  private static int instanceCount;
 
   public LoopDelegate() {
     instanceCount++;

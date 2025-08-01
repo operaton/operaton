@@ -24,7 +24,7 @@ public class RetriesDto {
 
   protected Integer retries;
   protected Date dueDate;
-  protected boolean dueDateSet = false; // internal property to distinguish between missing due date and null due date parameters
+  protected boolean dueDateSet; // internal property to distinguish between missing due date and null due date parameters
 
   public Integer getRetries() {
     return retries;

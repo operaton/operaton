@@ -42,7 +42,7 @@ public class OAuth2Properties {
     /**
      * Enable SSO Logout. Default {@code false}.
      */
-    private boolean enabled = false;
+    private boolean enabled;
 
     /**
      * URI the user is redirected after SSO logout from the provider. Default {@code {baseUrl}}.

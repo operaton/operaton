@@ -38,7 +38,7 @@ public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements Varia
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected boolean taskLocalVariablesUpdated = false;
+  protected boolean taskLocalVariablesUpdated;
 
 
   public SetTaskVariablesCmd(String taskId, Map<String, ? extends Object> variables, boolean isLocal) {

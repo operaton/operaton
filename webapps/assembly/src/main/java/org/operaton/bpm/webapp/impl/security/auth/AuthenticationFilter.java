@@ -47,7 +47,7 @@ public class AuthenticationFilter implements Filter {
 
   public static final String AUTH_CACHE_TTL_INIT_PARAM_NAME = "cacheTimeToLive";
 
-  protected Long cacheTimeToLive = null;
+  protected Long cacheTimeToLive;
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {

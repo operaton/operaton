@@ -36,7 +36,7 @@ public abstract class AbstractVariableCmd implements Command<Void>, Serializable
   protected CommandContext commandContext;
   protected String entityId;
   protected boolean isLocal;
-  protected boolean preventLogUserOperation = false;
+  protected boolean preventLogUserOperation;
 
   protected AbstractVariableCmd(String entityId, boolean isLocal) {
     this.entityId = entityId;

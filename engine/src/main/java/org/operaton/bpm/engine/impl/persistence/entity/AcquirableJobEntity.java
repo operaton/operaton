@@ -30,12 +30,12 @@ public class AcquirableJobEntity implements DbEntity, HasDbRevision {
   protected String id;
   protected int revision;
 
-  protected String lockOwner = null;
-  protected Date lockExpirationTime = null;
+  protected String lockOwner;
+  protected Date lockExpirationTime;
   protected Date duedate;
 
-  protected String rootProcessInstanceId = null;
-  protected String processInstanceId = null;
+  protected String rootProcessInstanceId;
+  protected String processInstanceId;
 
   protected boolean isExclusive = DEFAULT_EXCLUSIVE;
 

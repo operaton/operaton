@@ -54,7 +54,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   protected ScopeImpl eventScope;
   protected ScopeImpl flowScope;
 
-  protected boolean isScope = false;
+  protected boolean isScope;
 
   protected boolean isAsyncBefore;
   protected boolean isAsyncAfter;

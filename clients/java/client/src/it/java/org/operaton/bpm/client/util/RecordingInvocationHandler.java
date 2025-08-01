@@ -27,7 +27,7 @@ import org.operaton.bpm.client.task.ExternalTaskService;
 public class RecordingInvocationHandler implements ExternalTaskHandler {
 
   protected List<RecordedInvocation> handledInvocations = Collections.synchronizedList(new ArrayList<>());
-  protected int nextTaskHandler = 0;
+  protected int nextTaskHandler;
   protected final ExternalTaskHandler[] taskHandlers;
 
   public RecordingInvocationHandler() {

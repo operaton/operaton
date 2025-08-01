@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil;
  */
 public class DecisionResultTestListener implements ExecutionListener {
 
-  public static DmnDecisionResult decisionResult = null;
+  public static DmnDecisionResult decisionResult;
 
   @Override
   public void notify(DelegateExecution execution) throws Exception {

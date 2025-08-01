@@ -30,11 +30,11 @@ import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmPropertie
  */
 public class CsrfProperties {
 
-  private String targetOrigin = null;
-  private Integer denyStatus = null;
-  private String randomClass = null;
+  private String targetOrigin;
+  private Integer denyStatus;
+  private String randomClass;
   private List<String> entryPoints = new ArrayList<>();
-  protected boolean enableSecureCookie = false;
+  protected boolean enableSecureCookie;
   protected boolean enableSameSiteCookie = true;
   protected String sameSiteCookieOption;
   protected String sameSiteCookieValue;

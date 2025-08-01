@@ -36,7 +36,7 @@ public class BatchStatisticsQueryImpl extends AbstractQuery<BatchStatisticsQuery
 
   protected String batchId;
   protected String type;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
   protected SuspensionState suspensionState;
   protected String userId;

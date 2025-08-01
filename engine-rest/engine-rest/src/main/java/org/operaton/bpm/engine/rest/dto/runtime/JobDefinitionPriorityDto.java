@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest.dto.runtime;
 public class JobDefinitionPriorityDto {
 
   protected Long priority;
-  protected boolean includeJobs = false;
+  protected boolean includeJobs;
 
   public Long getPriority() {
     return priority;

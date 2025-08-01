@@ -75,9 +75,9 @@ public class OperatonBpmProperties {
 
   private String idGenerator = IdGeneratorConfiguration.STRONG;
 
-  private Boolean jobExecutorAcquireByPriority = null;
+  private Boolean jobExecutorAcquireByPriority;
 
-  private Integer defaultNumberOfRetries = null;
+  private Integer defaultNumberOfRetries;
 
   /**
    * the history level to use

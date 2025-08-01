@@ -22,9 +22,9 @@ package org.operaton.bpm.engine.test.cmmn.listener;
  */
 public class SimpleBean {
 
-  protected static boolean staticInvoked = false;
+  protected static boolean staticInvoked;
 
-  protected boolean invoked = false;
+  protected boolean invoked;
 
   public void invoke() {
     invoked = true;

@@ -63,14 +63,14 @@ public class LdapConfiguration {
   protected String groupTypeAttribute = "";
   protected String groupMemberAttribute = "memberOf";
 
-  protected boolean sortControlSupported = false;
-  protected boolean useSsl = false;
-  protected boolean usePosixGroups = false;
-  protected boolean allowAnonymousLogin = false;
+  protected boolean sortControlSupported;
+  protected boolean useSsl;
+  protected boolean usePosixGroups;
+  protected boolean allowAnonymousLogin;
 
   protected boolean authorizationCheckEnabled = true;
 
-  protected Integer pageSize = null; // null => disabled
+  protected Integer pageSize; // null => disabled
 
   protected boolean passwordCheckCatchAuthenticationException = true;
 

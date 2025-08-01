@@ -48,7 +48,7 @@ public class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuil
   protected String tenantId;
 
   protected String processDefinitionTenantId;
-  protected boolean isProcessDefinitionTenantIdSet = false;
+  protected boolean isProcessDefinitionTenantIdSet;
 
   protected String restartedProcessInstanceId;
 

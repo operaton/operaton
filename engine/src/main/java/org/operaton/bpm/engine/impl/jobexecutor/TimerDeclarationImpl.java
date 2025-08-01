@@ -46,7 +46,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
 
   protected String repeat;
   protected boolean isInterruptingTimer; // For boundary timers
-  protected String eventScopeActivityId = null;
+  protected String eventScopeActivityId;
 
   protected String rawJobHandlerConfiguration;
 

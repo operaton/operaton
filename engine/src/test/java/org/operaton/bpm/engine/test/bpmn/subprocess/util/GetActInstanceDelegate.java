@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
  */
 public class GetActInstanceDelegate implements JavaDelegate {
 
-  public static ActivityInstance activityInstance = null;
+  public static ActivityInstance activityInstance;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

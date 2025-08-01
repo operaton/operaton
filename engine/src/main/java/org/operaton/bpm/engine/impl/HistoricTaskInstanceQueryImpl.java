@@ -106,7 +106,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   protected Date startedBefore;
 
   protected List<HistoricTaskInstanceQueryImpl> queries = new ArrayList<>(List.of(this));
-  protected boolean isOrQueryActive = false;
+  protected boolean isOrQueryActive;
 
   public HistoricTaskInstanceQueryImpl() {
   }

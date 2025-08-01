@@ -71,14 +71,14 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   protected transient ScopeInstantiationContext scopeInstantiationContext;
 
-  protected transient boolean ignoreAsync = false;
+  protected transient boolean ignoreAsync;
 
   /**
    * true for process instances in the initial phase. Currently
    * this controls that historic variable updates created during this phase receive
    * the <code>initial</code> flag (see {@link HistoricVariableUpdateEventEntity#isInitial}).
    */
-  protected transient boolean isStarting = false;
+  protected transient boolean isStarting;
 
   // current position /////////////////////////////////////////////////////////
 
@@ -101,7 +101,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * A list of outgoing transitions from the current activity
    * that are going to be taken
    */
-  protected transient List<PvmTransition> transitionsToTake = null;
+  protected transient List<PvmTransition> transitionsToTake;
 
   /**
    * the unique id of the current activity instance
@@ -135,27 +135,27 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    */
   protected boolean isActive = true;
   protected boolean isScope = true;
-  protected boolean isConcurrent = false;
-  protected boolean isEnded = false;
-  protected boolean isEventScope = false;
-  protected boolean isRemoved = false;
+  protected boolean isConcurrent;
+  protected boolean isEnded;
+  protected boolean isEventScope;
+  protected boolean isRemoved;
 
   /**
    * transient; used for process instance modification to preserve a scope from getting deleted
    */
-  protected boolean preserveScope = false;
+  protected boolean preserveScope;
 
   /**
    * marks the current activity instance
    */
   protected int activityInstanceState = ActivityInstanceState.DEFAULT.getStateCode();
 
-  protected boolean activityInstanceEndListenersFailed = false;
+  protected boolean activityInstanceEndListenersFailed;
 
   protected Map<String, Object> payloadForTriggeredScope;
 
   // sequence counter ////////////////////////////////////////////////////////
-  protected long sequenceCounter = 0;
+  protected long sequenceCounter;
 
   protected PvmExecutionImpl() {
   }

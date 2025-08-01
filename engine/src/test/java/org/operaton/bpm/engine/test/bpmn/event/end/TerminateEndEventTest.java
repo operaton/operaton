@@ -51,7 +51,7 @@ public class TerminateEndEventTest {
   TaskService taskService;
   HistoryService historyService;
 
-  public static int serviceTaskInvokedCount = 0;
+  public static int serviceTaskInvokedCount;
 
   public static class CountDelegate implements JavaDelegate {
 
@@ -64,7 +64,7 @@ public class TerminateEndEventTest {
     }
   }
 
-  public static int serviceTaskInvokedCount2 = 0;
+  public static int serviceTaskInvokedCount2;
 
   public static class CountDelegate2 implements JavaDelegate {
 

@@ -151,8 +151,8 @@ public abstract class AbstractRestServiceTest {
   }
 
 
-  private static Properties connectionProperties = null;
-  private static MockedProcessEngineProvider processEngineProvider = null;
+  private static Properties connectionProperties;
+  private static MockedProcessEngineProvider processEngineProvider;
 
   @BeforeEach
   public void setUp() throws IOException {

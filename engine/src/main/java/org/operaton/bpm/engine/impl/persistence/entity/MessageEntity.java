@@ -38,7 +38,7 @@ public class MessageEntity extends JobEntity {
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  private String repeat = null;
+  private String repeat;
 
   public String getRepeat() {
     return repeat;

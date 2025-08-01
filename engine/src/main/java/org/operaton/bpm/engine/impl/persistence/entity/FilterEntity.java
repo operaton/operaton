@@ -66,7 +66,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
   protected String owner;
   protected AbstractQuery query;
   protected Map<String, Object> properties;
-  protected int revision = 0;
+  protected int revision;
 
   protected FilterEntity() {
   }

@@ -37,8 +37,8 @@ public class ConditionEvaluationBuilderImpl implements ConditionEvaluationBuilde
 
   protected VariableMap variables = new VariableMapImpl();
 
-  protected String tenantId = null;
-  protected boolean isTenantIdSet = false;
+  protected String tenantId;
+  protected boolean isTenantIdSet;
 
   public ConditionEvaluationBuilderImpl(CommandExecutor commandExecutor) {
     ensureNotNull("commandExecutor", commandExecutor);

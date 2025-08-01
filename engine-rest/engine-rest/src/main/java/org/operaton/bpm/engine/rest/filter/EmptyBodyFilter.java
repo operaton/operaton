@@ -40,7 +40,7 @@ public class EmptyBodyFilter extends AbstractEmptyBodyFilter {
         return new ServletInputStream() {
 
           final InputStream inputStream = getRequestBody(isBodyEmpty, requestBody);
-          boolean finished = false;
+          boolean finished;
 
           @Override
           public boolean isFinished() {

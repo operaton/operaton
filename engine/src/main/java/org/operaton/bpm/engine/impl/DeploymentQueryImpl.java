@@ -46,9 +46,9 @@ public class DeploymentQueryImpl extends AbstractQuery<DeploymentQuery, Deployme
   protected Date deploymentBefore;
   protected Date deploymentAfter;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
-  protected boolean includeDeploymentsWithoutTenantId = false;
+  protected boolean includeDeploymentsWithoutTenantId;
 
   public DeploymentQueryImpl() {
   }

@@ -39,7 +39,7 @@ import org.junit.runner.Description;
  */
 public class UpgradeTestRule extends ProcessEngineRule {
 
-  protected String scenarioTestedByClass = null;
+  protected String scenarioTestedByClass;
   protected String scenarioName;
   protected String tag;
 

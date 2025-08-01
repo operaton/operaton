@@ -93,7 +93,7 @@ public class ProcessEngineRule extends TestWatcher implements ProcessEngineServi
 
   protected String configurationResource = "operaton.cfg.xml";
   protected String configurationResourceCompat = "activiti.cfg.xml";
-  protected String deploymentId = null;
+  protected String deploymentId;
   protected List<String> additionalDeployments = new ArrayList<>();
 
   protected boolean ensureCleanAfterTest;

@@ -38,7 +38,7 @@ public class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetR
   protected HistoricProcessInstanceQuery query;
   protected List<String> ids;
   protected Date removalTime;
-  protected Mode mode = null;
+  protected Mode mode;
   protected boolean isHierarchical;
   protected boolean updateInChunks;
   protected Integer chunkSize;

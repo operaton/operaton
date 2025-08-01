@@ -36,7 +36,7 @@ public class HistoricBatchQueryImpl extends AbstractQuery<HistoricBatchQuery, Hi
   protected String batchId;
   protected String type;
   protected Boolean completed;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
 
   public HistoricBatchQueryImpl(CommandExecutor commandExecutor) {

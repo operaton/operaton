@@ -52,7 +52,7 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
 
   // firstVersion is true, when version == 1 or when
   // this definition does not have any previous definitions
-  protected boolean firstVersion = false;
+  protected boolean firstVersion;
   protected String previousDecisionDefinitionId;
 
   protected Integer historyTimeToLive;

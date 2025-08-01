@@ -57,7 +57,7 @@ public abstract class Parse extends DefaultHandler {
   protected Parser parser;
   protected String name;
   protected StreamSource streamSource;
-  protected Element rootElement = null;
+  protected Element rootElement;
   protected List<Problem> errors = new ArrayList<>();
   protected List<Problem> warnings = new ArrayList<>();
   protected String schemaResource;

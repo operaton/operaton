@@ -40,7 +40,7 @@ public class CachedDbEntity implements Recyclable {
   /**
    * Ids of referenced entities of the same entity type
    */
-  protected Set<String> flushRelevantEntityReferences = null;
+  protected Set<String> flushRelevantEntityReferences;
 
   @Override
   public void recycle() {

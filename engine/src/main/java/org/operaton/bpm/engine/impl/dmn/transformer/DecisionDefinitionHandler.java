@@ -25,7 +25,7 @@ import org.operaton.bpm.model.dmn.instance.Decision;
 
 public class DecisionDefinitionHandler extends DmnDecisionTransformHandler {
 
-  protected boolean skipEnforceTtl = false;
+  protected boolean skipEnforceTtl;
 
   @Override
   protected DmnDecisionImpl createDmnElement() {

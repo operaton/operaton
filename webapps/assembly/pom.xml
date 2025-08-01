@@ -17,6 +17,7 @@
     Note: Every compile time dependency will end up in the license book. Please
     declare only dependencies that are actually needed -->
     <skip-third-party-bom>false</skip-third-party-bom>
+    <surefire.forkCount>1</surefire.forkCount>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -30,30 +31,7 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
-    <!-- jee spec -->
-    <dependency>
-      <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
-      <artifactId>jackson-jakarta-rs-json-provider</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>jakarta.activation</groupId>
-          <artifactId>jakarta.activation-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jakarta.xml.bind</groupId>
-          <artifactId>jakarta.xml.bind-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-    </dependency>
-    <!-- rest api -->
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
-    </dependency>
+    <!-- JakartaEE APIs -->
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
@@ -74,6 +52,34 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-logging</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
+      <artifactId>jackson-jakarta-rs-json-provider</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <!-- rest api -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
     <!-- rest api -->
     <dependency>
       <groupId>org.operaton.bpm</groupId>
@@ -83,6 +89,27 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-testing</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -97,11 +124,6 @@
       <artifactId>operaton-bpm-junit5</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-      <classifier>junit5</classifier>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -134,8 +156,24 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
+      <groupId>com.fasterxml.uuid</groupId>
+      <artifactId>java-uuid-generator</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
+      <version>${version.jersey3}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -160,6 +198,33 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+            <resource>
+              <filtering>true</filtering>
+              <directory>${web.resources.override}</directory>
+            </resource>
+            <resource>
+              <filtering>false</filtering>
+              <directory>target/webapp</directory>
+              <excludes>
+                <exclude>**/*.html</exclude>
+              </excludes>
+            </resource>
+            <resource>
+              <filtering>true</filtering>
+              <directory>target/webapp</directory>
+              <!-- no filtering for favicon because linux destroys images through carriage return -->
+              <includes>
+                <include>**/*.html</include>
+              </includes>
+            </resource>
+          </webResources>
+          <!-- exclude development resources (task forms etc.) -->
+          <packagingExcludes>
+            develop/**
+          </packagingExcludes>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -167,11 +232,26 @@
           <failIfNoTests>false</failIfNoTests>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <systemPropertyVariables>
+            <myWorkingDir>${project.build.directory}</myWorkingDir>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create-jar</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <classifier>classes</classifier>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -183,6 +263,21 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>zip-frontend-sources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <skipAssembly>${skip-zip-frontend-sources}</skipAssembly>
+              <descriptors>
+                <descriptor>assembly.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

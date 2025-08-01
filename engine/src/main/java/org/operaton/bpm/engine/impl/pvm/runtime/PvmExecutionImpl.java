@@ -1205,7 +1205,9 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   public String getBusinessKey() {
     if (this.isProcessInstanceExecution()) {
       return businessKey;
-    } else return getProcessBusinessKey();
+    } else {
+      return getProcessBusinessKey();
+    }
   }
 
   // process definition ///////////////////////////////////////////////////////

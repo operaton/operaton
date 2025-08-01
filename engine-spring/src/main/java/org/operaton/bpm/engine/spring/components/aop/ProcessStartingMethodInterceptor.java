@@ -101,14 +101,17 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
 
             String pId = pi.getId();
 
-            if (invocation.getMethod().getReturnType().equals(void.class))
-                return null;
+          if (invocation.getMethod().getReturnType().equals(void.class)) {
+            return null;
+          }
 
-            if (shouldReturnProcessInstance(startProcess, invocation, result))
-                return pi;
+          if (shouldReturnProcessInstance(startProcess, invocation, result)) {
+            return pi;
+          }
 
-            if (shouldReturnProcessInstanceId(startProcess, invocation, result))
-                return pId;
+          if (shouldReturnProcessInstanceId(startProcess, invocation, result)) {
+            return pId;
+          }
 
             if (shouldReturnAsyncResultWithProcessInstance(startProcess, invocation, result)) {
                 return new AsyncResult<ProcessInstance>(pi);

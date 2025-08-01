@@ -90,10 +90,11 @@ public class ProcessEngineTestExtension
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
-    if (processEngineExtension != null)
+    if (processEngineExtension != null) {
       this.processEngine = processEngineExtension.getProcessEngine();
-    else
+    } else {
       this.processEngine = (ProcessEngine) context.getStore(ExtensionContext.Namespace.create("Operaton")).get(ProcessEngine.class);
+    }
   }
 
   @Override

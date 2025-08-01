@@ -128,14 +128,17 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
   @Override
   public Object resolveContextualObject(String key) {
 
-        if ("executionId".equalsIgnoreCase(key))
-            return Context.getBpmnExecutionContext().getExecution().getId();
+    if ("executionId".equalsIgnoreCase(key)) {
+      return Context.getBpmnExecutionContext().getExecution().getId();
+    }
 
-        if ("processInstance".equalsIgnoreCase(key))
-            return Context.getBpmnExecutionContext().getProcessInstance();
+    if ("processInstance".equalsIgnoreCase(key)) {
+      return Context.getBpmnExecutionContext().getProcessInstance();
+    }
 
-        if ("processInstanceId".equalsIgnoreCase(key))
-            return Context.getBpmnExecutionContext().getProcessInstance().getId();
+    if ("processInstanceId".equalsIgnoreCase(key)) {
+      return Context.getBpmnExecutionContext().getProcessInstance().getId();
+    }
 
         return null;
     }
@@ -152,8 +155,9 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
                 String methodName = methodInvocation.getMethod().getName();
 
                 logger.info(() -> "method invocation for " + methodName + ".");
-                if ("toString".equals(methodName))
-                    return "SharedProcessInstance";
+            if ("toString".equals(methodName)) {
+              return "SharedProcessInstance";
+            }
 
 
                 ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();

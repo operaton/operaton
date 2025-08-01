@@ -153,8 +153,9 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   }
 
   public void setAsyncBefore(boolean isAsyncBefore, boolean exclusive) {
-    if (delegateAsyncBeforeUpdate != null)
+    if (delegateAsyncBeforeUpdate != null) {
       delegateAsyncBeforeUpdate.updateAsyncBefore(isAsyncBefore, exclusive);
+    }
     this.isAsyncBefore = isAsyncBefore;
   }
 
@@ -168,8 +169,9 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   }
 
   public void setAsyncAfter(boolean isAsyncAfter, boolean exclusive) {
-    if (delegateAsyncAfterUpdate != null)
+    if (delegateAsyncAfterUpdate != null) {
       delegateAsyncAfterUpdate.updateAsyncAfter(isAsyncAfter, exclusive);
+    }
     this.isAsyncAfter = isAsyncAfter;
   }
 

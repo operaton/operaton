@@ -207,8 +207,9 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     }
     TopicSubscriptionImpl other = (TopicSubscriptionImpl) obj;
     if (topicName == null) {
-      if (other.topicName != null)
+      if (other.topicName != null) {
         return false;
+      }
     } else if (!topicName.equals(other.topicName)) {
       return false;
     }

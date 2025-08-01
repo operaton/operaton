@@ -233,8 +233,9 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   protected CaseExecutionAssert caseExecution(final CaseExecutionQuery query) {
     CaseExecutionAssert caseExecutionAssert = descendantCaseExecution(query);
     CaseExecution caseExecution = caseExecutionAssert.getActual();
-    if (caseExecution != null)
+    if (caseExecution != null) {
       Assertions.assertThat(caseExecution.getParentId()).isEqualTo(actual.getId());
+    }
     return new CaseExecutionAssert(engine, caseExecution);
   }
 
@@ -256,8 +257,9 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    *          to the actual 'parent' CaseExecution)
    */
   protected CaseExecutionAssert descendantCaseExecution(CaseExecutionQuery query) {
-    if (query == null)
+    if (query == null) {
       throw new IllegalArgumentException("Illegal call of caseExecution(query = 'null') - but must not be null!");
+    }
     isNotNull();
     @SuppressWarnings("unchecked")
     A caseExecution = (A) query.singleResult();

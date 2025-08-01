@@ -49,7 +49,9 @@ public class FileUtils {
       }
     } finally {
       try {
-        if (is != null) is.close();
+        if (is != null) {
+          is.close();
+        }
       } finally {
         ; // Cannot handle exception
       }

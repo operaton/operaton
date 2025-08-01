@@ -80,10 +80,10 @@ public class DeployBarTask extends Task {
           // is causing the error. We should show ALL errors and process engine names / resource URL's.
           String message = getErrorMessage(processEngineInfos, processEngineName);
           throw new ProcessEngineException(message);
-        }
-        else
+        } else {
           throw new ProcessEngineException("Could not find a process engine with name '" + processEngineName + "', no engines found. " +
-        	        "Make sure an engine configuration is present on the classpath");
+            "Make sure an engine configuration is present on the classpath");
+        }
       }
       RepositoryService repositoryService = processEngine.getRepositoryService();
 

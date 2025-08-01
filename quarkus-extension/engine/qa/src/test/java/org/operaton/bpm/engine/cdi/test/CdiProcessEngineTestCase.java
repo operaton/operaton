@@ -73,7 +73,9 @@ public class CdiProcessEngineTestCase {
   public void before() {
     Set<String> processEngineNames = BpmPlatform.getProcessEngineService()
         .getProcessEngineNames();
-    if (processEngineNames.size() > 1) throw new RuntimeException("More than one process engines registered");
+    if (processEngineNames.size() > 1) {
+      throw new RuntimeException("More than one process engines registered");
+    }
     processEngine =
         BpmPlatform.getProcessEngineService().getProcessEngine(processEngineNames.stream().findFirst().get());
     Arc.container().requestContext().activate();

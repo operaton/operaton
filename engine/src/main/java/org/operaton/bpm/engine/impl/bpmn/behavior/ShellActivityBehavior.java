@@ -94,16 +94,21 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
     List<String> argList = new ArrayList<>();
     argList.add(commandStr);
 
-    if (arg1Str != null)
+    if (arg1Str != null) {
       argList.add(arg1Str);
-    if (arg2Str != null)
+    }
+    if (arg2Str != null) {
       argList.add(arg2Str);
-    if (arg3Str != null)
+    }
+    if (arg3Str != null) {
       argList.add(arg3Str);
-    if (arg4Str != null)
+    }
+    if (arg4Str != null) {
       argList.add(arg4Str);
-    if (arg5Str != null)
+    }
+    if (arg5Str != null) {
       argList.add(arg5Str);
+    }
 
     ProcessBuilder processBuilder = new ProcessBuilder(argList);
 
@@ -113,8 +118,9 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
         Map<String, String> env = processBuilder.environment();
         env.clear();
       }
-      if (directoryStr != null && !directoryStr.isEmpty())
+      if (directoryStr != null && !directoryStr.isEmpty()) {
         processBuilder.directory(new File(directoryStr));
+      }
 
       Process process = processBuilder.start();
 

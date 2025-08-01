@@ -135,8 +135,9 @@ public enum Element {
     final Map<String, Element> map = new HashMap<String, Element>();
     for (Element element : values()) {
       final String name = element.getLocalName();
-      if (name != null)
+      if (name != null) {
         map.put(name, element);
+      }
     }
     MAP = map;
   }

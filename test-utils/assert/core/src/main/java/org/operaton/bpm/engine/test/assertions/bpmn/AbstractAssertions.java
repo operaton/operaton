@@ -41,8 +41,9 @@ public abstract class AbstractAssertions {
    */
   public static ProcessEngine processEngine() {
     ProcessEngine processEngine = AbstractAssertions.processEngine.get();
-    if (processEngine != null)
+    if (processEngine != null) {
       return processEngine;
+    }
     Map<String, ProcessEngine> processEngines = ProcessEngines.getProcessEngines();
     if (processEngines.size() == 1) {
       processEngine = processEngines.values().iterator().next();

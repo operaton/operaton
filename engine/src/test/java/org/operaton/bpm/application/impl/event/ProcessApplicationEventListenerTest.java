@@ -101,8 +101,9 @@ class ProcessApplicationEventListenerTest {
       public ExecutionListener getExecutionListener() {
         // this process application returns an execution listener
         return execution -> {
-          if (((CoreExecution) execution).getEventSource() instanceof ProcessDefinitionEntity)
+          if (((CoreExecution) execution).getEventSource() instanceof ProcessDefinitionEntity) {
             processDefinitionEventCount.incrementAndGet();
+          }
         };
       }
     };
@@ -127,8 +128,9 @@ class ProcessApplicationEventListenerTest {
       public ExecutionListener getExecutionListener() {
         // this process application returns an execution listener
         return execution -> {
-          if (!(((CoreExecution) execution).getEventSource() instanceof ProcessDefinitionEntity))
+          if (!(((CoreExecution) execution).getEventSource() instanceof ProcessDefinitionEntity)) {
             eventCount.incrementAndGet();
+          }
         };
       }
     };

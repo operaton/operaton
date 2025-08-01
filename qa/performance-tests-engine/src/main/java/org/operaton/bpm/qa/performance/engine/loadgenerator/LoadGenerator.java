@@ -82,9 +82,13 @@ public class LoadGenerator {
 
     timer.cancel();
 
-    if(configuration.isColor()) System.out.print(CLEAR_LINE + ANSI_GREEN);
+    if (configuration.isColor()) {
+      System.out.print(CLEAR_LINE + ANSI_GREEN);
+    }
     System.out.println("Finished generating load.");
-    if(configuration.isColor()) System.out.print(ANSI_RESET);
+    if (configuration.isColor()) {
+      System.out.print(ANSI_RESET);
+    }
 
     executorService.shutdown();
   }
@@ -101,11 +105,15 @@ public class LoadGenerator {
 
     sync.await();
 
-    if(configuration.isColor()) System.out.print(ANSI_GREEN);
+    if (configuration.isColor()) {
+      System.out.print(ANSI_GREEN);
+    }
 
     System.out.println("Done");
 
-    if(configuration.isColor()) System.out.print(ANSI_RESET);
+    if (configuration.isColor()) {
+      System.out.print(ANSI_RESET);
+    }
   }
 
   static class ProgressReporter extends TimerTask {
@@ -129,13 +137,19 @@ public class LoadGenerator {
 
       StringBuilder statusMessage = new StringBuilder();
 
-      if(color) statusMessage.append(CLEAR_LINE + ANSI_YELLOW);
+      if (color) {
+        statusMessage.append(CLEAR_LINE + ANSI_YELLOW);
+      }
 
       statusMessage.append("%6.2f".formatted(progress));
       statusMessage.append("% done");
 
-      if(color) statusMessage.append(ANSI_RESET);
-      if(!color) statusMessage.append("\n");
+      if (color) {
+        statusMessage.append(ANSI_RESET);
+      }
+      if (!color) {
+        statusMessage.append("\n");
+      }
 
       System.out.print(statusMessage);
     }

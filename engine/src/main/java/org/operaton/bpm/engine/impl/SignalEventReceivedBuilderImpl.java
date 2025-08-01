@@ -34,12 +34,12 @@ public class SignalEventReceivedBuilderImpl implements SignalEventReceivedBuilde
   protected final CommandExecutor commandExecutor;
   protected final String signalName;
 
-  protected String executionId = null;
+  protected String executionId;
 
-  protected String tenantId = null;
-  protected boolean isTenantIdSet = false;
+  protected String tenantId;
+  protected boolean isTenantIdSet;
 
-  protected VariableMap variables = null;
+  protected VariableMap variables;
 
   public SignalEventReceivedBuilderImpl(CommandExecutor commandExecutor, String signalName) {
     this.commandExecutor = commandExecutor;

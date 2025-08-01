@@ -363,7 +363,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   public static class ThrowBPMNErrorListener implements TaskListener {
-    public static int invocations = 0;
+    public static int invocations;
 
     @Override
     public void notify(DelegateTask delegateTask) {

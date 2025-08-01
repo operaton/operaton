@@ -52,7 +52,7 @@ public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery
   protected String incidentMessage;
   protected String incidentMessageLike;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
 
   public ExecutionQueryImpl() {

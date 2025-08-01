@@ -29,8 +29,8 @@ public class DiagramEdgeWaypoint implements Serializable {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  private Double x = null;
-  private Double y = null;
+  private Double x;
+  private Double y;
 
   public Double getX() {
     return x;

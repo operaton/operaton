@@ -65,7 +65,7 @@ public class AsyncTaskTest {
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   public static boolean invocation;
-  public static int numInvocations = 0;
+  public static int numInvocations;
 
   ProcessEngineConfigurationImpl processEngineConfiguration;
   RuntimeService runtimeService;

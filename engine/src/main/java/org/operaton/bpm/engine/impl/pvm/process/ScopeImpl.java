@@ -46,7 +46,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected boolean isSubProcessScope = false;
+  protected boolean isSubProcessScope;
 
   /** The activities for which the flow scope is this scope  */
   protected List<ActivityImpl> flowActivities = new ArrayList<>();

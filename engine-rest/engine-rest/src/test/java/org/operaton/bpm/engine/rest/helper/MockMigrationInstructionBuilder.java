@@ -28,7 +28,7 @@ public class MockMigrationInstructionBuilder {
 
   protected List<String> sourceActivityIds;
   protected List<String> targetActivityIds;
-  protected boolean updateEventTrigger = false;
+  protected boolean updateEventTrigger;
 
   public MockMigrationInstructionBuilder sourceActivityIds(List<String> sourceActivityIds) {
     this.sourceActivityIds = sourceActivityIds;

@@ -58,7 +58,7 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
 
   // firstVersion is true, when version == 1 or when
   // this definition does not have any previous definitions
-  protected boolean firstVersion = false;
+  protected boolean firstVersion;
   protected String previousCaseDefinitionId;
 
   public CaseDefinitionEntity() {

@@ -65,7 +65,7 @@ public class ProcessDataContext {
   protected String mdcPropertyTenantId;
   protected String mdcPropertyEngineName;
 
-  protected boolean handleMdc = false;
+  protected boolean handleMdc;
 
   protected ProcessDataStack activityIdStack;
   /**

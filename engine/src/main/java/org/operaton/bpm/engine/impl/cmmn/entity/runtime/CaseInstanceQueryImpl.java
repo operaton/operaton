@@ -50,7 +50,7 @@ public class CaseInstanceQueryImpl extends AbstractVariableQueryImpl<CaseInstanc
   protected String superCaseInstanceId;
   protected String subCaseInstanceId;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
 
   // Not used by end-users, but needed for dynamic ibatis query

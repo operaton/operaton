@@ -55,7 +55,7 @@ public abstract class CoreExecution extends AbstractVariableScope implements Bas
 
   protected String eventName;
   protected CoreModelElement eventSource;
-  protected int listenerIndex = 0;
+  protected int listenerIndex;
   protected boolean skipCustomListeners;
   protected boolean skipIoMapping;
   protected boolean skipSubprocesses;

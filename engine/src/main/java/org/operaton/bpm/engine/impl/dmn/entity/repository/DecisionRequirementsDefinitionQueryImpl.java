@@ -47,11 +47,11 @@ public class DecisionRequirementsDefinitionQueryImpl extends AbstractQuery<Decis
   protected String resourceName;
   protected String resourceNameLike;
   protected Integer version;
-  protected boolean latest = false;
+  protected boolean latest;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
-  protected boolean includeDefinitionsWithoutTenantId = false;
+  protected boolean includeDefinitionsWithoutTenantId;
 
   public DecisionRequirementsDefinitionQueryImpl() {
   }

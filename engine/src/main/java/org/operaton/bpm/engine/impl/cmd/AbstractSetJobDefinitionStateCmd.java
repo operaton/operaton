@@ -37,7 +37,7 @@ public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateC
   protected String processDefinitionKey;
 
   protected String processDefinitionTenantId;
-  protected boolean isProcessDefinitionTenantIdSet = false;
+  protected boolean isProcessDefinitionTenantIdSet;
 
   protected AbstractSetJobDefinitionStateCmd(UpdateJobDefinitionSuspensionStateBuilderImpl builder) {
     super(

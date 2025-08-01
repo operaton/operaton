@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.fail;
  */
 class VariableListenerTest extends CmmnTest {
 
-  protected Map<Object, Object> beans = null;
+  protected Map<Object, Object> beans;
 
   @BeforeEach
   void setUp() {

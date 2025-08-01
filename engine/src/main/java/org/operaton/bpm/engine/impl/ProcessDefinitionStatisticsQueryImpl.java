@@ -29,9 +29,9 @@ public class ProcessDefinitionStatisticsQueryImpl extends AbstractQuery<ProcessD
   implements ProcessDefinitionStatisticsQuery {
 
   protected static final long serialVersionUID = 1L;
-  protected boolean includeFailedJobs = false;
-  protected boolean includeIncidents = false;
-  protected boolean includeRootIncidents = false;
+  protected boolean includeFailedJobs;
+  protected boolean includeIncidents;
+  protected boolean includeRootIncidents;
   protected String includeIncidentsForType;
 
   public ProcessDefinitionStatisticsQueryImpl(CommandExecutor commandExecutor) {

@@ -71,8 +71,8 @@ class XmlValueTest {
   protected String brokenXmlString = "<elementName attrName=attrValue\" />";
 
   protected String variableName = "x";
-  private RuntimeService runtimeService = null;
-  private TaskService taskService = null;
+  private RuntimeService runtimeService;
+  private TaskService taskService;
 
   @RegisterExtension
   DeploymentExtension deploymentExtension = new DeploymentExtension();

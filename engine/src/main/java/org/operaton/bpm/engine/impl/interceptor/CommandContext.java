@@ -117,7 +117,7 @@ public class CommandContext {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected FailedJobCommandFactory failedJobCommandFactory;
 
-  protected JobEntity currentJob = null;
+  protected JobEntity currentJob;
 
   protected List<CommandContextListener> commandContextListeners = new LinkedList<>();
 

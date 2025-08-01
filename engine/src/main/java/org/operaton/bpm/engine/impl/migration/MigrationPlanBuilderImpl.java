@@ -42,8 +42,8 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
   protected String targetProcessDefinitionId;
   protected List<MigrationInstructionImpl> explicitMigrationInstructions;
 
-  protected boolean mapEqualActivities = false;
-  protected boolean updateEventTriggersForGeneratedInstructions = false;
+  protected boolean mapEqualActivities;
+  protected boolean updateEventTriggersForGeneratedInstructions;
   protected VariableMap variables;
 
   public MigrationPlanBuilderImpl(CommandExecutor commandExecutor, String sourceProcessDefinitionId,

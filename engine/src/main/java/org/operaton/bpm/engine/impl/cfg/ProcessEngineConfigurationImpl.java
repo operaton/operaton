@@ -514,7 +514,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * <p>
    * Default value: false; to keep the legacy behaviour backwards compatible.
    */
-  protected volatile boolean jobExecutorAcquireExclusiveOverProcessHierarchies = false;
+  protected volatile boolean jobExecutorAcquireExclusiveOverProcessHierarchies;
 
   // EXTERNAL TASK /////////////////////////////////////////////////////////////
   protected volatile PriorityProvider<ExternalTaskActivityBehavior> externalTaskPriorityProvider;
@@ -575,7 +575,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile Map<String, Class<? extends FormFieldValidator>> customFormFieldValidators;
 
   /** don't throw parsing exceptions for Operaton Forms if set to true*/
-  protected volatile boolean disableStrictOperatonFormParsing = false;
+  protected volatile boolean disableStrictOperatonFormParsing;
 
   protected volatile List<TypedValueSerializer> customPreVariableSerializers;
   protected volatile List<TypedValueSerializer> customPostVariableSerializers;
@@ -584,9 +584,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile boolean implicitVariableUpdateDetectionEnabled = true;
 
   protected volatile String defaultSerializationFormat = Variables.SerializationDataFormats.JAVA.getName();
-  protected volatile boolean javaSerializationFormatEnabled = false;
-  protected volatile String defaultCharsetName = null;
-  protected volatile Charset defaultCharset = null;
+  protected volatile boolean javaSerializationFormatEnabled;
+  protected volatile String defaultCharsetName;
+  protected volatile Charset defaultCharset;
 
   protected volatile ExpressionManager expressionManager;
   protected volatile ElProvider dmnElProvider;
@@ -597,14 +597,14 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile ScriptFactory scriptFactory;
   protected volatile ScriptEngineResolver scriptEngineResolver;
   protected volatile String scriptEngineNameJavaScript;
-  protected volatile boolean autoStoreScriptVariables = false;
+  protected volatile boolean autoStoreScriptVariables;
   protected volatile boolean enableScriptCompilation = true;
   protected volatile boolean enableScriptEngineCaching = true;
   protected volatile boolean enableFetchScriptEngineFromProcessApplication = true;
-  protected volatile boolean enableScriptEngineLoadExternalResources = false;
-  protected volatile boolean enableScriptEngineNashornCompatibility = false;
+  protected volatile boolean enableScriptEngineLoadExternalResources;
+  protected volatile boolean enableScriptEngineNashornCompatibility;
   protected volatile boolean configureScriptEngineHostAccess = true;
-  protected volatile boolean skipIsolationLevelCheck = false;
+  protected volatile boolean skipIsolationLevelCheck;
 
   /**
    * When set to false, the following behavior changes:
@@ -662,12 +662,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * Enable DMN FEEL legacy behavior
    */
-  protected volatile boolean dmnFeelEnableLegacyBehavior = false;
+  protected volatile boolean dmnFeelEnableLegacyBehavior;
 
   /**
    * Controls whether blank DMN table outputs are swallowed or returned as {@code null}.
    */
-  protected volatile boolean dmnReturnBlankTableOutputAsNull = false;
+  protected volatile boolean dmnReturnBlankTableOutputAsNull;
 
   protected volatile HistoryLevel historyLevel;
 
@@ -710,9 +710,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * doesn't return that correctly, see https://jira.codehaus.org/browse/ACT-1220,
    * https://jira.codehaus.org/browse/ACT-1062
    */
-  protected volatile String databaseSchema = null;
+  protected volatile String databaseSchema;
 
-  protected volatile boolean isCreateDiagramOnDeploy = false;
+  protected volatile boolean isCreateDiagramOnDeploy;
 
   protected volatile ProcessApplicationManager processApplicationManager;
 
@@ -783,7 +783,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * @see CompositeIncidentHandler
    * @see #initIncidentHandlers
    */
-  protected volatile boolean isCompositeIncidentHandlersEnabled = false;
+  protected volatile boolean isCompositeIncidentHandlersEnabled;
 
   /**
    * If true the process engine will attempt to acquire an exclusive lock before
@@ -800,7 +800,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * Allows setting whether the process engine should try reusing the first level entity cache.
    * Default setting is false, enabling it improves performance of asynchronous continuations.
    */
-  protected volatile boolean isDbEntityCacheReuseEnabled = false;
+  protected volatile boolean isDbEntityCacheReuseEnabled;
 
   protected volatile boolean isInvokeCustomVariableListeners = true;
 
@@ -839,13 +839,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * handling of expressions submitted via API; can be used as guards against remote code execution
    */
-  protected volatile boolean enableExpressionsInAdhocQueries = false;
+  protected volatile boolean enableExpressionsInAdhocQueries;
   protected volatile boolean enableExpressionsInStoredQueries = true;
 
   /**
    * If false, disables XML eXternal Entity (XXE) Processing. This provides protection against XXE Processing attacks.
    */
-  protected volatile boolean enableXxeProcessing = false;
+  protected volatile boolean enableXxeProcessing;
 
   /**
    * If true, user operation log entries are only written if there is an
@@ -866,15 +866,15 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    */
   protected volatile long logEntriesPerSyncOperationLimit = 1L;
 
-  protected volatile boolean disableStrictCallActivityValidation = false;
+  protected volatile boolean disableStrictCallActivityValidation;
 
-  protected volatile boolean isBpmnStacktraceVerbose = false;
+  protected volatile boolean isBpmnStacktraceVerbose;
 
   protected volatile boolean forceCloseMybatisConnectionPool = true;
 
-  protected volatile TenantIdProvider tenantIdProvider = null;
+  protected volatile TenantIdProvider tenantIdProvider;
 
-  protected volatile List<CommandChecker> commandCheckers = null;
+  protected volatile List<CommandChecker> commandCheckers;
 
   protected volatile List<String> adminGroups;
 
@@ -903,9 +903,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * Historic instance permissions are disabled by default
    */
-  protected volatile boolean enableHistoricInstancePermissions = false;
+  protected volatile boolean enableHistoricInstancePermissions;
 
-  protected volatile boolean isUseSharedSqlSessionFactory = false;
+  protected volatile boolean isUseSharedSqlSessionFactory;
 
   //History cleanup configuration
   protected volatile String historyCleanupBatchWindowStartTime;
@@ -1000,7 +1000,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile int loginDelayBase = 3;
 
   // webapps logging
-  protected volatile boolean webappsAuthenticationLoggingEnabled = false;
+  protected volatile boolean webappsAuthenticationLoggingEnabled;
 
   // max results limit
   protected volatile int queryMaxResultsLimit = Integer.MAX_VALUE;
@@ -1052,7 +1052,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile ExceptionCodeProvider builtinExceptionCodeProvider;
 
   /** Controls whether the time cycle is re-evaluated when due. */
-  protected volatile boolean reevaluateTimeCycleWhenDue = false;
+  protected volatile boolean reevaluateTimeCycleWhenDue;
 
   /**
    * Size of batch in which removal time data will be updated. {@link ProcessSetRemovalTimeJobHandler#MAX_CHUNK_SIZE} must be respected.

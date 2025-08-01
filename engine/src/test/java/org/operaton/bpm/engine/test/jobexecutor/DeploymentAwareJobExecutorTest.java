@@ -61,7 +61,7 @@ class DeploymentAwareJobExecutorTest {
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   
-  Object otherProcessEngine = null; // "ProcessEngine" but untyped to protect from ProcessEngineExtension
+  Object otherProcessEngine; // "ProcessEngine" but untyped to protect from ProcessEngineExtension
 
   ProcessEngine processEngine;
   ProcessEngineConfigurationImpl processEngineConfiguration;

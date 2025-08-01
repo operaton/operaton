@@ -54,7 +54,7 @@ public class DomXmlElement extends SpinXmlElement {
 
   private static final DomXmlLogger LOG = DomXmlLogger.XML_DOM_LOGGER;
 
-  protected static Transformer cachedTransformer = null;
+  protected static Transformer cachedTransformer;
 
   protected static XPathFactory cachedXPathFactory;
 

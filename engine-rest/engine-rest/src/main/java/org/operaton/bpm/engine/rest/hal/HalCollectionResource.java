@@ -21,7 +21,7 @@ package org.operaton.bpm.engine.rest.hal;
  */
 public abstract class HalCollectionResource<T extends HalCollectionResource<?>> extends HalResource<T> {
 
-  protected long count = 0;
+  protected long count;
 
   public long getCount() {
     return count;

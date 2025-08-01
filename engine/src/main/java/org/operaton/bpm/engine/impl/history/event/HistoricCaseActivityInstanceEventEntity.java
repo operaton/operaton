@@ -65,7 +65,7 @@ public class HistoricCaseActivityInstanceEventEntity extends HistoricScopeInstan
   protected String tenantId;
 
   /** the flag whether this case activity is required */
-  protected boolean required = false;
+  protected boolean required;
 
   // getters and setters //////////////////////////////////////////////////////
 

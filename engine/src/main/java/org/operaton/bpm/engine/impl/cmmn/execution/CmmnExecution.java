@@ -67,7 +67,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   /** current activity */
   protected transient CmmnActivity activity;
 
-  protected boolean required = false;
+  protected boolean required;
 
   protected int previousState;
 
@@ -82,7 +82,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
    * {@link CmmnExecution} is in state {@link CaseExecutionState#NEW}
    * to note that an entry criterion is satisfied.
    */
-  protected boolean entryCriterionSatisfied = false;
+  protected boolean entryCriterionSatisfied;
 
   protected CmmnExecution() {
   }

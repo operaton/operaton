@@ -44,9 +44,9 @@ public class EventSubscriptionQueryImpl
   protected String processInstanceId;
   protected String activityId;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
-  protected boolean includeEventSubscriptionsWithoutTenantId = false;
+  protected boolean includeEventSubscriptionsWithoutTenantId;
 
   public EventSubscriptionQueryImpl() {
   }

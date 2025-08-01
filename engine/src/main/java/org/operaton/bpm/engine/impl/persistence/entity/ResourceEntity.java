@@ -35,7 +35,7 @@ public class ResourceEntity implements Serializable, DbEntity, Resource {
   protected String name;
   protected byte[] bytes;
   protected String deploymentId;
-  protected boolean generated = false;
+  protected boolean generated;
   protected String tenantId;
   protected Integer type;
   protected Date createTime;

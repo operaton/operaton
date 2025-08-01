@@ -51,8 +51,8 @@ public abstract class JobExecutor {
   protected RejectedJobsHandler rejectedJobsHandler;
   protected Thread jobAcquisitionThread;
 
-  protected boolean isAutoActivate = false;
-  protected boolean isActive = false;
+  protected boolean isAutoActivate;
+  protected boolean isActive;
 
   protected int maxJobsPerAcquisition = 3;
 
@@ -62,8 +62,8 @@ public abstract class JobExecutor {
   protected long maxWait = 60 * 1000L;
 
   // backoff when job acquisition fails to lock all jobs
-  protected int backoffTimeInMillis = 0;
-  protected long maxBackoff = 0;
+  protected int backoffTimeInMillis;
+  protected long maxBackoff;
 
   /**
    * The number of job acquisition cycles without locking failures

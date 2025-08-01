@@ -54,9 +54,9 @@ public class ProcessInstanceModificationBuilderImpl implements ProcessInstanceMo
   protected String processInstanceId;
   protected String modificationReason;
 
-  protected boolean skipCustomListeners = false;
-  protected boolean skipIoMappings = false;
-  protected boolean externallyTerminated = false;
+  protected boolean skipCustomListeners;
+  protected boolean skipIoMappings;
+  protected boolean externallyTerminated;
   protected String annotation;
 
   protected List<AbstractProcessInstanceModificationCommand> operations = new ArrayList<>();

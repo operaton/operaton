@@ -155,9 +155,9 @@ public class AuthorizationManager extends AbstractManager {
    * It is used to only check authorizations for groups for which authorizations exist. In other words,
    * if for a given group no authorization exists in the DB, then auth checks are not performed for this group.
    */
-  protected Set<String> availableAuthorizedGroupIds = null;
+  protected Set<String> availableAuthorizedGroupIds;
 
-  protected Boolean isRevokeAuthCheckUsed = null;
+  protected Boolean isRevokeAuthCheckUsed;
 
   public PermissionCheckBuilder newPermissionCheckBuilder() {
     return new PermissionCheckBuilder();

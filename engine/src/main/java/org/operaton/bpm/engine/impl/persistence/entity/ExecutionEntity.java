@@ -135,9 +135,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    */
   protected transient CaseExecutionEntity subCaseInstance;
 
-  protected boolean shouldQueryForSubprocessInstance = false;
+  protected boolean shouldQueryForSubprocessInstance;
 
-  protected boolean shouldQueryForSubCaseInstance = false;
+  protected boolean shouldQueryForSubCaseInstance;
 
   // associated entities /////////////////////////////////////////////////////
 

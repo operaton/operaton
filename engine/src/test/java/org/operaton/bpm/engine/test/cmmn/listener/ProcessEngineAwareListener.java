@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
  */
 public class ProcessEngineAwareListener implements CaseVariableListener {
 
-  protected static boolean foundValidRuntimeService = false;
+  protected static boolean foundValidRuntimeService;
 
   @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {

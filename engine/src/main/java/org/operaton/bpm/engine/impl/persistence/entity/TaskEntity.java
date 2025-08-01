@@ -132,7 +132,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
    */
   protected String taskState;
 
-  protected boolean isIdentityLinksInitialized = false;
+  protected boolean isIdentityLinksInitialized;
   protected transient List<IdentityLinkEntity> taskIdentityLinkEntities = new ArrayList<>();
 
   // execution
@@ -159,7 +159,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected String deleteReason;
 
   protected String eventName;
-  protected boolean isFormKeyInitialized = false;
+  protected boolean isFormKeyInitialized;
   protected String formKey;
   protected transient OperatonFormRef operatonFormRef;
   protected boolean attachmentExists;
@@ -170,7 +170,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   = new VariableStore<>(this, new TaskEntityReferencer(this));
 
 
-  protected transient boolean skipCustomListeners = false;
+  protected transient boolean skipCustomListeners;
 
   /**
    * contains all changed properties of this entity

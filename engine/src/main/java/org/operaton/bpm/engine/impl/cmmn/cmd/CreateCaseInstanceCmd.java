@@ -46,7 +46,7 @@ public class CreateCaseInstanceCmd implements Command<CaseInstance>, Serializabl
   protected String businessKey;
 
   protected String caseDefinitionTenantId;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
 
   public CreateCaseInstanceCmd(CaseInstanceBuilderImpl builder) {
     this.caseDefinitionKey = builder.getCaseDefinitionKey();

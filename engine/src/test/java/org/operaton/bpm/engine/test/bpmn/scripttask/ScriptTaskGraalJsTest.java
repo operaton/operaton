@@ -46,7 +46,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   private static final String GRAALJS = "graal.js";
 
   protected ScriptEngineResolver defaultScriptEngineResolver;
-  protected boolean spinEnabled = false;
+  protected boolean spinEnabled;
 
   @BeforeEach
   void setup() {

@@ -31,7 +31,7 @@ public class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitio
   protected String processDefinitionKey;
 
   protected String processDefinitionTenantId;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
 
   protected final boolean checkReadPermission;
 

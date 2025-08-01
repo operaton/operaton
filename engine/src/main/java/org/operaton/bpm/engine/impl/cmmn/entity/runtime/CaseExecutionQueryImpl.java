@@ -49,7 +49,7 @@ public class CaseExecutionQueryImpl extends AbstractVariableQueryImpl<CaseExecut
   protected CaseExecutionState state;
   protected Boolean required = false;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
 
   // Not used by end-users, but needed for dynamic ibatis query

@@ -37,8 +37,8 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
 
   protected Map<ModelElementInstance, List<ValidationResult>> collectedResults = new HashMap<>();
 
-  protected int errorCount = 0;
-  protected int warningCount = 0;
+  protected int errorCount;
+  protected int warningCount;
 
   @Override
   public void addError(int code, String message) {

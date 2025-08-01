@@ -26,7 +26,7 @@ public class SpinConfiguration extends AbstractProcessEnginePlugin {
   protected static final String XXE_PROPERTY = "xxe-processing";
   protected static final String SP_PROPERTY = "secure-processing";
 
-  protected boolean enableXxeProcessing = false;
+  protected boolean enableXxeProcessing;
   protected boolean enableSecureXmlProcessing = true;
 
   public boolean isEnableXxeProcessing() {

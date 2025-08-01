@@ -68,7 +68,7 @@ public class ProcessEngines {
 
   public static final String NAME_DEFAULT = "default";
 
-  private static volatile boolean isInitialized = false;
+  private static volatile boolean isInitialized;
   private static volatile Map<String, ProcessEngine> processEngines = new ConcurrentHashMap<>();
   private static final Map<String, ProcessEngineInfo> PROCESS_ENGINE_INFOS_BY_NAME = new ConcurrentHashMap<>();
   private static final Map<String, ProcessEngineInfo> PROCESS_ENGINE_INFOS_BY_RESOURCE_URL = new ConcurrentHashMap<>();

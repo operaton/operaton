@@ -144,7 +144,7 @@ public class FailedJobListenerWithRetriesTest {
 
   public class OLEFoxJobRetryCmd extends DefaultJobRetryCmd {
 
-    private int countRuns = 0;
+    private int countRuns;
 
     public OLEFoxJobRetryCmd(String jobId, Throwable exception) {
       super(jobId, exception);

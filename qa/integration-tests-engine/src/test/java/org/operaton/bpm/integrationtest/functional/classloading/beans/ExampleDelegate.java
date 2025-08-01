@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 public class ExampleDelegate implements JavaDelegate {
 
-  private static boolean invoked = false;
+  private static boolean invoked;
 
   @Override
   public void execute(DelegateExecution arg0) throws Exception {

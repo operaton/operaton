@@ -32,8 +32,8 @@ import java.util.concurrent.Callable;
 @SuppressWarnings("unused")
 public class PostDeployRegistrationPa extends SpringProcessApplication {
 
-  protected boolean isPostDeployInvoked = false;
-  protected boolean isPreUndeployInvoked = false;
+  protected boolean isPostDeployInvoked;
+  protected boolean isPreUndeployInvoked;
   protected String deploymentId;
 
   @PostDeploy
@@ -70,7 +70,7 @@ public class PostDeployRegistrationPa extends SpringProcessApplication {
 
   // customization of Process Application for unit test ////////////////////////////
 
-  protected boolean isInvoked = false;
+  protected boolean isInvoked;
 
   @Override
   public void start() {

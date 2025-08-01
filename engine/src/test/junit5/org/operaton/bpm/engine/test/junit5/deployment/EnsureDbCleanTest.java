@@ -72,7 +72,7 @@ public class EnsureDbCleanTest {
   @EnabledIf("isEnabled")
   public static class ClassUnderTest {
 
-    private static boolean isEnabled = false;
+    private static boolean isEnabled;
 
     public static boolean isEnabled() {
       return isEnabled;

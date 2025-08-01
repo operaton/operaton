@@ -41,7 +41,7 @@ public class MetricsCollectionTask extends TimerTask {
 
   protected MetricsRegistry metricsRegistry;
   protected CommandExecutor commandExecutor;
-  protected String reporterId = null;
+  protected String reporterId;
 
   public MetricsCollectionTask(MetricsRegistry metricsRegistry, CommandExecutor commandExecutor) {
     this.metricsRegistry = metricsRegistry;

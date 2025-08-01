@@ -62,11 +62,11 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected String businessKey;
   protected String[] businessKeyIn;
   protected String businessKeyLike;
-  protected boolean finished = false;
-  protected boolean unfinished = false;
-  protected boolean withJobsRetrying = false;
-  protected boolean withIncidents = false;
-  protected boolean withRootIncidents = false;
+  protected boolean finished;
+  protected boolean unfinished;
+  protected boolean withJobsRetrying;
+  protected boolean withIncidents;
+  protected boolean withRootIncidents;
   protected String incidentType;
   protected String incidentStatus;
   protected String incidentMessage;
@@ -101,7 +101,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected String caseInstanceId;
 
   protected List<HistoricProcessInstanceQueryImpl> queries = new ArrayList<>(Collections.singletonList(this));
-  protected boolean isOrQueryActive = false;
+  protected boolean isOrQueryActive;
 
   protected Map<String, Set<QueryVariableValue>> queryVariableNameToValuesMap = new HashMap<>();
 

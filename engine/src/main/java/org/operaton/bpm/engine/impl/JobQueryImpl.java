@@ -73,9 +73,9 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
   protected boolean noRetriesLeft;
   protected SuspensionState suspensionState;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
-  protected boolean includeJobsWithoutTenantId = false;
+  protected boolean includeJobsWithoutTenantId;
 
   public JobQueryImpl() {
   }

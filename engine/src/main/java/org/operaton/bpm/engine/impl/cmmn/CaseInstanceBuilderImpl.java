@@ -53,7 +53,7 @@ public class CaseInstanceBuilderImpl implements CaseInstanceBuilder {
   protected VariableMap variables;
 
   protected String caseDefinitionTenantId;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
 
   public CaseInstanceBuilderImpl(CommandExecutor commandExecutor, String caseDefinitionKey, String caseDefinitionId) {
     this(caseDefinitionKey, caseDefinitionId);

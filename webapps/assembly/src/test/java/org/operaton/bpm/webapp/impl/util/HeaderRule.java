@@ -42,7 +42,7 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
 
   private final Server server = new Server(SERVER_PORT);
   private final WebAppContext webAppContext = new WebAppContext();
-  private HttpURLConnection connection = null;
+  private HttpURLConnection connection;
 
   @Override
   public void beforeEach(ExtensionContext context) {

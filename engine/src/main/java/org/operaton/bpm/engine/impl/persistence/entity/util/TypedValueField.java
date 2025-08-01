@@ -59,7 +59,7 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
 
   protected final ValueFields valueFields;
 
-  protected boolean notifyOnImplicitUpdates = false;
+  protected boolean notifyOnImplicitUpdates;
   protected List<TypedValueUpdateListener> updateListeners;
 
   public TypedValueField(ValueFields valueFields, boolean notifyOnImplicitUpdates) {

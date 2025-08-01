@@ -128,7 +128,7 @@ class DefaultUserPermissionNameForTaskCfgTest {
 
   static class TestProcessEngineCfg extends StandaloneInMemProcessEngineConfiguration {
 
-    boolean initMethodCalled = false;
+    boolean initMethodCalled;
 
     @Override
     public void initDefaultUserPermissionForTask() {

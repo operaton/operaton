@@ -73,9 +73,9 @@ public class LdapTestEnvironment {
   protected String configFilePath = "ldap.properties";
   protected File workingDirectory = Files.newTemporaryFolder();
 
-  private int numberOfUsersCreated = 0;
-  private int numberOfGroupsCreated = 0;
-  private int numberOfRolesCreated = 0;
+  private int numberOfUsersCreated;
+  private int numberOfGroupsCreated;
+  private int numberOfRolesCreated;
 
   private final int numberOfUsersCreatedInBerkeleyOffice = 0;
 

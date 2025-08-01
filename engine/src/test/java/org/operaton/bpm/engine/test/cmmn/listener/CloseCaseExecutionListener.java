@@ -31,7 +31,7 @@ public class CloseCaseExecutionListener implements CaseExecutionListener, Serial
   @Serial private static final long serialVersionUID = 1L;
 
   protected static String event;
-  protected static int counter = 0;
+  protected static int counter;
   protected static String onCaseExecutionId;
 
   @Override

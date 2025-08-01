@@ -34,10 +34,10 @@ public class PerfTestConfiguration {
   protected int numberOfRuns = 1000;
   protected String databaseName = "";
 
-  protected String testWatchers = null;
+  protected String testWatchers;
   protected String historyLevel;
 
-  protected List<String> watchActivities = null;
+  protected List<String> watchActivities;
 
   protected Date startTime;
 

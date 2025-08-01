@@ -27,10 +27,10 @@ import org.operaton.bpm.client.task.ExternalTaskService;
 
 public class RecordingExternalTaskHandler implements ExternalTaskHandler {
 
-  protected boolean failed = false;
+  protected boolean failed;
   protected EngineException exception;
   protected List<ExternalTask> handledTasks = Collections.synchronizedList(new ArrayList<>());
-  protected int nextTaskHandler = 0;
+  protected int nextTaskHandler;
   protected final ExternalTaskHandler[] taskHandlers;
 
   public RecordingExternalTaskHandler() {

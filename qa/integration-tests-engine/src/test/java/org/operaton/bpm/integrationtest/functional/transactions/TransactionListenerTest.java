@@ -107,7 +107,7 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
 
   protected static class TestTransactionListener implements TransactionListener {
 
-    protected volatile boolean invoked = false;
+    protected volatile boolean invoked;
 
     @Override
     public void execute(CommandContext commandContext) {

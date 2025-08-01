@@ -29,8 +29,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class ProcessInstanceModificationDto {
 
-  protected boolean skipCustomListeners = false;
-  protected boolean skipIoMappings = false;
+  protected boolean skipCustomListeners;
+  protected boolean skipIoMappings;
   protected List<ProcessInstanceModificationInstructionDto> instructions;
   protected String annotation;
 

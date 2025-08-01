@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 public class ToUpperCaseSetterInjected implements JavaDelegate {
 
   private Expression text;
-  private boolean setterInvoked = false;
+  private boolean setterInvoked;
 
   @Override
   public void execute(DelegateExecution execution) {

@@ -72,13 +72,13 @@ public class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
   protected int backoffLevel;
   protected int maxBackoffLevel;
   protected long maxBackoffWaitTime;
-  protected boolean applyJitter = false;
+  protected boolean applyJitter;
 
   /*
    * Keeping a history of recent acquisitions without locking failure
    * for backoff level decrease
    */
-  protected int numAcquisitionsWithoutLockingFailure = 0;
+  protected int numAcquisitionsWithoutLockingFailure;
   protected int backoffDecreaseThreshold;
 
   protected int baseNumJobsToAcquire;
@@ -89,7 +89,7 @@ public class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
    * Backing off when the execution resources (queue) are saturated
    * in order to not busy wait for free resources
    */
-  protected boolean executionSaturated = false;
+  protected boolean executionSaturated;
   protected long executionSaturationWaitTime = DEFAULT_EXECUTION_SATURATION_WAIT_TIME;
 
   public BackoffJobAcquisitionStrategy(

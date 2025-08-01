@@ -17,7 +17,7 @@ import org.junit.jupiter.engine.extension.ExtensionRegistry;
 
 public class CustomParameterResolver implements BeforeEachMethodAdapter, ParameterResolver {
 
-  private ParameterResolver parameterisedTestParameterResolver = null;
+  private ParameterResolver parameterisedTestParameterResolver;
 
   @Override
   public void invokeBeforeEachMethod(ExtensionContext context, ExtensionRegistry registry)

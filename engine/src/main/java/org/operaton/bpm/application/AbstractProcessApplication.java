@@ -52,7 +52,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
 
   protected VariableSerializers variableSerializers;
 
-  protected boolean isDeployed = false;
+  protected boolean isDeployed;
 
   protected String defaultDeployToEngineName = ProcessEngines.NAME_DEFAULT;
 

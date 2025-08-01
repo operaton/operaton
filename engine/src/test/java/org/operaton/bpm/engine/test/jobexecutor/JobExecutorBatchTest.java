@@ -152,8 +152,8 @@ class JobExecutorBatchTest {
 
   public class CountingJobExecutor extends JobExecutor {
 
-    public boolean recordStarted = false;
-    public long jobsAdded = 0;
+    public boolean recordStarted;
+    public long jobsAdded;
 
     @Override
     public boolean isActive() {

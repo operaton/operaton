@@ -59,7 +59,7 @@ public class ProcessEngineTestCase extends TestCase {
 
   protected String configurationResource = "operaton.cfg.xml";
   protected String configurationResourceCompat = "activiti.cfg.xml";
-  protected String deploymentId = null;
+  protected String deploymentId;
 
   protected ProcessEngine processEngine;
   protected RepositoryService repositoryService;
@@ -75,7 +75,7 @@ public class ProcessEngineTestCase extends TestCase {
   protected AuthorizationService authorizationService;
   protected CaseService caseService;
 
-  protected boolean skipTest = false;
+  protected boolean skipTest;
 
   /** uses 'operaton.cfg.xml' as it's configuration resource */
   public ProcessEngineTestCase() {

@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 class IntermediateNoneEventTest {
 
-  private static boolean listenerExcecuted = false;
+  private static boolean listenerExcecuted;
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

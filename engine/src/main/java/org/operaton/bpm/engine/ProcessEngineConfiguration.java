@@ -206,12 +206,12 @@ public abstract class ProcessEngineConfiguration {
   protected int idBlockSize = 100;
   protected String history = HISTORY_DEFAULT;
   protected boolean jobExecutorActivate;
-  protected boolean jobExecutorDeploymentAware = false;
-  protected boolean jobExecutorPreferTimerJobs = false;
-  protected boolean jobExecutorAcquireByDueDate = false;
-  protected boolean jobExecutorAcquireByPriority = false;
+  protected boolean jobExecutorDeploymentAware;
+  protected boolean jobExecutorPreferTimerJobs;
+  protected boolean jobExecutorAcquireByDueDate;
+  protected boolean jobExecutorAcquireByPriority;
 
-  protected boolean ensureJobDueDateNotNull = false;
+  protected boolean ensureJobDueDateNotNull;
   protected boolean producePrioritizedJobs = true;
   protected boolean producePrioritizedExternalTasks = true;
 
@@ -226,7 +226,7 @@ public abstract class ProcessEngineConfiguration {
   protected String mailServerUsername; // by default no name and password are provided, which
   protected String mailServerPassword; // means no authentication for mail server
   protected int mailServerPort = 25;
-  protected boolean useTLS = false;
+  protected boolean useTLS;
   protected String mailServerDefaultFrom = "operaton@localhost";
 
   protected String databaseType;
@@ -237,19 +237,19 @@ public abstract class ProcessEngineConfiguration {
   protected String jdbcUrl = "jdbc:h2:tcp://localhost/activiti";
   protected String jdbcUsername = "sa";
   protected String jdbcPassword = "";
-  protected String dataSourceJndiName = null;
+  protected String dataSourceJndiName;
   protected int jdbcMaxActiveConnections;
   protected int jdbcMaxIdleConnections;
   protected int jdbcMaxCheckoutTime;
   protected int jdbcMaxWaitTime;
-  protected boolean jdbcPingEnabled = false;
-  protected String jdbcPingQuery = null;
+  protected boolean jdbcPingEnabled;
+  protected String jdbcPingQuery;
   protected int jdbcPingConnectionNotUsedFor;
   protected DataSource dataSource;
   protected SchemaOperationsCommand schemaOperationsCommand = new SchemaOperationsProcessEngineBuild();
   protected ProcessEngineBootstrapCommand bootstrapCommand = new BootstrapEngineCommand();
   protected HistoryLevelSetupCommand historyLevelCommand = new HistoryLevelSetupCommand();
-  protected boolean transactionsExternallyManaged = false;
+  protected boolean transactionsExternallyManaged;
   /** the number of seconds the jdbc driver will wait for a response from the database */
   protected Integer jdbcStatementTimeout;
   protected boolean jdbcBatchProcessing = true;
@@ -270,7 +270,7 @@ public abstract class ProcessEngineConfiguration {
    * switch for controlling whether the process engine performs authorization checks.
    * The default value is false.
    */
-  protected boolean authorizationEnabled = false;
+  protected boolean authorizationEnabled;
 
   /**
    * Provides the default task permission for the user related to a task
@@ -295,7 +295,7 @@ public abstract class ProcessEngineConfiguration {
    * <p>The default value is <code>false</code>.</p>
    *
    */
-  protected boolean authorizationEnabledForCustomCode = false;
+  protected boolean authorizationEnabledForCustomCode;
 
   /**
    * If the value of this flag is set <code>true</code> then the process engine
@@ -354,7 +354,7 @@ public abstract class ProcessEngineConfiguration {
    *
    * <p>The default value is <code>false</code>.</p>
    */
-  protected boolean enableExceptionsAfterUnhandledBpmnError = false;
+  protected boolean enableExceptionsAfterUnhandledBpmnError;
 
   /**
    * If the value of this flag is set to <code>false</code>, {@link OptimisticLockingException}s
@@ -373,7 +373,7 @@ public abstract class ProcessEngineConfiguration {
    * READ_VARIABLE on Historic Task Instance resource
    * will be required to fetch variables when the authorizations are enabled.
    */
-  protected boolean enforceSpecificVariablePermission = false;
+  protected boolean enforceSpecificVariablePermission;
 
   /**
    * Specifies which permissions will not be taken into account in the
@@ -395,7 +395,7 @@ public abstract class ProcessEngineConfiguration {
    * If the job does not have any retries left, the exception will still be logged
    * on logging level WARN.
    */
-  protected boolean enableReducedJobExceptionLogging = false;
+  protected boolean enableReducedJobExceptionLogging;
 
   /** Specifies which classes are allowed for deserialization */
   protected String deserializationAllowedClasses;
@@ -407,7 +407,7 @@ public abstract class ProcessEngineConfiguration {
   protected DeserializationTypeValidator deserializationTypeValidator;
 
   /** Indicates whether type validation should be done before deserialization */
-  protected boolean deserializationTypeValidationEnabled = false;
+  protected boolean deserializationTypeValidationEnabled;
 
   /** An unique installation identifier */
   protected String installationId;
@@ -416,7 +416,7 @@ public abstract class ProcessEngineConfiguration {
    * On failing activities we can skip output mapping. This might be helpful if output mapping uses variables that might not
    * be available on failure (e.g. with external tasks or RPA tasks).
    */
-  protected boolean skipOutputMappingOnCanceledActivities = false;
+  protected boolean skipOutputMappingOnCanceledActivities;
 
   /** @deprecated Use one of the static createXxxx methods instead */
   @Deprecated(forRemoval = true, since = "1.0")

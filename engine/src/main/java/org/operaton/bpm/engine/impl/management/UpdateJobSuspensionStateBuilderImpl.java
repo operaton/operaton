@@ -44,7 +44,7 @@ public class UpdateJobSuspensionStateBuilderImpl
   protected String processDefinitionId;
 
   protected String processDefinitionTenantId;
-  protected boolean isProcessDefinitionTenantIdSet = false;
+  protected boolean isProcessDefinitionTenantIdSet;
 
   public UpdateJobSuspensionStateBuilderImpl(CommandExecutor commandExecutor) {
     this.commandExecutor = commandExecutor;

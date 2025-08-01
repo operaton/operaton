@@ -40,9 +40,9 @@ public class AtomicOperationInvocation {
   protected boolean performAsync;
 
   // for logging
-  protected String applicationContextName = null;
-  protected String activityId = null;
-  protected String activityName = null;
+  protected String applicationContextName;
+  protected String activityId;
+  protected String activityName;
 
   public AtomicOperationInvocation(AtomicOperation operation, ExecutionEntity execution, boolean performAsync) {
     init(operation, execution, performAsync);

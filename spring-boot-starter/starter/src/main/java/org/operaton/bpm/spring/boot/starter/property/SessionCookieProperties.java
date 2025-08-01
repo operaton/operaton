@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class SessionCookieProperties {
 
-  protected boolean enableSecureCookie = false;
+  protected boolean enableSecureCookie;
   protected boolean enableSameSiteCookie = true;
   protected String sameSiteCookieOption;
   protected String sameSiteCookieValue;

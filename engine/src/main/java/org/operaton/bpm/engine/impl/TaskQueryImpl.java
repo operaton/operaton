@@ -121,7 +121,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected String owner;
   protected Boolean unassigned;
   protected Boolean assigned;
-  protected boolean noDelegationState = false;
+  protected boolean noDelegationState;
   protected DelegationState delegationState;
   protected String candidateUser;
   protected String candidateGroup;
@@ -157,19 +157,19 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected Date dueAfter;
   protected Date followUpDate;
   protected Date followUpBefore;
-  protected boolean followUpNullAccepted=false;
+  protected boolean followUpNullAccepted;
   protected Date followUpAfter;
-  protected boolean excludeSubtasks = false;
+  protected boolean excludeSubtasks;
   protected SuspensionState suspensionState;
-  protected boolean initializeFormKeys = false;
-  protected boolean taskNameCaseInsensitive = false;
+  protected boolean initializeFormKeys;
+  protected boolean taskNameCaseInsensitive;
 
   protected Boolean variableNamesIgnoreCase;
   protected Boolean variableValuesIgnoreCase;
 
   protected String parentTaskId;
-  protected boolean isWithoutTenantId = false;
-  protected boolean isWithoutDueDate = false;
+  protected boolean isWithoutTenantId;
+  protected boolean isWithoutDueDate;
 
   protected String[] tenantIds;
   // case management /////////////////////////////
@@ -187,7 +187,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   // or query /////////////////////////////
   protected List<TaskQueryImpl> queries = new ArrayList<>(List.of(this));
-  protected boolean isOrQueryActive = false;
+  protected boolean isOrQueryActive;
   protected boolean withCommentAttachmentInfo;
 
   public TaskQueryImpl() {

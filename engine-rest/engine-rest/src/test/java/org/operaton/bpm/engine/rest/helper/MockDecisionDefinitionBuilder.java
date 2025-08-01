@@ -23,18 +23,18 @@ import org.operaton.bpm.engine.repository.DecisionDefinition;
 
 public class MockDecisionDefinitionBuilder {
 
-  private String id = null;
-  private String key = null;
-  private String category = null;
-  private String name = null;
-  private int version = 0;
-  private String resource = null;
-  private String diagramResource = null;
-  private String deploymentId = null;
-  private String tenantId = null;
-  private String decisionRequirementsDefinitionId = null;
-  private String decisionRequirementsDefinitionKey = null;
-  private String versionTag = null;
+  private String id;
+  private String key;
+  private String category;
+  private String name;
+  private int version;
+  private String resource;
+  private String diagramResource;
+  private String deploymentId;
+  private String tenantId;
+  private String decisionRequirementsDefinitionId;
+  private String decisionRequirementsDefinitionKey;
+  private String versionTag;
 
   public MockDecisionDefinitionBuilder id(String id) {
     this.id = id;

@@ -107,7 +107,7 @@ public class ActivityInstanceAssert {
   }
   public static class ActivityInstanceTreeBuilder {
 
-    protected ExpectedActivityInstance rootInstance = null;
+    protected ExpectedActivityInstance rootInstance;
 
     protected Stack<ExpectedActivityInstance> activityInstanceStack = new Stack<>();
 

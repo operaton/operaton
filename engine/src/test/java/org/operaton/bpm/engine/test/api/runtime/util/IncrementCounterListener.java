@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  */
 public class IncrementCounterListener implements ExecutionListener {
 
-  public static int counter = 0;
+  public static int counter;
 
   @Override
   public void notify(DelegateExecution execution) throws Exception {

@@ -38,7 +38,7 @@ public class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements Set
   protected HistoricDecisionInstanceQuery query;
   protected List<String> ids;
   protected Date removalTime;
-  protected Mode mode = null;
+  protected Mode mode;
   protected boolean isHierarchical;
 
   protected CommandExecutor commandExecutor;

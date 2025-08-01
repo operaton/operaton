@@ -33,7 +33,7 @@ public abstract class TenantQueryImpl extends AbstractQuery<TenantQuery, Tenant>
   protected String nameLike;
   protected String userId;
   protected String groupId;
-  protected boolean includingGroups = false;
+  protected boolean includingGroups;
 
   protected TenantQueryImpl() {
   }

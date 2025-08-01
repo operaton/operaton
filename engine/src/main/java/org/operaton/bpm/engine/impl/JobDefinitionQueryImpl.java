@@ -44,9 +44,9 @@ public class JobDefinitionQueryImpl extends AbstractQuery<JobDefinitionQuery, Jo
   protected SuspensionState suspensionState;
   protected Boolean withOverridingJobPriority;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
-  protected boolean includeJobDefinitionsWithoutTenantId = false;
+  protected boolean includeJobDefinitionsWithoutTenantId;
 
   public JobDefinitionQueryImpl() {
   }

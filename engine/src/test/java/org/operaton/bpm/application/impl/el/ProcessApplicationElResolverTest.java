@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 @ExtendWith(ProcessEngineExtension.class)
 class ProcessApplicationElResolverTest {
 
-  RuntimeContainerDelegate runtimeContainerDelegate = null;
+  RuntimeContainerDelegate runtimeContainerDelegate;
 
   ProcessEngine processEngine;
   RuntimeService runtimeService;

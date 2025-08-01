@@ -72,13 +72,13 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
   protected boolean isRootProcessInstances;
   protected boolean isLeafProcessInstances;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
-  protected boolean isProcessDefinitionWithoutTenantId = false;
+  protected boolean isProcessDefinitionWithoutTenantId;
 
   // or query /////////////////////////////
   protected List<ProcessInstanceQueryImpl> queries = new ArrayList<>(List.of(this));
-  protected boolean isOrQueryActive = false;
+  protected boolean isOrQueryActive;
 
   public ProcessInstanceQueryImpl() {
   }

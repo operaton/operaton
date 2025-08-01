@@ -43,7 +43,7 @@ public class DecisionEvaluationBuilderImpl implements DecisionsEvaluationBuilder
   protected Map<String, Object> variables;
 
   protected String decisionDefinitionTenantId;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
 
 
   public DecisionEvaluationBuilderImpl(CommandExecutor commandExecutor) {

@@ -40,9 +40,9 @@ public class FetchExternalTasksDto {
 
   protected int maxTasks;
   protected String workerId;
-  protected boolean usePriority = false;
+  protected boolean usePriority;
   protected List<FetchExternalTaskTopicDto> topics;
-  protected boolean includeExtensionProperties = false;
+  protected boolean includeExtensionProperties;
 
   protected List<SortingDto> sorting;
 
@@ -105,9 +105,9 @@ public class FetchExternalTasksDto {
     protected long lockDuration;
     protected List<String> variables;
     protected HashMap<String, Object> processVariables;
-    protected boolean deserializeValues = false;
-    protected boolean localVariables = false;
-    protected boolean includeExtensionProperties = false;
+    protected boolean deserializeValues;
+    protected boolean localVariables;
+    protected boolean includeExtensionProperties;
 
     protected boolean withoutTenantId;
     protected String[] tenantIdIn;

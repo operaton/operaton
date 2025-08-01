@@ -85,8 +85,8 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   protected SqlSession sqlSession;
   protected DbSqlSessionFactory dbSqlSessionFactory;
 
-  protected String connectionMetadataDefaultCatalog = null;
-  protected String connectionMetadataDefaultSchema = null;
+  protected String connectionMetadataDefaultCatalog;
+  protected String connectionMetadataDefaultSchema;
 
   protected DbSqlSession(DbSqlSessionFactory dbSqlSessionFactory) {
     this.dbSqlSessionFactory = dbSqlSessionFactory;

@@ -47,9 +47,9 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    */
   private T defaultValue;
 
-  private boolean isRequired = false;
+  private boolean isRequired;
 
-  private boolean isIdAttribute = false;
+  private boolean isIdAttribute;
 
   private final List<Reference<?>> outgoingReferences = new ArrayList<>();
 

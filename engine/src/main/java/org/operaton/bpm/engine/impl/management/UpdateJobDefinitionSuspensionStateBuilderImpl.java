@@ -43,9 +43,9 @@ public class UpdateJobDefinitionSuspensionStateBuilderImpl
   protected String processDefinitionId;
 
   protected String processDefinitionTenantId;
-  protected boolean isProcessDefinitionTenantIdSet = false;
+  protected boolean isProcessDefinitionTenantIdSet;
 
-  protected boolean includeJobs = false;
+  protected boolean includeJobs;
   protected Date executionDate;
 
   public UpdateJobDefinitionSuspensionStateBuilderImpl(CommandExecutor commandExecutor) {

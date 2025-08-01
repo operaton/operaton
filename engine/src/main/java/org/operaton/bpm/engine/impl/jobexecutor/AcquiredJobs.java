@@ -34,7 +34,7 @@ public class AcquiredJobs {
   protected List<List<String>> acquiredJobBatches = new ArrayList<>();
   protected Set<String> acquiredJobIds = new HashSet<>();
 
-  protected int numberOfJobsFailedToLock = 0;
+  protected int numberOfJobsFailedToLock;
 
   public AcquiredJobs(int numberOfJobsAttemptedToAcquire) {
     this.numberOfJobsAttemptedToAcquire = numberOfJobsAttemptedToAcquire;

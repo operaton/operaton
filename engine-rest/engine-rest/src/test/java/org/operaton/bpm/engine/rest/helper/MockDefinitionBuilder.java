@@ -23,19 +23,19 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 public class MockDefinitionBuilder {
 
-  private String id = null;
-  private String key = null;
-  private String category = null;
-  private String description = null;
-  private String name = null;
-  private int version = 0;
-  private String resource = null;
-  private String deploymentId = null;
-  private String diagram = null;
-  private boolean suspended = false;
-  private boolean startFormKey = false;
-  private String tenantId = null;
-  private String versionTag = null;
+  private String id;
+  private String key;
+  private String category;
+  private String description;
+  private String name;
+  private int version;
+  private String resource;
+  private String deploymentId;
+  private String diagram;
+  private boolean suspended;
+  private boolean startFormKey;
+  private String tenantId;
+  private String versionTag;
   private boolean isStartableInTasklist = true;
 
   public MockDefinitionBuilder id(String id) {

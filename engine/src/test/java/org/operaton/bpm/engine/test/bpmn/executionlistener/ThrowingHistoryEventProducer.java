@@ -27,7 +27,7 @@ public class ThrowingHistoryEventProducer extends DefaultHistoryEventProducer {
   public static final String ERROR_CODE = "508";
 
   protected String activityName;
-  protected boolean failsWithException = false;
+  protected boolean failsWithException;
 
   public ThrowingHistoryEventProducer failsWithException() {
     this.failsWithException = true;

@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class DummySendTask implements JavaDelegate {
 
-  public static boolean wasExecuted = false;
+  public static boolean wasExecuted;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

@@ -41,7 +41,7 @@ public class SetJobDefinitionPriorityCmd implements Command<Void> {
 
   protected String jobDefinitionId;
   protected Long priority;
-  protected boolean cascade = false;
+  protected boolean cascade;
 
   public SetJobDefinitionPriorityCmd(String jobDefinitionId, Long priority, boolean cascade) {
     this.jobDefinitionId = jobDefinitionId;

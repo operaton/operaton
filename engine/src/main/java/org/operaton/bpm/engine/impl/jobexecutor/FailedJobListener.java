@@ -35,7 +35,7 @@ public class FailedJobListener implements Command<Void> {
 
   protected CommandExecutor commandExecutor;
   protected JobFailureCollector jobFailureCollector;
-  protected int countRetries = 0;
+  protected int countRetries;
   protected int totalRetries = ProcessEngineConfigurationImpl.DEFAULT_FAILED_JOB_LISTENER_MAX_RETRIES;
 
   public FailedJobListener(CommandExecutor commandExecutor, JobFailureCollector jobFailureCollector) {

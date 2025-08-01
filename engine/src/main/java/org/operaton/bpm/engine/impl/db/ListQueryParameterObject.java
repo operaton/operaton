@@ -36,7 +36,7 @@ public class ListQueryParameterObject implements Serializable {
   protected List<QueryOrderingProperty> orderingProperties = new ArrayList<>();
 
   protected int maxResults = Integer.MAX_VALUE;
-  protected int firstResult = 0;
+  protected int firstResult;
   protected Object parameter;
   protected String databaseType;
 

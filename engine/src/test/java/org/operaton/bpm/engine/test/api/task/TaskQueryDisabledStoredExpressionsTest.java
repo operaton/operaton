@@ -46,7 +46,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
   public static final String STATE_MANIPULATING_EXPRESSION =
       "${''.getClass().forName('" + TaskQueryDisabledStoredExpressionsTest.class.getName() + "').getField('MUTABLE_FIELD').setLong(null, 42)}";
 
-  public static long mutableField = 0;
+  public static long mutableField;
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()

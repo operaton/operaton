@@ -33,7 +33,7 @@ public abstract class CmmnSentryPart implements Serializable {
   protected String source;
   protected String variableEvent;
   protected String variableName;
-  protected boolean satisfied = false;
+  protected boolean satisfied;
 
   public abstract CmmnExecution getCaseInstance();
 

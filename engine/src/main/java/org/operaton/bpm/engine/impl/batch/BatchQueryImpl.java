@@ -36,7 +36,7 @@ public class BatchQueryImpl extends AbstractQuery<BatchQuery, Batch> implements 
 
   protected String batchId;
   protected String type;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
   protected SuspensionState suspensionState;
 

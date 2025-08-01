@@ -56,9 +56,9 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
   protected Long sequenceCounter;
   protected Date occurredBefore;
   protected Date occurredAfter;
-  protected boolean initial = false;
+  protected boolean initial;
 
-  protected boolean excludeTaskRelated = false;
+  protected boolean excludeTaskRelated;
   protected boolean isByteArrayFetchingEnabled = true;
   protected boolean isCustomObjectDeserializationEnabled = true;
 

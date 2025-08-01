@@ -61,18 +61,18 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected String executionId = null;
+  protected String executionId;
 
-  protected String processDefinitionId = null;
-  protected String processDefinitionKey = null;
+  protected String processDefinitionId;
+  protected String processDefinitionKey;
 
   protected int retries = DEFAULT_RETRIES;
 
   // entity is active by default
   protected int suspensionState = SuspensionState.ACTIVE.getStateCode();
 
-  protected String jobHandlerType = null;
-  protected String jobHandlerConfiguration = null;
+  protected String jobHandlerType;
+  protected String jobHandlerConfiguration;
 
   protected ByteArrayEntity exceptionByteArray;
   protected String exceptionByteArrayId;

@@ -44,7 +44,7 @@ public class AdditionalOperatonBpmConfigurations {
   @Order(Ordering.DEFAULT_ORDER - 1)
   public static class BeforeStandardConfiguration extends AbstractProcessEnginePlugin {
 
-    static boolean processed = false;
+    static boolean processed;
 
     @Override
     public void preInit(ProcessEngineConfigurationImpl configuration) {
@@ -56,7 +56,7 @@ public class AdditionalOperatonBpmConfigurations {
   @Order(Ordering.DEFAULT_ORDER + 1)
   public static class AfterStandardConfiguration extends  AbstractProcessEnginePlugin {
 
-    static boolean processed = false;
+    static boolean processed;
 
     @Override
     public void preInit(ProcessEngineConfigurationImpl configuration) {

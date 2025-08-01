@@ -33,7 +33,7 @@ public class AuthorizationExceptionInterceptor extends CommandInterceptor {
   protected boolean isActive;
   protected AuthorizationException lastException;
 
-  protected int count = 0;
+  protected int count;
 
   @Override
   public <T> T execute(Command<T> command) {

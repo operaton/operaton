@@ -28,8 +28,8 @@ import org.operaton.bpm.engine.spring.application.SpringServletProcessApplicatio
  */
 public class CustomSpringServletProcessApplication extends SpringServletProcessApplication {
 
-  private boolean isPostDeployInvoked = false;
-  private boolean isPreUndeployInvoked = false;
+  private boolean isPostDeployInvoked;
+  private boolean isPreUndeployInvoked;
 
   @PostDeploy
   @SuppressWarnings("unused")

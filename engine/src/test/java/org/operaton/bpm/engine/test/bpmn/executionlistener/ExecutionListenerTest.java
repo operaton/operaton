@@ -1393,7 +1393,7 @@ public class ExecutionListenerTest {
 
   public static class ThrowBPMNErrorDelegate implements ExecutionListener {
 
-    public static int invocations = 0;
+    public static int invocations;
 
     @Override
     public void notify(DelegateExecution execution) throws Exception {
@@ -1408,7 +1408,7 @@ public class ExecutionListenerTest {
 
   public static class ThrowRuntimeExceptionDelegate implements ExecutionListener {
 
-    public static int invocations = 0;
+    public static int invocations;
 
     @Override
     public void notify(DelegateExecution execution) throws Exception {

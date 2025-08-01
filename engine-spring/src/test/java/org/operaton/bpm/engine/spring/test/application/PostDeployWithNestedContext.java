@@ -40,8 +40,8 @@ public class PostDeployWithNestedContext extends SpringProcessApplication {
     }
   }
 
-  boolean deployCalled = false;
-  boolean triggered = false;
+  boolean deployCalled;
+  boolean triggered;
   boolean deployOnChildRefresh;
 
   @Override

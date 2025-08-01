@@ -74,16 +74,16 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
   /**
    * Enable FEEL legacy behavior
    */
-  protected boolean enableFeelLegacyBehavior = false;
+  protected boolean enableFeelLegacyBehavior;
 
-  protected String defaultInputExpressionExpressionLanguage = null;
-  protected String defaultInputEntryExpressionLanguage = null;
-  protected String defaultOutputEntryExpressionLanguage = null;
-  protected String defaultLiteralExpressionLanguage = null;
+  protected String defaultInputExpressionExpressionLanguage;
+  protected String defaultInputEntryExpressionLanguage;
+  protected String defaultOutputEntryExpressionLanguage;
+  protected String defaultLiteralExpressionLanguage;
 
   protected DmnTransformer transformer = new DefaultDmnTransformer();
 
-  protected boolean returnBlankTableOutputAsNull = false;
+  protected boolean returnBlankTableOutputAsNull;
 
   @Override
   public DmnEngine buildEngine() {

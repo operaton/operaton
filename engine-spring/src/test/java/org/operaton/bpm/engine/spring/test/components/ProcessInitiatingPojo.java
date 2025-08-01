@@ -34,7 +34,7 @@ public class ProcessInitiatingPojo {
 
     private final Logger log = Logger.getLogger(getClass().getName());
 
-    private int methodState = 0;
+    private int methodState;
 
     public void reset() {
         this.methodState = 0;

@@ -51,21 +51,21 @@ public class DecisionDefinitionQueryImpl extends AbstractQuery<DecisionDefinitio
   protected String resourceName;
   protected String resourceNameLike;
   protected Integer version;
-  protected boolean latest = false;
+  protected boolean latest;
 
   protected String decisionRequirementsDefinitionId;
   protected String decisionRequirementsDefinitionKey;
-  protected boolean withoutDecisionRequirementsDefinition = false;
+  protected boolean withoutDecisionRequirementsDefinition;
 
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
   protected String[] tenantIds;
-  protected boolean includeDefinitionsWithoutTenantId = false;
+  protected boolean includeDefinitionsWithoutTenantId;
 
   protected String versionTag;
   protected String versionTagLike;
 
   // for internal use
-  private boolean shouldJoinDeploymentTable = false;
+  private boolean shouldJoinDeploymentTable;
 
   public DecisionDefinitionQueryImpl() {
   }

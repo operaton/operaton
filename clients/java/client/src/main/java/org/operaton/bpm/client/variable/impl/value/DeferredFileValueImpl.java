@@ -35,7 +35,7 @@ public class DeferredFileValueImpl extends FileValueImpl implements DeferredFile
 
   protected static final ExternalTaskClientLogger LOG = ExternalTaskClientLogger.CLIENT_LOGGER;
 
-  protected boolean isLoaded = false;
+  protected boolean isLoaded;
 
   protected String variableName;
   protected String executionId;

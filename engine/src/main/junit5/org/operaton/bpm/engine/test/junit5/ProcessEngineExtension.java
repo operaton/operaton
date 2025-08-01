@@ -190,7 +190,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   protected String configurationResource = "operaton.cfg.xml";
   protected String deploymentId;
-  protected boolean ensureCleanAfterTest = false;
+  protected boolean ensureCleanAfterTest;
   protected List<String> additionalDeployments = new ArrayList<>();
   private boolean randomName;
   private boolean closeEngine;

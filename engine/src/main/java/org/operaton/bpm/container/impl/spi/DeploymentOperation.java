@@ -178,7 +178,7 @@ public class DeploymentOperation {
 
     protected PlatformServiceContainer container;
     protected String name;
-    protected boolean isUndeploymentOperation = false;
+    protected boolean isUndeploymentOperation;
     protected List<DeploymentOperationStep> steps = new ArrayList<>();
     protected Map<String, Object> initialAttachments = new HashMap<>();
 

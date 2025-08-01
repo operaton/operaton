@@ -31,7 +31,7 @@ public class EqualsObjectValue extends EqualsTypedValue<EqualsObjectValue> {
   protected String objectTypeName;
   protected String serializedValue;
   protected Object value;
-  protected boolean isDeserialized = false;
+  protected boolean isDeserialized;
 
   public EqualsObjectValue() {
     this.type = ValueType.OBJECT;

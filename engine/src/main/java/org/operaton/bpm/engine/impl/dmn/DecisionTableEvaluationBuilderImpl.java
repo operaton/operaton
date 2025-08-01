@@ -46,7 +46,7 @@ public class DecisionTableEvaluationBuilderImpl implements DecisionEvaluationBui
   protected Map<String, Object> variables;
 
   protected String decisionDefinitionTenantId;
-  protected boolean isTenantIdSet = false;
+  protected boolean isTenantIdSet;
 
 
   public DecisionTableEvaluationBuilderImpl(CommandExecutor commandExecutor) {

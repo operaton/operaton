@@ -26,14 +26,14 @@ import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmPropertie
 
 public class HeaderSecurityProperties {
 
-  protected boolean xssProtectionDisabled = false;
+  protected boolean xssProtectionDisabled;
   protected String xssProtectionOption;
   protected String xssProtectionValue;
 
-  protected boolean contentSecurityPolicyDisabled = false;
+  protected boolean contentSecurityPolicyDisabled;
   protected String contentSecurityPolicyValue;
 
-  protected boolean contentTypeOptionsDisabled = false;
+  protected boolean contentTypeOptionsDisabled;
   protected String contentTypeOptionsValue;
 
   protected boolean hstsDisabled = true;

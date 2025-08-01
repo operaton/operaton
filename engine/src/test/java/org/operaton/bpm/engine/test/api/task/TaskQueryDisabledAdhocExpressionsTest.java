@@ -48,7 +48,7 @@ public class TaskQueryDisabledAdhocExpressionsTest {
   public static final String STATE_MANIPULATING_EXPRESSION =
       "${''.getClass().forName('" + TaskQueryDisabledAdhocExpressionsTest.class.getName() + "').getField('MUTABLE_FIELD').setLong(null, 42)}";
 
-  public static long mutableField = 0;
+  public static long mutableField;
 
   ProcessEngineConfigurationImpl processEngineConfiguration;
   TaskService taskService;

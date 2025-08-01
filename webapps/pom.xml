@@ -27,88 +27,7 @@
     <!-- frontend-sources artifact is for internal use only.
     Artifact generation is skipped when it comes to maven central deployment -->
     <skip-zip-frontend-sources>false</skip-zip-frontend-sources>
-    <surefire.forkCount>1</surefire.forkCount>
   </properties>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
-        <version>${project.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  <dependencies>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.commons</groupId>
-      <artifactId>operaton-commons-logging</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!-- tests -->
-    <dependency>
-      <groupId>org.operaton.commons</groupId>
-      <artifactId>operaton-commons-testing</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.uuid</groupId>
-      <artifactId>java-uuid-generator</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-http</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty.ee10</groupId>
-      <artifactId>jetty-ee10-webapp</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.core</groupId>
-      <artifactId>jersey-common</artifactId>
-      <version>${version.jersey3}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
   <build>
     <plugins>
       <plugin>
@@ -173,16 +92,6 @@
     </plugins>
     <pluginManagement>
       <plugins>
-        <!-- test plugins -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <configuration>
-            <systemPropertyVariables>
-              <myWorkingDir>${project.build.directory}</myWorkingDir>
-            </systemPropertyVariables>
-          </configuration>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
@@ -193,72 +102,6 @@
               <nonFilteredFileExtension>png</nonFilteredFileExtension>
             </nonFilteredFileExtensions>
           </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <configuration>
-            <webResources>
-              <resource>
-                <filtering>true</filtering>
-                <directory>${web.resources.override}</directory>
-              </resource>
-              <resource>
-                <filtering>false</filtering>
-                <directory>target/webapp</directory>
-                <excludes>
-                  <exclude>**/*.html</exclude>
-                </excludes>
-              </resource>
-              <resource>
-                <filtering>true</filtering>
-                <directory>target/webapp</directory>
-                <!-- no filtering for favicon because linux destroys images through carriage return -->
-                <includes>
-                  <include>**/*.html</include>
-                </includes>
-              </resource>
-            </webResources>
-            <!-- exclude development resources (task forms etc.) -->
-            <packagingExcludes>
-              develop/**
-            </packagingExcludes>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>create-jar</id>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-              <phase>package</phase>
-              <configuration>
-                <classifier>classes</classifier>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>zip-frontend-sources</id>
-              <phase>process-resources</phase>
-              <goals>
-                <goal>single</goal>
-              </goals>
-              <configuration>
-                <skipAssembly>${skip-zip-frontend-sources}</skipAssembly>
-                <descriptors>
-                  <descriptor>assembly.xml</descriptor>
-                </descriptors>
-              </configuration>
-            </execution>
-          </executions>
         </plugin>
       </plugins>
     </pluginManagement>

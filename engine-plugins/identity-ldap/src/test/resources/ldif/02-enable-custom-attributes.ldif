@@ -1,0 +1,12 @@
+# Add custom schema with objects and attributes that have orderding to test server side sorting
+dn: cn=operatonSchema,cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: operatonSchema
+olcAttributeTypes: ( 1.3.6.1.4.1.49213.1.1.1 NAME 'firstnameAlias' DESC 'Custom firstnameAlias with ordering support' EQUALITY caseIgnoreMatch ORDERING caseIgnoreOrderingMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcAttributeTypes: ( 1.3.6.1.4.1.49213.1.2.1 NAME 'lastnameAlias' DESC 'Custom lastnameAlias with ordering support' EQUALITY caseIgnoreMatch ORDERING caseIgnoreOrderingMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcAttributeTypes: ( 1.3.6.1.4.1.49213.1.3.1 NAME 'sortableMailAlias' DESC 'Custom sortableMailAlias with ordering support' EQUALITY caseIgnoreMatch ORDERING caseIgnoreOrderingMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcAttributeTypes: ( 1.3.6.1.4.1.49213.1.4.1 NAME 'sortableUserIdAlias' DESC 'Custom sortableUserIdAlias with ordering support' EQUALITY caseIgnoreMatch ORDERING caseIgnoreOrderingMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcAttributeTypes: ( 1.3.6.1.4.1.49213.2.1.1 NAME 'sortableGroupIdAlias' DESC 'Custom sortableGroupIdAlias with ordering support' EQUALITY caseIgnoreMatch ORDERING caseIgnoreOrderingMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcAttributeTypes: ( 1.3.6.1.4.1.49213.2.2.1 NAME 'sortableGroupNameAlias' DESC 'Custom sortableGroupNameAlias with ordering support' EQUALITY caseIgnoreMatch ORDERING caseIgnoreOrderingMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcObjectClasses: ( 1.3.6.1.4.1.49213.1.5.1 NAME 'operatonPerson' DESC 'OperatonPerson object class with sortable aliases' SUP top AUXILIARY MAY ( firstnameAlias $ lastnameAlias $ sortableMailAlias $ sortableUserIdAlias ))
+olcObjectClasses: ( 1.3.6.1.4.1.49213.2.3.1 NAME 'operatonGroup' DESC 'OperatonGroup object class with sortable aliases' SUP top AUXILIARY MAY ( sortableGroupIdAlias $ sortableGroupNameAlias ))

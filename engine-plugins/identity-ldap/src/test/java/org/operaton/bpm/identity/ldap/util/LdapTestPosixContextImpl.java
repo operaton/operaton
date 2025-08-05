@@ -1,0 +1,181 @@
+package org.operaton.bpm.identity.ldap.util;
+
+import com.unboundid.ldap.sdk.Entry;
+import com.unboundid.ldap.sdk.LDAPConnection;
+import com.unboundid.ldap.sdk.LDAPException;
+
+import java.nio.charset.StandardCharsets;
+
+/**
+ * Implementation {@link LdapTestContext} for test with posix groups
+ */
+public class LdapTestPosixContextImpl implements LdapTestContext {
+
+    private static final String OFFICE_BERLIN = "office-berlin";
+    private static final String OFFICE_BERKELEY = "office-berkeley";
+    private static final String PEOPLE_GROUP = "people";
+    private static final String GROUP_GROUP = "groups";
+
+    private final String host;
+    private final int port;
+    private final String baseDn;
+    private final String password;
+
+    private int numberOfAdditionalUsers;
+    private int numberOfAdditionalGroups;
+    private int numberOfAdditionalRoles;
+    private int generatedUserCount;
+    private int generatedGroupCount;
+    private int generatedRoleCount;
+
+    public LdapTestPosixContextImpl(String host, int port, String baseDn, String password) {
+        this.host = host;
+        this.port = port;
+        this.baseDn = baseDn;
+        this.password = password;
+        this.generatedUserCount = 0;
+        this.generatedGroupCount = 0;
+        this.generatedRoleCount = 0;
+        this.numberOfAdditionalUsers = 0;
+        this.numberOfAdditionalGroups = 0;
+        this.numberOfAdditionalRoles = 0;
+    }
+
+    @Override
+    public int numberOfGeneratedUsers() {
+        return generatedUserCount;
+    }
+
+    @Override
+    public int numberOfGeneratedGroups() {
+        return generatedGroupCount;
+    }
+
+    @Override
+    public int numberOfGeneratedRoles() {
+        return generatedRoleCount;
+    }
+
+    @Override
+    public LdapTestContext withAdditionalUsers(int numberOfAdditionalUsers) {
+        this.numberOfAdditionalUsers = numberOfAdditionalUsers;
+        return this;
+    }
+
+    @Override
+    public LdapTestContext withAdditionalGroups(int numberOfAdditionalGroups) {
+        this.numberOfAdditionalGroups = numberOfAdditionalGroups;
+        return this;
+    }
+
+    @Override
+    public LdapTestContext withAdditionalRoles(int numberOfAdditionalRoles) {
+        this.numberOfAdditionalRoles = numberOfAdditionalRoles;
+        return this;
+    }
+
+    @Override
+    public LdapTestContext initialize() {
+        try(var connection = new LDAPConnection(host,
+                port,
+                "cn=admin," + baseDn,
+                password)) {
+
+            addGroupEntry(connection, LdapTestPosixContextImpl.OFFICE_BERLIN);
+
+            addUserUidEntry(connection, "daniel", LdapTestPosixContextImpl.OFFICE_BERLIN, "Daniel", "Meyer", "daniel@operaton.org");
+
+            addGroupEntry(connection, PEOPLE_GROUP);
+            addUserUidEntry(connection, "ruecker", PEOPLE_GROUP, "Bernd", "Ruecker", "ruecker@operaton.org");
+            addUserUidEntry(connection, "monster", PEOPLE_GROUP, "Monster", "Cookie", "monster@operaton.org");
+            var fozzieDn = addUserUidEntry(connection, "fozzie", PEOPLE_GROUP, "Bear", "Fozzie", "fozzie@operaton.org");
+
+            addGroupEntry(connection, GROUP_GROUP);
+
+            addPosixGroupEntry(connection, "1", "posix-group-without-members");
+            addPosixGroupEntry(connection, "2", "posix-group-with-members", "fozzie", "monster", "ruecker");
+
+            for (int i = 1; i <= numberOfAdditionalUsers; i++) {
+                String lastName = "fisher" + "%04d".formatted(i);
+                addUserUidEntry(connection, "jan.fisher." + lastName,
+                        LdapTestPosixContextImpl.OFFICE_BERKELEY,
+                        "jan",
+                        lastName,
+                        "jan.fisher" + lastName + "@operaton.org");
+            }
+
+            for (int i = 1; i <= numberOfAdditionalGroups; i++) {
+                String groupName = "Paris" + "%04d".formatted(i);
+                addGroupEntry(connection, groupName);
+            }
+
+            for (int i = 1; i <= numberOfAdditionalRoles; i++) {
+                String roleName = "Support" + "%04d".formatted(i);
+                addRoleEntry(connection, roleName, fozzieDn);
+            }
+
+            return this;
+        } catch (Exception e) {
+            throw new RuntimeException("Could not initialize LDAP Context",e);
+        }
+    }
+
+    private String addGroupEntry(LDAPConnection connection, String groupName) throws LDAPException {
+        String orgDN = "ou=" + groupName + "," + baseDn;
+        Entry orgEntry = new Entry(orgDN);
+        orgEntry.addAttribute("objectClass", "organizationalUnit", "top", "operatonGroup");
+        orgEntry.addAttribute("ou", groupName);
+        orgEntry.addAttribute("sortableGroupIdAlias", groupName);
+        orgEntry.addAttribute("sortableGroupNameAlias", groupName);
+        connection.add(orgEntry);
+        generatedGroupCount++;
+        return orgDN;
+
+    }
+
+    private String addPosixGroupEntry(LDAPConnection connection, String gid, String name, String... memberUids) throws LDAPException {
+        String groupDN = "cn=" + name + ",ou=groups," + baseDn;
+        Entry orgEntry = new Entry(groupDN);
+        orgEntry.addAttribute("objectClass", "top", "posixGroup");
+        orgEntry.addAttribute("cn", name);
+        orgEntry.addAttribute("gidNumber", gid);
+        for (String memberUid : memberUids) {
+            orgEntry.addAttribute("memberUid", memberUid);
+        }
+        connection.add(orgEntry);
+        generatedGroupCount++;
+        return groupDN;
+
+    }
+
+    private String addUserUidEntry(LDAPConnection connection, String uid, String groupName, String firstname, String lastname, String mail) throws LDAPException {
+        String userDN = "uid=" + uid +",ou=" + groupName + ",dc=operaton,dc=org";
+        Entry userEntry = new Entry(userDN);
+        userEntry.addAttribute("objectClass",  "top", "person", "inetOrgPerson", "operatonPerson");
+        userEntry.addAttribute("uid", uid);
+        userEntry.addAttribute("sortableUserIdAlias", uid);
+        userEntry.addAttribute("cn", firstname);
+        userEntry.addAttribute("sn", lastname);
+        userEntry.addAttribute("mail", mail);
+        userEntry.addAttribute("firstnameAlias", firstname);
+        userEntry.addAttribute("lastnameAlias", lastname);
+        userEntry.addAttribute("sortableMailAlias", mail);
+        userEntry.addAttribute("userPassword", uid.getBytes(StandardCharsets.UTF_8));
+        generatedUserCount++;
+        connection.add(userEntry);
+        return userDN;
+    }
+
+    private String addRoleEntry(LDAPConnection connection, String roleName, String... userDns) throws LDAPException {
+        String orgDN = "ou=" + roleName + "," + baseDn;
+        Entry roleEntry = new Entry(orgDN);
+        roleEntry.addAttribute("objectClass", "top", "groupOfNames");
+        roleEntry.addAttribute("cn", roleName);
+        for (String user : userDns) {
+            roleEntry.addAttribute("member", user);
+        }
+        connection.add(roleEntry);
+        generatedRoleCount++;
+        return orgDN;
+    }
+}

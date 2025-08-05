@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.authorization.Resources.USER;
 import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testGroupPaging;
 import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testUserPaging;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
@@ -33,8 +33,7 @@ import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
+import org.operaton.bpm.identity.ldap.util.LdapTestExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestUtilities;
 
 /**
@@ -44,25 +43,24 @@ import org.operaton.bpm.identity.ldap.util.LdapTestUtilities;
 class LdapDisableAuthorizationCheckTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .configurationResource("operaton.ldap.disable.authorization.check.cfg.xml")
-    .build();
+  @Order(1)
+  static LdapTestExtension ldapExtension = new LdapTestExtension();
+
   @RegisterExtension
-  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
+  @Order(2)
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+          .configurationResource("operaton.ldap.disable.authorization.check.cfg.xml")
+          .configurator(ldapExtension::injectLdapUrlIntoProcessEngineConfiguration)
+          .closeEngineAfterAllTests()
+          .build();
 
   ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;
   AuthorizationService authorizationService;
-  LdapTestEnvironment ldapTestEnvironment;
-
-  @BeforeEach
-  void setup() {
-    ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
-  }
 
   @Test
   void testUserQueryPagination() {
-    LdapTestUtilities.testUserPaging(identityService, ldapTestEnvironment);
+    LdapTestUtilities.testUserPaging(identityService, ldapExtension.getLdapTestContext());
   }
 
   @Test
@@ -71,7 +69,7 @@ class LdapDisableAuthorizationCheckTest {
       processEngineConfiguration.setAuthorizationEnabled(true);
 
       identityService.setAuthenticatedUserId("oscar");
-      testUserPaging(identityService, ldapTestEnvironment);
+      testUserPaging(identityService, ldapExtension.getLdapTestContext());
 
     } finally {
       processEngineConfiguration.setAuthorizationEnabled(false);
@@ -90,7 +88,7 @@ class LdapDisableAuthorizationCheckTest {
       processEngineConfiguration.setAuthorizationEnabled(true);
 
       identityService.setAuthenticatedUserId("oscar");
-      testUserPaging(identityService, ldapTestEnvironment);
+      testUserPaging(identityService, ldapExtension.getLdapTestContext());
 
     } finally {
       processEngineConfiguration.setAuthorizationEnabled(false);

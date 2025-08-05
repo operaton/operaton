@@ -32,12 +32,9 @@
   </bean>
   
   <bean id="ldapIdentityProviderPlugin" class="org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin">
-  
-    <property name="serverUrl" value="ldap://localhost:${ldap.server.port}/" />
-    <property name="managerDn" value="uid=daniel,ou=office-berlin,o=operaton,c=org" />
-    <property name="managerPassword" value="daniel" />
-    <property name="baseDn" value="o=operaton,c=org" />
-    
+
+    <!-- Credentials will be injected via extension at runtime -->
+
     <property name="userSearchBase" value="" />
     <property name="userSearchFilter" value="(objectclass=person)" />
     <property name="userIdAttribute" value="uid" />

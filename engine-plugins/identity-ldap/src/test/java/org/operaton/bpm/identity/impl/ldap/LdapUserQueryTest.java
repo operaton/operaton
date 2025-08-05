@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -44,25 +44,25 @@ import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
+import org.operaton.bpm.identity.ldap.util.LdapTestExtension;
 
 class LdapUserQueryTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @Order(1)
+  static LdapTestExtension ldapExtension = new LdapTestExtension();
+
   @RegisterExtension
-  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
+  @Order(2)
+  static ProcessEngineExtension engineRule = ProcessEngineExtension
+          .builder()
+          .configurator(ldapExtension::injectLdapUrlIntoProcessEngineConfiguration)
+          .closeEngineAfterAllTests()
+          .build();
 
   ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;
   AuthorizationService authorizationService;
-  LdapTestEnvironment ldapTestEnvironment;
-
-  @BeforeEach
-  void setup() {
-    ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
-  }
 
   @Test
   void testCountUsers() {
@@ -73,7 +73,7 @@ class LdapUserQueryTest {
 
     // then
     assertThat(userQuery.listPage(0, Integer.MAX_VALUE)).hasSize(12);
-    assertThat(userQuery.count()).isEqualTo(12);
+    assertThat(userQuery.count()).isEqualTo(ldapExtension.getLdapTestContext().numberOfGeneratedUsers());
   }
 
   @Test
@@ -84,7 +84,7 @@ class LdapUserQueryTest {
     List<User> result = identityService.createUserQuery().list();
 
     // then
-    assertThat(result).hasSize(ldapTestEnvironment.getTotalNumberOfUsersCreated());
+    assertThat(result).hasSize(ldapExtension.getLdapTestContext().numberOfGeneratedUsers());
   }
 
   @Test
@@ -249,7 +249,7 @@ class LdapUserQueryTest {
   })
   void testFilterByLastnameLike(String testName, String nameSearchText, String expectedNameFound) {
     // when
-    User user = identityService.createUserQuery().userLastNameLike("The Cro*").singleResult();
+    User user = identityService.createUserQuery().userLastNameLike(nameSearchText).singleResult();
 
     // then
     assertThat(user).isNotNull();
@@ -284,7 +284,7 @@ class LdapUserQueryTest {
     // given
 
     // when
-    User user = identityService.createUserQuery().userEmail("non-exist").singleResult();
+      User user = identityService.createUserQuery().userEmail("non-exist").singleResult();
 
     // then
     assertThat(user).isNull();
@@ -300,11 +300,11 @@ class LdapUserQueryTest {
   })
   void testFilterByEmailLike(String testName, String nameSearchText, String expectedNameFound) {
     // when
-    User user = identityService.createUserQuery().userEmailLike("oscar@*").singleResult();
+    User user = identityService.createUserQuery().userEmailLike(nameSearchText).singleResult();
 
     // then
     assertThat(user).isNotNull();
-    assertThat(user.getEmail()).isEqualTo("oscar@operaton.org");
+    assertThat(user.getEmail()).isEqualTo(expectedNameFound);
   }
 
   @Test
@@ -421,7 +421,7 @@ class LdapUserQueryTest {
   }
 
   @Test
-  void testAuthenticatedUserSeesThemselve() {
+  void testAuthenticatedUserSeesThemselves() {
     try {
       // given
       processEngineConfiguration.setAuthorizationEnabled(true);
@@ -459,7 +459,7 @@ class LdapUserQueryTest {
 
   @Test
   void testPagination() {
-    testUserPaging(identityService, ldapTestEnvironment);
+    testUserPaging(identityService, ldapExtension.getLdapTestContext());
   }
 
   @Test
@@ -519,6 +519,7 @@ class LdapUserQueryTest {
     assertThatThrownBy(() -> identityService.createNativeUserQuery())
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Native user queries are not supported for LDAP");
+    System.out.println("FUZ");
   }
 
   protected void createGrantAuthorization(Resource resource, String resourceId, String userId, Permission... permissions) {

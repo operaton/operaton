@@ -47,30 +47,30 @@ class LdapLoginTest {
 
   @Test
   void testLdapLoginSuccess() {
-    assertThat(identityService.checkPassword("roman", "roman")).isTrue();
+    assertThat(identityService.checkPassword("kermit", "kermit")).isTrue();
   }
 
   @Test
   void testLdapLoginCapitalization() {
-    assertThat(identityService.checkPassword("Roman", "roman")).isTrue();
+    assertThat(identityService.checkPassword("Kermit", "kermit")).isTrue();
   }
 
   @Test
   void testLdapLoginFailure() {
-    assertThat(identityService.checkPassword("roman", "ro")).isFalse();
-    assertThat(identityService.checkPassword("r", "roman")).isFalse();
+    assertThat(identityService.checkPassword("kermit", "ro")).isFalse();
+    assertThat(identityService.checkPassword("r", "kermit")).isFalse();
   }
 
   @Test
   void testLdapLoginNullValues() {
-    assertThat(identityService.checkPassword(null, "roman")).isFalse();
-    assertThat(identityService.checkPassword("roman", null)).isFalse();
+    assertThat(identityService.checkPassword(null, "kermit")).isFalse();
+    assertThat(identityService.checkPassword("kermit", null)).isFalse();
     assertThat(identityService.checkPassword(null, null)).isFalse();
   }
 
   @Test
   void testLdapLoginEmptyPassword() {
-    assertThat(identityService.checkPassword("roman", "")).isTrue();
+    assertThat(identityService.checkPassword("kermit", "")).isTrue();
   }
 
 }

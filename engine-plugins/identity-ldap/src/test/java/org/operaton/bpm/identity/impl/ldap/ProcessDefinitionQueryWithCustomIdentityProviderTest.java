@@ -74,7 +74,7 @@ class ProcessDefinitionQueryWithCustomIdentityProviderTest {
     // given
 
     // when
-    List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startableByUser("david(IT)").list();
+    List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startableByUser("uncledeadly(IT)").list();
 
     // then
     assertThat(processDefinitions).hasSize(1);

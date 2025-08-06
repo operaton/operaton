@@ -183,7 +183,7 @@ class LdapGroupQueryTest {
     // given
 
     // when
-    List<Group> list = identityService.createGroupQuery().groupMember("daniel").list();
+    List<Group> list = identityService.createGroupQuery().groupMember("sam").list();
 
     // then
     assertThat(list).hasSize(3);
@@ -206,7 +206,7 @@ class LdapGroupQueryTest {
     // given
 
     // when
-    List<Group> list = identityService.createGroupQuery().groupMember("david(IT)").list();
+    List<Group> list = identityService.createGroupQuery().groupMember("uncledeadly(IT)").list();
 
     // then
     assertThat(list).hasSize(2);
@@ -276,7 +276,7 @@ class LdapGroupQueryTest {
       groups = identityService.createGroupQuery().listPage(4, 2);
       assertThat(groups).isEmpty();
 
-      identityService.setAuthenticatedUserId("daniel");
+      identityService.setAuthenticatedUserId("kermit");
 
       groups = identityService.createGroupQuery().listPage(0, 2);
       assertThat(groups).isEmpty();

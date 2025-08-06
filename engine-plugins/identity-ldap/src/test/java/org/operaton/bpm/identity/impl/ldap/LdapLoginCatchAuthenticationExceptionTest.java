@@ -47,7 +47,7 @@ class LdapLoginCatchAuthenticationExceptionTest {
     // given config passwordCheckCatchAuthenticationException=false
 
     // when
-    assertThatThrownBy(() -> identityService.checkPassword("roman", "wrongPW"))
+    assertThatThrownBy(() -> identityService.checkPassword("kermit", "wrongPW"))
       .isInstanceOf(LdapAuthenticationException.class)
       .hasMessage("Could not authenticate with LDAP server");
   }

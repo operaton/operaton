@@ -132,13 +132,13 @@ class LdapUserQueryTest {
     // given
 
     // when
-    List<User> users = identityService.createUserQuery().userIdIn("oscar", "monster", "daniel", "non-existing").list();
+    List<User> users = identityService.createUserQuery().userIdIn("oscar", "monster", "sam", "non-existing").list();
 
     // then
     assertThat(users)
       .isNotNull()
       .hasSize(3)
-      .extracting("id").containsOnly("oscar", "monster", "daniel");
+      .extracting("id").containsOnly("oscar", "monster", "sam");
   }
 
   @Test
@@ -327,7 +327,7 @@ class LdapUserQueryTest {
 
     // then
     assertThat(result).hasSize(3);
-    assertThat(result).extracting("id").containsOnly("roman", "daniel", "oscar");
+    assertThat(result).extracting("id").containsOnly("kermit", "sam", "oscar");
   }
 
   @Test
@@ -402,7 +402,7 @@ class LdapUserQueryTest {
 
     // then
     assertThat(result).hasSize(3);
-    assertThat(result).extracting("email").containsOnly("daniel@operaton.org", "roman@operaton.org", "oscar@operaton.org");
+    assertThat(result).extracting("email").containsOnly("kermit@operaton.org", "sam@operaton.org", "oscar@operaton.org");
   }
 
   @Test
@@ -469,10 +469,10 @@ class LdapUserQueryTest {
 
   @Test
   void testPaginationWithAuthenticatedUser() {
-    createGrantAuthorization(USER, "roman", "oscar", READ);
-    createGrantAuthorization(USER, "daniel", "oscar", READ);
+    createGrantAuthorization(USER, "kermit", "oscar", READ);
+    createGrantAuthorization(USER, "sam", "oscar", READ);
     createGrantAuthorization(USER, "monster", "oscar", READ);
-    createGrantAuthorization(USER, "ruecker", "oscar", READ);
+    createGrantAuthorization(USER, "bobo", "oscar", READ);
 
     try {
       processEngineConfiguration.setAuthorizationEnabled(true);
@@ -493,12 +493,12 @@ class LdapUserQueryTest {
       assertThat(userNames).doesNotContain(users.get(0).getId());
       userNames.add(users.get(0).getId());
 
-      identityService.setAuthenticatedUserId("daniel");
+      identityService.setAuthenticatedUserId("kermit");
 
       users = identityService.createUserQuery().listPage(0, 2);
       assertThat(users).hasSize(1);
 
-      assertThat(users.get(0).getId()).isEqualTo("daniel");
+      assertThat(users.get(0).getId()).isEqualTo("kermit");
 
       users = identityService.createUserQuery().listPage(2, 2);
       assertThat(users).isEmpty();

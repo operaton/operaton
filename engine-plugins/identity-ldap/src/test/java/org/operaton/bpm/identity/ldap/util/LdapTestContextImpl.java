@@ -1,3 +1,18 @@
+/*
+ * Copyright 2025 the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.operaton.bpm.identity.ldap.util;
 
 import com.unboundid.ldap.sdk.Entry;
@@ -84,9 +99,9 @@ public class LdapTestContextImpl implements LdapTestContext {
 
             addGroupEntry(connection, OFFICE_BERLIN);
 
-            var romanDn = addUserUidEntry(connection, "roman", OFFICE_BERLIN, "Roman", "Smirnow", "roman@operaton.org");
-            var robertDn = addUserUidEntry(connection, "robert", OFFICE_BERLIN, "Robert", "Gimbel", "robert@operaton.org");
-            var danielDn = addUserUidEntry(connection, "daniel", OFFICE_BERLIN, "Daniel", "Meyer", "daniel@operaton.org");
+            var kermitDn = addUserUidEntry(connection, "kermit", OFFICE_BERLIN, "Kermit", "The Frog", "kermit@operaton.org");
+            var camillaDn = addUserUidEntry(connection, "camilla", OFFICE_BERLIN, "Camilla", "The Chicken", "camilla@operaton.org");
+            var samDn = addUserUidEntry(connection, "sam", OFFICE_BERLIN, "Sam", "Eagle", "sam@operaton.org");
             var gonzoDn = addUserUidEntry(connection, "gonzo", OFFICE_BERLIN, "Gonzo", "The Great", "gonzo@operaton.org");
             var rowlfDn = addUserUidEntry(connection, "rowlf", OFFICE_BERLIN, "Rowlf", "The Dog", "rowlf@operaton.org");
             var pepeDn = addUserUidEntry(connection, "pepe", OFFICE_BERLIN, "Pepe", "The King Prawn", "pepe@operaton.org");
@@ -99,31 +114,31 @@ public class LdapTestContextImpl implements LdapTestContext {
 
             addGroupEntry(connection, OFFICE_HOME);
 
-            var davidItDn = addUserUidEntry(connection, "david(IT)", OFFICE_HOME, "David", "Howe\\IT\\", "david@operaton.org");
-            var rueckerDn = addUserUidEntry(connection, "ruecker", OFFICE_HOME, "Bernd", "Ruecker", "ruecker@operaton.org");
+            var uncledeadlyItDn = addUserUidEntry(connection, "uncledeadly(IT)", OFFICE_HOME, "Uncle", "Deadly\\IT\\", "uncledeadly@operaton.org");
+            var boboDn = addUserUidEntry(connection, "bobo", OFFICE_HOME, "Bobo", "The Bear", "bobo@operaton.org");
 
             addGroupEntry(connection, OFFICE_EXTERNAL);
 
             var fozzieDn = addUserCnEntry(connection, "fozzie", OFFICE_EXTERNAL, "Bear", "Fozzie", "fozzie@operaton.org");
 
-            addRoleEntry(connection, "management", rueckerDn, robertDn, danielDn);
-            addRoleEntry(connection, "development", romanDn, danielDn, oscarDn);
-            addRoleEntry(connection, "consulting", rueckerDn);
-            addRoleEntry(connection, "sales", rueckerDn, monsterDn, davidItDn);
+            addRoleEntry(connection, "management", boboDn, camillaDn, samDn);
+            addRoleEntry(connection, "development", kermitDn, samDn, oscarDn);
+            addRoleEntry(connection, "consulting", boboDn);
+            addRoleEntry(connection, "sales", boboDn, monsterDn, uncledeadlyItDn);
             addRoleEntry(connection, "external", fozzieDn);
-            addRoleEntry(connection, "all", rueckerDn, robertDn, danielDn,
-                    romanDn, oscarDn, monsterDn,
-                    davidItDn, fozzieDn, gonzoDn, rowlfDn, pepeDn, rizzoDn);
+            addRoleEntry(connection, "all", boboDn, camillaDn, samDn,
+                    kermitDn, oscarDn, monsterDn,
+                    uncledeadlyItDn, fozzieDn, gonzoDn, rowlfDn, pepeDn, rizzoDn);
 
             addGroupEntry(connection, OFFICE_BERKELEY);
 
             for (int i = 1; i <= numberOfAdditionalUsers; i++) {
-                String lastName = "fisher" + "%04d".formatted(i);
-                addUserUidEntry(connection, "jan.fisher." + lastName,
+                String lastName = "hogthrob" + "%04d".formatted(i);
+                addUserUidEntry(connection, "link.hogthrob." + lastName,
                         OFFICE_BERKELEY,
-                        "jan",
+                        "Link",
                         lastName,
-                        "jan.fisher" + lastName + "@operaton.org");
+                        "link.hogthrob" + lastName + "@operaton.org");
             }
 
             for (int i = 1; i <= numberOfAdditionalGroups; i++) {

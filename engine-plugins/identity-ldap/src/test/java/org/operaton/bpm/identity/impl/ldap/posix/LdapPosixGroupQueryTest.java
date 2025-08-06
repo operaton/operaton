@@ -90,7 +90,7 @@ class LdapPosixGroupQueryTest {
 
     // then
     assertThat(result).hasSize(3);
-    assertThat(result).extracting("id").containsOnly("fozzie", "monster", "ruecker");
+    assertThat(result).extracting("id").containsOnly("fozzie", "monster", "bobo");
   }
 
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2025 the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.operaton.bpm.identity.ldap.util;
 
 import com.unboundid.ldap.sdk.Entry;
@@ -83,25 +98,25 @@ public class LdapTestPosixContextImpl implements LdapTestContext {
 
             addGroupEntry(connection, LdapTestPosixContextImpl.OFFICE_BERLIN);
 
-            addUserUidEntry(connection, "daniel", LdapTestPosixContextImpl.OFFICE_BERLIN, "Daniel", "Meyer", "daniel@operaton.org");
+            addUserUidEntry(connection, "kermit", LdapTestPosixContextImpl.OFFICE_BERLIN, "Kermit", "The Frog", "daniel@operaton.org");
 
             addGroupEntry(connection, PEOPLE_GROUP);
-            addUserUidEntry(connection, "ruecker", PEOPLE_GROUP, "Bernd", "Ruecker", "ruecker@operaton.org");
+            addUserUidEntry(connection, "bobo", PEOPLE_GROUP, "Bobo", "The Bear", "bobo@operaton.org");
             addUserUidEntry(connection, "monster", PEOPLE_GROUP, "Monster", "Cookie", "monster@operaton.org");
             var fozzieDn = addUserUidEntry(connection, "fozzie", PEOPLE_GROUP, "Bear", "Fozzie", "fozzie@operaton.org");
 
             addGroupEntry(connection, GROUP_GROUP);
 
             addPosixGroupEntry(connection, "1", "posix-group-without-members");
-            addPosixGroupEntry(connection, "2", "posix-group-with-members", "fozzie", "monster", "ruecker");
+            addPosixGroupEntry(connection, "2", "posix-group-with-members", "fozzie", "monster", "bobo");
 
             for (int i = 1; i <= numberOfAdditionalUsers; i++) {
-                String lastName = "fisher" + "%04d".formatted(i);
-                addUserUidEntry(connection, "jan.fisher." + lastName,
+                String lastName = "hogthrob" + "%04d".formatted(i);
+                addUserUidEntry(connection, "link.hogthrob." + lastName,
                         LdapTestPosixContextImpl.OFFICE_BERKELEY,
-                        "jan",
+                        "link",
                         lastName,
-                        "jan.fisher" + lastName + "@operaton.org");
+                        "link.hogthrob" + lastName + "@operaton.org");
             }
 
             for (int i = 1; i <= numberOfAdditionalGroups; i++) {

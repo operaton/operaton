@@ -2357,16 +2357,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     HistoryCleanupJobHandler historyCleanupJobHandler = new HistoryCleanupJobHandler();
     jobHandlers.put(historyCleanupJobHandler.getType(), historyCleanupJobHandler);
 
-    for (JobHandler batchHandler : batchHandlers.values()) {
-      jobHandlers.put(batchHandler.getType(), batchHandler);
-    }
+    batchHandlers.values().forEach(jobHandler -> jobHandlers.put(jobHandler.getType(), jobHandler));
 
     // if we have custom job handlers, register them
-    if (getCustomJobHandlers() != null) {
-      for (JobHandler customJobHandler : getCustomJobHandlers()) {
-        jobHandlers.put(customJobHandler.getType(), customJobHandler);
-      }
-    }
+    getCustomJobHandlers().forEach(jobHandler -> jobHandlers.put(jobHandler.getType(), jobHandler));
 
     jobExecutor.setAutoActivate(jobExecutorActivate);
 
@@ -3436,7 +3430,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   public List<JobHandler> getCustomJobHandlers() {
-    return customJobHandlers;
+    return customJobHandlers != null ? customJobHandlers : Collections.emptyList();
   }
 
   public ProcessEngineConfigurationImpl setCustomJobHandlers(List<JobHandler> customJobHandlers) {

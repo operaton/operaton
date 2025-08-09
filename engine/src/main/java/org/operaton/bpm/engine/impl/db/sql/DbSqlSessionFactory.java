@@ -24,10 +24,7 @@ import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
 import org.operaton.bpm.engine.impl.util.ClassNameUtil;
 
 import java.sql.Connection;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -48,67 +45,67 @@ public class DbSqlSessionFactory implements SessionFactory {
 
   protected static final Map<String, Map<String, String>> databaseSpecificStatements = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificLimitBeforeStatements = new HashMap<>();
-  public static final Map<String, String> databaseSpecificLimitAfterStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitBeforeStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitAfterStatements = new HashMap<>();
   //limit statements that can be used to select first N rows without OFFSET
-  public static final Map<String, String> databaseSpecificLimitBeforeWithoutOffsetStatements = new HashMap<>();
-  public static final Map<String, String> databaseSpecificLimitAfterWithoutOffsetStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitBeforeWithoutOffsetStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitAfterWithoutOffsetStatements = new HashMap<>();
   // limitAfter statements that can be used with subqueries
-  public static final Map<String, String> databaseSpecificInnerLimitAfterStatements = new HashMap<>();
-  public static final Map<String, String> databaseSpecificLimitBetweenStatements = new HashMap<>();
-  public static final Map<String, String> databaseSpecificLimitBetweenFilterStatements = new HashMap<>();
-  public static final Map<String, String> databaseSpecificLimitBetweenAcquisitionStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificInnerLimitAfterStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitBetweenStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitBetweenFilterStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitBetweenAcquisitionStatements = new HashMap<>();
   // limit before and after for update queries
-  public static final Map<String, String> databaseSpecificLimitBeforeInUpdate = new HashMap<>();
-  public static final Map<String, String> databaseSpecificLimitAfterInUpdate = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitBeforeInUpdate = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitAfterInUpdate = new HashMap<>();
   // count distinct statements
-  public static final Map<String, String> databaseSpecificCountDistinctBeforeStart = new HashMap<>();
-  public static final Map<String, String> databaseSpecificCountDistinctBeforeEnd = new HashMap<>();
-  public static final Map<String, String> databaseSpecificCountDistinctAfterEnd = new HashMap<>();
+  private static final Map<String, String> databaseSpecificCountDistinctBeforeStart = new HashMap<>();
+  private static final Map<String, String> databaseSpecificCountDistinctBeforeEnd = new HashMap<>();
+  private static final Map<String, String> databaseSpecificCountDistinctAfterEnd = new HashMap<>();
 
-  public static final Map<String, String> optimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements = new HashMap<>();
-  public static final Map<String, String> optimizeDatabaseSpecificLimitAfterWithoutOffsetStatements = new HashMap<>();
+  private static final Map<String, String> optimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements = new HashMap<>();
+  private static final Map<String, String> optimizeDatabaseSpecificLimitAfterWithoutOffsetStatements = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificEscapeChar = new HashMap<>();
+  private static final Map<String, String> databaseSpecificEscapeChar = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificOrderByStatements = new HashMap<>();
-  public static final Map<String, String> databaseSpecificLimitBeforeNativeQueryStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificOrderByStatements = new HashMap<>();
+  private static final Map<String, String> databaseSpecificLimitBeforeNativeQueryStatements = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificBitAnd1 = new HashMap<>();
-  public static final Map<String, String> databaseSpecificBitAnd2 = new HashMap<>();
-  public static final Map<String, String> databaseSpecificBitAnd3 = new HashMap<>();
+  private static final Map<String, String> databaseSpecificBitAnd1 = new HashMap<>();
+  private static final Map<String, String> databaseSpecificBitAnd2 = new HashMap<>();
+  private static final Map<String, String> databaseSpecificBitAnd3 = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificDatepart1 = new HashMap<>();
-  public static final Map<String, String> databaseSpecificDatepart2 = new HashMap<>();
-  public static final Map<String, String> databaseSpecificDatepart3 = new HashMap<>();
+  private static final Map<String, String> databaseSpecificDatepart1 = new HashMap<>();
+  private static final Map<String, String> databaseSpecificDatepart2 = new HashMap<>();
+  private static final Map<String, String> databaseSpecificDatepart3 = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificDummyTable = new HashMap<>();
+  private static final Map<String, String> databaseSpecificDummyTable = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificIfNull = new HashMap<>();
+  private static final Map<String, String> databaseSpecificIfNull = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificTrueConstant = new HashMap<>();
-  public static final Map<String, String> databaseSpecificFalseConstant = new HashMap<>();
+  private static final Map<String, String> databaseSpecificTrueConstant = new HashMap<>();
+  private static final Map<String, String> databaseSpecificFalseConstant = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificDistinct = new HashMap<>();
+  private static final Map<String, String> databaseSpecificDistinct = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificNumericCast = new HashMap<>();
+  private static final Map<String, String> databaseSpecificNumericCast = new HashMap<>();
 
-  public static final Map<String, Map<String, String>> dbSpecificConstants = new HashMap<>();
+  private static final Map<String, Map<String, String>> dbSpecificConstants = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificDaysComparator = new HashMap<>();
+  private static final Map<String, String> databaseSpecificDaysComparator = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificCollationForCaseSensitivity = new HashMap<>();
+  private static final Map<String, String> databaseSpecificCollationForCaseSensitivity = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificAuthJoinStart = new HashMap<>();
-  public static final Map<String, String> databaseSpecificAuthJoinEnd = new HashMap<>();
-  public static final Map<String, String> databaseSpecificAuthJoinSeparator = new HashMap<>();
+  private static final Map<String, String> databaseSpecificAuthJoinStart = new HashMap<>();
+  private static final Map<String, String> databaseSpecificAuthJoinEnd = new HashMap<>();
+  private static final Map<String, String> databaseSpecificAuthJoinSeparator = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificAuth1JoinStart = new HashMap<>();
-  public static final Map<String, String> databaseSpecificAuth1JoinEnd = new HashMap<>();
-  public static final Map<String, String> databaseSpecificAuth1JoinSeparator = new HashMap<>();
+  private static final Map<String, String> databaseSpecificAuth1JoinStart = new HashMap<>();
+  private static final Map<String, String> databaseSpecificAuth1JoinEnd = new HashMap<>();
+  private static final Map<String, String> databaseSpecificAuth1JoinSeparator = new HashMap<>();
 
-  public static final Map<String, String> databaseSpecificExtractTimeUnitFromDate = new HashMap<>();
-  public static final Map<String, String> databaseSpecificAuthCheckMethodSuffix = new HashMap<>();
+  private static final Map<String, String> databaseSpecificExtractTimeUnitFromDate = new HashMap<>();
+  private static final Map<String, String> databaseSpecificAuthCheckMethodSuffix = new HashMap<>();
 
 
   /*
@@ -876,6 +873,176 @@ public class DbSqlSessionFactory implements SessionFactory {
   public DbSqlSessionFactory(boolean jdbcBatchProcessing) {
     this.jdbcBatchProcessing = jdbcBatchProcessing;
   }
+
+  public static Map<String, String> getDatabaseSpecificLimitBeforeStatements() {
+    return Collections.unmodifiableMap(databaseSpecificLimitBeforeStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificLimitAfterStatements() {
+    return Collections.unmodifiableMap(databaseSpecificLimitAfterStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificInnerLimitAfterStatements() {
+    return Collections.unmodifiableMap(databaseSpecificInnerLimitAfterStatements);
+  }
+
+  public static Map<String, String> getOptimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements() {
+    return Collections.unmodifiableMap(optimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements);
+  }
+
+  public static Map<String, String> getOptimizeDatabaseSpecificLimitAfterWithoutOffsetStatements() {
+    return Collections.unmodifiableMap(optimizeDatabaseSpecificLimitAfterWithoutOffsetStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificLimitBetweenStatements() {
+    return Collections.unmodifiableMap(databaseSpecificLimitBetweenStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificLimitBetweenFilterStatements() {
+    return Collections.unmodifiableMap(databaseSpecificLimitBetweenFilterStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificLimitBetweenAcquisitionStatements() {
+    return Collections.unmodifiableMap(databaseSpecificLimitBetweenAcquisitionStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificLimitBeforeInUpdate() {
+    return Collections.unmodifiableMap(databaseSpecificLimitBeforeInUpdate);
+  }
+
+  public static Map<String, String> getDatabaseSpecificLimitAfterInUpdate() {
+    return Collections.unmodifiableMap(databaseSpecificLimitAfterInUpdate);
+  }
+
+  public static Map<String, String> getDatabaseSpecificLimitBeforeWithoutOffsetStatements() {
+    return Collections.unmodifiableMap(databaseSpecificLimitBeforeWithoutOffsetStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificLimitAfterWithoutOffsetStatements() {
+    return Collections.unmodifiableMap(databaseSpecificLimitAfterWithoutOffsetStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificOrderByStatements() {
+    return Collections.unmodifiableMap(databaseSpecificOrderByStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificLimitBeforeNativeQueryStatements() {
+    return Collections.unmodifiableMap(databaseSpecificLimitBeforeNativeQueryStatements);
+  }
+
+  public static Map<String, String> getDatabaseSpecificDistinct() {
+    return Collections.unmodifiableMap(databaseSpecificDistinct);
+  }
+
+  public static Map<String, String> getDatabaseSpecificNumericCast() {
+    return Collections.unmodifiableMap(databaseSpecificNumericCast);
+  }
+
+  public static Map<String, String> getDatabaseSpecificCountDistinctBeforeStart() {
+    return Collections.unmodifiableMap(databaseSpecificCountDistinctBeforeStart);
+  }
+
+  public static Map<String, String> getDatabaseSpecificCountDistinctBeforeEnd() {
+    return Collections.unmodifiableMap(databaseSpecificCountDistinctBeforeEnd);
+  }
+
+  public static Map<String, String> getDatabaseSpecificCountDistinctAfterEnd() {
+    return Collections.unmodifiableMap(databaseSpecificCountDistinctAfterEnd);
+  }
+
+  public static Map<String, String> getDatabaseSpecificEscapeChar() {
+    return Collections.unmodifiableMap(databaseSpecificEscapeChar);
+  }
+
+  public static Map<String, String> getDatabaseSpecificBitAnd1() {
+    return Collections.unmodifiableMap(databaseSpecificBitAnd1);
+  }
+
+  public static Map<String, String> getDatabaseSpecificBitAnd2() {
+    return Collections.unmodifiableMap(databaseSpecificBitAnd2);
+  }
+
+  public static Map<String, String> getDatabaseSpecificBitAnd3() {
+    return Collections.unmodifiableMap(databaseSpecificBitAnd3);
+  }
+
+  public static Map<String, String> getDatabaseSpecificDatepart1() {
+    return Collections.unmodifiableMap(databaseSpecificDatepart1);
+  }
+
+  public static Map<String, String> getDatabaseSpecificDatepart2() {
+    return Collections.unmodifiableMap(databaseSpecificDatepart2);
+  }
+
+  public static Map<String, String> getDatabaseSpecificDatepart3() {
+    return Collections.unmodifiableMap(databaseSpecificDatepart3);
+  }
+
+  public static Map<String, String> getDatabaseSpecificDummyTable() {
+    return Collections.unmodifiableMap(databaseSpecificDummyTable);
+  }
+
+  public static Map<String, String> getDatabaseSpecificTrueConstant() {
+    return Collections.unmodifiableMap(databaseSpecificTrueConstant);
+  }
+
+  public static Map<String, String> getDatabaseSpecificFalseConstant() {
+    return Collections.unmodifiableMap(databaseSpecificFalseConstant);
+  }
+
+  public static Map<String, String> getDatabaseSpecificIfNull() {
+    return Collections.unmodifiableMap(databaseSpecificIfNull);
+  }
+
+  public static Map<String, String> getDatabaseSpecificDaysComparator() {
+    return Collections.unmodifiableMap(databaseSpecificDaysComparator);
+  }
+
+  public static Map<String, String> getDatabaseSpecificCollationForCaseSensitivity() {
+    return Collections.unmodifiableMap(databaseSpecificCollationForCaseSensitivity);
+  }
+
+  public static Map<String, String> getDatabaseSpecificAuthJoinStart() {
+    return Collections.unmodifiableMap(databaseSpecificAuthJoinStart);
+  }
+
+  public static Map<String, String> getDatabaseSpecificAuthJoinEnd() {
+    return Collections.unmodifiableMap(databaseSpecificAuthJoinEnd);
+  }
+
+  public static Map<String, String> getDatabaseSpecificAuthJoinSeparator() {
+    return Collections.unmodifiableMap(databaseSpecificAuthJoinSeparator);
+  }
+
+  public static Map<String, String> getDatabaseSpecificAuth1JoinStart() {
+    return Collections.unmodifiableMap(databaseSpecificAuth1JoinStart);
+  }
+
+  public static Map<String, String> getDatabaseSpecificAuth1JoinEnd() {
+    return Collections.unmodifiableMap(databaseSpecificAuth1JoinEnd);
+  }
+
+  public static Map<String, String> getDatabaseSpecificAuth1JoinSeparator() {
+    return Collections.unmodifiableMap(databaseSpecificAuth1JoinSeparator);
+  }
+
+  public static Map<String, String> getDatabaseSpecificAuthCheckMethodSuffix() {
+    return Collections.unmodifiableMap(databaseSpecificAuthCheckMethodSuffix);
+  }
+
+  public static Map<String, String> getDatabaseSpecificExtractTimeUnitFromDate() {
+    return Collections.unmodifiableMap(databaseSpecificExtractTimeUnitFromDate);
+  }
+
+  public static Map<String, Map<String, String>> getDatabaseSpecificStatements() {
+    return Collections.unmodifiableMap(databaseSpecificStatements);
+  }
+
+  public static Map<String, Map<String, String>> getDatabaseSpecificConstants() {
+    return Collections.unmodifiableMap(dbSpecificConstants);
+  }
+
+
 
   @Override
   public Class< ? > getSessionType() {

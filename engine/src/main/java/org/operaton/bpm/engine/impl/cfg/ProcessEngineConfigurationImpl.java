@@ -1881,61 +1881,61 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public static void initSqlSessionFactoryProperties(Properties properties, String databaseTablePrefix, String databaseType) {
 
     if (databaseType != null) {
-      properties.put("limitBefore", DbSqlSessionFactory.databaseSpecificLimitBeforeStatements.get(databaseType));
-      properties.put("limitAfter", DbSqlSessionFactory.databaseSpecificLimitAfterStatements.get(databaseType));
-      properties.put("limitBeforeWithoutOffset", DbSqlSessionFactory.databaseSpecificLimitBeforeWithoutOffsetStatements.get(databaseType));
-      properties.put("limitAfterWithoutOffset", DbSqlSessionFactory.databaseSpecificLimitAfterWithoutOffsetStatements.get(databaseType));
+      properties.put("limitBefore", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeStatements().get(databaseType));
+      properties.put("limitAfter", DbSqlSessionFactory.getDatabaseSpecificLimitAfterStatements().get(databaseType));
+      properties.put("limitBeforeWithoutOffset", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeWithoutOffsetStatements().get(databaseType));
+      properties.put("limitAfterWithoutOffset", DbSqlSessionFactory.getDatabaseSpecificLimitAfterWithoutOffsetStatements().get(databaseType));
 
-      properties.put("optimizeLimitBeforeWithoutOffset", DbSqlSessionFactory.optimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements.get(databaseType));
-      properties.put("optimizeLimitAfterWithoutOffset", DbSqlSessionFactory.optimizeDatabaseSpecificLimitAfterWithoutOffsetStatements.get(databaseType));
-      properties.put("innerLimitAfter", DbSqlSessionFactory.databaseSpecificInnerLimitAfterStatements.get(databaseType));
-      properties.put("limitBetween", DbSqlSessionFactory.databaseSpecificLimitBetweenStatements.get(databaseType));
-      properties.put("limitBetweenFilter", DbSqlSessionFactory.databaseSpecificLimitBetweenFilterStatements.get(databaseType));
-      properties.put("limitBetweenAcquisition", DbSqlSessionFactory.databaseSpecificLimitBetweenAcquisitionStatements.get(databaseType));
-      properties.put("orderBy", DbSqlSessionFactory.databaseSpecificOrderByStatements.get(databaseType));
-      properties.put("limitBeforeNativeQuery", DbSqlSessionFactory.databaseSpecificLimitBeforeNativeQueryStatements.get(databaseType));
-      properties.put("distinct", DbSqlSessionFactory.databaseSpecificDistinct.get(databaseType));
-      properties.put("numericCast", DbSqlSessionFactory.databaseSpecificNumericCast.get(databaseType));
+      properties.put("optimizeLimitBeforeWithoutOffset", DbSqlSessionFactory.getOptimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements().get(databaseType));
+      properties.put("optimizeLimitAfterWithoutOffset", DbSqlSessionFactory.getOptimizeDatabaseSpecificLimitAfterWithoutOffsetStatements().get(databaseType));
+      properties.put("innerLimitAfter", DbSqlSessionFactory.getDatabaseSpecificInnerLimitAfterStatements().get(databaseType));
+      properties.put("limitBetween", DbSqlSessionFactory.getDatabaseSpecificLimitBetweenStatements().get(databaseType));
+      properties.put("limitBetweenFilter", DbSqlSessionFactory.getDatabaseSpecificLimitBetweenFilterStatements().get(databaseType));
+      properties.put("limitBetweenAcquisition", DbSqlSessionFactory.getDatabaseSpecificLimitBetweenAcquisitionStatements().get(databaseType));
+      properties.put("orderBy", DbSqlSessionFactory.getDatabaseSpecificOrderByStatements().get(databaseType));
+      properties.put("limitBeforeNativeQuery", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeNativeQueryStatements().get(databaseType));
+      properties.put("distinct", DbSqlSessionFactory.getDatabaseSpecificDistinct().get(databaseType));
+      properties.put("numericCast", DbSqlSessionFactory.getDatabaseSpecificNumericCast().get(databaseType));
 
-      properties.put("limitBeforeInUpdate", DbSqlSessionFactory.databaseSpecificLimitBeforeInUpdate.get(databaseType));
-      properties.put("limitAfterInUpdate", DbSqlSessionFactory.databaseSpecificLimitAfterInUpdate.get(databaseType));
+      properties.put("limitBeforeInUpdate", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeInUpdate().get(databaseType));
+      properties.put("limitAfterInUpdate", DbSqlSessionFactory.getDatabaseSpecificLimitAfterInUpdate().get(databaseType));
 
-      properties.put("countDistinctBeforeStart", DbSqlSessionFactory.databaseSpecificCountDistinctBeforeStart.get(databaseType));
-      properties.put("countDistinctBeforeEnd", DbSqlSessionFactory.databaseSpecificCountDistinctBeforeEnd.get(databaseType));
-      properties.put("countDistinctAfterEnd", DbSqlSessionFactory.databaseSpecificCountDistinctAfterEnd.get(databaseType));
+      properties.put("countDistinctBeforeStart", DbSqlSessionFactory.getDatabaseSpecificCountDistinctBeforeStart().get(databaseType));
+      properties.put("countDistinctBeforeEnd", DbSqlSessionFactory.getDatabaseSpecificCountDistinctBeforeEnd().get(databaseType));
+      properties.put("countDistinctAfterEnd", DbSqlSessionFactory.getDatabaseSpecificCountDistinctAfterEnd().get(databaseType));
 
-      properties.put("escapeChar", DbSqlSessionFactory.databaseSpecificEscapeChar.get(databaseType));
+      properties.put("escapeChar", DbSqlSessionFactory.getDatabaseSpecificEscapeChar().get(databaseType));
 
-      properties.put("bitand1", DbSqlSessionFactory.databaseSpecificBitAnd1.get(databaseType));
-      properties.put("bitand2", DbSqlSessionFactory.databaseSpecificBitAnd2.get(databaseType));
-      properties.put("bitand3", DbSqlSessionFactory.databaseSpecificBitAnd3.get(databaseType));
+      properties.put("bitand1", DbSqlSessionFactory.getDatabaseSpecificBitAnd1().get(databaseType));
+      properties.put("bitand2", DbSqlSessionFactory.getDatabaseSpecificBitAnd2().get(databaseType));
+      properties.put("bitand3", DbSqlSessionFactory.getDatabaseSpecificBitAnd3().get(databaseType));
 
-      properties.put("datepart1", DbSqlSessionFactory.databaseSpecificDatepart1.get(databaseType));
-      properties.put("datepart2", DbSqlSessionFactory.databaseSpecificDatepart2.get(databaseType));
-      properties.put("datepart3", DbSqlSessionFactory.databaseSpecificDatepart3.get(databaseType));
+      properties.put("datepart1", DbSqlSessionFactory.getDatabaseSpecificDatepart1().get(databaseType));
+      properties.put("datepart2", DbSqlSessionFactory.getDatabaseSpecificDatepart2().get(databaseType));
+      properties.put("datepart3", DbSqlSessionFactory.getDatabaseSpecificDatepart3().get(databaseType));
 
-      properties.put("trueConstant", DbSqlSessionFactory.databaseSpecificTrueConstant.get(databaseType));
-      properties.put("falseConstant", DbSqlSessionFactory.databaseSpecificFalseConstant.get(databaseType));
+      properties.put("trueConstant", DbSqlSessionFactory.getDatabaseSpecificTrueConstant().get(databaseType));
+      properties.put("falseConstant", DbSqlSessionFactory.getDatabaseSpecificFalseConstant().get(databaseType));
 
-      properties.put("dbSpecificDummyTable", DbSqlSessionFactory.databaseSpecificDummyTable.get(databaseType));
-      properties.put("dbSpecificIfNullFunction", DbSqlSessionFactory.databaseSpecificIfNull.get(databaseType));
+      properties.put("dbSpecificDummyTable", DbSqlSessionFactory.getDatabaseSpecificDummyTable().get(databaseType));
+      properties.put("dbSpecificIfNullFunction", DbSqlSessionFactory.getDatabaseSpecificIfNull().get(databaseType));
 
-      properties.put("dayComparator", DbSqlSessionFactory.databaseSpecificDaysComparator.get(databaseType));
+      properties.put("dayComparator", DbSqlSessionFactory.getDatabaseSpecificDaysComparator().get(databaseType));
 
-      properties.put("collationForCaseSensitivity", DbSqlSessionFactory.databaseSpecificCollationForCaseSensitivity.get(databaseType));
+      properties.put("collationForCaseSensitivity", DbSqlSessionFactory.getDatabaseSpecificCollationForCaseSensitivity().get(databaseType));
 
-      properties.put("authJoinStart", DbSqlSessionFactory.databaseSpecificAuthJoinStart.get(databaseType));
-      properties.put("authJoinEnd", DbSqlSessionFactory.databaseSpecificAuthJoinEnd.get(databaseType));
-      properties.put("authJoinSeparator", DbSqlSessionFactory.databaseSpecificAuthJoinSeparator.get(databaseType));
+      properties.put("authJoinStart", DbSqlSessionFactory.getDatabaseSpecificAuthJoinStart().get(databaseType));
+      properties.put("authJoinEnd", DbSqlSessionFactory.getDatabaseSpecificAuthJoinEnd().get(databaseType));
+      properties.put("authJoinSeparator", DbSqlSessionFactory.getDatabaseSpecificAuthJoinSeparator().get(databaseType));
 
-      properties.put("authJoin1Start", DbSqlSessionFactory.databaseSpecificAuth1JoinStart.get(databaseType));
-      properties.put("authJoin1End", DbSqlSessionFactory.databaseSpecificAuth1JoinEnd.get(databaseType));
-      properties.put("authJoin1Separator", DbSqlSessionFactory.databaseSpecificAuth1JoinSeparator.get(databaseType));
+      properties.put("authJoin1Start", DbSqlSessionFactory.getDatabaseSpecificAuth1JoinStart().get(databaseType));
+      properties.put("authJoin1End", DbSqlSessionFactory.getDatabaseSpecificAuth1JoinEnd().get(databaseType));
+      properties.put("authJoin1Separator", DbSqlSessionFactory.getDatabaseSpecificAuth1JoinSeparator().get(databaseType));
 
-      properties.put("extractTimeUnitFromDate", DbSqlSessionFactory.databaseSpecificExtractTimeUnitFromDate.get(databaseType));
-      properties.put("authCheckMethodSuffix", DbSqlSessionFactory.databaseSpecificAuthCheckMethodSuffix.getOrDefault(databaseType, ""));
+      properties.put("extractTimeUnitFromDate", DbSqlSessionFactory.getDatabaseSpecificExtractTimeUnitFromDate().get(databaseType));
+      properties.put("authCheckMethodSuffix", DbSqlSessionFactory.getDatabaseSpecificAuthCheckMethodSuffix().getOrDefault(databaseType, ""));
 
-      Map<String, String> constants = DbSqlSessionFactory.dbSpecificConstants.get(databaseType);
+      Map<String, String> constants = DbSqlSessionFactory.getDatabaseSpecificConstants().get(databaseType);
       for (Entry<String, String> entry : constants.entrySet()) {
         properties.put(entry.getKey(), entry.getValue());
       }

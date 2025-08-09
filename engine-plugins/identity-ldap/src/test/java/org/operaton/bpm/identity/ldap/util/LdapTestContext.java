@@ -21,50 +21,46 @@ package org.operaton.bpm.identity.ldap.util;
 public interface LdapTestContext {
 
     /**
-     * Returns total number of generated users added to currently active LDAP test instance
-     * @return <code>int</code> total number of generated users
+     * Returns the total number of users generated and added to the currently active LDAP test instance
+     * @return total number of generated users
      */
     int numberOfGeneratedUsers();
 
     /**
-     * Returns total number of generated groups added to currently active LDAP test instance
-     * @return <code>int</code> total number of generated groups
+     * Returns the total number of groups generated and added to the currently active LDAP test instance
+     * @return total number of generated groups
      */
     int numberOfGeneratedGroups();
 
     /**
-     * Returns total number of generated roles added to currently active LDAP test instance
-     * @return <code>int</code> total number of generated roles
+     * Returns the total number of roles generated and added to the currently active LDAP test instance
+     * @return total number of generated roles
      */
     int numberOfGeneratedRoles();
 
     /**
-     * Modifies context to add number of additional users when populating LDAP test instance.
-     * Must be called before <b>initialize</b> Method
-     * @param numberOfAdditionalUsers <code>int</code> number of additional users to add to currently active LDAP test instance
-     * @return <code>this</code> itself
+     * Modifies the context to add a number of additional users when populating the LDAP test instance.
+     * This method must be called before {@link #initialize()}.
+     * @param numberOfAdditionalUsers Number of additional users to be added to the currently active LDAP test instance
      */
     LdapTestContext withAdditionalUsers(int numberOfAdditionalUsers);
 
     /**
-     * Modifies context to add number of additional groups when populating LDAP test instance.
-     * Must be called before <b>initialize</b> Method
-     * @param numberOfAdditionalGroups <code>int</code> number of additional groups to add to currently active LDAP test instance
-     * @return <code>this</code> itself
+     * Modifies the context to add a number of additional groups when populating the LDAP test instance.
+     * This method must be called before {@link #initialize()}.
+     * @param numberOfAdditionalGroups Number of additional groups to be added to the currently active LDAP test instance
      */
     LdapTestContext withAdditionalGroups(int numberOfAdditionalGroups);
 
     /**
-     * Modifies context to add number of additional roles when populating LDAP test instance.
-     * Must be called before <b>initialize</b> Method
-     * @param numberOfAdditionalRoles <code>int</code> number of additional roles to add to currently active LDAP test instance
-     * @return <code>this</code> itself
+     * Modifies the context to add a number of additional roles when populating the LDAP test instance.
+     * This method must be called before {@link #initialize()}.
+     * @param numberOfAdditionalRoles Number of additional roles to be added to the currently active LDAP test instance
      */
     LdapTestContext withAdditionalRoles(int numberOfAdditionalRoles);
 
     /**
-     * Attempts to connect to LDAP test instance and populate it with test data
-     * @return <code>this</code> itself
+     * Connects to an LDAP test instance and populates it with test data
      */
     LdapTestContext initialize();
 }

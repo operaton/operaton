@@ -18,11 +18,12 @@ package org.operaton.bpm.identity.ldap.util;
 import com.unboundid.ldap.sdk.Entry;
 import com.unboundid.ldap.sdk.LDAPConnection;
 import com.unboundid.ldap.sdk.LDAPException;
+import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
 
 import java.nio.charset.StandardCharsets;
 
 /**
- * Implementation {@link LdapTestContext} for test with posix groups
+ * Implementation of the {@link LdapTestContext} for testing with posix groups
  */
 public class LdapTestPosixContextImpl implements LdapTestContext {
 
@@ -98,7 +99,7 @@ public class LdapTestPosixContextImpl implements LdapTestContext {
 
             addGroupEntry(connection, LdapTestPosixContextImpl.OFFICE_BERLIN);
 
-            addUserUidEntry(connection, "kermit", LdapTestPosixContextImpl.OFFICE_BERLIN, "Kermit", "The Frog", "daniel@operaton.org");
+            addUserUidEntry(connection, "kermit", LdapTestPosixContextImpl.OFFICE_BERLIN, "Kermit", "The Frog", "kermit@operaton.org");
 
             addGroupEntry(connection, PEOPLE_GROUP);
             addUserUidEntry(connection, "bobo", PEOPLE_GROUP, "Bobo", "The Bear", "bobo@operaton.org");
@@ -131,7 +132,7 @@ public class LdapTestPosixContextImpl implements LdapTestContext {
 
             return this;
         } catch (Exception e) {
-            throw new RuntimeException("Could not initialize LDAP Context",e);
+            throw new IdentityProviderException("Could not initialize LDAP Context",e);
         }
     }
 

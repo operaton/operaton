@@ -28,7 +28,8 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 /**
- * Extension to configure and setup containerized LDAP test instance and populate it with data
+ * This extension is used to configure and set up a containerised LDAP test instance,
+ * and to populate it with data
  */
 public class LdapTestExtension implements BeforeAllCallback, AfterAllCallback {
 
@@ -37,9 +38,9 @@ public class LdapTestExtension implements BeforeAllCallback, AfterAllCallback {
     private static final String ADMIN_DN = "cn=admin,dc=operaton,dc=org";
     private LdapTestContext ldapTestContextContext;
 
-    private int additionalMumberOfUsers = 0;
-    private int additionalMumberOfGroups = 0;
-    private int additionalMumberOfRoles = 0;
+    private int additionalNumberOfUsers = 0;
+    private int additionalNumberOfGroups = 0;
+    private int additionalNumberOfRoles = 0;
     private boolean posixContext = false;
 
     private final GenericContainer<?> ldapContainer = new GenericContainer<>("osixia/openldap:latest")
@@ -52,7 +53,7 @@ public class LdapTestExtension implements BeforeAllCallback, AfterAllCallback {
             .withClasspathResourceMapping("ldif/01-enable-sssvlv.ldif",
                                          "/container/service/slapd/assets/config/bootstrap/ldif/custom/01-enable-sssvlv.ldif",
                                  BindMode.READ_ONLY)
-            // Provides "ObjectClasses" with attributes and that can be sorted
+            // Provides "ObjectClasses" with attributes that can be sorted
             // (Basic cn, sn and mail do not have ordering active in this container)
             .withClasspathResourceMapping("ldif/02-enable-custom-attributes.ldif",
                                                   "/container/service/slapd/assets/config/bootstrap/ldif/custom/02-enable-custom-attributes.ldif",
@@ -82,61 +83,58 @@ public class LdapTestExtension implements BeforeAllCallback, AfterAllCallback {
                     BASE_DN,
                     ADMIN_PASSWORD);
         }
-        ldapTestContextContext = ctx.withAdditionalUsers(additionalMumberOfUsers)
-                .withAdditionalGroups(additionalMumberOfGroups)
-                .withAdditionalRoles(additionalMumberOfRoles)
+        ldapTestContextContext = ctx.withAdditionalUsers(additionalNumberOfUsers)
+                .withAdditionalGroups(additionalNumberOfGroups)
+                .withAdditionalRoles(additionalNumberOfRoles)
                 .initialize();
     }
 
     /**
-     * Injects LDAP instance access data to LdapIdentityProviderPlugin if it is available
-     * @param peConfig current {@link ProcessEngineConfigurationImpl} configuration instance
+     * If available, injects LDAP instance access data to the LdapIdentityProviderPlugin
+     * @param peConfig {@link ProcessEngineConfigurationImpl} configuration instance
      */
     public void injectLdapUrlIntoProcessEngineConfiguration(ProcessEngineConfigurationImpl peConfig) {
-        for(var plugin : peConfig.getProcessEnginePlugins()) {
-            if(plugin instanceof LdapIdentityProviderPlugin ldapPlugin) {
-                ldapPlugin.setServerUrl( "ldap://" + ldapContainer.getHost() + ":" + ldapContainer.getFirstMappedPort());
-                ldapPlugin.setManagerDn(ADMIN_DN);
-                ldapPlugin.setManagerPassword(ADMIN_PASSWORD);
-                ldapPlugin.setBaseDn(BASE_DN);
-                break;
-            }
-        }
+        peConfig.getProcessEnginePlugins().stream()
+                .filter(plugin -> plugin instanceof LdapIdentityProviderPlugin)
+                .map(LdapIdentityProviderPlugin.class::cast)
+                .findFirst()
+                .ifPresent(ldapPlugin -> {
+                    ldapPlugin.setServerUrl( "ldap://" + ldapContainer.getHost() + ":" + ldapContainer.getFirstMappedPort());
+                    ldapPlugin.setManagerDn(ADMIN_DN);
+                    ldapPlugin.setManagerPassword(ADMIN_PASSWORD);
+                    ldapPlugin.setBaseDn(BASE_DN);
+                });
     }
 
     /**
-     * Modifies number of additional users to add to LDAP test instance
-     * @param numberOfAdditionalUsers <code>int</code> number of additional users to add
-     * @return <code>this</code> itself
+     * Modifies the number of additional users to be added to the LDAP test instance
+     * @param numberOfAdditionalUsers number of additional users to add
      */
     public LdapTestExtension withAdditionalNumberOfUsers(int numberOfAdditionalUsers) {
-        this.additionalMumberOfUsers = numberOfAdditionalUsers;
+        this.additionalNumberOfUsers = numberOfAdditionalUsers;
         return this;
     }
 
     /**
-     * Modifies number of additional groups to add to LDAP test instance
-     * @param numberOfAdditionalGroups <code>int</code> number of additional groups to add
-     * @return <code>this</code> itself
+     * Modifies the number of additional groups to be added to the LDAP test instance
+     * @param numberOfAdditionalGroups number of additional groups to add
      */
     public LdapTestExtension withAdditionalNumberOfGroups(int numberOfAdditionalGroups) {
-        this.additionalMumberOfGroups = numberOfAdditionalGroups;
+        this.additionalNumberOfGroups = numberOfAdditionalGroups;
         return this;
     }
 
     /**
-     * Modifies number of additional roles to add to LDAP test instance
-     * @param numberOfAdditionalRoles <code>int</code> number of additional roles to add
-     * @return <code>this</code> itself
+     * Modifies the number of additional roles to be added to the LDAP test instance
+     * @param numberOfAdditionalRoles number of additional roles to add
      */
     public LdapTestExtension withAdditionalNumberOfRoles(int numberOfAdditionalRoles) {
-        this.additionalMumberOfRoles = numberOfAdditionalRoles;
+        this.additionalNumberOfRoles = numberOfAdditionalRoles;
         return this;
     }
 
     /**
-     * Modifies if LDAP should be populated with posix groups
-     * @return <code>this</code> itself
+     * Modifies whether the LDAP should be populated with POSIX groups
      */
     public LdapTestExtension withPosixContext() {
         this.posixContext = true;
@@ -144,7 +142,7 @@ public class LdapTestExtension implements BeforeAllCallback, AfterAllCallback {
     }
 
     /**
-     * Provides access to currently active {@link LdapTestContext}
+     * Provides access to the currently active context {@link LdapTestContext}
      * @return currently active LDAP test context
      */
     public LdapTestContext getLdapTestContext() {

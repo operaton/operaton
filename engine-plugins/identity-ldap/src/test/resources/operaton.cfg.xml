@@ -33,7 +33,7 @@
   
   <bean id="ldapIdentityProviderPlugin" class="org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin">
 
-    <!-- Credentials will be injected via extension at runtime -->
+    <!-- The LDAP credentials will be injected via the extension at runtime -->
 
     <property name="userSearchBase" value="" />
     <property name="userSearchFilter" value="(objectclass=person)" />

@@ -1,4 +1,4 @@
-# Add custom schema with objects and attributes that have orderding to test server side sorting
+# Add a custom schema with ordered objects and attributes to test server-side sorting
 dn: cn=operatonSchema,cn=schema,cn=config
 objectClass: olcSchemaConfig
 cn: operatonSchema

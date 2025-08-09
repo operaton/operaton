@@ -1,5 +1,4 @@
-# Activate server side sorting module
-# Load the sssvlv module to allow server side sorting
+# Load the SSSVLV module to enable server-side sorting
 dn: cn=module{0},cn=config
 changeType: modify
 add: olcModuleLoad

@@ -18,6 +18,7 @@ package org.operaton.bpm.identity.ldap.util;
 import com.unboundid.ldap.sdk.Entry;
 import com.unboundid.ldap.sdk.LDAPConnection;
 import com.unboundid.ldap.sdk.LDAPException;
+import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -153,7 +154,7 @@ public class LdapTestContextImpl implements LdapTestContext {
 
             return this;
         } catch (Exception e) {
-            throw new RuntimeException("Could not initialize LDAP Context",e);
+            throw new IdentityProviderException("Could not initialize LDAP Context",e);
         }
     }
 

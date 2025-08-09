@@ -68,7 +68,7 @@ class DefaultJobConfigurationTest {
     when(jobHandler.getType()).thenReturn("MockHandler");
     setField(jobConfiguration, "customJobHandlers", List.<JobHandler<?>>of(jobHandler));
 
-    assertThat(processEngineConfiguration.getCustomJobHandlers()).isNull();
+    assertThat(processEngineConfiguration.getCustomJobHandlers()).isEmpty();
     jobConfiguration.registerCustomJobHandlers(processEngineConfiguration);
 
     assertThat(processEngineConfiguration.getCustomJobHandlers()).containsOnly(jobHandler);

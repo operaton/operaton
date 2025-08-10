@@ -1647,7 +1647,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         }
 
       } else if (jdbcUrl != null) {
-        if ((jdbcDriver == null) || (jdbcUrl == null) || (jdbcUsername == null)) {
+        if (jdbcDriver == null || jdbcUsername == null) {
           throw new ProcessEngineException("DataSource or JDBC properties have to be specified in a process engine configuration");
         }
 

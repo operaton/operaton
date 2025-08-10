@@ -130,8 +130,8 @@ public final class Context {
   }
 
   public static CoreExecutionContext<? extends CoreExecution> getCoreExecutionContext() {
-    Deque<CoreExecutionContext<? extends CoreExecution>> stack = getStack(executionContextStackThreadLocal);
-    if(stack == null || stack.isEmpty()) {
+    var stack = getStack(executionContextStackThreadLocal);
+    if(stack.isEmpty()) {
       return null;
     } else {
       return stack.peek();

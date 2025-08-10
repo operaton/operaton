@@ -138,7 +138,7 @@ public class ProcessEngineLogger extends BaseLogger {
 
   public static boolean shouldLogJobException(ProcessEngineConfiguration processEngineConfiguration, JobEntity currentJob) {
     boolean enableReducedJobExceptionLogging = processEngineConfiguration.isEnableReducedJobExceptionLogging();
-    return currentJob == null || !enableReducedJobExceptionLogging || enableReducedJobExceptionLogging && currentJob.getRetries() <= 1;
+    return enableReducedJobExceptionLogging && currentJob != null && currentJob.getRetries() <= 1;
   }
 
   public static boolean shouldLogCmdException(ProcessEngineConfiguration processEngineConfiguration) {

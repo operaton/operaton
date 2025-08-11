@@ -18,11 +18,12 @@ package org.operaton.bpm.identity.impl.ldap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
+import org.operaton.bpm.identity.ldap.util.LdapTestExtension;
 
 /**
  * @author Daniel Meyer
@@ -31,38 +32,45 @@ import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
 class LdapLoginTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @Order(1)
+  static LdapTestExtension ldapExtension = new LdapTestExtension();
+
   @RegisterExtension
-  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
+  @Order(2)
+  static ProcessEngineExtension engineRule = ProcessEngineExtension
+          .builder()
+          .configurator(ldapExtension::injectLdapUrlIntoProcessEngineConfiguration)
+          .closeEngineAfterAllTests()
+          .build();
 
   IdentityService identityService;
 
   @Test
   void testLdapLoginSuccess() {
-    assertThat(identityService.checkPassword("roman", "roman")).isTrue();
+    assertThat(identityService.checkPassword("kermit", "kermit")).isTrue();
   }
 
   @Test
   void testLdapLoginCapitalization() {
-    assertThat(identityService.checkPassword("Roman", "roman")).isTrue();
+    assertThat(identityService.checkPassword("Kermit", "kermit")).isTrue();
   }
 
   @Test
   void testLdapLoginFailure() {
-    assertThat(identityService.checkPassword("roman", "ro")).isFalse();
-    assertThat(identityService.checkPassword("r", "roman")).isFalse();
+    assertThat(identityService.checkPassword("kermit", "ro")).isFalse();
+    assertThat(identityService.checkPassword("r", "kermit")).isFalse();
   }
 
   @Test
   void testLdapLoginNullValues() {
-    assertThat(identityService.checkPassword(null, "roman")).isFalse();
-    assertThat(identityService.checkPassword("roman", null)).isFalse();
+    assertThat(identityService.checkPassword(null, "kermit")).isFalse();
+    assertThat(identityService.checkPassword("kermit", null)).isFalse();
     assertThat(identityService.checkPassword(null, null)).isFalse();
   }
 
   @Test
   void testLdapLoginEmptyPassword() {
-    assertThat(identityService.checkPassword("roman", "")).isTrue();
+    assertThat(identityService.checkPassword("kermit", "")).isTrue();
   }
 
 }

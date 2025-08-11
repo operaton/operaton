@@ -20,51 +20,47 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
+import org.operaton.bpm.identity.ldap.util.LdapTestExtension;
 
 class LdapUserLargeQueryTest {
 
   @RegisterExtension
+  @Order(1)
+  static LdapTestExtension ldapExtension = new LdapTestExtension()
+          .withAdditionalNumberOfGroups(5)
+          .withAdditionalNumberOfRoles(5)
+          .withAdditionalNumberOfUsers(80); // Attention, stay under 80, there is a limitation in the query on 100
+
+  @RegisterExtension
+  @Order(2)
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .configurationResource("operaton.ldap.pages.cfg.xml") // pageSize = 3 in this configuration
+    .configurator(ldapExtension::injectLdapUrlIntoProcessEngineConfiguration)
+    .closeEngineAfterAllTests()
     .build();
-  @RegisterExtension
-  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension()
-    .additionalNumberOfUsers(80)
-    .additionnalNumberOfGroups(5)
-    .additionalNumberOfRoles(5); // Attention, stay under 80, there is a limitation in the query on 100
 
-  ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;
-  LdapTestEnvironment ldapTestEnvironment;
-
-  @BeforeEach
-  void setup() {
-    ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
-  }
 
   @Test
   void testAllUsersQuery() {
     List<User> listUsers = identityService.createUserQuery().list();
 
     // In this group, we expect more than a page size
-    assertThat(listUsers).hasSize(ldapTestEnvironment.getTotalNumberOfUsersCreated());
+    assertThat(listUsers).hasSize(ldapExtension.getLdapTestContext().numberOfGeneratedUsers());
   }
 
   @Test
   void testPagesAllUsersQuery() {
     List<User> listUsers = identityService.createUserQuery().list();
 
-    assertThat(listUsers).hasSize(ldapTestEnvironment.getTotalNumberOfUsersCreated());
+    assertThat(listUsers).hasSize(ldapExtension.getLdapTestContext().numberOfGeneratedUsers());
 
     // ask 3 pages
     for (int firstResult = 0; firstResult < 10; firstResult += 4) {

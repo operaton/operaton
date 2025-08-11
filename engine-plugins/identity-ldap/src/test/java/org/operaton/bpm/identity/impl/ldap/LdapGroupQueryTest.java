@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,26 +41,26 @@ import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
+import org.operaton.bpm.identity.ldap.util.LdapTestExtension;
 
 
 class LdapGroupQueryTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @Order(1)
+  static LdapTestExtension ldapExtension = new LdapTestExtension();
+
   @RegisterExtension
-  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
+  @Order(2)
+  static ProcessEngineExtension engineRule = ProcessEngineExtension
+          .builder()
+          .configurator(ldapExtension::injectLdapUrlIntoProcessEngineConfiguration)
+          .closeEngineAfterAllTests()
+          .build();
 
   ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;
   AuthorizationService authorizationService;
-  LdapTestEnvironment ldapTestEnvironment;
-
-  @BeforeEach
-  void setup() {
-    ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
-  }
 
   @Test
   void testCountGroups() {
@@ -183,7 +183,7 @@ class LdapGroupQueryTest {
     // given
 
     // when
-    List<Group> list = identityService.createGroupQuery().groupMember("daniel").list();
+    List<Group> list = identityService.createGroupQuery().groupMember("sam").list();
 
     // then
     assertThat(list).hasSize(3);
@@ -206,7 +206,7 @@ class LdapGroupQueryTest {
     // given
 
     // when
-    List<Group> list = identityService.createGroupQuery().groupMember("david(IT)").list();
+    List<Group> list = identityService.createGroupQuery().groupMember("uncledeadly(IT)").list();
 
     // then
     assertThat(list).hasSize(2);
@@ -276,7 +276,7 @@ class LdapGroupQueryTest {
       groups = identityService.createGroupQuery().listPage(4, 2);
       assertThat(groups).isEmpty();
 
-      identityService.setAuthenticatedUserId("daniel");
+      identityService.setAuthenticatedUserId("kermit");
 
       groups = identityService.createGroupQuery().listPage(0, 2);
       assertThat(groups).isEmpty();

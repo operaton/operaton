@@ -18,20 +18,27 @@ package org.operaton.bpm.identity.impl.ldap;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
+import org.operaton.bpm.identity.ldap.util.LdapTestExtension;
 
 class LdapLoginCatchAuthenticationExceptionTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .configurationResource("operaton.ldap.disable.catch.authentication.exception.cfg.xml")
-    .build();
+  @Order(1)
+  static LdapTestExtension ldapExtension = new LdapTestExtension();
+
   @RegisterExtension
-  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension();
+  @Order(2)
+  static ProcessEngineExtension engineRule = ProcessEngineExtension
+          .builder()
+          .configurationResource("operaton.ldap.disable.catch.authentication.exception.cfg.xml")
+          .configurator(ldapExtension::injectLdapUrlIntoProcessEngineConfiguration)
+          .closeEngineAfterAllTests()
+          .build();
 
   IdentityService identityService;
 
@@ -40,7 +47,7 @@ class LdapLoginCatchAuthenticationExceptionTest {
     // given config passwordCheckCatchAuthenticationException=false
 
     // when
-    assertThatThrownBy(() -> identityService.checkPassword("roman", "wrongPW"))
+    assertThatThrownBy(() -> identityService.checkPassword("kermit", "wrongPW"))
       .isInstanceOf(LdapAuthenticationException.class)
       .hasMessage("Could not authenticate with LDAP server");
   }

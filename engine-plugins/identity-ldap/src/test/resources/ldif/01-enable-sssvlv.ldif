@@ -1,0 +1,13 @@
+# Load the SSSVLV module to enable server-side sorting
+dn: cn=module{0},cn=config
+changeType: modify
+add: olcModuleLoad
+olcModuleLoad: sssvlv.la
+
+dn: olcOverlay=sssvlv,olcDatabase={1}mdb,cn=config
+changeType: add
+objectClass: olcOverlayConfig
+objectClass: olcSssVlvConfig
+olcOverlay: sssvlv
+olcSssVlvMax: 8
+olcSssVlvMaxKeys: 5

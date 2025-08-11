@@ -20,33 +20,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironment;
-import org.operaton.bpm.identity.ldap.util.LdapTestEnvironmentExtension;
+import org.operaton.bpm.identity.ldap.util.LdapTestExtension;
 
 
 class LdapPosixGroupQueryTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .configurationResource("posix.operaton.cfg.xml")
-    .build();
+  @Order(1)
+  static LdapTestExtension ldapExtension = new LdapTestExtension().withPosixContext();
+
   @RegisterExtension
-  LdapTestEnvironmentExtension ldapRule = new LdapTestEnvironmentExtension().posix(true);
+  @Order(2)
+  static ProcessEngineExtension engineRule = ProcessEngineExtension
+          .builder()
+          .configurationResource("posix.operaton.cfg.xml")
+          .configurator(ldapExtension::injectLdapUrlIntoProcessEngineConfiguration)
+          .build();
 
   IdentityService identityService;
-  LdapTestEnvironment ldapTestEnvironment;
-
-  @BeforeEach
-  void setup() {
-    ldapTestEnvironment = ldapRule.getLdapTestEnvironment();
-  }
 
   @Test
   void shouldFindGroupFilterByGroupIdWithoutMembers() {
@@ -92,7 +90,7 @@ class LdapPosixGroupQueryTest {
 
     // then
     assertThat(result).hasSize(3);
-    assertThat(result).extracting("id").containsOnly("fozzie", "monster", "ruecker");
+    assertThat(result).extracting("id").containsOnly("fozzie", "monster", "bobo");
   }
 
 }

@@ -36,7 +36,7 @@
         desc = "Request successful."
         examples = ['"example-1": {
                        "summary": "Status 200 Response",
-                       "description": "A `/process-definition/key/anKey/tenand-id/aTenantId/rendered-form` HTML
+                       "description": "A `/process-definition/key/anKey/tenant-id/aTenantId/rendered-form` HTML
                                        GET response body providing the rendered (generated) form content.",
                        "value": "<form class=\\"form-horizontal\\">
                                   <div class=\\"control-group\\">

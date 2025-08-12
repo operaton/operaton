@@ -30,7 +30,7 @@
         mediaType = "application/json"
         dto = "EvaluateDecisionDto"
         examples = [ '"example-1": {
-                       "summary": "POST /decision-definition/key/aKey/tenand-id/aTenantId/evaluate",
+                       "summary": "POST /decision-definition/key/aKey/tenant-id/aTenantId/evaluate",
                        "value": {
                          "variables" : {
                            "amount" : { "value" : 600, "type" : "Double" },
@@ -49,7 +49,7 @@
         desc = "Request successful."
         examples = ['"example-1": {
                        "summary": "Status 200 response",
-                       "description": "Response for POST `/decision-definition/akey/aKey/tenand-id/aTenantId/evaluate`",
+                       "description": "Response for POST `/decision-definition/akey/aKey/tenant-id/aTenantId/evaluate`",
                        "value": [
                          {
                            "result": { "value" : "management", "type" : "String", "valueInfo" : null }

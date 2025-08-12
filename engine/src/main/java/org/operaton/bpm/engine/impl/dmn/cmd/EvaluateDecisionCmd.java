@@ -48,7 +48,7 @@ public class EvaluateDecisionCmd implements Command<DmnDecisionResult> {
   protected Integer version;
   protected VariableMap variables;
   protected String decisionDefinitionTenantId;
-  protected boolean isTenandIdSet;
+  protected boolean isTenantIdSet;
 
   public EvaluateDecisionCmd(DecisionEvaluationBuilderImpl builder) {
     this.decisionDefinitionKey = builder.getDecisionDefinitionKey();
@@ -56,7 +56,7 @@ public class EvaluateDecisionCmd implements Command<DmnDecisionResult> {
     this.version = builder.getVersion();
     this.variables = Variables.fromMap(builder.getVariables());
     this.decisionDefinitionTenantId = builder.getDecisionDefinitionTenantId();
-    this.isTenandIdSet = builder.isTenantIdSet();
+    this.isTenantIdSet = builder.isTenantIdSet();
   }
 
   @Override
@@ -108,16 +108,16 @@ public class EvaluateDecisionCmd implements Command<DmnDecisionResult> {
   protected DecisionDefinition findByKey(DeploymentCache deploymentCache) {
     DecisionDefinition decisionDefinition = null;
 
-    if (version == null && !isTenandIdSet) {
+    if (version == null && !isTenantIdSet) {
       decisionDefinition = deploymentCache.findDeployedLatestDecisionDefinitionByKey(decisionDefinitionKey);
     }
-    else if (version == null && isTenandIdSet) {
+    else if (version == null && isTenantIdSet) {
       decisionDefinition = deploymentCache.findDeployedLatestDecisionDefinitionByKeyAndTenantId(decisionDefinitionKey, decisionDefinitionTenantId);
     }
-    else if (version != null && !isTenandIdSet) {
+    else if (version != null && !isTenantIdSet) {
       decisionDefinition = deploymentCache.findDeployedDecisionDefinitionByKeyAndVersion(decisionDefinitionKey, version);
     }
-    else if (version != null && isTenandIdSet) {
+    else if (version != null && isTenantIdSet) {
       decisionDefinition = deploymentCache.findDeployedDecisionDefinitionByKeyVersionAndTenantId(decisionDefinitionKey, version, decisionDefinitionTenantId);
     }
 

@@ -376,7 +376,7 @@ describe.skip('Tasklist Start Spec', function() {
       });
     });
 
-    it('should display the tenand id of process definitions', function() {
+    it('should display the tenant id of process definitions', function() {
       // when
       dashboardPage.startProcess.openStartDialog();
 

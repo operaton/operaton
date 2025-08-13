@@ -51,7 +51,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
           <execution>
-            <id>distro-tomcat10</id>
+            <id>distro-tomcat11</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>

@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 @ExtendWith(ProcessEngineExtension.class)
-class HistoricIdentityLinkLogTestByXml {
+class HistoricIdentityLinkLogByXmlTest {
 
   private static final String PROCESS_DEFINITION_KEY_CANDIDATE_USER = "oneTaskProcessForHistoricIdentityLinkWithCanidateUser";
   private static final String PROCESS_DEFINITION_KEY_CANDIDATE_GROUP = "oneTaskProcessForHistoricIdentityLinkWithCanidateGroup";

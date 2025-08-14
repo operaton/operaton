@@ -23,8 +23,6 @@ import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 
-import jakarta.servlet.annotation.WebListener;
-
 /**
  * Process Application exposing this application's resources the process engine.
  */

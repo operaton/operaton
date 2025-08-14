@@ -41,12 +41,10 @@ import java.lang.ref.WeakReference;
  * <p>
  * It is sufficient adding a custom
  * subclass of {@link ServletProcessApplication} annotated with
- * <code>{@literal @}ProcessApplication</code> and <code>{@literal @}WebListener</code>
- * to your application:
+ * <code>{@literal @}ProcessApplication</code> to your application:
  *
  * <pre>
  * {@literal @}ProcessApplication("Loan Approval App")
- * {@literal @}WebListener
  * public class LoanApprovalApplication extends ServletProcessApplication {
  * // empty implementation
  * }

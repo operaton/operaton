@@ -29,7 +29,6 @@ import jakarta.servlet.annotation.WebListener;
  * Process Application exposing this application's resources the process engine.
  */
 @ProcessApplication(name = "InvoiceProcessApplication")
-@WebListener
 public class InvoiceProcessApplication extends JakartaServletProcessApplication {
 
   /**

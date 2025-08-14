@@ -637,14 +637,13 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   @SuppressWarnings("deprecation")
   protected boolean requiresUnsuspendedExecution(AtomicOperation executionOperation) {
-    if (executionOperation != PvmAtomicOperation.TRANSITION_DESTROY_SCOPE
-        && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_END
-        && executionOperation != PvmAtomicOperation.TRANSITION_CREATE_SCOPE && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_START
-        && executionOperation != PvmAtomicOperation.DELETE_CASCADE && executionOperation != PvmAtomicOperation.DELETE_CASCADE_FIRE_ACTIVITY_END) {
-      return true;
-    }
-
-    return false;
+    return executionOperation != PvmAtomicOperation.TRANSITION_CREATE_SCOPE
+      && executionOperation != PvmAtomicOperation.TRANSITION_DESTROY_SCOPE
+      && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_START
+      && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE
+      && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_END
+      && executionOperation != PvmAtomicOperation.DELETE_CASCADE
+      && executionOperation != PvmAtomicOperation.DELETE_CASCADE_FIRE_ACTIVITY_END;
   }
 
   @SuppressWarnings({"unchecked"})

@@ -1,0 +1,11 @@
+services:
+  mariadb:
+    image: mariadb:11.8
+    container_name: ${MT_MARIADB_CONTAINER_NAME}
+    ports:
+      - "${MT_MARIADB_HOST_PORT}:3306"
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MT_MARIADB_PASSWORD}
+      - MARIADB_DATABASE=${MT_MARIADB_DATABASE}
+    volumes:
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf

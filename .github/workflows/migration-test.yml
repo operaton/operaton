@@ -1,0 +1,28 @@
+name: Database Migration Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        db: [mysql, mariadb, postgres, oracle, sqlserver]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run QA script
+        run: |
+          cd qa
+          chmod +x ./db-migration-test.sh
+          ./db-migration-test.sh ${{ matrix.db }}

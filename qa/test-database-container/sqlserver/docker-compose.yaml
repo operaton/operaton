@@ -1,0 +1,10 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ${MT_MSSQL_CONTAINER_NAME}
+    ports:
+      - "${MT_MSSQL_HOST_PORT}:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${MT_MSSQL_PASSWORD}
+      - MSSQL_PID=Developer

@@ -1,0 +1,9 @@
+services:
+  oracledb:
+    image: gvenzl/oracle-xe:21-faststart
+    container_name: ${MT_ORACLE_CONTAINER_NAME}
+    ports:
+      - "${MT_ORACLE_HOST_PORT}:1521"
+    environment:
+      - ORACLE_PASSWORD=${MT_ORACLE_PASSWORD}
+      - ORACLE_DATABASE=${MT_ORACLE_DATABASE}

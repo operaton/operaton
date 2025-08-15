@@ -46,16 +46,17 @@ The Wildfly distribution has been upgraded to Wildfly 36.0.1.
 
 Operaton uses the following versions of its dependencies:
 
-| Dependency | Version |
-|------------|---------|
-| Java       | 17      |
-| Spring Boot | 3.5.3  |
-| Wildfly    | 36.0.1  |
-| Tomcat    | 11.0.9  |
-| Jakarta EE | 10.0.0 |
-| BPMN       | 2.0     |
-| DMN        | 1.3     |
-| CMMN       | 1.1    |
+| Dependency  | Version |
+|-------------|---------|
+| Java        | 17      |
+| Spring Boot | 3.5.4   |
+| Spring      | 6.2.9   |
+| Wildfly     | 36.0.1  |
+| Tomcat      | 11.0.10 |
+| Jakarta EE  | 10.0.0  |
+| BPMN        | 2.0     |
+| DMN         | 1.3     |
+| CMMN        | 1.1     |
 
 {{changelogContributors}}
 

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" id="Definitions_0q20tej" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <decision id="_3b2953a3-745f-4d2e-b55d-75c8c5ae653c" name="Approval Status">
+    <variable id="_3cf2bd40-2c83-4e6f-8039-81b391eebf2d" name="Approval Status" typeRef="tApprovalStatus6" />
+    <informationRequirement id="a4969753-18cf-42d7-ac6d-3821564d2620">
+      <requiredInput href="#_5a4bdb64-f0ef-4978-9e03-6f1ae64a1f17" />
+    </informationRequirement>
+    <informationRequirement id="_57960db1-d798-4bad-8c64-f4fc7e82dbf7">
+      <requiredInput href="#_41effb45-b3c4-46ac-b1da-122b3e428a98" />
+    </informationRequirement>
+    <informationRequirement id="fb1a3d38-22bd-4521-a253-a1c7570b8fa7">
+      <requiredInput href="#_8ff18665-84e9-49f2-a8df-8981b1844549" />
+    </informationRequirement>
+    <decisionTable id="_e7995f4c-0575-4579-8119-aa4f5cb262f6" typeRef="tApprovalStatus6" hitPolicy="PRIORITY" outputLabel="Approval Status">
+      <input id="_f64e79ef-12df-471a-8830-18dd1060e8f0">
+        <inputExpression typeRef="long">
+          <text>Age</text>
+        </inputExpression>
+      </input>
+      <input id="_066896e9-14c6-4684-a6a7-1036057c69ae">
+        <inputExpression typeRef="string">
+          <text>RiskCategory</text>
+        </inputExpression>
+        <inputValues triso:constraintsType="enumeration">
+          <text>"High", "Low", "Medium"</text>
+        </inputValues>
+      </input>
+      <input id="_11764a00-cb22-4e5b-8e52-cbcd2a4d3971">
+        <inputExpression typeRef="boolean">
+          <text>isAffordable</text>
+        </inputExpression>
+      </input>
+      <output id="_c8adc49f-998f-48b8-bd79-746d9c3d25b3" name="Approved/Declined" typeRef="string">
+        <outputValues triso:constraintsType="enumeration">
+          <text>"Approved", "Declined"</text>
+        </outputValues>
+      </output>
+      <output id="_ee202a75-fdc2-43e0-a9aa-c1d3577f8156" name="Rate" typeRef="string" />
+      <rule id="_d720490a-c6c7-4e48-b003-44d99720c632">
+        <inputEntry id="_d720490a-c6c7-4e48-b003-44d99720c632-0">
+          <text>&gt;=18</text>
+        </inputEntry>
+        <inputEntry id="_d720490a-c6c7-4e48-b003-44d99720c632-1">
+          <text>"Medium","Low"</text>
+        </inputEntry>
+        <inputEntry id="_d720490a-c6c7-4e48-b003-44d99720c632-2">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="_d720490a-c6c7-4e48-b003-44d99720c632-3">
+          <text>"Approved"</text>
+        </outputEntry>
+        <outputEntry id="_f269bc24-76ac-4ddb-9b1e-3ab918d32b2f">
+          <text>"Basic"</text>
+        </outputEntry>
+      </rule>
+      <rule id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a">
+        <inputEntry id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a-0">
+          <text>&lt;18</text>
+        </inputEntry>
+        <inputEntry id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a-1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a-2">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a-3">
+          <text>"Declined"</text>
+        </outputEntry>
+        <outputEntry id="_192d4141-059c-464e-8d84-6f08baded65e">
+          <text>"Standard"</text>
+        </outputEntry>
+      </rule>
+      <rule id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0">
+        <inputEntry id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0-0">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0-1">
+          <text>"High"</text>
+        </inputEntry>
+        <inputEntry id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0-2">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0-3">
+          <text>"Approved"</text>
+        </outputEntry>
+        <outputEntry id="_00de6e01-f0d6-4f82-966c-e09f589b9586">
+          <text>"Standard"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="_41effb45-b3c4-46ac-b1da-122b3e428a98" name="Age">
+    <variable id="_78044e5c-314d-4029-8a54-573107f67895" name="Age" typeRef="number" />
+  </inputData>
+  <inputData id="_5a4bdb64-f0ef-4978-9e03-6f1ae64a1f17" name="RiskCategory">
+    <variable id="_01068460-8306-4103-b114-be7c0fc45d42" name="RiskCategory" typeRef="string" />
+  </inputData>
+  <inputData id="_8ff18665-84e9-49f2-a8df-8981b1844549" name="isAffordable">
+    <variable id="_57bada07-ae1f-4c31-bb2e-6b536918af85" name="isAffordable" typeRef="boolean" />
+  </inputData>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_D1">
+      <dmndi:Size width="879" height="650" />
+      <dmndi:DMNShape id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_s1" dmnElementRef="_3b2953a3-745f-4d2e-b55d-75c8c5ae653c">
+        <dc:Bounds height="61" width="154" x="362" y="150" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_s2" dmnElementRef="_41effb45-b3c4-46ac-b1da-122b3e428a98">
+        <dc:Bounds height="60" width="153" x="150" y="331" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_s3" dmnElementRef="_5a4bdb64-f0ef-4978-9e03-6f1ae64a1f17">
+        <dc:Bounds height="60" width="153" x="363" y="331" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_s4" dmnElementRef="_8ff18665-84e9-49f2-a8df-8981b1844549">
+        <dc:Bounds height="60" width="153" x="576" y="331" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_e1" dmnElementRef="a4969753-18cf-42d7-ac6d-3821564d2620">
+        <di:waypoint x="439" y="331" />
+        <di:waypoint x="439" y="211" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_e2" dmnElementRef="_57960db1-d798-4bad-8c64-f4fc7e82dbf7">
+        <di:waypoint x="226" y="331" />
+        <di:waypoint x="439" y="211" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_e3" dmnElementRef="fb1a3d38-22bd-4521-a253-a1c7570b8fa7">
+        <di:waypoint x="652" y="331" />
+        <di:waypoint x="439" y="211" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

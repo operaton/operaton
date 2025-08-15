@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -78,17 +73,12 @@ public class ActivityExecutionTreeMapping {
   }
 
   protected ExecutionEntity intersect(Set<ExecutionEntity> executions, String[] executionIds) {
-    Set<String> executionIdSet = new HashSet<>();
-    for (String executionId : executionIds) {
-      executionIdSet.add(executionId);
-    }
+    Set<String> executionIdSet = new HashSet<>(Arrays.asList(executionIds));
 
-    for (ExecutionEntity execution : executions) {
-      if (executionIdSet.contains(execution.getId())) {
-        return execution;
-      }
-    }
-    throw new ProcessEngineException("Could not determine execution");
+    return executions.stream()
+      .filter(execution -> executionIdSet.contains(execution.getId()))
+      .findFirst()
+      .orElseThrow(() -> new ProcessEngineException("Could not determine execution"));
   }
 
   protected void initialize() {

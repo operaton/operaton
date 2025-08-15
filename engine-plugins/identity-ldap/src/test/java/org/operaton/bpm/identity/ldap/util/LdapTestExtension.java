@@ -95,7 +95,7 @@ public class LdapTestExtension implements BeforeAllCallback, AfterAllCallback {
      */
     public void injectLdapUrlIntoProcessEngineConfiguration(ProcessEngineConfigurationImpl peConfig) {
         peConfig.getProcessEnginePlugins().stream()
-                .filter(plugin -> plugin instanceof LdapIdentityProviderPlugin)
+                .filter(LdapIdentityProviderPlugin.class::isInstance)
                 .map(LdapIdentityProviderPlugin.class::cast)
                 .findFirst()
                 .ifPresent(ldapPlugin -> {

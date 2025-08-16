@@ -32,7 +32,7 @@ public interface ActivityInstanceState {
 
   int getStateCode();
 
-  ///////////////////////////////////////////////////// default implementation
+  // /////////////////////////////////////////////////// default implementation
 
   class ActivityInstanceStateImpl implements ActivityInstanceState {
 

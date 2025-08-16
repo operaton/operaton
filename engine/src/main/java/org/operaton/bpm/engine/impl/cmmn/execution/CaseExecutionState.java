@@ -49,7 +49,7 @@ public interface CaseExecutionState {
 
   int getStateCode();
 
-  ///////////////////////////////////////////////////// default implementation
+  // /////////////////////////////////////////////////// default implementation
 
   class CaseExecutionStateImpl implements CaseExecutionState {
 

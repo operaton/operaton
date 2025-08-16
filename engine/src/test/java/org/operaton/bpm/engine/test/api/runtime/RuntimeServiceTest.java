@@ -1344,7 +1344,7 @@ public class RuntimeServiceTest {
   @Test
   void testSignalEventReceived() {
 
-    //////  test  signalEventReceived(String)
+    // ////  test  signalEventReceived(String)
 
     startSignalCatchProcesses();
     // 12, because the signal catch is a scope
@@ -1354,7 +1354,7 @@ public class RuntimeServiceTest {
     runtimeService.signalEventReceived("panic");
     assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
-    //////  test  signalEventReceived(String, String)
+    // ////  test  signalEventReceived(String, String)
     startSignalCatchProcesses();
 
     // signal the executions one at a time:

@@ -26,7 +26,7 @@ public interface ExternalTaskState {
 
   int getStateCode();
 
-  ///////////////////////////////////////////////////// default implementation
+  // /////////////////////////////////////////////////// default implementation
 
   class ExternalTaskStateImpl implements ExternalTaskState {
 

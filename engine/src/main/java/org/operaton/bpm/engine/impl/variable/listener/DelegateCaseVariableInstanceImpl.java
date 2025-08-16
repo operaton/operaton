@@ -76,7 +76,7 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
     this.scopeExecution = scopeExecution;
   }
 
-  //// methods delegated to wrapped variable ////
+  // // methods delegated to wrapped variable // //
 
   @Override
   public String getId() {

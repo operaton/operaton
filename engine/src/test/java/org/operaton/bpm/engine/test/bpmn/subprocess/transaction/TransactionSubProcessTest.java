@@ -688,7 +688,7 @@ class TransactionSubProcessTest {
     // this test simply makes sure we can parse a transaction subprocess with DI information
     // the actual transaction behavior is tested by other testcases
 
-    //// failing case
+    // // failing case
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TransactionSubProcessTest");
 
@@ -700,7 +700,7 @@ class TransactionSubProcessTest {
     testRule.assertProcessEnded(processInstance.getId());
 
 
-    ////// success case
+    // //// success case
 
     processInstance = runtimeService.startProcessInstanceByKey("TransactionSubProcessTest");
 

@@ -46,9 +46,9 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     VariableMap variables = (VariableMap) getBeanInstance("processVariableMap");
     assertThat(variables).isNotNull();
 
-    ///////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////
     // Put a variable via BusinessProcess and get it via VariableMap //
-    ///////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////
     String aValue = "aValue";
     businessProcess.setVariable(VARNAME_1, Variables.stringValue(aValue));
 
@@ -69,9 +69,9 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
       assertThat(ex.getMessage()).isEqualTo("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.");
     }
 
-    ///////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////
     // Put a variable via VariableMap and get it via BusinessProcess //
-    ///////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////
     String anotherValue = "anotherValue";
     variables.put(VARNAME_2, Variables.stringValue(anotherValue));
 
@@ -93,9 +93,9 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     VariableMap variables = (VariableMap) getBeanInstance("processVariableMapLocal");
     assertThat(variables).isNotNull();
 
-    ///////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////
     // Put a variable via BusinessProcess and get it via VariableMap //
-    ///////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////
     String aValue = "aValue";
     businessProcess.setVariableLocal(VARNAME_1, Variables.stringValue(aValue));
 
@@ -116,9 +116,9 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
       assertThat(ex.getMessage()).isEqualTo("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.");
     }
 
-    ///////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////
     // Put a variable via VariableMap and get it via BusinessProcess //
-    ///////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////
     String anotherValue = "anotherValue";
     variables.put(VARNAME_2, Variables.stringValue(anotherValue));
 

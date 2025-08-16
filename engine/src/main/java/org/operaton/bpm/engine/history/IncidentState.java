@@ -29,7 +29,7 @@ public interface IncidentState {
 
   int getStateCode();
 
-  ///////////////////////////////////////////////////// default implementation
+  // /////////////////////////////////////////////////// default implementation
 
   class IncidentStateImpl implements IncidentState {
 

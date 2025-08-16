@@ -60,7 +60,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   protected ActivityImpl activity;
   protected EventSubscriptionJobDeclaration jobDeclaration;
 
-  /////////////////////////////////////////////
+  // ///////////////////////////////////////////
 
   //only for mybatis
   public EventSubscriptionEntity() {

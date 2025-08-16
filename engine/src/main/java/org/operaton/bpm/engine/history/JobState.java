@@ -30,7 +30,7 @@ public interface JobState {
 
   int getStateCode();
 
-  ///////////////////////////////////////////////////// default implementation
+  // /////////////////////////////////////////////////// default implementation
 
   class JobStateImpl implements JobState {
 

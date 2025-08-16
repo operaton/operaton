@@ -149,7 +149,7 @@ class MessageBoundaryEventTest {
 
     assertThat(execution2.getId()).isEqualTo(execution1.getId());
 
-    ///////////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////////
     // 1. first message received cancels the task and the execution and both subscriptions
     runtimeService.messageEventReceived("messageName_1", execution1.getId());
 
@@ -167,7 +167,7 @@ class MessageBoundaryEventTest {
     taskService.complete(userTask.getId());
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
-    /////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////
     // 2. complete the user task cancels the message subscriptions
 
     runtimeService.startProcessInstanceByKey("process");
@@ -210,7 +210,7 @@ class MessageBoundaryEventTest {
     assertThat(execution2.getId()).isEqualTo(execution1.getId());
     var execution2Id = execution2.getId();
 
-    ///////////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////////
     // 1. first message received cancels all tasks and the executions and both subscriptions
     runtimeService.messageEventReceived("messageName_1", execution1.getId());
 
@@ -232,7 +232,7 @@ class MessageBoundaryEventTest {
     testRule.assertProcessEnded(processInstance.getId());
 
 
-    ///////////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////////
     // 2. complete the user task cancels the message subscriptions
 
     processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -310,7 +310,7 @@ class MessageBoundaryEventTest {
         .singleResult();
     assertThat(execution).isNotNull();
 
-    ///////////////////////////////////////////////////
+    // /////////////////////////////////////////////////
     // 1. case: message received cancels the task
 
     runtimeService.messageEventReceived("messageName", execution.getId());
@@ -321,7 +321,7 @@ class MessageBoundaryEventTest {
     taskService.complete(userTask.getId());
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
-    ///////////////////////////////////////////////////
+    // /////////////////////////////////////////////////
     // 2nd. case: complete the user task cancels the message subscription
 
     runtimeService.startProcessInstanceByKey("process");
@@ -368,7 +368,7 @@ class MessageBoundaryEventTest {
 
     assertNotSame(execution1.getId(), execution2.getId());
 
-    /////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////
     // first case: we complete the inner usertask.
 
     taskService.complete(userTask.getId());
@@ -405,7 +405,7 @@ class MessageBoundaryEventTest {
     // now complete the outer usertask
     taskService.complete(userTask.getId());
 
-    /////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////
     // second case: we signal the inner message event
 
     runtimeService.startProcessInstanceByKey("process");
@@ -447,7 +447,7 @@ class MessageBoundaryEventTest {
     // now complete the outer usertask
     taskService.complete(userTask.getId());
 
-    /////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////
     // third case: we signal the outer message event
 
     runtimeService.startProcessInstanceByKey("process");

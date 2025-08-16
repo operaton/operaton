@@ -80,7 +80,7 @@ public class Authorization {
     return application;
   }
 
-  ////// static helpers //////////////////////////////
+  // //// static helpers //////////////////////////////
 
   public static Authorization granted(Authentication authentication) {
     return new Authorization(authentication, true);

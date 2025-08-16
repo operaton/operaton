@@ -31,7 +31,7 @@ public interface SuspensionState {
 
   String getName();
 
-  ///////////////////////////////////////////////////// default implementation
+  // /////////////////////////////////////////////////// default implementation
 
   class SuspensionStateImpl implements SuspensionState {
 

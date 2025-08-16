@@ -3533,7 +3533,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     verify(caseExecutionCommandBuilderMock).complete();
   }
 
-  ///////////////////////////////////////////////////////////////
+  // /////////////////////////////////////////////////////////////
   @Test
   void testTerminate() {
     given()

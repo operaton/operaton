@@ -13,7 +13,7 @@
   <name>Operaton - Spin - Root</name>
   <description>${project.name}</description>
   <properties>
-    <json-junit-assertj.version>4.1.1</json-junit-assertj.version>
+    <json-unit.version>4.1.1</json-unit.version>
     <spin.version.old>7.22.0</spin.version.old>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <additionalparam>-Xdoclint:none</additionalparam>
@@ -57,7 +57,7 @@
       <dependency>
         <groupId>net.javacrumbs.json-unit</groupId>
         <artifactId>json-unit-assertj</artifactId>
-        <version>${json-junit-assertj.version}</version>
+        <version>${json-unit.version}</version>
       </dependency>
       <dependency>
         <groupId>com.jayway.jsonpath</groupId>

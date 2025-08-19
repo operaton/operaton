@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         db: [mysql, mariadb, postgres, oracle, sqlserver]
 
@@ -23,6 +24,7 @@ jobs:
 
       - name: Run QA script
         run: |
+          ./mvnw clean install -DskipTests -PskipFrontendBuild
           cd qa
           chmod +x ./db-migration-test.sh
           ./db-migration-test.sh ${{ matrix.db }}

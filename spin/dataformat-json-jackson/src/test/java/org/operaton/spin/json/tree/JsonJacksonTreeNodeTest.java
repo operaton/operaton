@@ -16,7 +16,7 @@
  */
 package org.operaton.spin.json.tree;
 
-import static net.javacrumbs.jsonunit.fluent.JsonFluentAssert.assertThatJson;
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.operaton.spin.Spin.S;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 

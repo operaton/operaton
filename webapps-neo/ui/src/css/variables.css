@@ -1,0 +1,84 @@
+:root {
+    /* colors */
+    --color-primary: #126bbe;
+    --color-primary-transparent: color-mix(
+        in srgb,
+        var(--color-primary) 40%,
+        transparent
+    );
+    --color-danger: #bb2511;
+    --color-danger-transparent: color-mix(
+        in srgb,
+        var(--color-danger) 50%,
+        transparent
+    );
+    --color-warning: #d47100;
+    --color-warning-transparent: color-mix(
+        in srgb,
+        var(--color-warning) 50%,
+        transparent
+    );
+    --color-success: #00b82b;
+    --color-success-transparent: color-mix(
+        in srgb,
+        var(--color-success) 50%,
+        transparent
+    );
+
+    --background-1: #fff;
+    --background-2: #f2f2f4;
+    --background-3: #dadadc;
+
+    --border-color: #ccc;
+    --border-color-2: #aaa;
+
+    --text: #000;
+    --text-2: #555;
+    --text-disabled: #888;
+    --text-inverted: #fff;
+
+    /* font */
+    --base-font-size: 1rem;
+    --small-font-size: 0.85rem;
+    --h1-size: 3rem;
+    --h2-size: 2rem;
+    --h3-size: 1.5rem;
+    --h4-size: 1rem;
+    --h5-size: 0.8rem;
+    --h6-size: 0.8rem;
+
+    /* spacing */
+    --spacing-1: 0.5rem;
+    --spacing-2: 1rem;
+    --spacing-3: 2rem;
+    --spacing-4: 4rem;
+    --spacing-5: 8rem;
+    --spacing-6: 16rem;
+
+    --border-radius: 0.3rem;
+    --border-radius-2: 0.4rem;
+    --border-width: 0.095rem;
+    --border-width-2: 0.15rem;
+    --border-width-3: 0.25rem;
+
+    /* components */
+    --border: var(--border-width) solid var(--border-color);
+    --border-2: var(--border-width-2) solid var(--border-color-2);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-primary: #5ca2e4;
+
+        --background-1: #111113;
+        --background-2: #222224;
+        --background-3: #333335;
+
+        --border-color: #555;
+        --border-color-2: #777;
+
+        --text: #fff;
+        --text-2: #ccc;
+        --text-inverted: #000;
+    }
+}

@@ -1,0 +1,28 @@
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+   animation: 150ms ease-in 0s 1 fade-in;
+}
+
+@keyframes fade-in-delayed {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in-delayed {
+   animation: 250ms ease-in 0s 1 fade-in-delayed;
+}

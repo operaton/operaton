@@ -353,6 +353,7 @@
         <module>engine-spring</module>
         <module>engine-rest</module>
         <module>webapps</module>
+        <module>webapps-neo</module>
         <module>examples</module>
         <module>engine-plugins</module>
         <module>distro/license-book</module>
@@ -380,6 +381,7 @@
         <module>engine-spring</module>
         <module>engine-rest</module>
         <module>webapps</module>
+        <module>webapps-neo</module>
         <module>examples</module>
         <module>engine-plugins</module>
         <module>distro/sql-script</module>
@@ -479,6 +481,7 @@
         <module>freemarker-template-engine</module>
         <module>jakarta-ee/ejb-client</module>
         <module>webapps</module>
+        <module>webapps-neo</module>
         <module>engine-plugins</module>
         <module>distro/webjar</module>
         <module>distro/sql-script</module>

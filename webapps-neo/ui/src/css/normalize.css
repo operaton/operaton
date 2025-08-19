@@ -1,0 +1,128 @@
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-1);
+  color: var(--text);
+}
+
+menu {
+  margin: 0;
+}
+
+a, a:visited {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-indent: 0;
+  overflow: scroll;
+  white-space: nowrap;
+
+  /* TODO: Force scrollbar visible on MacOS as an indicator, if table is scrollable */
+}
+
+tbody tr:hover :where(td, th),
+tbody tr[aria-selected=true] :where(td, th) {
+  background-color: var(--background-2);
+  &:first-child { border-radius: var(--border-radius) 0 0 var(--border-radius) }
+  &:last-child { border-radius: 0 var(--border-radius) var(--border-radius) 0; }
+}
+
+tbody tr:hover :where(td, th){
+  border-top: var(--border-2);
+  border-bottom: var(--border-2);
+  margin: calc(-1 * var(--border-width-2));
+  padding-top: calc(var(--spacing-1) - var(--border-width-2));
+  padding-bottom: calc(var(--spacing-1) - var(--border-width-2));
+
+  &:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    border-left: var(--border-2);
+    padding-left: calc(var(--spacing-1) - var(--border-width-2));
+  }
+  &:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    border-right: var(--border-2);
+  }
+}
+
+thead th {
+  text-align: left;
+  position: sticky;
+  top: 0;
+  background: var(--background-1);
+  text-transform: uppercase;
+  font-size: var(--small-font-size);
+  letter-spacing: .02em;
+  z-index: 1;
+}
+table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+tbody th {
+  text-align: left;
+  font-weight: normal;
+  font-style: italic;
+  position: sticky;
+  left: 0;
+  background: var(--background-1);
+  z-index: 1;
+}
+
+td,
+th {
+  padding: var(--spacing-1);
+}
+
+dl {
+  margin-top: var(--spacing-1);
+  margin-bottom: 0;
+  /*overflow: hidden;*/
+}
+
+dt {
+  margin-top: var(--spacing-1);
+  font-weight: bold;
+}
+
+dt:first-child {
+  margin-top: 0;
+}
+
+dd {
+  margin-left: var(--spacing-2);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+aside {
+  width: 16rem;
+  min-height: 100%;
+  border-right: var(--border-width) solid var(--border-color);
+}
+
+section:not(:first-child) {
+  margin-top: var(--spacing-3);
+}
+
+dialog {
+  max-width: 80ch;
+  width: min(calc(100% - var(--spacing-2) * 2), 80ch);
+  margin: auto;
+  max-height: 80%;
+  border: var(--border);
+  border-radius: var(--border-radius-2);
+  box-shadow: 0 0 var(--spacing-2) #0002;
+  padding: var(--spacing-2);
+}

@@ -1,0 +1,34 @@
+name: Database Migration Test
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**/*.sql'
+      - 'qa/test-db-rolling-update/**'
+    schedule:
+    - cron: "30 2 * * *"     # Runs at 2:30 AM UTC daily
+  workflow_dispatch:
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        db: [mysql, mariadb, postgres, oracle, sqlserver]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run QA script
+        run: |
+          ./mvnw clean install -DskipTests -PskipFrontendBuild
+          cd qa/test-database-container
+          ./test.sh ${{ matrix.db }}

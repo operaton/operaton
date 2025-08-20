@@ -25,6 +25,6 @@ jobs:
       - name: Run QA script
         run: |
           ./mvnw clean install -DskipTests -PskipFrontendBuild
-          cd qa
-          chmod +x ./db-migration-test.sh
-          ./db-migration-test.sh ${{ matrix.db }}
+          cd qa/test-database-container
+          chmod +x ./test.sh
+          ./test.sh ${{ matrix.db }}

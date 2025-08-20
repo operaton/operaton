@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.NotifyAcquisitionRejectedJobsHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.RejectedJobsHandler;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
+
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -37,10 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
-@SpringBootTest(
-  classes = {TestApplication.class},
-  webEnvironment = WebEnvironment.NONE
-)
+@SpringBootTest(classes = { TestApplication.class }, webEnvironment = WebEnvironment.NONE)
 class DefaultJobConfigurationTest {
 
   private final SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
@@ -49,10 +54,12 @@ class DefaultJobConfigurationTest {
 
   @Autowired
   JobExecutor jobExecutor;
+  @Autowired
+  protected List<JobHandler<?>> customJobHandlers;
 
   @BeforeEach
   void setUp() {
-    setField(jobConfiguration, "operatonBpmProperties", properties);
+    jobConfiguration = new DefaultJobConfiguration(properties, jobExecutor, customJobHandlers);
   }
 
   @Test

@@ -51,7 +51,7 @@ public class OptimizeHistoricIdentityLinkLogRestServiceTest extends AbstractRest
   protected ProcessEngine namedProcessEngine;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedOptimizeService = mock(OptimizeService.class);
     ProcessEngineConfigurationImpl mockedConfig = mock(ProcessEngineConfigurationImpl.class);
 
@@ -62,7 +62,7 @@ public class OptimizeHistoricIdentityLinkLogRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testNoQueryParameters() {
+  void testNoQueryParameters() {
     given()
     .then()
       .expect()
@@ -76,7 +76,7 @@ public class OptimizeHistoricIdentityLinkLogRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testOccurredAfterQueryParameter() {
+  void testOccurredAfterQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("occurredAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -92,7 +92,7 @@ public class OptimizeHistoricIdentityLinkLogRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testOccurredAtQueryParameter() {
+  void testOccurredAtQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("occurredAt", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -108,7 +108,7 @@ public class OptimizeHistoricIdentityLinkLogRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testMaxResultsQueryParameter() {
+  void testMaxResultsQueryParameter() {
     given()
       .queryParam("maxResults", 10)
     .then()
@@ -123,7 +123,7 @@ public class OptimizeHistoricIdentityLinkLogRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testQueryParameterCombination() {
+  void testQueryParameterCombination() {
     Date now = new Date();
     given()
       .queryParam("occurredAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -141,7 +141,7 @@ public class OptimizeHistoricIdentityLinkLogRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testPresenceOfProcessInstanceIdProperty() {
+  void testPresenceOfProcessInstanceIdProperty() {
     final OptimizeHistoricIdentityLinkLogEntity mock = mock(OptimizeHistoricIdentityLinkLogEntity.class);
     when(mock.getProcessInstanceId()).thenReturn(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     when(mockedOptimizeService.getHistoricIdentityLinkLogs(null, null, Integer.MAX_VALUE))

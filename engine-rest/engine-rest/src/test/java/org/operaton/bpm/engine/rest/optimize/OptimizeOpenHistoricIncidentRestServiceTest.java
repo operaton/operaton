@@ -41,7 +41,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestServiceTest {
+class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestServiceTest {
 
   private static final String OPTIMIZE_OPEN_HISTORIC_INCIDENT_PATH =
     TEST_RESOURCE_ROOT_PATH + "/optimize/incident/open";
@@ -50,7 +50,7 @@ public class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestSer
   protected ProcessEngine namedProcessEngine;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedOptimizeService = mock(OptimizeService.class);
     ProcessEngineConfigurationImpl mockedConfig = mock(ProcessEngineConfigurationImpl.class);
 
@@ -60,7 +60,7 @@ public class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestSer
   }
 
   @Test
-  public void testNoQueryParameters() {
+  void testNoQueryParameters() {
     given()
     .then()
       .expect()
@@ -74,7 +74,7 @@ public class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestSer
   }
 
   @Test
-  public void testCreatedAfterQueryParameter() {
+  void testCreatedAfterQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("createdAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -90,7 +90,7 @@ public class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestSer
   }
 
   @Test
-  public void testCreatedAtQueryParameter() {
+  void testCreatedAtQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("createdAt", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -106,7 +106,7 @@ public class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestSer
   }
 
   @Test
-  public void testMaxResultsQueryParameter() {
+  void testMaxResultsQueryParameter() {
     given()
       .queryParam("maxResults", 10)
     .then()
@@ -121,7 +121,7 @@ public class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestSer
   }
 
   @Test
-  public void testQueryParameterCombination() {
+  void testQueryParameterCombination() {
     Date now = new Date();
     given()
       .queryParam("createdAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -139,7 +139,7 @@ public class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestSer
   }
 
   @Test
-  public void testPresenceOfProcessInstanceIdProperty() {
+  void testPresenceOfProcessInstanceIdProperty() {
     final HistoricIncidentEntity mock = mock(HistoricIncidentEntity.class);
     when(mock.getProcessInstanceId()).thenReturn(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     when(mockedOptimizeService.getOpenHistoricIncidents(null, null, Integer.MAX_VALUE))

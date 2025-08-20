@@ -45,7 +45,7 @@ public class OptimizeUserOperationLogRestServiceTest extends AbstractRestService
   protected ProcessEngine namedProcessEngine;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedOptimizeService = mock(OptimizeService.class);
     ProcessEngineConfigurationImpl mockedConfig = mock(ProcessEngineConfigurationImpl.class);
 
@@ -56,7 +56,7 @@ public class OptimizeUserOperationLogRestServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testNoQueryParameters() {
+  void testNoQueryParameters() {
     given()
     .then()
       .expect()
@@ -70,7 +70,7 @@ public class OptimizeUserOperationLogRestServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testOccurredAfterQueryParameter() {
+  void testOccurredAfterQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("occurredAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -86,7 +86,7 @@ public class OptimizeUserOperationLogRestServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testOccurredAtQueryParameter() {
+  void testOccurredAtQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("occurredAt", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -102,7 +102,7 @@ public class OptimizeUserOperationLogRestServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testMaxResultsQueryParameter() {
+  void testMaxResultsQueryParameter() {
     given()
       .queryParam("maxResults", 10)
     .then()
@@ -117,7 +117,7 @@ public class OptimizeUserOperationLogRestServiceTest extends AbstractRestService
   }
 
   @Test
-  public void testQueryParameterCombination() {
+  void testQueryParameterCombination() {
     Date now = new Date();
     given()
       .queryParam("occurredAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))

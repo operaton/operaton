@@ -52,7 +52,7 @@ public class OptimizeRunningActivityInstanceRestServiceTest extends AbstractRest
   protected ProcessEngine namedProcessEngine;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedOptimizeService = mock(OptimizeService.class);
     ProcessEngineConfigurationImpl mockedConfig = mock(ProcessEngineConfigurationImpl.class);
 
@@ -63,7 +63,7 @@ public class OptimizeRunningActivityInstanceRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testNoQueryParameters() {
+  void testNoQueryParameters() {
     given()
     .then()
       .expect()
@@ -77,7 +77,7 @@ public class OptimizeRunningActivityInstanceRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testStartedAfterQueryParameter() {
+  void testStartedAfterQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("startedAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -93,7 +93,7 @@ public class OptimizeRunningActivityInstanceRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testStartedAtQueryParameter() {
+  void testStartedAtQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("startedAt", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -109,7 +109,7 @@ public class OptimizeRunningActivityInstanceRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testMaxResultsQueryParameter() {
+  void testMaxResultsQueryParameter() {
     given()
       .queryParam("maxResults", 10)
     .then()
@@ -124,7 +124,7 @@ public class OptimizeRunningActivityInstanceRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testQueryParameterCombination() {
+  void testQueryParameterCombination() {
     Date now = new Date();
     given()
       .queryParam("startedAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -142,7 +142,7 @@ public class OptimizeRunningActivityInstanceRestServiceTest extends AbstractRest
   }
 
   @Test
-  public void testPresenceOfSequenceCounterProperty() {
+  void testPresenceOfSequenceCounterProperty() {
     final HistoricActivityInstanceEntity mock = mock(HistoricActivityInstanceEntity.class);
     when(mock.getSequenceCounter()).thenReturn(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_SEQUENCE_COUNTER);
     when(mockedOptimizeService.getRunningHistoricActivityInstances(null, null, Integer.MAX_VALUE))

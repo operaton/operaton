@@ -51,7 +51,7 @@ public class OptimizeCompletedHistoricIncidentRestServiceTest extends AbstractRe
   protected ProcessEngine namedProcessEngine;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedOptimizeService = mock(OptimizeService.class);
     ProcessEngineConfigurationImpl mockedConfig = mock(ProcessEngineConfigurationImpl.class);
 
@@ -61,7 +61,7 @@ public class OptimizeCompletedHistoricIncidentRestServiceTest extends AbstractRe
   }
 
   @Test
-  public void testNoQueryParameters() {
+  void testNoQueryParameters() {
     given()
     .then()
       .expect()
@@ -75,7 +75,7 @@ public class OptimizeCompletedHistoricIncidentRestServiceTest extends AbstractRe
   }
 
   @Test
-  public void testFinishedAfterQueryParameter() {
+  void testFinishedAfterQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("finishedAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -91,7 +91,7 @@ public class OptimizeCompletedHistoricIncidentRestServiceTest extends AbstractRe
   }
 
   @Test
-  public void testFinishedAtQueryParameter() {
+  void testFinishedAtQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("finishedAt", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -107,7 +107,7 @@ public class OptimizeCompletedHistoricIncidentRestServiceTest extends AbstractRe
   }
 
   @Test
-  public void testMaxResultsQueryParameter() {
+  void testMaxResultsQueryParameter() {
     given()
       .queryParam("maxResults", 10)
     .then()
@@ -122,7 +122,7 @@ public class OptimizeCompletedHistoricIncidentRestServiceTest extends AbstractRe
   }
 
   @Test
-  public void testQueryParameterCombination() {
+  void testQueryParameterCombination() {
     Date now = new Date();
     given()
       .queryParam("finishedAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -140,7 +140,7 @@ public class OptimizeCompletedHistoricIncidentRestServiceTest extends AbstractRe
   }
 
   @Test
-  public void testPresenceOfProcessInstanceIdProperty() {
+  void testPresenceOfProcessInstanceIdProperty() {
     final HistoricIncidentEntity mock = mock(HistoricIncidentEntity.class);
     when(mock.getProcessInstanceId()).thenReturn(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     when(mockedOptimizeService.getCompletedHistoricIncidents(null, null, Integer.MAX_VALUE))

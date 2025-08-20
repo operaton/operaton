@@ -62,7 +62,7 @@ public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTe
   protected MockHistoricVariableUpdateBuilder historicUpdateBuilder;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     historicUpdateBuilder = MockProvider.mockHistoricVariableUpdate();
     historicUpdateMock = historicUpdateBuilder.build();
 
@@ -77,7 +77,7 @@ public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testNoQueryParameters() {
+  void testNoQueryParameters() {
     given()
     .then()
       .expect()
@@ -91,7 +91,7 @@ public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testOccurredAfterQueryParameter() {
+  void testOccurredAfterQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("occurredAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -107,7 +107,7 @@ public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testOccurredAtQueryParameter() {
+  void testOccurredAtQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("occurredAt", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -123,7 +123,7 @@ public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testExcludeObjectValuesQueryParameter() {
+  void testExcludeObjectValuesQueryParameter() {
     given()
       .queryParam("excludeObjectValues", true)
     .then()
@@ -138,7 +138,7 @@ public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testMaxResultsQueryParameter() {
+  void testMaxResultsQueryParameter() {
     given()
       .queryParam("maxResults", 10)
     .then()
@@ -153,7 +153,7 @@ public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testQueryParameterCombination() {
+  void testQueryParameterCombination() {
     Date now = new Date();
     given()
       .queryParam("occurredAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -172,7 +172,7 @@ public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testQueryWhenFileWasDeleted() {
+  void testQueryWhenFileWasDeleted() {
     doThrow(new IllegalArgumentException("Parameter 'filename' is null")).when(historicUpdateMock).getTypedValue();
 
     given()
@@ -188,7 +188,7 @@ public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTe
   }
 
   @Test
-  public void testPresenceOfSequenceCounterProperty() {
+  void testPresenceOfSequenceCounterProperty() {
     final HistoricDetailVariableInstanceUpdateEntity mock = mock(HistoricDetailVariableInstanceUpdateEntity.class);
     when(mock.getSequenceCounter()).thenReturn(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_SEQUENCE_COUNTER);
     when(mock.getTypedValue()).thenReturn(EXAMPLE_PRIMITIVE_VARIABLE_VALUE);

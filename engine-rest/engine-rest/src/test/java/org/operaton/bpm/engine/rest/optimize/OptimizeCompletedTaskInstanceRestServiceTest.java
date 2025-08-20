@@ -46,7 +46,7 @@ public class OptimizeCompletedTaskInstanceRestServiceTest extends AbstractRestSe
   protected ProcessEngine namedProcessEngine;
 
   @BeforeEach
-  public void setUpRuntimeData() {
+  void setUpRuntimeData() {
     mockedOptimizeService = mock(OptimizeService.class);
     ProcessEngineConfigurationImpl mockedConfig = mock(ProcessEngineConfigurationImpl.class);
 
@@ -57,7 +57,7 @@ public class OptimizeCompletedTaskInstanceRestServiceTest extends AbstractRestSe
   }
 
   @Test
-  public void testNoQueryParameters() {
+  void testNoQueryParameters() {
     given()
     .then()
       .expect()
@@ -71,7 +71,7 @@ public class OptimizeCompletedTaskInstanceRestServiceTest extends AbstractRestSe
   }
 
   @Test
-  public void testFinishedAfterQueryParameter() {
+  void testFinishedAfterQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("finishedAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -87,7 +87,7 @@ public class OptimizeCompletedTaskInstanceRestServiceTest extends AbstractRestSe
   }
 
   @Test
-  public void testFinishedAtQueryParameter() {
+  void testFinishedAtQueryParameter() {
     Date now = new Date();
     given()
       .queryParam("finishedAt", DATE_FORMAT_WITH_TIMEZONE.format(now))
@@ -103,7 +103,7 @@ public class OptimizeCompletedTaskInstanceRestServiceTest extends AbstractRestSe
   }
 
   @Test
-  public void testMaxResultsQueryParameter() {
+  void testMaxResultsQueryParameter() {
     given()
       .queryParam("maxResults", 10)
     .then()
@@ -118,7 +118,7 @@ public class OptimizeCompletedTaskInstanceRestServiceTest extends AbstractRestSe
   }
 
   @Test
-  public void testQueryParameterCombination() {
+  void testQueryParameterCombination() {
     Date now = new Date();
     given()
       .queryParam("finishedAfter", DATE_FORMAT_WITH_TIMEZONE.format(now))

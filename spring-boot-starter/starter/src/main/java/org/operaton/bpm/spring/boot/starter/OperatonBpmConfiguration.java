@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonAuthorizationConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonDatasourceConfiguration;
@@ -97,8 +99,10 @@ public class OperatonBpmConfiguration {
   @Bean
   @ConditionalOnMissingBean(OperatonJobConfiguration.class)
   @ConditionalOnProperty(prefix = "operaton.bpm.job-execution", name = "enabled", havingValue = "true", matchIfMissing = true)
-  public static OperatonJobConfiguration operatonJobConfiguration() {
-    return new DefaultJobConfiguration();
+  public static OperatonJobConfiguration operatonJobConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                                                  JobExecutor jobExecutor,
+                                                                  List<JobHandler<?>> customJobHandlers) {
+    return new DefaultJobConfiguration(operatonBpmProperties, jobExecutor, customJobHandlers);
   }
 
   @Bean

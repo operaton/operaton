@@ -44,10 +44,6 @@ public enum Resources implements Resource {
   REPORT(EntityTypes.REPORT, 15),
   DASHBOARD(EntityTypes.DASHBOARD, 16),
   OPERATION_LOG_CATEGORY(EntityTypes.OPERATION_LOG_CATEGORY, 17),
-  /*
-   * @deprecated Operaton does not support Optimize.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
   OPTIMIZE(EntityTypes.OPTIMIZE, 18),
   HISTORIC_TASK(EntityTypes.HISTORIC_TASK, 19),
   HISTORIC_PROCESS_INSTANCE(EntityTypes.HISTORIC_PROCESS_INSTANCE, 20),

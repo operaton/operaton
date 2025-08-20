@@ -314,8 +314,8 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <version.netty>4.1.89.Final</version.netty>
-        <version.undertow>2.3.0.Final</version.undertow>
+        <version.netty>4.2.4.Final</version.netty>
+        <version.undertow>2.3.18.Final</version.undertow>
       </properties>
       <dependencies>
         <dependency>

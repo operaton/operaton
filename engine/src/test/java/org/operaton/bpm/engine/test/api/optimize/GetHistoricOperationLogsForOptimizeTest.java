@@ -25,7 +25,6 @@ import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TY
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_JOB;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -118,30 +117,26 @@ class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog).hasSize(2);
-    assertThat(userOperationsLog.get(0)).isNotNull();
-    assertThat(userOperationsLog.get(0).getId()).isNotNull();
-    assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
-    assertThat(userOperationsLog.get(0).getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
-    assertThat(userOperationsLog.get(0).getOrgValue()).isNull();
-    assertThat(userOperationsLog.get(0).getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
-    assertThat(userOperationsLog.get(0).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(0).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(0).getProcessDefinitionId()).isNotNull();
-    assertThat(userOperationsLog.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
-    assertThat(userOperationsLog.get(0).getCategory()).isEqualTo(CATEGORY_OPERATOR);
+    assertThat(userOperationsLog)
+      .hasSize(2)
+      .allSatisfy(
+        entry -> {
+          assertThat(entry).isNotNull();
+          assertThat(entry.getId()).isNotNull();
+          assertThat(entry.getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
+          assertThat(entry.getOrgValue()).isNull();
+          assertThat(entry.getTimestamp()).isNotNull();
+          assertThat(entry.getProcessDefinitionKey()).isEqualTo("process");
+          assertThat(entry.getProcessDefinitionId()).isNotNull();
+          assertThat(entry.getProcessInstanceId()).isEqualTo(processInstance.getId());
+          assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
+        });
 
-    assertThat(userOperationsLog.get(1)).isNotNull();
-    assertThat(userOperationsLog.get(1).getId()).isNotNull();
+    assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
+    assertThat(userOperationsLog.get(0).getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
+
     assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE);
-    assertThat(userOperationsLog.get(1).getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
-    assertThat(userOperationsLog.get(1).getOrgValue()).isNull();
     assertThat(userOperationsLog.get(1).getNewValue()).isEqualTo(SuspensionState.ACTIVE.getName());
-    assertThat(userOperationsLog.get(1).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(1).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(1).getProcessDefinitionId()).isNotNull();
-    assertThat(userOperationsLog.get(1).getProcessInstanceId()).isEqualTo(processInstance.getId());
-    assertThat(userOperationsLog.get(1).getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
   @Test
@@ -163,30 +158,21 @@ class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog).hasSize(2);
-    assertThat(userOperationsLog.get(0)).isNotNull();
-    assertThat(userOperationsLog.get(0).getId()).isNotNull();
+    assertThat(userOperationsLog)
+      .hasSize(2)
+      .allSatisfy(entry -> {
+        assertThat(entry).isNotNull();
+        assertThat(entry.getId()).isNotNull();
+        assertThat(entry.getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
+        assertThat(entry.getOrgValue()).isNull();
+        assertThat(entry.getTimestamp()).isNotNull();
+        assertThat(entry.getProcessDefinitionKey()).isEqualTo("process");
+        assertThat(entry.getProcessDefinitionId()).isNotNull();
+        assertThat(entry.getProcessInstanceId()).isNull();
+        assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
+      });
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
-    assertThat(userOperationsLog.get(0).getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
-    assertThat(userOperationsLog.get(0).getOrgValue()).isNull();
     assertThat(userOperationsLog.get(0).getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
-    assertThat(userOperationsLog.get(0).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(0).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(0).getProcessDefinitionId()).isNotNull();
-    assertThat(userOperationsLog.get(0).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(0).getCategory()).isEqualTo(CATEGORY_OPERATOR);
-
-    assertThat(userOperationsLog.get(1)).isNotNull();
-    assertThat(userOperationsLog.get(1).getId()).isNotNull();
-    assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE);
-    assertThat(userOperationsLog.get(1).getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
-    assertThat(userOperationsLog.get(1).getOrgValue()).isNull();
-    assertThat(userOperationsLog.get(1).getNewValue()).isEqualTo(SuspensionState.ACTIVE.getName());
-    assertThat(userOperationsLog.get(1).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(1).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(1).getProcessDefinitionId()).isNotNull();
-    assertThat(userOperationsLog.get(1).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(1).getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
   @Test
@@ -208,30 +194,24 @@ class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog).hasSize(2);
-    assertThat(userOperationsLog.get(0)).isNotNull();
-    assertThat(userOperationsLog.get(0).getId()).isNotNull();
+    assertThat(userOperationsLog)
+      .hasSize(2)
+      .allSatisfy(entry -> {
+        assertThat(entry).isNotNull();
+        assertThat(entry.getId()).isNotNull();
+        assertThat(entry.getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
+        assertThat(entry.getOrgValue()).isNull();
+        assertThat(entry.getTimestamp()).isNotNull();
+        assertThat(entry.getProcessDefinitionKey()).isEqualTo("process");
+        assertThat(entry.getProcessDefinitionId()).isNull();
+        assertThat(entry.getProcessInstanceId()).isNull();
+        assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
+      });
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
-    assertThat(userOperationsLog.get(0).getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
-    assertThat(userOperationsLog.get(0).getOrgValue()).isNull();
     assertThat(userOperationsLog.get(0).getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
-    assertThat(userOperationsLog.get(0).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(0).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(0).getProcessDefinitionId()).isNull();
-    assertThat(userOperationsLog.get(0).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(0).getCategory()).isEqualTo(CATEGORY_OPERATOR);
 
-    assertThat(userOperationsLog.get(1)).isNotNull();
-    assertThat(userOperationsLog.get(1).getId()).isNotNull();
     assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE);
-    assertThat(userOperationsLog.get(1).getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
-    assertThat(userOperationsLog.get(1).getOrgValue()).isNull();
     assertThat(userOperationsLog.get(1).getNewValue()).isEqualTo(SuspensionState.ACTIVE.getName());
-    assertThat(userOperationsLog.get(1).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(1).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(1).getProcessDefinitionId()).isNull();
-    assertThat(userOperationsLog.get(1).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(1).getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
   @Test
@@ -253,53 +233,27 @@ class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog).hasSize(4);
-    List<String> newPossibleValue = new ArrayList<>(Arrays.asList(
-      SuspensionState.SUSPENDED.getName(),
-      SuspensionState.ACTIVE.getName(),
-      "true",
-      "true"
-    ));
-
+    assertThat(userOperationsLog)
+      .hasSize(4)
+      .allSatisfy(
+        entry -> {
+          assertThat(entry.getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
+          assertThat(entry.getOrgValue()).isNull();
+          assertThat(entry.getTimestamp()).isNotNull();
+          assertThat(entry.getProcessDefinitionKey()).isEqualTo("process");
+          assertThat(entry.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
+          assertThat(entry.getProcessInstanceId()).isNull();
+          assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
+        }
+    );
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(0).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(0).getOrgValue()).isNull();
-    assertThat(newPossibleValue.remove(userOperationsLog.get(0).getNewValue())).isTrue();
-    assertThat(userOperationsLog.get(0).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(0).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(0).getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
-    assertThat(userOperationsLog.get(0).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(0).getCategory()).isEqualTo(CATEGORY_OPERATOR);
-
+    assertThat(userOperationsLog.get(0).getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
     assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(1).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(1).getOrgValue()).isNull();
-    assertThat(newPossibleValue.remove(userOperationsLog.get(1).getNewValue())).isTrue();
-    assertThat(userOperationsLog.get(1).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(1).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(1).getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
-    assertThat(userOperationsLog.get(1).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(1).getCategory()).isEqualTo(CATEGORY_OPERATOR);
-
+    assertThat(userOperationsLog.get(1).getNewValue()).isEqualTo("true");
     assertThat(userOperationsLog.get(2).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(2).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(2).getOrgValue()).isNull();
-    assertThat(newPossibleValue.remove(userOperationsLog.get(2).getNewValue())).isTrue();
-    assertThat(userOperationsLog.get(2).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(2).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(2).getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
-    assertThat(userOperationsLog.get(2).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(2).getCategory()).isEqualTo(CATEGORY_OPERATOR);
-
+    assertThat(userOperationsLog.get(2).getNewValue()).isEqualTo(SuspensionState.ACTIVE.getName());
     assertThat(userOperationsLog.get(3).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(3).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(3).getOrgValue()).isNull();
-    assertThat(newPossibleValue.remove(userOperationsLog.get(3).getNewValue())).isTrue();
-    assertThat(userOperationsLog.get(3).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(3).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(3).getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
-    assertThat(userOperationsLog.get(3).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(3).getCategory()).isEqualTo(CATEGORY_OPERATOR);
+    assertThat(userOperationsLog.get(3).getNewValue()).isEqualTo("true");
   }
 
   @Test
@@ -321,53 +275,27 @@ class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog).hasSize(4);
-    List<String> newPossibleValue = new ArrayList<>(Arrays.asList(
-      SuspensionState.SUSPENDED.getName(),
-      SuspensionState.ACTIVE.getName(),
-      "true",
-      "true"
-    ));
-
+    assertThat(userOperationsLog)
+      .hasSize(4)
+      .allSatisfy(
+        entry -> {
+          assertThat(entry.getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
+          assertThat(entry.getOrgValue()).isNull();
+          assertThat(entry.getTimestamp()).isNotNull();
+          assertThat(entry.getProcessDefinitionKey()).isEqualTo("process");
+          assertThat(entry.getProcessDefinitionId()).isNull();
+          assertThat(entry.getProcessInstanceId()).isNull();
+          assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
+        }
+    );
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(0).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(0).getOrgValue()).isNull();
-    assertThat(newPossibleValue.remove(userOperationsLog.get(0).getNewValue())).isTrue();
-    assertThat(userOperationsLog.get(0).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(0).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(0).getProcessDefinitionId()).isNull();
-    assertThat(userOperationsLog.get(0).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(0).getCategory()).isEqualTo(CATEGORY_OPERATOR);
-
+    assertThat(userOperationsLog.get(0).getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
     assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(1).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(1).getOrgValue()).isNull();
-    assertThat(newPossibleValue.remove(userOperationsLog.get(1).getNewValue())).isTrue();
-    assertThat(userOperationsLog.get(1).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(1).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(1).getProcessDefinitionId()).isNull();
-    assertThat(userOperationsLog.get(1).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(1).getCategory()).isEqualTo(CATEGORY_OPERATOR);
-
+    assertThat(userOperationsLog.get(1).getNewValue()).isEqualTo("true");
     assertThat(userOperationsLog.get(2).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(2).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(2).getOrgValue()).isNull();
-    assertThat(newPossibleValue.remove(userOperationsLog.get(2).getNewValue())).isTrue();
-    assertThat(userOperationsLog.get(2).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(2).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(2).getProcessDefinitionId()).isNull();
-    assertThat(userOperationsLog.get(2).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(2).getCategory()).isEqualTo(CATEGORY_OPERATOR);
-
+    assertThat(userOperationsLog.get(2).getNewValue()).isEqualTo(SuspensionState.ACTIVE.getName());
     assertThat(userOperationsLog.get(3).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(3).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(3).getOrgValue()).isNull();
-    assertThat(newPossibleValue.remove(userOperationsLog.get(3).getNewValue())).isTrue();
-    assertThat(userOperationsLog.get(3).getTimestamp()).isNotNull();
-    assertThat(userOperationsLog.get(3).getProcessDefinitionKey()).isEqualTo("process");
-    assertThat(userOperationsLog.get(3).getProcessDefinitionId()).isNull();
-    assertThat(userOperationsLog.get(3).getProcessInstanceId()).isNull();
-    assertThat(userOperationsLog.get(3).getCategory()).isEqualTo(CATEGORY_OPERATOR);
+    assertThat(userOperationsLog.get(3).getNewValue()).isEqualTo("true");
   }
 
   @Test

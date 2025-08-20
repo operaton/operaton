@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest.optimize;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
 import org.operaton.bpm.engine.impl.OptimizeService;
@@ -33,6 +34,7 @@ import jakarta.ws.rs.core.Response.Status;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -48,7 +50,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTest {
+@ExtendWith(TestContainerExtension.class)
+class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTest {
 
   public static final String OPTIMIZE_VARIABLE_UPDATE_PATH =
     TEST_RESOURCE_ROOT_PATH + "/optimize/variable-update";

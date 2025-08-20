@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest.optimize;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.OptimizeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -30,6 +31,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 import java.util.Collections;
 import java.util.Date;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -40,6 +42,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(TestContainerExtension.class)
 class OptimizeOpenHistoricIncidentRestServiceTest extends AbstractRestServiceTest {
 
   private static final String OPTIMIZE_OPEN_HISTORIC_INCIDENT_PATH =

@@ -322,6 +322,14 @@
                     <version>.+</version>
                   </ignoreVersion>
                 </rule>
+                <!-- JRuby 10+ is not compatible due Java 21 is a pre-requisite -->
+                <rule>
+                  <groupId>org.jruby</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[10.0,)</version>
+                  </ignoreVersion>
+                </rule>
               </rules>
             </ruleSet>
           </configuration>

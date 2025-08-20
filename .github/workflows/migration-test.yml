@@ -1,10 +1,15 @@
 name: Database Migration Test
 
 on:
-  workflow_dispatch:
   pull_request:
     branches:
       - main
+    paths:
+      - '**/*.sql'
+      - 'qa/test-db-rolling-update/**'
+    schedule:
+    - cron: "30 2 * * *"     # Runs at 2:30 AM UTC daily
+  workflow_dispatch:
 
 jobs:
   qa:
@@ -26,5 +31,4 @@ jobs:
         run: |
           ./mvnw clean install -DskipTests -PskipFrontendBuild
           cd qa/test-database-container
-          chmod +x ./test.sh
           ./test.sh ${{ matrix.db }}

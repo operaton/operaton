@@ -93,7 +93,7 @@ var ProcessInstance = AbstractClientResource.extend(
 
     /**
      * Post process instance modifications
-     * @see http://docs.operaton.org/api-references/rest/#process-instance-modify-process-instance-execution-state-method
+     * @see https://docs.operaton.org/api-references/rest/#process-instance-modify-process-instance-execution-state-method
      *
      * @param  {Object}           params
      * @param  {UUID}             params.id                     process instance UUID
@@ -242,7 +242,7 @@ var ProcessInstance = AbstractClientResource.extend(
     /**
      * Sets a variable of a given process instance by id.
      *
-     * @see http://docs.operaton.org/manual/develop/reference/rest/process-instance/variables/put-variable/
+     * @see https://docs.operaton.org/manual/develop/reference/rest/process-instance/variables/put-variable/
      *
      * @param   {uuid}              id
      * @param   {Object}            params

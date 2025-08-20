@@ -25,12 +25,11 @@ The webapps above are relying on 2 libraries:
 * __operaton-bpm-sdk-js__: provides tools for developers who want interact with the platform using Javascript
 * __operaton-commons-ui__: is a set of shared scripts, templates and assets, used in the different webapps
 
-
 #### Plugins
 
 Parts of the web applications can be extended using plugins.
 
-See [plugin development guide](http://docs.operaton.org/latest/real-life/how-to/#cockpit-how-to-develop-a-cockpit-plugin) for details.
+See [plugin development guide](https://docs.operaton.org/latest/real-life/how-to/#cockpit-how-to-develop-a-cockpit-plugin) for details.
 
 #### Translations
 
@@ -93,10 +92,9 @@ The supported browsers are:
 
 Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/main/CONTRIBUTING.md) for how to contribute to this repository.
 
-
 ## Help and support
 
-* [Documentation](http://docs.operaton.org/manual/latest/)
+* [Documentation](https://docs.operaton.org/manual/latest/)
 * [Forum](https://forum.operaton.org)
 * [Stackoverflow](https://stackoverflow.com/questions/tagged/operaton)
 

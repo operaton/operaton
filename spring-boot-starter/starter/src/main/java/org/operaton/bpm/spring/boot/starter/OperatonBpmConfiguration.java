@@ -24,6 +24,7 @@ import javax.sql.DataSource;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
+import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonAuthorizationConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonDatasourceConfiguration;
@@ -102,8 +103,9 @@ public class OperatonBpmConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(OperatonHistoryConfiguration.class)
-  public static OperatonHistoryConfiguration operatonHistoryConfiguration() {
-    return new DefaultHistoryConfiguration();
+  public static OperatonHistoryConfiguration operatonHistoryConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                                                          HistoryEventHandler historyEventHandler) {
+    return new DefaultHistoryConfiguration(operatonBpmProperties, historyEventHandler);
   }
 
   @Bean

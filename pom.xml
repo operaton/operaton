@@ -277,7 +277,53 @@
           <artifactId>versions-maven-plugin</artifactId>
           <version>2.18.0</version>
           <configuration>
-            <ignoredVersions>.*alpha.*,.*beta.*,4\.0\.0-.*</ignoredVersions>
+            <onlyProjectDependencies>true</onlyProjectDependencies>
+            <onlyUpgradable>true</onlyUpgradable>
+            <ruleSet>
+              <ignoreVersions>
+                <ignoreVersion>
+                  <type>regex</type>
+                  <version>.+[-\.](alpha|Alpha|beta|Beta|M|RC|rc|CR)[-\.]?\d+</version>
+                </ignoreVersion>
+              </ignoreVersions>
+              <rules>
+                <rule>
+                  <groupId>commons-collections</groupId>
+                  <ignoreVersion>
+                    <type>regex</type>
+                    <version>200\d+(?:\.\d+)?</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>commons-io</groupId>
+                  <ignoreVersion>
+                    <type>regex</type>
+                    <version>200\d+(?:\.\d+)?</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.inject</groupId>
+                  <ignoreVersion>
+                    <type>regex</type>
+                    <version>.+\.MR</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>org.glassfish.extras</groupId>
+                  <ignoreVersion>
+                    <type>regex</type>
+                    <version>.+\-b\d+</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>org.jboss.shrinkwrap.resolver</groupId>
+                  <ignoreVersion>
+                    <type>regex</type>
+                    <version>.+</version>
+                  </ignoreVersion>
+                </rule>
+              </rules>
+            </ruleSet>
           </configuration>
         </plugin>
         <plugin>

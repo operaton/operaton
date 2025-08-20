@@ -119,8 +119,10 @@ public class OperatonBpmConfiguration {
   @ConditionalOnMissingBean(OperatonHistoryLevelAutoHandlingConfiguration.class)
   @ConditionalOnProperty(prefix = "operaton.bpm", name = "history-level", havingValue = "auto", matchIfMissing = false)
   @Conditional(NeedsHistoryAutoConfigurationCondition.class)
-  public static OperatonHistoryLevelAutoHandlingConfiguration historyLevelAutoHandlingConfiguration() {
-    return new DefaultHistoryLevelAutoHandlingConfiguration();
+  public static OperatonHistoryLevelAutoHandlingConfiguration historyLevelAutoHandlingConfiguration(
+      OperatonBpmProperties operatonBpmProperties,
+      HistoryLevelDeterminator historyLevelDeterminator) {
+    return new DefaultHistoryLevelAutoHandlingConfiguration(operatonBpmProperties, historyLevelDeterminator);
   }
 
   //TODO to be removed within CAM-8108

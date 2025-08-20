@@ -8,7 +8,7 @@ operaton BPMN model can be used standalone, independenly of Operaton / process e
 ====
 
 * Web Site: https://operaton.com/
-* User Guide: link:http://docs.operaton.org/latest/guides/user-guide/#bpmn-model-api[http://docs.operaton.org]
+* User Guide: link:https://docs.operaton.org/latest/guides/user-guide/#bpmn-model-api[https://docs.operaton.org]
 * Examples: link:https://github.com/operaton/operaton-bpm-examples/tree/master/bpmn-model-api[https://github.com/operaton/operaton-bpm-examples]
 * Issue Tracker: https://app.camunda.com/jira/
 * Contribution Guidelines: https://operaton.com/learn/community/#contribute

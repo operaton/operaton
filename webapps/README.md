@@ -7,8 +7,8 @@ Clean, package and install it via [Maven](https://maven.apache.org/).
 
 The structure is as follows:
 
-* `assembly` - Java sources and tests for the Operaton web application.
-* `frontend` - HTML, CSS and Javascript sources as well as Plugins and tests for the Operaton webapplications Cockpit, Tasklist and Admin.
+- `assembly` - Java sources and tests for the Operaton web application.
+- `frontend` - HTML, CSS and Javascript sources as well as Plugins and tests for the Operaton webapplications Cockpit, Tasklist and Admin.
 
 ## FRONTEND
 
@@ -16,21 +16,20 @@ The structure is as follows:
 
 There are 3 web applications available for the Operaton :
 
-* __cockpit__: an administration interface for processes and decisions
-* __tasklist__: provides an interface to process user tasks
-* __admin__: is used to administer users, groups and their authorizations
+- **cockpit**: an administration interface for processes and decisions
+- **tasklist**: provides an interface to process user tasks
+- **admin**: is used to administer users, groups and their authorizations
 
 The webapps above are relying on 2 libraries:
 
-* __operaton-bpm-sdk-js__: provides tools for developers who want interact with the platform using Javascript
-* __operaton-commons-ui__: is a set of shared scripts, templates and assets, used in the different webapps
-
+- **operaton-bpm-sdk-js**: provides tools for developers who want interact with the platform using Javascript
+- **operaton-commons-ui**: is a set of shared scripts, templates and assets, used in the different webapps
 
 #### Plugins
 
 Parts of the web applications can be extended using plugins.
 
-See [plugin development guide](http://docs.operaton.org/latest/real-life/how-to/#cockpit-how-to-develop-a-cockpit-plugin) for details.
+See [plugin development guide](https://docs.operaton.org/latest/real-life/how-to/#cockpit-how-to-develop-a-cockpit-plugin) for details.
 
 #### Translations
 
@@ -93,12 +92,11 @@ The supported browsers are:
 
 Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/main/CONTRIBUTING.md) for how to contribute to this repository.
 
-
 ## Help and support
 
-* [Documentation](http://docs.operaton.org/manual/latest/)
-* [Forum](https://forum.operaton.org)
-* [Stackoverflow](https://stackoverflow.com/questions/tagged/operaton)
+- [Documentation](https://docs.operaton.org/manual/latest/)
+- [Forum](https://forum.operaton.org)
+- [Stackoverflow](https://stackoverflow.com/questions/tagged/operaton)
 
 ## License
 

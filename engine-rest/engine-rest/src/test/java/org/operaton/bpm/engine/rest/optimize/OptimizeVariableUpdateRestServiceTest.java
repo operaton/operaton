@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.rest.optimize;
 
 import io.restassured.response.Response;
-import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;

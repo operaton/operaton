@@ -50,7 +50,7 @@ Operaton uses the following versions of its dependencies:
 |-------------|---------|
 | Java        | 17      |
 | Spring Boot | 3.5.4   |
-| Spring      | 6.2.9   |
+| Spring      | 6.2.10  |
 | Wildfly     | 36.0.1  |
 | Tomcat      | 11.0.10 |
 | Jakarta EE  | 10.0.0  |

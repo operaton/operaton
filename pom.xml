@@ -20,6 +20,7 @@
     <version.quarkus>3.24.2</version.quarkus>
     <version.java>17</version.java>
     <version.spring-boot>3.5.4</version.spring-boot>
+    <version.liquibase>4.33.0</version.liquibase>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <sonar.organization>operaton</sonar.organization>
@@ -362,7 +363,7 @@
         <plugin>
           <groupId>org.liquibase</groupId>
           <artifactId>liquibase-maven-plugin</artifactId>
-          <version>4.31.1</version>
+          <version>${version.liquibase}</version>
         </plugin>
         <plugin>
           <groupId>org.springframework.boot</groupId>

@@ -58,7 +58,7 @@
       <dependency>
         <groupId>org.glassfish.jersey</groupId>
         <artifactId>jersey-bom</artifactId>
-        <version>3.1.10</version>
+        <version>${version.jersey3}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -419,7 +419,7 @@
       <dependency>
         <groupId>org.glassfish.jersey.core</groupId>
         <artifactId>jersey-client</artifactId>
-        <version>3.1.10</version>
+        <version>${version.jersey3}</version>
       </dependency>
 
       <dependency>

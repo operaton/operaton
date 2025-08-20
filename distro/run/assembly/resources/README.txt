@@ -3,7 +3,7 @@ This is a distribution of
        Operaton v${project.version}
 
 visit
-      https://docs.operaton.org/
+       https://docs.operaton.org/
 
 Operaton is a Java-based framework licensed under the
 Apache License 2.0 license.

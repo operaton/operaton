@@ -594,7 +594,7 @@
   </licenses>
   <organization>
     <name>Operaton</name>
-  <url>https://www.operaton.com</url>
+    <url>https://www.operaton.com</url>
   </organization>
   <url>https://www.operaton.org</url>
   <developers>
@@ -602,7 +602,7 @@
       <id>operaton.org</id>
       <name>Operaton Community</name>
       <organization>operaton.org</organization>
-  <organizationUrl>https://operaton.org</organizationUrl>
+      <organizationUrl>https://operaton.org</organizationUrl>
     </developer>
   </developers>
   <scm>

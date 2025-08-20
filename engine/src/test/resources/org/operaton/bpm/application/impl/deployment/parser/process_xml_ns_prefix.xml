@@ -3,7 +3,7 @@
 <operaton:process-application
   xmlns:operaton="http://www.operaton.org/schema/1.0/ProcessApplication"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.operaton.org/schema/1.0/ProcessApplication https://www.operaton.org/schema/1.0/ProcessApplication ">
+  xsi:schemaLocation="http://www.operaton.org/schema/1.0/ProcessApplication http://www.operaton.org/schema/1.0/ProcessApplication ">
   
   <operaton:process-engine name="engine1">
     <operaton:job-acquisition>default</operaton:job-acquisition>

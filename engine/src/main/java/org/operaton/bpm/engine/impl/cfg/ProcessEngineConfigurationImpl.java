@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd.MAX_THREADS_NUMBER;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -40,8 +41,10 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.mapping.Environment;
@@ -87,6 +90,7 @@ import org.operaton.bpm.engine.impl.HistoryServiceImpl;
 import org.operaton.bpm.engine.impl.IdentityServiceImpl;
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.ModificationBatchJobHandler;
+import org.operaton.bpm.engine.impl.OptimizeService;
 import org.operaton.bpm.engine.impl.PriorityProvider;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -284,6 +288,7 @@ import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventSc
 import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventTypeValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.UpdateEventTriggersValidator;
 import org.operaton.bpm.engine.impl.mock.MocksResolverFactory;
+import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.GenericManagerFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.Deployer;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.CacheFactory;
@@ -432,6 +437,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile FilterService filterService = new FilterServiceImpl();
   protected volatile ExternalTaskService externalTaskService = new ExternalTaskServiceImpl();
   protected volatile DecisionService decisionService = new DecisionServiceImpl();
+  protected volatile OptimizeService optimizeService = new OptimizeService();
 
   // COMMAND EXECUTORS ////////////////////////////////////////////////////////
 
@@ -1624,6 +1630,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     initService(filterService);
     initService(externalTaskService);
     initService(decisionService);
+    initService(optimizeService);
   }
 
   protected void initService(Object service) {
@@ -2013,6 +2020,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       addSessionFactory(new GenericManagerFactory(HistoricDecisionInstanceManager.class));
 
       addSessionFactory(new GenericManagerFactory(OperatonFormDefinitionManager.class));
+
+      addSessionFactory(new GenericManagerFactory(OptimizeManager.class));
 
       sessionFactories.put(ReadOnlyIdentityProvider.class, identityProviderSessionFactory);
 
@@ -3143,6 +3152,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public void setDecisionService(DecisionService decisionService) {
     this.decisionService = decisionService;
+  }
+
+  public OptimizeService getOptimizeService() {
+    return optimizeService;
   }
 
   public Map<Class<?>, SessionFactory> getSessionFactories() {

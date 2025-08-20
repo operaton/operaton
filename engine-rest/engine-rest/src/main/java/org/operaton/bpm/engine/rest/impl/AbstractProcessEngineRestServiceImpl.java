@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
+
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.Providers;
-import java.net.URI;
+
 import org.operaton.bpm.engine.rest.AuthorizationRestService;
 import org.operaton.bpm.engine.rest.BatchRestService;
 import org.operaton.bpm.engine.rest.CaseDefinitionRestService;
@@ -54,7 +55,10 @@ import org.operaton.bpm.engine.rest.UserRestService;
 import org.operaton.bpm.engine.rest.VariableInstanceRestService;
 import org.operaton.bpm.engine.rest.history.HistoryRestService;
 import org.operaton.bpm.engine.rest.impl.history.HistoryRestServiceImpl;
+import org.operaton.bpm.engine.rest.impl.optimize.OptimizeRestService;
 import org.operaton.bpm.engine.rest.util.ProvidersUtil;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * <p>Abstract process engine resource that provides instantiations of all REST resources.</p>
@@ -271,6 +275,13 @@ public abstract class AbstractProcessEngineRestServiceImpl {
   public ConditionRestService getConditionRestService(String engineName) {
     String rootResourcePath = getRelativeEngineUri(engineName).toASCIIString();
     ConditionRestServiceImpl subResource = new ConditionRestServiceImpl(engineName, getObjectMapper());
+    subResource.setRelativeRootResourceUri(rootResourcePath);
+    return subResource;
+  }
+
+  public OptimizeRestService getOptimizeRestService(String engineName) {
+    String rootResourcePath = getRelativeEngineUri(engineName).toASCIIString();
+    OptimizeRestService subResource = new OptimizeRestService(engineName, getObjectMapper());
     subResource.setRelativeRootResourceUri(rootResourcePath);
     return subResource;
   }

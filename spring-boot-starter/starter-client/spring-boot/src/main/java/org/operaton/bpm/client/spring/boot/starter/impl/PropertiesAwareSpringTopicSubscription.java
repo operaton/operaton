@@ -28,8 +28,11 @@ import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguratio
 
 public class PropertiesAwareSpringTopicSubscription extends SpringTopicSubscriptionImpl {
 
-  @Autowired
   protected ClientProperties clientProperties;
+
+  public PropertiesAwareSpringTopicSubscription(ClientProperties clientProperties) {
+    this.clientProperties = clientProperties;
+  }
 
   @Override
   public void afterPropertiesSet() {

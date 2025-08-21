@@ -27,8 +27,11 @@ public class JobExecutorStartingEventListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(JobExecutorStartingEventListener.class);
 
-  @Autowired
   protected JobExecutor jobExecutor;
+
+  public JobExecutorStartingEventListener(JobExecutor jobExecutor) {
+    this.jobExecutor = jobExecutor;
+  }
 
   @EventListener
   public void handleProcessApplicationStartedEvent(ProcessApplicationStartedEvent processApplicationStartedEvent) {

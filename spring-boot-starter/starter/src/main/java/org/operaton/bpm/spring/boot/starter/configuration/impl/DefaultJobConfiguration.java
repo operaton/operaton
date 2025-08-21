@@ -131,8 +131,8 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
     @Bean
     @ConditionalOnProperty(prefix = "operaton.bpm.job-execution", name = "enabled", havingValue = "true", matchIfMissing = true)
     @ConditionalOnBean(JobExecutor.class)
-    public static JobExecutorStartingEventListener jobExecutorStartingEventListener() {
-      return new JobExecutorStartingEventListener();
+    public static JobExecutorStartingEventListener jobExecutorStartingEventListener(JobExecutor jobExecutor) {
+      return new JobExecutorStartingEventListener(jobExecutor);
     }
 
     private JobConfiguration() {

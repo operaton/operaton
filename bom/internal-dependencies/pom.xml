@@ -20,7 +20,6 @@
   </description>
 
   <properties>
-    <version.slf4j>2.0.16</version.slf4j>
     <version.jetty>12.0.16</version.jetty>
   </properties>
 

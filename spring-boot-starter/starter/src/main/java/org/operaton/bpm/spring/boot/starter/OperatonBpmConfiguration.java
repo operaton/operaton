@@ -22,6 +22,7 @@ import java.util.List;
 
 import java.util.Optional;
 import javax.sql.DataSource;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -192,7 +193,7 @@ public class OperatonBpmConfiguration {
   }
 
   @Bean
-  public OperatonIntegrationDeterminator operatonIntegrationDeterminator() {
-    return new OperatonIntegrationDeterminator();
+  public OperatonIntegrationDeterminator operatonIntegrationDeterminator(ProcessEngine processEngine) {
+    return new OperatonIntegrationDeterminator(processEngine);
   }
 }

@@ -18,21 +18,23 @@ package org.operaton.bpm.spring.boot.starter.telemetry;
 
 import jakarta.servlet.ServletContext;
 
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.ManagementServiceImpl;
-
 
 public class OperatonApplicationServerConfigurator implements InitializingBean {
 
-  @Autowired
   protected ProcessEngine processEngine;
 
-  @Autowired
   protected ApplicationContext applicationContext;
+
+  public OperatonApplicationServerConfigurator(ProcessEngine processEngine, ApplicationContext applicationContext) {
+    this.processEngine = processEngine;
+    this.applicationContext = applicationContext;
+  }
 
   @Override
   public void afterPropertiesSet() throws Exception {

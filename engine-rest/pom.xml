@@ -19,7 +19,6 @@
     <!-- override groovy version with the one used by rest-assured -->
     <version.groovy>3.0.9</version.groovy>
     <version.apache.httpcore>4.4.16</version.apache.httpcore>
-    <version.commons-codec>1.15</version.commons-codec>
     <surefire.forkCount>1</surefire.forkCount>
   </properties>
 
@@ -57,11 +56,6 @@
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpcore</artifactId>
         <version>${version.apache.httpcore}</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-codec</groupId>
-        <artifactId>commons-codec</artifactId>
-        <version>${version.commons-codec}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

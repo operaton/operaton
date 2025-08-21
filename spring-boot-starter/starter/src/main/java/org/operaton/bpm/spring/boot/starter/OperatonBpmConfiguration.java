@@ -20,8 +20,10 @@ import static org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminator
 
 import java.util.List;
 
+import java.util.Optional;
 import javax.sql.DataSource;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
+import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
@@ -81,8 +83,9 @@ public class OperatonBpmConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(DefaultProcessEngineConfiguration.class)
-  public static OperatonProcessEngineConfiguration operatonProcessEngineConfiguration() {
-    return new DefaultProcessEngineConfiguration();
+  public static OperatonProcessEngineConfiguration operatonProcessEngineConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                                                                      Optional<IdGenerator> idGenerator) {
+    return new DefaultProcessEngineConfiguration(operatonBpmProperties, idGenerator);
   }
 
   @Bean

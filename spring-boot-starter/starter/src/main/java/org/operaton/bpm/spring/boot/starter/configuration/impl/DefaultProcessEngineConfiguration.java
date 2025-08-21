@@ -26,10 +26,16 @@ import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
-public class DefaultProcessEngineConfiguration extends AbstractOperatonConfiguration implements OperatonProcessEngineConfiguration {
+public class DefaultProcessEngineConfiguration extends AbstractOperatonConfiguration
+    implements OperatonProcessEngineConfiguration {
 
-  @Autowired
   private Optional<IdGenerator> idGenerator;
+
+  public DefaultProcessEngineConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                           Optional<IdGenerator> idGenerator) {
+    super(operatonBpmProperties);
+    this.idGenerator = idGenerator;
+  }
 
   @Override
   public void preInit(SpringProcessEngineConfiguration configuration) {
@@ -60,24 +66,25 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
       if (operatonBpmProperties.getGenerateUniqueProcessEngineName()) {
         if (!ProcessEngines.NAME_DEFAULT.equals(processEngineName)) {
           throw new RuntimeException(("A unique processEngineName cannot be generated "
-            + "if a custom processEngineName is already set: %s").formatted(processEngineName));
+              + "if a custom processEngineName is already set: %s").formatted(processEngineName));
         }
         processEngineName = OperatonBpmProperties.getUniqueName(operatonBpmProperties.UNIQUE_ENGINE_NAME_PREFIX);
       }
 
       configuration.setProcessEngineName(processEngineName);
     } else {
-      logger.warn("Ignoring invalid processEngineName='{}' - must not be null, blank or contain hyphen", operatonBpmProperties.getProcessEngineName());
+      logger.warn("Ignoring invalid processEngineName='{}' - must not be null, blank or contain hyphen",
+          operatonBpmProperties.getProcessEngineName());
     }
   }
 
   private void setJobExecutorAcquireByPriority(SpringProcessEngineConfiguration configuration) {
     Optional.ofNullable(operatonBpmProperties.getJobExecutorAcquireByPriority())
-      .ifPresent(configuration::setJobExecutorAcquireByPriority);
+        .ifPresent(configuration::setJobExecutorAcquireByPriority);
   }
 
   private void setDefaultNumberOfRetries(SpringProcessEngineConfiguration configuration) {
     Optional.ofNullable(operatonBpmProperties.getDefaultNumberOfRetries())
-      .ifPresent(configuration::setDefaultNumberOfRetries);
+        .ifPresent(configuration::setDefaultNumberOfRetries);
   }
 }

@@ -29,14 +29,20 @@ import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
 @ConditionalOnBean(ProcessEngine.class)
 public class OperatonIntegrationDeterminator implements InitializingBean {
 
-  @Autowired
   protected ProcessEngine processEngine;
+
+  public OperatonIntegrationDeterminator(ProcessEngine processEngine) {
+    this.processEngine = processEngine;
+  }
 
   @Override
   public void afterPropertiesSet() throws Exception {
     ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
 
-    Set<String> operatonIntegration = configuration.getTelemetryData().getProduct().getInternals().getOperatonIntegration();
+    Set<String> operatonIntegration = configuration.getTelemetryData()
+        .getProduct()
+        .getInternals()
+        .getOperatonIntegration();
     operatonIntegration.add(OperatonIntegration.SPRING_BOOT_STARTER);
   }
 

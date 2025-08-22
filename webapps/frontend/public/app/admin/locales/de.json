@@ -143,6 +143,7 @@
     "AUTHORIZATION_HISTORIC_TASK": "Historische Taskinstanz",
     "AUTHORIZATION_MANAGE_AUTHORIZATIONS": "Autorisierungen verwalten",
     "AUTHORIZATION_OPERATION_LOG": "Operation Log",
+    "AUTHORIZATION_OPTIMIZE": "Optimize",
     "AUTHORIZATION_PERMISSIONS": "Berechtigungen",
     "AUTHORIZATION_PROCESS_DEFINITION": "Prozessdefinition",
     "AUTHORIZATION_PROCESS_INSTANCE": "Prozessinstanzen",

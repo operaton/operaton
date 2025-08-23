@@ -53,7 +53,7 @@ public class Properties {
    */
   @SuppressWarnings("unchecked")
   public <T> T get(PropertyKey<T> property) {
-    return (T) properties.get(property.getName());
+    return (T) properties.get(property.name());
   }
 
   /**
@@ -110,7 +110,7 @@ public class Properties {
    *          the value to be associated with the specified property key
    */
   public <T> void set(PropertyKey<T> property, T value) {
-    properties.put(property.getName(), value);
+    properties.put(property.name(), value);
   }
 
   /**
@@ -202,7 +202,7 @@ public class Properties {
    * @return <code>true</code> if this properties contains a mapping for the specified property key
    */
   public boolean contains(PropertyKey<?> property) {
-    return properties.containsKey(property.getName());
+    return properties.containsKey(property.name());
   }
 
   /**

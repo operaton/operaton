@@ -20,7 +20,9 @@ package org.operaton.bpm.engine.impl.core.model;
  * Key of a list property.
  *
  * @param T the type of elements in the list
+ *
  * @author Philipp Ossler
+ *
  */
 public record PropertyListKey<T>(String name) {
 }

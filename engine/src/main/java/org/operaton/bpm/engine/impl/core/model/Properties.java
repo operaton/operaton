@@ -92,7 +92,7 @@ public class Properties {
   @SuppressWarnings("unchecked")
   public <K, V> Map<K, V> get(PropertyMapKey<K, V> property) {
     if (contains(property)) {
-      return (Map<K, V>) properties.get(property.getName());
+      return (Map<K, V>) properties.get(property.name());
     } else {
       return new HashMap<>();
     }
@@ -142,7 +142,7 @@ public class Properties {
    *          the map to be associated with the specified property key
    */
   public <K, V> void set(PropertyMapKey<K, V> property, Map<K, V> value) {
-    properties.put(property.getName(), value);
+    properties.put(property.name(), value);
   }
 
   /**
@@ -224,7 +224,7 @@ public class Properties {
    * @return <code>true</code> if this properties contains a mapping for the specified property key
    */
   public boolean contains(PropertyMapKey<?, ?> property) {
-    return properties.containsKey(property.getName());
+    return properties.containsKey(property.name());
   }
 
   /**

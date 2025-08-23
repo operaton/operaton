@@ -25,55 +25,10 @@ package org.operaton.bpm.engine.impl.core.model;
  * @author Philipp Ossler
  *
  */
-public class PropertyMapKey<K,V> {
-
-  protected final String name;
-  protected boolean allowOverwrite = true;
+public record PropertyMapKey<K,V>(String name, boolean allowsOverwrite) {
 
   public PropertyMapKey(String name) {
     this(name, true);
   }
 
-  public PropertyMapKey(String name, boolean allowOverwrite) {
-    this.name = name;
-    this.allowOverwrite = allowOverwrite;
-  }
-
-  public boolean allowsOverwrite() {
-    return allowOverwrite;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public String toString() {
-    return "PropertyMapKey [name=" + name + "]";
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((name == null) ? 0 : name.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    PropertyMapKey<?,?> other = (PropertyMapKey<?,?>) obj;
-    if (name == null) {
-      if (other.name != null)
-        return false;
-    } else if (!name.equals(other.name))
-      return false;
-    return true;
-  }
 }

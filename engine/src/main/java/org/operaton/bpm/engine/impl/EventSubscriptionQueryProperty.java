@@ -23,12 +23,12 @@ import org.operaton.bpm.engine.query.QueryProperty;
 /**
  * @author Daniel Meyer
  */
-public interface EventSubscriptionQueryProperty {
+final class EventSubscriptionQueryProperty {
 
   // properties used in event subscription queries:
 
-  QueryProperty CREATED = new QueryPropertyImpl("CREATED_");
+  public static final QueryProperty CREATED = new QueryPropertyImpl("CREATED_");
+  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
 
-  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
-
+  private  EventSubscriptionQueryProperty() {}
 }

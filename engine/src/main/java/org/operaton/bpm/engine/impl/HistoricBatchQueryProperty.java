@@ -23,11 +23,13 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * Contains the possible properties that can be used in a {@link HistoricBatchQuery}.
  *
  */
-public interface HistoricBatchQueryProperty {
+public final class HistoricBatchQueryProperty {
 
-  QueryProperty ID = new QueryPropertyImpl("ID_");
-  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
-  QueryProperty START_TIME = new QueryPropertyImpl("START_TIME_");
-  QueryProperty END_TIME = new QueryPropertyImpl("END_TIME_");
+  public static final QueryProperty ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  public static final QueryProperty START_TIME = new QueryPropertyImpl("START_TIME_");
+  public static final QueryProperty END_TIME = new QueryPropertyImpl("END_TIME_");
+
+  private  HistoricBatchQueryProperty() {}
 
 }

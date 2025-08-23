@@ -18,7 +18,9 @@ package org.operaton.bpm.engine.impl;
 
 import org.operaton.bpm.engine.query.QueryProperty;
 
-public interface CleanableHistoricInstanceReportProperty {
+public final class CleanableHistoricInstanceReportProperty {
 
-  QueryProperty FINISHED_AMOUNT = new QueryPropertyImpl("FINISHED_");
+  public static final QueryProperty FINISHED_AMOUNT = new QueryPropertyImpl("FINISHED_");
+
+  private CleanableHistoricInstanceReportProperty() {}
 }

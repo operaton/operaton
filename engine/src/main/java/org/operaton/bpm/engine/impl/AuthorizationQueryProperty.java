@@ -24,8 +24,10 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * @author Daniel Meyer
  */
-public interface AuthorizationQueryProperty {
+final class AuthorizationQueryProperty {
 
-  QueryProperty RESOURCE_TYPE = new QueryPropertyImpl("RESOURCE_TYPE_");
-  QueryProperty RESOURCE_ID = new QueryPropertyImpl("RESOURCE_ID_");
+  public static final QueryProperty RESOURCE_TYPE = new QueryPropertyImpl("RESOURCE_TYPE_");
+  public static final QueryProperty RESOURCE_ID = new QueryPropertyImpl("RESOURCE_ID_");
+
+  private AuthorizationQueryProperty() {}
 }

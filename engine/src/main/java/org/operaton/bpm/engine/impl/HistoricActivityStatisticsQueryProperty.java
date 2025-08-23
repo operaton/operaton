@@ -23,8 +23,9 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * @author Roman Smirnov
  *
  */
-public interface HistoricActivityStatisticsQueryProperty {
+final class HistoricActivityStatisticsQueryProperty {
 
-  QueryProperty ACTIVITY_ID_ = new QueryPropertyImpl("ID_");
+  public static final QueryProperty ACTIVITY_ID_ = new QueryPropertyImpl("ID_");
 
+  private HistoricActivityStatisticsQueryProperty() {}
 }

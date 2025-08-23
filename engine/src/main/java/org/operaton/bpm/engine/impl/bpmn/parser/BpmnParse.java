@@ -251,7 +251,7 @@ public class BpmnParse extends Parse {
    * @deprecated Use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.getName();
+  public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.name();
 
   /* process start authorization specific finals */
   protected static final String POTENTIAL_STARTER = "potentialStarter";

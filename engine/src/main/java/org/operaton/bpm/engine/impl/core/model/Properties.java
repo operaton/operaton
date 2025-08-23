@@ -71,7 +71,7 @@ public class Properties {
   @SuppressWarnings("unchecked")
   public <T> List<T> get(PropertyListKey<T> property) {
     if (contains(property)) {
-      return (List<T>) properties.get(property.getName());
+      return (List<T>) properties.get(property.name());
     } else {
       return new ArrayList<>();
     }
@@ -125,7 +125,7 @@ public class Properties {
    *          the list to be associated with the specified property key
    */
   public <T> void set(PropertyListKey<T> property, List<T> value) {
-    properties.put(property.getName(), value);
+    properties.put(property.name(), value);
   }
 
   /**
@@ -213,7 +213,7 @@ public class Properties {
    * @return <code>true</code> if this properties contains a mapping for the specified property key
    */
   public boolean contains(PropertyListKey<?> property) {
-    return properties.containsKey(property.getName());
+    return properties.containsKey(property.name());
   }
 
   /**

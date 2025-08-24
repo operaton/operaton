@@ -23,12 +23,11 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * Contains the possible properties that can be used in a {@link BatchQuery}.
  *
  */
-public interface BatchQueryProperty {
+public final class BatchQueryProperty {
 
-  QueryProperty ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  public static final QueryProperty START_TIME = new QueryPropertyImpl("START_TIME_");
 
-  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
-
-  QueryProperty START_TIME = new QueryPropertyImpl("START_TIME_");
-
+  private BatchQueryProperty() {}
 }

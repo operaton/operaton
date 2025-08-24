@@ -24,12 +24,14 @@ import org.operaton.bpm.engine.runtime.ExecutionQuery;
  *
  * @author Joram Barrez
  */
-public interface ExecutionQueryProperty {
+final class ExecutionQueryProperty {
 
-  QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
-  QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
-  QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("ID_");
-  QueryProperty SEQUENCE_COUNTER = new QueryPropertyImpl("SEQUENCE_COUNTER_");
-  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
+  public static final QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
+  public static final QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty SEQUENCE_COUNTER = new QueryPropertyImpl("SEQUENCE_COUNTER_");
+  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+
+  private ExecutionQueryProperty() {}
 
 }

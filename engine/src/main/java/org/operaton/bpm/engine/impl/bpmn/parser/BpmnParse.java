@@ -245,13 +245,13 @@ public class BpmnParse extends Parse {
    * @deprecated Use {@link BpmnProperties#TYPE} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public static final String PROPERTYNAME_TYPE = BpmnProperties.TYPE.getName();
+  public static final String PROPERTYNAME_TYPE = BpmnProperties.TYPE.name();
 
   /**
    * @deprecated Use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.getName();
+  public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.name();
 
   /* process start authorization specific finals */
   protected static final String POTENTIAL_STARTER = "potentialStarter";
@@ -890,7 +890,7 @@ public class BpmnParse extends Parse {
         addError("Invalid reference targetRef '" + targetRef + "' of association element ", associationElement);
       } else {
 
-        if (sourceActivity != null && ActivityTypes.BOUNDARY_COMPENSATION.equals(sourceActivity.getProperty(BpmnProperties.TYPE.getName()))) {
+        if (sourceActivity != null && ActivityTypes.BOUNDARY_COMPENSATION.equals(sourceActivity.getProperty(BpmnProperties.TYPE.name()))) {
 
           if (targetActivity == null && compensationHandlers.containsKey(targetRef)) {
             targetActivity = parseCompensationHandlerForCompensationBoundaryEvent(parentScope, sourceActivity, targetRef, compensationHandlers);
@@ -1011,7 +1011,7 @@ public class BpmnParse extends Parse {
     List<String> exclusiveStartEventTypes = Arrays.asList("startEvent", "startTimerEvent");
 
     for (ActivityImpl activityImpl : startEventActivities) {
-      if (exclusiveStartEventTypes.contains(activityImpl.getProperty(BpmnProperties.TYPE.getName()))) {
+      if (exclusiveStartEventTypes.contains(activityImpl.getProperty(BpmnProperties.TYPE.name()))) {
         if (initial == null) {
           initial = activityImpl;
         } else {
@@ -1723,7 +1723,7 @@ public class BpmnParse extends Parse {
 
     if (activityRef != null && scopeElement.findActivityAtLevelOfSubprocess(activityRef) == null) {
       Boolean isTriggeredByEvent = scopeElement.getProperties().get(BpmnProperties.TRIGGERED_BY_EVENT);
-      String type = (String) scopeElement.getProperty(BpmnProperties.TYPE.getName());
+      String type = (String) scopeElement.getProperty(BpmnProperties.TYPE.name());
       if (Boolean.TRUE == isTriggeredByEvent && SUB_PROCESS_TAG.equals(type)) {
         scopeElement = scopeElement.getFlowScope();
       }
@@ -1767,7 +1767,7 @@ public class BpmnParse extends Parse {
 
     ScopeImpl hostActivity = activity.getEventScope();
     for (ActivityImpl sibling : activity.getFlowScope().getActivities()) {
-      if ("compensationBoundaryCatch".equals(sibling.getProperty(BpmnProperties.TYPE.getName())) && sibling.getEventScope().equals(hostActivity) && sibling != activity) {
+      if ("compensationBoundaryCatch".equals(sibling.getProperty(BpmnProperties.TYPE.name())) && sibling.getEventScope().equals(hostActivity) && sibling != activity) {
         addError("multiple boundary events with compensateEventDefinition not supported on same activity", compensateEventDefinition, activity.getId());
       }
     }
@@ -1785,13 +1785,13 @@ public class BpmnParse extends Parse {
       transaction = transaction.getActivities().get(0);
     }
 
-    if (!TRANSACTION_TAG.equals(transaction.getProperty(BpmnProperties.TYPE.getName()))) {
+    if (!TRANSACTION_TAG.equals(transaction.getProperty(BpmnProperties.TYPE.name()))) {
       addError("boundary event with cancelEventDefinition only supported on transaction subprocesses", cancelEventDefinition, activity.getId());
     }
 
     // ensure there is only one cancel boundary event
     for (ActivityImpl sibling : activity.getFlowScope().getActivities()) {
-      if ("cancelBoundaryCatch".equals(sibling.getProperty(BpmnProperties.TYPE.getName())) && sibling != activity && sibling.getEventScope() == transaction) {
+      if ("cancelBoundaryCatch".equals(sibling.getProperty(BpmnProperties.TYPE.name())) && sibling != activity && sibling.getEventScope() == transaction) {
         addError("multiple boundary events with cancelEventDefinition not supported on same transaction subprocess", cancelEventDefinition, activity.getId());
       }
     }
@@ -1824,7 +1824,7 @@ public class BpmnParse extends Parse {
     id = getIdForMiBody(id);
     ActivityImpl miBodyScope = scope.createActivity(id);
     setActivityAsyncDelegates(miBodyScope);
-    miBodyScope.setProperty(BpmnProperties.TYPE.getName(), ActivityTypes.MULTI_INSTANCE_BODY);
+    miBodyScope.setProperty(BpmnProperties.TYPE.name(), ActivityTypes.MULTI_INSTANCE_BODY);
     miBodyScope.setScope(true);
 
     boolean isSequential = parseBooleanAttribute(miLoopCharacteristics.attribute("isSequential"), false);
@@ -3166,7 +3166,7 @@ public class BpmnParse extends Parse {
           }
         }
       } else if (cancelEventDefinition != null) {
-        if (scope.getProperty(BpmnProperties.TYPE.getName()) == null || !TRANSACTION_TAG.equals(scope.getProperty(BpmnProperties.TYPE.getName()))) {
+        if (scope.getProperty(BpmnProperties.TYPE.name()) == null || !TRANSACTION_TAG.equals(scope.getProperty(BpmnProperties.TYPE.name()))) {
           addError("end event with cancelEventDefinition only supported inside transaction subprocess", cancelEventDefinition, activityId);
         } else {
           activity.getProperties().set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_CANCEL);

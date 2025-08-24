@@ -520,7 +520,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   }
 
   protected boolean evaluateThrowBpmnError(ExecutionEntity execution, boolean continueOnException) {
-    List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = (List<OperatonErrorEventDefinition>) execution.getActivity().getProperty(BpmnProperties.CAMUNDA_ERROR_EVENT_DEFINITION.getName());
+    List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = (List<OperatonErrorEventDefinition>) execution.getActivity().getProperty(BpmnProperties.CAMUNDA_ERROR_EVENT_DEFINITION.name());
     if (operatonErrorEventDefinitions != null && !operatonErrorEventDefinitions.isEmpty()) {
       for (OperatonErrorEventDefinition operatonErrorEventDefinition : operatonErrorEventDefinitions) {
         if (errorEventDefinitionMatches(operatonErrorEventDefinition, continueOnException)) {

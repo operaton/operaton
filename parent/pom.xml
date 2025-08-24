@@ -368,6 +368,14 @@
       </properties>
     </profile>
     <profile>
+      <id>docker</id>
+      <activation>
+        <property>
+          <name>env.DOCKER_HOST</name>
+        </property>
+      </activation>
+    </profile>
+    <profile>
       <id>sonatype-oss-release</id>
       <properties>
         <with-sources>true</with-sources>

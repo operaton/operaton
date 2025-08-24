@@ -58,7 +58,7 @@ MVN_ARGS+=(clean install)
 if [ "$REPORT_PLUGINS" = "true" ]; then
   MVN_ARGS+=(versions:dependency-updates-aggregate-report)
   MVN_ARGS+=(versions:plugin-updates-aggregate-report)
-  MVN_ARGS+=(dependency:analyze-report)
+  # MVN_ARGS+=(dependency:analyze-report) TODO Disabled due to issue #1095
   MVN_ARGS+=(-Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc)
   MVN_ARGS+=(-Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list)
 fi

@@ -25,12 +25,14 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
  *
  * @author Joram Barrez
  */
-public interface ProcessInstanceQueryProperty {
+final class ProcessInstanceQueryProperty {
 
-  QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("ID_");
-  QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
-  QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("ID_");
-  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
-  QueryProperty BUSINESS_KEY = new QueryPropertyImpl("BUSINESS_KEY_");
+  public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
+  public static final QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  public static final QueryProperty BUSINESS_KEY = new QueryPropertyImpl("BUSINESS_KEY_");
+
+  private ProcessInstanceQueryProperty() {}
 
 }

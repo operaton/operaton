@@ -23,11 +23,13 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * @author Roman Smirnov
  *
  */
-public interface CaseInstanceQueryProperty {
+final class CaseInstanceQueryProperty {
 
-  QueryProperty CASE_INSTANCE_ID = new QueryPropertyImpl("ID_");
-  QueryProperty CASE_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
-  QueryProperty CASE_DEFINITION_ID = new QueryPropertyImpl("CASE_DEF_ID_");
-  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  public static final QueryProperty CASE_INSTANCE_ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty CASE_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
+  public static final QueryProperty CASE_DEFINITION_ID = new QueryPropertyImpl("CASE_DEF_ID_");
+  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+
+  private CaseInstanceQueryProperty() {}
 
 }

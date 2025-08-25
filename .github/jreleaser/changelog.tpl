@@ -51,7 +51,7 @@ Operaton is compliant with the following standards:
 - DMN 1.3
 - CMMN 1.1
 
-### Code Modernization
+## Code Modernization
 
 We have continued to modernize the code base by removing deprecated code inherited from Camunda 7.
 This is part of our
@@ -63,13 +63,12 @@ Overall since 1.0.0-beta-1 the findings have been reduced by 83 %.
 See the [Sonar report](https://sonarcloud.io/summary/overall?id=io.github.operaton%3Aoperaton) for
 details.
 
-### Deprecations
+## Deprecations
 
 We have revised deprecated code inherited from Camunda 7. Since we do not want to break clients we
-have only marked
-deprecated methods and classes.
+have only marked deprecated methods and classes.
 
-API that was marked deprecated before has been tagged with
+API that was marked deprecated from the inherited Camunda codebase has been tagged with `@Deprecated(forRemoval = true)`.
 
 ```
 @Deprecated(since = "1.0")
@@ -87,6 +86,13 @@ API that has a clear replacement has been marked for removal.
 It is strongly encouraged to clear usages of such API. We did not remove it yet, but will remove it
 from a future version.
 It will be announced to when exactly removal is planned on a detailed level.
+
+## Architecture Decision Records
+
+We have started to document important architectural decisions in the form of
+[Architecture Decision Records (ADRs)](https://adr.github.io/).
+
+A template for ADRs can be found in the [`docs/decisions/`](https://github.com/operaton/operaton/tree/main/docs/decisions) directory.
 
 ## Testing
 
@@ -146,6 +152,21 @@ The used version was outdated.
 
 Instead of the embedded server we are now using a Testcontainer based LDAP server.
 The Testcontainer uses the [Osixia docker-openlap image](https://github.com/osixia/docker-openldap).
+
+## New Fluent API for asserting the JobExecutor state
+
+A new assertion class `org.operaton.bpm.engine.test.util.JobExecutorAssert` has been added to
+facilitate assertions on the state of the JobExecutor in tests.
+
+Example usage:
+
+```java
+JobExecutorAssert.assertThatJobExecutor()
+        .withProcessEngineConfiguration(processEngineConfiguration)
+        .withTimeout(5000L)
+        .withCheckInterval(25L)
+        .hasAllJobsProcessed();
+```
 
 {{changelogContributors}}
 

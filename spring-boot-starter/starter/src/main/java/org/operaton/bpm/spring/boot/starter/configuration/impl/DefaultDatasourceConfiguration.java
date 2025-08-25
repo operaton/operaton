@@ -21,26 +21,36 @@ import javax.sql.DataSource;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonDatasourceConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.DatabaseProperty;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.util.StringUtils;
 
-public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguration implements OperatonDatasourceConfiguration {
+public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguration
+    implements OperatonDatasourceConfiguration {
 
-  @Autowired
   protected PlatformTransactionManager transactionManager;
 
-  @Autowired(required = false)
   @Qualifier("operatonBpmTransactionManager")
   protected PlatformTransactionManager operatonTransactionManager;
 
-  @Autowired
   protected DataSource dataSource;
 
-  @Autowired(required = false)
   @Qualifier("operatonBpmDataSource")
   protected DataSource operatonDataSource;
+
+  public DefaultDatasourceConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                        PlatformTransactionManager transactionManager,
+                                        PlatformTransactionManager operatonTransactionManager,
+                                        DataSource dataSource,
+                                        DataSource operatonDataSource) {
+    super(operatonBpmProperties);
+    this.transactionManager = transactionManager;
+    this.operatonTransactionManager = operatonTransactionManager;
+    this.dataSource = dataSource;
+    this.operatonDataSource = operatonDataSource;
+  }
 
   @Override
   public void preInit(SpringProcessEngineConfiguration configuration) {
@@ -65,7 +75,7 @@ public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguratio
       configuration.setDatabaseTablePrefix(database.getTablePrefix());
     }
 
-    if(!StringUtils.isEmpty(database.getSchemaName())) {
+    if (!StringUtils.isEmpty(database.getSchemaName())) {
       configuration.setDatabaseSchema(database.getSchemaName());
     }
 

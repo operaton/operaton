@@ -20,9 +20,16 @@ import static org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminator
 
 import java.util.List;
 
+import java.util.Optional;
+import javax.sql.DataSource;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
+import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
+import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonAuthorizationConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonDatasourceConfiguration;
@@ -62,11 +69,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.PlatformTransactionManager;
 
-@Import({
-    JobConfiguration.class,
-    IdGeneratorConfiguration.class
-})
+@Import({ JobConfiguration.class, IdGeneratorConfiguration.class })
 public class OperatonBpmConfiguration {
 
   @Bean
@@ -79,27 +84,36 @@ public class OperatonBpmConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(DefaultProcessEngineConfiguration.class)
-  public static OperatonProcessEngineConfiguration operatonProcessEngineConfiguration() {
-    return new DefaultProcessEngineConfiguration();
+  public static OperatonProcessEngineConfiguration operatonProcessEngineConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                                                                      Optional<IdGenerator> idGenerator) {
+    return new DefaultProcessEngineConfiguration(operatonBpmProperties, idGenerator);
   }
 
   @Bean
   @ConditionalOnMissingBean(OperatonDatasourceConfiguration.class)
-  public static OperatonDatasourceConfiguration operatonDatasourceConfiguration() {
-    return new DefaultDatasourceConfiguration();
+  public static OperatonDatasourceConfiguration operatonDatasourceConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                                                                PlatformTransactionManager transactionManager,
+                                                                                PlatformTransactionManager operatonTransactionManager,
+                                                                                DataSource dataSource,
+                                                                                DataSource operatonDataSource) {
+    return new DefaultDatasourceConfiguration(operatonBpmProperties, transactionManager, operatonTransactionManager,
+        dataSource, operatonDataSource);
   }
 
   @Bean
   @ConditionalOnMissingBean(OperatonJobConfiguration.class)
   @ConditionalOnProperty(prefix = "operaton.bpm.job-execution", name = "enabled", havingValue = "true", matchIfMissing = true)
-  public static OperatonJobConfiguration operatonJobConfiguration() {
-    return new DefaultJobConfiguration();
+  public static OperatonJobConfiguration operatonJobConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                                                  JobExecutor jobExecutor,
+                                                                  List<JobHandler<?>> customJobHandlers) {
+    return new DefaultJobConfiguration(operatonBpmProperties, jobExecutor, customJobHandlers);
   }
 
   @Bean
   @ConditionalOnMissingBean(OperatonHistoryConfiguration.class)
-  public static OperatonHistoryConfiguration operatonHistoryConfiguration() {
-    return new DefaultHistoryConfiguration();
+  public static OperatonHistoryConfiguration operatonHistoryConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                                                          HistoryEventHandler historyEventHandler) {
+    return new DefaultHistoryConfiguration(operatonBpmProperties, historyEventHandler);
   }
 
   @Bean
@@ -113,15 +127,18 @@ public class OperatonBpmConfiguration {
   @ConditionalOnMissingBean(OperatonHistoryLevelAutoHandlingConfiguration.class)
   @ConditionalOnProperty(prefix = "operaton.bpm", name = "history-level", havingValue = "auto", matchIfMissing = false)
   @Conditional(NeedsHistoryAutoConfigurationCondition.class)
-  public static OperatonHistoryLevelAutoHandlingConfiguration historyLevelAutoHandlingConfiguration() {
-    return new DefaultHistoryLevelAutoHandlingConfiguration();
+  public static OperatonHistoryLevelAutoHandlingConfiguration historyLevelAutoHandlingConfiguration(
+      OperatonBpmProperties operatonBpmProperties,
+      HistoryLevelDeterminator historyLevelDeterminator) {
+    return new DefaultHistoryLevelAutoHandlingConfiguration(operatonBpmProperties, historyLevelDeterminator);
   }
 
   //TODO to be removed within CAM-8108
   @Bean(name = "historyLevelDeterminator")
   @ConditionalOnMissingBean(name = { "operatonBpmJdbcTemplate", "historyLevelDeterminator" })
   @ConditionalOnBean(name = "historyLevelAutoConfiguration")
-  public static HistoryLevelDeterminator historyLevelDeterminator(OperatonBpmProperties operatonBpmProperties, JdbcTemplate jdbcTemplate) {
+  public static HistoryLevelDeterminator historyLevelDeterminator(OperatonBpmProperties operatonBpmProperties,
+                                                                  JdbcTemplate jdbcTemplate) {
     return createHistoryLevelDeterminator(operatonBpmProperties, jdbcTemplate);
   }
 
@@ -130,7 +147,7 @@ public class OperatonBpmConfiguration {
   @ConditionalOnBean(name = { "operatonBpmJdbcTemplate", "historyLevelAutoConfiguration", "historyLevelDeterminator" })
   @ConditionalOnMissingBean(name = "historyLevelDeterminator")
   public static HistoryLevelDeterminator historyLevelDeterminatorMultiDatabase(OperatonBpmProperties operatonBpmProperties,
-      @Qualifier("operatonBpmJdbcTemplate") JdbcTemplate jdbcTemplate) {
+                                                                               @Qualifier("operatonBpmJdbcTemplate") JdbcTemplate jdbcTemplate) {
     return createHistoryLevelDeterminator(operatonBpmProperties, jdbcTemplate);
   }
 
@@ -170,12 +187,13 @@ public class OperatonBpmConfiguration {
   }
 
   @Bean
-  public EventPublisherPlugin eventPublisherPlugin(OperatonBpmProperties properties, ApplicationEventPublisher publisher) {
+  public EventPublisherPlugin eventPublisherPlugin(OperatonBpmProperties properties,
+                                                   ApplicationEventPublisher publisher) {
     return new EventPublisherPlugin(properties.getEventing(), publisher);
   }
 
   @Bean
-  public OperatonIntegrationDeterminator operatonIntegrationDeterminator() {
-    return new OperatonIntegrationDeterminator();
+  public OperatonIntegrationDeterminator operatonIntegrationDeterminator(ProcessEngine processEngine) {
+    return new OperatonIntegrationDeterminator(processEngine);
   }
 }

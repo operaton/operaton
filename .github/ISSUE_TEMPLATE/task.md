@@ -8,7 +8,7 @@ projects: ["operaton/operaton"]
 
 ---
 
-**What needs to be done? Please describe.**
+**What needs to be done?**
 
 A clear and concise description of what needs to be done.
 

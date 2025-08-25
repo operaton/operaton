@@ -1,5 +1,5 @@
 ---
-name:  📋 Good First Issue - Task
+name:  📋 Good First Issue
 about: A simple task suitable for new contributors
 title: ''
 type: task

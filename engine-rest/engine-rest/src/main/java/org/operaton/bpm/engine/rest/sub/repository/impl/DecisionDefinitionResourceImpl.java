@@ -149,11 +149,7 @@ public class DecisionDefinitionResourceImpl implements DecisionDefinitionResourc
       String errorMessage = "Cannot evaluate decision %s: %s".formatted(decisionDefinitionId, e.getMessage());
       throw new InvalidRequestException(Status.BAD_REQUEST, e, errorMessage);
     }
-    catch (ProcessEngineException e) {
-      String errorMessage = "Cannot evaluate decision %s: %s".formatted(decisionDefinitionId, e.getMessage());
-      throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
-    }
-    catch (DmnEngineException e) {
+    catch (ProcessEngineException | DmnEngineException e) {
       String errorMessage = "Cannot evaluate decision %s: %s".formatted(decisionDefinitionId, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
     }

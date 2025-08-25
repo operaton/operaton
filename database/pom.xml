@@ -436,7 +436,7 @@
     <profile>
       <id>mt-sqlserver</id>
       <properties>
-        <database.type>sqlserver</database.type>
+        <database.type>mssql</database.type>
         <database.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</database.driver>
         <database.datasource.class>com.microsoft.sqlserver.jdbc.SQLServerDataSource</database.datasource.class>
         <jboss.datasource.filename>sqlserver-ds.xml</jboss.datasource.filename>

@@ -37,7 +37,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByPr
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1052,7 +1051,7 @@ class TaskQueryTest {
   }
 
   @Test
-  void testCreateTimeCombinations() throws ParseException {
+  void testCreateTimeCombinations() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
 
     // Exact matching of createTime, should result in 6 tasks
@@ -2233,7 +2232,7 @@ class TaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  void testTaskDueDateCombinations() throws ParseException {
+  void testTaskDueDateCombinations() throws Exception {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -2362,7 +2361,7 @@ class TaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  void testFollowUpDateCombinations() throws ParseException {
+  void testFollowUpDateCombinations() throws Exception {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 

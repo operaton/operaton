@@ -22,7 +22,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -708,7 +707,7 @@ class IdentityServiceTest {
 
   @Test
   @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
-  void testUnsuccessfulAttemptsResultInBlockedUser() throws ParseException {
+  void testUnsuccessfulAttemptsResultInBlockedUser() throws Exception {
     // given
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");

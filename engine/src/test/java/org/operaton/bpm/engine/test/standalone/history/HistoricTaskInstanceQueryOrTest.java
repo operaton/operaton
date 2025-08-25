@@ -542,7 +542,7 @@ class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  void shouldTestDueDateCombinations() throws ParseException {
+  void shouldTestDueDateCombinations() throws Exception {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
     taskService.saveTask(taskService.newTask());
 
@@ -625,7 +625,7 @@ class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  void shouldTestFollowUpDateCombinations() throws ParseException {
+  void shouldTestFollowUpDateCombinations() throws Exception {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
 
     assertThat(historyService.createHistoricTaskInstanceQuery()

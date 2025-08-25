@@ -71,7 +71,7 @@ public class ClassPathScannerTest {
    * @throws MalformedURLException
    */
   @TestTemplate
-  void testScanClassPath() throws MalformedURLException {
+  void testScanClassPath() throws Exception {
 
     URLClassLoader classLoader = getClassloader();
 
@@ -89,7 +89,7 @@ public class ClassPathScannerTest {
   }
 
   @TestTemplate
-  void testScanClassPathWithNonExistingRootPath_relativeToPa() throws MalformedURLException {
+  void testScanClassPathWithNonExistingRootPath_relativeToPa() throws Exception {
 
     URLClassLoader classLoader = getClassloader();
 
@@ -102,7 +102,7 @@ public class ClassPathScannerTest {
   }
 
   @TestTemplate
-  void testScanClassPathWithNonExistingRootPath_nonRelativeToPa() throws MalformedURLException {
+  void testScanClassPathWithNonExistingRootPath_nonRelativeToPa() throws Exception {
 
     URLClassLoader classLoader = getClassloader();
 
@@ -115,7 +115,7 @@ public class ClassPathScannerTest {
   }
 
   @TestTemplate
-  void testScanClassPathWithExistingRootPath_relativeToPa() throws MalformedURLException {
+  void testScanClassPathWithExistingRootPath_relativeToPa() throws Exception {
 
     URLClassLoader classLoader = getClassloader();
 
@@ -134,7 +134,7 @@ public class ClassPathScannerTest {
   }
 
   @TestTemplate
-  void testScanClassPathWithExistingRootPath_nonRelativeToPa() throws MalformedURLException {
+  void testScanClassPathWithExistingRootPath_nonRelativeToPa() throws Exception {
 
     URLClassLoader classLoader = getClassloader();
 
@@ -153,7 +153,7 @@ public class ClassPathScannerTest {
   }
 
   @TestTemplate
-  void testScanClassPathWithAdditionalResourceSuffixes() throws MalformedURLException {
+  void testScanClassPathWithAdditionalResourceSuffixes() throws Exception {
     URLClassLoader classLoader = getClassloader();
 
     String[] additionalResourceSuffixes = new String[] {"py", "rb", "groovy"};

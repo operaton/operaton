@@ -23,9 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
@@ -131,7 +129,7 @@ class FileValueSerializerTest {
   }
 
   @Test
-  void testWriteMimetypeFilenameAndBytesValueWithShortcutMethod() throws URISyntaxException {
+  void testWriteMimetypeFilenameAndBytesValueWithShortcutMethod() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt").toURI());
     FileValue fileValue = Variables.fileValue(file);
     ValueFields valueFields = new MockValueFields();
@@ -150,7 +148,7 @@ class FileValueSerializerTest {
   }
 
   @Test
-  void testReadFileNameMimeTypeAndByteArray() throws IOException {
+  void testReadFileNameMimeTypeAndByteArray() throws Exception {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -171,7 +169,7 @@ class FileValueSerializerTest {
   }
 
   @Test
-  void testReadFileNameEncodingAndByteArray() throws IOException {
+  void testReadFileNameEncodingAndByteArray() throws Exception {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -193,7 +191,7 @@ class FileValueSerializerTest {
   }
 
   @Test
-  void testReadFullValue() throws IOException {
+  void testReadFullValue() throws Exception {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -217,7 +215,7 @@ class FileValueSerializerTest {
   }
 
   @Test
-  void testReadFilenameAndByteArrayValue() throws IOException {
+  void testReadFilenameAndByteArrayValue() throws Exception {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);

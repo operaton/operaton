@@ -22,7 +22,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
 import org.openapitools.client.api.ProcessInstanceApi;
 import org.openapitools.client.model.ProcessInstanceDto;
 
@@ -56,7 +55,7 @@ class BasicAuthenticationTest {
   }
 
   @Test
-  void shouldUseBasicAuth() throws ApiException {
+  void shouldUseBasicAuth() throws Exception {
     // given
     wireMock.stubFor(get(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).willReturn(aResponse().withStatus(
             200).withBody("{ \"id\": 1 }")));

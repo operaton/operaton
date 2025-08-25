@@ -26,7 +26,6 @@ import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_EMPTY_STRING;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_INVALID_JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 
-import java.io.IOException;
 import java.io.Reader;
 
 import org.junit.jupiter.api.Test;
@@ -124,7 +123,7 @@ class JsonTreeCreateTest {
   }
 
   @Test
-  void shouldFailForEmptyReader() throws IOException {
+  void shouldFailForEmptyReader() throws Exception {
     var json = json();
 
     try (Reader input1 = stringAsReader(EXAMPLE_EMPTY_STRING)) {

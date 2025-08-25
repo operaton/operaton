@@ -25,7 +25,6 @@ import org.operaton.commons.utils.IoUtil;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.Collections;
@@ -89,7 +88,7 @@ class FileValueTypeImplTest {
   }
 
   @Test
-  void createValueFromFile() throws URISyntaxException {
+  void createValueFromFile() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/variables/simpleFile.txt").toURI());
     TypedValue value = type.createValue(file, Collections.singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
     assertThat(value).isInstanceOf(FileValue.class);

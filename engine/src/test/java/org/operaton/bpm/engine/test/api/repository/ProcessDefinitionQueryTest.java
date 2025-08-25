@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processD
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -186,7 +185,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  void testQueryByDeploymentTimeAt() throws ParseException {
+  void testQueryByDeploymentTimeAt() throws Exception {
     // given
     //get rid of the milliseconds because of MySQL datetime precision
     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy - HH:mm:ss");

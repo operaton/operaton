@@ -40,7 +40,7 @@ class SingleConsumerConditionTest {
 
   @Test
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
-  void shouldNotBlockIfSignalAvailableDifferentThread() throws InterruptedException {
+  void shouldNotBlockIfSignalAvailableDifferentThread() throws Exception {
 
     final SingleConsumerCondition condition = new SingleConsumerCondition(Thread.currentThread());
 

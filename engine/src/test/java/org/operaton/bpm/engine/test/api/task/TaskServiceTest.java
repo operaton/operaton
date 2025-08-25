@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2576,7 +2575,7 @@ class TaskServiceTest {
   }
 
   @Test
-  void testTaskAttachmentByTaskIdAndAttachmentId() throws ParseException {
+  void testTaskAttachmentByTaskIdAndAttachmentId() throws Exception {
     Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
 
@@ -2672,7 +2671,7 @@ class TaskServiceTest {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
-  void testCreateTaskAttachmentWithNullTaskId() throws ParseException {
+  void testCreateTaskAttachmentWithNullTaskId() throws Exception {
     Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");

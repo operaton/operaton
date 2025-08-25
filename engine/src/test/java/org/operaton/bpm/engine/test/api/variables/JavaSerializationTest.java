@@ -29,7 +29,6 @@ import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Base64;
@@ -307,7 +306,7 @@ class JavaSerializationTest {
   }
 
   @Test
-  void testStandaloneTaskTransientVariable() throws IOException {
+  void testStandaloneTaskTransientVariable() throws Exception {
     Task task = taskService.newTask();
     task.setName("gonzoTask");
     taskService.saveTask(task);
@@ -329,7 +328,7 @@ class JavaSerializationTest {
   }
 
   @Test
-  void testTransientObjectValue() throws IOException {
+  void testTransientObjectValue() throws Exception {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo")
         .startEvent()

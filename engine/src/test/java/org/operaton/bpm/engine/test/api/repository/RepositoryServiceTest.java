@@ -147,7 +147,7 @@ class RepositoryServiceTest {
   }
 
   @Test
-  void testUTF8DeploymentMethod() throws IOException {
+  void testUTF8DeploymentMethod() throws Exception {
     //given utf8 charset
     Charset utf8Charset = StandardCharsets.UTF_8;
     Charset defaultCharset = processEngineConfiguration.getDefaultCharset();

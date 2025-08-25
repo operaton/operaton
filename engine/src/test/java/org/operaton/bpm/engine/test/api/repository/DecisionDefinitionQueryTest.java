@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.decision
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -208,7 +207,7 @@ class DecisionDefinitionQueryTest {
   }
 
   @Test
-  void testQueryByDeploymentTimeAt() throws ParseException {
+  void testQueryByDeploymentTimeAt() throws Exception {
     // given
     //get rid of the milliseconds because of MySQL datetime precision
     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy - HH:mm:ss");

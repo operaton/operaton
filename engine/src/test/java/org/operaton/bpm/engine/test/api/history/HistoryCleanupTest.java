@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -1102,7 +1101,7 @@ class HistoryCleanupTest {
 
   @Test
   @Disabled("CAM-10055")
-  void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() throws ParseException {
+  void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() throws Exception {
     //given
     prepareData(5);
 
@@ -1135,7 +1134,7 @@ class HistoryCleanupTest {
 
   @Test
   @Disabled("CAM-10055")
-  void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() throws ParseException {
+  void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() throws Exception {
     //given
     prepareData(5);
 
@@ -1220,7 +1219,7 @@ class HistoryCleanupTest {
   }
 
   @Test
-  void testHistoryCleanupHelper() throws ParseException {
+  void testHistoryCleanupHelper() throws Exception {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("22:00+0100");
     processEngineConfiguration.initHistoryCleanup();
 

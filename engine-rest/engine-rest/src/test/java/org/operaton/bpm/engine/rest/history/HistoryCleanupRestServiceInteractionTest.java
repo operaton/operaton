@@ -41,7 +41,6 @@ import static org.mockito.Mockito.when;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -151,7 +150,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  void testHistoryConfigurationOutsideBatchWindow() throws ParseException {
+  void testHistoryConfigurationOutsideBatchWindow() throws Exception {
     ProcessEngineConfigurationImpl processEngineConfigurationImplMock = mock(ProcessEngineConfigurationImpl.class);
     Date startDate = HistoryCleanupHelper.parseTimeConfiguration("23:59");
     Date endDate = HistoryCleanupHelper.parseTimeConfiguration("00:00");
@@ -186,7 +185,7 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  void testHistoryConfigurationWithinBatchWindow() throws ParseException {
+  void testHistoryConfigurationWithinBatchWindow() throws Exception {
     ProcessEngineConfigurationImpl processEngineConfigurationImplMock = mock(ProcessEngineConfigurationImpl.class);
     Date startDate = HistoryCleanupHelper.parseTimeConfiguration("22:00+0200");
     Date endDate = HistoryCleanupHelper.parseTimeConfiguration("23:00+0200");

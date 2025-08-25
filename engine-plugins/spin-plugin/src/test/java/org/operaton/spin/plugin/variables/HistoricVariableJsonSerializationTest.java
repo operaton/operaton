@@ -33,7 +33,6 @@ import static org.operaton.bpm.engine.variable.Variables.objectValue;
 
 import java.util.List;
 
-import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -86,7 +85,7 @@ class HistoricVariableJsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  void selectHistoricSerializedValues() throws JSONException {
+  void selectHistoricSerializedValues() throws Exception {
     if (processEngineConfiguration.getHistoryLevel().getId() >=
         HistoryLevel.HISTORY_LEVEL_AUDIT.getId()) {
 
@@ -109,7 +108,7 @@ class HistoricVariableJsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  void selectHistoricSerializedValuesUpdate() throws JSONException {
+  void selectHistoricSerializedValuesUpdate() throws Exception {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JsonSerializable bean = new JsonSerializable("a String", 42, false);

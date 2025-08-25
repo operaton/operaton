@@ -18,8 +18,6 @@ package org.operaton.connect.httpclient;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
-
 import org.apache.http.Header;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -151,7 +149,7 @@ public class HttpConnectorTest {
   }
 
   @Test
-  void shouldSetPayloadOnHttpRequest() throws IOException {
+  void shouldSetPayloadOnHttpRequest() throws Exception {
     connector.createRequest().url(EXAMPLE_URL).payload(EXAMPLE_PAYLOAD).post().execute();
     HttpPost request = interceptor.getTarget();
     String content = IoUtil.inputStreamAsString(request.getEntity().getContent());

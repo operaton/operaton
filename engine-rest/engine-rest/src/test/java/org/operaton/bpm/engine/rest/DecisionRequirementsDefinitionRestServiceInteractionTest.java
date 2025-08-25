@@ -168,7 +168,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   }
 
   @Test
-  void decisionRequirementsDefinitionRetrievalByKeyAndTenantId() throws FileNotFoundException, URISyntaxException {
+  void decisionRequirementsDefinitionRetrievalByKeyAndTenantId() throws Exception {
     DecisionRequirementsDefinition mockDefinition = MockProvider.mockDecisionRequirementsDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build();
     setUpRuntimeData(mockDefinition);
 
@@ -232,7 +232,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
 
   // DRD retrieval
   @Test
-  void decisionRequirementsDiagramRetrieval() throws FileNotFoundException, URISyntaxException {
+  void decisionRequirementsDiagramRetrieval() throws Exception {
     byte[] actual = given().pathParam("id", MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
       .expect()
         .statusCode(Status.OK.getStatusCode())

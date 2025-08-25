@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.history;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -624,7 +623,7 @@ class HistoricActivityStatisticsQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  void testQueryByCanceledAndFinishedByPeriods() throws ParseException {
+  void testQueryByCanceledAndFinishedByPeriods() throws Exception {
     try {
 
       //start two process instances
@@ -1272,7 +1271,7 @@ class HistoricActivityStatisticsQueryTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  void testQueryCancelledIncludeIncidentsDeletedOnly() throws ParseException {
+  void testQueryCancelledIncludeIncidentsDeletedOnly() throws Exception {
     try {
       // given
       String processDefinitionId = getProcessDefinitionId();
@@ -1320,7 +1319,7 @@ class HistoricActivityStatisticsQueryTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  void testQueryCompletedIncludeIncidentsDeletedOnly() throws ParseException {
+  void testQueryCompletedIncludeIncidentsDeletedOnly() throws Exception {
     try {
       // given
       String processDefinitionId = getProcessDefinitionId();

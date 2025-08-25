@@ -122,7 +122,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
   @Script(name = "XmlDomElementScriptTest.readAttributeValueByName", variables = {
       @ScriptVariable(name = "input", file = EXAMPLE_XML_FILE_NAME),
       @ScriptVariable(name = "name", value = "order") }, execute = false)
-  public void canReadAttributeByName() throws Throwable {
+  public void canReadAttributeByName() throws Exception {
     script.setVariable("variables", new HashMap<String, Object>());
     script.execute();
     String value = script.getVariable("value");
@@ -590,7 +590,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
   @Script(name = "XmlDomElementScriptTest.removeChildElement", variables = {
       @ScriptVariable(name = "input", isNull = true),
       @ScriptVariable(name = "child2", isNull = true) }, execute = false)
-  public void canRemoveAChildElement() throws Throwable {
+  public void canRemoveAChildElement() throws Exception {
     SpinXmlElement element = XML(exampleXmlFileAsReader());
     SpinXmlElement child = XML("<child/>");
     element.append(child);
@@ -623,7 +623,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
   @Test
   @Script(name = "XmlDomElementScriptTest.removeChildElement", variables = {
       @ScriptVariable(name = "input", isNull = true) }, execute = false)
-  public void canRemoveMultipleChildElements() throws Throwable {
+  public void canRemoveMultipleChildElements() throws Exception {
     SpinXmlElement element = XML(exampleXmlFileAsReader());
     SpinXmlElement child1 = XML("<child/>");
     SpinXmlElement child2 = XML("<child/>");
@@ -642,7 +642,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
   @Script(name = "XmlDomElementScriptTest.removeChildElement", variables = {
       @ScriptVariable(name = "input", isNull = true),
       @ScriptVariable(name = "child2", isNull = true) }, execute = false)
-  public void canRemoveChildElementCollection() throws Throwable {
+  public void canRemoveChildElementCollection() throws Exception {
     SpinXmlElement element = XML(exampleXmlFileAsReader());
     element.append(XML("<child/>"), XML("<child/>"), XML("<child/>"));
 
@@ -750,7 +750,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
   @Script(name = "XmlDomElementScriptTest.replaceChildElement", variables = {
       @ScriptVariable(name = "input", isNull = true),
       @ScriptVariable(name = "newChild", value = "<child/>") }, execute = false)
-  public void canReplaceAChildElement() throws Throwable {
+  public void canReplaceAChildElement() throws Exception {
     SpinXmlElement element = XML(exampleXmlFileAsReader());
     SpinXmlElement date = element.childElement("date");
 
@@ -797,7 +797,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
   @Test
   @Script(name = "XmlDomElementScriptTest.replaceElement", variables = {
       @ScriptVariable(name = "newElement", value = "<child/>") }, execute = false)
-  public void canReplaceElement() throws Throwable {
+  public void canReplaceElement() throws Exception {
     SpinXmlElement element = XML(exampleXmlFileAsReader());
     script.setVariable("oldElement", element.childElement("date")).execute();
 
@@ -808,7 +808,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
   @Test
   @Script(name = "XmlDomElementScriptTest.replaceElement", variables = {
       @ScriptVariable(name = "newElement", value = "<root/>") }, execute = false)
-  public void canReplaceRootElement() throws Throwable {
+  public void canReplaceRootElement() throws Exception {
     SpinXmlElement element = XML(exampleXmlFileAsReader());
     element = script.setVariable("oldElement", element).execute().getVariable("element");
 

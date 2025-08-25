@@ -73,7 +73,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testScenario() throws JsonProcessingException {
+  public void testScenario() throws Exception {
     // get process definitions for default engine
     log.info("Checking " + appBasePath + PROCESS_DEFINITION_PATH);
     target = client.target(appBasePath + PROCESS_DEFINITION_PATH);
@@ -116,7 +116,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void assertJodaTimePresent() throws JsonProcessingException {
+  public void assertJodaTimePresent() throws Exception {
     log.info("Checking " + appBasePath + TASK_PATH);
 
     target = client.target(appBasePath + TASK_PATH)
@@ -161,7 +161,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testSingleTaskContentType() throws JsonProcessingException {
+  public void testSingleTaskContentType() throws Exception {
     // get id of first task
     String taskId = getFirstTask().get("id").asText();
 
@@ -171,7 +171,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testTaskFilterResultContentType() throws JsonProcessingException {
+  public void testTaskFilterResultContentType() throws Exception {
     // create filter for first task, so single result will not throw an exception
     JsonNode firstTask = getFirstTask();
     Map<String, Object> query = new HashMap<>();

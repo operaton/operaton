@@ -59,7 +59,7 @@ class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyTestHelp
   }
 
   @Test
-  void testFailedHistoryCleanupJobUpdate() throws InterruptedException {
+  void testFailedHistoryCleanupJobUpdate() throws Exception {
     // given configured History cleanup
 
     String cleanUpJobId;

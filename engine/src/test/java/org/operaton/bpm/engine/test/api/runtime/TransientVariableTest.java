@@ -25,7 +25,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.Conditio
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VAR_CONDITION;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -75,7 +74,7 @@ class TransientVariableTest {
   TaskService taskService;
 
   @Test
-  void createTransientTypedVariablesUsingVariableMap() throws URISyntaxException {
+  void createTransientTypedVariablesUsingVariableMap() throws Exception {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -112,7 +111,7 @@ class TransientVariableTest {
   }
 
   @Test
-  void createTransientVariablesUsingVariableMap() throws URISyntaxException {
+  void createTransientVariablesUsingVariableMap() throws Exception {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()

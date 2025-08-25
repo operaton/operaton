@@ -22,7 +22,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
 import org.openapitools.client.api.DeploymentApi;
 import org.openapitools.client.model.DeploymentWithDefinitionsDto;
 
@@ -51,7 +50,7 @@ class DeploymentTest {
   }
 
   @Test
-  void shouldCreateDeployment() throws ApiException {
+  void shouldCreateDeployment() throws Exception {
     // given
     String deploymentSource = "test-source";
     String deploymentName = "deployment-test-name";

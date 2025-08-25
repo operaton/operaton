@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.history.dmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -105,7 +104,7 @@ public class HistoricDecisionInstanceInputOutputValueTest {
 
   @TestTemplate
   @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
-  void decisionInputInstanceValue() throws ParseException {
+  void decisionInputInstanceValue() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
     Date fixedDate = sdf.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
@@ -124,7 +123,7 @@ public class HistoricDecisionInstanceInputOutputValueTest {
 
   @TestTemplate
   @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
-  void decisionOutputInstanceValue() throws ParseException {
+  void decisionOutputInstanceValue() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
     Date fixedDate = sdf.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);

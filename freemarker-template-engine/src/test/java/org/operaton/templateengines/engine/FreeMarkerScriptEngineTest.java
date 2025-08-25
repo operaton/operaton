@@ -59,7 +59,7 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void variableExpansion() throws ScriptException {
+  void variableExpansion() throws Exception {
     bindings.put("name", "world");
     expected = "Hello world!";
     template = "Hello ${name}!";
@@ -67,7 +67,7 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void javaProperties() throws ScriptException {
+  void javaProperties() throws Exception {
     bindings.put("greeter", new Greeter());
     expected = "!";
     template = "${greeter.suffix}";
@@ -75,7 +75,7 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void javaMethodCall() throws ScriptException {
+  void javaMethodCall() throws Exception {
     bindings.put("greeter", new Greeter());
     expected = "Hello world!";
     template = "${greeter.hello('world')}";
@@ -83,7 +83,7 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void javaArrays() throws ScriptException {
+  void javaArrays() throws Exception {
     bindings.put("myarray", new String[]{"hello", "foo", "world", "bar"});
     expected = "4 hello world!";
     template = "${myarray?size} ${myarray[0]} ${myarray[2]}!";
@@ -91,7 +91,7 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void javaBoolean() throws ScriptException {
+  void javaBoolean() throws Exception {
     bindings.put("mybool", false);
     expected = "Hello world!";
     template = "<#if mybool>okey<#else>Hello world!</#if>";
@@ -99,7 +99,7 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void javaInteger() throws ScriptException {
+  void javaInteger() throws Exception {
     bindings.put("myint", 6);
     expected = "42";
     template = "<#assign myint = myint + 36>${myint}";
@@ -107,7 +107,7 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void javaCollection() throws ScriptException {
+  void javaCollection() throws Exception {
     Collection<String> names = Arrays.asList("tweety", "duffy", "tom");
     bindings.put("names", names);
     expected = "tweety, duffy, tom";
@@ -116,7 +116,7 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void defineBlock() throws ScriptException {
+  void defineBlock() throws Exception {
     bindings.put("who", "world");
     expected = "Hello world!";
     template = "<#macro block>Hello ${who}!</#macro><@block/>";

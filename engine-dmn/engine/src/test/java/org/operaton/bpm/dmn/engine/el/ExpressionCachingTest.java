@@ -68,7 +68,7 @@ class ExpressionCachingTest {
   }
 
   @Test
-  void compiledScriptCaching() throws ScriptException {
+  void compiledScriptCaching() throws Exception {
 
     // given
     DmnExpressionImpl expression = createExpression("1 > 2", "groovy");

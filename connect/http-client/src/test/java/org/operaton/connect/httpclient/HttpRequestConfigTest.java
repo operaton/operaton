@@ -27,7 +27,6 @@ import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.httpclient.impl.util.ParseUtil;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -202,7 +201,7 @@ public class HttpRequestConfigTest {
   }
 
   @Test
-  void shouldParseLocalAddress() throws UnknownHostException {
+  void shouldParseLocalAddress() throws Exception {
     // given
     InetAddress testAddress = InetAddress.getByName("127.0.0.1");
     HttpRequest request = connector.createRequest()

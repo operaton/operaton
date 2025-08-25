@@ -36,7 +36,6 @@ import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.JsonValue;
 import org.operaton.spin.plugin.variable.value.builder.JsonValueBuilder;
 
-import org.json.JSONException;
 import static org.operaton.spin.DataFormats.json;
 import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
 import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
@@ -78,7 +77,7 @@ class JsonValueTest {
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  void getUntypedJsonValue() throws JSONException {
+  void getUntypedJsonValue() throws Exception {
     // given
     JsonValue jsonValue = jsonValue(jsonString).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);
@@ -111,7 +110,7 @@ class JsonValueTest {
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  void getTypedJsonValue() throws JSONException {
+  void getTypedJsonValue() throws Exception {
     // given
     JsonValue jsonValue = jsonValue(jsonString).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);

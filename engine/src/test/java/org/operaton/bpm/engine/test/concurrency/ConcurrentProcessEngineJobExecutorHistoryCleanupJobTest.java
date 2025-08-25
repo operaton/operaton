@@ -120,7 +120,7 @@ class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Concurrenc
   }
 
   @Test
-  void testConcurrentHistoryCleanupJobReconfigurationExecution() throws InterruptedException {
+  void testConcurrentHistoryCleanupJobReconfigurationExecution() throws Exception {
 
     processEngine.getHistoryService().cleanUpHistoryAsync(true);
 

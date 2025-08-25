@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import java.io.IOException;
 import java.util.Date;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -67,7 +66,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
   }
 
   @Test
-  void testPaLocalJodaConfiguration() throws IOException {
+  void testPaLocalJodaConfiguration() throws Exception {
     // given a process instance
     final ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 

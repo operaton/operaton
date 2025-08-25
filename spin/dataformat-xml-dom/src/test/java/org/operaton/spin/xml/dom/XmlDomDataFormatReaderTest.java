@@ -45,14 +45,14 @@ class XmlDomDataFormatReaderTest {
   }
 
   @Test
-  void shouldMatchXmlInput() throws IOException {
+  void shouldMatchXmlInput() throws Exception {
     inputReader = stringToReader(EXAMPLE_XML);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();
   }
 
   @Test
-  void shouldMatchXmlInputWithWhitespace() throws IOException {
+  void shouldMatchXmlInputWithWhitespace() throws Exception {
     inputReader = stringToReader("   " + EXAMPLE_XML);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();

@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import jakarta.inject.Inject;
-import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,7 +41,7 @@ class ChooseDatasourceConfigurationTest {
   protected ProcessEngine processEngine;
 
   @Test
-  void shouldChooseDatasource() throws SQLException {
+  void shouldChooseDatasource() throws Exception {
     ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
     assertThat(configuration.getDataSource().getConnection()).asString().contains("jdbc:h2:mem:secondary");
   }

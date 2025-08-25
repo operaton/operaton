@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.test.util.OperatonFormUtils.writeTempFormF
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -179,7 +178,7 @@ class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  void shouldUpdateVersionForChangedFormResource() throws IOException {
+  void shouldUpdateVersionForChangedFormResource() throws Exception {
     // given
     String fileName = "myForm.form";
     String formContent1 = "{\"id\"=\"myForm\",\"type\": \"default\",\"components\":[{\"key\": \"button3\",\"label\": \"Button\",\"type\": \"button\"}]}";
@@ -204,7 +203,7 @@ class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  void shouldUpdateVersionForChangedFormResourceWithTenant() throws IOException {
+  void shouldUpdateVersionForChangedFormResourceWithTenant() throws Exception {
     // given
     String fileName = "myForm.form";
     String formContent1 = "{\"id\"=\"myForm\",\"type\": \"default\",\"components\":[{\"key\": \"button3\",\"label\": \"Button\",\"type\": \"button\"}]}";

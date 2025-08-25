@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.standalone.authentication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -73,7 +72,7 @@ class LoginAttemptsTest {
   }
 
   @Test
-  void testUsuccessfulAttemptsResultInLockedUser() throws ParseException {
+  void testUsuccessfulAttemptsResultInLockedUser() throws Exception {
     // given
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");

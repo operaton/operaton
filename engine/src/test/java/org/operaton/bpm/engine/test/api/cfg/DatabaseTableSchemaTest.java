@@ -95,7 +95,7 @@ class DatabaseTableSchemaTest {
   }
 
   @Test
-  void testTablePresentWithSchemaAndPrefix() throws SQLException {
+  void testTablePresentWithSchemaAndPrefix() throws Exception {
 
     Connection connection = pooledDataSource.getConnection();
     connection.createStatement().execute("drop schema if exists " + SCHEMA_NAME + " cascade");

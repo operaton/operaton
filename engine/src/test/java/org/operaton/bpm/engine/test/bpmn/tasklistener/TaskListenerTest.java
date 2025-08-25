@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.bpmn.tasklistener;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -779,7 +778,7 @@ class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  void testTimeoutTaskListenerDate() throws ParseException {
+  void testTimeoutTaskListenerDate() throws Exception {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
 

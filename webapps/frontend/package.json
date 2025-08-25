@@ -62,7 +62,6 @@
     "superagent": "8.1.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.28.3",
     "@babel/core": "^7.28.3",
     "@babel/plugin-proposal-object-rest-spread": "7.20.7",
     "@babel/plugin-transform-object-assign": "7.23.3",

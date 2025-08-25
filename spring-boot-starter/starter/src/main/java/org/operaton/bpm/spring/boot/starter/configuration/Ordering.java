@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration;
 
-public interface Ordering {
+public class Ordering {
 
-  int DEFAULT_ORDER = 0;
+  public static final int DEFAULT_ORDER = 0;
+
+  private Ordering() {}
 }

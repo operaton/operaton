@@ -40,12 +40,12 @@ class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
   void completeTaskOnlySuccess() {
     // Given
     ProcessInstance processInstance = getProcessInstanceStarted();
-    assertThat(processInstance).hasNotPassed("ExternalTask_1");
+    BpmnAwareTests.assertThat(processInstance).hasNotPassed("ExternalTask_1");
     // When
     complete(externalTask(processInstance));
     // Then
-    assertThat(processInstance).hasPassed("ExternalTask_1");
-    assertThat(processInstance).isEnded();
+    BpmnAwareTests.assertThat(processInstance).hasPassed("ExternalTask_1");
+    BpmnAwareTests.assertThat(processInstance).isEnded();
     // And
     assertThat(getExternalTaskLogEntry().getWorkerId()).isEqualTo(DEFAULT_WORKER_EXTERNAL_TASK);
   }
@@ -96,7 +96,7 @@ class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
     // When
     complete(externalTask(processInstance), withVariables("a", "b"));
     // Then
-    assertThat(processInstance).isEnded().variables().containsEntry("a", "b");
+    BpmnAwareTests.assertThat(processInstance).isEnded().variables().containsEntry("a", "b");
     // And
     assertThat(getExternalTaskLogEntry().getWorkerId()).isEqualTo(DEFAULT_WORKER_EXTERNAL_TASK);
   }
@@ -139,15 +139,15 @@ class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
   void completeLockedTaskSuccess() {
     // Given
     ProcessInstance processInstance = getProcessInstanceStarted();
-    assertThat(processInstance).hasNotPassed("ExternalTask_1");
+    BpmnAwareTests.assertThat(processInstance).hasNotPassed("ExternalTask_1");
     ExternalTask task = externalTask();
     // When
     List<LockedExternalTask> lockedTasks = fetchAndLock(task.getTopicName(), DEFAULT_WORKER_EXTERNAL_TASK, 1);
     assertThat(lockedTasks).hasSize(1);
     complete(lockedTasks.get(0));
     // Then
-    assertThat(processInstance).hasPassed("ExternalTask_1");
-    assertThat(processInstance).isEnded();
+    BpmnAwareTests.assertThat(processInstance).hasPassed("ExternalTask_1");
+    BpmnAwareTests.assertThat(processInstance).isEnded();
     // And
     assertThat(getExternalTaskLogEntry().getWorkerId()).isEqualTo(DEFAULT_WORKER_EXTERNAL_TASK);
   }
@@ -181,15 +181,15 @@ class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
   void completeLockedTaskWithVariablesSuccess() {
     // Given
     ProcessInstance processInstance = getProcessInstanceStarted();
-    assertThat(processInstance).hasNotPassed("ExternalTask_1");
+    BpmnAwareTests.assertThat(processInstance).hasNotPassed("ExternalTask_1");
     ExternalTask task = externalTask();
     // When
     List<LockedExternalTask> lockedTasks = fetchAndLock(task.getTopicName(), DEFAULT_WORKER_EXTERNAL_TASK, 1);
     assertThat(lockedTasks).hasSize(1);
     complete(lockedTasks.get(0), withVariables("a", "b"));
     // Then
-    assertThat(processInstance).hasPassed("ExternalTask_1");
-    assertThat(processInstance).isEnded().variables().containsEntry("a", "b");
+    BpmnAwareTests.assertThat(processInstance).hasPassed("ExternalTask_1");
+    BpmnAwareTests.assertThat(processInstance).isEnded().variables().containsEntry("a", "b");
     // And
     assertThat(getExternalTaskLogEntry().getWorkerId()).isEqualTo(DEFAULT_WORKER_EXTERNAL_TASK);
   }
@@ -240,7 +240,7 @@ class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
 
     // Assume
     assertThat(externalTaskQuery().singleResult()).isNotNull();
-    assertThat(externalTaskQuery().singleResult()).hasTopicName("External_1");
+    BpmnAwareTests.assertThat(externalTaskQuery().singleResult()).hasTopicName("External_1");
 
     LockedExternalTask task = fetchAndLock("External_1", "worker1", 1).get(0);
     assertThat(task.getActivityId()).isEqualTo("ExternalTask_1");
@@ -254,8 +254,8 @@ class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
 
     // Then
     assertThat(externalTaskQuery().singleResult()).isNotNull();
-    assertThat(externalTaskQuery().singleResult()).hasTopicName("Noop");
-    assertThat(pi).variables().containsKey("variable_1");
+    BpmnAwareTests.assertThat(externalTaskQuery().singleResult()).hasTopicName("Noop");
+    BpmnAwareTests.assertThat(pi).variables().containsKey("variable_1");
   }
 
   @Test
@@ -283,7 +283,7 @@ class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
 
     // Assume
     assertThat(externalTaskQuery().singleResult()).isNotNull();
-    assertThat(externalTaskQuery().singleResult()).hasTopicName("External_1");
+    BpmnAwareTests.assertThat(externalTaskQuery().singleResult()).hasTopicName("External_1");
 
     // When
     complete(
@@ -294,8 +294,8 @@ class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
 
     // Then
     assertThat(externalTaskQuery().singleResult()).isNotNull();
-    assertThat(externalTaskQuery().singleResult()).hasTopicName("Noop");
-    assertThat(pi).variables().containsKey("variable_1");
+    BpmnAwareTests.assertThat(externalTaskQuery().singleResult()).hasTopicName("Noop");
+    BpmnAwareTests.assertThat(pi).variables().containsKey("variable_1");
   }
 
   @Test

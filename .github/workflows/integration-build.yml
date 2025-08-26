@@ -79,7 +79,7 @@ jobs:
       recent_changes: ${{steps.check-commits.outputs.commits}}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Check for recent commits
@@ -109,7 +109,7 @@ jobs:
       database_version: ${{steps.maven-build.outputs.database_version}}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Cache Maven packages
@@ -176,7 +176,7 @@ jobs:
         database: ${{ fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]') }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Cache Maven packages
@@ -236,7 +236,7 @@ jobs:
     if: ${{ (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') || github.event.inputs.skip_build == 'false' }}
     steps:
       - name: Check out the code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           ref: ${{github.event.inputs.release_branch}}

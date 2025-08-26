@@ -23,7 +23,6 @@ import org.operaton.spin.DataFormats;
 import org.operaton.spin.plugin.variable.type.JsonValueType;
 import org.operaton.spin.plugin.variable.type.XmlValueType;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 
@@ -42,7 +41,7 @@ class SpinProcessEnginePluginTest {
   ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
-  void pluginDoesNotRegisterXmlSerializerIfNotPresentInClasspath() throws IOException {
+  void pluginDoesNotRegisterXmlSerializerIfNotPresentInClasspath() throws Exception {
     ClassLoader mockClassloader = Mockito.mock(ClassLoader.class);
     Mockito.when(mockClassloader.getResources(Mockito.anyString())).thenReturn(Collections.enumeration(Collections.<URL>emptyList()));
     DataFormats.loadDataFormats(mockClassloader);
@@ -55,7 +54,7 @@ class SpinProcessEnginePluginTest {
   }
 
   @Test
-  void pluginDoesNotRegisterJsonSerializerIfNotPresentInClasspath() throws IOException {
+  void pluginDoesNotRegisterJsonSerializerIfNotPresentInClasspath() throws Exception {
     ClassLoader mockClassloader = Mockito.mock(ClassLoader.class);
     Mockito.when(mockClassloader.getResources(Mockito.anyString())).thenReturn(Collections.enumeration(Collections.<URL>emptyList()));
     DataFormats.loadDataFormats(mockClassloader);

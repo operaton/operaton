@@ -74,7 +74,7 @@ class CockpitPluginAutoDeploymentIT {
   }
 
   @Test
-  void shouldAutoDeployCockpitPlugin() throws IOException {
+  void shouldAutoDeployCockpitPlugin() throws Exception {
     // given
     deployPlugin("operaton-bpm-run-example-plugin.jar");
     runStartScript();

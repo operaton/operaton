@@ -37,7 +37,7 @@ class UuidGeneratorTest {
   private static final int LOOP_COUNT = 10000;
 
   @Test
-  void testMultithreaded() throws InterruptedException {
+  void testMultithreaded() throws Exception {
     final List<Thread> threads = new ArrayList<>();
 
     final TimeBasedGenerator timeBasedGenerator = Generators.timeBasedGenerator(EthernetAddress.fromInterface());

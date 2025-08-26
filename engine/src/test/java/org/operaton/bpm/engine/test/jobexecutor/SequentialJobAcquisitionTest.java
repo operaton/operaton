@@ -169,7 +169,7 @@ class SequentialJobAcquisitionTest {
   }
 
   @Test
-  void testJobAddedGuardForTwoEnginesSameAcquisition() throws InterruptedException {
+  void testJobAddedGuardForTwoEnginesSameAcquisition() throws Exception {
     // configure and build a process engine
     StandaloneProcessEngineConfiguration engineConfiguration1 = new StandaloneInMemProcessEngineConfiguration();
     engineConfiguration1.setProcessEngineName(getClass().getName() + "-engine1");

@@ -85,7 +85,7 @@ class DeadlockTest {
   }
 
   @Test
-  void shouldProvokeDeadlock() throws InterruptedException {
+  void shouldProvokeDeadlock() throws Exception {
     String databaseType = engineRule.getProcessEngineConfiguration().getDatabaseType();
     switch (databaseType) {
     case DbSqlSessionFactory.MARIADB,DbSqlSessionFactory.MYSQL:

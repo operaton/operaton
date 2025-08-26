@@ -62,7 +62,7 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
    * @see <a href="https://app.camunda.com/jira/browse/CAM-2128">https://app.camunda.com/jira/browse/CAM-2128</a>
    */
   @Test
-  void testDuplicateFiltering() throws InterruptedException {
+  void testDuplicateFiltering() throws Exception {
 
     deployOnTwoConcurrentThreads(
         createDeploymentBuilder().enableDuplicateFiltering(false),
@@ -75,7 +75,7 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
   }
 
   @Test
-  void testVersioning() throws InterruptedException {
+  void testVersioning() throws Exception {
 
     deployOnTwoConcurrentThreads(
         createDeploymentBuilder(),

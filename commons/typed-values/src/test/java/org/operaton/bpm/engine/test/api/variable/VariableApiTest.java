@@ -20,7 +20,6 @@ import static org.operaton.bpm.engine.variable.Variables.*;
 
 import java.io.File;
 import java.math.BigDecimal;
-import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -169,7 +168,7 @@ class VariableApiTest {
   }
 
   @Test
-  void transientVariables() throws URISyntaxException {
+  void transientVariables() throws Exception {
     VariableMap variableMap = createVariables().putValueTyped("foo", doubleValue(10.0, true))
                      .putValueTyped("bar", integerValue(10, true))
                      .putValueTyped("aa", booleanValue(true, true))
@@ -192,7 +191,7 @@ class VariableApiTest {
   }
 
   @Test
-  void transientVariablesRaw() throws URISyntaxException {
+  void transientVariablesRaw() throws Exception {
     VariableMap variableMap = createVariables().putValueTyped("foo", doubleValue(10.0, true))
                      .putValue("bar", integerValue(10, true))
                      .putValue("aa", booleanValue(true, true))

@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Base64;
@@ -576,7 +575,7 @@ class SignalEventTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml")
   @Test
-  void testSetSerializedVariableValues() throws IOException, ClassNotFoundException {
+  void testSetSerializedVariableValues() throws Exception {
 
     // when
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");

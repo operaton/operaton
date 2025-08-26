@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -192,7 +191,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  void threadSafetyDateAndTimeParsing() throws ExecutionException, InterruptedException {
+  void threadSafetyDateAndTimeParsing() throws Exception {
     int threadCount = 2;
     ExecutorService pool = Executors.newFixedThreadPool(threadCount);
 

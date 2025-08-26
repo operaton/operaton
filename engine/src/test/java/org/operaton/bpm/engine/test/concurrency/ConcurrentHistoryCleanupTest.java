@@ -61,7 +61,7 @@ class ConcurrentHistoryCleanupTest extends ConcurrencyTestCase {
 
   @Test
   @RequiredDatabase(excludes = {DbSqlSessionFactory.MARIADB, DbSqlSessionFactory.H2})
-  void testRunTwoHistoryCleanups() throws InterruptedException {
+  void testRunTwoHistoryCleanups() throws Exception {
     final Integer transactionIsolationLevel = DatabaseHelper.getTransactionIsolationLevel(processEngineConfiguration);
     assumeTrue((transactionIsolationLevel != null && !transactionIsolationLevel.equals(Connection.TRANSACTION_READ_COMMITTED)));
 

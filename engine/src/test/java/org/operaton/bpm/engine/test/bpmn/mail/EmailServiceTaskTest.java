@@ -130,7 +130,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  void testSendEmail() throws MessagingException {
+  void testSendEmail() throws Exception {
 
     String from = "ordershipping@activiti.org";
     boolean male = true;

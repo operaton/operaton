@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import java.io.IOException;
 import java.util.Date;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -75,7 +74,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
    * the context of it
    */
   @Test
-  void testPaLocalFormatApplies() throws IOException {
+  void testPaLocalFormatApplies() throws Exception {
 
     // given a process instance
     final ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -111,7 +110,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
    * of the process application
    */
   @Test
-  void testPaLocalFormatDoesNotApply() throws IOException {
+  void testPaLocalFormatDoesNotApply() throws Exception {
 
     // given a process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -142,7 +141,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
    * process application.
    */
   @Test
-  void testExecutionVariableImplicitObjectValueUpdate() throws IOException {
+  void testExecutionVariableImplicitObjectValueUpdate() throws Exception {
 
     // given a process instance and a task
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("implicitProcessVariableUpdate");
@@ -193,7 +192,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
   }
 
   @Test
-  void testTaskVariableImplicitObjectValueUpdate() throws IOException {
+  void testTaskVariableImplicitObjectValueUpdate() throws Exception {
 
     // given a process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("implicitTaskVariableUpdate");

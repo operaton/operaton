@@ -24,7 +24,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
 import org.openapitools.client.api.ProcessInstanceApi;
 import org.openapitools.client.model.CountResultDto;
 import org.openapitools.client.model.ProcessInstanceQueryDto;
@@ -60,7 +59,7 @@ class ProcessInstanceTest {
   }
 
   @Test
-  void shouldQueryProcessInstancesCount() throws ApiException {
+  void shouldQueryProcessInstancesCount() throws Exception {
     // given
     stubFor(post(urlEqualTo(
             ENGINE_REST_PROCESS_INSTANCE + "/count")).willReturn(aResponse().withStatus(200)
@@ -79,7 +78,7 @@ class ProcessInstanceTest {
   }
 
   @Test
-  void shouldUpdateSuspensionStateById() throws ApiException {
+  void shouldUpdateSuspensionStateById() throws Exception {
     // given
     String id = "anProcessInstanceId";
     stubFor(put(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).willReturn(

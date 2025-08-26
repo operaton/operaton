@@ -31,8 +31,6 @@ import org.operaton.bpm.quarkus.engine.extension.OperatonEngineConfig;
 import org.operaton.bpm.quarkus.engine.extension.QuarkusProcessEngineConfiguration;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 
-import java.sql.SQLException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class OperatonEngineProgrammaticAndConfigFileTest {
@@ -64,7 +62,7 @@ class OperatonEngineProgrammaticAndConfigFileTest {
   }
 
   @Test
-  void shouldUseProvidedConfigurationAndConfigProperties() throws SQLException {
+  void shouldUseProvidedConfigurationAndConfigProperties() throws Exception {
     // given
     // a .properties file with process engine and job executor configuration
 

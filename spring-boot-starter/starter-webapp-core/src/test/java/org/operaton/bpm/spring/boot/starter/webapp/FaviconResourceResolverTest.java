@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.webapp;
 
 import static org.mockito.Mockito.*;
 
-import java.io.IOException;
 import java.net.URL;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,7 +38,7 @@ class FaviconResourceResolverTest {
   FaviconResourceResolver resolver;
 
   @Test
-  void shouldStripPathExceptLastSegment() throws IOException {
+  void shouldStripPathExceptLastSegment() throws Exception {
     // given
     String resourcePath = "/operaton/favicon.ico";
     String lastSegment = "/favicon.ico";
@@ -58,7 +57,7 @@ class FaviconResourceResolverTest {
   }
 
   @Test
-  void shouldStripPathExceptLastSegmentWithCustomPath() throws IOException {
+  void shouldStripPathExceptLastSegmentWithCustomPath() throws Exception {
     // given
     String resourcePath = "/custom-path/favicon.ico";
     String lastSegment = "/favicon.ico";

@@ -31,9 +31,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -554,7 +552,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  void testCaseDiagramRetrieval() throws FileNotFoundException, URISyntaxException {
+  void testCaseDiagramRetrieval() throws Exception {
     // setup additional mock behavior
     File file = getFile("/processes/todo-process.png");
     when(repositoryServiceMock.getCaseDiagram(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
@@ -580,7 +578,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  void testCaseDiagramNullFilename() throws FileNotFoundException, URISyntaxException {
+  void testCaseDiagramNullFilename() throws Exception {
     // setup additional mock behavior
     File file = getFile("/processes/todo-process.png");
     when(repositoryServiceMock.getCaseDefinition(MockProvider.EXAMPLE_CASE_DEFINITION_ID).getDiagramResourceName())

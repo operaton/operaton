@@ -411,7 +411,7 @@ class FoxJobRetryCmdTest {
   }
 
   @Test
-  void testFailedJobRetryTimeCycleWithChangingExpression() throws ParseException {
+  void testFailedJobRetryTimeCycleWithChangingExpression() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -749,7 +749,7 @@ class FoxJobRetryCmdTest {
   }
 
   @Test
-  void testFailingIntermediateBoundaryTimerJobWithCustomRetries() throws ParseException {
+  void testFailingIntermediateBoundaryTimerJobWithCustomRetries() throws Exception {
     try {
       // given
       BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")

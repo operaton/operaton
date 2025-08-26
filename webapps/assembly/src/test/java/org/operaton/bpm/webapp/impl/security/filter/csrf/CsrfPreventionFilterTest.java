@@ -106,7 +106,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void nonModifyingRequestTokenGeneration(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void nonModifyingRequestTokenGeneration(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     MockHttpServletResponse response = performNonModifyingRequest(nonModifyingRequestUrl, new MockHttpSession());
 
@@ -125,7 +125,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void nonModifyingRequestTokenGenerationWithRootContextPath(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void nonModifyingRequestTokenGenerationWithRootContextPath(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     // given
     MockHttpSession session = new MockHttpSession();
@@ -159,7 +159,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void consecutiveNonModifyingRequestTokens(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void consecutiveNonModifyingRequestTokens(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     MockHttpSession session = new MockHttpSession();
 
@@ -177,7 +177,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void modifyingRequestTokenValidation(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void modifyingRequestTokenValidation(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     MockHttpSession session = new MockHttpSession();
 
@@ -193,7 +193,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void modifyingRequestInvalidToken(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void modifyingRequestInvalidToken(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     MockHttpSession session = new MockHttpSession();
     performNonModifyingRequest(nonModifyingRequestUrl, session);

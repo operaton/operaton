@@ -169,13 +169,13 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
     }
   }
 
-  public ScriptExtension execute(Map<String, Object> scriptVariables) throws Throwable {
+  public ScriptExtension execute(Map<String, Object> scriptVariables) throws Exception {
     variables.putAll(scriptVariables);
     executeScript();
     return this;
   }
 
-  public ScriptExtension execute() throws Throwable {
+  public ScriptExtension execute() throws Exception {
     executeScript();
     return this;
   }

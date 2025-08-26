@@ -1336,7 +1336,7 @@ class ExternalTaskServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  void shouldLockExternalTaskWithExpiredLock() throws java.text.ParseException {
+  void shouldLockExternalTaskWithExpiredLock() throws Exception {
     // given
     // a second worker
     String aSecondWorkerId = "aSecondWorkerId";

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.csrf;
 
-import jakarta.servlet.ServletException;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +26,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockServletContext;
 
-import java.io.IOException;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,7 +53,7 @@ public class CsrfPreventionFilterAppPathTest extends CsrfPreventionFilterTest {
   @MethodSource("getRequestUrls")
   @ParameterizedTest
   void shouldCheckNonModifyingRequestTokenGenerationWithRootContextPathAndEmptyAppPath()
-    throws IOException, ServletException {
+    throws Exception {
     // given
     ServletContextUtil.setAppPath("", mockServletContext);
 

@@ -35,7 +35,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
-import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.application.impl.embedded.TestApplicationWithoutEngine;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -66,7 +65,7 @@ class ProcessApplicationContextTest {
   }
 
   @Test
-  void testSetPAContextByName() throws ProcessApplicationUnavailableException {
+  void testSetPAContextByName() throws Exception {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {
@@ -92,7 +91,7 @@ class ProcessApplicationContextTest {
   }
 
   @Test
-  void testSetPAContextByReference() throws ProcessApplicationUnavailableException {
+  void testSetPAContextByReference() throws Exception {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {
@@ -118,7 +117,7 @@ class ProcessApplicationContextTest {
   }
 
   @Test
-  void testSetPAContextByRawPA() throws ProcessApplicationUnavailableException {
+  void testSetPAContextByRawPA() throws Exception {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {

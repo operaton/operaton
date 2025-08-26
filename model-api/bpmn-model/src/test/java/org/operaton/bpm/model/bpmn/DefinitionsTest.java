@@ -25,7 +25,6 @@ import org.operaton.bpm.model.xml.ModelReferenceException;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -111,7 +110,7 @@ class DefinitionsTest extends BpmnModelTest {
 
   @Test
   @BpmnModelResource
-  void shouldNotAffectComments() throws IOException {
+  void shouldNotAffectComments() throws Exception {
     Definitions definitions = bpmnModelInstance.getDefinitions();
     assertThat(definitions).isNotNull();
 

@@ -225,12 +225,12 @@ class ContainerAuthenticationFilterTest {
   }
 
   @TestTemplate
-  void shouldCheckCustomApplicationPath() throws IOException, ServletException {
+  void shouldCheckCustomApplicationPath() throws Exception {
     testContainerAuthenticationCheck("/my-custom/application/path");
   }
 
   @TestTemplate
-  void shouldCheckEmptyApplicationPath() throws IOException, ServletException {
+  void shouldCheckEmptyApplicationPath() throws Exception {
     testContainerAuthenticationCheck("");
   }
 

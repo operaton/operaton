@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -44,7 +43,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.operaton.bpm.AbstractWebIntegrationTest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -64,7 +62,7 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
   }
 
   @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldUseJaxRs2Artifact() throws JsonProcessingException {
+  public void shouldUseJaxRs2Artifact() throws Exception {
     Map<String, Object> payload = new HashMap<>();
     payload.put("workerId", "aWorkerId");
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
@@ -85,7 +83,7 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void shouldPerform500ConcurrentRequests() throws InterruptedException, ExecutionException {
+  public void shouldPerform500ConcurrentRequests() throws Exception {
     PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     final CloseableHttpClient httpClient = HttpClients.custom()
       .setConnectionManager(cm)

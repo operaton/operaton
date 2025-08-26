@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 class DateConverterTest {
@@ -55,7 +54,7 @@ class DateConverterTest {
   }
 
   @Test
-  void shouldConvertDate() throws JsonProcessingException {
+  void shouldConvertDate() throws Exception {
     //given
     String value = "2014-01-01T00:00:00+0200";
     ObjectMapper mock = mock(ObjectMapper.class);

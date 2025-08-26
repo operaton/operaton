@@ -90,7 +90,7 @@ class AutoDeploymentIT {
   }
 
   @Test
-  void shouldAutoDeployProcessDefinition() throws IOException {
+  void shouldAutoDeployProcessDefinition() throws Exception {
     // given
     createBPMNFile("", "process1");
     runStartScript();
@@ -116,7 +116,7 @@ class AutoDeploymentIT {
   }
 
   @Test
-  void shouldAutoDeployScriptAndForms() throws IOException {
+  void shouldAutoDeployScriptAndForms() throws Exception {
     // given
     InputStream formFile = AutoDeploymentIT.class.getClassLoader().getResourceAsStream("deployment/form.html");
     InputStream  scriptFile = AutoDeploymentIT.class.getClassLoader().getResourceAsStream("deployment/script.js");
@@ -142,7 +142,7 @@ class AutoDeploymentIT {
   }
 
   @Test
-  void shouldSetRelativePathAsResourceName() throws IOException {
+  void shouldSetRelativePathAsResourceName() throws Exception {
     // given
     createBPMNFile("", "process1");
     createBPMNFile("nested/", "process2");

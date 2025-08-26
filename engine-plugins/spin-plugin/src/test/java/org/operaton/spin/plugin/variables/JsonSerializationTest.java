@@ -46,7 +46,6 @@ import static org.operaton.spin.plugin.variables.TypedValueAssert.assertUntypedN
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -73,7 +72,7 @@ class JsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  void serializationAsJson() throws JSONException {
+  void serializationAsJson() throws Exception {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JsonSerializable bean = new JsonSerializable("a String", 42, true);
@@ -101,7 +100,7 @@ class JsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  void listSerializationAsJson() throws JSONException {
+  void listSerializationAsJson() throws Exception {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<JsonSerializable> beans = new ArrayList<>();
@@ -214,7 +213,7 @@ class JsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  void getSerializedVariableValue() throws JSONException {
+  void getSerializedVariableValue() throws Exception {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JsonSerializable bean = new JsonSerializable("a String", 42, true);

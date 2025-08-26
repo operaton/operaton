@@ -45,7 +45,7 @@ class JsonJacksonTreeDataFormatReaderTest {
   }
 
   @Test
-  void shouldMatchJsonInput() throws IOException {
+  void shouldMatchJsonInput() throws Exception {
     inputReader = stringToReader(EXAMPLE_JSON);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();
@@ -55,7 +55,7 @@ class JsonJacksonTreeDataFormatReaderTest {
   }
 
   @Test
-  void shouldMatchJsonInputWithWhitespace() throws IOException {
+  void shouldMatchJsonInputWithWhitespace() throws Exception {
     inputReader = stringToReader("   " + EXAMPLE_JSON);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();

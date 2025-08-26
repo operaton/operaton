@@ -103,27 +103,27 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testBodyIsEmpty() throws IOException {
+  public void testBodyIsEmpty() throws Exception {
     evaluatePostRequest(new ByteArrayEntity("".getBytes(UTF_8)), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 
   @Test
-  public void testBodyIsNull() throws IOException {
+  public void testBodyIsNull() throws Exception {
     evaluatePostRequest(null, ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 
   @Test
-  public void testBodyIsNullAndContentTypeIsNull() throws IOException {
+  public void testBodyIsNullAndContentTypeIsNull() throws Exception {
     evaluatePostRequest(null, null, 415, false);
   }
 
   @Test
-  public void testBodyIsNullAndContentTypeHasISOCharset() throws IOException {
+  public void testBodyIsNullAndContentTypeHasISOCharset() throws Exception {
     evaluatePostRequest(null, ContentType.create(MediaType.APPLICATION_JSON, StandardCharsets.ISO_8859_1).toString(), 200, true);
   }
 
   @Test
-  public void testBodyIsEmptyJSONObject() throws IOException {
+  public void testBodyIsEmptyJSONObject() throws Exception {
     evaluatePostRequest(new ByteArrayEntity(EMPTY_JSON_OBJECT.getBytes(UTF_8)), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 

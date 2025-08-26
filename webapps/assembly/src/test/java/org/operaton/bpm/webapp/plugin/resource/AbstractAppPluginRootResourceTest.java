@@ -34,7 +34,6 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -101,7 +100,7 @@ public class AbstractAppPluginRootResourceTest {
 
   @MethodSource("getAssets")
   @ParameterizedTest
-  void shouldGetAssetIfAllowed(String assetName, String assetMediaType, boolean assetAllowed) throws IOException {
+  void shouldGetAssetIfAllowed(String assetName, String assetMediaType, boolean assetAllowed) throws Exception {
     initAbstractAppPluginRootResourceTest(assetName, assetMediaType, assetAllowed);
     // given
     String resourceName = "/" + ASSET_DIR + "/" + assetName;

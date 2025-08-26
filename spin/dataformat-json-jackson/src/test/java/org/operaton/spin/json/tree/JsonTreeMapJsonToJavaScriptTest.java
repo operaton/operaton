@@ -43,7 +43,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     execute = false
   )
   @ScriptVariable(name = "input", file=EXAMPLE_JSON_FILE_NAME)
-  public void shouldMapJsonObjectToJavaObject() throws Throwable {
+  public void shouldMapJsonObjectToJavaObject() throws Exception {
     Map<String, Object> variables = newMap("mapToType", Order.class);
     Order order = script.execute(variables).getVariable("result");
     assertIsExampleOrder(order);
@@ -67,7 +67,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     execute = false
   )
   @ScriptVariable(name = "input", file=EXAMPLE_JSON_FILE_NAME)
-  public void shouldMapByCanonicalString() throws Throwable {
+  public void shouldMapByCanonicalString() throws Exception {
     Map<String, Object> variables = newMap("mapToType", Order.class.getCanonicalName());
     Order order = script.execute(variables).getVariable("result");
     assertIsExampleOrder(order);
@@ -78,7 +78,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     name = "JsonTreeMapJsonToJavaScriptTest.mapToCollection",
     execute = false
   )
-  public void shouldMapListByCanonicalString() throws Throwable {
+  public void shouldMapListByCanonicalString() throws Exception {
     Map<String, Object> variables = new HashMap<>();
     variables.put("input", EXAMPLE_JSON_COLLECTION);
     variables.put("collectionType", ArrayList.class);

@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Base64;
@@ -396,7 +395,7 @@ class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  void testExecutionCorrelationSetSerializedVariableValue() throws IOException, ClassNotFoundException {
+  void testExecutionCorrelationSetSerializedVariableValue() throws Exception {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -438,7 +437,7 @@ class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  void testExecutionCorrelationSetSerializedVariableValues() throws IOException, ClassNotFoundException {
+  void testExecutionCorrelationSetSerializedVariableValues() throws Exception {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -590,7 +589,7 @@ class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  void testMessageStartEventCorrelationSetSerializedVariableValue() throws IOException, ClassNotFoundException {
+  void testMessageStartEventCorrelationSetSerializedVariableValue() throws Exception {
 
     // when
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");
@@ -632,7 +631,7 @@ class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  void testMessageStartEventCorrelationSetSerializedVariableValues() throws IOException, ClassNotFoundException {
+  void testMessageStartEventCorrelationSetSerializedVariableValues() throws Exception {
 
     // when
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");

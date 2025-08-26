@@ -19,7 +19,6 @@ package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import org.apache.commons.io.IOUtils;
@@ -47,7 +46,7 @@ class ResourceLoadingProcessEnginesAppPathRootTest {
   public int port;
 
   @Test
-  void shouldRedirectToStaticContent() throws IOException {
+  void shouldRedirectToStaticContent() throws Exception {
     // given
     // send GET request to /
     HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/");

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
-import java.io.IOException;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -44,14 +42,14 @@ public class TestWarDeploymentWithDiagram extends AbstractFoxPlatformIntegration
   }
 
   @Test
-  void testDeployProcessArchive() throws IOException {
+  void testDeployProcessArchive() throws Exception {
     String expectedDiagramResource = "/org/operaton/bpm/integrationtest/testDeployProcessArchive.png";
     String processDefinitionKey = "testDeployProcessArchive";
     TestHelper.assertDiagramIsDeployed(true, getClass(), expectedDiagramResource, processDefinitionKey);
   }
 
   @Test
-  void testInvoiceProcess() throws IOException {
+  void testInvoiceProcess() throws Exception {
     String expectedDiagramResource = "/org/operaton/bpm/integrationtest/invoice-it.jpg";
     String processDefinitionKey = "invoice-it";
     TestHelper.assertDiagramIsDeployed(true, getClass(), expectedDiagramResource, processDefinitionKey);

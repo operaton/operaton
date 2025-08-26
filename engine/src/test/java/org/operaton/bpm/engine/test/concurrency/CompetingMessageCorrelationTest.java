@@ -66,7 +66,7 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
   @RequiredDatabase(excludes = DbSqlSessionFactory.H2)
-  void testConcurrentExclusiveCorrelation() throws InterruptedException {
+  void testConcurrentExclusiveCorrelation() throws Exception {
     InvocationLogListener.reset();
 
     // given a process instance
@@ -308,7 +308,7 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Ignore("CAM-3636")
   @Test
-  void testConcurrentMixedCorrelationCase2() throws InterruptedException {
+  void testConcurrentMixedCorrelationCase2() throws Exception {
     InvocationLogListener.reset();
 
     // given a process instance

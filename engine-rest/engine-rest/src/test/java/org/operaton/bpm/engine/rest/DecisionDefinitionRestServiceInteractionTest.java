@@ -32,9 +32,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -318,7 +316,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
   }
 
   @Test
-  void testDecisionDiagramRetrieval() throws FileNotFoundException, URISyntaxException {
+  void testDecisionDiagramRetrieval() throws Exception {
     // setup additional mock behavior
     File file = getFile("/processes/todo-process.png");
     when(repositoryServiceMock.getDecisionDiagram(MockProvider.EXAMPLE_DECISION_DEFINITION_ID))
@@ -344,7 +342,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
   }
 
   @Test
-  void testDecisionDiagramNullFilename() throws FileNotFoundException, URISyntaxException {
+  void testDecisionDiagramNullFilename() throws Exception {
     // setup additional mock behavior
     File file = getFile("/processes/todo-process.png");
     when(repositoryServiceMock.getDecisionDefinition(MockProvider.EXAMPLE_DECISION_DEFINITION_ID).getDiagramResourceName())

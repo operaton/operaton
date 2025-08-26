@@ -33,7 +33,7 @@ public class DefaultHistoryLevelAutoHandlingConfiguration extends AbstractOperat
   @Override
   public void preInit(SpringProcessEngineConfiguration configuration) {
     final String determineHistoryLevel = historyLevelDeterminator.determineHistoryLevel();
-    if (!StringUtils.isEmpty(determineHistoryLevel)) {
+    if (StringUtils.hasText(determineHistoryLevel)) {
       configuration.setHistory(determineHistoryLevel);
     }
   }

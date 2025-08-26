@@ -61,11 +61,11 @@ public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguratio
     configuration.setDatabaseType(database.getType());
     configuration.setDatabaseSchemaUpdate(database.getSchemaUpdate());
 
-    if (!StringUtils.isEmpty(database.getTablePrefix())) {
+    if (StringUtils.hasText(database.getTablePrefix())) {
       configuration.setDatabaseTablePrefix(database.getTablePrefix());
     }
 
-    if(!StringUtils.isEmpty(database.getSchemaName())) {
+    if(StringUtils.hasText(database.getSchemaName())) {
       configuration.setDatabaseSchema(database.getSchemaName());
     }
 

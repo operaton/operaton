@@ -55,7 +55,7 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
 
   private void setProcessEngineName(SpringProcessEngineConfiguration configuration) {
     String processEngineName = StringUtils.trimAllWhitespace(operatonBpmProperties.getProcessEngineName());
-    if (!StringUtils.isEmpty(processEngineName) && !processEngineName.contains("-")) {
+    if (StringUtils.hasText(processEngineName) && !processEngineName.contains("-")) {
 
       if (operatonBpmProperties.getGenerateUniqueProcessEngineName()) {
         if (!ProcessEngines.NAME_DEFAULT.equals(processEngineName)) {

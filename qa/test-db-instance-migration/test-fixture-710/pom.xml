@@ -12,7 +12,7 @@
   <properties>
     <operaton.version.previous>7.9.0</operaton.version.previous>
     <version.h2>${version.h2-v1}</version.h2>
-    <version.groovy.old>3.0.24</version.groovy.old>
+    <version.groovy.old>3.0.25</version.groovy.old>
   </properties>
   <dependencyManagement>
     <dependencies>

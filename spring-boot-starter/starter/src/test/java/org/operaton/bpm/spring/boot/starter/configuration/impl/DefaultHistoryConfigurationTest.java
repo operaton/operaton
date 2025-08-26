@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import org.mockito.InjectMocks;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
@@ -38,6 +39,9 @@ class DefaultHistoryConfigurationTest {
   @Mock
   private SpringProcessEngineConfiguration springProcessEngineConfiguration;
 
+  @InjectMocks
+  private HistoryEventHandler historyEventHandler;
+
   private OperatonBpmProperties operatonBpmProperties;
 
   private DefaultHistoryConfiguration defaultHistoryConfiguration;
@@ -45,7 +49,7 @@ class DefaultHistoryConfigurationTest {
   @BeforeEach
   void before() {
     operatonBpmProperties = new OperatonBpmProperties();
-    defaultHistoryConfiguration = new DefaultHistoryConfiguration();
+    defaultHistoryConfiguration = new DefaultHistoryConfiguration(operatonBpmProperties, historyEventHandler);
     defaultHistoryConfiguration.operatonBpmProperties = operatonBpmProperties;
   }
 

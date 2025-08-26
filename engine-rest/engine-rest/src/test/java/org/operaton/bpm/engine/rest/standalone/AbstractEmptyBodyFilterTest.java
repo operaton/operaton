@@ -69,7 +69,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
   @BeforeEach
   public void setUpHttpClientAndRuntimeData() {
-    client = HttpClients.createDefault();
+    client = HttpClients.createSystem();
     reqConfig = RequestConfig.custom().setConnectTimeout(3 * 60 * 1000).setSocketTimeout(10 * 60 * 1000).build();
 
     ProcessDefinition mockDefinition = MockProvider.createMockDefinition();

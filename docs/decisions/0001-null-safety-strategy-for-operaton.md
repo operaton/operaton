@@ -41,6 +41,7 @@ Chosen option: "JSpecify for All Public APIs (Selected)", because it formalizes 
 ### Confirmation
 
 Compliance will be confirmed via code review and CI checks:
+
 - 100% of public APIs annotated with JSpecify.
 - CI flags nullability violations on public APIs.
 - No externally visible behavior changes (e.g., exception types) in the engine module due to refactors.

@@ -14,3 +14,12 @@ updates:
    directory: "/"
    schedule:
      interval: "weekly"
+   reviewers:
+     - "kthoms"
+ - package-ecosystem: "maven"
+   directory: "/"
+   schedule:
+     interval: "daily"
+     time: "05:00"
+   reviewers:
+     - "kthoms"

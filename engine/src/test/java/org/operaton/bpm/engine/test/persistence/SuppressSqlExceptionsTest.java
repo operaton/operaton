@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.persistence;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.PERSISTENCE_EXCEPTION_MESSAGE;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,6 +28,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.IdentityService;
@@ -59,6 +55,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.PERSISTENCE_EXCEPTION_MESSAGE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class SuppressSqlExceptionsTest {
 

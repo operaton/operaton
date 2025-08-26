@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7120.useroperationlog.annotation;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -24,14 +29,10 @@ import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SetAnnotationAuthorizationTest {
 

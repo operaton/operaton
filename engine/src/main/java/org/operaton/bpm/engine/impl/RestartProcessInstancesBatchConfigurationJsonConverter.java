@@ -18,16 +18,17 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
 import org.operaton.bpm.engine.impl.cmd.AbstractProcessInstanceModificationCommand;
 import org.operaton.bpm.engine.impl.json.ModificationCmdJsonConverter;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
-import com.google.gson.JsonObject;
 
 public class RestartProcessInstancesBatchConfigurationJsonConverter
-    extends AbstractBatchConfigurationObjectConverter<RestartProcessInstancesBatchConfiguration> {
+  extends AbstractBatchConfigurationObjectConverter<RestartProcessInstancesBatchConfiguration> {
 
   public static final RestartProcessInstancesBatchConfigurationJsonConverter INSTANCE = new RestartProcessInstancesBatchConfigurationJsonConverter();
 

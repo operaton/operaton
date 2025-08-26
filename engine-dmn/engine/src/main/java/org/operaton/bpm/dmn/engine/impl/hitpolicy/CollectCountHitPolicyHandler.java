@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.dmn.engine.impl.hitpolicy;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.model.dmn.BuiltinAggregator;
 import org.operaton.bpm.model.dmn.HitPolicy;
-
-import java.util.List;
 
 public class CollectCountHitPolicyHandler extends AbstractCollectNumberHitPolicyHandler {
 

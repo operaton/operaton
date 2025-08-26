@@ -16,10 +16,17 @@
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.ModelImpl;
 import org.operaton.bpm.model.xml.instance.DomElement;
@@ -27,12 +34,6 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.testmodel.Gender;
 import org.operaton.bpm.model.xml.testmodel.TestModelConstants;
 import org.operaton.bpm.model.xml.testmodel.TestModelTest;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository;
 
-import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
-
 import org.springframework.data.repository.CrudRepository;
+
+import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
 
 public interface TestEntityRepository extends CrudRepository<TestEntity, Long> {
 

@@ -16,26 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mockConstruction;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.identity.Group;
-import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.identity.UserQuery;
-import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
-import org.operaton.bpm.engine.impl.identity.db.DbGroupQueryImpl;
-import org.operaton.bpm.engine.impl.identity.db.DbUserQueryImpl;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.AbstractSpringSecurityIT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -52,6 +34,25 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.identity.Group;
+import org.operaton.bpm.engine.identity.GroupQuery;
+import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.identity.UserQuery;
+import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
+import org.operaton.bpm.engine.impl.identity.db.DbGroupQueryImpl;
+import org.operaton.bpm.engine.impl.identity.db.DbUserQueryImpl;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.AbstractSpringSecurityIT;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mockConstruction;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 
 @AutoConfigureMockMvc
 @TestPropertySource("/oauth2-mock.properties")

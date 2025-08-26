@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.spring;
 
-import org.operaton.bpm.engine.ArtifactFactory;
-import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
+
+import org.operaton.bpm.engine.ArtifactFactory;
+import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
 
 /**
  *

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala.function;
 
-import org.operaton.bpm.dmn.feel.impl.scala.function.builder.CustomFunctionBuilder;
-import org.operaton.bpm.dmn.feel.impl.scala.function.builder.CustomFunctionBuilderImpl;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+
+import org.operaton.bpm.dmn.feel.impl.scala.function.builder.CustomFunctionBuilder;
+import org.operaton.bpm.dmn.feel.impl.scala.function.builder.CustomFunctionBuilderImpl;
 
 public class CustomFunction {
 

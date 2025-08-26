@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.model.xml.impl.type.reference;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelReferenceException;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
@@ -29,10 +33,6 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @author Sebastian Menski

@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.dmn.engine.transform;
 
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
 import org.operaton.bpm.dmn.engine.impl.*;
@@ -27,12 +33,6 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.commons.utils.IoUtil;
-
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

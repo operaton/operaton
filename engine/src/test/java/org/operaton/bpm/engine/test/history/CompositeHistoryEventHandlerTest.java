@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.history.handler.CompositeHistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.handler.DbHistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.test.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Alexander Tyatenkov

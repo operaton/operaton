@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.dto.runtime;
 
 import java.util.List;
-
 import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;

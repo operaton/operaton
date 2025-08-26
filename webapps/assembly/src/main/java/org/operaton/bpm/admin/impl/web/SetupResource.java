@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.admin.impl.web;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.ServiceLoader;
@@ -33,6 +28,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.Providers;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -48,6 +46,10 @@ import org.operaton.bpm.engine.rest.util.ProvidersUtil;
 import org.operaton.bpm.webapp.impl.WebappLogger;
 import org.operaton.bpm.webapp.impl.security.SecurityActions;
 import org.operaton.bpm.webapp.impl.security.SecurityActions.SecurityAction;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 
 /**
  * <p>Jax RS resource allowing to perform the setup steps.</p>

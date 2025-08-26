@@ -21,6 +21,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.QueryOperator;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
@@ -29,10 +33,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.TaskQuery;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 /**
  * @author Sebastian Menski

@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.BackoffJobAcquisitionStrategy;
 import org.operaton.bpm.engine.impl.jobexecutor.JobAcquisitionContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobAcquisitionStrategy;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

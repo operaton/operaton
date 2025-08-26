@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.error;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
-import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ParseException;
@@ -40,7 +35,6 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -51,6 +45,13 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
+import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
 /**

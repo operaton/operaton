@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.migrate;
-import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.variable;
-import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,6 +23,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -44,6 +37,14 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.UserTaskBuilder;
+
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.migrate;
+import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.variable;
+import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer

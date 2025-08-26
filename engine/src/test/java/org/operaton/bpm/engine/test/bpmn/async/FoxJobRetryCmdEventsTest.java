@@ -16,19 +16,13 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.deployment;
-import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareCompensationEventProcess;
-import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareEscalationEventProcess;
-import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareMessageEventProcess;
-import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareSignalEventProcess;
-
 import java.util.Collection;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -37,6 +31,13 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameteri
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.deployment;
+import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareCompensationEventProcess;
+import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareEscalationEventProcess;
+import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareMessageEventProcess;
+import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareSignalEventProcess;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Askar Akhmerov

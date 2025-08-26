@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.pvm.process;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +29,8 @@ import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.runtime.ExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**

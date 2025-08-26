@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.deployment.Attachments;
@@ -35,6 +34,8 @@ import org.operaton.bpm.container.impl.metadata.ProcessEngineXmlImpl;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

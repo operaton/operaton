@@ -16,6 +16,27 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+
+import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.identity.UserQuery;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+import org.operaton.bpm.engine.rest.helper.MockProvider;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -26,28 +47,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import jakarta.ws.rs.core.Response.Status;
-
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.identity.UserQuery;
-import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 public class UserRestServiceQueryTest extends AbstractRestServiceTest {
 

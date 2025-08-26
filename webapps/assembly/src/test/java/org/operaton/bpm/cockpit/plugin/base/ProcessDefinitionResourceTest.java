@@ -16,8 +16,14 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessDefinitionResource;
@@ -29,17 +35,12 @@ import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQUALS_OPERATOR_NAME;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
   ProcessDefinitionResource resource;

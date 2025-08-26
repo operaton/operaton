@@ -18,6 +18,7 @@ package org.operaton.bpm.application.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.application.ProcessApplicationReference;

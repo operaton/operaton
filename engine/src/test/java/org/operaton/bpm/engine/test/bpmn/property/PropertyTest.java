@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.property;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.test.Deployment;
 
 /**

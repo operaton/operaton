@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.run.test.config.cors;
 
-import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
-import org.operaton.bpm.run.test.AbstractRestTest;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -28,6 +25,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+
+import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
+import org.operaton.bpm.run.test.AbstractRestTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,8 +40,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @ActiveProfiles(profiles = {"test-cors-enabled"})
 @TestPropertySource(properties = {
-    OperatonBpmRunCorsProperty.PREFIX + ".allowed-origins=http://other.origin:8081",
-    OperatonBpmRunCorsProperty.PREFIX + ".allow-credentials=true"})
+  OperatonBpmRunCorsProperty.PREFIX + ".allowed-origins=http://other.origin:8081",
+  OperatonBpmRunCorsProperty.PREFIX + ".allow-credentials=true"})
 class CorsConfigAllowCredentialsTest extends AbstractRestTest {
 
   @Test

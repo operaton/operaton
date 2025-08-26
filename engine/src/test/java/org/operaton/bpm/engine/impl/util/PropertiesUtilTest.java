@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import ch.qos.logback.classic.Level;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 
-import ch.qos.logback.classic.Level;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PropertiesUtilTest {
 

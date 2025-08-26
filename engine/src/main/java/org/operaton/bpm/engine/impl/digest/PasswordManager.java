@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.digest;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 

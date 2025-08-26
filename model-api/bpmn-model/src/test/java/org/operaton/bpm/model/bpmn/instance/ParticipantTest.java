@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.operaton.bpm.model.bpmn.impl.instance.EndPointRef;
-import org.operaton.bpm.model.bpmn.impl.instance.InterfaceRef;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.impl.instance.EndPointRef;
+import org.operaton.bpm.model.bpmn.impl.instance.InterfaceRef;
 
 /**
  * @author Sebastian Menski

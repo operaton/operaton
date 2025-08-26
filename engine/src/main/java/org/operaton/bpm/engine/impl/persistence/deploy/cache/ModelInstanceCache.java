@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import java.io.InputStream;
+import java.util.List;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -25,9 +28,6 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.repository.ResourceDefinition;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.commons.utils.cache.Cache;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * @author: Johannes Heinemann

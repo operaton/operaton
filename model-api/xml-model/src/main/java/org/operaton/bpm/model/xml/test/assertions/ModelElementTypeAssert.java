@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.model.xml.test.assertions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import org.assertj.core.api.AbstractAssert;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.impl.util.QName;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Sebastian Menski

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import org.operaton.bpm.engine.history.DurationReportResult;
-
 import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import org.operaton.bpm.engine.history.DurationReportResult;
 
 /**
  * @author Roman Smirnov

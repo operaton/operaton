@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.test.variables;
 
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
-import org.operaton.bpm.engine.variable.value.FileValue;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.operaton.commons.utils.IoUtil;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
@@ -34,6 +28,12 @@ import java.util.Scanner;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
+import org.operaton.bpm.engine.variable.value.FileValue;
+import org.operaton.bpm.engine.variable.value.TypedValue;
+import org.operaton.commons.utils.IoUtil;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.emptyMap;

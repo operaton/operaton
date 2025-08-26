@@ -16,22 +16,22 @@
  */
 package org.operaton.bpm.engine.spring.test.configuration;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Philipp Ossler
  */
-@ContextConfiguration(classes = { InMemProcessEngineConfiguration.class,
-    SpringProcessEngineServicesConfiguration.class })
+@ContextConfiguration(classes = {InMemProcessEngineConfiguration.class,
+  SpringProcessEngineServicesConfiguration.class})
 class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
 
   private final Counter counter;

@@ -16,15 +16,15 @@
  */
 package org.operaton.spin.xml.dom;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.xml.SpinXmlDataFormatException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.mapping.Order;
+
 import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.assertIsExampleOrder;
-
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class XmlDomMapXmlToJavaTest {

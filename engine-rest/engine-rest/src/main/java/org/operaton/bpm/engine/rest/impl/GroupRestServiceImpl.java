@@ -16,17 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
-import static org.operaton.bpm.engine.authorization.Resources.GROUP;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.util.List;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
@@ -40,6 +38,10 @@ import org.operaton.bpm.engine.rest.sub.identity.GroupResource;
 import org.operaton.bpm.engine.rest.sub.identity.impl.GroupResourceImpl;
 import org.operaton.bpm.engine.rest.util.PathUtil;
 import org.operaton.bpm.engine.rest.util.QueryUtil;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
+import static org.operaton.bpm.engine.authorization.Resources.GROUP;
 
 /**
  * @author Daniel Meyer

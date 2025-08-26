@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.variable;
 
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.impl.value.NullValueImpl;
-import org.operaton.bpm.engine.variable.type.ValueType;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-import static org.operaton.bpm.engine.variable.Variables.*;
-import static org.operaton.bpm.engine.variable.type.ValueType.*;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -30,6 +23,13 @@ import java.util.Date;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.impl.value.NullValueImpl;
+import org.operaton.bpm.engine.variable.type.ValueType;
+import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.bpm.engine.variable.Variables.*;
+import static org.operaton.bpm.engine.variable.type.ValueType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

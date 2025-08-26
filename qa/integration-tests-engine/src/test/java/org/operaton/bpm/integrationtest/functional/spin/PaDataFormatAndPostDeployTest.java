@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.Foo;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooDataFormat;
@@ -33,6 +32,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestConstants;
 import org.operaton.spin.spi.DataFormatProvider;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

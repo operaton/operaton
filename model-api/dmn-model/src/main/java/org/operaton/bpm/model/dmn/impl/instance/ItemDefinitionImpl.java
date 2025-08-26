@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_IS_COLLECTION;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_TYPE_LANGUAGE;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_ITEM_DEFINITION;
-
 import java.util.Collection;
 
 import org.operaton.bpm.model.dmn.instance.AllowedValues;
@@ -35,6 +30,11 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_IS_COLLECTION;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_TYPE_LANGUAGE;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_ITEM_DEFINITION;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 
 public class ItemDefinitionImpl extends NamedElementImpl implements ItemDefinition {
 

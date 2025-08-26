@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.spring.test.components;
 
-import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
-
 import java.io.Serializable;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Scope;
+
+import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
 
 @Scope(ProcessScope.PROCESS_SCOPE_NAME)
 @SuppressWarnings("unused")

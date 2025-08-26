@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.util.List;
 
@@ -26,6 +24,8 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.management.SchemaLogQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Miklas Boskamp

@@ -16,17 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.schemaLogEntryByTimestamp;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-
 import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -35,6 +31,11 @@ import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManagerFactory;
 import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.schemaLogEntryByTimestamp;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Miklas Boskamp

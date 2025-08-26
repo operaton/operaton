@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.container.impl.jboss.util;
 
-import org.jboss.msc.service.LifecycleEvent;
-import org.jboss.msc.service.LifecycleListener;
-import org.jboss.msc.service.ServiceController;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import org.jboss.msc.service.LifecycleEvent;
+import org.jboss.msc.service.LifecycleListener;
+import org.jboss.msc.service.ServiceController;
 
 /**
  * <p>A {@link Future} implementation backed by a {@link LifecycleListener}</p>

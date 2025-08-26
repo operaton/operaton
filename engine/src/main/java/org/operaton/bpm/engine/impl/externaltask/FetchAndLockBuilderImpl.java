@@ -17,21 +17,22 @@
 
 package org.operaton.bpm.engine.impl.externaltask;
 
-import static org.operaton.bpm.engine.impl.Direction.ASCENDING;
-import static org.operaton.bpm.engine.impl.Direction.DESCENDING;
-import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.CREATE_TIME;
-import static org.operaton.commons.utils.CollectionUtil.getLastElement;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
-
 import java.util.ArrayList;
 import java.util.List;
+
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQueryTopicBuilder;
 import org.operaton.bpm.engine.externaltask.FetchAndLockBuilder;
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
+
+import static org.operaton.bpm.engine.impl.Direction.ASCENDING;
+import static org.operaton.bpm.engine.impl.Direction.DESCENDING;
+import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.CREATE_TIME;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
+import static org.operaton.commons.utils.CollectionUtil.getLastElement;
 
 /**
  * Implementation of {@link FetchAndLockBuilder}.

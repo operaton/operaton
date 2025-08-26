@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi.beans;
 
+import jakarta.inject.Named;
+
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
-
-import jakarta.inject.Named;
 
 /**
  * @author Daniel Meyer

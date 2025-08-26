@@ -28,13 +28,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import org.xml.sax.SAXException;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.util.DomUtil;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.DomElement;
-import org.xml.sax.SAXException;
 
 /**
  * @author Daniel Meyer

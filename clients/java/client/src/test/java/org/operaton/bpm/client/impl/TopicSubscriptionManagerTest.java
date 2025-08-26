@@ -15,23 +15,15 @@
  */
 package org.operaton.bpm.client.impl;
 
-import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
@@ -44,6 +36,16 @@ import org.operaton.bpm.client.variable.impl.DefaultValueMappers;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
 import org.operaton.bpm.client.variable.impl.TypedValues;
 import org.operaton.bpm.engine.variable.value.PrimitiveValue;
+
+import static org.awaitility.Awaitility.await;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class TopicSubscriptionManagerTest {
 

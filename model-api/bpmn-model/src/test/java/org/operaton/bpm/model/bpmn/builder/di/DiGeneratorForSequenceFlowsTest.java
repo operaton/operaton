@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.builder.di;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.END_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEQUENCE_FLOW_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
-
 import java.util.Collection;
 import java.util.Iterator;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
+
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.END_EVENT_ID;
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEQUENCE_FLOW_ID;
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class DiGeneratorForSequenceFlowsTest {
 

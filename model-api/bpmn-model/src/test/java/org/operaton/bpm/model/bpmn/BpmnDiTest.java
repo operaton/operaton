@@ -16,23 +16,23 @@
  */
 package org.operaton.bpm.model.bpmn;
 
+import java.util.Collection;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.bpmn.instance.Process;
+
 import org.operaton.bpm.model.bpmn.instance.*;
+import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.*;
 import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
 import org.operaton.bpm.model.bpmn.instance.dc.Font;
 import org.operaton.bpm.model.bpmn.instance.di.DiagramElement;
 import org.operaton.bpm.model.bpmn.instance.di.Waypoint;
 
-import java.util.Collection;
-
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
 
 /**
  * @author Sebastian Menski

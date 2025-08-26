@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +29,8 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.query.PeriodUnit;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Stefan Hentschel.

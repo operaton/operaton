@@ -16,11 +16,14 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala;
 
-import org.operaton.bpm.dmn.feel.impl.FeelEngine;
-import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunctionTransformer;
-import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
-import org.operaton.bpm.dmn.feel.impl.scala.spin.SpinValueMapperFactory;
-import org.operaton.bpm.engine.variable.context.VariableContext;
+import java.util.Arrays;
+
+import camundajar.impl.scala.collection.immutable.List;
+import camundajar.impl.scala.collection.immutable.Map;
+import camundajar.impl.scala.runtime.BoxesRunTime;
+import camundajar.impl.scala.util.Either;
+import camundajar.impl.scala.util.Left;
+import camundajar.impl.scala.util.Right;
 import org.camunda.feel.FeelEngine.Builder;
 import org.camunda.feel.FeelEngine.Failure;
 import org.camunda.feel.context.CustomContext;
@@ -29,17 +32,15 @@ import org.camunda.feel.context.VariableProvider.StaticVariableProvider;
 import org.camunda.feel.impl.JavaValueMapper;
 import org.camunda.feel.valuemapper.CustomValueMapper;
 import org.camunda.feel.valuemapper.ValueMapper.CompositeValueMapper;
-import camundajar.impl.scala.collection.immutable.List;
-import camundajar.impl.scala.collection.immutable.Map;
-import camundajar.impl.scala.runtime.BoxesRunTime;
-import camundajar.impl.scala.util.Either;
-import camundajar.impl.scala.util.Left;
-import camundajar.impl.scala.util.Right;
 
-import java.util.Arrays;
+import org.operaton.bpm.dmn.feel.impl.FeelEngine;
+import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunctionTransformer;
+import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
+import org.operaton.bpm.dmn.feel.impl.scala.spin.SpinValueMapperFactory;
+import org.operaton.bpm.engine.variable.context.VariableContext;
 
-import static org.camunda.feel.context.VariableProvider.CompositeVariableProvider;
 import static camundajar.impl.scala.jdk.CollectionConverters.ListHasAsScala;
+import static org.camunda.feel.context.VariableProvider.CompositeVariableProvider;
 
 public class ScalaFeelEngine implements FeelEngine {
 

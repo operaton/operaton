@@ -16,21 +16,22 @@
  */
 package org.operaton.bpm.engine.rest.dto.externaltask;
 
-import static java.lang.Boolean.TRUE;
-import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQueryTopicBuilder;
 import org.operaton.bpm.engine.externaltask.FetchAndLockBuilder;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.rest.dto.SortingDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
+import static java.lang.Boolean.TRUE;
 
 /**
  * @author Thorben Lindhauer

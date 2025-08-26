@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.container.impl.jboss.service;
 
-import org.operaton.bpm.application.ProcessApplicationInfo;
-import org.operaton.bpm.application.ProcessApplicationReference;
-import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessApplication;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+
+import org.operaton.bpm.application.ProcessApplicationInfo;
+import org.operaton.bpm.application.ProcessApplicationReference;
+import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessApplication;
 
 /**
  * <p>Represents a Process Application registered with the Msc</p>

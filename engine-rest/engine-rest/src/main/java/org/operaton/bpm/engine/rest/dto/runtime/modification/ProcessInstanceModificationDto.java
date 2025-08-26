@@ -18,10 +18,10 @@ package org.operaton.bpm.engine.rest.dto.runtime.modification;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.runtime.ProcessInstanceModificationBuilder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Thorben Lindhauer

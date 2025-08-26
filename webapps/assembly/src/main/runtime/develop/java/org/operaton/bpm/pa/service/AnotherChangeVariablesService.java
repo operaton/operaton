@@ -17,8 +17,6 @@
 package org.operaton.bpm.pa.service;
 
 
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +26,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
 
 public class AnotherChangeVariablesService implements JavaDelegate {
 

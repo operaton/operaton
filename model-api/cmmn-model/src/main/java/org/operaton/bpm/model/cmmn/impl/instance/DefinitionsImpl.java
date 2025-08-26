@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_AUTHOR;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_EXPORTER;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_EXPORTER_VERSION;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_EXPRESSION_LANGUAGE;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_ID;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_NAME;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_TARGET_NAMESPACE;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_DEFINITIONS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.XPATH_NS;
-
 import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.instance.Artifact;
@@ -45,6 +34,8 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.*;
 
 /**
  * @author Roman Smirnov

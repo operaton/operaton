@@ -17,8 +17,8 @@
 package org.operaton.bpm.admin;
 
 import org.operaton.bpm.admin.plugin.spi.AdminPlugin;
-import org.operaton.bpm.webapp.db.QueryService;
 import org.operaton.bpm.webapp.AppRuntimeDelegate;
+import org.operaton.bpm.webapp.db.QueryService;
 
 /**
  * The admin application service runtime delegate. Provides access to the

@@ -20,8 +20,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
@@ -31,13 +32,11 @@ import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
 import org.operaton.bpm.engine.runtime.IncidentQuery;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * @author Roman Smirnov
  *
  */
-public class IncidentQueryDto extends AbstractQueryDto<IncidentQuery>{
+public class IncidentQueryDto extends AbstractQueryDto<IncidentQuery> {
 
   private static final String SORT_BY_INCIDENT_ID = "incidentId";
   private static final String SORT_BY_INCIDENT_MESSAGE = "incidentMessage";

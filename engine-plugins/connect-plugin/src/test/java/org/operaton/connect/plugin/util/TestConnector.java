@@ -16,10 +16,10 @@
  */
 package org.operaton.connect.plugin.util;
 
-import org.operaton.connect.impl.AbstractConnector;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.operaton.connect.impl.AbstractConnector;
 
 /**
  * @author Daniel Meyer

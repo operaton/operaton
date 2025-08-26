@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
-import static org.operaton.bpm.engine.delegate.CaseExecutionListener.COMPLETE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
-import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnCompositeActivityBehavior;
@@ -27,6 +23,10 @@ import org.operaton.bpm.engine.impl.cmmn.behavior.TransferVariablesActivityBehav
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static org.operaton.bpm.engine.delegate.CaseExecutionListener.COMPLETE;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
+import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
 
 /**
  * @author Roman Smirnov

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.openapi.client;
 
+import java.io.File;
+
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,8 +26,6 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.api.DeploymentApi;
 import org.openapitools.client.model.DeploymentWithDefinitionsDto;
-
-import java.io.File;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin.base.dto.query;
 
+import java.io.Serial;
+import java.util.*;
+import jakarta.ws.rs.core.MultivaluedMap;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessInstanceDto;
 import org.operaton.bpm.cockpit.rest.dto.AbstractRestQueryParametersDto;
 import org.operaton.bpm.engine.impl.QueryVariableValue;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
-import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto;
+import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
 import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
 import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
 import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-
-import java.io.Serial;
-import java.util.*;
 
 public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceDto>
   extends AbstractRestQueryParametersDto<T> {

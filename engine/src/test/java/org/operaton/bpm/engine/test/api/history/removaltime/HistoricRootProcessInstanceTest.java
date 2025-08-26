@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.ByteArrayInputStream;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
@@ -60,6 +59,8 @@ import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner

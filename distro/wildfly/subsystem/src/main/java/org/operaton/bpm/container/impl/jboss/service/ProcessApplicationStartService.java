@@ -29,19 +29,6 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.operaton.bpm.application.PostDeploy;
-import org.operaton.bpm.application.PreUndeploy;
-import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
-import org.operaton.bpm.application.ProcessApplicationInfo;
-import org.operaton.bpm.application.ProcessApplicationInterface;
-import org.operaton.bpm.application.impl.ProcessApplicationDeploymentInfoImpl;
-import org.operaton.bpm.application.impl.ProcessApplicationInfoImpl;
-import org.operaton.bpm.container.impl.deployment.util.InjectionUtil;
-import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
-import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.jboss.as.ee.component.ComponentView;
 import org.jboss.as.naming.ManagedReference;
 import org.jboss.jandex.AnnotationInstance;
@@ -55,6 +42,20 @@ import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+
+import org.operaton.bpm.application.PostDeploy;
+import org.operaton.bpm.application.PreUndeploy;
+import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
+import org.operaton.bpm.application.ProcessApplicationInfo;
+import org.operaton.bpm.application.ProcessApplicationInterface;
+import org.operaton.bpm.application.impl.ProcessApplicationDeploymentInfoImpl;
+import org.operaton.bpm.application.impl.ProcessApplicationInfoImpl;
+import org.operaton.bpm.container.impl.deployment.util.InjectionUtil;
+import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
+import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 
 /**
  * <p>This service is responsible for starting the {@link MscManagedProcessApplication} service.</p>

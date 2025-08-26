@@ -17,9 +17,11 @@
 package org.operaton.bpm.container.impl.jboss.test;
 
 import java.io.IOException;
+
+import org.jboss.as.subsystem.test.AbstractSubsystemBaseTest;
+
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
-import org.jboss.as.subsystem.test.AbstractSubsystemBaseTest;
 
 
 /**

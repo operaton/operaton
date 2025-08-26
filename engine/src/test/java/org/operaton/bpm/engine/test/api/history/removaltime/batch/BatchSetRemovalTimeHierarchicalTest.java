@@ -16,17 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime.batch;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
-import static org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeRule.addDays;
-
 import java.io.ByteArrayInputStream;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.ExternalTaskService;
@@ -69,6 +65,11 @@ import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
+import static org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeRule.addDays;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 /**
  * @author Tassilo Weidner

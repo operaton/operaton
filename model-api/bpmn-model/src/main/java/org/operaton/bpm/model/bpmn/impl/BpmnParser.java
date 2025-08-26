@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.impl;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_20_SCHEMA_LOCATION;
-
 import java.io.InputStream;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.validation.SchemaFactory;
 
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.xml.impl.ModelImpl;
@@ -27,8 +27,8 @@ import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.validation.SchemaFactory;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_20_SCHEMA_LOCATION;
 
 /**
  * <p>The parser used when parsing BPMN Files</p>

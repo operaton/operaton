@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.bpmn.builder;
 
 import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.instance.StartEvent;

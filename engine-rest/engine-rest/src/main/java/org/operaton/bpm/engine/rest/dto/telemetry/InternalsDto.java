@@ -22,9 +22,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.operaton.bpm.engine.telemetry.Internals;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.operaton.bpm.engine.telemetry.Internals;
 
 public class InternalsDto {
 

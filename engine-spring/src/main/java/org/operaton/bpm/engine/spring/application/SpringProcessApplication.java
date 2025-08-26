@@ -19,9 +19,6 @@ package org.operaton.bpm.engine.spring.application;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.application.AbstractProcessApplication;
-import org.operaton.bpm.application.ProcessApplicationReference;
-import org.operaton.bpm.application.impl.ProcessApplicationReferenceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.context.ApplicationContext;
@@ -30,6 +27,10 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ApplicationContextEvent;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
+
+import org.operaton.bpm.application.AbstractProcessApplication;
+import org.operaton.bpm.application.ProcessApplicationReference;
+import org.operaton.bpm.application.impl.ProcessApplicationReferenceImpl;
 
 /**
  * <p>Process Application implementation to be used in a Spring Application.</p>

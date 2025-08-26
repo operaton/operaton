@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.dto.migration;
 
-import org.operaton.bpm.engine.migration.MigrationVariableValidationReport;
-import org.operaton.bpm.engine.rest.dto.VariableValueDto;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.engine.migration.MigrationVariableValidationReport;
+import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 
 public class MigrationVariableValidationReportDto extends VariableValueDto {
 

@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.activitylog;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
@@ -23,11 +28,6 @@ import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.qa.performance.engine.framework.*;
 import org.operaton.bpm.qa.performance.engine.junit.PerfTestProcessEngine;
 import org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 public class ActivityPerfTestWatcher implements PerfTestWatcher {
 

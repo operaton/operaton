@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
-import static org.operaton.bpm.engine.impl.util.CallableElementUtil.getCaseDefinitionToCall;
-
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -25,6 +23,8 @@ import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnCaseInstance;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
+
+import static org.operaton.bpm.engine.impl.util.CallableElementUtil.getCaseDefinitionToCall;
 
 /**
  * @author Roman Smirnov

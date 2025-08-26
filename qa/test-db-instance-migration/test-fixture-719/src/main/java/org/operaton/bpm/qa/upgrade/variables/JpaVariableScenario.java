@@ -18,7 +18,6 @@ package org.operaton.bpm.qa.upgrade.variables;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 

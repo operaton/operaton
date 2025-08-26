@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.model.cmmn;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
-
 import java.io.*;
 
 import org.operaton.bpm.model.cmmn.impl.CmmnParser;
@@ -126,6 +123,9 @@ import org.operaton.bpm.model.xml.ModelParseException;
 import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 
 /**
  * @author Roman Smirnov

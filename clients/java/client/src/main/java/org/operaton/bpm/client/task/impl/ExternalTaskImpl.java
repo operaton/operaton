@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.client.task.impl;
 
-import org.operaton.bpm.client.task.ExternalTask;
-import org.operaton.bpm.client.variable.impl.TypedValueField;
-import org.operaton.bpm.client.variable.impl.VariableValue;
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-
 import java.text.DateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -30,6 +23,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.operaton.bpm.client.task.ExternalTask;
+import org.operaton.bpm.client.variable.impl.TypedValueField;
+import org.operaton.bpm.client.variable.impl.VariableValue;
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
  * @author Tassilo Weidner

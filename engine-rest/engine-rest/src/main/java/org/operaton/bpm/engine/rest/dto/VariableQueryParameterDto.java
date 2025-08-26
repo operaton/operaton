@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.dto;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
 import org.operaton.bpm.engine.variable.Variables;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class VariableQueryParameterDto extends ConditionQueryParameterDto {
 

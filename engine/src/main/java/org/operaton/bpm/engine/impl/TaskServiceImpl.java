@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,51 +27,7 @@ import java.util.Map;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.impl.cmd.AddCommentCmd;
-import org.operaton.bpm.engine.impl.cmd.AddGroupIdentityLinkCmd;
-import org.operaton.bpm.engine.impl.cmd.AddUserIdentityLinkCmd;
-import org.operaton.bpm.engine.impl.cmd.AssignTaskCmd;
-import org.operaton.bpm.engine.impl.cmd.ClaimTaskCmd;
-import org.operaton.bpm.engine.impl.cmd.CompleteTaskCmd;
-import org.operaton.bpm.engine.impl.cmd.CreateAttachmentCmd;
-import org.operaton.bpm.engine.impl.cmd.CreateTaskCmd;
-import org.operaton.bpm.engine.impl.cmd.DelegateTaskCmd;
-import org.operaton.bpm.engine.impl.cmd.DeleteAttachmentCmd;
-import org.operaton.bpm.engine.impl.cmd.DeleteGroupIdentityLinkCmd;
-import org.operaton.bpm.engine.impl.cmd.DeleteProcessInstanceCommentCmd;
-import org.operaton.bpm.engine.impl.cmd.DeleteTaskCmd;
-import org.operaton.bpm.engine.impl.cmd.DeleteTaskCommentCmd;
-import org.operaton.bpm.engine.impl.cmd.DeleteUserIdentityLinkCmd;
-import org.operaton.bpm.engine.impl.cmd.GetAttachmentCmd;
-import org.operaton.bpm.engine.impl.cmd.GetAttachmentContentCmd;
-import org.operaton.bpm.engine.impl.cmd.GetIdentityLinksForTaskCmd;
-import org.operaton.bpm.engine.impl.cmd.GetProcessInstanceAttachmentsCmd;
-import org.operaton.bpm.engine.impl.cmd.GetProcessInstanceCommentsCmd;
-import org.operaton.bpm.engine.impl.cmd.GetSubTasksCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskAttachmentCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskAttachmentContentCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskAttachmentsCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskCommentCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskCommentsCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskEventsCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskVariableCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskVariableCmdTyped;
-import org.operaton.bpm.engine.impl.cmd.GetTaskVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.HandleTaskBpmnErrorCmd;
-import org.operaton.bpm.engine.impl.cmd.HandleTaskEscalationCmd;
-import org.operaton.bpm.engine.impl.cmd.PatchTaskVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.RemoveTaskVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.ResolveTaskCmd;
-import org.operaton.bpm.engine.impl.cmd.SaveAttachmentCmd;
-import org.operaton.bpm.engine.impl.cmd.SaveTaskCmd;
-import org.operaton.bpm.engine.impl.cmd.SetTaskDescriptionCmd;
-import org.operaton.bpm.engine.impl.cmd.SetTaskDueDateCmd;
-import org.operaton.bpm.engine.impl.cmd.SetTaskFollowUpDateCmd;
-import org.operaton.bpm.engine.impl.cmd.SetTaskNameCmd;
-import org.operaton.bpm.engine.impl.cmd.SetTaskOwnerCmd;
-import org.operaton.bpm.engine.impl.cmd.SetTaskPriorityCmd;
-import org.operaton.bpm.engine.impl.cmd.SetTaskVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.UpdateCommentCmd;
+import org.operaton.bpm.engine.impl.cmd.*;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Comment;
@@ -86,6 +40,8 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.task.TaskReport;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**

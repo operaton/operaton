@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
-import com.google.gson.JsonElement;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.JsonElement;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;

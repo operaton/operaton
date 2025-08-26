@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.exception.dmn;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**

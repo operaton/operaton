@@ -16,12 +16,12 @@
  */
 package org.operaton.spin.impl;
 
-import org.operaton.spin.Spin;
-import org.operaton.spin.SpinList;
-
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.operaton.spin.Spin;
+import org.operaton.spin.SpinList;
 
 /**
  * @author Sebastian Menski

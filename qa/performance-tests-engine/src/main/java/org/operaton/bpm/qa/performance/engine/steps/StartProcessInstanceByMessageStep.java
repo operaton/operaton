@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.qa.performance.engine.steps;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
+
 import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.PROCESS_INSTANCE_ID;
 import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.RUN_ID;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Daniel Meyer

@@ -16,17 +16,16 @@
  */
 package org.operaton.bpm.application.impl.embedded;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 import java.util.List;
 import java.util.Set;
 
+import ch.qos.logback.classic.Level;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -40,7 +39,8 @@ import org.operaton.bpm.engine.repository.Resource;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 
-import ch.qos.logback.classic.Level;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Daniel Meyer

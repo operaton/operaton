@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_POTENTIAL_OWNER;
-
 import org.operaton.bpm.model.bpmn.instance.HumanPerformer;
 import org.operaton.bpm.model.bpmn.instance.PotentialOwner;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_POTENTIAL_OWNER;
 
 /**
  * The BPMN potentialOwner element

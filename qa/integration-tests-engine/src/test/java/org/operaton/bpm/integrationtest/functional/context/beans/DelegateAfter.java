@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.integrationtest.functional.context.beans;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 
 /**
  *

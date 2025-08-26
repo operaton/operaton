@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.qa.upgrade;
 
+import org.junit.Assert;
+import org.junit.runner.Description;
+
 import org.operaton.bpm.engine.history.HistoricIncidentQuery;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.management.JobDefinitionQuery;
@@ -30,8 +33,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Assert;
-import org.junit.runner.Description;
 
 /**
  * @author Thorben Lindhauer

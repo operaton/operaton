@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.helper.variable;
 
-import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+
+import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
  * @author Thorben Lindhauer

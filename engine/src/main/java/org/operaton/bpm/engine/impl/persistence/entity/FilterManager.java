@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Resources.FILTER;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.List;
 
 import org.operaton.bpm.engine.filter.Filter;
@@ -31,6 +23,14 @@ import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.QueryValidators.StoredQueryValidator;
 import org.operaton.bpm.engine.impl.filter.FilterQueryImpl;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Resources.FILTER;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Sebastian Menski

@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.pa.demo;
 
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Permissions.ACCESS;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Resources.APPLICATION;
-import static org.operaton.bpm.engine.authorization.Resources.USER;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +31,12 @@ import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.task.TaskQuery;
+
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Permissions.ACCESS;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Resources.APPLICATION;
+import static org.operaton.bpm.engine.authorization.Resources.USER;
 
 /**
  * @author drobisch

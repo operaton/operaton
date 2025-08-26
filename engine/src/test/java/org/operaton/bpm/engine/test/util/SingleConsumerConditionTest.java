@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+
 import org.operaton.bpm.engine.impl.util.SingleConsumerCondition;
+
+import static org.assertj.core.api.Assertions.fail;
 
 class SingleConsumerConditionTest {
 

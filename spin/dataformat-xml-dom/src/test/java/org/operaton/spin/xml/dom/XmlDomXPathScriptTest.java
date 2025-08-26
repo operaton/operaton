@@ -16,6 +16,8 @@
  */
 package org.operaton.spin.xml.dom;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
@@ -24,8 +26,6 @@ import org.operaton.spin.xml.SpinXPathException;
 import org.operaton.spin.xml.SpinXPathQuery;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlElement;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;

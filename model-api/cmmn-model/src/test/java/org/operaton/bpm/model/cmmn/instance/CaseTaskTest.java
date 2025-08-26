@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.cmmn.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 
 /**
  * @author Roman Smirnov

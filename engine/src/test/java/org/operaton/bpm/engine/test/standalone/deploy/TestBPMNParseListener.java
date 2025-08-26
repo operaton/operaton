@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.standalone.deploy;
 
-import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse.COMPENSATE_EVENT_DEFINITION;
-
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.bpmn.behavior.CompensationEventActivityBehavior;
@@ -29,6 +27,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.xml.Element;
+
+import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse.COMPENSATE_EVENT_DEFINITION;
 
 /**
  * @author Frederik Heremans

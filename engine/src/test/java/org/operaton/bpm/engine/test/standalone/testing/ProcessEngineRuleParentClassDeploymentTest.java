@@ -17,15 +17,16 @@
 package org.operaton.bpm.engine.test.standalone.testing;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 
-public class ProcessEngineRuleParentClassDeploymentTest extends ProcessEngineRuleParentClassDeployment  {
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+public class ProcessEngineRuleParentClassDeploymentTest extends ProcessEngineRuleParentClassDeployment {
 
   @Rule
   public final ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();

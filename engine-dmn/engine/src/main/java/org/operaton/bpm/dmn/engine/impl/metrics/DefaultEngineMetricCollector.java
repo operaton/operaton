@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.dmn.engine.impl.metrics;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationEvent;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationListener;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionTableEvaluationEvent;
 import org.operaton.bpm.dmn.engine.spi.DmnEngineMetricCollector;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 public class DefaultEngineMetricCollector implements DmnEngineMetricCollector, DmnDecisionEvaluationListener {
 

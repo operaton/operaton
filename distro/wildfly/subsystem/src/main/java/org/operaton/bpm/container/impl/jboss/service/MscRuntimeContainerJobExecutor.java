@@ -18,11 +18,12 @@ package org.operaton.bpm.container.impl.jboss.service;
 
 import java.util.function.Consumer;
 
-import org.operaton.bpm.engine.impl.jobexecutor.RuntimeContainerJobExecutor;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+
+import org.operaton.bpm.engine.impl.jobexecutor.RuntimeContainerJobExecutor;
 
 /**
  * @author Daniel Meyer

@@ -16,8 +16,15 @@
  */
 package org.operaton.bpm.example.invoice;
 
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
@@ -31,15 +38,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProcessEnded;
 import static org.operaton.bpm.engine.variable.Variables.fileValue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ProcessEngineExtension.class)
 class InvoiceTestCase {

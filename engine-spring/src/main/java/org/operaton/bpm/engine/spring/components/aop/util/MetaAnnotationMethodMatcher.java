@@ -15,12 +15,12 @@
  */
 package org.operaton.bpm.engine.spring.components.aop.util;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
 import org.springframework.aop.support.AopUtils;
 import org.springframework.aop.support.annotation.AnnotationMethodMatcher;
 import org.springframework.core.annotation.AnnotationUtils;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
 /**
  * this code is taken almost verbatim from the Spring Integration

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.dmn.engine.impl.evaluation;
 
+import javax.script.*;
+
 import org.operaton.bpm.dmn.engine.impl.*;
 import org.operaton.bpm.dmn.engine.impl.el.VariableContextScriptBindings;
 import org.operaton.bpm.dmn.engine.impl.spi.el.DmnScriptEngineResolver;
@@ -24,9 +26,8 @@ import org.operaton.bpm.dmn.engine.impl.spi.el.ElProvider;
 import org.operaton.bpm.dmn.feel.impl.FeelEngine;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.commons.utils.StringUtil;
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
-import javax.script.*;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 public class ExpressionEvaluationHandler {
 

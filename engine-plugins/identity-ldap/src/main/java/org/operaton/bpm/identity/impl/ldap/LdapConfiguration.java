@@ -19,6 +19,7 @@ package org.operaton.bpm.identity.impl.ldap;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.naming.directory.SearchControls;
 
 

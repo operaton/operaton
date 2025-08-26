@@ -18,7 +18,6 @@ package org.operaton.bpm.impl.juel;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-
 import jakarta.el.ELException;
 import jakarta.el.ValueExpression;
 

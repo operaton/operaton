@@ -16,20 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.builder.di;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.END_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEND_TASK_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEQUENCE_FLOW_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SERVICE_TASK_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SUB_PROCESS_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TASK_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
-
 import java.util.Collection;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
@@ -37,6 +28,9 @@ import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
 import org.operaton.bpm.model.bpmn.instance.di.Waypoint;
+
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CoordinatesGenerationTest {
 

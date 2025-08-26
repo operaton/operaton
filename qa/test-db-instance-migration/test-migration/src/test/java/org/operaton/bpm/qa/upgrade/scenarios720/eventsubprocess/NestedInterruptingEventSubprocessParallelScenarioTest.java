@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios720.eventsubprocess;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.task.Task;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.task.Task;
 
 /**
  * @author Thorben Lindhauer

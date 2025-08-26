@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.history.event.HistoricJobLogEvent;
 

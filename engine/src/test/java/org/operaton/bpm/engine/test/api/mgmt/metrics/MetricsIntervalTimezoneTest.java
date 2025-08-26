@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.management.Metrics.ACTIVTY_INSTANCE_START;
-
 import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.MetricIntervalValue;
+
+import static org.operaton.bpm.engine.management.Metrics.ACTIVTY_INSTANCE_START;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Represents a test suite for the metrics interval query to check if the

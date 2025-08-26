@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2;
 
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.ClientsNotConfiguredCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +23,8 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.ClientsNotConfiguredCondition;
 
 @Conditional(ClientsNotConfiguredCondition.class)
 public class OperatonBpmSpringSecurityDisableAutoConfiguration {

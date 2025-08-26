@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assume.assumeTrue;
-
 import java.sql.Connection;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
@@ -30,8 +30,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.util.DatabaseHelper;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assume.assumeTrue;
 
 /**
  * <p>Tests the call to history cleanup simultaneously.</p>

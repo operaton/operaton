@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +40,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Command to delete process definitions by ids.

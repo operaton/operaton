@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_ASSOCIATION_DIRECTION;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_SOURCE_REF;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_TARGET_REF;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_ASSOCIATION;
-
 import org.operaton.bpm.model.cmmn.AssociationDirection;
 import org.operaton.bpm.model.cmmn.instance.Artifact;
 import org.operaton.bpm.model.cmmn.instance.Association;
@@ -31,6 +25,12 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_ASSOCIATION_DIRECTION;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_SOURCE_REF;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_TARGET_REF;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_ASSOCIATION;
 
 /**
  * @author Roman Smirnov

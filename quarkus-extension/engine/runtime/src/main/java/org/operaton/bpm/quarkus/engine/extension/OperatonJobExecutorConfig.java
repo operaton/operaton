@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.quarkus.engine.extension;
 
-import io.smallrye.config.WithDefault;
 import java.util.Map;
+
+import io.smallrye.config.WithDefault;
 
 public interface OperatonJobExecutorConfig {
 

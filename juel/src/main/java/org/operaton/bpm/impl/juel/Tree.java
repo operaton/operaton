@@ -17,7 +17,6 @@ package org.operaton.bpm.impl.juel;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
-
 import jakarta.el.ELException;
 import jakarta.el.FunctionMapper;
 import jakarta.el.ValueExpression;

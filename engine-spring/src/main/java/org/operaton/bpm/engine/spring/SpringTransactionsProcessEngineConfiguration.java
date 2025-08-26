@@ -16,6 +16,19 @@
  */
 package org.operaton.bpm.engine.spring;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.zip.ZipInputStream;
+
+import javax.sql.DataSource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ContextResource;
+import org.springframework.core.io.Resource;
+import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+import org.springframework.transaction.PlatformTransactionManager;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -23,19 +36,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.interceptor.*;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.zip.ZipInputStream;
-
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ContextResource;
-import org.springframework.core.io.Resource;
-import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRED;
 import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW;

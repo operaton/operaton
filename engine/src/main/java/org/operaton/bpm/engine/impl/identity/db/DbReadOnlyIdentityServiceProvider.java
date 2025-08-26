@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.identity.db;
 
-import static org.operaton.bpm.engine.impl.util.EncryptionUtil.saltPassword;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +41,8 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TenantEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
+
+import static org.operaton.bpm.engine.impl.util.EncryptionUtil.saltPassword;
 
 /**
  * <p>Read only implementation of DB-backed identity service</p>

@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.property.authcachettl;
 
-import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 class AuthCacheTTLPropertyDefaultTest extends ParsePropertiesHelper {
 
   @Test

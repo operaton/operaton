@@ -19,9 +19,9 @@ package org.operaton.bpm.admin.impl.web;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import jakarta.ws.rs.core.Application;
 
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
-import jakarta.ws.rs.core.Application;
 
 import org.operaton.bpm.admin.Admin;
 import org.operaton.bpm.admin.plugin.spi.AdminPlugin;

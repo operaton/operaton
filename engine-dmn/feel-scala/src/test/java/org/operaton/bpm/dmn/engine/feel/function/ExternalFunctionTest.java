@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.feel.function;
 
-import org.operaton.bpm.dmn.engine.feel.helper.FeelExtension;
-import org.operaton.bpm.dmn.feel.impl.FeelException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
+import org.operaton.bpm.dmn.engine.feel.helper.FeelExtension;
+import org.operaton.bpm.dmn.feel.impl.FeelException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

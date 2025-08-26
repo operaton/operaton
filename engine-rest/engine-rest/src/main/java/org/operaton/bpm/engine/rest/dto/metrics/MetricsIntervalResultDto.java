@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.dto.metrics;
 
 import java.util.Date;
+
 import org.operaton.bpm.engine.management.MetricIntervalValue;
 
 /**

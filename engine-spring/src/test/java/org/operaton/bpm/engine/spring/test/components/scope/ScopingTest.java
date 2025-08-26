@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test.components.scope;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.spring.test.components.ProcessInitiatingPojo;
-import org.operaton.bpm.engine.task.Task;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +29,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.StringUtils;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.repository.Deployment;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.spring.test.components.ProcessInitiatingPojo;
+import org.operaton.bpm.engine.task.Task;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotSame;

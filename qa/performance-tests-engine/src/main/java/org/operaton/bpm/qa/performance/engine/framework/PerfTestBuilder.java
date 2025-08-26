@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
-import org.operaton.bpm.qa.performance.engine.junit.PerfTestResultRecorderExtension;
-
 import java.util.concurrent.ExecutionException;
+
+import org.operaton.bpm.qa.performance.engine.junit.PerfTestResultRecorderExtension;
 
 
 /**

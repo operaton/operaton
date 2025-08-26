@@ -16,27 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static java.util.Collections.emptyList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertThrows;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByAssignee;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCaseExecutionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCaseInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCreateTime;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByDescription;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByDueDate;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByExecutionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByFollowUpDate;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskById;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByName;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByPriority;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
-import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +34,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FilterService;
@@ -90,6 +70,14 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertThrows;
 
 /**
  * @author Joram Barrez

@@ -16,12 +16,14 @@
  */
 package org.operaton.connect.soap.httpclient;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.connect.Connectors;
 import org.operaton.connect.httpclient.soap.SoapHttpConnector;
 import org.operaton.connect.httpclient.soap.SoapHttpRequest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SoapHttpRequestTest {
 

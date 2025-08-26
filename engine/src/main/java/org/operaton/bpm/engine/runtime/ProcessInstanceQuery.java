@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.runtime;
 import java.io.Serializable;
 import java.util.Set;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.query.Query;
 
 /**

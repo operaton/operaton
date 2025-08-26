@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.logging;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -26,11 +23,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.jboss.logging.MDC;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -49,10 +50,9 @@ import org.operaton.bpm.engine.test.junit5.WatchLogger;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.logging.MdcAccess;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class ProcessDataLoggingContextTest {
 

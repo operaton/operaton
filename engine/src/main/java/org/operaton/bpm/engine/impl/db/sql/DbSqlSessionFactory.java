@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.db.sql;
 
+import java.sql.Connection;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.ibatis.session.SqlSessionFactory;
+
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.interceptor.Session;
 import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
 import org.operaton.bpm.engine.impl.util.ClassNameUtil;
-
-import java.sql.Connection;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 /**

@@ -17,16 +17,18 @@
 package org.operaton.bpm.run.qa.webapps;
 
 import java.util.logging.Logger;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
+
 import org.operaton.bpm.TestProperties;
 import org.operaton.bpm.util.TestUtil;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
 
 /**
  * NOTE: copied from

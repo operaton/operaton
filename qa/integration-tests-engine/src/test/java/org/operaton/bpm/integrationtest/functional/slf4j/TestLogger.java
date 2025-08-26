@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.integrationtest.functional.slf4j;
 
-import org.operaton.commons.logging.BaseLogger;
 import org.slf4j.helpers.MessageFormatter;
+
+import org.operaton.commons.logging.BaseLogger;
 
 public class TestLogger extends BaseLogger {
 

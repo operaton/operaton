@@ -16,9 +16,6 @@
  */
 package org.operaton.spin.xml;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-
 import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,12 +28,15 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+import org.xml.sax.SAXException;
 
 import org.operaton.spin.impl.util.SpinIoUtil;
 import org.operaton.spin.xml.mapping.Customer;
 import org.operaton.spin.xml.mapping.Order;
 import org.operaton.spin.xml.mapping.OrderDetails;
-import org.xml.sax.SAXException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 /**
  * @author Daniel Meyer

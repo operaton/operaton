@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_LIST;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +29,9 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.impl.util.ModelUtil;
 import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_LIST;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 /**
  * @author Sebastian Menski

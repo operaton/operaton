@@ -18,8 +18,9 @@ package org.operaton.bpm.engine.rest.dto.history;
 
 import java.util.Date;
 import java.util.Map;
-
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
@@ -27,8 +28,6 @@ import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Danny Gräf

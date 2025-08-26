@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_REQUIRED_DECISION;
-
 import org.operaton.bpm.model.dmn.instance.DmnElementReference;
 import org.operaton.bpm.model.dmn.instance.RequiredDecisionReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_REQUIRED_DECISION;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 
 public class RequiredDecisionReferenceImpl extends DmnElementReferenceImpl implements org.operaton.bpm.model.dmn.instance.RequiredDecisionReference {
 

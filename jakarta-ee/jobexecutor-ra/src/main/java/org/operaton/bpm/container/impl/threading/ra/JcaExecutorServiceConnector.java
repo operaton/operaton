@@ -20,7 +20,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jakarta.resource.ResourceException;
 import jakarta.resource.spi.ActivationSpec;
 import jakarta.resource.spi.BootstrapContext;
@@ -30,6 +29,7 @@ import jakarta.resource.spi.ResourceAdapter;
 import jakarta.resource.spi.ResourceAdapterInternalException;
 import jakarta.resource.spi.TransactionSupport;
 import jakarta.resource.spi.endpoint.MessageEndpointFactory;
+
 import javax.transaction.xa.XAResource;
 
 import org.operaton.bpm.container.impl.threading.ra.commonj.CommonJWorkManagerExecutorService;
@@ -44,9 +44,9 @@ import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandlerAc
  * @author Daniel Meyer
  */
 @Connector(
-    reauthenticationSupport = false,
-    transactionSupport = TransactionSupport.TransactionSupportLevel.NoTransaction
-  )
+  reauthenticationSupport = false,
+  transactionSupport = TransactionSupport.TransactionSupportLevel.NoTransaction
+)
 public class JcaExecutorServiceConnector implements ResourceAdapter {
 
   public static final String ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE = "org.operaton.bpm.engine.ProcessEngine";

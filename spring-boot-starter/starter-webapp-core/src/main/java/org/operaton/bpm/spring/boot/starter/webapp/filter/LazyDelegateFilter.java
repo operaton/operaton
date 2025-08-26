@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-
 import jakarta.servlet.*;
 
 @SuppressWarnings("unused")

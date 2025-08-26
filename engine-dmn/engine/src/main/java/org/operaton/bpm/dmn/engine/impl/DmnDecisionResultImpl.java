@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
+import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 public class DmnDecisionResultImpl implements DmnDecisionResult {

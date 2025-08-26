@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +36,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**

@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_TYPE_REF;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_EXPRESSION;
-
 import org.operaton.bpm.model.dmn.instance.DmnElement;
 import org.operaton.bpm.model.dmn.instance.Expression;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
+
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_TYPE_REF;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_EXPRESSION;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 
 public abstract class ExpressionImpl extends DmnElementImpl implements Expression {
 

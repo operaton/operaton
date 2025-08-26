@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.runtime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultDeserializationTypeValidatorTest {
 

@@ -23,12 +23,13 @@ import java.util.Set;
 
 import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.spring.annotations.StartProcess;
-import org.operaton.bpm.engine.spring.components.aop.util.MetaAnnotationMatchingPointcut;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.PointcutAdvisor;
 import org.springframework.aop.support.ComposablePointcut;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.spring.annotations.StartProcess;
+import org.operaton.bpm.engine.spring.components.aop.util.MetaAnnotationMatchingPointcut;
 
 /**
  * AOP advice for methods annotated with (by default) {@link StartProcess}.

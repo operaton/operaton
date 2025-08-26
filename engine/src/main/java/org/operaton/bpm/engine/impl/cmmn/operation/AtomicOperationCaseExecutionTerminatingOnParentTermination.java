@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATING_ON_PARENT_TERMINATION;
-
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
+
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATING_ON_PARENT_TERMINATION;
 
 /**
  * @author Roman Smirnov

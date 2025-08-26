@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_TEXT_FORMAT;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TEXT_ANNOTATION;
-
 import org.operaton.bpm.model.bpmn.instance.Artifact;
 import org.operaton.bpm.model.bpmn.instance.Text;
 import org.operaton.bpm.model.bpmn.instance.TextAnnotation;
@@ -29,6 +25,10 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_TEXT_FORMAT;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TEXT_ANNOTATION;
 
 /**
  * The BPMN 2.0 textAnnotation element

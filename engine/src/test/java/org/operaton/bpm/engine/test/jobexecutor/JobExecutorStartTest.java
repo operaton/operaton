@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquireJobsCommandFactory;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultAcquireJobsCommandFactory;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class JobExecutorStartTest {
 

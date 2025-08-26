@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
-import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.InitHook;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyInitRegistration;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.ResourceLoaderDependingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -33,6 +27,13 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.InitHook;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyInitRegistration;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.ResourceLoaderDependingFilter;
 
 @Configuration
 @ConditionalOnProperty(prefix = WebappProperty.PREFIX, name = "enabled", matchIfMissing = true)

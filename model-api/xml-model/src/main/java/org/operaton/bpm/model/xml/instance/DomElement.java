@@ -19,9 +19,10 @@ package org.operaton.bpm.model.xml.instance;
 import java.util.List;
 import java.util.Set;
 
+import org.w3c.dom.Element;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
-import org.w3c.dom.Element;
 
 /**
  * Encapsulates {@link Element}. Implementations of this interface must be thread-safe.

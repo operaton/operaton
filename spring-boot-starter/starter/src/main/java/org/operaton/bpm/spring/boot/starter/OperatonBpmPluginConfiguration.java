@@ -19,6 +19,12 @@ package org.operaton.bpm.spring.boot.starter;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
+import org.springframework.boot.devtools.restart.ConditionalOnInitializedRestarter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.spring.boot.starter.plugin.ApplicationContextClassloaderSwitchPlugin;
@@ -29,12 +35,6 @@ import org.operaton.bpm.spring.boot.starter.spin.SpringBootSpinProcessEnginePlug
 import org.operaton.connect.plugin.impl.ConnectProcessEnginePlugin;
 import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.operaton.spin.plugin.impl.SpinProcessEnginePlugin;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
-import org.springframework.boot.devtools.restart.ConditionalOnInitializedRestarter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OperatonBpmPluginConfiguration {

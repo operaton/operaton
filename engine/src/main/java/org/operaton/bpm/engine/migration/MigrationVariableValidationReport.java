@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.migration;
 
-import org.operaton.bpm.engine.variable.value.TypedValue;
-
 import java.util.List;
+
+import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
  * Collects the validation failures for a single migration

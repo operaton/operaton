@@ -16,16 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVOKE;
-
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
@@ -36,6 +32,11 @@ import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVOKE;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ProcessEngineExtension.class)
 class AuthorizationQueryAuthorizationsTest {

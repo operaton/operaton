@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
-
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 
 /**
  * The BPMN event element

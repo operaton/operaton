@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.run.test.util;
 
-import javax.net.ssl.*;
 import java.io.InputStream;
 import java.security.KeyStore;
 
+import javax.net.ssl.*;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;

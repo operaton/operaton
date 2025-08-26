@@ -18,12 +18,6 @@ package org.operaton.bpm.container.impl.jboss.deployment.processor;
 
 import java.util.List;
 
-import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
-import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
-import org.operaton.bpm.container.impl.jboss.service.MscManagedProcessEngineController;
-import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
-import org.operaton.bpm.container.impl.jboss.util.ProcessesXmlWrapper;
-import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.jboss.as.server.deployment.DeploymentPhaseContext;
 import org.jboss.as.server.deployment.DeploymentUnit;
 import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
@@ -31,6 +25,13 @@ import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceTarget;
+
+import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
+import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
+import org.operaton.bpm.container.impl.jboss.service.MscManagedProcessEngineController;
+import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
+import org.operaton.bpm.container.impl.jboss.util.ProcessesXmlWrapper;
+import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 
 
 /**

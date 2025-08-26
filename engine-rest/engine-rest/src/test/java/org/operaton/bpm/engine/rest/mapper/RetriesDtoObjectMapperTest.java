@@ -16,18 +16,20 @@
  */
 package org.operaton.bpm.engine.rest.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Date;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.JobQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.RetriesDto;
 import org.operaton.bpm.engine.rest.dto.runtime.SetJobRetriesByProcessDto;
 import org.operaton.bpm.engine.rest.dto.runtime.SetJobRetriesDto;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RetriesDtoObjectMapperTest {
 

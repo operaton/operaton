@@ -16,21 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.db.entitymanager;
 
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_MERGED;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_PERSISTENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_TRANSIENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.MERGED;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.PERSISTENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.TRANSIENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE_BULK;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.INSERT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.UPDATE;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.UPDATE_BULK;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.DeploymentQueryImpl;
@@ -75,16 +64,28 @@ import org.operaton.bpm.engine.impl.identity.db.DbUserQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Session;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_MERGED;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_PERSISTENT;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_TRANSIENT;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.MERGED;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.PERSISTENT;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.TRANSIENT;
+import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE;
+import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE_BULK;
+import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.INSERT;
+import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.UPDATE;
+import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.UPDATE_BULK;
 
 /**
  *
  * @author Daniel Meyer
  *
  */
-@SuppressWarnings({ "rawtypes" })
+@SuppressWarnings({"rawtypes"})
 public class DbEntityManager implements Session, EntityLoadListener {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;

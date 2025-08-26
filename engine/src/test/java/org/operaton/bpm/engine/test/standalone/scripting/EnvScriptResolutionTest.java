@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.engine.test.standalone.scripting;
 
-import static org.assertj.core.api.Assertions.as;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
+
+import static org.assertj.core.api.Assertions.as;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class EnvScriptResolutionTest extends AbstractScriptEnvironmentTest {
 

@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios730.compensation;
 
-import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.task.Task;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.history.HistoricActivityInstance;
+import org.operaton.bpm.engine.history.HistoricProcessInstance;
+import org.operaton.bpm.engine.task.Task;
 
 /**
  * @author Thorben Lindhauer

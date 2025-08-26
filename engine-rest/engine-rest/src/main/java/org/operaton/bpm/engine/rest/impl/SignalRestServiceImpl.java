@@ -16,7 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
+import java.util.Map;
+import jakarta.ws.rs.core.Response.Status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.rest.SignalRestService;
@@ -25,9 +29,6 @@ import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.runtime.SignalEventReceivedBuilder;
-
-import jakarta.ws.rs.core.Response.Status;
-import java.util.Map;
 
 /**
  * @author Tassilo Weidner

@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import jakarta.resource.NotSupportedException;
 import jakarta.resource.ResourceException;
 import jakarta.resource.spi.ConnectionEvent;
@@ -29,6 +28,7 @@ import jakarta.resource.spi.ConnectionRequestInfo;
 import jakarta.resource.spi.LocalTransaction;
 import jakarta.resource.spi.ManagedConnection;
 import jakarta.resource.spi.ManagedConnectionMetaData;
+
 import javax.security.auth.Subject;
 import javax.transaction.xa.XAResource;
 

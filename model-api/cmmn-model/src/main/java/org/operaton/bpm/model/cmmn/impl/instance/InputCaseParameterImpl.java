@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_INPUT;
-
 import org.operaton.bpm.model.cmmn.instance.CaseParameter;
 import org.operaton.bpm.model.cmmn.instance.InputCaseParameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_INPUT;
 
 /**
  * @author Roman Smirnov

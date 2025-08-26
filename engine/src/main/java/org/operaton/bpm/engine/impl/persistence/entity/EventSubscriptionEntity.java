@@ -17,6 +17,10 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.*;
+
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
@@ -29,11 +33,8 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.EventSubscription;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.*;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Daniel Meyer

@@ -16,19 +16,11 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension.handler;
 
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ADDRESS;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
-import org.operaton.bpm.container.impl.jboss.extension.Element;
-import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
-import org.operaton.bpm.container.impl.jboss.service.MscManagedProcessEngineController;
-import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
-import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
 import org.jboss.as.controller.AbstractAddStepHandler;
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
@@ -37,6 +29,15 @@ import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.Property;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceName;
+
+import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
+import org.operaton.bpm.container.impl.jboss.extension.Element;
+import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
+import org.operaton.bpm.container.impl.jboss.service.MscManagedProcessEngineController;
+import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
+import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
+
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ADDRESS;
 
 
 /**

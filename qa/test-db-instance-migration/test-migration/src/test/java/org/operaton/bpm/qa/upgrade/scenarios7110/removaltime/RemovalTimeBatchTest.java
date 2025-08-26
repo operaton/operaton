@@ -16,22 +16,23 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7110.removaltime;
 
+import java.util.Date;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
-import java.util.Date;
-import java.util.List;
-
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author Tassilo Weidner

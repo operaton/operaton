@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_CONTEXT_ENTRY;
-
 import org.operaton.bpm.model.dmn.instance.ContextEntry;
 import org.operaton.bpm.model.dmn.instance.Expression;
 import org.operaton.bpm.model.dmn.instance.Variable;
@@ -27,6 +24,9 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_CONTEXT_ENTRY;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 
 public class ContextEntryImpl extends DmnModelElementInstanceImpl implements ContextEntry {
 

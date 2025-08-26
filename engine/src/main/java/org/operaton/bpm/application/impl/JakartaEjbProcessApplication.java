@@ -17,8 +17,10 @@
 package org.operaton.bpm.application.impl;
 
 import jakarta.ejb.SessionContext;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ManagementService;

@@ -20,12 +20,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.engine.spring.annotations.ProcessId;
-import org.operaton.bpm.engine.spring.annotations.ProcessVariable;
-import org.operaton.bpm.engine.spring.annotations.ProcessVariables;
-import org.operaton.bpm.engine.spring.annotations.State;
-import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistration;
-import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistry;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
@@ -39,6 +33,13 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
+
+import org.operaton.bpm.engine.spring.annotations.ProcessId;
+import org.operaton.bpm.engine.spring.annotations.ProcessVariable;
+import org.operaton.bpm.engine.spring.annotations.ProcessVariables;
+import org.operaton.bpm.engine.spring.annotations.State;
+import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistration;
+import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistry;
 
 
 /**

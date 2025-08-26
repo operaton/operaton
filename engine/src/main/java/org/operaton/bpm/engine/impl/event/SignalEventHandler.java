@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.event;
 
+import java.util.Map;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -25,8 +27,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-
-import java.util.Map;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 

@@ -16,24 +16,25 @@
  */
 package org.operaton.bpm.admin.impl.plugin.base.dto;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.webapp.rest.dto.AbstractRestQueryParametersDto;
-import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
-import org.operaton.bpm.engine.management.Metrics;
-import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
-import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
-import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
-import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.management.Metrics;
+import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
+import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
+import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+import org.operaton.bpm.webapp.rest.dto.AbstractRestQueryParametersDto;
 
 public class MetricsAggregatedQueryDto extends AbstractRestQueryParametersDto<MetricsAggregatedQueryDto> {
 

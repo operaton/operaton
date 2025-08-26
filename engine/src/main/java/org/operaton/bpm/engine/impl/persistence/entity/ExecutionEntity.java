@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
+import java.util.*;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -63,7 +66,6 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 import org.operaton.bpm.engine.impl.tree.ExecutionTopDownWalker;
 import org.operaton.bpm.engine.impl.util.BitMaskUtil;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -75,9 +77,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.FlowElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-
-import java.io.Serial;
-import java.util.*;
+import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * @author Tom Baeyens

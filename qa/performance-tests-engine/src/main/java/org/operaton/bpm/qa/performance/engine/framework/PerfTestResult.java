@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
-import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestResult;
-
 import java.util.*;
+
+import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestResult;
 
 /**
  * @author Daniel Meyer

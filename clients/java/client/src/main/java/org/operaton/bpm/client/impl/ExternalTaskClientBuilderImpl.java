@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.client.impl;
 
-import static org.operaton.bpm.client.task.OrderingConfig.Direction.ASC;
-import static org.operaton.bpm.client.task.OrderingConfig.Direction.DESC;
-import static org.operaton.bpm.client.task.OrderingConfig.SortingField.CREATE_TIME;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -33,8 +26,13 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.UUID;
 import java.util.function.Consumer;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
 import org.operaton.bpm.client.UrlResolver;
@@ -64,6 +62,10 @@ import org.operaton.bpm.client.variable.impl.mapper.ShortValueMapper;
 import org.operaton.bpm.client.variable.impl.mapper.StringValueMapper;
 import org.operaton.bpm.client.variable.impl.mapper.XmlValueMapper;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.client.task.OrderingConfig.Direction.ASC;
+import static org.operaton.bpm.client.task.OrderingConfig.Direction.DESC;
+import static org.operaton.bpm.client.task.OrderingConfig.SortingField.CREATE_TIME;
 
 /**
  * @author Tassilo Weidner

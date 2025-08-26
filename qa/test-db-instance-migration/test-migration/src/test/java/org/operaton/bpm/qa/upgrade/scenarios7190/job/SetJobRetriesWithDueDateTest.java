@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7190.job;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 import java.util.Map;
 
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.runtime.Job;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.batch.Batch;
+import org.operaton.bpm.engine.runtime.Job;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ScenarioUnderTest("SetJobRetriesWithDueDateScenario")
 @Origin("7.18.0")

@@ -16,16 +16,13 @@
  */
 package org.operaton.connect.plugin;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProcessEnded;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
@@ -41,7 +38,10 @@ import org.operaton.connect.httpclient.soap.SoapHttpConnector;
 import org.operaton.connect.plugin.util.TestConnector;
 import org.operaton.connect.spi.Connector;
 
+import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProcessEnded;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ConnectProcessEnginePluginTest {
 

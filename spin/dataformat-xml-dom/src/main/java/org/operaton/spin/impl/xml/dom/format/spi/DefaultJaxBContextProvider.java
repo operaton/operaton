@@ -16,18 +16,18 @@
  */
 package org.operaton.spin.impl.xml.dom.format.spi;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBContextFactory;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Marshaller;
-import jakarta.xml.bind.Unmarshaller;
-
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collections;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContextFactory;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
+
 import org.operaton.spin.impl.xml.dom.DomXmlLogger;
 
 /**

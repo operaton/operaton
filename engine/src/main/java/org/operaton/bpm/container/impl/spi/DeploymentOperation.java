@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.container.impl.spi;
 
-import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 /**
  * <p>A DeploymentOperation allows bundling multiple deployment steps into a

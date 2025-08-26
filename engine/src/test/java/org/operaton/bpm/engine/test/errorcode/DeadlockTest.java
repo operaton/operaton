@@ -16,30 +16,30 @@
  */
 package org.operaton.bpm.engine.test.errorcode;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.DB2;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.H2;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.MARIADB_MYSQL;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.MSSQL;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.ORACLE;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.POSTGRES;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.CountDownLatch;
 
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.DB2;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.H2;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.MARIADB_MYSQL;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.MSSQL;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.ORACLE;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.POSTGRES;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * HEADS-UP: If a test fails, please make sure to adjust the error code / sql state for the respective

@@ -16,22 +16,23 @@
  */
 package org.operaton.bpm.engine.impl.dmn.cmd;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoricDecisionInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.batch.builder.BatchBuilder;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
 import org.operaton.bpm.engine.impl.batch.BatchElementConfiguration;
+import org.operaton.bpm.engine.impl.batch.builder.BatchBuilder;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.commons.utils.CollectionUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 
 public class DeleteHistoricDecisionInstancesBatchCmd implements Command<Batch> {

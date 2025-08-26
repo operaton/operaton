@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.dto.externaltask;
 
 import java.util.List;
+
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
 

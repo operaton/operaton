@@ -19,7 +19,6 @@ package org.operaton.bpm.client.variable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.execution;
 
+import java.io.Serial;
+import java.util.*;
+
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableListener;
@@ -39,6 +42,7 @@ import org.operaton.bpm.engine.impl.variable.listener.CaseVariableListenerInvoca
 import org.operaton.bpm.engine.impl.variable.listener.DelegateCaseVariableInstanceImpl;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.*;
 import static org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration.IF_PART;
 import static org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration.PLAN_ITEM_ON_PART;
@@ -46,9 +50,6 @@ import static org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration.VARI
 import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.*;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.io.Serial;
-import java.util.*;
 
 /**
  * @author Roman Smirnov

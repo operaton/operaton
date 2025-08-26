@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.el.beans;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
-import jakarta.enterprise.context.Dependent;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

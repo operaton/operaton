@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.metadata.engine;
 
-import static org.assertj.core.api.Assertions.fail;
-
 import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -28,7 +26,10 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+
+import static org.assertj.core.api.Assertions.fail;
 
 
 /**

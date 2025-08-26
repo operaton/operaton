@@ -17,6 +17,8 @@
 package org.operaton.bpm.integrationtest.jobexecutor;
 
 import java.util.List;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
@@ -25,9 +27,6 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
-
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 
 @Named
 public class SendSignalDelegate implements JavaDelegate {

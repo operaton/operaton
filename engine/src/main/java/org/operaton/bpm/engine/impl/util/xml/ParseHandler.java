@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.util.xml;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;

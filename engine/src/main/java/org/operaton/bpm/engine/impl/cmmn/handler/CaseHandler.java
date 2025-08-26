@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cmmn.handler;
 
 import java.util.HashMap;
+
 import org.operaton.bpm.engine.impl.HistoryTimeToLiveParser;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;

@@ -16,20 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cfg.auth;
 
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
-import static org.operaton.bpm.engine.authorization.Resources.FILTER;
-import static org.operaton.bpm.engine.authorization.Resources.GROUP;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.Resources.TENANT;
-import static org.operaton.bpm.engine.authorization.Resources.USER;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureValidIndividualResourceId;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,6 +47,20 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Permissions.ALL;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
+import static org.operaton.bpm.engine.authorization.Resources.FILTER;
+import static org.operaton.bpm.engine.authorization.Resources.GROUP;
+import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+import static org.operaton.bpm.engine.authorization.Resources.TENANT;
+import static org.operaton.bpm.engine.authorization.Resources.USER;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureValidIndividualResourceId;
 
 /**
  * <p>Provides the default authorizations for Operaton.</p>

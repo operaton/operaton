@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.engine.spring.test.autodeployment;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.springframework.core.io.Resource;
+
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 
 /**
  * @author Tobias Metzke

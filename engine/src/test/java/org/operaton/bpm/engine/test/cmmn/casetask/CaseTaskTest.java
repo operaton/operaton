@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.test.cmmn.casetask;
 
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -28,10 +32,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

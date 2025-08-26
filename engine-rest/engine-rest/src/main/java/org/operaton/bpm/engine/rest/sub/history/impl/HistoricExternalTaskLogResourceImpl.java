@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.sub.history.impl;
 
+import jakarta.ws.rs.core.Response.Status;
+
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -24,8 +26,6 @@ import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
 import org.operaton.bpm.engine.rest.dto.history.HistoricExternalTaskLogDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.sub.history.HistoricExternalTaskLogResource;
-
-import jakarta.ws.rs.core.Response.Status;
 
 public class HistoricExternalTaskLogResourceImpl implements HistoricExternalTaskLogResource {
 

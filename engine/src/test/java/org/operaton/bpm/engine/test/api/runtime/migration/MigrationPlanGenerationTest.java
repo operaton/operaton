@@ -16,20 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.BOUNDARY_ID;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITIONAL_PROCESS_KEY;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITION_ID;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.EVENT_SUB_PROCESS_ID;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.EVENT_SUB_PROCESS_START_ID;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.EVENT_SUB_PROCESS_TASK_ID;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.USER_TASK_ID;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.VAR_CONDITION;
-import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.migrate;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.migration.MigrationInstructionsBuilder;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -50,6 +39,18 @@ import org.operaton.bpm.engine.test.util.MigrationPlanAssert;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
+
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.BOUNDARY_ID;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITIONAL_PROCESS_KEY;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITION_ID;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.EVENT_SUB_PROCESS_ID;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.EVENT_SUB_PROCESS_START_ID;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.EVENT_SUB_PROCESS_TASK_ID;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.USER_TASK_ID;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.VAR_CONDITION;
+import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.migrate;
 
 /**
  * @author Thorben Lindhauer

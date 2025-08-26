@@ -18,9 +18,6 @@ package org.operaton.bpm.container.impl.jboss.deployment.processor;
 
 import java.util.function.Consumer;
 
-import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
-import org.operaton.bpm.container.impl.jboss.service.ProcessApplicationModuleService;
-import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
 import org.jboss.as.server.deployment.AttachmentList;
 import org.jboss.as.server.deployment.Attachments;
 import org.jboss.as.server.deployment.DeploymentPhaseContext;
@@ -34,6 +31,10 @@ import org.jboss.modules.ModuleLoader;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController.Mode;
 import org.jboss.msc.service.ServiceName;
+
+import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
+import org.operaton.bpm.container.impl.jboss.service.ProcessApplicationModuleService;
+import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
 
 /**
  * <p>This Processor creates implicit module dependencies for process applications</p>

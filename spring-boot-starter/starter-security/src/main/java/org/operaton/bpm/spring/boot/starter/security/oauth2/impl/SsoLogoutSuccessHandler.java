@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
+import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.OAuth2Properties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 
-import java.io.IOException;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.OAuth2Properties;
 
 /**
  * {@link OidcClientInitiatedLogoutSuccessHandler} with logging.

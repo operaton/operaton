@@ -16,17 +16,17 @@
  */
 package org.operaton.spin.plugin.variable.value.impl;
 
-import static org.operaton.spin.Spin.S;
+import java.io.Serial;
 
 import org.operaton.bpm.engine.variable.impl.value.AbstractTypedValue;
-
-import java.io.Serial;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.Spin;
 import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.SpinValue;
 import org.operaton.spin.spi.DataFormat;
+
+import static org.operaton.spin.Spin.S;
 
 /**
  * @author Roman Smirnov

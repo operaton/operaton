@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.dmn.engine.impl.el.DefaultScriptEngineResolver;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.dmn.engine.impl.el.DefaultScriptEngineResolver;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

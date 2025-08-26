@@ -16,6 +16,8 @@
  */
 package org.operaton.spin.plugin.impl;
 
+import java.util.List;
+
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
@@ -23,8 +25,6 @@ import org.operaton.bpm.engine.impl.variable.serializer.DefaultVariableSerialize
 import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 import org.operaton.spin.DataFormats;
-
-import java.util.List;
 
 /**
  * @author Thorben Lindhauer

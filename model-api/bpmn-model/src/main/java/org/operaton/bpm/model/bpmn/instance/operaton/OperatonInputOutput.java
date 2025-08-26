@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.bpmn.instance.operaton;
 
 import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstance;
 
 /**

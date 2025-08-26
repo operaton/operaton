@@ -16,19 +16,18 @@
  */
 package org.operaton.commons.logging;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 
+import static org.operaton.commons.logging.ExampleLogger.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-
-import static org.operaton.commons.logging.ExampleLogger.*;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author Daniel Meyer

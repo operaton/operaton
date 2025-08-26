@@ -16,20 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserialized;
-import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
-
 import java.util.Base64;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -44,6 +38,13 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserialized;
+import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
+import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Svetlana Dorokhova

@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.integrationtest.functional.transactions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPaWithoutWeld;
-
 import java.sql.Connection;
 import java.sql.SQLException;
+import jakarta.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -28,11 +26,13 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import jakarta.inject.Inject;
+import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPaWithoutWeld;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(ArquillianExtension.class)

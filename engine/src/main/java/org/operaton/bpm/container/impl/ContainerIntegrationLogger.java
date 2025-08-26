@@ -27,10 +27,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.management.ObjectName;
 import javax.naming.NamingException;
+import org.jboss.vfs.VirtualFile;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.jboss.vfs.VirtualFile;
 
 /**
  * @author Daniel Meyer

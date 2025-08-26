@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.application.impl.event;
 
+import java.util.concurrent.Callable;
+
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -29,8 +31,6 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-
-import java.util.concurrent.Callable;
 
 /**
  * <p>{@link ExecutionListener} and {@link TaskListener} implementation delegating to

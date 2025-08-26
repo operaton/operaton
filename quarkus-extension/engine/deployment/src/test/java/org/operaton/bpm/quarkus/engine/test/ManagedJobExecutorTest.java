@@ -16,13 +16,18 @@
  */
 package org.operaton.bpm.quarkus.engine.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
-
-import io.quarkus.test.QuarkusUnitTest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
+
+import io.quarkus.test.QuarkusUnitTest;
+import org.eclipse.microprofile.context.ManagedExecutor;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
@@ -33,12 +38,9 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.quarkus.engine.extension.QuarkusProcessEngineConfiguration;
 import org.operaton.bpm.quarkus.engine.extension.impl.ManagedJobExecutor;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
-import org.eclipse.microprofile.context.ManagedExecutor;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+
+import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ManagedJobExecutorTest {
 

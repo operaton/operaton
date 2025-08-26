@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
+import java.io.InputStream;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.*;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
@@ -28,15 +33,10 @@ import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.commons.utils.IoUtil;
+
 import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.emptyVariableContext;
-
-import java.io.InputStream;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 

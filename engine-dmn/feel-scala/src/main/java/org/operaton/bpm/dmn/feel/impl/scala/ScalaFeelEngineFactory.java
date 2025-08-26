@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala;
 
+import java.util.List;
+
 import org.operaton.bpm.dmn.feel.impl.FeelEngine;
 import org.operaton.bpm.dmn.feel.impl.FeelEngineFactory;
 import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
-
-import java.util.List;
 
 public class ScalaFeelEngineFactory implements FeelEngineFactory {
 

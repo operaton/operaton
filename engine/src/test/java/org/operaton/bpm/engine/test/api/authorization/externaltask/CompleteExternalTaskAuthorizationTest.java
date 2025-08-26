@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

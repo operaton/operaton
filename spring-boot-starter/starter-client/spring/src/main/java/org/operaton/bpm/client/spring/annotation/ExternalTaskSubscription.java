@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.client.spring.annotation;
 
-import org.operaton.bpm.client.spring.SpringTopicSubscription;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 import org.springframework.core.annotation.AliasFor;
+
+import org.operaton.bpm.client.spring.SpringTopicSubscription;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
 
 /**
  * Annotation to subscribe the External Task Client to a topic.

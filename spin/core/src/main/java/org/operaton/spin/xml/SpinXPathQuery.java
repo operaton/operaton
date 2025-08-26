@@ -16,9 +16,9 @@
  */
 package org.operaton.spin.xml;
 
-import org.operaton.spin.SpinList;
-
 import java.util.Map;
+
+import org.operaton.spin.SpinList;
 
 /**
  * @author Sebastian Menski

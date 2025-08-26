@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.quarkus.engine.test;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+
 import io.quarkus.test.QuarkusUnitTest;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.quarkus.engine.extension.QuarkusProcessEngineConfiguration;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Produces;
-import jakarta.inject.Inject;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.quarkus.engine.extension.QuarkusProcessEngineConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

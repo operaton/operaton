@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.Set;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.pvm.runtime.ExecutionImpl;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**

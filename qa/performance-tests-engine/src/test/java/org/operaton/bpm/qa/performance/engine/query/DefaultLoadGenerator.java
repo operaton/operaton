@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.qa.performance.engine.query;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -27,10 +31,6 @@ import org.operaton.bpm.qa.performance.engine.loadgenerator.LoadGeneratorConfigu
 import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.DeployModelInstancesTask;
 import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.GenerateMetricsTask;
 import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.StartProcessInstanceTask;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * @author Daniel Meyer

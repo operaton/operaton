@@ -19,8 +19,9 @@ package org.operaton.bpm.engine.rest.dto.authorization;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
@@ -28,8 +29,6 @@ import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.converter.IntegerConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *

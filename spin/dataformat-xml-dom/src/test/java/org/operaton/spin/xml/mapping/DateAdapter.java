@@ -18,7 +18,6 @@ package org.operaton.spin.xml.mapping;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**

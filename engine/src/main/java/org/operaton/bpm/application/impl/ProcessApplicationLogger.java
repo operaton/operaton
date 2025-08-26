@@ -17,7 +17,9 @@
 package org.operaton.bpm.application.impl;
 
 import java.util.Set;
+
 import javax.naming.NamingException;
+
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationExecutionException;

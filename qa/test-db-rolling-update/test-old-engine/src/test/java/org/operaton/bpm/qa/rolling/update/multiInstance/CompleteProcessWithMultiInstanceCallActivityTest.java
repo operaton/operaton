@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.qa.rolling.update.multiInstance;
 
+import org.junit.Test;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.Test;
+
 import static org.junit.Assert.assertNotNull;
 
 /**

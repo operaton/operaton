@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.model.bpmn.util;
 
+import java.io.InputStream;
+
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
-
-import java.io.InputStream;
 
 /**
  * @author Daniel Meyer

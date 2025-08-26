@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
-import static org.operaton.bpm.engine.rest.util.EngineUtil.getProcessEngineProvider;
-
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
+
+import static org.operaton.bpm.engine.rest.util.EngineUtil.getProcessEngineProvider;
 
 public final class WebApplicationUtil {
 

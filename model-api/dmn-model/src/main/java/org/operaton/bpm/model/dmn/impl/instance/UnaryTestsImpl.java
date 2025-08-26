@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_EXPRESSION_LANGUAGE;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_UNARY_TESTS;
-
 import org.operaton.bpm.model.dmn.instance.DmnElement;
 import org.operaton.bpm.model.dmn.instance.Text;
 import org.operaton.bpm.model.dmn.instance.UnaryTests;
@@ -29,6 +25,10 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_EXPRESSION_LANGUAGE;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_UNARY_TESTS;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 
 public class UnaryTestsImpl extends DmnElementImpl implements UnaryTests {
 

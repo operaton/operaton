@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.client.task;
 
+import java.util.Date;
+import java.util.Map;
+
 import org.operaton.bpm.client.exception.ValueMapperException;
 import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import java.util.Date;
-import java.util.Map;
 
 /**
  * <p>Represents an external task</p>

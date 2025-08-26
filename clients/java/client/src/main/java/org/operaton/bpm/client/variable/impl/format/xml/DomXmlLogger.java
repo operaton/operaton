@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.client.variable.impl.format.xml;
 
+import org.w3c.dom.Node;
+
 import org.operaton.bpm.client.exception.DataFormatException;
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
-import org.w3c.dom.Node;
 
 public class DomXmlLogger extends ExternalTaskClientLogger {
 

@@ -16,18 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.migration.MigrationPlanValidationException;
@@ -38,6 +33,12 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.MultiInstanceProcessModels;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
+
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
+import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer

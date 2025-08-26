@@ -16,7 +16,11 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.jboss.arquillian.junit.Arquillian;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
@@ -25,11 +29,8 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.InjectedProcessEngineBean;
 import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>

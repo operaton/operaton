@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -32,9 +31,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 import org.operaton.bpm.webapp.impl.security.auth.Authentications;
 import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
+import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 
 
 /**

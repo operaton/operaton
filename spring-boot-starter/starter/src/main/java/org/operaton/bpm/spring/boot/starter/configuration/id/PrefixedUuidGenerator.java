@@ -17,6 +17,7 @@
 package org.operaton.bpm.spring.boot.starter.configuration.id;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.persistence;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +29,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class DatabaseNamingConsistencyTest {
 

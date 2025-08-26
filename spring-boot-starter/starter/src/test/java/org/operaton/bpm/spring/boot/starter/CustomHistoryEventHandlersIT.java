@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.handler.CompositeDbHistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.spring.boot.starter.event.PublishHistoryEventHandler;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { TestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {TestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CustomHistoryEventHandlersIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test

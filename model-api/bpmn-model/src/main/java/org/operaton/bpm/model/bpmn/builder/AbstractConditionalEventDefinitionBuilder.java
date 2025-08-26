@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.bpmn.builder;
 
 import java.util.List;
+
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Condition;
 import org.operaton.bpm.model.bpmn.instance.ConditionalEventDefinition;
@@ -28,7 +29,7 @@ import org.operaton.bpm.model.bpmn.instance.Event;
  * @author Christopher Zell <christopher.zell@camunda.com>
  * @param <B>
  */
-public class AbstractConditionalEventDefinitionBuilder<B extends AbstractConditionalEventDefinitionBuilder<B>> extends AbstractRootElementBuilder<B, ConditionalEventDefinition>{
+public class AbstractConditionalEventDefinitionBuilder<B extends AbstractConditionalEventDefinitionBuilder<B>> extends AbstractRootElementBuilder<B, ConditionalEventDefinition> {
 
   public AbstractConditionalEventDefinitionBuilder(BpmnModelInstance modelInstance, ConditionalEventDefinition element, Class<?> selfType) {
     super(modelInstance, element, selfType);

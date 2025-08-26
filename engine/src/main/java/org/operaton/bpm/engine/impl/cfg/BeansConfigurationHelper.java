@@ -18,12 +18,13 @@ package org.operaton.bpm.engine.impl.cfg;
 
 import java.io.InputStream;
 
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
 
 
 /**

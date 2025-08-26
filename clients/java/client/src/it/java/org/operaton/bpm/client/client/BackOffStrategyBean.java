@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.client;
 
+import java.util.List;
+
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.task.ExternalTask;
-
-import java.util.List;
 
 /**
  * @author Tassilo Weidner

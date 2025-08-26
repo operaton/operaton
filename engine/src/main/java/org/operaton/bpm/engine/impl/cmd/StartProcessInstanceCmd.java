@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
-import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
+import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessInstantiationBuilderImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;

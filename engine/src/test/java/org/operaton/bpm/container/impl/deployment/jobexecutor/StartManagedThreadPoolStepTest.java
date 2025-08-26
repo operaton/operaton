@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +23,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import javax.management.ObjectName;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.deployment.Attachments;
 import org.operaton.bpm.container.impl.jmx.MBeanServiceContainer;
@@ -42,6 +40,8 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *

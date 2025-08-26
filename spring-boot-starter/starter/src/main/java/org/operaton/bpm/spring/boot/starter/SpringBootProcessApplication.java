@@ -16,15 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.operaton.bpm.application.ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH;
-import static org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.processApplicationNameFromAnnotation;
-import static org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger.LOG;
-
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
-
 import jakarta.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.util.StringUtils;
+import org.springframework.web.context.ServletContextAware;
 
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.PreUndeploy;
@@ -36,15 +41,10 @@ import org.operaton.bpm.spring.boot.starter.configuration.OperatonDeploymentConf
 import org.operaton.bpm.spring.boot.starter.event.PostDeployEvent;
 import org.operaton.bpm.spring.boot.starter.event.PreUndeployEvent;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
-import org.springframework.util.StringUtils;
-import org.springframework.web.context.ServletContextAware;
+
+import static org.operaton.bpm.application.ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH;
+import static org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.processApplicationNameFromAnnotation;
+import static org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger.LOG;
 
 @Configuration
 public class SpringBootProcessApplication extends SpringProcessApplication {

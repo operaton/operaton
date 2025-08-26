@@ -16,19 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.variable;
 
-import static org.operaton.bpm.engine.variable.type.ValueType.BOOLEAN;
-import static org.operaton.bpm.engine.variable.type.ValueType.BYTES;
-import static org.operaton.bpm.engine.variable.type.ValueType.DATE;
-import static org.operaton.bpm.engine.variable.type.ValueType.DOUBLE;
-import static org.operaton.bpm.engine.variable.type.ValueType.FILE;
-import static org.operaton.bpm.engine.variable.type.ValueType.INTEGER;
-import static org.operaton.bpm.engine.variable.type.ValueType.LONG;
-import static org.operaton.bpm.engine.variable.type.ValueType.NULL;
-import static org.operaton.bpm.engine.variable.type.ValueType.NUMBER;
-import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
-import static org.operaton.bpm.engine.variable.type.ValueType.SHORT;
-import static org.operaton.bpm.engine.variable.type.ValueType.STRING;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -39,6 +26,8 @@ import java.util.Set;
 
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
+
+import static org.operaton.bpm.engine.variable.type.ValueType.*;
 
 /**
  * Resolves ValueType by name.

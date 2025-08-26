@@ -16,18 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-
 import java.util.List;
 
+import junit.framework.AssertionFailedError;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -43,7 +39,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 
-import junit.framework.AssertionFailedError;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class MultiTenancySingleProcessInstanceModificationAsyncTest {
 

@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.test.standalone.authentication;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ch.qos.logback.classic.Level;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import ch.qos.logback.classic.Level;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class LoginAttemptsTest {
 

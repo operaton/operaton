@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.bpmn.impl.instance.OperationRef;
-
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.model.bpmn.impl.instance.OperationRef;
+
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_LANGUAGE;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_EXPRESSION;
-
 import org.operaton.bpm.model.cmmn.instance.Body;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.cmmn.instance.Expression;
@@ -29,6 +25,10 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_LANGUAGE;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_EXPRESSION;
 
 /**
  * @author Roman Smirnov

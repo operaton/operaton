@@ -16,14 +16,16 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
@@ -36,13 +38,12 @@ import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
 import org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions;
 import org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 import org.operaton.bpm.engine.test.assertions.helpers.CaseExecutionQueryFluentAnswer;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
+
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 /**
  * You will notice that this test class does not cover all methods.

@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
+
 import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.FORM_PROPERTY_UPDATE;
 import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.VARIABLE_INSTANCE_CREATE;
 import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.VARIABLE_INSTANCE_DELETE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.VARIABLE_INSTANCE_UPDATE;
 import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.VARIABLE_INSTANCE_MIGRATE;
-
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
+import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.VARIABLE_INSTANCE_UPDATE;
 
 /**
  * @author Daniel Meyer

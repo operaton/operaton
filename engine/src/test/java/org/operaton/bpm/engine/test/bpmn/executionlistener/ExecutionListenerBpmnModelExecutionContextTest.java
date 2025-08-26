@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.executionlistener;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-
 import java.util.Collection;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -48,6 +46,9 @@ import org.operaton.bpm.model.bpmn.instance.Task;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

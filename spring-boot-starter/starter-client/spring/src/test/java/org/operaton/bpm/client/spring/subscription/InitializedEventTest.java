@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.client.spring.subscription;
 
-import org.operaton.bpm.client.spring.MockedTest;
-import org.operaton.bpm.client.spring.SpringTopicSubscription;
-import org.operaton.bpm.client.spring.subscription.configuration.InitializedEventConfiguration;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import org.operaton.bpm.client.spring.MockedTest;
+import org.operaton.bpm.client.spring.SpringTopicSubscription;
+import org.operaton.bpm.client.spring.subscription.configuration.InitializedEventConfiguration;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration(classes = {
-    InitializedEventConfiguration.class
+  InitializedEventConfiguration.class
 })
 class InitializedEventTest extends MockedTest {
 

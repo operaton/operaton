@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import org.operaton.bpm.spring.boot.starter.configuration.Ordering;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
-import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEnginePlugin;
+import java.util.Map;
+import java.util.StringJoiner;
+import java.util.function.Supplier;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 
-import java.util.Map;
-import java.util.StringJoiner;
-import java.util.function.Supplier;
+import org.operaton.bpm.spring.boot.starter.configuration.Ordering;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
+import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEnginePlugin;
 
 import static org.slf4j.LoggerFactory.getLogger;
 

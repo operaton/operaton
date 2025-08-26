@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
-import org.operaton.bpm.engine.impl.management.PurgeReporting;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.operaton.bpm.engine.impl.management.PurgeReporting;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>

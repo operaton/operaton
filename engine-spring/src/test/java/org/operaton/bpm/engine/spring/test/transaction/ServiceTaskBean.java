@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @SuppressWarnings("unused")
 public class ServiceTaskBean implements JavaDelegate {

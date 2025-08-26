@@ -25,8 +25,8 @@ import java.util.Map;
 import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.db.DbEntity;
+import org.operaton.bpm.engine.impl.db.HasDbRevision;
 
 import static org.operaton.bpm.engine.impl.util.EncryptionUtil.saltPassword;
 

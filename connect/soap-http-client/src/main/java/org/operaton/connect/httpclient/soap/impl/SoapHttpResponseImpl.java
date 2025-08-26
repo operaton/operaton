@@ -17,6 +17,7 @@
 package org.operaton.connect.httpclient.soap.impl;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+
 import org.operaton.connect.httpclient.impl.HttpResponseImpl;
 import org.operaton.connect.httpclient.soap.SoapHttpResponse;
 

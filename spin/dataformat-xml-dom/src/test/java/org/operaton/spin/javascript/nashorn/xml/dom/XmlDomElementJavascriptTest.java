@@ -16,14 +16,15 @@
  */
 package org.operaton.spin.javascript.nashorn.xml.dom;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML_FILE_NAME;
-
 import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.xml.dom.XmlDomElementScriptTest;
+
+import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML_FILE_NAME;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ScriptEngine("nashorn")
 class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {

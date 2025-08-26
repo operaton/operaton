@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Arrays;
 import java.util.Collection;
 
+import junit.framework.AssertionFailedError;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
@@ -31,7 +30,8 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameteri
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-import junit.framework.AssertionFailedError;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * Parse an invalid process definition and assert the error message.

@@ -16,14 +16,20 @@
  */
 package org.operaton.spin.impl.json.jackson;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.jayway.jsonpath.InvalidPathException;
+import com.jayway.jsonpath.JsonPath;
 
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.SpinListImpl;
@@ -36,13 +42,7 @@ import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPathQuery;
 import org.operaton.spin.spi.DataFormatMapper;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeType;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.jayway.jsonpath.InvalidPathException;
-import com.jayway.jsonpath.JsonPath;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 /**
  * Wrapper for a Jackson Json Tree Node.

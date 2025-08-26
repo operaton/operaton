@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.authcache.it;
 
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,9 +28,13 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
   "operaton.bpm.admin-user.id=demo",
   "operaton.bpm.admin-user.password=demo",

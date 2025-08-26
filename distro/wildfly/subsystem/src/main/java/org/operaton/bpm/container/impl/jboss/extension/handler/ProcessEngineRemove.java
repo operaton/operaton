@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension.handler;
 
-import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
 import org.jboss.as.controller.AbstractRemoveStepHandler;
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
@@ -24,6 +23,8 @@ import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.descriptions.ModelDescriptionConstants;
 import org.jboss.dmr.ModelNode;
 import org.jboss.msc.service.ServiceName;
+
+import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
 
 
 /**

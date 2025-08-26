@@ -22,7 +22,6 @@ import jakarta.el.ELException;
 
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineLogger;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelLogger;
-
 import org.operaton.bpm.impl.juel.TypeConverterImpl;
 
 public class FeelTypeConverter extends TypeConverterImpl {

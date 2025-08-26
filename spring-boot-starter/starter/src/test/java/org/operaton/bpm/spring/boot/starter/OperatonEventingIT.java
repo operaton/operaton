@@ -16,6 +16,19 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
+import java.io.ByteArrayInputStream;
+import java.util.Collections;
+import java.util.Date;
+
+import org.assertj.core.util.DateUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.ActiveProfiles;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -31,19 +44,6 @@ import org.operaton.bpm.spring.boot.starter.event.TaskEvent;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.BoundaryEventServiceTask;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestEventCaptor;
-
-import java.io.ByteArrayInputStream;
-import java.util.Collections;
-import java.util.Date;
-
-import org.assertj.core.util.DateUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

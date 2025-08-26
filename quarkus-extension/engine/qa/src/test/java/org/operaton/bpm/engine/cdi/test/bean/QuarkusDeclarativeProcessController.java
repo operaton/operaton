@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.cdi.test.bean;
 
-import io.quarkus.arc.Unremovable;
-import org.operaton.bpm.engine.cdi.test.impl.beans.DeclarativeProcessController;
-
 import jakarta.enterprise.context.Dependent;
+
+import io.quarkus.arc.Unremovable;
+
+import org.operaton.bpm.engine.cdi.test.impl.beans.DeclarativeProcessController;
 
 @Dependent
 @Unremovable

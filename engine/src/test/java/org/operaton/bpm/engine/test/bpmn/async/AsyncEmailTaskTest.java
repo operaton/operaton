@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.subethamail.wiser.WiserMessage;
+
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.mail.EmailServiceTaskTest;
 import org.operaton.bpm.engine.test.bpmn.mail.EmailTestCase;
-import org.subethamail.wiser.WiserMessage;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *

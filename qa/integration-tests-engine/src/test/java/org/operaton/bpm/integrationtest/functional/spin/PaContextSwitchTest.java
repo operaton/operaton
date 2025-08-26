@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
-
 import java.util.concurrent.Callable;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
@@ -28,6 +28,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.application.ProcessApplicationContext;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
@@ -38,8 +39,7 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
 
 /**
  * @author Thorben Lindhauer

@@ -18,11 +18,12 @@ package org.operaton.bpm.spring.boot.starter.telemetry;
 
 import jakarta.servlet.ServletContext;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 
 
 public class OperatonApplicationServerConfigurator implements InitializingBean {

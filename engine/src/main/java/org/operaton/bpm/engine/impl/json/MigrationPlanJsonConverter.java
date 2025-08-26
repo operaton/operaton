@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.json;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.migration.MigrationPlanImpl;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
-import com.google.gson.JsonObject;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 
 public class MigrationPlanJsonConverter extends JsonObjectConverter<MigrationPlan> {

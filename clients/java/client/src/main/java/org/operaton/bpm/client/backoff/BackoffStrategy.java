@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.client.backoff;
 
-import org.operaton.bpm.client.task.ExternalTask;
-
 import java.util.List;
+
+import org.operaton.bpm.client.task.ExternalTask;
 
 /**
  * <p>Provides a way to define a back off between fetch and lock requests.

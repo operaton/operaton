@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -25,6 +23,7 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -42,6 +41,8 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>

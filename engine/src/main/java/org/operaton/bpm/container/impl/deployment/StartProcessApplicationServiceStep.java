@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
-import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_XML_RESOURCES;
-import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_APPLICATION;
-import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_ARCHIVE_DEPLOYMENT_MAP;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +36,10 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
+
+import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_XML_RESOURCES;
+import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_APPLICATION;
+import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_ARCHIVE_DEPLOYMENT_MAP;
 
 /**
  * <p>This deployment operation step starts an {@link MBeanService} for the process application.</p>

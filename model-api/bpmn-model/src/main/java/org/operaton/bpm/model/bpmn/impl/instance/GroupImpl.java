@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_CATEGORY_VALUE_REF;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_GROUP;
-
 import org.operaton.bpm.model.bpmn.instance.Artifact;
 import org.operaton.bpm.model.bpmn.instance.CategoryValue;
 import org.operaton.bpm.model.bpmn.instance.Group;
@@ -28,6 +24,10 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_CATEGORY_VALUE_REF;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_GROUP;
 
 public class GroupImpl extends ArtifactImpl implements Group {
 

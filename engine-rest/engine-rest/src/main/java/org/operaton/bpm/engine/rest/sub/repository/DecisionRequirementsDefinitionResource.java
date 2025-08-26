@@ -22,8 +22,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.operaton.bpm.engine.rest.dto.repository.DecisionRequirementsDefinitionXmlDto;
 import org.operaton.bpm.engine.rest.dto.repository.DecisionRequirementsDefinitionDto;
+import org.operaton.bpm.engine.rest.dto.repository.DecisionRequirementsDefinitionXmlDto;
 
 public interface DecisionRequirementsDefinitionResource {
 

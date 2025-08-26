@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.qa.performance.engine.benchmark;
 
+import java.io.File;
+
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultAggregator;
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
 import org.operaton.bpm.qa.performance.engine.framework.report.HtmlReportBuilder;
 import org.operaton.bpm.qa.performance.engine.util.CsvUtil;
 import org.operaton.bpm.qa.performance.engine.util.FileUtil;
 import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
-
-import java.io.File;
 
 /**
  * @author Daniel Meyer, Ingo Richtsmeier

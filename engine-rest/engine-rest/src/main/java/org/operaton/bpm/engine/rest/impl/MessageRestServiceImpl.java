@@ -16,10 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -27,17 +32,11 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.rest.MessageRestService;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.dto.message.CorrelationMessageDto;
+import org.operaton.bpm.engine.rest.dto.message.MessageCorrelationResultDto;
+import org.operaton.bpm.engine.rest.dto.message.MessageCorrelationResultWithVariableDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.runtime.MessageCorrelationBuilder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import java.util.List;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import org.operaton.bpm.engine.rest.dto.message.MessageCorrelationResultDto;
-import org.operaton.bpm.engine.rest.dto.message.MessageCorrelationResultWithVariableDto;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResultWithVariables;
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static java.lang.Boolean.TRUE;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,6 +31,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.lang.Boolean.TRUE;
 
 
 /**

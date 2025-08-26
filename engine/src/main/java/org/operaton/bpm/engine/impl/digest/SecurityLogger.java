@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.digest;
 
+import java.util.Collection;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
-import java.util.Collection;
 
 public class SecurityLogger extends ProcessEngineLogger {
 

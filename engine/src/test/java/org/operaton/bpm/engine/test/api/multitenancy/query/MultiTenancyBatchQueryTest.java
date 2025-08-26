@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
-import static java.util.Collections.singletonList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchByTenantId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchStatisticsByTenantId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +25,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -43,6 +36,14 @@ import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHe
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchByTenantId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchStatisticsByTenantId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+import static java.util.Collections.singletonList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer

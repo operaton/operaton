@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.util;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.client.ClientConfig;
+
 import org.operaton.bpm.TestProperties;
 import org.operaton.bpm.engine.rest.dto.identity.UserCredentialsDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
-
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.client.Entity;
 
 public class TestUtil {
 

@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.spring.test.taskListener;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ContextConfiguration;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
 import org.assertj.core.api.MapAssert;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.operaton.bpm.engine.runtime.CaseExecution;

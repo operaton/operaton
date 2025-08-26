@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.client.variable.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.engine.variable.VariableMap;
@@ -23,9 +26,6 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class TypedValues {
 

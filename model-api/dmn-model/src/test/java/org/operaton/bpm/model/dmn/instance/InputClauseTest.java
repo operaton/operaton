@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.dmn.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_NS;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_NS;
 
 public class InputClauseTest extends DmnModelElementInstanceTest {
 

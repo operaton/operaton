@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmptyString;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.util.List;
 
@@ -30,8 +25,13 @@ import org.operaton.bpm.engine.history.HistoricJobLogQuery;
 import org.operaton.bpm.engine.history.JobState;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmptyString;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Roman Smirnov

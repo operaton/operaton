@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.slf4j.Logger;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -55,8 +57,6 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-
-import org.slf4j.Logger;
 
 
 /**

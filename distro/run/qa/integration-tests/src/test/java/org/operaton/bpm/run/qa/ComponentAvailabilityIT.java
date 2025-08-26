@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.run.qa;
 
-import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -25,6 +23,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.equalTo;

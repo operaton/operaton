@@ -16,15 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.resources;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.repository.ResourceTypes.REPOSITORY;
-
 import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -39,6 +37,9 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.Resource;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.operaton.bpm.engine.repository.ResourceTypes.REPOSITORY;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RepositoryByteArrayTest {
   protected static final String USER_ID = "johndoe";

@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.operaton.bpm.engine.authorization.Permissions.TASK_WORK;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
+
+import static org.operaton.bpm.engine.authorization.Permissions.TASK_WORK;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *

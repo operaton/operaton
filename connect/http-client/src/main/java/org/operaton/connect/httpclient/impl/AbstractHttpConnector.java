@@ -16,11 +16,6 @@
  */
 package org.operaton.connect.httpclient.impl;
 
-import org.operaton.connect.httpclient.HttpBaseRequest;
-import org.operaton.connect.httpclient.HttpResponse;
-import org.operaton.connect.httpclient.impl.util.ParseUtil;
-import org.operaton.connect.impl.AbstractConnector;
-
 import java.io.ByteArrayInputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -33,6 +28,11 @@ import org.apache.http.client.methods.*;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+
+import org.operaton.connect.httpclient.HttpBaseRequest;
+import org.operaton.connect.httpclient.HttpResponse;
+import org.operaton.connect.httpclient.impl.util.ParseUtil;
+import org.operaton.connect.impl.AbstractConnector;
 
 public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R extends HttpResponse> extends AbstractConnector<Q, R> {
 

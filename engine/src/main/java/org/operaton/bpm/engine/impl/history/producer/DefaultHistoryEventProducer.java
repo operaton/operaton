@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.history.producer;
 
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.getExceptionStacktrace;
-import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,6 +75,12 @@ import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.IdentityLink;
+
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.getExceptionStacktrace;
+import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
 
 /**
  * @author Daniel Meyer

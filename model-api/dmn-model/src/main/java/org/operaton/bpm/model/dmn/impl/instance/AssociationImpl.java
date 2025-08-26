@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_ASSOCIATION_DIRECTION;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_ASSOCIATION;
-
 import org.operaton.bpm.model.dmn.AssociationDirection;
 import org.operaton.bpm.model.dmn.instance.Artifact;
 import org.operaton.bpm.model.dmn.instance.Association;
@@ -32,6 +28,10 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.ElementReference;
+
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ATTRIBUTE_ASSOCIATION_DIRECTION;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_ASSOCIATION;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 
 public class AssociationImpl extends ArtifactImpl implements Association {
 

@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
@@ -29,13 +34,8 @@ import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
+
 import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;

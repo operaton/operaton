@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.qa.performance.engine.steps;
 
-import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.TASK_ID;
-
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
+
+import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.TASK_ID;
 
 /**
  * <p>{@link TaskListener} recording the current task id in the {@link PerfTestRunContext}

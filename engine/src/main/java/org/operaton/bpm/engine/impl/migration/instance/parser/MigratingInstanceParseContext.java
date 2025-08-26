@@ -45,11 +45,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
+import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * @author Thorben Lindhauer

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.handler;
 
-import static org.operaton.bpm.engine.delegate.CaseExecutionListener.COMPLETE;
-import static org.operaton.bpm.engine.delegate.CaseExecutionListener.TERMINATE;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -71,6 +68,9 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonString;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableListener;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
+
+import static org.operaton.bpm.engine.delegate.CaseExecutionListener.COMPLETE;
+import static org.operaton.bpm.engine.delegate.CaseExecutionListener.TERMINATE;
 
 /**
  * @author Roman Smirnov

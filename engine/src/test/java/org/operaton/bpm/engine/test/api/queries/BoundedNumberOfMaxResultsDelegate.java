@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.queries;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import java.util.concurrent.Callable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,8 +25,6 @@ import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManage
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.commons.utils.cache.Cache;
-
-import java.util.concurrent.Callable;
 
 
 /**

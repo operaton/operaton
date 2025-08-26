@@ -16,15 +16,6 @@
  */
 package org.operaton.spin.xml.dom;
 
-import org.operaton.spin.SpinList;
-import org.operaton.spin.xml.SpinXmlAttribute;
-import org.operaton.spin.xml.SpinXmlAttributeException;
-import org.operaton.spin.xml.SpinXmlElement;
-import org.operaton.spin.xml.SpinXmlElementException;
-import static org.operaton.spin.Spin.S;
-import static org.operaton.spin.Spin.XML;
-import static org.operaton.spin.xml.XmlTestConstants.*;
-
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +24,15 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.spin.SpinList;
+import org.operaton.spin.xml.SpinXmlAttribute;
+import org.operaton.spin.xml.SpinXmlAttributeException;
+import org.operaton.spin.xml.SpinXmlElement;
+import org.operaton.spin.xml.SpinXmlElementException;
+
+import static org.operaton.spin.Spin.S;
+import static org.operaton.spin.Spin.XML;
+import static org.operaton.spin.xml.XmlTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

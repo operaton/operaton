@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.cdi.impl.util;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.spi.CreationalContext;
 

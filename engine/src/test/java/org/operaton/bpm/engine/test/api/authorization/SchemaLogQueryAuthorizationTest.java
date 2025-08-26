@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.authorization.Groups;
-
 import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.authorization.Groups;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

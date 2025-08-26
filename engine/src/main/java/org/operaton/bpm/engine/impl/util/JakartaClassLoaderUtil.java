@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import jakarta.servlet.ServletContextEvent;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import jakarta.servlet.ServletContextEvent;
 
 public class JakartaClassLoaderUtil extends ClassLoaderUtil {
 

@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.test.util;
 
+import java.util.*;
+
+import org.assertj.core.api.Assertions;
+
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.persistence.entity.ActivityInstanceImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.TransitionInstanceImpl;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
-
-import java.util.*;
-
-import org.assertj.core.api.Assertions;
 
 import static org.assertj.core.api.Assertions.fail;
 

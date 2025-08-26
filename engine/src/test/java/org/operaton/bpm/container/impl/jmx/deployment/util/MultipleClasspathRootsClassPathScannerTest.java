@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.container.impl.deployment.scanning.ClassPathProcessApplicationScanner;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

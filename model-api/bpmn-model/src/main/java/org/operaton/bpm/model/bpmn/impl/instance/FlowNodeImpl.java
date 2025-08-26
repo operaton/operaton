@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import org.operaton.bpm.model.bpmn.BpmnModelException;
 import org.operaton.bpm.model.bpmn.Query;
 import org.operaton.bpm.model.bpmn.builder.AbstractFlowNodeBuilder;
@@ -32,9 +35,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 import org.operaton.bpm.model.xml.type.reference.Reference;
-
-import java.util.Collection;
-import java.util.HashSet;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
 

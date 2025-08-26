@@ -18,10 +18,12 @@ package org.operaton.bpm.spring.boot.starter.actuator;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health.Builder;
+
+import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 
 import static java.util.Objects.requireNonNull;
 

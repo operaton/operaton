@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.container.impl;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.management.MBeanServer;
+
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.application.AbstractProcessApplication;
@@ -42,12 +49,6 @@ import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
-import javax.management.MBeanServer;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 

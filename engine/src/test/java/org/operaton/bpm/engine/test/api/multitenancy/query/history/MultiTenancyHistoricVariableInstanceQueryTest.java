@@ -16,18 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicVariableInstanceByTenantId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -42,6 +37,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicVariableInstanceByTenantId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
 class MultiTenancyHistoricVariableInstanceQueryTest {

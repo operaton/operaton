@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios750.deployment;
 
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 /**
  *

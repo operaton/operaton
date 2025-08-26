@@ -16,9 +16,13 @@
  */
 package org.operaton.bpm.engine.test.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.RuleChain;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.DecisionService;
@@ -37,9 +41,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**

@@ -19,10 +19,14 @@ package org.operaton.spin.impl.xml.dom.format;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Map;
+
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+
 import org.operaton.spin.impl.xml.dom.DomXmlAttribute;
 import org.operaton.spin.impl.xml.dom.DomXmlElement;
 import org.operaton.spin.impl.xml.dom.DomXmlLogger;
@@ -31,8 +35,6 @@ import org.operaton.spin.impl.xml.dom.format.spi.JaxBContextProvider;
 import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
 
 /**
  * @author Daniel Meyer

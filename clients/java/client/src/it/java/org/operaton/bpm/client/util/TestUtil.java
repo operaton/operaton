@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.client.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.concurrent.Callable;
 import java.util.function.BooleanSupplier;
 import java.util.function.Function;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestUtil {
 

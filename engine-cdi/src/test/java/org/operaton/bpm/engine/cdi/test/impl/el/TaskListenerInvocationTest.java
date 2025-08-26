@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.el;
 
-import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.Deployment;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.Deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.cdi.test.impl.el.beans.CdiTaskListenerBean.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

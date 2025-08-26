@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.externalTaskQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(ProcessEngineExtension.class)
 class ExternalTaskAssertHasActivityIdTest extends ProcessAssertTestCase {

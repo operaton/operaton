@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.impl.history;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +26,9 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriInfo;
 import jakarta.ws.rs.core.Variant;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -52,7 +54,7 @@ import org.operaton.bpm.engine.rest.sub.history.impl.HistoricProcessInstanceReso
 import org.operaton.bpm.engine.rest.util.QueryUtil;
 import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
 
-  public class HistoricProcessInstanceRestServiceImpl implements HistoricProcessInstanceRestService {
+public class HistoricProcessInstanceRestServiceImpl implements HistoricProcessInstanceRestService {
 
   public static final MediaType APPLICATION_CSV_TYPE = new MediaType("application", "csv");
   public static final MediaType TEXT_CSV_TYPE = new MediaType("text", "csv");

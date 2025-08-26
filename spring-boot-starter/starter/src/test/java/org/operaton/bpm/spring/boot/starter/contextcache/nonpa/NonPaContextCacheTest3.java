@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.spring.boot.starter.contextcache.nonpa;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTest;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTest;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
+
+import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @ActiveProfiles("contextcaching")
 @SpringBootTest(
-  classes = { TestApplication.class },
+  classes = {TestApplication.class},
   properties = {
     "operaton.bpm.process-engine-name=foo",
     "spring.datasource.generate-unique-name=true",

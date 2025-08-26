@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-import org.operaton.bpm.engine.delegate.JavaDelegate;
-
 import java.io.Serial;
 import java.io.Serializable;
+
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 public class NoopDelegate implements JavaDelegate, Serializable {
 

@@ -27,6 +27,7 @@ import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpTrace;
+
 import org.operaton.connect.httpclient.HttpBaseRequest;
 import org.operaton.connect.httpclient.HttpResponse;
 import org.operaton.connect.impl.AbstractConnectorRequest;

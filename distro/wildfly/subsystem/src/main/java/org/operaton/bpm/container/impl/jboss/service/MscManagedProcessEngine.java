@@ -19,11 +19,6 @@ package org.operaton.bpm.container.impl.jboss.service;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 
-import org.operaton.bpm.BpmPlatform;
-import org.operaton.bpm.container.impl.jboss.util.BindingUtil;
-import org.operaton.bpm.container.impl.jboss.util.ProcessEngineManagedReferenceFactory;
-import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessEngine;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.jboss.as.naming.ManagedReferenceFactory;
 import org.jboss.as.naming.deployment.ContextNames;
 import org.jboss.msc.service.Service;
@@ -33,6 +28,12 @@ import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+
+import org.operaton.bpm.BpmPlatform;
+import org.operaton.bpm.container.impl.jboss.util.BindingUtil;
+import org.operaton.bpm.container.impl.jboss.util.ProcessEngineManagedReferenceFactory;
+import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessEngine;
+import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * <p>Service representing a managed process engine instance registered with the Msc.</p>

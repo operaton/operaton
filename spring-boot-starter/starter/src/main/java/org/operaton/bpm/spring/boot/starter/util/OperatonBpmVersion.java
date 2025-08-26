@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.spring.boot.starter.util;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.springframework.core.env.PropertiesPropertySource;
-
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Supplier;
+
+import org.springframework.core.env.PropertiesPropertySource;
+
+import org.operaton.bpm.engine.ProcessEngine;
 
 import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties.PREFIX;
 

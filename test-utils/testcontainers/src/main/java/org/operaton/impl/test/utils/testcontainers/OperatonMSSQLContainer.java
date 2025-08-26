@@ -15,11 +15,11 @@
  */
 package org.operaton.impl.test.utils.testcontainers;
 
+import java.io.IOException;
+
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.utility.DockerImageName;
-
-import java.io.IOException;
 
 
 /**

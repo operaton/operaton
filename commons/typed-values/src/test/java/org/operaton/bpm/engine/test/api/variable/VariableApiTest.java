@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.variable;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.operaton.bpm.engine.variable.Variables.*;
-
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -27,12 +24,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.variable.context.VariableContext;
+
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
+import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.bpm.engine.variable.Variables.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Daniel Meyer

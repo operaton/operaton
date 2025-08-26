@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import org.operaton.bpm.engine.rest.dto.identity.BasicUserCredentialsDto;
-import org.operaton.bpm.engine.rest.dto.identity.PasswordPolicyRequestDto;
-import org.operaton.bpm.engine.rest.dto.task.GroupInfoDto;
-import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -29,6 +24,11 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import org.operaton.bpm.engine.rest.dto.identity.BasicUserCredentialsDto;
+import org.operaton.bpm.engine.rest.dto.identity.PasswordPolicyRequestDto;
+import org.operaton.bpm.engine.rest.dto.task.GroupInfoDto;
+import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
 
 @Produces(MediaType.APPLICATION_JSON)
 public interface IdentityRestService {

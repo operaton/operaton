@@ -16,7 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import java.io.InputStream;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.exception.NullValueException;
+import org.operaton.bpm.engine.form.StartFormData;
+import org.operaton.bpm.engine.form.TaskFormData;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.variable.VariableMap;
+
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE_INSTANCE;
@@ -30,20 +43,8 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-
-import java.io.InputStream;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.exception.NullValueException;
-import org.operaton.bpm.engine.form.StartFormData;
-import org.operaton.bpm.engine.form.TaskFormData;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.variable.VariableMap;
 
 /**
  * @author Roman Smirnov

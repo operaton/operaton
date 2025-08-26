@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.multiinstance;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.leaveExecution;
-import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
-import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,6 +26,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -44,7 +38,6 @@ import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
@@ -60,6 +53,14 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.leaveExecution;
+import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
+import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

@@ -16,17 +16,19 @@
  */
 package org.operaton.bpm.qa.largedata.optimize;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 import java.util.function.Function;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import org.operaton.bpm.engine.impl.OptimizeService;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.qa.largedata.util.EngineDataGenerator;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class OptimizeApiPageSizeTest {
 

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
-import org.operaton.bpm.engine.migration.MigrationVariableValidationReport;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.operaton.bpm.engine.migration.MigrationVariableValidationReport;
+import org.operaton.bpm.engine.variable.value.TypedValue;
 
 public class MigrationVariableValidationReportImpl implements MigrationVariableValidationReport {
 

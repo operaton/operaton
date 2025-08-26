@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -36,9 +39,6 @@ import org.operaton.bpm.engine.impl.cmd.optimize.OptimizeRunningHistoricProcessI
 import org.operaton.bpm.engine.impl.cmd.optimize.OptimizeRunningHistoricTaskInstanceQueryCmd;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.optimize.OptimizeHistoricIdentityLinkLogEntity;
-
-import java.util.Date;
-import java.util.List;
 
 public class OptimizeService extends ServiceImpl {
 

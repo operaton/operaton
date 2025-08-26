@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +30,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
@@ -47,6 +46,8 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationTest {

@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.model.xml.validation;
 
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.validation.ModelValidationResultsImpl;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
-
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

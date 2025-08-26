@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
-
-import org.junit.jupiter.api.Test;
 
 class FeelTest extends DmnEngineTest {
 

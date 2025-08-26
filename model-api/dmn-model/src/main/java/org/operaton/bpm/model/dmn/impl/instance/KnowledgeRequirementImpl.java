@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_KNOWLEDGE_REQUIREMENT;
-
 import org.operaton.bpm.model.dmn.instance.BusinessKnowledgeModel;
 import org.operaton.bpm.model.dmn.instance.KnowledgeRequirement;
 import org.operaton.bpm.model.dmn.instance.RequiredKnowledgeReference;
@@ -27,6 +24,9 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.ElementReference;
+
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_KNOWLEDGE_REQUIREMENT;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 
 public class KnowledgeRequirementImpl extends DmnModelElementInstanceImpl implements KnowledgeRequirement {
 

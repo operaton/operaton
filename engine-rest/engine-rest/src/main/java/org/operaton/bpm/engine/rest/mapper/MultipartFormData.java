@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.engine.rest.mapper;
 
-import org.apache.commons.fileupload.FileItemStream;
-import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.engine.rest.exception.RestException;
-
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
+
+import org.apache.commons.fileupload.FileItemStream;
+
+import org.operaton.bpm.engine.impl.util.IoUtil;
+import org.operaton.bpm.engine.rest.exception.RestException;
 
 /**
  * Custom implementation of Multipart Form Data which can be used for handling requests.

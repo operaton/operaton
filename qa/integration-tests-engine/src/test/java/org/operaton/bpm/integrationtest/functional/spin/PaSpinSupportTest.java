@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-import static org.operaton.spin.Spin.JSON;
-import static org.operaton.spin.Spin.XML;
-
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +26,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.Variables;
@@ -39,6 +34,12 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.spin.impl.util.SpinIoUtil;
 import org.operaton.spin.json.SpinJsonNode;
+
+import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
+import static org.operaton.spin.Spin.JSON;
+import static org.operaton.spin.Spin.XML;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>Smoke-test Make sure operaton spin can be used in a process application </p>

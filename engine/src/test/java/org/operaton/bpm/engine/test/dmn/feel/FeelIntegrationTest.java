@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.test.dmn.feel;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ProcessEngineExtension.class)
 class FeelIntegrationTest {

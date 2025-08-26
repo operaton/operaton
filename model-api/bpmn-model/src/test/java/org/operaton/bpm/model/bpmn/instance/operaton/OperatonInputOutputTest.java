@@ -18,6 +18,7 @@ package org.operaton.bpm.model.bpmn.instance.operaton;
 
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;

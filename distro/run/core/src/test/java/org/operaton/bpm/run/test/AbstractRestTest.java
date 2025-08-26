@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.run.test;
 
-import org.operaton.bpm.run.OperatonApp;
-import org.operaton.bpm.run.test.util.LoggingInterceptor;
-
 import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -29,8 +26,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest(classes = { OperatonApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(profiles = { "test-auth-disabled" })
+import org.operaton.bpm.run.OperatonApp;
+import org.operaton.bpm.run.test.util.LoggingInterceptor;
+
+@SpringBootTest(classes = {OperatonApp.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
+@ActiveProfiles(profiles = {"test-auth-disabled"})
 public abstract class AbstractRestTest {
 
   public static final String CONTEXT_PATH = "/engine-rest";

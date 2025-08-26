@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-import org.junit.jupiter.api.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 class JobAssertHasDeploymentIdTest extends ProcessAssertTestCase {
 

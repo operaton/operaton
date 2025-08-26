@@ -16,36 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.RETURNS_DEFAULTS;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_FULL_MESSAGE;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricProcessInstance;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -54,7 +24,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,6 +40,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
+
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -125,13 +102,27 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.LongValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_FULL_MESSAGE;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_ID;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_ID;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricProcessInstance;
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
+import static io.restassured.RestAssured.given;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServiceTest {
 

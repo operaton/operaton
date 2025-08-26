@@ -18,14 +18,15 @@ package org.operaton.bpm.engine.impl.batch.update;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
-import com.google.gson.JsonObject;
 
 public class UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter
-    extends AbstractBatchConfigurationObjectConverter<UpdateProcessInstancesSuspendStateBatchConfiguration> {
+  extends AbstractBatchConfigurationObjectConverter<UpdateProcessInstancesSuspendStateBatchConfiguration> {
 
   public static final UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter INSTANCE = new UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter();
 

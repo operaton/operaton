@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
-import org.operaton.bpm.model.xml.instance.DomDocument;
+import java.io.*;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
-import java.io.*;
+
+import org.operaton.bpm.model.xml.instance.DomDocument;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 

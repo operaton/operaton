@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.dmn.engine.impl.transform;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandler;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandlerRegistry;
 import org.operaton.bpm.model.dmn.instance.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class DefaultElementTransformHandlerRegistry implements DmnElementTransformHandlerRegistry {
 

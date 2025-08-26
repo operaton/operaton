@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
-import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
-
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -35,13 +31,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-    classes = { WebappTestApp.class },
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+  classes = {WebappTestApp.class},
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
-    "operaton.bpm.webapp.applicationPath=" + ChangedAppPathIT.MY_APP_PATH
+  "operaton.bpm.webapp.applicationPath=" + ChangedAppPathIT.MY_APP_PATH
 })
 class ChangedAppPathIT {
 

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.test.util;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.engine.ManagementService;
@@ -25,9 +28,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.ThreadPoolJobExecutor;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.await;
 

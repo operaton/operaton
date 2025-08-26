@@ -16,19 +16,19 @@
  */
 package org.operaton.spin.json.tree;
 
-import org.operaton.spin.impl.test.Script;
-import org.operaton.spin.impl.test.ScriptTest;
-import org.operaton.spin.impl.test.ScriptVariable;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.json.SpinJsonPropertyException;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.spin.impl.test.Script;
+import org.operaton.spin.impl.test.ScriptTest;
+import org.operaton.spin.impl.test.ScriptVariable;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.json.SpinJsonPropertyException;
+
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

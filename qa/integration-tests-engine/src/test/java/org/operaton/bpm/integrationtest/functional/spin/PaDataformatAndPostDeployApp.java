@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.engine.ProcessEngine;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

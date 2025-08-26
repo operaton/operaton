@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
+import java.io.IOException;
+import java.util.Date;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -34,8 +36,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthorizationException;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
-import java.util.Date;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
 
 /**
  * Authorize or re-authorize (if required) oauth2 client using {@link OAuth2AuthorizedClientManager}.

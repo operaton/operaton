@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.dmn.engine.feel;
 
+import java.util.Date;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
-
-import java.util.Date;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 

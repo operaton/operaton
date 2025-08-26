@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.dmn;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
-
 import java.util.Map;
 
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
@@ -29,6 +27,8 @@ import org.operaton.bpm.engine.exception.dmn.DecisionDefinitionNotFoundException
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.dmn.cmd.EvaluateDecisionCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
 public class DecisionEvaluationBuilderImpl implements DecisionsEvaluationBuilder {
 

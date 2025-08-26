@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.engine.test.standalone.deploy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.standalone.deploy.TestCmmnTransformListener.numberOfRegistered;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -37,6 +35,9 @@ import org.operaton.bpm.model.cmmn.instance.ProcessTask;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.Stage;
 import org.operaton.bpm.model.cmmn.instance.Task;
+
+import static org.operaton.bpm.engine.test.standalone.deploy.TestCmmnTransformListener.numberOfRegistered;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

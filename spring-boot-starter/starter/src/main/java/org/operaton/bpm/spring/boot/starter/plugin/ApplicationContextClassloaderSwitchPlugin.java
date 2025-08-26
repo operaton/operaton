@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.spring.boot.starter.plugin;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 
 public class ApplicationContextClassloaderSwitchPlugin implements ProcessEnginePlugin, ApplicationContextAware {
 

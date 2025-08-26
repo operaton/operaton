@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.OptimisticLockingException;
@@ -27,13 +30,10 @@ import org.operaton.bpm.engine.impl.cmmn.cmd.ManualStartCaseExecutionCmd;
 import org.operaton.bpm.engine.impl.cmmn.cmd.StateTransitionCaseExecutionCmd;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import org.slf4j.Logger;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov

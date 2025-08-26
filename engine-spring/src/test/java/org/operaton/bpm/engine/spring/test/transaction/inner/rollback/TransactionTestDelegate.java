@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction.inner.rollback;
 
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-import org.operaton.bpm.engine.delegate.JavaDelegate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 @Service("transactionTestDelegate")
 @Transactional(value = "transactionManager", propagation = Propagation.REQUIRED)

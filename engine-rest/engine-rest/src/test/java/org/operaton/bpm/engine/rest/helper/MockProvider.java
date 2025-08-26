@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.helper;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -141,6 +134,13 @@ import org.operaton.bpm.engine.variable.value.BytesValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Provides mocks for the basic engine entities, such as
@@ -1035,6 +1035,7 @@ public abstract class MockProvider {
     EXAMPLE_TELEMETRY_INTERNALS.setWebapps(Collections.singleton("cockpit"));
     EXAMPLE_TELEMETRY_INTERNALS.setDataCollectionStartDate(DateTimeUtil.parseDate(EXAMPLE_TELEMETRY_DATA_COLLECTION_START_DATE));
   }
+
   public static final ProductImpl EXAMPLE_TELEMETRY_PRODUCT = new ProductImpl(EXAMPLE_TELEMETRY_PRODUCT_NAME,
       EXAMPLE_TELEMETRY_PRODUCT_VERSION, EXAMPLE_TELEMETRY_PRODUCT_EDITION, EXAMPLE_TELEMETRY_INTERNALS);
   public static final TelemetryDataImpl EXAMPLE_TELEMETRY_DATA = new TelemetryDataImpl(EXAMPLE_TELEMETRY_INSTALLATION_ID, EXAMPLE_TELEMETRY_PRODUCT);

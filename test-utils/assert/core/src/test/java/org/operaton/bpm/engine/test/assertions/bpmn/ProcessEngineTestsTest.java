@@ -16,37 +16,17 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.processEngine;
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.reset;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.authorizationService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.executionQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.formService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.historyService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.identityService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.jobQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.managementService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processDefinitionQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processInstanceQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.repositoryService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskService;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.HistoryService;
@@ -72,12 +52,21 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.assertions.cmmn.CaseDefinitionAssert;
 import org.operaton.bpm.engine.test.assertions.cmmn.CaseExecutionAssert;
 import org.operaton.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
+
+import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
+import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.processEngine;
+import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.reset;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProcessEngineTestsTest {

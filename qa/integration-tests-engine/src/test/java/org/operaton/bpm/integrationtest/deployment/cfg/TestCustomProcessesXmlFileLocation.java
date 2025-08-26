@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.integrationtest.deployment.cfg;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>This test ensures that we can use a custom location for the <em>processes.xml</em> file.</p>

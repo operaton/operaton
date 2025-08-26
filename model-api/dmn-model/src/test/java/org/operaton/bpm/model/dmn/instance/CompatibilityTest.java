@@ -2,15 +2,16 @@ package org.operaton.bpm.model.dmn.instance;
 
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.bpm.model.dmn.OperatonExtensionsTest;
 import org.operaton.bpm.model.dmn.impl.instance.DecisionImpl;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.CAMUNDA_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_ATTRIBUTE_VERSION_TAG;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test to check the interoperability when changing elements and attributes with

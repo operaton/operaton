@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.spring.boot.starter.rest;
 
-import org.operaton.bpm.engine.rest.filter.CacheControlFilter;
-import org.operaton.bpm.engine.rest.filter.EmptyBodyFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.web.servlet.JerseyApplicationPath;
-import org.springframework.boot.web.servlet.ServletContextInitializer;
-
+import java.util.EnumSet;
+import java.util.Map;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
-import java.util.EnumSet;
-import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.web.servlet.JerseyApplicationPath;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+
+import org.operaton.bpm.engine.rest.filter.CacheControlFilter;
+import org.operaton.bpm.engine.rest.filter.EmptyBodyFilter;
 
 /**
  * Inspired by:

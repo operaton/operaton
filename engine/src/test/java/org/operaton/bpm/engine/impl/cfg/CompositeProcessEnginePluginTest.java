@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
-import org.operaton.bpm.engine.ProcessEngine;
 
-import java.util.Arrays;
+import org.operaton.bpm.engine.ProcessEngine;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

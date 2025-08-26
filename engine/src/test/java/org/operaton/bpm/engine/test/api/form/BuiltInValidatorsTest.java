@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -40,6 +38,9 @@ import org.operaton.bpm.engine.impl.form.validator.ReadOnlyValidator;
 import org.operaton.bpm.engine.impl.form.validator.RequiredValidator;
 import org.operaton.bpm.engine.test.api.runtime.util.TestVariableScope;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer

@@ -17,9 +17,11 @@
 package org.operaton.bpm.engine.spring;
 
 import jakarta.el.ELContext;
-import org.operaton.bpm.engine.ProcessEngineException;
 import jakarta.el.ELResolver;
+
 import org.springframework.context.ApplicationContext;
+
+import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
  * @author Tom Baeyens

@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.slf4j.Logger;
+
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 
 /**

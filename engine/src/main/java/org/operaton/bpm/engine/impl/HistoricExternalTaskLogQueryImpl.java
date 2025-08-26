@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
+import java.util.List;
+
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.ExternalTaskState;
 import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
@@ -23,9 +26,6 @@ import org.operaton.bpm.engine.history.HistoricExternalTaskLogQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.commons.utils.CollectionUtil;
-
-import java.io.Serial;
-import java.util.List;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmptyString;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;

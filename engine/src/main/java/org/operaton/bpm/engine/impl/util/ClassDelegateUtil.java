@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+
 import org.operaton.bpm.engine.ArtifactFactory;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.context.Context;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.List;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Roman Smirnov

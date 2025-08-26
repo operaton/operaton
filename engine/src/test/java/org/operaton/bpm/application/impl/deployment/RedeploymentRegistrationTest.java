@@ -18,10 +18,12 @@ package org.operaton.bpm.application.impl.deployment;
 
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.ManagementService;

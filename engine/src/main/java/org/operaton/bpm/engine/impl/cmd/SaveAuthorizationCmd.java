@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.function.Supplier;
 
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -28,9 +29,8 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
 
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.function.Supplier;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
 /**
  * @author Daniel Meyer

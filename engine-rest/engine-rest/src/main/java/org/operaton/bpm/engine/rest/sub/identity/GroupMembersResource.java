@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.sub.identity;
 
-import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
-
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
+
+import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
 
 
 /**

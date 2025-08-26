@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history.dmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,6 +27,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
@@ -45,6 +44,8 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)

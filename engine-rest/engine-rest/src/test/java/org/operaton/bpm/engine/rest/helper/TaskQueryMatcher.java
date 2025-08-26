@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.helper;
 
-import org.operaton.bpm.engine.impl.TaskQueryImpl;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+
+import org.operaton.bpm.engine.impl.TaskQueryImpl;
 
 /**
  * @author Thorben Lindhauer

@@ -16,20 +16,19 @@
  */
 package org.operaton.bpm.pa;
 
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-import static org.operaton.bpm.engine.variable.Variables.fileValue;
-
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.LinkedList;
-import java.util.List;
+
+import org.joda.time.DateTime;
 
 import org.operaton.bpm.admin.impl.web.SetupResource;
 import org.operaton.bpm.application.PostDeploy;
@@ -37,13 +36,13 @@ import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.impl.ServletProcessApplication;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.externaltask.ExternalTask;
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.authorization.Groups;
+import org.operaton.bpm.engine.externaltask.ExternalTask;
+import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -55,7 +54,9 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.pa.demo.InvoiceDemoDataGenerator;
-import org.joda.time.DateTime;
+
+import static org.operaton.bpm.engine.variable.Variables.createVariables;
+import static org.operaton.bpm.engine.variable.Variables.fileValue;
 
 /**
  *

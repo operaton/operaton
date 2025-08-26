@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.cdi;
 
 import java.util.Map;
 import java.util.logging.Logger;
-
 import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.inject.Inject;

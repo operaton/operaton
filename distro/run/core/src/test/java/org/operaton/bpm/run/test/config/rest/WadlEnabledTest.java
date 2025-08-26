@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.run.test.config.rest;
 
-import org.operaton.bpm.run.property.OperatonBpmRunRestProperties;
-import org.operaton.bpm.run.test.AbstractRestTest;
-
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
+
+import org.operaton.bpm.run.property.OperatonBpmRunRestProperties;
+import org.operaton.bpm.run.test.AbstractRestTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

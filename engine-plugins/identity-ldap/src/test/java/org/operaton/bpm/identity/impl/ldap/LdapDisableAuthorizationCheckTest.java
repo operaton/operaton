@@ -16,16 +16,10 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Resources.GROUP;
-import static org.operaton.bpm.engine.authorization.Resources.USER;
-import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testGroupPaging;
-import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testUserPaging;
-
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -35,6 +29,13 @@ import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestUtilities;
+
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Resources.GROUP;
+import static org.operaton.bpm.engine.authorization.Resources.USER;
+import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testGroupPaging;
+import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testUserPaging;
 
 /**
  * @author Roman Smirnov

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
@@ -27,6 +25,8 @@ import java.util.logging.Logger;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class DemoDelegate implements JavaDelegate {
 

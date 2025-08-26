@@ -15,8 +15,8 @@
  */
 package org.operaton.bpm.impl.juel;
 
-import jakarta.el.ELException;
 import java.io.Serializable;
+import jakarta.el.ELException;
 
 /**
  * Tree builder interface.

@@ -21,10 +21,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
+import org.junit.Assert;
+
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
-import org.junit.Assert;
 
 /**
  * @author Daniel Meyer

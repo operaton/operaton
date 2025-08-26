@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.run.test.config.filter;
 
-import org.operaton.bpm.engine.rest.dto.runtime.FilterDto;
-import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
-import org.operaton.bpm.run.OperatonApp;
-import org.operaton.bpm.run.test.AbstractRestTest;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -30,6 +25,11 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+
+import org.operaton.bpm.engine.rest.dto.runtime.FilterDto;
+import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
+import org.operaton.bpm.run.OperatonApp;
+import org.operaton.bpm.run.test.AbstractRestTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -26,9 +26,9 @@ import org.operaton.bpm.container.impl.deployment.Attachments;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedThreadPool;
 import org.operaton.bpm.container.impl.metadata.spi.BpmPlatformXml;
 import org.operaton.bpm.container.impl.metadata.spi.JobExecutorXml;
-import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
+import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
 
 /**

@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.springframework.util.Assert;
-
 import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.util.Assert;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_FALSE;

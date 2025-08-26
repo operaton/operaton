@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.qa.rolling.update.scenarios.cleanup;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -24,10 +28,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 import org.operaton.bpm.qa.upgrade.Times;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author Tassilo Weidner

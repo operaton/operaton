@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.engine.test.cmmn.stage;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
 import org.operaton.bpm.engine.runtime.CaseExecution;
@@ -30,6 +29,8 @@ import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov

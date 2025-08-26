@@ -16,11 +16,11 @@
  */
 package org.operaton.spin;
 
-import org.operaton.spin.spi.DataFormat;
-import static org.operaton.spin.Spin.S;
-
 import org.junit.jupiter.api.Test;
 
+import org.operaton.spin.spi.DataFormat;
+
+import static org.operaton.spin.Spin.S;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 /**

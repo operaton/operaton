@@ -16,19 +16,17 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static org.operaton.bpm.engine.rest.mapper.JacksonConfigurator.DEFAULT_DATE_FORMAT;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
@@ -36,13 +34,15 @@ import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
-import io.restassured.http.ContentType;
+import static org.operaton.bpm.engine.rest.mapper.JacksonConfigurator.DEFAULT_DATE_FORMAT;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @Disabled("See PR#52: Causes an issue resolving operaton-core-internal-dependencies")
 public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {

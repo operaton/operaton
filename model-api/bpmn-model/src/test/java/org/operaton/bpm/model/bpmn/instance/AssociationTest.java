@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.operaton.bpm.model.bpmn.AssociationDirection;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.AssociationDirection;
 
 /**
  * @author Sebastian Menski

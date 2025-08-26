@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Execution;
+
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer

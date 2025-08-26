@@ -31,6 +31,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+
 import org.operaton.bpm.util.SeleniumScreenshotExtension;
 
 public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest {

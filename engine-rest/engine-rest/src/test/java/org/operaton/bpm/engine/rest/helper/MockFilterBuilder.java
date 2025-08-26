@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.helper;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.util.Map;
 
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.query.Query;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Sebastian Menski

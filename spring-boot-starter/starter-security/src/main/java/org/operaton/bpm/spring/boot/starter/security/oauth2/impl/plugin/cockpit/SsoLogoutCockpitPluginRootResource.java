@@ -17,6 +17,7 @@
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.cockpit;
 
 import jakarta.ws.rs.Path;
+
 import org.operaton.bpm.cockpit.plugin.resource.AbstractCockpitPluginRootResource;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.SsoLogoutPluginConstants;
 

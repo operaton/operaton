@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.HashMap;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -25,8 +23,11 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(ArquillianExtension.class)

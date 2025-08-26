@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.repository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.cmd.DeleteProcessDefinitionsByIdsCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteProcessDefinitionsByKeyCmd;
@@ -24,10 +28,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.repository.DeleteProcessDefinitionsBuilder;
 import org.operaton.bpm.engine.repository.DeleteProcessDefinitionsSelectBuilder;
 import org.operaton.bpm.engine.repository.DeleteProcessDefinitionsTenantBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;

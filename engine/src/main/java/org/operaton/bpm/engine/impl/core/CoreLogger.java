@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.core;
 
+import java.text.MessageFormat;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
 import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
-import static org.operaton.bpm.engine.impl.core.variable.VariableUtil.ERROR_MSG;
 
-import java.text.MessageFormat;
+import static org.operaton.bpm.engine.impl.core.variable.VariableUtil.ERROR_MSG;
 
 /**
  * @author Daniel Meyer

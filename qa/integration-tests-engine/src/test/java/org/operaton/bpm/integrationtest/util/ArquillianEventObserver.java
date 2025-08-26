@@ -20,13 +20,14 @@ import java.util.Map;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
+import org.testcontainers.containers.JdbcDatabaseContainer;
+
 import org.operaton.impl.test.utils.testcontainers.OperatonDb2ContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMariaDBContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMySqlContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonOracleContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonPostgreSQLContainerProvider;
-import org.testcontainers.containers.JdbcDatabaseContainer;
 
 /**
  * {@link org.jboss.arquillian.core.api.annotation.Observer} for Arquillian lifecycle events.

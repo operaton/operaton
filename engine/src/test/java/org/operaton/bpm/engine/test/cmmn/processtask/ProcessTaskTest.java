@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.test.cmmn.processtask;
 
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -26,10 +30,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

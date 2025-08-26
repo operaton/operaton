@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.dmn.cmd;
 
-import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateDecision;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +31,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateDecision;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
 /**
  * Evaluates the decision with the given key or id.

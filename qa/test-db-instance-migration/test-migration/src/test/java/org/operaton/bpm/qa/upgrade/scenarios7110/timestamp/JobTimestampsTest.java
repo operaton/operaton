@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7110.timestamp;
 
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.runtime.Job;
+import java.util.Date;
+
 import org.junit.Test;
 
-import java.util.Date;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
+import org.operaton.bpm.engine.runtime.Job;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

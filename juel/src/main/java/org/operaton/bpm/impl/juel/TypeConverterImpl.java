@@ -15,12 +15,12 @@
  */
 package org.operaton.bpm.impl.juel;
 
-import jakarta.el.ELException;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import jakarta.el.ELException;
 
 /**
  * Type Conversions as described in EL 2.1 specification (section 1.17).

@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import org.operaton.bpm.engine.impl.el.Expression;
-
 import java.io.Serial;
 import java.io.Serializable;
+
+import org.operaton.bpm.engine.impl.el.Expression;
 
 /**
  * Represents a bpmn signal definition

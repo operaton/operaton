@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.sub.authorization;
 
-import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
-import org.operaton.bpm.engine.rest.dto.authorization.AuthorizationDto;
-
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
+
+import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
+import org.operaton.bpm.engine.rest.dto.authorization.AuthorizationDto;
 
 /**
  * @author Daniel Meyer

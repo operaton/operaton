@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.engine.test.bpmn.multiinstance;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_INSTANCES;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -31,6 +29,9 @@ import org.operaton.bpm.model.bpmn.builder.CallActivityBuilder;
 import org.operaton.bpm.model.bpmn.instance.CallActivity;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonIn;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOut;
+
+import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_INSTANCES;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Askar Akhmerov

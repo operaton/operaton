@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.mock;
 
-import org.operaton.bpm.engine.delegate.VariableScope;
-import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
-import org.operaton.bpm.engine.impl.el.VariableContextElResolver;
-import org.operaton.bpm.engine.impl.el.VariableScopeElResolver;
 import jakarta.el.ArrayELResolver;
 import jakarta.el.BeanELResolver;
 import jakarta.el.CompositeELResolver;
 import jakarta.el.ELResolver;
 import jakarta.el.ListELResolver;
 import jakarta.el.MapELResolver;
+
+import org.operaton.bpm.engine.delegate.VariableScope;
+import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
+import org.operaton.bpm.engine.impl.el.VariableContextElResolver;
+import org.operaton.bpm.engine.impl.el.VariableScopeElResolver;
 
 public class MockExpressionManager extends JuelExpressionManager {
 

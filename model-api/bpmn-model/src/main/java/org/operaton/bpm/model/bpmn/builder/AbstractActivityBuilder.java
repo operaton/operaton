@@ -25,10 +25,10 @@ import org.operaton.bpm.model.bpmn.instance.Activity;
 import org.operaton.bpm.model.bpmn.instance.BoundaryEvent;
 import org.operaton.bpm.model.bpmn.instance.MultiInstanceLoopCharacteristics;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
+import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputOutput;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputParameter;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOutputParameter;
-import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
 
 /**
  * @author Sebastian Menski

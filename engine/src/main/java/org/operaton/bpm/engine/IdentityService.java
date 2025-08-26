@@ -21,11 +21,11 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
-import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.identity.NativeUserQuery;
 import org.operaton.bpm.engine.identity.PasswordPolicy;
+import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.Picture;
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.TenantQuery;

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
@@ -24,7 +24,8 @@ import org.operaton.bpm.engine.impl.cmd.LockExternalTaskCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test covers the use-case where two competing transactions

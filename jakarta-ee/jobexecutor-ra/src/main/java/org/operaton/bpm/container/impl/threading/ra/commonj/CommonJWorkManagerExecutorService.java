@@ -20,16 +20,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import commonj.work.WorkException;
+import commonj.work.WorkManager;
+import commonj.work.WorkRejectedException;
 import javax.naming.InitialContext;
 
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.threading.ra.JcaExecutorServiceConnector;
 import org.operaton.bpm.container.impl.threading.ra.inflow.JcaInflowExecuteJobsRunnable;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-
-import commonj.work.WorkException;
-import commonj.work.WorkManager;
-import commonj.work.WorkRejectedException;
 
 /**
  * {@link AbstractPlatformJobExecutor} implementation delegating to a CommonJ {@link WorkManager}.

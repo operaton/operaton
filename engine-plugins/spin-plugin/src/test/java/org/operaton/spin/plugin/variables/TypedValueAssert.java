@@ -16,16 +16,16 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import java.util.Base64;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.type.ValueType;
-import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.type.ValueType;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
+import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.junit.jupiter.api.Assertions.*;
 

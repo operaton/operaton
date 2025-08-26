@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
-
-import java.io.Serial;
-import java.io.Serializable;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 

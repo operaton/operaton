@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 package org.operaton.spin.impl.util;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
-
-import java.io.*;
-import java.nio.charset.Charset;
 
 /**
  * @author Daniel Meyer

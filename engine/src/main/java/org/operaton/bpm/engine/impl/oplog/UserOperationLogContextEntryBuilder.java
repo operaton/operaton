@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.oplog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
@@ -28,9 +31,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE;
 

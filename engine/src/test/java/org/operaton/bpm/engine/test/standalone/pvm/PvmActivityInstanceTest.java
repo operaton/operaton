@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
@@ -34,6 +33,8 @@ import org.operaton.bpm.engine.test.standalone.pvm.activities.ParallelGateway;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.While;
 import org.operaton.bpm.engine.test.standalone.pvm.verification.TransitionInstanceVerifyer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

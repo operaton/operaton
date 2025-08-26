@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.TestEventCaptor;
-
 import jakarta.transaction.Transactional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -33,6 +25,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
+
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.TestEventCaptor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.model.xml.testmodel;
 
+import java.io.InputStream;
+
 import org.junit.jupiter.api.AfterEach;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.testmodel.instance.*;
-
-import java.io.InputStream;
 
 /**
  * @author Sebastian Menski

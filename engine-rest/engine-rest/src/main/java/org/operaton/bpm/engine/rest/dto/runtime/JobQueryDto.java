@@ -16,22 +16,20 @@
  */
 package org.operaton.bpm.engine.rest.dto.runtime;
 
-import static java.lang.Boolean.TRUE;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
-import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto;
+import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
 import org.operaton.bpm.engine.rest.dto.converter.ConditionListConverter;
 import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
@@ -41,8 +39,9 @@ import org.operaton.bpm.engine.rest.dto.converter.StringSetConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.runtime.JobQuery;
+import org.operaton.commons.utils.CollectionUtil;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static java.lang.Boolean.TRUE;
 
 public class JobQueryDto extends AbstractQueryDto<JobQuery> {
 

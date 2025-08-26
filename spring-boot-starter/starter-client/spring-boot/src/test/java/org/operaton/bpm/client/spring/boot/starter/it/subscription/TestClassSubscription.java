@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.it.subscription;
 
+import org.springframework.stereotype.Component;
+
 import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
 import org.operaton.bpm.client.task.ExternalTaskService;
 
-import org.springframework.stereotype.Component;
-
 @ExternalTaskSubscription(
-    topicName = "topic-two",
-    autoOpen = false,
-    businessKey = "business-key"
+  topicName = "topic-two",
+  autoOpen = false,
+  businessKey = "business-key"
 )
 @Component
 @SuppressWarnings({"unused", "java:S1186"})

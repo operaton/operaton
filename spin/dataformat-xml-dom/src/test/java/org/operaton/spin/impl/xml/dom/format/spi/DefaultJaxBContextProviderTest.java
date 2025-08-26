@@ -1,10 +1,12 @@
 package org.operaton.spin.impl.xml.dom.format.spi;
 
-import jakarta.xml.bind.JAXBException;
 import java.util.Iterator;
 import java.util.ServiceLoader;
+import jakarta.xml.bind.JAXBException;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
 import org.operaton.spin.xml.SpinXmlDataFormatException;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -18,10 +18,11 @@ package org.operaton.bpm.spring.boot.starter;
 
 import jakarta.servlet.ServletContext;
 
-import org.operaton.bpm.spring.boot.starter.telemetry.OperatonApplicationServerConfigurator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import org.operaton.bpm.spring.boot.starter.telemetry.OperatonApplicationServerConfigurator;
 
 @Configuration
 public class OperatonBpmTelemetryConfiguration {

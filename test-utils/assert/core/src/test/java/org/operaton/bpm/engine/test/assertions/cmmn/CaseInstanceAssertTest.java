@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 
 public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 

@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.test.standalone.db;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.test.util.TestconfigProperties;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Miklas Boskamp

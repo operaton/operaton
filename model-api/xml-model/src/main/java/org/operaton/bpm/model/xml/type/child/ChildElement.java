@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.xml.type.child;
 
-import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-
 import java.util.Collection;
+
+import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 
 /**
  * A single child element (child Element collection where {@link ChildElementCollection#getMaxOccurs()} returns 1.

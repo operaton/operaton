@@ -18,16 +18,16 @@ package org.operaton.bpm.engine.impl.batch.externaltask;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
 import org.operaton.bpm.engine.impl.batch.SetRetriesBatchConfiguration;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-import com.google.gson.JsonObject;
-
 public class SetExternalTaskRetriesBatchConfigurationJsonConverter
-    extends AbstractBatchConfigurationObjectConverter<SetRetriesBatchConfiguration> {
+  extends AbstractBatchConfigurationObjectConverter<SetRetriesBatchConfiguration> {
 
   public static final SetExternalTaskRetriesBatchConfigurationJsonConverter INSTANCE = new SetExternalTaskRetriesBatchConfigurationJsonConverter();
 

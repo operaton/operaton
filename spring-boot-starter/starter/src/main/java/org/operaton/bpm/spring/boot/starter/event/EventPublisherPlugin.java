@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.operaton.bpm.spring.boot.starter.property.EventingProperty;
-import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEnginePlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
+
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.EventingProperty;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEnginePlugin;
 
 /**
  * Engine Plugin forwarding Operaton task, execution and history events as Spring Events.

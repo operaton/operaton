@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.hal;
 
-import org.operaton.bpm.engine.ProcessEngine;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * Base class for implementing a HAL resource as defined in

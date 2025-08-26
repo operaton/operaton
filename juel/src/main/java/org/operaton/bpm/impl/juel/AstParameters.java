@@ -16,7 +16,6 @@
 package org.operaton.bpm.impl.juel;
 
 import java.util.List;
-
 import jakarta.el.ELContext;
 
 

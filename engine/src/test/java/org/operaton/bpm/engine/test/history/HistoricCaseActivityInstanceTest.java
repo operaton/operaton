@@ -16,16 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DISABLED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENABLED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,7 +23,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -58,6 +50,16 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DISABLED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENABLED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Sebastian Menski

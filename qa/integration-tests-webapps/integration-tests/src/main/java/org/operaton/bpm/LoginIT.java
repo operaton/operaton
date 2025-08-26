@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -30,6 +26,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public class LoginIT extends AbstractWebappUiIntegrationTest {
 

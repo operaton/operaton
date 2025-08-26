@@ -18,12 +18,13 @@ package org.operaton.bpm.spring.boot.starter.telemetry;
 
 import java.util.Set;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
 
 @ConditionalOnBean(ProcessEngine.class)
 public class OperatonIntegrationDeterminator implements InitializingBean {

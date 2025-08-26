@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import java.util.HashMap;
+
 import org.junit.jupiter.api.BeforeEach;
+
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.handler.CmmnHandlerContext;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
@@ -25,8 +28,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.*;
-
-import java.util.HashMap;
 
 /**
  * @author Roman Smirnov

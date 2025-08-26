@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -58,7 +57,7 @@ import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
  * @author Daniel Meyer
  *
  */
-@WebServlet(urlPatterns= {"/ensureCleanDb/*"})
+@WebServlet(urlPatterns = {"/ensureCleanDb/*"})
 public class TestServlet extends HttpServlet {
 
   public static final Logger log = Logger.getLogger(TestServlet.class.getName());

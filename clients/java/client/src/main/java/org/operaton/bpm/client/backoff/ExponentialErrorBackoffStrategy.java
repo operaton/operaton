@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.backoff;
 
+import java.util.List;
+
 import org.operaton.bpm.client.exception.ExternalTaskClientException;
 import org.operaton.bpm.client.task.ExternalTask;
-
-import java.util.List;
 
 /**
  * <p>Provides an exponential backoff strategy when an error occurs fetching external tasks.

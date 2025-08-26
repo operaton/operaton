@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
-import org.operaton.bpm.model.xml.instance.DomDocument;
-import org.operaton.bpm.model.xml.instance.DomElement;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.operaton.bpm.model.xml.instance.DomDocument;
+import org.operaton.bpm.model.xml.instance.DomElement;
 
 import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
 

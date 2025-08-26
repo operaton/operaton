@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.externaltask;
 
-import org.operaton.bpm.engine.impl.QueryOperator;
-import org.operaton.bpm.engine.impl.QueryVariableValue;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.engine.impl.QueryOperator;
+import org.operaton.bpm.engine.impl.QueryVariableValue;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 
 /**
  * @author Thorben Lindhauer

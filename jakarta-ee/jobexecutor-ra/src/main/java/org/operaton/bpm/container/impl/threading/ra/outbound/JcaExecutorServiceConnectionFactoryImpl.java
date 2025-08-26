@@ -17,10 +17,10 @@
 package org.operaton.bpm.container.impl.threading.ra.outbound;
 
 import java.io.Serial;
-
-import javax.naming.Reference;
 import jakarta.resource.ResourceException;
 import jakarta.resource.spi.ConnectionManager;
+
+import javax.naming.Reference;
 
 
 /**

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.model.xml.type;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Daniel Meyer

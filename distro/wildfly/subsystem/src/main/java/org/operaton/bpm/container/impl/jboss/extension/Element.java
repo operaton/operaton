@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension;
 
-import org.jboss.as.controller.AttributeDefinition;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.jboss.as.controller.AttributeDefinition;
 
 /**
  * An Element.

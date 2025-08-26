@@ -17,6 +17,7 @@
 package org.operaton.bpm.integrationtest.functional.spin;
 
 import org.junit.jupiter.api.Assertions;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 

@@ -16,15 +16,12 @@
  */
 package org.operaton.bpm.engine.test.dmn.deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.io.InputStream;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -49,6 +46,10 @@ import org.operaton.bpm.model.dmn.instance.Input;
 import org.operaton.bpm.model.dmn.instance.InputExpression;
 import org.operaton.bpm.model.dmn.instance.Output;
 import org.operaton.bpm.model.dmn.instance.Text;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 class DecisionDefinitionDeployerTest {
 

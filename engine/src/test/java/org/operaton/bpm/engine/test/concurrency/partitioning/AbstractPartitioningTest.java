@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.test.concurrency.partitioning;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -25,7 +27,6 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestCase;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.jupiter.api.BeforeEach;
 
 /**
  * @author Tassilo Weidner

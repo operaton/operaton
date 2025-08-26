@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
-
 import java.text.ParseException;
 import java.util.Date;
+
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
 
 /**
  * @author Svetlana Dorokhova.

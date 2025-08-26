@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.engine.test.bpmn.scripttask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
+import com.oracle.truffle.js.scriptengine.GraalJSEngineFactory;
+import com.oracle.truffle.js.scriptengine.GraalJSScriptEngine;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
+
 import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.impl.scripting.engine.DefaultScriptEngineResolver;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptEngineResolver;
@@ -37,8 +36,8 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
-import com.oracle.truffle.js.scriptengine.GraalJSEngineFactory;
-import com.oracle.truffle.js.scriptengine.GraalJSScriptEngine;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Parameterized
 public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {

@@ -16,20 +16,11 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2;
 
+import java.util.Map;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
-import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
-import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
-import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.AuthorizeTokenFilter;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2GrantedAuthoritiesMapper;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2IdentityProviderPlugin;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.SsoLogoutSuccessHandler;
-import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -52,10 +43,20 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.Map;
+import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
+import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
+import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.AuthorizeTokenFilter;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2GrantedAuthoritiesMapper;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2IdentityProviderPlugin;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.SsoLogoutSuccessHandler;
+import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
 
 @AutoConfigureOrder(OperatonSpringSecurityOAuth2AutoConfiguration.OPERATON_OAUTH2_ORDER)
-@AutoConfigureAfter({ OperatonBpmAutoConfiguration.class, SpringProcessEngineServicesConfiguration.class })
+@AutoConfigureAfter({OperatonBpmAutoConfiguration.class, SpringProcessEngineServicesConfiguration.class})
 @ConditionalOnBean(OperatonBpmProperties.class)
 @Conditional(ClientsConfiguredCondition.class)
 @EnableConfigurationProperties(OAuth2Properties.class)

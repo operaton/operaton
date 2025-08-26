@@ -16,30 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.impl.history;
 
-import org.operaton.bpm.engine.rest.history.HistoricActivityInstanceRestService;
-import org.operaton.bpm.engine.rest.history.HistoricProcessDefinitionRestService;
-import org.operaton.bpm.engine.rest.history.HistoricBatchRestService;
-import org.operaton.bpm.engine.rest.history.HistoricCaseActivityInstanceRestService;
-import org.operaton.bpm.engine.rest.history.HistoricCaseDefinitionRestService;
-import org.operaton.bpm.engine.rest.history.HistoricCaseInstanceRestService;
-import org.operaton.bpm.engine.rest.history.HistoricDecisionDefinitionRestService;
-import org.operaton.bpm.engine.rest.history.HistoricDecisionInstanceRestService;
-import org.operaton.bpm.engine.rest.history.HistoricDecisionStatisticsRestService;
-import org.operaton.bpm.engine.rest.history.HistoricDetailRestService;
-import org.operaton.bpm.engine.rest.history.HistoricExternalTaskLogRestService;
-import org.operaton.bpm.engine.rest.history.HistoricIdentityLinkLogRestService;
-import org.operaton.bpm.engine.rest.history.HistoricIncidentRestService;
-import org.operaton.bpm.engine.rest.history.HistoricJobLogRestService;
-import org.operaton.bpm.engine.rest.history.HistoricProcessInstanceRestService;
-import org.operaton.bpm.engine.rest.history.HistoricTaskInstanceRestService;
-import org.operaton.bpm.engine.rest.history.HistoricVariableInstanceRestService;
-import org.operaton.bpm.engine.rest.history.HistoryCleanupRestService;
-import org.operaton.bpm.engine.rest.history.HistoryRestService;
-import org.operaton.bpm.engine.rest.history.UserOperationLogRestService;
-
-import org.operaton.bpm.engine.rest.impl.AbstractRestProcessEngineAware;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.operaton.bpm.engine.rest.history.*;
+import org.operaton.bpm.engine.rest.impl.AbstractRestProcessEngineAware;
 
 public class HistoryRestServiceImpl extends AbstractRestProcessEngineAware implements HistoryRestService {
 

@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
+
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 

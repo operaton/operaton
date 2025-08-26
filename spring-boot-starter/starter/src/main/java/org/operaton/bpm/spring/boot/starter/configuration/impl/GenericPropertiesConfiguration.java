@@ -17,13 +17,15 @@
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
 import java.util.Map;
+
+import org.springframework.core.annotation.Order;
+import org.springframework.util.CollectionUtils;
+
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.Ordering;
 import org.operaton.bpm.spring.boot.starter.property.GenericProperties;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterPropertyHelper;
-import org.springframework.core.annotation.Order;
-import org.springframework.util.CollectionUtils;
 
 @Order(Ordering.DEFAULT_ORDER - 1)
 public class GenericPropertiesConfiguration extends AbstractOperatonConfiguration {

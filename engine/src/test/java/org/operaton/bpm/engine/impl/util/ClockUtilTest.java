@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Date;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ClockUtilTest {
 

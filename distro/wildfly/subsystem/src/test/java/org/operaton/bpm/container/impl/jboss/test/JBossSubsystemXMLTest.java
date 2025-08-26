@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.test;
 
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ADD;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP_ADDR;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUBSYSTEM;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -36,19 +25,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.stream.XMLStreamException;
-
-import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
-import org.operaton.bpm.container.impl.jboss.extension.Attribute;
-import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
-import org.operaton.bpm.container.impl.jboss.extension.Element;
-import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
-import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
-import org.operaton.bpm.container.impl.jboss.service.MscManagedProcessEngineController;
-import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
-import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
-import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
-import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.PathElement;
 import org.jboss.as.controller.descriptions.ModelDescriptionConstants;
@@ -62,6 +38,30 @@ import org.jboss.msc.service.ServiceContainer;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceName;
 import org.junit.Test;
+
+import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
+import org.operaton.bpm.container.impl.jboss.extension.Attribute;
+import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
+import org.operaton.bpm.container.impl.jboss.extension.Element;
+import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
+import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
+import org.operaton.bpm.container.impl.jboss.service.MscManagedProcessEngineController;
+import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
+import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
+import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
+import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ADD;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP_ADDR;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUBSYSTEM;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 /**

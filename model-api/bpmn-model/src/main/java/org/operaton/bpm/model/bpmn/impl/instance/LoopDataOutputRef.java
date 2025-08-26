@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_LOOP_DATA_OUTPUT_REF;
-
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_LOOP_DATA_OUTPUT_REF;
 
 /**
  * The BPMN 2.0 loopDataOutputRef element of the BPMN 2.0

@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.hal;
 
-import org.operaton.bpm.engine.ProcessEngine;
-
 import java.util.*;
 import java.util.Map.Entry;
+
+import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * A stateful linker which collects information about the links it creates.

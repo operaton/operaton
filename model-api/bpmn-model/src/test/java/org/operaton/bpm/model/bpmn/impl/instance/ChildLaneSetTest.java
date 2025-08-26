@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 import org.operaton.bpm.model.bpmn.instance.LaneSet;
-
-import java.util.Collection;
 
 /**
  * @author Sebastian Menski

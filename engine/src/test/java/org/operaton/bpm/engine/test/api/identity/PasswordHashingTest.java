@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.identity.User;
@@ -40,6 +38,9 @@ import org.operaton.bpm.engine.test.api.identity.util.MyConstantSaltGenerator;
 import org.operaton.bpm.engine.test.api.identity.util.MyCustomPasswordEncryptor;
 import org.operaton.bpm.engine.test.api.identity.util.MyCustomPasswordEncryptorCreatingPrefixThatCannotBeResolved;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(ProcessEngineExtension.class)
 class PasswordHashingTest {

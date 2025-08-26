@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.xml.type.child;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-
-import java.util.Collection;
 
 /**
  * <p>A collection containing all or a subset of the child

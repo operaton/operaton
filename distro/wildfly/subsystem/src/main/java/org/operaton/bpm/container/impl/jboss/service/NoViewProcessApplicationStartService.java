@@ -18,14 +18,15 @@ package org.operaton.bpm.container.impl.jboss.service;
 
 import java.util.function.Consumer;
 
-import org.operaton.bpm.application.ProcessApplicationInterface;
-import org.operaton.bpm.application.ProcessApplicationReference;
-import org.operaton.bpm.application.ProcessApplicationUnavailableException;
-import org.operaton.bpm.application.impl.ServletProcessApplication;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+
+import org.operaton.bpm.application.ProcessApplicationInterface;
+import org.operaton.bpm.application.ProcessApplicationReference;
+import org.operaton.bpm.application.ProcessApplicationUnavailableException;
+import org.operaton.bpm.application.impl.ServletProcessApplication;
 
 /**
  * <p>Start Service for process applications that do not expose an EE Component View

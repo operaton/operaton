@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.Direction.DESCENDING;
-import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.PRIORITY;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
@@ -40,6 +38,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
+
+import static org.operaton.bpm.engine.impl.Direction.DESCENDING;
+import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.PRIORITY;
 
 /**
  * @author Thorben Lindhauer

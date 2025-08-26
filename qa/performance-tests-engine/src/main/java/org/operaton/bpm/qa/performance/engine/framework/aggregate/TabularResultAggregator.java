@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.aggregate;
 
+import java.io.File;
+import java.util.Comparator;
+
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
 import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
-
-import java.io.File;
-import java.util.Comparator;
 
 /**
  * A result aggregator is used to aggregate the results of a

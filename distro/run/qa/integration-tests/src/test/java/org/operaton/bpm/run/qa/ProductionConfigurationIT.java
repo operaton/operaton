@@ -16,15 +16,17 @@
  */
 package org.operaton.bpm.run.qa;
 
-import static io.restassured.RestAssured.when;
-import static org.hamcrest.CoreMatchers.is;
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
-import io.restassured.response.Response;
+import static io.restassured.RestAssured.when;
+import static org.hamcrest.CoreMatchers.is;
 
 class ProductionConfigurationIT {
 

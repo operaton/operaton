@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.qa.rolling.update.task;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * This test ensures that the old engine can complete an

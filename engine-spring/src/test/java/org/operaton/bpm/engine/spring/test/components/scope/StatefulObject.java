@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test.components.scope;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -26,6 +24,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
+
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 /**
  * dumb object to demonstrate holding scoped state for the duration of a business process

@@ -16,17 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.diagram;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParser;
-import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.repository.DiagramElement;
-import org.operaton.bpm.engine.repository.DiagramLayout;
-import org.operaton.bpm.engine.repository.DiagramNode;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -35,13 +31,18 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParser;
+import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.repository.DiagramElement;
+import org.operaton.bpm.engine.repository.DiagramLayout;
+import org.operaton.bpm.engine.repository.DiagramNode;
 
 /**
  * Provides positions and dimensions of elements in a process diagram as

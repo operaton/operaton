@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.dmn.engine.feel.helper;
 
-import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunction;
-import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunction;
+import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
 
 public class CustomFunctionProvider implements FeelCustomFunctionProvider {
 

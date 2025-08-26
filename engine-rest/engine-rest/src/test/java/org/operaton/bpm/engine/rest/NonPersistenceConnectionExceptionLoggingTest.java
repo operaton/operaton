@@ -17,27 +17,29 @@
 
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.PERSISTENCE_EXCEPTION_MESSAGE;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.wrapPersistenceException;
-import static org.operaton.bpm.engine.rest.exception.ExceptionLogger.REST_API;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_FIRST_NAME;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import java.sql.SQLNonTransientConnectionException;
+import java.util.List;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import java.sql.SQLNonTransientConnectionException;
-import java.util.List;
 import org.apache.ibatis.exceptions.PersistenceException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEnginePersistenceException;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
+
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.PERSISTENCE_EXCEPTION_MESSAGE;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.wrapPersistenceException;
+import static org.operaton.bpm.engine.rest.exception.ExceptionLogger.REST_API;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_FIRST_NAME;
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests Connection Exceptions that do not originate from persistence layer but are still connection exceptions.

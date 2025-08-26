@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collections;
 import java.util.List;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.ProcessInstanceModificationBuilderImpl;

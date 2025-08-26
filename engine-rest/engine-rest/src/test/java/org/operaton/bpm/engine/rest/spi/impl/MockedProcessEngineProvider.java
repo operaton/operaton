@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.spi.impl;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -40,6 +37,9 @@ import org.operaton.bpm.engine.impl.variable.ValueTypeResolverImpl;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
 import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MockedProcessEngineProvider implements ProcessEngineProvider {
 

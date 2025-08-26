@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.ActiveProfiles;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -26,14 +34,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.spring.boot.starter.event.TaskEvent;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestEventCaptor;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

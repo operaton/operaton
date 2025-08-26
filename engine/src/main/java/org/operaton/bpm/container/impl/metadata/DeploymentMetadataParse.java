@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.container.impl.metadata;
 
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
@@ -29,6 +28,8 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 import org.operaton.bpm.engine.impl.util.xml.Parse;
 import org.operaton.bpm.engine.impl.util.xml.Parser;
+
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.*;
 
 /**
  * <p>{@link Parse} implementation for Deployment Metadata.</p>

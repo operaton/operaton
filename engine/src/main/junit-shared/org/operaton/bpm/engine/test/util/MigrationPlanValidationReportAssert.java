@@ -19,7 +19,9 @@ package org.operaton.bpm.engine.test.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.assertj.core.api.Assertions;
+
 import org.operaton.bpm.engine.migration.MigrationInstructionValidationReport;
 import org.operaton.bpm.engine.migration.MigrationPlanValidationReport;
 

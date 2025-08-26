@@ -20,8 +20,9 @@ import java.util.List;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.operaton.connect.spi.ConnectorRequest;
+
 import org.operaton.connect.impl.AbstractRequestInvocation;
+import org.operaton.connect.spi.ConnectorRequest;
 import org.operaton.connect.spi.ConnectorRequestInterceptor;
 
 public class HttpRequestInvocation  extends AbstractRequestInvocation<HttpRequestBase> {

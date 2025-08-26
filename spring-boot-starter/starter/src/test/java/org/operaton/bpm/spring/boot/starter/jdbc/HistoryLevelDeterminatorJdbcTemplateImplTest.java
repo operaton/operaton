@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.jdbc;
 
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.history.HistoryLevelAudit;
-import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-
 import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +25,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.history.HistoryLevel;
+import org.operaton.bpm.engine.impl.history.HistoryLevelAudit;
+import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.verify;

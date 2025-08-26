@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.hal.caseDefinition;
 
+import jakarta.ws.rs.core.UriBuilder;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.rest.CaseDefinitionRestService;
@@ -25,8 +27,6 @@ import org.operaton.bpm.engine.rest.hal.HalRelation;
 import org.operaton.bpm.engine.rest.hal.HalResource;
 import org.operaton.bpm.engine.rest.sub.repository.DeploymentResourcesResource;
 import org.operaton.bpm.engine.rest.util.ApplicationContextPathUtil;
-
-import jakarta.ws.rs.core.UriBuilder;
 
 /**
  * @author Daniel Meyer

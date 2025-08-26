@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.client.spring.impl.subscription;
 
-import org.operaton.bpm.client.ExternalTaskClient;
-import org.operaton.bpm.client.spring.SpringTopicSubscription;
-import org.operaton.bpm.client.spring.event.SubscriptionInitializedEvent;
-import org.operaton.bpm.client.spring.impl.subscription.util.SubscriptionLoggerUtil;
-import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
-import org.operaton.bpm.client.task.ExternalTaskHandler;
-import org.operaton.bpm.client.topic.TopicSubscription;
-import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
-
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -36,8 +27,17 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 
+import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.spring.SpringTopicSubscription;
+import org.operaton.bpm.client.spring.event.SubscriptionInitializedEvent;
+import org.operaton.bpm.client.spring.impl.subscription.util.SubscriptionLoggerUtil;
+import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
+import org.operaton.bpm.client.task.ExternalTaskHandler;
+import org.operaton.bpm.client.topic.TopicSubscription;
+import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
+
 public class SpringTopicSubscriptionImpl
-    implements SpringTopicSubscription, InitializingBean {
+  implements SpringTopicSubscription, InitializingBean {
 
   protected static final SubscriptionLoggerUtil LOG = LoggerUtil.SUBSCRIPTION_LOGGER;
 

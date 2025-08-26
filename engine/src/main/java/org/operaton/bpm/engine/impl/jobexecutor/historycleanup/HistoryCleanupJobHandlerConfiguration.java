@@ -18,8 +18,10 @@ package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
 import java.util.Calendar;
 import java.util.Date;
-import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
+
 import com.google.gson.JsonObject;
+
+import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 /**

@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.quarkus.engine.extension;
 
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.transaction.TransactionManager;
+
 import org.operaton.bpm.engine.cdi.CdiJtaProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.interceptor.CommandContextInterceptor;
@@ -24,10 +28,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.JakartaTransactionInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.LogInterceptor;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
-
-import jakarta.transaction.TransactionManager;
-import java.util.ArrayList;
-import java.util.List;
 
 public class QuarkusProcessEngineConfiguration extends CdiJtaProcessEngineConfiguration {
 

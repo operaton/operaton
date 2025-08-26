@@ -16,16 +16,18 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7150.variable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @ScenarioUnderTest("EmptyStringVariableScenario")
 @Origin("7.14.0")

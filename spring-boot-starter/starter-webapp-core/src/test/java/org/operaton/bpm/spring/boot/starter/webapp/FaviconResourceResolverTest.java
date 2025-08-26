@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
-import static org.mockito.Mockito.*;
-
 import java.net.URL;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +26,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.Resource;
+
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FaviconResourceResolverTest {

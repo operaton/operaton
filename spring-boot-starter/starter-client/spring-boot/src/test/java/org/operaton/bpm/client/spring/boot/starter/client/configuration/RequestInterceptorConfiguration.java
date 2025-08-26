@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.client.configuration;
 
-import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
-
 import org.springframework.context.annotation.Bean;
+
+import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
 
 public class RequestInterceptorConfiguration {
 

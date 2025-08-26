@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.variable.impl.format.json;
 
-import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.JSON;
-
 import org.operaton.bpm.client.spi.DataFormat;
 import org.operaton.bpm.client.spi.DataFormatProvider;
+
+import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.JSON;
 
 public class JacksonJsonDataFormatProvider implements DataFormatProvider {
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.EventSubscriptionDeclaration;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -24,8 +26,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.variable.VariableMap;
-
-import java.util.List;
 
 /**
  * Defines activity behavior for signal end event and intermediate throw signal event.

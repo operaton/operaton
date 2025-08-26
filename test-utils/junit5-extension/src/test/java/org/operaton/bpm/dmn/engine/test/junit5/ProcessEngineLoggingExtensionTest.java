@@ -1,7 +1,5 @@
 package org.operaton.bpm.dmn.engine.test.junit5;
 
-import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
-
 import java.util.List;
 
 import ch.qos.logback.classic.Level;
@@ -11,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

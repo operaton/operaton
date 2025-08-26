@@ -19,12 +19,13 @@ package org.operaton.bpm.engine.test.cmmn.operation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.test.TestLogger;
-import org.slf4j.Logger;
 
 /**
  * @author Roman Smirnov

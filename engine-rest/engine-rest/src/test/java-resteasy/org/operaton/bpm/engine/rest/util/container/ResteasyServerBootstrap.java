@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.rest.util.container;
 
 import java.util.Properties;
 import jakarta.ws.rs.core.Application;
+
 import org.jboss.resteasy.plugins.server.netty.NettyJaxrsServer;
 
 public class ResteasyServerBootstrap extends EmbeddedServerBootstrap {

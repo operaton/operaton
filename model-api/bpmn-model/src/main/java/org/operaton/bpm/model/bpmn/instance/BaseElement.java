@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.operaton.bpm.model.bpmn.instance.di.DiagramElement;
-
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.instance.di.DiagramElement;
 
 /**
  * The BPMN baseElement element

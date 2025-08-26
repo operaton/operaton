@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.dto.batch;
 
-import org.operaton.bpm.engine.batch.Batch;
-
 import java.util.Date;
+
+import org.operaton.bpm.engine.batch.Batch;
 
 public class BatchDto {
 

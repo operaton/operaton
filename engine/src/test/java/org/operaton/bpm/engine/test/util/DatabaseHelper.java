@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-
 import java.sql.SQLException;
+
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 public class DatabaseHelper {
 

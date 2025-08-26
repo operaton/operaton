@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.Arrays;
+
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
-
-import java.util.Arrays;
 
 /**
  * @author Daniel Meyer

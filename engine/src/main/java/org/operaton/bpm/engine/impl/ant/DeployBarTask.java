@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.ant;
 
-import org.operaton.bpm.engine.*;
-import org.operaton.bpm.engine.impl.util.LogUtil;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -30,6 +27,9 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
+
+import org.operaton.bpm.engine.*;
+import org.operaton.bpm.engine.impl.util.LogUtil;
 
 
 /**

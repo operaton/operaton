@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.rest.exception;
 
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.PERSISTENCE_CONNECTION_ERROR_CLASS;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.getExceptionStacktrace;
-
 import java.sql.SQLException;
 import jakarta.ws.rs.core.Response;
+
 import org.operaton.bpm.engine.ProcessEnginePersistenceException;
 import org.operaton.commons.logging.BaseLogger;
+
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.PERSISTENCE_CONNECTION_ERROR_CLASS;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.getExceptionStacktrace;
 
 public class ExceptionLogger extends BaseLogger {
 

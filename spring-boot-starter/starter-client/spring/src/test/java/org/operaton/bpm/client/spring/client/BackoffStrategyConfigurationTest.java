@@ -16,22 +16,22 @@
  */
 package org.operaton.bpm.client.spring.client;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.client.configuration.BackoffStrategyConfiguration;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @ContextConfiguration(classes = {
-    SimpleClientConfiguration.class,
-    BackoffStrategyConfiguration.class
+  SimpleClientConfiguration.class,
+  BackoffStrategyConfiguration.class
 })
 class BackoffStrategyConfigurationTest extends MockedTest {
 

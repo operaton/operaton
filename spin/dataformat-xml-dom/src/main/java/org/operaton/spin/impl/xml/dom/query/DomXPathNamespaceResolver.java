@@ -16,18 +16,19 @@
  */
 package org.operaton.spin.impl.xml.dom.query;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 
 import org.operaton.spin.xml.SpinXmlElement;
+
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 
 /**

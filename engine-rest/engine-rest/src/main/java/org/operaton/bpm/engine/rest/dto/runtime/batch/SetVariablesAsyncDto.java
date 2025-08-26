@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.dto.runtime.batch;
 
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
-
-import java.util.List;
-import java.util.Map;
 
 public class SetVariablesAsyncDto {
 

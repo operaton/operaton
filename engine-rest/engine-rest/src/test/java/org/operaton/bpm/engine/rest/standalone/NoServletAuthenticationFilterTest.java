@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
-import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 public class NoServletAuthenticationFilterTest extends AbstractAuthenticationFilterTest {
 

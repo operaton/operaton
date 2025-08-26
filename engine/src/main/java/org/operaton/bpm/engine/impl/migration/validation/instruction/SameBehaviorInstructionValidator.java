@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
+import java.util.*;
+
 import org.operaton.bpm.engine.impl.bpmn.behavior.CallActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CaseCallActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.commons.utils.CollectionUtil;
-
-import java.util.*;
 
 public class SameBehaviorInstructionValidator implements MigrationInstructionValidator {
 

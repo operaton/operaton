@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.container.impl.jboss.util;
 
-import org.operaton.bpm.container.impl.jboss.service.MscRuntimeContainerDelegate;
 import org.jboss.as.naming.ManagedReference;
 import org.jboss.as.naming.ManagedReferenceFactory;
 
+import org.operaton.bpm.container.impl.jboss.service.MscRuntimeContainerDelegate;
 
 
 /**

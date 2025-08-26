@@ -17,9 +17,10 @@
 package org.operaton.bpm.dmn.engine.impl.el;
 
 import jakarta.el.ELContext;
+import jakarta.el.ValueExpression;
+
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElExpression;
 import org.operaton.bpm.engine.variable.context.VariableContext;
-import jakarta.el.ValueExpression;
 
 /**
  * @author Daniel Meyer

@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
-import org.operaton.bpm.dmn.engine.DmnDecision;
-import org.operaton.bpm.dmn.engine.DmnDecisionResult;
-import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
-import org.operaton.bpm.engine.variable.Variables;
-
 import java.util.List;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import org.operaton.bpm.dmn.engine.DmnDecision;
+import org.operaton.bpm.dmn.engine.DmnDecisionResult;
+import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
+import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

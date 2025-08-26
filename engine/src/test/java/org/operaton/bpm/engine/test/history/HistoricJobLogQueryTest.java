@@ -16,29 +16,13 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByActivityId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByDeploymentId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByExecutionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobDueDate;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobPriority;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobRetries;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByProcessDefinitionKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByTimestamp;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogPartiallyByOccurence;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -60,7 +44,10 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov

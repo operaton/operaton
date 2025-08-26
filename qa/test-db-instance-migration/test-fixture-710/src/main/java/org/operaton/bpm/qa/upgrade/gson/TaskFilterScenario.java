@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.qa.upgrade.gson;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
@@ -23,10 +27,6 @@ import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author Tassilo Weidner

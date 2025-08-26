@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.model.xml.impl.instance;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.w3c.dom.*;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.DomUtil;
@@ -23,12 +29,6 @@ import org.operaton.bpm.model.xml.impl.util.XmlQName;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import org.w3c.dom.*;
 
 import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE;
 import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE_NS_URI;

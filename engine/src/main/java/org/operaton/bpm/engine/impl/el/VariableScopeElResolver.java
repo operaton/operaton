@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
+import java.util.List;
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.bpmn.behavior.ExternalTaskActivityBehavior;
@@ -26,8 +28,6 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
-
-import java.util.List;
 
 
 /**

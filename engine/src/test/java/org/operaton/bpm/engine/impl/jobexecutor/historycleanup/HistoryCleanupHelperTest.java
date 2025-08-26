@@ -1,9 +1,9 @@
 package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.jupiter.api.Test;
 
 class HistoryCleanupHelperTest {
   @Test

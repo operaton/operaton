@@ -17,6 +17,9 @@
 package org.operaton.spin.impl.xml.dom;
 
 import java.util.NoSuchElementException;
+
+import org.w3c.dom.Node;
+
 import org.operaton.commons.logging.BaseLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 import org.operaton.spin.xml.SpinXPathException;
@@ -26,7 +29,6 @@ import org.operaton.spin.xml.SpinXmlDataFormatException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.SpinXmlElementException;
 import org.operaton.spin.xml.SpinXmlElementImplementationException;
-import org.w3c.dom.Node;
 
 /**
  * @author Daniel Meyer

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.qa.upgrade.gson.batch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Tassilo Weidner

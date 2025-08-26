@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.dmn.engine.impl.transform;
 
-import static org.operaton.bpm.dmn.engine.impl.transform.DmnExpressionTransformHelper.getExpression;
-import static org.operaton.bpm.dmn.engine.impl.transform.DmnExpressionTransformHelper.getExpressionLanguage;
-
 import org.operaton.bpm.dmn.engine.impl.DmnExpressionImpl;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformContext;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandler;
 import org.operaton.bpm.model.dmn.instance.InputEntry;
+
+import static org.operaton.bpm.dmn.engine.impl.transform.DmnExpressionTransformHelper.getExpression;
+import static org.operaton.bpm.dmn.engine.impl.transform.DmnExpressionTransformHelper.getExpressionLanguage;
 
 public class DmnDecisionTableConditionTransformHandler implements DmnElementTransformHandler<InputEntry, DmnExpressionImpl> {
 

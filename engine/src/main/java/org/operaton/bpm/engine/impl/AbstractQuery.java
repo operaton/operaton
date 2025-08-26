@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -29,6 +26,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.joda.time.DateTime;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -42,7 +41,9 @@ import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.impl.util.QueryMaxResultsLimitUtil;
 import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.query.QueryProperty;
-import org.joda.time.DateTime;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
 
 /**

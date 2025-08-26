@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.rest.sub.runtime;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+
 import org.operaton.bpm.engine.rest.dto.CreateIncidentDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ExecutionDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ExecutionTriggerDto;
 import org.operaton.bpm.engine.rest.dto.runtime.IncidentDto;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
-
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 
 public interface ExecutionResource {
 

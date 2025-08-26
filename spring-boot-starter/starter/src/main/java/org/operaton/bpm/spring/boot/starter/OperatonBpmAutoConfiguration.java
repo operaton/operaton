@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.spring.ProcessEngineFactoryBean;
-import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
-import org.operaton.bpm.spring.boot.starter.event.ProcessApplicationEventPublisher;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.operaton.bpm.spring.boot.starter.property.ManagementProperties;
-import org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -34,6 +26,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
+import org.operaton.bpm.engine.spring.ProcessEngineFactoryBean;
+import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
+import org.operaton.bpm.spring.boot.starter.event.ProcessApplicationEventPublisher;
+import org.operaton.bpm.spring.boot.starter.property.ManagementProperties;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion;
 
 @EnableConfigurationProperties({
   OperatonBpmProperties.class,

@@ -17,15 +17,17 @@
 package org.operaton.bpm.qa;
 
 import jakarta.annotation.PostConstruct;
+
 import org.apache.catalina.webresources.TomcatURLStreamHandlerFactory;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.example.invoice.InvoiceProcessApplication;
-import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
-import org.operaton.bpm.spring.boot.starter.event.PostDeployEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.event.EventListener;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.example.invoice.InvoiceProcessApplication;
+import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
+import org.operaton.bpm.spring.boot.starter.event.PostDeployEvent;
 
 @SpringBootApplication
 @EnableProcessApplication("myProcessApplication")

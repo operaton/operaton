@@ -22,12 +22,12 @@ import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.operaton.spin.impl.xml.dom.DomXmlLogger;
-import org.operaton.spin.spi.TextBasedDataFormatReader;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import org.operaton.spin.impl.xml.dom.DomXmlLogger;
+import org.operaton.spin.spi.TextBasedDataFormatReader;
 
 /**
  * @author Daniel Meyer

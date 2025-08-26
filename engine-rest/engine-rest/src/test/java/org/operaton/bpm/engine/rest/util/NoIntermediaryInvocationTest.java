@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
-import static org.operaton.bpm.engine.rest.helper.NoIntermediaryInvocation.immediatelyAfter;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.exceptions.base.MockitoAssertionError;
 
+import static org.operaton.bpm.engine.rest.helper.NoIntermediaryInvocation.immediatelyAfter;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**

@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.rest.sub.impl;
 
+import java.io.ByteArrayInputStream;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.BytesValue;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import java.io.ByteArrayInputStream;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>

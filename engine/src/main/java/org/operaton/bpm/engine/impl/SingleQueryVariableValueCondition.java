@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.QueryOperator.EQUALS;
-import static org.operaton.bpm.engine.impl.QueryOperator.NOT_EQUALS;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -32,12 +29,15 @@ import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static org.operaton.bpm.engine.impl.QueryOperator.EQUALS;
+import static org.operaton.bpm.engine.impl.QueryOperator.NOT_EQUALS;
+
 /**
  * @author Thorben Lindhauer
  *
  */
 public class SingleQueryVariableValueCondition extends AbstractQueryVariableValueCondition
-    implements ValueFields {
+  implements ValueFields {
 
   protected String textValue;
   protected String textValue2;

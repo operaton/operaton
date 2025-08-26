@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.quarkus.engine.test.id;
 
+import jakarta.inject.Inject;
+
 import io.quarkus.test.QuarkusUnitTest;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
-
-import jakarta.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

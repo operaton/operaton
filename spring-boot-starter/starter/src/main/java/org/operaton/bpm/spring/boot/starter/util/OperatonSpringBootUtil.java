@@ -17,16 +17,17 @@
 package org.operaton.bpm.spring.boot.starter.util;
 
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.springframework.util.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.util.CollectionUtils;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 
 public final class OperatonSpringBootUtil {
 

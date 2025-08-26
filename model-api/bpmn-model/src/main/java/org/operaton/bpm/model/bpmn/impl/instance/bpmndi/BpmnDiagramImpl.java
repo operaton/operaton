@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance.bpmndi;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.impl.instance.di.DiagramImpl;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnDiagram;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnLabelStyle;
@@ -27,8 +29,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
-
-import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_ELEMENT_BPMN_DIAGRAM;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;

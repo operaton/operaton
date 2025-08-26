@@ -16,20 +16,20 @@
  */
 package org.operaton.spin.xml.dom;
 
+import java.io.Reader;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.spi.SpinDataFormatException;
 import org.operaton.spin.xml.SpinXmlElement;
+
 import static org.operaton.spin.DataFormats.xml;
 import static org.operaton.spin.Spin.S;
 import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.impl.util.SpinIoUtil.stringAsReader;
 import static org.operaton.spin.xml.XmlTestConstants.*;
-
-import java.io.Reader;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

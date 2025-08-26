@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.cockpit.impl.db;
 
+import java.util.List;
+
 import org.operaton.bpm.cockpit.db.CommandExecutor;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-
-import java.util.List;
 
 /**
  *

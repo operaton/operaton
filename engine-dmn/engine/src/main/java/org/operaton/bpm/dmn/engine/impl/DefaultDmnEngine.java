@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.impl;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +30,8 @@ import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformer;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
+
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 public class DefaultDmnEngine implements DmnEngine {
 

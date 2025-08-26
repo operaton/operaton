@@ -17,8 +17,8 @@
 package org.operaton.bpm.engine.cdi.annotation.event;
 
 
-import jakarta.enterprise.util.AnnotationLiteral;
 import java.util.Objects;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 public class TakeTransitionLiteral extends AnnotationLiteral<TakeTransition> implements TakeTransition {
 

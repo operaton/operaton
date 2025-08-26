@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.operaton.connect.spi.Connector;
 import org.operaton.connect.spi.ConnectorRequest;
-import org.operaton.connect.spi.ConnectorResponse;
 import org.operaton.connect.spi.ConnectorRequestInterceptor;
+import org.operaton.connect.spi.ConnectorResponse;
 
 /**
  * Abstract implementation of the connector interface.

@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.spring.client.configuration;
 
-import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
 
 @Configuration
 @EnableExternalTaskClient("http://localhost:8080/engine-rest")

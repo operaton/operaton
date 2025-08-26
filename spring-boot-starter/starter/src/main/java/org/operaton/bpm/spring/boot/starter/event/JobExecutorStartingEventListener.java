@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 
 public class JobExecutorStartingEventListener {
 

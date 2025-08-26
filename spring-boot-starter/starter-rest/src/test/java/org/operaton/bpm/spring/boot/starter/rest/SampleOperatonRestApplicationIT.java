@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.rest;
 
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-
 import java.io.ByteArrayInputStream;
 
 import my.own.custom.spring.boot.project.SampleOperatonRestApplication;
@@ -32,6 +26,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
+
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;

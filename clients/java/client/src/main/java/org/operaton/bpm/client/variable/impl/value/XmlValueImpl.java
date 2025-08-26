@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.client.variable.impl.value;
 
-import static org.operaton.bpm.client.variable.ClientValues.XML;
+import java.io.Serial;
 
 import org.operaton.bpm.client.variable.value.XmlValue;
-
-import java.io.Serial;
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl;
+
+import static org.operaton.bpm.client.variable.ClientValues.XML;
 
 public class XmlValueImpl extends PrimitiveTypeValueImpl<String> implements XmlValue {
 

@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala.spin;
 
-import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
 import org.camunda.feel.valuemapper.CustomValueMapper;
+
+import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
 
 public class SpinValueMapperFactory {
 

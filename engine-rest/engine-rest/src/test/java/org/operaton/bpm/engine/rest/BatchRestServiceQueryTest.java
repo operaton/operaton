@@ -16,6 +16,27 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+
+import org.operaton.bpm.engine.batch.Batch;
+import org.operaton.bpm.engine.batch.BatchQuery;
+import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+import org.operaton.bpm.engine.rest.helper.MockProvider;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+
+import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -27,27 +48,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
-import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.batch.BatchQuery;
-import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
-import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import jakarta.ws.rs.core.Response.Status;
 
 public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
 

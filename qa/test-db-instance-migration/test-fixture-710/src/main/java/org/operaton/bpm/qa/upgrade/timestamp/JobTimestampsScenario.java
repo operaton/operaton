@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.qa.upgrade.timestamp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -27,9 +30,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 import org.operaton.bpm.qa.upgrade.Times;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author Nikola Koevski

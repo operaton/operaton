@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.impl;
 
+import java.io.IOException;
+import java.io.Reader;
+
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.Spin;
 import org.operaton.spin.SpinFactory;
@@ -27,10 +30,8 @@ import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.spi.DataFormatReader;
 import org.operaton.spin.spi.SpinDataFormatException;
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
-import java.io.IOException;
-import java.io.Reader;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 /**
  * @author Daniel Meyer

@@ -19,10 +19,10 @@ package org.operaton.bpm.engine.impl.migration.validation.activity;
 import java.util.Arrays;
 import java.util.List;
 
+import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryEventActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessStartEventActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
-import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
 /**

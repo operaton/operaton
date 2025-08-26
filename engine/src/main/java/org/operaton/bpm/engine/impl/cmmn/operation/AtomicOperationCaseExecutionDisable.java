@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
-import static org.operaton.bpm.engine.delegate.CaseExecutionListener.DISABLE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DISABLED;
-import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
-
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnCompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
+
+import static org.operaton.bpm.engine.delegate.CaseExecutionListener.DISABLE;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DISABLED;
+import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
 
 /**
  * @author Roman Smirnov

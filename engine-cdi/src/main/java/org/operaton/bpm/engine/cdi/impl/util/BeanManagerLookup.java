@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.cdi.impl.util;
 
 import jakarta.enterprise.inject.spi.BeanManager;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 

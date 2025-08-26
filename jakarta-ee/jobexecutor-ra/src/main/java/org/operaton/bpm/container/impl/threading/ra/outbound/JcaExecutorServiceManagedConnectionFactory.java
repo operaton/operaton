@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 import java.io.Serial;
 import java.util.Iterator;
 import java.util.Set;
-
 import jakarta.resource.ResourceException;
 import jakarta.resource.spi.ConnectionDefinition;
 import jakarta.resource.spi.ConnectionManager;
@@ -29,15 +28,16 @@ import jakarta.resource.spi.ManagedConnection;
 import jakarta.resource.spi.ManagedConnectionFactory;
 import jakarta.resource.spi.ResourceAdapter;
 import jakarta.resource.spi.ResourceAdapterAssociation;
+
 import javax.security.auth.Subject;
 
 
 @ConnectionDefinition(
-    connectionFactory = JcaExecutorServiceConnectionFactory.class,
-    connectionFactoryImpl = JcaExecutorServiceConnectionFactoryImpl.class,
-    connection = JcaExecutorServiceConnection.class,
-    connectionImpl = JcaExecutorServiceConnectionImpl.class
-  )
+  connectionFactory = JcaExecutorServiceConnectionFactory.class,
+  connectionFactoryImpl = JcaExecutorServiceConnectionFactoryImpl.class,
+  connection = JcaExecutorServiceConnection.class,
+  connectionImpl = JcaExecutorServiceConnectionImpl.class
+)
 public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnectionFactory, ResourceAdapterAssociation {
 
   @Serial private static final long serialVersionUID = 1L;

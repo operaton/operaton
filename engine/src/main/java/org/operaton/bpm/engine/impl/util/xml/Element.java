@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.util.xml;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-
 import java.util.*;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
+
+import org.operaton.bpm.engine.ProcessEngineException;
 
 
 /**

@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngines;
-import org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
-
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringJoiner;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
+
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngines;
+import org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration;
 
 import static org.springframework.core.io.support.ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX;
 

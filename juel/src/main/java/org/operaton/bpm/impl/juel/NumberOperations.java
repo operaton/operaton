@@ -15,10 +15,10 @@
  */
 package org.operaton.bpm.impl.juel;
 
-import jakarta.el.ELException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import jakarta.el.ELException;
 
 /**
  * Arithmetic Operations as specified in chapter 1.7.

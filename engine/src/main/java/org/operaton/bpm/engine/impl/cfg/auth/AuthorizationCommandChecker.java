@@ -16,29 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cfg.auth;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_TASK;
-import static org.operaton.bpm.engine.authorization.Permissions.TASK_ASSIGN;
-import static org.operaton.bpm.engine.authorization.Permissions.TASK_WORK;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_TASK;
-import static org.operaton.bpm.engine.authorization.Resources.BATCH;
-import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.DECISION_REQUIREMENTS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
@@ -72,6 +49,16 @@ import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.CaseExecution;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.*;
+import static org.operaton.bpm.engine.authorization.Resources.BATCH;
+import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.DECISION_REQUIREMENTS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
 
 /**
  * {@link CommandChecker} that uses the {@link AuthorizationManager} to perform

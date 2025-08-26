@@ -17,10 +17,6 @@
 package org.operaton.bpm.engine.impl.util;
 
 import java.lang.reflect.Type;
-import org.operaton.bpm.engine.impl.telemetry.dto.CommandImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.MetricImpl;
-import org.operaton.bpm.engine.telemetry.Command;
-import org.operaton.bpm.engine.telemetry.Metric;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,6 +24,11 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+
+import org.operaton.bpm.engine.impl.telemetry.dto.CommandImpl;
+import org.operaton.bpm.engine.impl.telemetry.dto.MetricImpl;
+import org.operaton.bpm.engine.telemetry.Command;
+import org.operaton.bpm.engine.telemetry.Metric;
 
 public final class JsonTestUtil {
 

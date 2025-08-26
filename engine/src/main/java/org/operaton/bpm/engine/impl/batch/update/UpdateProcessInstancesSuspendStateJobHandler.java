@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.batch.update;
 
 import java.util.List;
+
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.UpdateProcessInstancesSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;

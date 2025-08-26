@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.jobexecutor;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 /**

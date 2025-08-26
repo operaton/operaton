@@ -18,7 +18,6 @@ package org.operaton.spin.xml;
 
 import java.io.Serial;
 
-
 import org.operaton.spin.SpinRuntimeException;
 
 /**

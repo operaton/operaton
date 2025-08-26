@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmptyString;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
-
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +36,15 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
+import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmptyString;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
 /**
  * @author Tom Baeyens

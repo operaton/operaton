@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;

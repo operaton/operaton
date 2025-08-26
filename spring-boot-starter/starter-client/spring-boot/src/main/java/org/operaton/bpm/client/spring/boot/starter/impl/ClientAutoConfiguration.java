@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.impl;
 
-import org.operaton.bpm.client.spring.boot.starter.ClientProperties;
-import org.operaton.bpm.client.spring.impl.client.ClientPostProcessor;
-import org.operaton.bpm.client.spring.impl.subscription.SubscriptionPostProcessor;
-
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import org.operaton.bpm.client.spring.boot.starter.ClientProperties;
+import org.operaton.bpm.client.spring.impl.client.ClientPostProcessor;
+import org.operaton.bpm.client.spring.impl.subscription.SubscriptionPostProcessor;
 
 @Configuration
 @EnableConfigurationProperties({ClientProperties.class})

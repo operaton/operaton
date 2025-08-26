@@ -16,15 +16,15 @@
  */
 package org.operaton.connect.plugin;
 
-import org.operaton.connect.httpclient.HttpConnector;
-import org.operaton.connect.httpclient.impl.HttpResponseImpl;
-import org.operaton.connect.spi.ConnectorConfigurator;
-
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHttpResponse;
+
+import org.operaton.connect.httpclient.HttpConnector;
+import org.operaton.connect.httpclient.impl.HttpResponseImpl;
+import org.operaton.connect.spi.ConnectorConfigurator;
 
 /**
  * @author Daniel Meyer

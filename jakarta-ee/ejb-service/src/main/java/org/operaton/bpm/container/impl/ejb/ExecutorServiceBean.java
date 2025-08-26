@@ -17,7 +17,6 @@
 package org.operaton.bpm.container.impl.ejb;
 
 import java.util.List;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.annotation.Resource;

@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Optional;
+import jakarta.annotation.PostConstruct;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.AbstractOperatonConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.FilterProperty;
-
-import jakarta.annotation.PostConstruct;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
 
 public class CreateFilterConfiguration extends AbstractOperatonConfiguration {
 

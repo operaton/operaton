@@ -17,7 +17,10 @@
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
 
+import java.util.*;
+
 import org.assertj.core.api.Assertions;
+
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
@@ -32,8 +35,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Activity;
 import org.operaton.bpm.model.bpmn.instance.Event;
 import org.operaton.bpm.model.bpmn.instance.Gateway;
-
-import java.util.*;
 
 import static java.util.Collections.emptyMap;
 

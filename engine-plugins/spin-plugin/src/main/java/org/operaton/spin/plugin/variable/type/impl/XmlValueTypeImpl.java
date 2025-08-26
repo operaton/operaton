@@ -18,7 +18,6 @@ package org.operaton.spin.plugin.variable.type.impl;
 
 import java.io.Serial;
 
-
 import org.operaton.spin.plugin.variable.SpinValues;
 import org.operaton.spin.plugin.variable.type.XmlValueType;
 import org.operaton.spin.plugin.variable.value.SpinValue;

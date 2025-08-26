@@ -16,6 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.dto.runtime;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
@@ -27,17 +36,8 @@ import org.operaton.bpm.engine.rest.dto.converter.StringSetConverter;
 import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response.Status;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static java.lang.Boolean.TRUE;
 
 public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQuery> {

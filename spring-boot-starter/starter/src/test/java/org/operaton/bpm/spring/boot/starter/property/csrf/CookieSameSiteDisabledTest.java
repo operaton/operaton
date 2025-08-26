@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.property.csrf;
 
-import org.operaton.bpm.spring.boot.starter.property.CsrfProperties;
-import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.spring.boot.starter.property.CsrfProperties;
+import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.csrf.enableSameSiteCookie=false"
 })

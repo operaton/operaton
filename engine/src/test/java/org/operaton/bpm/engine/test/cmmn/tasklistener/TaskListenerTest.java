@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.tasklistener;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
@@ -29,7 +28,9 @@ import org.operaton.bpm.engine.test.cmmn.tasklistener.util.MySpecialTaskListener
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.MyTaskListener;
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.NotTaskListener;
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.TaskDeleteListener;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Roman Smirnov

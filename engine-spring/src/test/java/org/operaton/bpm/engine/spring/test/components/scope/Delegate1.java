@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.spring.test.components.scope;
 
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -16,21 +16,22 @@
  */
 package org.operaton.spin.xml.dom.format.spi;
 
-import static org.assertj.core.api.Fail.fail;
-
 import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
-
 import jakarta.xml.bind.JAXBException;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.Spin;
 import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
 import org.operaton.spin.xml.SpinXmlDataFormatException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.mapping.Customer;
+
+import static org.assertj.core.api.Fail.fail;
 
 /**
  * @author Thorben Lindhauer

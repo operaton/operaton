@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.spring.boot.starter.util;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import static org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion.key;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.env.PropertiesPropertySource;
 
+import org.operaton.bpm.engine.ProcessEngine;
+
+import static org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion.key;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 class OperatonBpmVersionTest {
 
   protected static String currentVersion;

@@ -16,17 +16,17 @@
  */
 package org.operaton.spin.impl.json.jackson.query;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.jayway.jsonpath.InvalidPathException;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
+
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
 import org.operaton.spin.impl.json.jackson.JacksonJsonNode;
 import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPathQuery;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.PathNotFoundException;
 
 /**
  * @author Stefan Hentschel

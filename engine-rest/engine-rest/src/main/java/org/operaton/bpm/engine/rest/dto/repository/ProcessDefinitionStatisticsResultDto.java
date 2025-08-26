@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.dto.repository;
 
+import java.util.ArrayList;
+
 import org.operaton.bpm.engine.management.IncidentStatistics;
 import org.operaton.bpm.engine.management.ProcessDefinitionStatistics;
 import org.operaton.bpm.engine.rest.dto.StatisticsResultDto;
-
-import java.util.ArrayList;
 
 public class ProcessDefinitionStatisticsResultDto extends StatisticsResultDto {
 

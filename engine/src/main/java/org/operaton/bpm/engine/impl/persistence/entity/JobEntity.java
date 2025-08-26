@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.*;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -33,14 +37,11 @@ import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
+
 import static org.operaton.bpm.engine.impl.DefaultPriorityProvider.DEFAULT_PRIORITY;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
 import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.*;
 
 /**
  * Stub of the common parts of a Job. You will normally work with a subclass of
@@ -52,7 +53,7 @@ import java.util.*;
  * @author Frederik Heremans
  */
 public abstract class JobEntity extends AcquirableJobEntity
-    implements Serializable, Job, DbEntity,
+  implements Serializable, Job, DbEntity,
     HasDbRevision, HasDbReferences, DbEntityLifecycleAware {
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;

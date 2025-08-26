@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.deployment.scanning.spi.ProcessApplicationScanner;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -43,7 +44,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @author Daniel Meyer
  * @author Falko Menge
  */
-public class ClassPathProcessApplicationScanner implements ProcessApplicationScanner  {
+public class ClassPathProcessApplicationScanner implements ProcessApplicationScanner {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 

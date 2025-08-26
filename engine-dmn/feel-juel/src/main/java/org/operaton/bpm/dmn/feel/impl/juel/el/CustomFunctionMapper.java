@@ -19,7 +19,6 @@ package org.operaton.bpm.dmn.feel.impl.juel.el;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
 import jakarta.el.FunctionMapper;
 
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineLogger;

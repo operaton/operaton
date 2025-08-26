@@ -16,8 +16,12 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
+import java.util.Arrays;
+import java.util.Map;
+
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.MapAssert;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
 import org.operaton.bpm.engine.history.HistoricCaseActivityInstanceQuery;
@@ -30,9 +34,6 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.assertions.bpmn.AbstractProcessAssert;
 import org.operaton.bpm.engine.test.assertions.bpmn.TaskAssert;
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
-
-import java.util.Arrays;
-import java.util.Map;
 
 public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A extends CaseExecution> extends AbstractProcessAssert<S, A> {
 

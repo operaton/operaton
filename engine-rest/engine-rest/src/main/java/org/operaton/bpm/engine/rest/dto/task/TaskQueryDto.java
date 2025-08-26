@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.engine.rest.dto.task;
 
+import java.util.*;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.*;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
@@ -29,16 +37,8 @@ import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
+
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response.Status;
-import java.util.*;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static java.lang.Boolean.TRUE;
 
 @JsonInclude(Include.NON_NULL)

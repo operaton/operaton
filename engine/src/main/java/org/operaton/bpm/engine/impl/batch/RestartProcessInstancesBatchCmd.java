@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,6 +33,10 @@ import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  *

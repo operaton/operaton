@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
+import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
+
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.FAILED;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_BLOCKING;
-
-import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 
 /**
  * @author Roman Smirnov

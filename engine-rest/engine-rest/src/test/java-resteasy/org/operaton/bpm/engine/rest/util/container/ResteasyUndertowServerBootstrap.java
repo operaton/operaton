@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.util.container;
 
-import io.undertow.servlet.api.DeploymentInfo;
 import java.net.BindException;
 import java.util.Properties;
+
+import io.undertow.servlet.api.DeploymentInfo;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 
 public class ResteasyUndertowServerBootstrap extends AbstractServerBootstrap {

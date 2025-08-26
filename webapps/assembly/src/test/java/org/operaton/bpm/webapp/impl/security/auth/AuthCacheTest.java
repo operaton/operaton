@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
-import org.operaton.bpm.webapp.impl.security.SecurityActions;
-import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
-import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpSession;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,17 +33,17 @@ import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
+import org.operaton.bpm.webapp.impl.security.SecurityActions;
+import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
+import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.addDays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.addDays;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.any;

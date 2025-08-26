@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.container.impl.metadata;
 
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.JOB_ACQUISITION;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.JOB_EXECUTOR;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.JOB_EXECUTOR_CLASS_NAME;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.NAME;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROCESS_ENGINE;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROPERTIES;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +27,13 @@ import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 import org.operaton.bpm.engine.impl.util.xml.Parser;
+
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.JOB_ACQUISITION;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.JOB_EXECUTOR;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.JOB_EXECUTOR_CLASS_NAME;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.NAME;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROCESS_ENGINE;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROPERTIES;
 
 /**
  * <p>Parse implementation for parsing the {@link BpmPlatformXml}</p>

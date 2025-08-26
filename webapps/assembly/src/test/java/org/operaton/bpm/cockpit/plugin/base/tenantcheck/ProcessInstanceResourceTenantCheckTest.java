@@ -16,21 +16,22 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.tenantcheck;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.CalledProcessInstanceDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.CalledProcessInstanceQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessInstanceResource;
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
 import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

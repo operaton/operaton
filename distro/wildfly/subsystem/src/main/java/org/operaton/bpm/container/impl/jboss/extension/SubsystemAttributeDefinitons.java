@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension;
 
-import org.operaton.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration;
-import org.operaton.bpm.container.impl.jboss.util.CustomMarshaller;
 import org.jboss.as.controller.*;
 import org.jboss.as.controller.registry.AttributeAccess;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
+
+import org.operaton.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration;
+import org.operaton.bpm.container.impl.jboss.util.CustomMarshaller;
 
 public final class SubsystemAttributeDefinitons {
     private SubsystemAttributeDefinitons() {

@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.history.CleanableHistoricBatchReportResult;
 import org.operaton.bpm.engine.impl.CleanableHistoricBatchReportImpl;
@@ -38,11 +43,6 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class HistoricBatchManager extends AbstractManager {
   private static final String MAP = "map";

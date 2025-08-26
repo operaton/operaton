@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseSentryPartEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseSentryPartQueryImpl;
@@ -26,7 +26,8 @@ import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.model.cmmn.VariableTransition;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov

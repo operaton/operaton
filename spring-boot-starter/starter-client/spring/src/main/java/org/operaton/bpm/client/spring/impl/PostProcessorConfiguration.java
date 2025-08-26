@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.client.spring.impl;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import org.operaton.bpm.client.spring.impl.client.ClientFactory;
 import org.operaton.bpm.client.spring.impl.client.ClientPostProcessor;
 import org.operaton.bpm.client.spring.impl.subscription.SpringTopicSubscriptionImpl;
 import org.operaton.bpm.client.spring.impl.subscription.SubscriptionPostProcessor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class PostProcessorConfiguration {

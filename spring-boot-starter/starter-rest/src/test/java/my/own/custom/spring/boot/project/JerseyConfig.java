@@ -16,11 +16,11 @@
  */
 package my.own.custom.spring.boot.project;
 
-import org.operaton.bpm.spring.boot.starter.rest.OperatonJerseyResourceConfig;
-
 import jakarta.ws.rs.ApplicationPath;
 
 import org.springframework.stereotype.Component;
+
+import org.operaton.bpm.spring.boot.starter.rest.OperatonJerseyResourceConfig;
 
 @Component
 @ApplicationPath("/engine-rest")

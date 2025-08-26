@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.client.spring.subscription.configuration;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
 import org.operaton.bpm.client.task.ExternalTaskService;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class HandlerMethodAnnotationConfiguration {

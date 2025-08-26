@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.test.assertions.helpers;
 
-import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
+import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
 
 /**
  * Default Answer for CaseExecutionQuery mocks that returns the mock as default answer.

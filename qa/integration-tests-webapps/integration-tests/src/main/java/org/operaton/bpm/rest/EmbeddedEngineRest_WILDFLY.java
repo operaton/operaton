@@ -29,6 +29,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.rest.beans.CustomProcessEngineProvider;
 import org.operaton.bpm.rest.beans.CustomRestApplication;
 

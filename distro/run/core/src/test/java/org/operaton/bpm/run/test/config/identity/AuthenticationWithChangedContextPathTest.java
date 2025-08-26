@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.run.test.config.identity;
 
-import org.operaton.bpm.run.property.OperatonBpmRunAuthenticationProperties;
-import org.operaton.bpm.run.test.AbstractRestTest;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -29,15 +26,18 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.run.property.OperatonBpmRunAuthenticationProperties;
+import org.operaton.bpm.run.test.AbstractRestTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @ActiveProfiles(profiles = {
-    "test-changed-rest-context-path",
-    "test-auth-enabled"
+  "test-changed-rest-context-path",
+  "test-auth-enabled"
 })
 @TestPropertySource(properties = {
-    OperatonBpmRunAuthenticationProperties.PREFIX + "=basic"
+  OperatonBpmRunAuthenticationProperties.PREFIX + "=basic"
 })
 class AuthenticationWithChangedContextPathTest extends AbstractRestTest {
 

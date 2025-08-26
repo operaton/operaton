@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.engine.test.standalone.scripting;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import javax.script.ScriptEngine;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.RepositoryService;
@@ -30,6 +28,8 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov

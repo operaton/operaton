@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.operaton.bpm.engine.rest.helper.EqualsList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.rest.helper.EqualsList;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

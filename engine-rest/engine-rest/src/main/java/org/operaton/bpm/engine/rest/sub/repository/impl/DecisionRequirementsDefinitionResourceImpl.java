@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.sub.repository.impl;
 
 import java.io.InputStream;
-
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 

@@ -19,10 +19,10 @@ package org.operaton.bpm.client.variable.impl.format.json;
 import java.lang.reflect.TypeVariable;
 import java.util.List;
 
-import org.operaton.bpm.client.variable.impl.format.TypeDetector;
-
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+
+import org.operaton.bpm.client.variable.impl.format.TypeDetector;
 
 public class ListJacksonJsonTypeDetector implements TypeDetector {
 

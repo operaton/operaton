@@ -20,11 +20,10 @@ import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.LifecycleState;
 import org.apache.catalina.startup.Tomcat;
-import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
-import org.operaton.bpm.engine.rest.spi.impl.MockedProcessEngineProvider;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
@@ -33,6 +32,9 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
 import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
+
+import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
+import org.operaton.bpm.engine.rest.spi.impl.MockedProcessEngineProvider;
 
 
 public abstract class TomcatServerBootstrap extends AbstractServerBootstrap {

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.impl.bpmn.parser.EscalationEventDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
-
-import java.util.List;
 
 public class EscalationEventDefinitionFinder implements TreeVisitor<PvmScope> {
 

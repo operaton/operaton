@@ -16,8 +16,6 @@
 package org.operaton.bpm.impl.juel;
 
 import java.io.Serial;
-
-
 import jakarta.el.ELContext;
 import jakarta.el.ELException;
 

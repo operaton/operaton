@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.batch;
 
-import org.operaton.bpm.engine.ManagementService;
-
 import java.util.Date;
+
+import org.operaton.bpm.engine.ManagementService;
 
 /**
  * <p>A batch represents a number of jobs which

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.model.xml.impl.type.child;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
@@ -25,9 +28,6 @@ import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
-
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * <p>This collection is a view on an the children of a Model Element.</p>

@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import java.util.Comparator;
+import java.util.List;
+
+import junit.framework.TestCase;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -37,11 +42,6 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-
-import java.util.Comparator;
-import java.util.List;
-
-import junit.framework.TestCase;
 
 /**
  * This class provides utils to verify the sorting of queries of engine entities.

@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.engine.cdi.test.jsf;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Set;
-
 import jakarta.enterprise.inject.AmbiguousResolutionException;
 import jakarta.enterprise.inject.spi.Bean;
 
-import org.operaton.bpm.engine.cdi.compat.OperatonTaskForm;
-import org.operaton.bpm.engine.cdi.compat.FoxTaskForm;
-import org.operaton.bpm.engine.cdi.jsf.TaskForm;
-import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.operaton.bpm.engine.cdi.compat.FoxTaskForm;
+import org.operaton.bpm.engine.cdi.compat.OperatonTaskForm;
+import org.operaton.bpm.engine.cdi.jsf.TaskForm;
+import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer

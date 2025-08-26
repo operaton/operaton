@@ -16,6 +16,11 @@
  */
 package org.operaton.spin.json.tree.type;
 
+import java.util.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.operaton.spin.impl.json.jackson.format.MapJacksonJsonTypeDetector;
@@ -24,14 +29,9 @@ import org.operaton.spin.json.mapping.Customer;
 import org.operaton.spin.json.mapping.RegularCustomer;
 import org.operaton.spin.spi.DataFormatMapper;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.spin.DataFormats.json;
-
-import java.util.*;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class JsonJacksonTreeTypeDetectionTest {
 

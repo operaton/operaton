@@ -16,6 +16,8 @@
  */
 package org.operaton.spin.json.tree;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.Spin;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
@@ -23,11 +25,9 @@ import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPropertyException;
+
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

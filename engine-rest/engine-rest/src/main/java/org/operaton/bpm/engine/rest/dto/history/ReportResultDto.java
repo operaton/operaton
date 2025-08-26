@@ -16,22 +16,22 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import org.operaton.bpm.engine.history.DurationReportResult;
-import org.operaton.bpm.engine.history.ReportResult;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import org.operaton.bpm.engine.history.DurationReportResult;
+import org.operaton.bpm.engine.history.ReportResult;
 
 /**
  * @author Roman Smirnov
  *
  */
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.PROPERTY, property="type"
+  use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type"
 )
 @JsonSubTypes({
-    @Type(DurationReportResultDto.class)
+  @Type(DurationReportResultDto.class)
 })
 public abstract class ReportResultDto {
 

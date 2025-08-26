@@ -18,15 +18,15 @@ package org.operaton.bpm.engine.rest.dto.runtime.modification;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.dto.runtime.TriggerVariableValueDto;
 import org.operaton.bpm.engine.runtime.ActivityInstantiationBuilder;
 import org.operaton.bpm.engine.runtime.InstantiationBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstanceModificationBuilder;
-
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Thorben Lindhauer
@@ -34,10 +34,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(CancellationInstructionDto.class),
-    @JsonSubTypes.Type(StartBeforeInstructionDto.class),
-    @JsonSubTypes.Type(StartAfterInstructionDto.class),
-    @JsonSubTypes.Type(StartTransitionInstructionDto.class)})
+  @JsonSubTypes.Type(CancellationInstructionDto.class),
+  @JsonSubTypes.Type(StartBeforeInstructionDto.class),
+  @JsonSubTypes.Type(StartAfterInstructionDto.class),
+  @JsonSubTypes.Type(StartTransitionInstructionDto.class)})
 public abstract class ProcessInstanceModificationInstructionDto {
 
   public static final String CANCEL_INSTRUCTION_TYPE = "cancel";

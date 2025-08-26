@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
+import java.util.Collection;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.bpmn.instance.*;
 
-import java.util.Collection;
+import org.operaton.bpm.model.bpmn.instance.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

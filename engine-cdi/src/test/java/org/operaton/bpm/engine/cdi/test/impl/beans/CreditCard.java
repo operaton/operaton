@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.cdi.test.impl.beans;
 
 import java.io.Serializable;
-
 import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
 import org.operaton.bpm.engine.management.MetricIntervalValue;

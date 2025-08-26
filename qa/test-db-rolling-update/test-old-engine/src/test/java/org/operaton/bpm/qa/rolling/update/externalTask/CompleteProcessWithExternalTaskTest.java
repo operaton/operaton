@@ -17,13 +17,16 @@
 package org.operaton.bpm.qa.rolling.update.externalTask;
 
 import java.util.List;
-import org.operaton.bpm.engine.externaltask.ExternalTask;
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+
 import org.junit.Assert;
 import org.junit.Test;
-import static junit.framework.TestCase.assertEquals;
+
+import org.operaton.bpm.engine.externaltask.ExternalTask;
+import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNull;
 
 /**

@@ -22,15 +22,16 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.operaton.bpm.application.ProcessApplicationInterface;
-import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
-import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
 import org.jboss.as.ee.component.ComponentView;
 import org.jboss.as.naming.ManagedReference;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+
+import org.operaton.bpm.application.ProcessApplicationInterface;
+import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
+import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
 
 /**
  * Responsible for invoking {@link BpmPlatformPlugin#postProcessApplicationUndeploy(ProcessApplicationInterface)}

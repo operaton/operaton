@@ -16,16 +16,16 @@
  */
 package org.operaton.spin.xml.dom;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.xml.SpinXmlDataFormatException;
 import org.operaton.spin.xml.mapping.Order;
+
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML_FILE_NAME;
 import static org.operaton.spin.xml.XmlTestConstants.assertIsExampleOrder;
-
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**

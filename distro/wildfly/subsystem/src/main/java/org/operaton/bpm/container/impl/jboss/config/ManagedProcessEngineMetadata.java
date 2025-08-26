@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.container.impl.jboss.config;
 
-import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
-import org.operaton.bpm.engine.ProcessEngineException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
+import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
  * @author Daniel Meyer

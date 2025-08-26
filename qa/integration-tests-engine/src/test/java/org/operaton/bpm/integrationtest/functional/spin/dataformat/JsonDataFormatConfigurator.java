@@ -18,11 +18,11 @@ package org.operaton.bpm.integrationtest.functional.spin.dataformat;
 
 import java.text.SimpleDateFormat;
 
-import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
-import org.operaton.spin.spi.DataFormatConfigurator;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
+import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
+import org.operaton.spin.spi.DataFormatConfigurator;
 
 /**
  * @author Thorben Lindhauer

@@ -21,13 +21,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
-import org.operaton.bpm.container.impl.jboss.extension.handler.BpmPlatformSubsystemAdd;
-import org.operaton.bpm.container.impl.jboss.extension.handler.BpmPlatformSubsystemRemove;
 import org.jboss.as.controller.AttributeDefinition;
 import org.jboss.as.controller.PersistentResourceDefinition;
 import org.jboss.as.controller.operations.common.GenericSubsystemDescribeHandler;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
+
+import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
+import org.operaton.bpm.container.impl.jboss.extension.handler.BpmPlatformSubsystemAdd;
+import org.operaton.bpm.container.impl.jboss.extension.handler.BpmPlatformSubsystemRemove;
 
 public final class BpmPlatformRootDefinition extends PersistentResourceDefinition {
 

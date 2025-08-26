@@ -20,13 +20,15 @@ package org.operaton.bpm.engine.test.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.function.Supplier;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.task.Task;
+
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.task.Task;
 
 /**
  * JUnit 4 Rule that performs resource cleanup for methods that require post-method execution cleanup.

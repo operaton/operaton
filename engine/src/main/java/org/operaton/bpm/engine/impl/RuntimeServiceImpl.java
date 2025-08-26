@@ -16,35 +16,19 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
-import org.operaton.bpm.engine.impl.cmd.CreateIncidentCmd;
-import org.operaton.bpm.engine.impl.cmd.DeleteProcessInstanceCmd;
-import org.operaton.bpm.engine.impl.cmd.DeleteProcessInstancesCmd;
-import org.operaton.bpm.engine.impl.cmd.FindActiveActivityIdsCmd;
-import org.operaton.bpm.engine.impl.cmd.GetActivityInstanceCmd;
-import org.operaton.bpm.engine.impl.cmd.GetExecutionVariableCmd;
-import org.operaton.bpm.engine.impl.cmd.GetExecutionVariableTypedCmd;
-import org.operaton.bpm.engine.impl.cmd.GetExecutionVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.GetStartFormCmd;
-import org.operaton.bpm.engine.impl.cmd.MessageEventReceivedCmd;
-import org.operaton.bpm.engine.impl.cmd.PatchExecutionVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.RemoveExecutionVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.ResolveIncidentCmd;
-import org.operaton.bpm.engine.impl.cmd.SetAnnotationForIncidentCmd;
-import org.operaton.bpm.engine.impl.cmd.SetExecutionVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.SignalCmd;
+import org.operaton.bpm.engine.impl.cmd.*;
 import org.operaton.bpm.engine.impl.cmd.batch.DeleteProcessInstanceBatchCmd;
 import org.operaton.bpm.engine.impl.cmd.batch.variables.SetVariablesToProcessInstancesBatchCmd;
 import org.operaton.bpm.engine.impl.migration.MigrationPlanBuilderImpl;
@@ -75,6 +59,8 @@ import org.operaton.bpm.engine.runtime.UpdateProcessInstanceSuspensionStateSelec
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_EXTENSION_ELEMENTS;
-
 import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.Query;
@@ -30,6 +27,9 @@ import org.operaton.bpm.model.xml.impl.util.ModelUtil;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_EXTENSION_ELEMENTS;
 
 /**
  * @author Roman Smirnov

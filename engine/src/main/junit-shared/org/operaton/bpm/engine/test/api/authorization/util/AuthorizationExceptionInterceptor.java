@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.util;
 
+import org.slf4j.Logger;
+
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
-import org.slf4j.Logger;
 
 /**
  * @author Thorben Lindhauer

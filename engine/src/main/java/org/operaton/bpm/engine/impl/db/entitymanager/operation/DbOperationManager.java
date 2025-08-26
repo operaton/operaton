@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.db.entitymanager.operation;
 
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.INSERT;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -37,6 +34,9 @@ import org.operaton.bpm.engine.impl.db.entitymanager.operation.comparator.DbBulk
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.comparator.DbEntityOperationComparator;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.comparator.EntityTypeComparatorForInserts;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.comparator.EntityTypeComparatorForModifications;
+
+import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE;
+import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.INSERT;
 
 /**
  * Manages a set of {@link DbOperation database operations}.

@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.spring.test.taskassignment;
 
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-
 import java.util.Arrays;
 import java.util.List;
+
+import org.operaton.bpm.engine.delegate.DelegateExecution;
 
 
 /**

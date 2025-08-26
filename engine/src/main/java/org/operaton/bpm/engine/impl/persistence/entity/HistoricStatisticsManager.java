@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-
 import java.util.ArrayList;
 import java.util.List;
+
 import org.operaton.bpm.engine.history.HistoricActivityStatistics;
 import org.operaton.bpm.engine.history.HistoricCaseActivityStatistics;
 import org.operaton.bpm.engine.impl.HistoricActivityStatisticsQueryImpl;
@@ -28,6 +26,9 @@ import org.operaton.bpm.engine.impl.HistoricCaseActivityStatisticsQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
+
+import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 
 /**
  *

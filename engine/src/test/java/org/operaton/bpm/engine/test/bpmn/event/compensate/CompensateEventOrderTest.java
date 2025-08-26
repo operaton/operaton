@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
@@ -37,6 +36,8 @@ import org.operaton.bpm.model.bpmn.instance.Association;
 import org.operaton.bpm.model.bpmn.instance.BaseElement;
 import org.operaton.bpm.model.bpmn.instance.BoundaryEvent;
 import org.operaton.bpm.model.bpmn.instance.ServiceTask;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Svetlana Dorokhova

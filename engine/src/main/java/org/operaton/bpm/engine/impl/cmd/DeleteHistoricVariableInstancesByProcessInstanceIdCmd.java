@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Arrays;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -25,10 +29,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Arrays;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;

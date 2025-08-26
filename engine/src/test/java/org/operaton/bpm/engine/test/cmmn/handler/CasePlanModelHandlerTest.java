@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_DESCRIPTION;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_TYPE;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_AUTO_COMPLETE;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.StageActivityBehavior;
@@ -33,7 +30,11 @@ import org.operaton.bpm.model.cmmn.instance.ConditionExpression;
 import org.operaton.bpm.model.cmmn.instance.ExitCriterion;
 import org.operaton.bpm.model.cmmn.instance.IfPart;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
-import org.junit.jupiter.api.Test;
+
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_DESCRIPTION;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_TYPE;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_AUTO_COMPLETE;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov

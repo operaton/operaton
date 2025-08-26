@@ -16,8 +16,6 @@
  */
 package org.operaton.connect.httpclient;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.apache.http.Header;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -30,6 +28,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpTrace;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.Connectors;
@@ -37,6 +36,7 @@ import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 import org.operaton.connect.spi.Connector;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class HttpConnectorTest {

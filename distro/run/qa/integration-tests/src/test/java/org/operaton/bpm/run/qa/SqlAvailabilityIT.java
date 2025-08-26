@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.run.qa;
 
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 class SqlAvailabilityIT {
 

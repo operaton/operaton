@@ -16,6 +16,13 @@
  */
 package org.operaton.spin.json;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.json.mapping.CustomerList;
 import org.operaton.spin.json.mapping.GenericCustomerList;
 import org.operaton.spin.json.mapping.Order;
@@ -26,15 +33,8 @@ import org.operaton.spin.json.mapping.dmn.DmnDecisionResultImpl;
 import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.spi.DataFormatReader;
 import org.operaton.spin.spi.DataFormatWriter;
+
 import static org.operaton.spin.DataFormats.json;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

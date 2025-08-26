@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.application.impl;
 
-import org.operaton.bpm.application.AbstractProcessApplication;
-import org.operaton.bpm.application.ProcessApplicationElResolver;
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
-import jakarta.el.CompositeELResolver;
-import jakarta.el.ELResolver;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
+import jakarta.el.CompositeELResolver;
+import jakarta.el.ELResolver;
+
+import org.operaton.bpm.application.AbstractProcessApplication;
+import org.operaton.bpm.application.ProcessApplicationElResolver;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 /**
  * @author Daniel Meyer

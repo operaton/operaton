@@ -21,8 +21,8 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.qa.upgrade.batch.deploymentaware.DeploymentAwareBatchesScenario;
 import org.operaton.bpm.qa.upgrade.customretries.FailingIntermediateBoundaryTimerJobScenario;
-import org.operaton.bpm.qa.upgrade.restart.StartProcessIntanceWithInitialVariablesScenario;
 import org.operaton.bpm.qa.upgrade.restart.SetVariablesScenario;
+import org.operaton.bpm.qa.upgrade.restart.StartProcessIntanceWithInitialVariablesScenario;
 
 /**
  * @author Nikola Koevski

@@ -18,13 +18,13 @@ package org.operaton.bpm.engine.rest.util.container;
 
 import java.util.HashMap;
 import java.util.Map;
+import jakarta.ws.rs.core.Application;
 
 import org.junit.jupiter.api.extension.Extension;
+
 import org.operaton.bpm.engine.rest.CustomJacksonDateFormatTest;
 import org.operaton.bpm.engine.rest.ExceptionHandlerTest;
 import org.operaton.bpm.engine.rest.application.TestCustomResourceApplication;
-
-import jakarta.ws.rs.core.Application;
 
 /**
  * @author Thorben Lindhauer

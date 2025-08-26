@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.client.spring.client.configuration;
 
-import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
+
 @Configuration
 @EnableExternalTaskClient(
-    baseUrl = "${client.baseUrl}",
-    workerId = "${client.workerId}",
-    dateFormat = "${client.dateFormat}",
-    defaultSerializationFormat = "${client.serializationFormat}"
+  baseUrl = "${client.baseUrl}",
+  workerId = "${client.workerId}",
+  dateFormat = "${client.dateFormat}",
+  defaultSerializationFormat = "${client.serializationFormat}"
 )
 public class PropertyPlaceholderConfiguration {
 

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cfg;
 
 import javax.naming.NamingException;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;

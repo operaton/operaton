@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.client.topic.impl;
 
+import java.util.List;
+
 import org.operaton.bpm.client.exception.ExternalTaskClientException;
 import org.operaton.bpm.client.impl.EngineClientException;
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.topic.impl.dto.TopicRequestDto;
-
-import java.util.List;
 
 /**
  * @author Tassilo Weidner

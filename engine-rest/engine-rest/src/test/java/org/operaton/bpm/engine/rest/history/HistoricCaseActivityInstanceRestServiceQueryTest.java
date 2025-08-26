@@ -16,6 +16,31 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+
+import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
+import org.operaton.bpm.engine.history.HistoricCaseActivityInstanceQuery;
+import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
+import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+import org.operaton.bpm.engine.rest.helper.MockProvider;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -27,30 +52,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
-import jakarta.ws.rs.core.Response.Status;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
-import org.operaton.bpm.engine.history.HistoricCaseActivityInstanceQuery;
-import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
-import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
-import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 

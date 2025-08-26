@@ -16,16 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.dto.batch;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import static org.operaton.commons.utils.CollectionUtil.hasElements;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.batch.BatchQuery;
@@ -34,7 +31,9 @@ import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.operaton.commons.utils.CollectionUtil.hasElements;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 public class BatchQueryDto extends AbstractQueryDto<BatchQuery> {
 

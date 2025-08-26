@@ -16,31 +16,21 @@
  */
 package org.operaton.bpm.model.bpmn.builder.di;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.BOUNDARY_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.CALL_ACTIVITY_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.CATCH_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.CONDITION_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.END_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEND_TASK_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SERVICE_TASK_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SUB_PROCESS_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TASK_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_CONDITION;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TRANSACTION_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
-
 import java.util.Collection;
 import java.util.Iterator;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnDiagram;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
+
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DiGeneratorForFlowNodesTest {
 

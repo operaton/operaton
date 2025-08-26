@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -32,7 +31,9 @@ import org.operaton.bpm.engine.impl.oplog.UserOperationLogContextEntry;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class CustomUserOperationLogTest  {
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class CustomUserOperationLogTest {
 
     public static final String USER_ID = "demo";
 

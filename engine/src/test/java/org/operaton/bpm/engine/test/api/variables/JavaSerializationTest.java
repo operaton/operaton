@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserialized;
-import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserializedNull;
-import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
-import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedNull;
-import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertUntypedNullValue;
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -36,6 +25,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.StringUtil;
@@ -51,6 +41,17 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserialized;
+import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserializedNull;
+import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
+import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedNull;
+import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertUntypedNullValue;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
+import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class JavaSerializationTest {
 

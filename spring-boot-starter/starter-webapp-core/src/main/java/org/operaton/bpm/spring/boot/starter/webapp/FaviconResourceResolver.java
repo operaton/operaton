@@ -17,6 +17,7 @@
 package org.operaton.bpm.spring.boot.starter.webapp;
 
 import java.io.IOException;
+
 import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.resource.PathResourceResolver;

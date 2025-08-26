@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.util.it;
 
-import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
-import org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation;
-
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -28,6 +25,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.annotation.DirtiesContext;
+
+import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
+import org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;

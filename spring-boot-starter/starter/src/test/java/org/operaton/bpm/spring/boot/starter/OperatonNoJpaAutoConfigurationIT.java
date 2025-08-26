@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -32,8 +27,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(classes = {TestApplication.class},
   webEnvironment = WebEnvironment.NONE,

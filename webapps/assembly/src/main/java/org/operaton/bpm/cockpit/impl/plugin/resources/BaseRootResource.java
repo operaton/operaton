@@ -23,6 +23,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.Providers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.cockpit.plugin.resource.AbstractCockpitPluginRootResource;
 import org.operaton.bpm.engine.rest.util.ProvidersUtil;
 

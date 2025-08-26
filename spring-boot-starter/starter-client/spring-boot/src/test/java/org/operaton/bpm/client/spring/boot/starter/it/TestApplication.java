@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.it;
 
-import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
-import org.operaton.bpm.client.task.ExternalTaskHandler;
-
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
+import org.operaton.bpm.client.task.ExternalTaskHandler;
 
 @SpringBootApplication
 public class TestApplication {

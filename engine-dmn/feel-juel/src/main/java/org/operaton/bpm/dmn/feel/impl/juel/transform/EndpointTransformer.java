@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.dmn.feel.impl.juel.transform;
 
-import static org.operaton.bpm.dmn.feel.impl.juel.el.FeelFunctionMapper.JUEL_DATE_AND_TIME_METHOD;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.operaton.bpm.dmn.feel.impl.juel.el.FeelFunctionMapper.JUEL_DATE_AND_TIME_METHOD;
 
 public class EndpointTransformer implements FeelToJuelTransformer {
 

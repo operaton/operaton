@@ -17,9 +17,10 @@
 package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
 import jakarta.servlet.Filter;
-import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
 
 import org.springframework.core.io.ResourceLoader;
+
+import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
 
 public interface ResourceLoaderDependingFilter extends Filter {
 

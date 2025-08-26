@@ -27,6 +27,14 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.jboss.as.ee.component.ComponentView;
+import org.jboss.as.naming.ManagedReference;
+import org.jboss.modules.Module;
+import org.jboss.msc.service.Service;
+import org.jboss.msc.service.StartContext;
+import org.jboss.msc.service.StartException;
+import org.jboss.msc.service.StopContext;
+
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
@@ -39,13 +47,6 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeploymentBuilder;
 import org.operaton.bpm.engine.repository.ResumePreviousBy;
-import org.jboss.as.ee.component.ComponentView;
-import org.jboss.as.naming.ManagedReference;
-import org.jboss.modules.Module;
-import org.jboss.msc.service.Service;
-import org.jboss.msc.service.StartContext;
-import org.jboss.msc.service.StartException;
-import org.jboss.msc.service.StopContext;
 
 /**
  * <p>Service responsible for performing a deployment to the process engine and managing

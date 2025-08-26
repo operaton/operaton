@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.migration.instance;
 
+import java.util.*;
+
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -35,8 +37,6 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ModificationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
-
-import java.util.*;
 
 /**
  * @author Thorben Lindhauer

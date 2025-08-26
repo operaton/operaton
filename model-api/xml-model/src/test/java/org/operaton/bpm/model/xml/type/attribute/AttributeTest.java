@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.model.xml.type.attribute;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.type.attribute.AttributeImpl;
 import org.operaton.bpm.model.xml.testmodel.Gender;
@@ -29,8 +32,6 @@ import org.operaton.bpm.model.xml.testmodel.instance.AnimalTest;
 import org.operaton.bpm.model.xml.testmodel.instance.Animals;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-
-import java.util.stream.Stream;
 
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 

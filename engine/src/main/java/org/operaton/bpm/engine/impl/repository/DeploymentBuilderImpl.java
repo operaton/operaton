@@ -17,10 +17,6 @@
 package org.operaton.bpm.engine.impl.repository;
 
 import java.io.ByteArrayOutputStream;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.InputStream;
 import java.io.Serial;
 import java.io.Serializable;
@@ -45,7 +41,6 @@ import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
 import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.impl.util.StringUtil;
@@ -58,6 +53,11 @@ import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens

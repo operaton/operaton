@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.engine.test.cmmn.humantask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.Period;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.joda.time.Period;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov

@@ -23,9 +23,9 @@ import java.util.Map;
 
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.validation.ValidationResult;
+import org.operaton.bpm.model.xml.validation.ValidationResultCollector;
 import org.operaton.bpm.model.xml.validation.ValidationResultType;
 import org.operaton.bpm.model.xml.validation.ValidationResults;
-import org.operaton.bpm.model.xml.validation.ValidationResultCollector;
 
 /**
  * @author Daniel Meyer

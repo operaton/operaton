@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.cdi.test.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.HashMap;
-
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+
+import org.jboss.arquillian.junit.Arquillian;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
@@ -31,9 +32,8 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 public class SignalEventTest extends CdiProcessEngineTestCase {

@@ -16,15 +16,11 @@
  */
 package org.operaton.bpm.client.variable.impl.mapper;
 
-import static org.operaton.bpm.engine.variable.type.FileValueType.VALUE_INFO_FILE_ENCODING;
-import static org.operaton.bpm.engine.variable.type.FileValueType.VALUE_INFO_FILE_MIME_TYPE;
-import static org.operaton.bpm.engine.variable.type.FileValueType.VALUE_INFO_FILE_NAME;
-import static org.operaton.bpm.engine.variable.type.ValueType.FILE;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.hc.client5.http.utils.Base64;
+
 import org.operaton.bpm.client.impl.EngineClient;
 import org.operaton.bpm.client.variable.impl.AbstractTypedValueMapper;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
@@ -34,6 +30,11 @@ import org.operaton.bpm.engine.variable.impl.value.FileValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.bpm.engine.variable.type.FileValueType.VALUE_INFO_FILE_ENCODING;
+import static org.operaton.bpm.engine.variable.type.FileValueType.VALUE_INFO_FILE_MIME_TYPE;
+import static org.operaton.bpm.engine.variable.type.FileValueType.VALUE_INFO_FILE_NAME;
+import static org.operaton.bpm.engine.variable.type.ValueType.FILE;
 
 /**
  * @author Tassilo Weidner

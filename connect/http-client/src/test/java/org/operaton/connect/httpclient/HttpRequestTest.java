@@ -16,13 +16,14 @@
  */
 package org.operaton.connect.httpclient;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.http.client.methods.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.operaton.connect.Connectors;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.operaton.connect.Connectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -19,9 +19,9 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
-import org.operaton.bpm.engine.impl.pvm.runtime.ScopeInstantiationContext;
 import org.operaton.bpm.engine.impl.pvm.runtime.InstantiationStack;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+import org.operaton.bpm.engine.impl.pvm.runtime.ScopeInstantiationContext;
 
 /**
  * Instantiates the next activity on the stack of the current execution's start context.

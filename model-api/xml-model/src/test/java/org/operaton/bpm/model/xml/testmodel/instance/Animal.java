@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
 
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ATTRIBUTE_NAME_AGE;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ATTRIBUTE_NAME_BEST_FRIEND_REFS;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ATTRIBUTE_NAME_FATHER;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ATTRIBUTE_NAME_GENDER;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ATTRIBUTE_NAME_ID;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ATTRIBUTE_NAME_IS_ENDANGERED;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ATTRIBUTE_NAME_MOTHER;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ATTRIBUTE_NAME_NAME;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.TYPE_NAME_ANIMAL;
-
 import java.util.Collection;
 
 import org.operaton.bpm.model.xml.ModelBuilder;
@@ -40,6 +29,8 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 import org.operaton.bpm.model.xml.type.reference.AttributeReferenceCollection;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
+
+import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.*;
 
 /**
  * @author Daniel Meyer

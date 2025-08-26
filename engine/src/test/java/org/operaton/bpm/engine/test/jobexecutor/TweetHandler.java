@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +24,8 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.test.jobexecutor.TweetHandler.TweetJobConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TweetHandler implements JobHandler<TweetJobConfiguration> {
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -25,8 +27,6 @@ import org.operaton.bpm.engine.impl.HistoricTaskInstanceReportImpl;
 import org.operaton.bpm.engine.impl.TaskReportImpl;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
-
-import java.util.List;
 
 /**
  * @author Stefan Hentschel

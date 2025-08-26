@@ -16,11 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.InitHook;
-
 import java.util.HashSet;
 import java.util.Set;
-
 import jakarta.servlet.Filter;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +28,8 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationContext;
+
+import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.InitHook;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

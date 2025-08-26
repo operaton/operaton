@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.model.bpmn;
 
+import java.util.Collection;
+
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.instance.RootElement;
 import org.operaton.bpm.model.bpmn.util.BpmnModelResource;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-
-import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

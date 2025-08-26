@@ -18,14 +18,15 @@ package org.operaton.bpm.engine.impl.json;
 
 import java.util.List;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryEntityRelationCondition;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.QueryPropertyImpl;
 import org.operaton.bpm.engine.impl.VariableOrderProperty;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import org.operaton.bpm.engine.query.QueryProperty;
 
 

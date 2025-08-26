@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.multitask;
 
-import org.operaton.bpm.spring.boot.starter.AbstractOperatonAutoConfigurationIT;
-import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultJobConfiguration.JobConfiguration;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +27,9 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+
+import org.operaton.bpm.spring.boot.starter.AbstractOperatonAutoConfigurationIT;
+import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultJobConfiguration.JobConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

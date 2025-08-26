@@ -19,17 +19,16 @@ package org.operaton.bpm.container.impl.threading.ra;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.naming.Reference;
 import jakarta.resource.Referenceable;
 import jakarta.resource.spi.work.WorkException;
 import jakarta.resource.spi.work.WorkManager;
 import jakarta.resource.spi.work.WorkRejectedException;
 
+import javax.naming.Reference;
+
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.threading.ra.inflow.JcaInflowExecuteJobsRunnable;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-
 
 
 /**

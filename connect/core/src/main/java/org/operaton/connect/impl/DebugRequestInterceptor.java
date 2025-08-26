@@ -17,8 +17,8 @@
 package org.operaton.connect.impl;
 
 import org.operaton.connect.spi.ConnectorInvocation;
-import org.operaton.connect.spi.ConnectorRequestInterceptor;
 import org.operaton.connect.spi.ConnectorRequest;
+import org.operaton.connect.spi.ConnectorRequestInterceptor;
 
 /**
  * <p>

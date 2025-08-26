@@ -18,10 +18,10 @@ package org.operaton.bpm.webapp.impl.engine;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import jakarta.ws.rs.core.Application;
-import org.operaton.bpm.engine.rest.impl.OperatonRestResources;
+
 import org.operaton.bpm.engine.rest.impl.NamedProcessEngineRestServiceImpl;
+import org.operaton.bpm.engine.rest.impl.OperatonRestResources;
 
 /**
  * The engine rest api exposed by the application.

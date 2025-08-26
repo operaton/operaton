@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.db;
 
-import org.operaton.bpm.engine.impl.QueryOrderingProperty;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 
 /**
  * @author Daniel Meyer

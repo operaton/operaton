@@ -16,7 +16,11 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
+import java.io.*;
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
@@ -25,9 +29,6 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.task.DelegationState;
-
-import java.io.*;
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

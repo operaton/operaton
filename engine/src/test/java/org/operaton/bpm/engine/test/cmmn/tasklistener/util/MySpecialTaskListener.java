@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.cmmn.tasklistener.util;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 

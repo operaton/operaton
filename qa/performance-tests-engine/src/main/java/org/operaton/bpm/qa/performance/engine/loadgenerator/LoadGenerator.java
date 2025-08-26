@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.qa.performance.engine.loadgenerator;
 
-import static org.operaton.bpm.qa.performance.engine.loadgenerator.CompletionSignalingRunnable.wrap;
-
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static org.operaton.bpm.qa.performance.engine.loadgenerator.CompletionSignalingRunnable.wrap;
 
 /**
  * @author Daniel Meyer

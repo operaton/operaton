@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.batch.deletion;
 
 import java.util.HashSet;
 import java.util.List;
+
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;

@@ -19,14 +19,15 @@ package org.operaton.bpm.container.impl.jboss.extension.resource;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.jboss.as.controller.AttributeDefinition;
+import org.jboss.as.controller.PersistentResourceDefinition;
+import org.jboss.as.controller.registry.ManagementResourceRegistration;
+
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobAcquisitionAdd;
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobAcquisitionRemove;
-import org.jboss.as.controller.AttributeDefinition;
-import org.jboss.as.controller.PersistentResourceDefinition;
-import org.jboss.as.controller.registry.ManagementResourceRegistration;
 
 public final class JobAcquisitionDefinition extends PersistentResourceDefinition {
 

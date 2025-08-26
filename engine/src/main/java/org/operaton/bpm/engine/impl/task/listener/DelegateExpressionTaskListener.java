@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.task.listener;
 
-import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.applyFieldDeclaration;
-
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -28,6 +26,8 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.task.delegate.TaskListenerInvocation;
+
+import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.applyFieldDeclaration;
 
 
 /**

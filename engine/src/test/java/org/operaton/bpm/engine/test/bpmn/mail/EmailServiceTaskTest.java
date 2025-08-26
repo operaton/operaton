@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.mail;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,15 +25,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.jupiter.api.Test;
-import org.operaton.commons.utils.CollectionUtil;
-import org.operaton.bpm.engine.test.Deployment;
-import org.subethamail.wiser.WiserMessage;
-
 import jakarta.activation.DataHandler;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+
+import org.junit.jupiter.api.Test;
+import org.subethamail.wiser.WiserMessage;
+
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 
 /**

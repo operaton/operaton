@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
-
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
@@ -29,6 +28,8 @@ import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricProcessInstancesB
 import org.operaton.bpm.engine.impl.batch.removaltime.ProcessSetRemovalTimeJobHandler;
 import org.operaton.bpm.engine.impl.cmd.batch.removaltime.SetRemovalTimeToHistoricProcessInstancesCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
 /**
  * @author Tassilo Weidner

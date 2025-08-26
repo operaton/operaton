@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.util;
 
+import java.io.Serializable;
 import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
-import java.io.Serializable;
 
 /**
  * Automatically creates a session mutex when a HttpSession

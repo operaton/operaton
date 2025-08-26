@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.impl.instance.ChildLaneSet;
 import org.operaton.bpm.model.bpmn.impl.instance.PartitionElement;
-
-import java.util.Collection;
 
 /**
  * The BPMN lane element

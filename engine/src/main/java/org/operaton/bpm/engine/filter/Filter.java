@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.filter;
 
 import java.util.Map;
+
 import org.operaton.bpm.engine.query.Query;
 
 /**

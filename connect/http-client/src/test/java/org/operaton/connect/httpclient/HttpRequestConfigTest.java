@@ -16,39 +16,23 @@
  */
 package org.operaton.connect.httpclient;
 
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.config.RequestConfig.Builder;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.httpclient.impl.util.ParseUtil;
 
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.Map;
-
+import static org.operaton.connect.httpclient.impl.RequestConfigOption.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.AUTHENTICATION_ENABLED;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.CIRCULAR_REDIRECTS_ALLOWED;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.CONNECTION_REQUEST_TIMEOUT;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.CONNECTION_TIMEOUT;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.CONTENT_COMPRESSION_ENABLED;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.COOKIE_SPEC;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.DECOMPRESSION_ENABLED;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.EXPECT_CONTINUE_ENABLED;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.LOCAL_ADDRESS;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.MAX_REDIRECTS;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.NORMALIZE_URI;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.PROXY;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.PROXY_PREFERRED_AUTH_SCHEMES;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.REDIRECTS_ENABLED;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.RELATIVE_REDIRECTS_ALLOWED;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.SOCKET_TIMEOUT;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.STALE_CONNECTION_CHECK_ENABLED;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.TARGET_PREFERRED_AUTH_SCHEMES;
 
 public class HttpRequestConfigTest {
 

@@ -19,15 +19,9 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
+
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.spring.components.aop.util.Scopifier;
-import org.operaton.commons.utils.StringUtil;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.BeansException;
@@ -41,6 +35,14 @@ import org.springframework.beans.factory.config.Scope;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.spring.components.aop.util.Scopifier;
+import org.operaton.commons.utils.StringUtil;
 
 /**
  * binds variables to a currently executing Activiti business process (a {@link org.operaton.bpm.engine.runtime.ProcessInstance}).

@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test.autodeployment;
 
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.repository.*;
-import org.operaton.bpm.model.bpmn.Bpmn;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +23,11 @@ import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.repository.*;
+import org.operaton.bpm.model.bpmn.Bpmn;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

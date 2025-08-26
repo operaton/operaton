@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.batch.removaltime;
 
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
@@ -26,9 +29,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
-
-import java.util.Date;
-import java.util.List;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;

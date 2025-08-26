@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.List;
-
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -30,7 +29,6 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import org.operaton.bpm.engine.rest.dto.metrics.MetricsIntervalResultDto;
-
 import org.operaton.bpm.engine.rest.sub.metrics.MetricsResource;
 
 /**

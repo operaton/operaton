@@ -20,9 +20,9 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-import org.operaton.bpm.engine.rest.dto.VersionDto;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.operaton.bpm.engine.rest.dto.VersionDto;
 
 @Produces(MediaType.APPLICATION_JSON)
 public class VersionRestService extends AbstractRestProcessEngineAware {

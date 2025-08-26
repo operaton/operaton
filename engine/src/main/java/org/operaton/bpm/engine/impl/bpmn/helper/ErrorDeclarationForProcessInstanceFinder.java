@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.impl.bpmn.parser.ErrorEventDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
-
-import java.util.List;
 
 public class ErrorDeclarationForProcessInstanceFinder implements TreeVisitor<PvmScope> {
   protected Exception exception;

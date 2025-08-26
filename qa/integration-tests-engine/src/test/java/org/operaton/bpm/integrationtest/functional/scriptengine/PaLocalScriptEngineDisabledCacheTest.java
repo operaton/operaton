@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.AbstractScriptEngineFactory;
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.DummyScriptEngineFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov

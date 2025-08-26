@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi.beans;
 
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
-
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 
 /**
  * @author Thorben Lindhauer

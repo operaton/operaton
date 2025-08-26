@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.impl;
 
-import org.operaton.bpm.client.spring.boot.starter.ClientProperties;
-import org.operaton.bpm.client.spring.impl.subscription.SpringTopicSubscriptionImpl;
-import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationEvent;
 
-import java.util.function.Predicate;
+import org.operaton.bpm.client.spring.boot.starter.ClientProperties;
+import org.operaton.bpm.client.spring.impl.subscription.SpringTopicSubscriptionImpl;
+import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
 
 public class PropertiesAwareSpringTopicSubscription extends SpringTopicSubscriptionImpl {
 

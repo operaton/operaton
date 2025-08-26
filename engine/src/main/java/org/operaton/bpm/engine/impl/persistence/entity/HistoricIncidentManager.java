@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.impl.HistoricIncidentQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -26,11 +31,6 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoricIncidentEventEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Roman Smirnov

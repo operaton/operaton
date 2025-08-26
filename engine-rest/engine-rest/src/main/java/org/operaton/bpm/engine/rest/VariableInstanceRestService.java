@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import java.util.List;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.UriInfo;
+
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
 import org.operaton.bpm.engine.rest.dto.runtime.VariableInstanceDto;
 import org.operaton.bpm.engine.rest.dto.runtime.VariableInstanceQueryDto;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 import org.operaton.bpm.engine.rest.sub.runtime.VariableInstanceResource;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
-
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.UriInfo;
-import java.util.List;
 
 /**
  * @author roman.smirnov

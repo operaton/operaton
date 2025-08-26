@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.report;
 
-import org.operaton.bpm.engine.impl.form.engine.HtmlDocumentBuilder;
-import org.operaton.bpm.engine.impl.form.engine.HtmlElementWriter;
-import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
-
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.operaton.bpm.engine.impl.form.engine.HtmlDocumentBuilder;
+import org.operaton.bpm.engine.impl.form.engine.HtmlElementWriter;
+import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
 
 @SuppressWarnings("java:S1192")
 public class SectionedHtmlReportBuilder {

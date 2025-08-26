@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.repository.DeploymentBuilder;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -29,6 +24,11 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.repository.DeploymentBuilder;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static java.util.Objects.requireNonNull;
 

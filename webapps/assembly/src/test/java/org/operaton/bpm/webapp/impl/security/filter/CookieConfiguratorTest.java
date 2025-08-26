@@ -3,6 +3,7 @@ package org.operaton.bpm.webapp.impl.security.filter;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.SessionCookieConfig;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,14 +12,15 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
 
+import static org.operaton.bpm.webapp.impl.security.filter.CookieConfigurator.getSameSiteCookieValueInitValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.operaton.bpm.webapp.impl.security.filter.CookieConfigurator.getSameSiteCookieValueInitValue;
 
 @ExtendWith(MockitoExtension.class)
 class CookieConfiguratorTest {

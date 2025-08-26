@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.client.variable.impl.format.json;
 
-import org.operaton.bpm.client.variable.impl.format.TypeDetector;
-
 import com.fasterxml.jackson.databind.type.TypeFactory;
+
+import org.operaton.bpm.client.variable.impl.format.TypeDetector;
 
 public class DefaultJsonJacksonTypeDetector implements TypeDetector {
 

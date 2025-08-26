@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin.base.dto.query;
 
+import java.util.HashMap;
+import java.util.Map;
+import jakarta.ws.rs.core.MultivaluedMap;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatisticsDto;
 import org.operaton.bpm.cockpit.rest.dto.AbstractRestQueryParametersDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ProcessDefinitionStatisticsQueryDto extends AbstractRestQueryParametersDto<ProcessDefinitionStatisticsDto> {
 

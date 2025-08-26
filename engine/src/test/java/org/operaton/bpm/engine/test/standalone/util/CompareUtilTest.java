@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.test.standalone.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.util.CompareUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Filip Hrisafov

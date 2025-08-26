@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.dto.repository;
 
-import static java.lang.Boolean.TRUE;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinitionQuery;
@@ -32,7 +31,7 @@ import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
 import org.operaton.bpm.engine.rest.dto.converter.IntegerConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static java.lang.Boolean.TRUE;
 
 public class DecisionRequirementsDefinitionQueryDto extends AbstractQueryDto<DecisionRequirementsDefinitionQuery> {
 

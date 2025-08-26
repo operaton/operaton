@@ -16,6 +16,18 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+
 import org.operaton.bpm.engine.identity.*;
 import org.operaton.bpm.engine.impl.GroupQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -28,17 +40,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TenantEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * OAuth2 identity provider with fallback for {@link DbIdentityServiceProvider}

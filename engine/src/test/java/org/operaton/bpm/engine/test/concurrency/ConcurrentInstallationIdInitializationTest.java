@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assumptions.assumeThat;
-
 import java.sql.Connection;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.BootstrapEngineCommand;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
@@ -27,8 +27,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.test.util.DatabaseHelper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assumptions.assumeThat;
 
 /**
  * <p>Tests cluster scenario with two nodes trying to write the installation id property in parallel.</p>

@@ -16,22 +16,9 @@
  */
 package org.operaton.spin.impl.json.jackson.format;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
-import com.jayway.jsonpath.spi.json.JsonProvider;
-import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
-import org.operaton.spin.DataFormats;
-import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
-import org.operaton.spin.impl.json.jackson.JacksonJsonNode;
-import org.operaton.spin.json.SpinJsonDataFormatException;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.spi.DataFormat;
-import org.operaton.spin.spi.TypeDetector;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -41,6 +28,19 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.Configuration.ConfigurationBuilder;
+import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
+import com.jayway.jsonpath.spi.json.JsonProvider;
+import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
+
+import org.operaton.spin.DataFormats;
+import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
+import org.operaton.spin.impl.json.jackson.JacksonJsonNode;
+import org.operaton.spin.json.SpinJsonDataFormatException;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.spi.DataFormat;
+import org.operaton.spin.spi.TypeDetector;
+
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 /**
  * Spin data format that can wrap Json content and uses

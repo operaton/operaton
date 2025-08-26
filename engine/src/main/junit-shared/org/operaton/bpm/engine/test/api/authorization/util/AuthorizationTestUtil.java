@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

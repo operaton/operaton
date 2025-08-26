@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.core.model;
 
-import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
-import org.operaton.bpm.engine.delegate.DelegateListener;
-import org.operaton.bpm.engine.delegate.VariableListener;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
+
+import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
+import org.operaton.bpm.engine.delegate.DelegateListener;
+import org.operaton.bpm.engine.delegate.VariableListener;
 
 /**
  * @author Daniel Meyer

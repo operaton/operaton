@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.deployment.processor;
 
-import static org.jboss.as.server.deployment.Attachments.MODULE;
-
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,6 +28,22 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import org.jboss.as.ee.component.ComponentDescription;
+import org.jboss.as.ee.component.ComponentView;
+import org.jboss.as.ee.component.ViewDescription;
+import org.jboss.as.server.deployment.Attachments;
+import org.jboss.as.server.deployment.DeploymentPhaseContext;
+import org.jboss.as.server.deployment.DeploymentUnit;
+import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
+import org.jboss.as.server.deployment.DeploymentUnitProcessor;
+import org.jboss.jandex.AnnotationInstance;
+import org.jboss.modules.Module;
+import org.jboss.modules.ModuleClassLoader;
+import org.jboss.msc.service.ServiceBuilder;
+import org.jboss.msc.service.ServiceController.Mode;
+import org.jboss.msc.service.ServiceName;
+import org.jboss.vfs.VirtualFile;
 
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
@@ -48,21 +62,8 @@ import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.StringUtil;
-import org.jboss.as.ee.component.ComponentDescription;
-import org.jboss.as.ee.component.ComponentView;
-import org.jboss.as.ee.component.ViewDescription;
-import org.jboss.as.server.deployment.Attachments;
-import org.jboss.as.server.deployment.DeploymentPhaseContext;
-import org.jboss.as.server.deployment.DeploymentUnit;
-import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
-import org.jboss.as.server.deployment.DeploymentUnitProcessor;
-import org.jboss.jandex.AnnotationInstance;
-import org.jboss.modules.Module;
-import org.jboss.modules.ModuleClassLoader;
-import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceController.Mode;
-import org.jboss.msc.service.ServiceName;
-import org.jboss.vfs.VirtualFile;
+
+import static org.jboss.as.server.deployment.Attachments.MODULE;
 
 
 /**

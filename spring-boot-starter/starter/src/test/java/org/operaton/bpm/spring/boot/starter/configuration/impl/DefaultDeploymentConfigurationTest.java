@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +23,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.Resource;
 
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 class DefaultDeploymentConfigurationTest {
 
   private final DefaultDeploymentConfiguration defaultDeploymentConfiguration = new DefaultDeploymentConfiguration();

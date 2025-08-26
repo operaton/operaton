@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.batch;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.ProcessEngineProvider;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -27,10 +31,6 @@ import org.operaton.bpm.engine.test.api.runtime.BatchHelper;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class BatchMigrationHelper extends BatchHelper {
 

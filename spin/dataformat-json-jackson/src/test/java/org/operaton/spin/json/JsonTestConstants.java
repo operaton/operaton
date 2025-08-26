@@ -16,9 +16,6 @@
  */
 package org.operaton.spin.json;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +25,9 @@ import org.operaton.spin.json.mapping.Invoice;
 import org.operaton.spin.json.mapping.Order;
 import org.operaton.spin.json.mapping.OrderDetails;
 import org.operaton.spin.json.mapping.RegularCustomer;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 public class JsonTestConstants {
 

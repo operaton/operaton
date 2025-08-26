@@ -16,16 +16,15 @@
  */
 package org.operaton.bpm.spring.boot.starter.jdbc;
 
-import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-
 import javax.sql.DataSource;
-
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+
+import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 @EnableAutoConfiguration(exclude = OperatonBpmAutoConfiguration.class)
 @SuppressWarnings("unused")

@@ -16,14 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.diagnostics;
 
-import static org.operaton.bpm.engine.management.Metrics.ACTIVTY_INSTANCE_START;
-import static org.operaton.bpm.engine.management.Metrics.EXECUTED_DECISION_ELEMENTS;
-import static org.operaton.bpm.engine.management.Metrics.EXECUTED_DECISION_INSTANCES;
-import static org.operaton.bpm.engine.management.Metrics.ROOT_PROCESS_INSTANCE_START;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
 import org.operaton.bpm.engine.impl.metrics.Meter;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
@@ -34,6 +30,11 @@ import org.operaton.bpm.engine.impl.telemetry.dto.MetricImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 import org.operaton.bpm.engine.telemetry.Command;
 import org.operaton.bpm.engine.telemetry.Metric;
+
+import static org.operaton.bpm.engine.management.Metrics.ACTIVTY_INSTANCE_START;
+import static org.operaton.bpm.engine.management.Metrics.EXECUTED_DECISION_ELEMENTS;
+import static org.operaton.bpm.engine.management.Metrics.EXECUTED_DECISION_INSTANCES;
+import static org.operaton.bpm.engine.management.Metrics.ROOT_PROCESS_INSTANCE_START;
 
 public class DiagnosticsCollector {
 

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
-import org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants;
 
 /**
  * An individual run of a performance test. Holds all state related to a test run.

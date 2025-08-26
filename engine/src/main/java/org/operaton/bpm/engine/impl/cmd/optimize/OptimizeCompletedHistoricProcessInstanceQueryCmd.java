@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cmd.optimize;
 
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-
-import java.util.Date;
-import java.util.List;
 
 public class OptimizeCompletedHistoricProcessInstanceQueryCmd implements Command<List<HistoricProcessInstance>> {
 

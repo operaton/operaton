@@ -17,6 +17,7 @@
 package org.operaton.bpm.qa.rolling.update.scenarios.batch;
 
 import java.util.Date;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.runtime.Job;

@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
+import java.util.List;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.UriInfo;
+
 import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
 import org.operaton.bpm.engine.rest.dto.history.HistoricDetailDto;
 import org.operaton.bpm.engine.rest.dto.history.HistoricDetailQueryDto;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 import org.operaton.bpm.engine.rest.sub.history.HistoricDetailResource;
-
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.UriInfo;
-import java.util.List;
 
 /**
  *

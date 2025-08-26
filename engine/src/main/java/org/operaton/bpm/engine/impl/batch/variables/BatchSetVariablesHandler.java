@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.batch.variables;
 
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
@@ -29,9 +32,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
-
-import java.util.List;
-import java.util.Map;
 
 public class BatchSetVariablesHandler extends AbstractBatchJobHandler<BatchConfiguration> {
 

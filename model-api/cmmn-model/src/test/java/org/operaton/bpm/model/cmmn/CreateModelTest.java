@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.cmmn;
 
-import org.operaton.bpm.model.cmmn.instance.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.model.cmmn.instance.*;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 

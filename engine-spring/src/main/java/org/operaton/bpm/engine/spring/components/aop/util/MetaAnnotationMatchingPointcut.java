@@ -15,13 +15,13 @@
  */
 package org.operaton.bpm.engine.spring.components.aop.util;
 
+import java.lang.annotation.Annotation;
+
 import org.springframework.aop.ClassFilter;
 import org.springframework.aop.MethodMatcher;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.support.annotation.AnnotationClassFilter;
 import org.springframework.util.Assert;
-
-import java.lang.annotation.Annotation;
 
 /**
  * this code is taken almost (99.99%) verbatim from the Spring Integration

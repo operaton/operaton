@@ -20,13 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.support.SpringFactoriesLoader;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.plugin.impl.SpinProcessEnginePlugin;
 import org.operaton.spin.spi.DataFormatConfigurator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.support.SpringFactoriesLoader;
 
 public class SpringBootSpinProcessEnginePlugin extends SpinProcessEnginePlugin {
 

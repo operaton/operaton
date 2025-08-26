@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.form.engine;
 
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
@@ -24,9 +27,6 @@ import org.operaton.bpm.engine.impl.form.type.BooleanFormType;
 import org.operaton.bpm.engine.impl.form.type.DateFormType;
 import org.operaton.bpm.engine.impl.form.type.EnumFormType;
 import org.operaton.bpm.engine.impl.form.type.StringFormType;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Askar Akhmerov

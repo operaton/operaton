@@ -26,14 +26,15 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.instance.Error;
 import org.operaton.bpm.model.bpmn.instance.Process;
-import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.instance.operaton.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

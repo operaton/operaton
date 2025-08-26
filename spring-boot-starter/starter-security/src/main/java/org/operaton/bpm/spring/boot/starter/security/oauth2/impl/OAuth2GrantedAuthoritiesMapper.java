@@ -16,7 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
-import org.operaton.bpm.spring.boot.starter.security.oauth2.OAuth2Properties;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,11 +29,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.OAuth2Properties;
 
 public class OAuth2GrantedAuthoritiesMapper implements GrantedAuthoritiesMapper {
 

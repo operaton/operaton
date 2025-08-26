@@ -20,11 +20,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
-import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 import org.jboss.as.subsystem.test.AbstractSubsystemBaseTest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+
+import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
+import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 
 /**
  *

@@ -16,21 +16,22 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.csrf;
 
+import java.util.Collection;
 import jakarta.ws.rs.core.Response;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockServletContext;
 
-import java.util.Collection;
+import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.SET_COOKIE_HEADER_NAME;
 import static org.operaton.bpm.webapp.impl.security.filter.util.CsrfConstants.CSRF_PATH_FIELD_NAME;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CsrfPreventionFilterAppPathTest extends CsrfPreventionFilterTest {
 

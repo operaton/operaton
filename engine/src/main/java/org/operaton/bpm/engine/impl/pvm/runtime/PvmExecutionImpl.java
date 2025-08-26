@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
+import java.io.Serial;
+import java.util.*;
+
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -49,11 +52,9 @@ import org.operaton.bpm.engine.impl.tree.*;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.variable.VariableMap;
+
 import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
 import static org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState.ENDING;
-
-import java.io.Serial;
-import java.util.*;
 
 /**
  * @author Daniel Meyer

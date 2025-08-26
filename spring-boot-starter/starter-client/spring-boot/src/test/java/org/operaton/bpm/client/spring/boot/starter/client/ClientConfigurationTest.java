@@ -16,28 +16,28 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.client;
 
-import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestPropertySource(properties = {
-    "operaton.bpm.client.base-url=base-url",
-    "operaton.bpm.client.worker-id=worker-id",
-    "operaton.bpm.client.max-tasks=111",
-    "operaton.bpm.client.use-priority=false",
-    "operaton.bpm.client.default-serialization-format=serialization-format",
-    "operaton.bpm.client.date-format=date-format",
-    "operaton.bpm.client.async-response-timeout=555",
-    "operaton.bpm.client.lock-duration=777",
-    "operaton.bpm.client.disable-auto-fetching=true",
-    "operaton.bpm.client.disable-backoff-strategy=true",
-    "operaton.bpm.client.basic-auth.username=username",
-    "operaton.bpm.client.basic-auth.password=password",
+  "operaton.bpm.client.base-url=base-url",
+  "operaton.bpm.client.worker-id=worker-id",
+  "operaton.bpm.client.max-tasks=111",
+  "operaton.bpm.client.use-priority=false",
+  "operaton.bpm.client.default-serialization-format=serialization-format",
+  "operaton.bpm.client.date-format=date-format",
+  "operaton.bpm.client.async-response-timeout=555",
+  "operaton.bpm.client.lock-duration=777",
+  "operaton.bpm.client.disable-auto-fetching=true",
+  "operaton.bpm.client.disable-backoff-strategy=true",
+  "operaton.bpm.client.basic-auth.username=username",
+  "operaton.bpm.client.basic-auth.password=password",
 })
 @ExtendWith(SpringExtension.class)
 class ClientConfigurationTest extends ParsePropertiesHelper {

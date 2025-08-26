@@ -17,6 +17,7 @@
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.welcome;
 
 import jakarta.ws.rs.Path;
+
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.SsoLogoutPluginConstants;
 import org.operaton.bpm.welcome.resource.AbstractWelcomePluginRootResource;
 

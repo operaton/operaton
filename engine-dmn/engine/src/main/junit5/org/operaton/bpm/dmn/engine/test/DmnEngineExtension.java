@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.dmn.engine.test;
 
-import org.operaton.bpm.dmn.engine.DmnEngine;
-import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
-
 import java.util.Objects;
 
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
+import org.operaton.bpm.dmn.engine.DmnEngine;
+import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 
 /**
  * JUnit 5 extension for {@link DmnEngine} initialization.

@@ -16,15 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.sub.identity.impl;
 
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Resources.TENANT;
-
 import java.net.URI;
-
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriInfo;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.Tenant;
@@ -36,7 +33,9 @@ import org.operaton.bpm.engine.rest.sub.identity.TenantGroupMembersResource;
 import org.operaton.bpm.engine.rest.sub.identity.TenantResource;
 import org.operaton.bpm.engine.rest.sub.identity.TenantUserMembersResource;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Resources.TENANT;
 
 public class TenantResourceImpl extends AbstractIdentityResource implements TenantResource {
 

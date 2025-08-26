@@ -17,7 +17,6 @@
 package org.operaton.bpm.container.impl.ejb;
 
 import java.util.Set;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Local;
@@ -34,7 +33,7 @@ import org.operaton.bpm.application.ProcessApplicationInfo;
  * @author Daniel Meyer
  *
  */
-@Stateless(name="ProcessApplicationService", mappedName="ProcessApplicationService")
+@Stateless(name = "ProcessApplicationService", mappedName = "ProcessApplicationService")
 @Local(ProcessApplicationService.class)
 @TransactionAttribute(TransactionAttributeType.SUPPORTS)
 public class EjbProcessApplicationService implements ProcessApplicationService {

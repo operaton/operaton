@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.batch.deletion;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
@@ -26,8 +28,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
-
-import java.util.List;
 
 /**
  * @author Askar Akhmerov

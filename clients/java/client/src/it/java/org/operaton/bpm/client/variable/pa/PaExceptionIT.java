@@ -16,10 +16,15 @@
  */
 package org.operaton.bpm.client.variable.pa;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.HistoricProcessInstanceDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -36,16 +41,12 @@ import org.operaton.bpm.client.util.RecordingExternalTaskHandler;
 import org.operaton.bpm.client.util.RecordingInvocationHandler;
 import org.operaton.bpm.client.util.RecordingInvocationHandler.RecordedInvocation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_NAME;
 import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_REST;
 import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
 import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class PaExceptionIT {
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
-
 import java.util.concurrent.Callable;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -28,6 +25,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.Variables;
@@ -39,6 +37,9 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.spi.DataFormatConfigurator;
+
+import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(ArquillianExtension.class)
 public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformIntegrationTest {

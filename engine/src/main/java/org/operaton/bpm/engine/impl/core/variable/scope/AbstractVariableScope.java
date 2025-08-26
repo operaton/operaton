@@ -16,7 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.*;
 import jakarta.el.ELContext;
+
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -29,10 +33,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.*;
 
 /**
  * @author Daniel Meyer

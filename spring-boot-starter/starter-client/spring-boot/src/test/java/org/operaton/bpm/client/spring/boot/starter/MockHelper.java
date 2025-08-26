@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.spring.boot.starter;
 
+import org.mockito.MockedStatic;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
-
-import org.mockito.MockedStatic;
 
 import static org.mockito.Mockito.*;
 

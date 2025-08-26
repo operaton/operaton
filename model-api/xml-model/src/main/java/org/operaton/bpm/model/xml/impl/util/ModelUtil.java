@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
+import java.util.*;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -26,8 +28,6 @@ import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
-
-import java.util.*;
 
 /**
  * Some Helpers useful when handling model elements.

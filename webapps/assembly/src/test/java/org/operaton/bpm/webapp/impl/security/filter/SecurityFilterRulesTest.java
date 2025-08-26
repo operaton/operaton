@@ -16,19 +16,6 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mockito;
-import org.operaton.bpm.cockpit.Cockpit;
-import org.operaton.bpm.cockpit.impl.DefaultCockpitRuntimeDelegate;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.webapp.impl.security.auth.Authentication;
-import org.operaton.bpm.webapp.impl.security.auth.Authentications;
-import org.operaton.bpm.webapp.impl.security.auth.UserAuthentication;
-import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +24,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
+
+import org.operaton.bpm.cockpit.Cockpit;
+import org.operaton.bpm.cockpit.impl.DefaultCockpitRuntimeDelegate;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.webapp.impl.security.auth.Authentication;
+import org.operaton.bpm.webapp.impl.security.auth.Authentications;
+import org.operaton.bpm.webapp.impl.security.auth.UserAuthentication;
+import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

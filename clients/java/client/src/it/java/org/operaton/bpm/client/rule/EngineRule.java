@@ -16,31 +16,26 @@
  */
 package org.operaton.bpm.client.rule;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
-import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Supplier;
 
-import org.apache.hc.core5.http.ContentType;
-import org.apache.hc.core5.http.HttpEntity;
+import com.fasterxml.jackson.databind.*;
 import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.hc.client5.http.classic.methods.*;
-import org.apache.hc.core5.http.io.HttpClientResponseHandler;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.*;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.HttpClientResponseHandler;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
-import com.fasterxml.jackson.databind.*;
-
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
 import org.operaton.bpm.client.dto.*;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
@@ -50,7 +45,12 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.*;
 import org.operaton.bpm.model.bpmn.*;
 
-public class EngineRule implements BeforeEachCallback, AfterEachCallback  {
+import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
+import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class EngineRule implements BeforeEachCallback, AfterEachCallback {
 
   protected static final String URI_DEPLOYMEN_CREATE = "%s/deployment/create";
   protected static final String URI_DEPLOYMENT_DELETE = "%s/deployment/%s";

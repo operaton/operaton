@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.spring.test.components.registry;
 
-import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistration;
-
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

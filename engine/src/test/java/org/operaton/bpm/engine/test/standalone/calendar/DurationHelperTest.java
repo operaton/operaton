@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.test.standalone.calendar;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.calendar.DurationHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+
+import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DurationHelperTest {
 

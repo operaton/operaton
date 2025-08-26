@@ -23,9 +23,10 @@ import java.util.Map;
 
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
+
+import org.operaton.commons.utils.IoUtil;
 import org.operaton.connect.httpclient.HttpResponse;
 import org.operaton.connect.impl.AbstractCloseableConnectorResponse;
-import org.operaton.commons.utils.IoUtil;
 
 public class HttpResponseImpl extends AbstractCloseableConnectorResponse implements HttpResponse {
 

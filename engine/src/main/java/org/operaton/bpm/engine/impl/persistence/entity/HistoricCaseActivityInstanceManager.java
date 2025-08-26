@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
 import org.operaton.bpm.engine.impl.HistoricCaseActivityInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Sebastian Menski

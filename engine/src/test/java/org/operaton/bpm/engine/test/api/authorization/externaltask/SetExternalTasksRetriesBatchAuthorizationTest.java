@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -47,6 +44,10 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
+
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Parameterized
 public class SetExternalTasksRetriesBatchAuthorizationTest {

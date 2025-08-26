@@ -18,7 +18,6 @@ package org.operaton.bpm.application;
 
 import java.util.Comparator;
 import java.util.ServiceLoader;
-
 import jakarta.el.ELResolver;
 
 /**

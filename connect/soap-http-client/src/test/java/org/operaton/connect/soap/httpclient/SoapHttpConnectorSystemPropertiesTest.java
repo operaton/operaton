@@ -16,17 +16,18 @@
  */
 package org.operaton.connect.soap.httpclient;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.apache.http.protocol.HTTP;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.connect.httpclient.soap.SoapHttpConnector;
 import org.operaton.connect.httpclient.soap.impl.SoapHttpConnectorImpl;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;

@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 // it's h2-specific test
 @RequiredDatabase(includes = DbSqlSessionFactory.H2)

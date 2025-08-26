@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.client.task;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
 import org.operaton.bpm.client.variable.impl.DefaultValueMappers;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
@@ -31,6 +30,8 @@ import org.operaton.bpm.client.variable.impl.ValueMappers;
 import org.operaton.bpm.client.variable.impl.VariableValue;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Tobias Metzke

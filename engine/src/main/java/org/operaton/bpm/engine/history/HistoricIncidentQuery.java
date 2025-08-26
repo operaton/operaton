@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.history;
 
-import org.operaton.bpm.engine.query.Query;
-
 import java.util.Date;
+
+import org.operaton.bpm.engine.query.Query;
 
 /**
  * @author Roman Smirnov

@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.errorcode;
 
-import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.COLUMN_SIZE_TOO_SMALL;
-import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.DEADLOCK;
-import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.FOREIGN_KEY_CONSTRAINT_VIOLATION;
-import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.OPTIMISTIC_LOCKING;
-
 import java.sql.SQLException;
+
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
+
+import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.COLUMN_SIZE_TOO_SMALL;
+import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.DEADLOCK;
+import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.FOREIGN_KEY_CONSTRAINT_VIOLATION;
+import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.OPTIMISTIC_LOCKING;
 
 /**
  * <p>One of the provider methods are called when a {@link ProcessEngineException} occurs.

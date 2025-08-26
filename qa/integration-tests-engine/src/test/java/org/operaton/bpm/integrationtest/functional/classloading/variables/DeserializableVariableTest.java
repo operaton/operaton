@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -27,6 +25,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -36,6 +35,8 @@ import org.operaton.bpm.integrationtest.functional.classloading.variables.beans.
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Ensures that process variables can be deserialized on a

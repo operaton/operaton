@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -32,6 +31,8 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tom Baeyens

@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.history;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
-import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,6 +28,7 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RepositoryService;
@@ -52,6 +47,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
+import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Roman Smirnov

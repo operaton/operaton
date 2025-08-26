@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.xml.test.assertions;
 
 import org.assertj.core.api.AbstractAssert;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.Reference;

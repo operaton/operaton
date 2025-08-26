@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.container.impl.jboss.util;
 
-import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.jboss.vfs.VirtualFile;
+
+import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 
 /**
  * @author Daniel Meyer

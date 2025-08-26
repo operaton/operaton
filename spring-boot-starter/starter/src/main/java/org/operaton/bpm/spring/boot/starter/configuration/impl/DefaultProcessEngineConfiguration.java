@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-
-import java.util.Optional;
 
 public class DefaultProcessEngineConfiguration extends AbstractOperatonConfiguration implements OperatonProcessEngineConfiguration {
 

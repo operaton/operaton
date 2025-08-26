@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb.request.beans;
 
+import jakarta.inject.Named;
+
 import javax.naming.InitialContext;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.integrationtest.util.TestConstants;
-
-import jakarta.inject.Named;
 
 
 /**

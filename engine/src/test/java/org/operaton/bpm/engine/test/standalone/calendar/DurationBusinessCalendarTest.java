@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.test.standalone.calendar;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.calendar.DurationBusinessCalendar;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tom Baeyens

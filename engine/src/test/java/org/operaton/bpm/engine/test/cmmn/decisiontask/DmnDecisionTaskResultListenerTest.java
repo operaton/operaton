@@ -17,6 +17,8 @@
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.operaton.bpm.engine.runtime.CaseInstance;
@@ -25,8 +27,6 @@ import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.IntegerValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

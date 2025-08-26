@@ -22,10 +22,10 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance;
+import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance.SimpleVariableInstanceFactory;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceFactory;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore;
-import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance.SimpleVariableInstanceFactory;
 
 /**
  * Simple standalone variable scope which can be used in testcases.

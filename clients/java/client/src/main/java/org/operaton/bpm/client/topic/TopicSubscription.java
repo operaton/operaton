@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.topic;
 
-import org.operaton.bpm.client.task.ExternalTaskHandler;
-
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.client.task.ExternalTaskHandler;
 
 /**
  * <p>Subscription to a topic</p>

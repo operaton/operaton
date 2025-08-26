@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.hal;
 
-import org.operaton.bpm.engine.ProcessEngine;
-
 import java.util.List;
+
+import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * A link resolver is capable of resolving a set of resources by Id.

@@ -16,13 +16,13 @@
  */
 package org.operaton.spin.plugin.impl;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializerFactory;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Thorben Lindhauer

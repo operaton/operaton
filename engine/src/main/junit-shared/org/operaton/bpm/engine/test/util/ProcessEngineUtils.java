@@ -15,9 +15,9 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import org.operaton.bpm.engine.ProcessEngines;
-
 import java.util.Random;
+
+import org.operaton.bpm.engine.ProcessEngines;
 
 public class ProcessEngineUtils {
     private static final Random RANDOM = new Random();

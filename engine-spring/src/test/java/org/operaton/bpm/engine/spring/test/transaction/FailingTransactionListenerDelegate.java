@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
+import java.util.Objects;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-
-import java.util.Objects;
 
 public class FailingTransactionListenerDelegate implements JavaDelegate {
 

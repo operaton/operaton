@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.qa.upgrade.timestamp;
 
+import java.util.Date;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import java.util.Date;
 
 /**
  * @author Nikola Koevski

@@ -24,8 +24,17 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jakarta.transaction.TransactionManager;
 
 import javax.sql.DataSource;
+import org.jboss.as.connector.subsystems.datasources.DataSourceReferenceFactoryService;
+import org.jboss.as.naming.deployment.ContextNames;
+import org.jboss.msc.service.ServiceBuilder;
+import org.jboss.msc.service.ServiceController.Mode;
+import org.jboss.msc.service.ServiceName;
+import org.jboss.msc.service.StartContext;
+import org.jboss.msc.service.StartException;
+import org.jboss.msc.service.StopContext;
 
 import org.operaton.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration;
 import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
@@ -40,16 +49,6 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.JakartaTransactionProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-import org.jboss.as.connector.subsystems.datasources.DataSourceReferenceFactoryService;
-import org.jboss.as.naming.deployment.ContextNames;
-import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceController.Mode;
-import org.jboss.msc.service.ServiceName;
-import org.jboss.msc.service.StartContext;
-import org.jboss.msc.service.StartException;
-import org.jboss.msc.service.StopContext;
-
-import jakarta.transaction.TransactionManager;
 
 
 /**

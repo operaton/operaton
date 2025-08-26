@@ -16,16 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.pvm;
 
-import org.operaton.bpm.engine.delegate.ExecutionListener;
-import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
-import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
-import org.operaton.bpm.engine.impl.pvm.process.*;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+import org.operaton.bpm.engine.delegate.ExecutionListener;
+import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
+import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
+import org.operaton.bpm.engine.impl.pvm.process.*;
 
 
 /**

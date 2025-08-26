@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -28,9 +26,12 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestTemplate;
+
 import org.operaton.bpm.container.impl.deployment.scanning.ClassPathProcessApplicationScanner;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

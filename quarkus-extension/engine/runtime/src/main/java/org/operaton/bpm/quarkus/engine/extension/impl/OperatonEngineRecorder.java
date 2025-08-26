@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.quarkus.engine.extension.impl;
 
-import static com.arjuna.ats.jta.TransactionManager.transactionManager;
-import static io.quarkus.datasource.common.runtime.DataSourceUtil.DEFAULT_DATASOURCE_NAME;
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.enterprise.inject.spi.BeanManager;
 
 import io.quarkus.agroal.runtime.DataSources;
 import io.quarkus.arc.Arc;
@@ -26,9 +27,8 @@ import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.ShutdownContext;
 import io.quarkus.runtime.annotations.Recorder;
 import io.smallrye.context.SmallRyeManagedExecutor;
-import jakarta.enterprise.inject.spi.BeanManager;
-import java.util.ArrayList;
-import java.util.List;
+import org.eclipse.microprofile.context.ManagedExecutor;
+
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.metadata.PropertyHelper;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -40,7 +40,9 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.quarkus.engine.extension.OperatonEngineConfig;
 import org.operaton.bpm.quarkus.engine.extension.QuarkusProcessEngineConfiguration;
 import org.operaton.bpm.quarkus.engine.extension.event.OperatonEngineStartupEvent;
-import org.eclipse.microprofile.context.ManagedExecutor;
+
+import static com.arjuna.ats.jta.TransactionManager.transactionManager;
+import static io.quarkus.datasource.common.runtime.DataSourceUtil.DEFAULT_DATASOURCE_NAME;
 
 @Recorder
 public class OperatonEngineRecorder {

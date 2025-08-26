@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.test.api.runtime.util.TestVariableScope;
 import org.operaton.bpm.engine.variable.VariableMap;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.entity.repository;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -24,10 +28,6 @@ import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
 import org.operaton.bpm.engine.repository.CaseDefinition;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Roman Smirnov

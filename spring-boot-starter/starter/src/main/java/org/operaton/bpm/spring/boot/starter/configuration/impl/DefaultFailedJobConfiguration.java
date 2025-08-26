@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import java.util.ArrayList;
+
 import org.operaton.bpm.engine.impl.bpmn.parser.DefaultFailedJobParseListener;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultFailedJobCommandFactory;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonFailedJobConfiguration;
-
-import java.util.ArrayList;
 
 /**
  * Register parseListener to setup failed job retry specification.

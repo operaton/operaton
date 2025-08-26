@@ -16,13 +16,14 @@
  */
 package org.operaton.commons.testing;
 
+import java.util.List;
+
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.junit.Rule;
 import org.junit.Test;
-import org.operaton.commons.testing.util.ExampleProcessEngineLogger;
 
-import java.util.List;
+import org.operaton.commons.testing.util.ExampleProcessEngineLogger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

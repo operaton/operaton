@@ -16,8 +16,12 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import java.io.Reader;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -44,9 +48,11 @@ import org.operaton.spin.Spin;
 import org.operaton.spin.impl.util.SpinIoUtil;
 import org.operaton.spin.xml.SpinXmlElement;
 
-import java.io.Reader;
-import java.util.List;
-
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
+import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
+import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueDeserializedNull;
+import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueSerializedNull;
+import static org.operaton.spin.plugin.variables.TypedValueAssert.assertUntypedNullValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -55,11 +61,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueDeserializedNull;
-import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueSerializedNull;
-import static org.operaton.spin.plugin.variables.TypedValueAssert.assertUntypedNullValue;
 
 class XmlSerializationTest {
 

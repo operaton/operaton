@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**

@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
-import jakarta.enterprise.util.AnnotationLiteral;
 import java.util.Objects;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 public class BusinessProcessDefinitionLiteral extends AnnotationLiteral<BusinessProcessDefinition> implements BusinessProcessDefinition {
 

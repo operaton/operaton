@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -26,6 +24,8 @@ import org.operaton.bpm.engine.impl.batch.BatchElementConfiguration;
 import org.operaton.bpm.engine.impl.batch.SetRetriesBatchConfiguration;
 import org.operaton.bpm.engine.impl.batch.builder.BatchBuilder;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 
 public class SetExternalTasksRetriesBatchCmd extends AbstractSetExternalTaskRetriesCmd<Batch> {
 

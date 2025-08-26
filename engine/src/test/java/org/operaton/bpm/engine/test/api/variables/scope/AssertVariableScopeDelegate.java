@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.variables.scope;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Askar Akhmerov

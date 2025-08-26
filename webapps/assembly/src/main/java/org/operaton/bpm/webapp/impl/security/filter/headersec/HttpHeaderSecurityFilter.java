@@ -16,12 +16,9 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
-import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider;
-import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentTypeOptionsProvider;
-import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.HeaderSecurityProvider;
-import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.StrictTransportSecurityProvider;
-import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionProvider;
-
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -29,9 +26,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+
+import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.HeaderSecurityProvider;
+import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider;
+import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentTypeOptionsProvider;
+import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.StrictTransportSecurityProvider;
+import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionProvider;
 
 /**
  * @author Tassilo Weidner

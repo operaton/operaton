@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import org.operaton.bpm.util.SeleniumScreenshotExtension;
-
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,6 +31,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+
+import org.operaton.bpm.util.SeleniumScreenshotExtension;
 
 /**
  * NOTE: copied from

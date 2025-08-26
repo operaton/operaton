@@ -16,20 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil.join;
-
 import java.util.List;
 import java.util.Optional;
 
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.NotifyAcquisitionRejectedJobsHandler;
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.engine.spring.components.jobexecutor.SpringJobExecutor;
-import org.operaton.bpm.spring.boot.starter.configuration.OperatonJobConfiguration;
-import org.operaton.bpm.spring.boot.starter.event.JobExecutorStartingEventListener;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.operaton.bpm.spring.boot.starter.property.JobExecutionProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -38,6 +27,18 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.NotifyAcquisitionRejectedJobsHandler;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.engine.spring.components.jobexecutor.SpringJobExecutor;
+import org.operaton.bpm.spring.boot.starter.configuration.OperatonJobConfiguration;
+import org.operaton.bpm.spring.boot.starter.event.JobExecutorStartingEventListener;
+import org.operaton.bpm.spring.boot.starter.property.JobExecutionProperty;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
+import static org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil.join;
 
 /**
  * Prepares JobExecutor and registers all known custom JobHandlers.

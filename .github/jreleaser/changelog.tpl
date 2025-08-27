@@ -110,10 +110,10 @@ Operaton is now tested against the following databases:
 |----------------------|--------------------------------|------------------|----------------|
 | H2                   | n/a                            | n/a              | 2.3.232        |
 | PostgreSQL           | postgres                       | 9.6.12           | 42.7.7         |
-| MySQL                | mysql                          | 5.7.34           | 9.3.0          |
-| MariaDB              | mariadb                        | 10.3.6           | 1.7.6          |
-| Oracle               | gvenzl/oracle-xe               | 18.4.0-slim      | 23.5.0.24.07   |                
-| Microsoft SQL Server | mcr.microsoft.com/mssql/server | 2017-CU12        | 12.10.0.jre8   |
+| MySQL                | mysql                          | 5.7.34           | 9.4.0          |
+| MariaDB              | mariadb                        | 10.3.6           | 1.8.0          |
+| Oracle               | gvenzl/oracle-xe               | 18.4.0-slim      | 23.9.0.25.07   |                
+| Microsoft SQL Server | mcr.microsoft.com/mssql/server | 2017-CU12        | 12.10.1.jre11   |
 | DB2                  | icr.io/db2_community/db2       | 11.5.0.0a        | 12.1.2.0       |
 
 ### Database Schema Upgrade Tests

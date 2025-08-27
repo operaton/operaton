@@ -25,9 +25,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
 
@@ -39,18 +37,18 @@ public class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
 
   @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfProperties() {
-    // given
+      // given
 
-    // when
-    target = client.target(appBasePath + TASKLIST_PATH);
+      // when
+      target = client.target(appBasePath + TASKLIST_PATH);
 
-    // Send GET request and return the Response
-    response = target.request().get(Response.class);
+      // Send GET request and return the Response
+      response = target.request().get(Response.class);
 
-    // then
-    assertEquals(200, response.getStatus());
-    assertTrue(isCookieHeaderValuePresent("HttpOnly", response));
-    assertFalse(isCookieHeaderValuePresent("Secure", response));
+      // then
+      assertThat(response.getStatus()).isEqualTo(200);
+      assertThat(isCookieHeaderValuePresent("HttpOnly", response)).isTrue();
+      assertThat(isCookieHeaderValuePresent("Secure", response)).isFalse();
   }
 
   protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {

@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.qa.rolling.update.task;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test ensures that the old engine can complete an
@@ -39,19 +38,19 @@ public class CompleteProcessWithUserTaskTest extends AbstractRollingUpdateTestCa
   public void testCompleteProcessWithUserTask() {
     //given an already started process instance
     ProcessInstance oldInstance = rule.processInstance();
-    Assert.assertNotNull(oldInstance);
+    assertThat(oldInstance).isNotNull();
 
     //which waits on an user task
     TaskService taskService = rule.getTaskService();
     Task userTask = taskService.createTaskQuery().processInstanceId(oldInstance.getId()).singleResult();
-    Assert.assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
 
     //when completing the user task
     taskService.complete(userTask.getId());
 
     //then there exists no more tasks
     //and the process instance is also completed
-    Assert.assertEquals(0, rule.taskQuery().count());
+    assertThat(rule.taskQuery().count()).isEqualTo(0);
     rule.assertScenarioEnded();
   }
 

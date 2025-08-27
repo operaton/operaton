@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.variable.Variables;
 
 import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProcessEnded;
 import static org.operaton.bpm.engine.variable.Variables.fileValue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ProcessEngineExtension.class)
 class InvoiceTestCase {
@@ -51,185 +51,185 @@ class InvoiceTestCase {
    @Deployment(resources = {"invoice.v1.bpmn", "invoiceBusinessDecisions.dmn"})
    @Test
    void testHappyPathV1() {
-    InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
-    VariableMap variables = Variables.createVariables()
-      .putValue("creditor", "Great Pizza for Everyone Inc.")
-      .putValue("amount", 300.0d)
-      .putValue("invoiceCategory", "Travel Expenses")
-      .putValue("invoiceNumber", "GPFE-23232323")
-      .putValue("invoiceDocument", fileValue("invoice.pdf")
-        .file(invoiceInputStream)
-        .mimeType("application/pdf")
-        .create());
+       InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
+       VariableMap variables = Variables.createVariables()
+               .putValue("creditor", "Great Pizza for Everyone Inc.")
+               .putValue("amount", 300.0d)
+               .putValue("invoiceCategory", "Travel Expenses")
+               .putValue("invoiceNumber", "GPFE-23232323")
+               .putValue("invoiceDocument", fileValue("invoice.pdf")
+                       .file(invoiceInputStream)
+                       .mimeType("application/pdf")
+                       .create());
 
-    ProcessInstance pi = runtimeService.startProcessInstanceByKey("invoice", variables);
+       ProcessInstance pi = runtimeService.startProcessInstanceByKey("invoice", variables);
 
-    Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("approveInvoice", task.getTaskDefinitionKey());
+       Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+       assertThat(task.getTaskDefinitionKey()).isEqualTo("approveInvoice");
 
-    List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
-    Set<String> approverGroups = new HashSet<>();
-    for (IdentityLink link : links) {
-      approverGroups.add(link.getGroupId());
-    }
-    assertEquals(2, approverGroups.size());
-    assertTrue(approverGroups.contains("accounting"));
-    assertTrue(approverGroups.contains("sales"));
+       List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
+       Set<String> approverGroups = new HashSet<>();
+       for (IdentityLink link : links) {
+           approverGroups.add(link.getGroupId());
+       }
+       assertThat(approverGroups.size()).isEqualTo(2);
+       assertThat(approverGroups.contains("accounting")).isTrue();
+       assertThat(approverGroups.contains("sales")).isTrue();
 
-    variables.clear();
-    variables.put("approved", Boolean.TRUE);
-    taskService.complete(task.getId(), variables);
+       variables.clear();
+       variables.put("approved", Boolean.TRUE);
+       taskService.complete(task.getId(), variables);
 
-    task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+       task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
 
-    assertEquals("prepareBankTransfer", task.getTaskDefinitionKey());
-    taskService.complete(task.getId());
+       assertThat(task.getTaskDefinitionKey()).isEqualTo("prepareBankTransfer");
+       taskService.complete(task.getId());
 
-    Job archiveInvoiceJob = managementService.createJobQuery().singleResult();
-    assertNotNull(archiveInvoiceJob);
-    managementService.executeJob(archiveInvoiceJob.getId());
+       Job archiveInvoiceJob = managementService.createJobQuery().singleResult();
+       assertThat(archiveInvoiceJob).isNotNull();
+       managementService.executeJob(archiveInvoiceJob.getId());
 
-    assertProcessEnded(processEngine, pi.getId());
-  }
+       assertProcessEnded(processEngine, pi.getId());
+   }
 
    @Deployment(resources = {"invoice.v2.bpmn", "invoiceBusinessDecisions.dmn"})
    @Test
    void testHappyPathV2() {
-    InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
-    VariableMap variables = Variables.createVariables()
-      .putValue("creditor", "Great Pizza for Everyone Inc.")
-      .putValue("amount", 300.0d)
-      .putValue("invoiceCategory", "Travel Expenses")
-      .putValue("invoiceNumber", "GPFE-23232323")
-      .putValue("invoiceDocument", fileValue("invoice.pdf")
-        .file(invoiceInputStream)
-        .mimeType("application/pdf")
-        .create());
+       InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
+       VariableMap variables = Variables.createVariables()
+               .putValue("creditor", "Great Pizza for Everyone Inc.")
+               .putValue("amount", 300.0d)
+               .putValue("invoiceCategory", "Travel Expenses")
+               .putValue("invoiceNumber", "GPFE-23232323")
+               .putValue("invoiceDocument", fileValue("invoice.pdf")
+                       .file(invoiceInputStream)
+                       .mimeType("application/pdf")
+                       .create());
 
-    ProcessInstance pi = runtimeService.startProcessInstanceByKey("invoice", variables);
+       ProcessInstance pi = runtimeService.startProcessInstanceByKey("invoice", variables);
 
-    Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("approveInvoice", task.getTaskDefinitionKey());
+       Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+       assertThat(task.getTaskDefinitionKey()).isEqualTo("approveInvoice");
 
-    List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
-    Set<String> approverGroups = new HashSet<>();
-    for (IdentityLink link : links) {
-      approverGroups.add(link.getGroupId());
-    }
-    assertEquals(2, approverGroups.size());
-    assertTrue(approverGroups.contains("accounting"));
-    assertTrue(approverGroups.contains("sales"));
+       List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
+       Set<String> approverGroups = new HashSet<>();
+       for (IdentityLink link : links) {
+           approverGroups.add(link.getGroupId());
+       }
+       assertThat(approverGroups.size()).isEqualTo(2);
+       assertThat(approverGroups.contains("accounting")).isTrue();
+       assertThat(approverGroups.contains("sales")).isTrue();
 
-    variables.clear();
-    variables.put("approved", Boolean.TRUE);
-    taskService.complete(task.getId(), variables);
+       variables.clear();
+       variables.put("approved", Boolean.TRUE);
+       taskService.complete(task.getId(), variables);
 
-    task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+       task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
 
-    assertEquals("prepareBankTransfer", task.getTaskDefinitionKey());
-    taskService.complete(task.getId());
+       assertThat(task.getTaskDefinitionKey()).isEqualTo("prepareBankTransfer");
+       taskService.complete(task.getId());
 
-    Job archiveInvoiceJob = managementService.createJobQuery().singleResult();
-    assertNotNull(archiveInvoiceJob);
-    managementService.executeJob(archiveInvoiceJob.getId());
+       Job archiveInvoiceJob = managementService.createJobQuery().singleResult();
+       assertThat(archiveInvoiceJob).isNotNull();
+       managementService.executeJob(archiveInvoiceJob.getId());
 
-    assertProcessEnded(processEngine, pi.getId());
-  }
+       assertProcessEnded(processEngine, pi.getId());
+   }
 
    @Deployment(resources = {"invoice.v2.bpmn", "invoiceBusinessDecisions.dmn"})
    @Test
    void testApproveInvoiceAssignment() {
-    InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
+       InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
 
-    VariableMap variables = Variables.createVariables()
-      .putValue("creditor", "Great Pizza for Everyone Inc.")
-      .putValue("amount", 300.0d)
-      .putValue("invoiceCategory", "Travel Expenses")
-      .putValue("invoiceNumber", "GPFE-23232323")
-      .putValue("invoiceDocument", fileValue("invoice.pdf")
-        .file(invoiceInputStream)
-        .mimeType("application/pdf")
-        .create())
-      .putValue("approverGroups", Arrays.asList("sales", "accounting"));
+       VariableMap variables = Variables.createVariables()
+               .putValue("creditor", "Great Pizza for Everyone Inc.")
+               .putValue("amount", 300.0d)
+               .putValue("invoiceCategory", "Travel Expenses")
+               .putValue("invoiceNumber", "GPFE-23232323")
+               .putValue("invoiceDocument", fileValue("invoice.pdf")
+                       .file(invoiceInputStream)
+                       .mimeType("application/pdf")
+                       .create())
+               .putValue("approverGroups", Arrays.asList("sales", "accounting"));
 
-    ProcessInstance pi = runtimeService.createProcessInstanceByKey("invoice")
-      .setVariables(variables)
-      .startBeforeActivity("approveInvoice")
-      .execute();
+       ProcessInstance pi = runtimeService.createProcessInstanceByKey("invoice")
+               .setVariables(variables)
+               .startBeforeActivity("approveInvoice")
+               .execute();
 
-    // given that the process instance is waiting at task "approveInvoice"
-    Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("approveInvoice", task.getTaskDefinitionKey());
+       // given that the process instance is waiting at task "approveInvoice"
+       Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+       assertThat(task.getTaskDefinitionKey()).isEqualTo("approveInvoice");
 
-    // and task has candidate groups
-    List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
-    Set<String> approverGroups = new HashSet<>();
-    for (IdentityLink link : links) {
-      approverGroups.add(link.getGroupId());
-    }
-    assertEquals(2, approverGroups.size());
-    assertTrue(approverGroups.contains("accounting"));
-    assertTrue(approverGroups.contains("sales"));
+       // and task has candidate groups
+       List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
+       Set<String> approverGroups = new HashSet<>();
+       for (IdentityLink link : links) {
+           approverGroups.add(link.getGroupId());
+       }
+       assertThat(approverGroups.size()).isEqualTo(2);
+       assertThat(approverGroups.contains("accounting")).isTrue();
+       assertThat(approverGroups.contains("sales")).isTrue();
 
-    // and variable approver is null
-    assertNull(taskService.getVariable(task.getId(), "approver"));
+       // and variable approver is null
+       assertThat(taskService.getVariable(task.getId(), "approver")).isNull();
 
-    // if mary claims the task
-    taskService.claim(task.getId(), "mary");
+       // if mary claims the task
+       taskService.claim(task.getId(), "mary");
 
-    // then the variable "approver" exists and is set to mary
-    assertEquals("mary", taskService.getVariable(task.getId(), "approver"));
-  }
+       // then the variable "approver" exists and is set to mary
+       assertThat(taskService.getVariable(task.getId(), "approver")).isEqualTo("mary");
+   }
 
    @Deployment(resources = {"invoice.v2.bpmn", "reviewInvoice.bpmn", "invoiceBusinessDecisions.dmn"})
    @Test
    void testNonSuccessfulPath() {
-    InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
-    VariableMap variables = Variables.createVariables()
-      .putValue("creditor", "Great Pizza for Everyone Inc.")
-      .putValue("amount", 300.0d)
-      .putValue("invoiceCategory", "Travel Expenses")
-      .putValue("invoiceNumber", "GPFE-23232323")
-      .putValue("invoiceDocument", fileValue("invoice.pdf")
-        .file(invoiceInputStream)
-        .mimeType("application/pdf")
-        .create());
+       InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
+       VariableMap variables = Variables.createVariables()
+               .putValue("creditor", "Great Pizza for Everyone Inc.")
+               .putValue("amount", 300.0d)
+               .putValue("invoiceCategory", "Travel Expenses")
+               .putValue("invoiceNumber", "GPFE-23232323")
+               .putValue("invoiceDocument", fileValue("invoice.pdf")
+                       .file(invoiceInputStream)
+                       .mimeType("application/pdf")
+                       .create());
 
-    ProcessInstance pi = runtimeService.startProcessInstanceByKey("invoice", variables);
+       ProcessInstance pi = runtimeService.startProcessInstanceByKey("invoice", variables);
 
-    Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("approveInvoice", task.getTaskDefinitionKey());
+       Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+       assertThat(task.getTaskDefinitionKey()).isEqualTo("approveInvoice");
 
-    List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
-    Set<String> approverGroups = new HashSet<>();
-    for (IdentityLink link : links) {
-      approverGroups.add(link.getGroupId());
-    }
-    assertEquals(2, approverGroups.size());
-    assertTrue(approverGroups.contains("accounting"));
-    assertTrue(approverGroups.contains("sales"));
+       List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
+       Set<String> approverGroups = new HashSet<>();
+       for (IdentityLink link : links) {
+           approverGroups.add(link.getGroupId());
+       }
+       assertThat(approverGroups.size()).isEqualTo(2);
+       assertThat(approverGroups.contains("accounting")).isTrue();
+       assertThat(approverGroups.contains("sales")).isTrue();
 
-    variables.clear();
-    variables.put("approved", Boolean.FALSE);
-    taskService.complete(task.getId(), variables);
+       variables.clear();
+       variables.put("approved", Boolean.FALSE);
+       taskService.complete(task.getId(), variables);
 
-    task = taskService.createTaskQuery().singleResult();
+       task = taskService.createTaskQuery().singleResult();
 
-    assertEquals("assignReviewer", task.getTaskDefinitionKey());
-    variables.clear();
-    variables.put("reviewer", "peter");
-    taskService.complete(task.getId(), variables);
+       assertThat(task.getTaskDefinitionKey()).isEqualTo("assignReviewer");
+       variables.clear();
+       variables.put("reviewer", "peter");
+       taskService.complete(task.getId(), variables);
 
-    task = taskService.createTaskQuery().singleResult();
+       task = taskService.createTaskQuery().singleResult();
 
-    assertEquals("reviewInvoice", task.getTaskDefinitionKey());
-    variables.clear();
-    variables.put("clarified", Boolean.FALSE);
-    taskService.complete(task.getId(), variables);
+       assertThat(task.getTaskDefinitionKey()).isEqualTo("reviewInvoice");
+       variables.clear();
+       variables.put("clarified", Boolean.FALSE);
+       taskService.complete(task.getId(), variables);
 
-    assertProcessEnded(processEngine, task.getProcessInstanceId());
-    assertProcessEnded(processEngine, pi.getId());
-  }
+       assertProcessEnded(processEngine, task.getProcessInstanceId());
+       assertProcessEnded(processEngine, pi.getId());
+   }
 
 
 }

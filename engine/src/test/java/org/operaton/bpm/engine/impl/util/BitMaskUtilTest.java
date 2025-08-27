@@ -5,50 +5,48 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BitMaskUtilTest {
 
   @Test
   void testSetBitOn() {
     int bitOn = BitMaskUtil.setBitOn(3, 3);
-    assertEquals(7, bitOn);
+    assertThat(bitOn).isEqualTo(7);
   }
 
   @Test
   void testSetBitOff() {
     int bitOn = BitMaskUtil.setBitOff(7, 3);
-    assertEquals(3, bitOn);
+    assertThat(bitOn).isEqualTo(3);
   }
 
   @Test
   void testIsBitOn() {
-    assertTrue(BitMaskUtil.isBitOn(7, 3));
-    assertFalse(BitMaskUtil.isBitOn(3, 3));
+    assertThat(BitMaskUtil.isBitOn(7, 3)).isTrue();
+    assertThat(BitMaskUtil.isBitOn(3, 3)).isFalse();
   }
 
   @Test
   void testSetBit() {
     int setBitFalse = BitMaskUtil.setBit(1, 1, false);
-    assertEquals(0, setBitFalse);
+    assertThat(setBitFalse).isEqualTo(0);
 
     int setBitTrue = BitMaskUtil.setBit(0, 1, true);
-    assertEquals(1, setBitTrue);
+    assertThat(setBitTrue).isEqualTo(1);
   }
 
   @Test
   void testGetMaskForBit() {
-    assertEquals(1, BitMaskUtil.getMaskForBit(1));
-    assertEquals(2, BitMaskUtil.getMaskForBit(2));
-    assertEquals(4, BitMaskUtil.getMaskForBit(3));
-    assertEquals(8, BitMaskUtil.getMaskForBit(4));
-    assertEquals(16, BitMaskUtil.getMaskForBit(5));
-    assertEquals(32, BitMaskUtil.getMaskForBit(6));
-    assertEquals(64, BitMaskUtil.getMaskForBit(7));
-    assertEquals(128, BitMaskUtil.getMaskForBit(8));
+    assertThat(BitMaskUtil.getMaskForBit(1)).isEqualTo(1);
+    assertThat(BitMaskUtil.getMaskForBit(2)).isEqualTo(2);
+    assertThat(BitMaskUtil.getMaskForBit(3)).isEqualTo(4);
+    assertThat(BitMaskUtil.getMaskForBit(4)).isEqualTo(8);
+    assertThat(BitMaskUtil.getMaskForBit(5)).isEqualTo(16);
+    assertThat(BitMaskUtil.getMaskForBit(6)).isEqualTo(32);
+    assertThat(BitMaskUtil.getMaskForBit(7)).isEqualTo(64);
+    assertThat(BitMaskUtil.getMaskForBit(8)).isEqualTo(128);
   }
 
   @Test

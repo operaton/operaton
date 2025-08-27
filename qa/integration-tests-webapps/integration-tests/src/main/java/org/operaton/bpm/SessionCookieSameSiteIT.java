@@ -25,8 +25,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
 
@@ -38,17 +37,17 @@ public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
 
   @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfSameSiteProperties() {
-    // given
+      // given
 
-    // when
-    target = client.target(appBasePath + TASKLIST_PATH);
+      // when
+      target = client.target(appBasePath + TASKLIST_PATH);
 
-    // Send GET request and return the Response
-    response = target.request().get(Response.class);
+      // Send GET request and return the Response
+      response = target.request().get(Response.class);
 
-    // then
-    assertEquals(200, response.getStatus());
-    assertTrue(isCookieHeaderValuePresent("SameSite=Lax", response));
+      // then
+      assertThat(response.getStatus()).isEqualTo(200);
+      assertThat(isCookieHeaderValuePresent("SameSite=Lax", response)).isTrue();
   }
 
   protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {

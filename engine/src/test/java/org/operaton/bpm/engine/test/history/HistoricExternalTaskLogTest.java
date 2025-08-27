@@ -42,9 +42,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -183,14 +180,14 @@ class HistoricExternalTaskLogTest {
 
     // when
     String failedHistoricExternalTaskLogId = historyService
-      .createHistoricExternalTaskLogQuery()
-      .failureLog()
-      .singleResult()
-      .getId();
+            .createHistoricExternalTaskLogQuery()
+            .failureLog()
+            .singleResult()
+            .getId();
 
     // then
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
-    assertNotNull(stacktrace);
+    assertThat(stacktrace).isNotNull();
     assertThat(stacktrace).isEqualTo(ERROR_DETAILS);
   }
 
@@ -206,11 +203,11 @@ class HistoricExternalTaskLogTest {
 
     // when
     List<HistoricExternalTaskLog> list = historyService
-      .createHistoricExternalTaskLogQuery()
-      .failureLog()
-      .orderByTimestamp()
-      .asc()
-      .list();
+            .createHistoricExternalTaskLogQuery()
+            .failureLog()
+            .orderByTimestamp()
+            .asc()
+            .list();
 
     String firstFailedLogId = list.get(0).getId();
     String secondFailedLogId = list.get(1).getId();
@@ -218,8 +215,8 @@ class HistoricExternalTaskLogTest {
     // then
     String stacktrace1 = historyService.getHistoricExternalTaskLogErrorDetails(firstFailedLogId);
     String stacktrace2 = historyService.getHistoricExternalTaskLogErrorDetails(secondFailedLogId);
-    assertNotNull(stacktrace1);
-    assertNotNull(stacktrace2);
+    assertThat(stacktrace1).isNotNull();
+    assertThat(stacktrace2).isNotNull();
     assertThat(stacktrace1).isEqualTo(firstErrorDetails);
     assertThat(stacktrace2).isEqualTo(secondErrorDetails);
   }
@@ -231,8 +228,8 @@ class HistoricExternalTaskLogTest {
       historyService.getHistoricExternalTaskLogErrorDetails("foo");
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
-      String expectedMessage = "No historic external task log found with id foo";
-      assertTrue(re.getMessage().contains(expectedMessage));
+        String expectedMessage = "No historic external task log found with id foo";
+        assertThat(re.getMessage().contains(expectedMessage)).isTrue();
     }
   }
 
@@ -242,8 +239,8 @@ class HistoricExternalTaskLogTest {
       historyService.getHistoricExternalTaskLogErrorDetails(null);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
-      String expectedMessage = "historicExternalTaskLogId is null";
-      assertTrue(re.getMessage().contains(expectedMessage));
+        String expectedMessage = "historicExternalTaskLogId is null";
+        assertThat(re.getMessage().contains(expectedMessage)).isTrue();
     }
   }
 
@@ -256,15 +253,15 @@ class HistoricExternalTaskLogTest {
 
     // when
     HistoricExternalTaskLog failedLog = historyService
-      .createHistoricExternalTaskLogQuery()
-      .failureLog()
-      .singleResult();
+            .createHistoricExternalTaskLogQuery()
+            .failureLog()
+            .singleResult();
 
     String errorMessage = failedLog.getErrorMessage();
     String expectedErrorMessage = exceptionMessage.substring(0, ExternalTaskEntity.MAX_EXCEPTION_MESSAGE_LENGTH);
 
     // then
-    assertNotNull(failedLog);
+    assertThat(failedLog).isNotNull();
     assertThat(errorMessage).hasSize(ExternalTaskEntity.MAX_EXCEPTION_MESSAGE_LENGTH).isEqualTo(expectedErrorMessage);
 
   }
@@ -272,31 +269,31 @@ class HistoricExternalTaskLogTest {
   // helper
 
   protected void assertLogIsInCreatedState(HistoricExternalTaskLog log) {
-    assertTrue(log.isCreationLog());
-    assertFalse(log.isFailureLog());
-    assertFalse(log.isSuccessLog());
-    assertFalse(log.isDeletionLog());
+    assertThat(log.isCreationLog()).isTrue();
+    assertThat(log.isFailureLog()).isFalse();
+    assertThat(log.isSuccessLog()).isFalse();
+    assertThat(log.isDeletionLog()).isFalse();
   }
 
   protected void assertLogIsInFailedState(HistoricExternalTaskLog log) {
-    assertFalse(log.isCreationLog());
-    assertTrue(log.isFailureLog());
-    assertFalse(log.isSuccessLog());
-    assertFalse(log.isDeletionLog());
+    assertThat(log.isCreationLog()).isFalse();
+    assertThat(log.isFailureLog()).isTrue();
+    assertThat(log.isSuccessLog()).isFalse();
+    assertThat(log.isDeletionLog()).isFalse();
   }
 
   protected void assertLogIsInSuccessfulState(HistoricExternalTaskLog log) {
-    assertFalse(log.isCreationLog());
-    assertFalse(log.isFailureLog());
-    assertTrue(log.isSuccessLog());
-    assertFalse(log.isDeletionLog());
+    assertThat(log.isCreationLog()).isFalse();
+    assertThat(log.isFailureLog()).isFalse();
+    assertThat(log.isSuccessLog()).isTrue();
+    assertThat(log.isDeletionLog()).isFalse();
   }
 
   protected void assertLogIsInDeletedState(HistoricExternalTaskLog log) {
-    assertFalse(log.isCreationLog());
-    assertFalse(log.isFailureLog());
-    assertFalse(log.isSuccessLog());
-    assertTrue(log.isDeletionLog());
+    assertThat(log.isCreationLog()).isFalse();
+    assertThat(log.isFailureLog()).isFalse();
+    assertThat(log.isSuccessLog()).isFalse();
+    assertThat(log.isDeletionLog()).isTrue();
   }
 
   protected void assertHistoricLogPropertiesAreProperlySet(ExternalTask task, HistoricExternalTaskLog log) {
@@ -304,9 +301,9 @@ class HistoricExternalTaskLogTest {
   }
 
   protected void assertHistoricLogPropertiesAreProperlySet(ExternalTask task, Integer retries, HistoricExternalTaskLog log) {
-    assertNotNull(log);
-    assertNotNull(log.getId());
-    assertNotNull(log.getTimestamp());
+    assertThat(log).isNotNull();
+    assertThat(log.getId()).isNotNull();
+    assertThat(log.getTimestamp()).isNotNull();
 
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
     assertThat(log.getActivityId()).isEqualTo(task.getActivityId());

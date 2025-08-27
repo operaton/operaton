@@ -39,7 +39,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.SpinRuntimeException;
-import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.XmlValue;
 import org.operaton.spin.plugin.variable.value.builder.XmlValueBuilder;
 import org.operaton.spin.xml.SpinXmlElement;
@@ -50,7 +49,6 @@ import static org.operaton.spin.plugin.variable.type.SpinValueType.XML;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Roman Smirnov
@@ -78,44 +76,44 @@ class XmlValueTest {
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
   void getUntypedXmlValue() {
-    // given
-    XmlValue xmlValue = xmlValue(xmlString).create();
-    VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
+      // given
+      XmlValue xmlValue = xmlValue(xmlString).create();
+      VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
 
-    String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY, variables).getId();
+      String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY, variables).getId();
 
-    // when
-    SpinXmlElement value = (SpinXmlElement) runtimeService.getVariable(processInstanceId, variableName);
+      // when
+      SpinXmlElement value = (SpinXmlElement) runtimeService.getVariable(processInstanceId, variableName);
 
-    // then
-    assertTrue(value.hasAttr("attrName"));
-    assertEquals("attrValue", value.attr("attrName").value());
-    assertTrue(value.childElements().isEmpty());
-    assertEquals(xml().getName(), value.getDataFormatName());
+      // then
+      assertThat(value.hasAttr("attrName")).isTrue();
+      assertThat(value.attr("attrName").value()).isEqualTo("attrValue");
+      assertThat(value.childElements().isEmpty()).isTrue();
+      assertThat(value.getDataFormatName()).isEqualTo(xml().getName());
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
   void getTypedXmlValue() {
-    // given
-    XmlValue xmlValue = xmlValue(xmlString).create();
-    VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
+      // given
+      XmlValue xmlValue = xmlValue(xmlString).create();
+      VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
 
-    String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY, variables).getId();
+      String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY, variables).getId();
 
-    // when
-    XmlValue typedValue = runtimeService.getVariableTyped(processInstanceId, variableName);
+      // when
+      XmlValue typedValue = runtimeService.getVariableTyped(processInstanceId, variableName);
 
-    // then
-    SpinXmlElement value = typedValue.getValue();
-    assertTrue(value.hasAttr("attrName"));
-    assertEquals("attrValue", value.attr("attrName").value());
-    assertTrue(value.childElements().isEmpty());
+      // then
+      SpinXmlElement value = typedValue.getValue();
+      assertThat(value.hasAttr("attrName")).isTrue();
+      assertThat(value.attr("attrName").value()).isEqualTo("attrValue");
+      assertThat(value.childElements().isEmpty()).isTrue();
 
-    assertTrue(typedValue.isDeserialized());
-    assertEquals(XML, typedValue.getType());
-    assertEquals(XML_FORMAT_NAME, typedValue.getSerializationDataFormat());
-    assertEquals(xmlString, typedValue.getValueSerialized());
+      assertThat(typedValue.isDeserialized()).isTrue();
+      assertThat(typedValue.getType()).isEqualTo(XML);
+      assertThat(typedValue.getSerializationDataFormat()).isEqualTo(XML_FORMAT_NAME);
+      assertThat(typedValue.getValueSerialized()).isEqualTo(xmlString);
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -134,29 +132,29 @@ class XmlValueTest {
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
   void failingDeserialization() {
-    // given
-    XmlValue value = xmlValue(brokenXmlString).create();
+      // given
+      XmlValue value = xmlValue(brokenXmlString).create();
 
-    String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
-    runtimeService.setVariable(processInstanceId, variableName, value);
+      String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
+      runtimeService.setVariable(processInstanceId, variableName, value);
 
-    assertThatThrownBy(() -> runtimeService.getVariable(processInstanceId, variableName))
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining(SPIN_DOM_XML_01009);
+      assertThatThrownBy(() -> runtimeService.getVariable(processInstanceId, variableName))
+              .isInstanceOf(ProcessEngineException.class)
+              .hasMessageContaining(SPIN_DOM_XML_01009);
 
-    assertThatThrownBy(() -> runtimeService.getVariableTyped(processInstanceId, variableName))
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining(SPIN_DOM_XML_01009);
+      assertThatThrownBy(() -> runtimeService.getVariableTyped(processInstanceId, variableName))
+              .isInstanceOf(ProcessEngineException.class)
+              .hasMessageContaining(SPIN_DOM_XML_01009);
 
-    // However, I can access the serialized value
-    XmlValue xmlValue = runtimeService.getVariableTyped(processInstanceId, variableName, false);
-    assertFalse(xmlValue.isDeserialized());
-    assertEquals(brokenXmlString, xmlValue.getValueSerialized());
+      // However, I can access the serialized value
+      XmlValue xmlValue = runtimeService.getVariableTyped(processInstanceId, variableName, false);
+      assertThat(xmlValue.isDeserialized()).isFalse();
+      assertThat(xmlValue.getValueSerialized()).isEqualTo(brokenXmlString);
 
-    // but not the deserialized properties
-    assertThatThrownBy(xmlValue::getValue)
-      .isInstanceOf(SpinRuntimeException.class)
-      .hasMessage(SPIN_DOM_XML_01009);
+      // but not the deserialized properties
+      assertThatThrownBy(xmlValue::getValue)
+              .isInstanceOf(SpinRuntimeException.class)
+              .hasMessage(SPIN_DOM_XML_01009);
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -179,47 +177,47 @@ class XmlValueTest {
   @Deployment(resources = "org/operaton/spin/plugin/xmlConditionProcess.bpmn20.xml")
   @Test
   void xmlValueInCondition() {
-    // given
-    String xml = "<customer age=\"22\" />";
-    XmlValue value = xmlValue(xml).create();
-    VariableMap variables = Variables.createVariables().putValueTyped("customer", value);
+      // given
+      String xml = "<customer age=\"22\" />";
+      XmlValue value = xmlValue(xml).create();
+      VariableMap variables = Variables.createVariables().putValueTyped("customer", value);
 
-    // when
-    runtimeService.startProcessInstanceByKey("process", variables);
+      // when
+      runtimeService.startProcessInstanceByKey("process", variables);
 
-    // then
-    Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("task1", task.getTaskDefinitionKey());
+      // then
+      Task task = taskService.createTaskQuery().singleResult();
+      assertThat(task.getTaskDefinitionKey()).isEqualTo("task1");
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
   void transientXmlValueFluent() {
-    // given
-    XmlValue xmlValue = xmlValue(xmlString).setTransient(true).create();
-    VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
+      // given
+      XmlValue xmlValue = xmlValue(xmlString).setTransient(true).create();
+      VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
 
-    // when
-    runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY, variables).getId();
+      // when
+      runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY, variables).getId();
 
-    // then
-    List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+      // then
+      List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
+      assertThat(variableInstances.size()).isEqualTo(0);
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
   void transientXmlValue() {
-    // given
-    XmlValue xmlValue = xmlValue(xmlString, true).create();
-    VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
+      // given
+      XmlValue xmlValue = xmlValue(xmlString, true).create();
+      VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
 
-    // when
-    runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY, variables).getId();
+      // when
+      runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY, variables).getId();
 
-    // then
-    List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+      // then
+      List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
+      assertThat(variableInstances.size()).isEqualTo(0);
   }
 
   /**
@@ -247,49 +245,49 @@ class XmlValueTest {
 
   @Test
   void applyValueInfoFromSerializedValue() {
-    // given
-    Map<String, Object> valueInfo = new HashMap<>();
-    valueInfo.put(ValueType.VALUE_INFO_TRANSIENT, true);
+      // given
+      Map<String, Object> valueInfo = new HashMap<>();
+      valueInfo.put(ValueType.VALUE_INFO_TRANSIENT, true);
 
-    // when
-    XmlValue xmlValue = (XmlValue) SpinValueType.XML.createValueFromSerialized(xmlString, valueInfo);
+      // when
+      XmlValue xmlValue = (XmlValue) XML.createValueFromSerialized(xmlString, valueInfo);
 
-    // then
-    assertTrue(xmlValue.isTransient());
-    Map<String, Object> returnedValueInfo = SpinValueType.XML.getValueInfo(xmlValue);
-    assertEquals(true, returnedValueInfo.get(ValueType.VALUE_INFO_TRANSIENT));
+      // then
+      assertThat(xmlValue.isTransient()).isTrue();
+      Map<String, Object> returnedValueInfo = XML.getValueInfo(xmlValue);
+      assertThat(returnedValueInfo.get(ValueType.VALUE_INFO_TRANSIENT)).isEqualTo(true);
   }
 
   @Test
   void deserializeTransientXmlValue() {
-    // given
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo")
-        .startEvent()
-        .exclusiveGateway("gtw")
-          .sequenceFlowId("flow1")
-          .condition("cond", "${XML(" + variableName + ").attr('attrName').value() == 'attrValue'}")
-          .userTask("userTask1")
-          .endEvent()
-        .moveToLastGateway()
-          .sequenceFlowId("flow2")
-          .userTask("userTask2")
-          .endEvent()
-        .done();
+      // given
+      BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo")
+              .startEvent()
+              .exclusiveGateway("gtw")
+              .sequenceFlowId("flow1")
+              .condition("cond", "${XML(" + variableName + ").attr('attrName').value() == 'attrValue'}")
+              .userTask("userTask1")
+              .endEvent()
+              .moveToLastGateway()
+              .sequenceFlowId("flow2")
+              .userTask("userTask2")
+              .endEvent()
+              .done();
 
-    deploymentExtension.deploy(modelInstance);
+      deploymentExtension.deploy(modelInstance);
 
-    XmlValue xmlValue = xmlValue(xmlString, true).create();
-    VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
+      XmlValue xmlValue = xmlValue(xmlString, true).create();
+      VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
 
-    // when
-    runtimeService.startProcessInstanceByKey("foo", variables);
+      // when
+      runtimeService.startProcessInstanceByKey("foo", variables);
 
-    // then
-    List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+      // then
+      List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
+      assertThat(variableInstances.size()).isEqualTo(0);
 
-    Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("userTask1", task.getTaskDefinitionKey());
+      Task task = taskService.createTaskQuery().singleResult();
+      assertThat(task).isNotNull();
+      assertThat(task.getTaskDefinitionKey()).isEqualTo("userTask1");
   }
 }

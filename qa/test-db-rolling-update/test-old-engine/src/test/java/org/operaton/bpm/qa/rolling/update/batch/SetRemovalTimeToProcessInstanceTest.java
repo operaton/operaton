@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.qa.rolling.update.batch;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Date;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -30,8 +28,8 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.rolling.update.RollingUpdateConstants;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @ScenarioUnderTest("SetRemovalTimeToProcessInstanceScenario")
 public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTestCase {
@@ -39,7 +37,7 @@ public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTe
   protected ManagementService managementService;
   protected RuntimeService runtimeService;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     managementService = rule.getManagementService();
     runtimeService = rule.getRuntimeService();
@@ -70,9 +68,9 @@ public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTe
           .activityId("theTask")
           .processInstanceId(processInstanceId)
           .singleResult();
-      assertEquals(removalTime, historicActivityInstance.getRemovalTime());
+      assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(removalTime);
 
-      assertEquals(0, managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count());
+      assertThat(managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count()).isEqualTo(0);
     }
   }
 
@@ -97,9 +95,9 @@ public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTe
           .activityId("theTask")
           .processInstanceId(processInstanceId)
           .singleResult();
-      assertEquals(removalTime, historicActivityInstance.getRemovalTime());
+      assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(removalTime);
 
-      assertEquals(0, managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count());
+      assertThat(managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count()).isEqualTo(0);
     }
   }
 

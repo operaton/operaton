@@ -48,9 +48,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.cache.Cache;
 
 import static org.operaton.bpm.engine.test.api.repository.RedeploymentTest.DEPLOYMENT_NAME;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -138,9 +135,9 @@ class DeleteProcessDefinitionTest {
       repositoryService.deleteProcessDefinition(processDefinitionId);
       fail("Should fail, since there exists a process instance");
     } catch (ProcessEngineException pex) {
-      // then Exception is expected, the deletion should fail since there exist a process instance
-      // and the cascade flag is per default false
-      assertTrue(pex.getMessage().contains("Deletion of process definition without cascading failed."));
+        // then Exception is expected, the deletion should fail since there exist a process instance
+        // and the cascade flag is per default false
+        assertThat(pex.getMessage().contains("Deletion of process definition without cascading failed.")).isTrue();
     }
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
@@ -181,44 +178,44 @@ class DeleteProcessDefinitionTest {
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
 
     // ensure definitions and models are part of the cache
-    assertNotNull(deploymentCache.getProcessDefinitionCache().get(processDefinitionId));
-    assertNotNull(deploymentCache.getBpmnModelInstanceCache().get(processDefinitionId));
+    assertThat(deploymentCache.getProcessDefinitionCache().get(processDefinitionId)).isNotNull();
+    assertThat(deploymentCache.getBpmnModelInstanceCache().get(processDefinitionId)).isNotNull();
 
     repositoryService.deleteProcessDefinition(processDefinitionId, true);
 
     // then the definitions and models are removed from the cache
-    assertNull(deploymentCache.getProcessDefinitionCache().get(processDefinitionId));
-    assertNull(deploymentCache.getBpmnModelInstanceCache().get(processDefinitionId));
+    assertThat(deploymentCache.getProcessDefinitionCache().get(processDefinitionId)).isNull();
+    assertThat(deploymentCache.getBpmnModelInstanceCache().get(processDefinitionId)).isNull();
   }
 
   @Test
   void testDeleteProcessDefinitionAndRefillDeploymentCache() {
-    // given a deployment with two process definitions in one xml model file
-    deployment = repositoryService.createDeployment()
-            .addClasspathResource("org/operaton/bpm/engine/test/repository/twoProcesses.bpmn20.xml")
-            .deploy();
-    ProcessDefinition processDefinitionOne =
-        repositoryService.createProcessDefinitionQuery().processDefinitionKey("one").singleResult();
-    ProcessDefinition processDefinitionTwo =
-        repositoryService.createProcessDefinitionQuery().processDefinitionKey("two").singleResult();
+      // given a deployment with two process definitions in one xml model file
+      deployment = repositoryService.createDeployment()
+              .addClasspathResource("org/operaton/bpm/engine/test/repository/twoProcesses.bpmn20.xml")
+              .deploy();
+      ProcessDefinition processDefinitionOne =
+              repositoryService.createProcessDefinitionQuery().processDefinitionKey("one").singleResult();
+      ProcessDefinition processDefinitionTwo =
+              repositoryService.createProcessDefinitionQuery().processDefinitionKey("two").singleResult();
 
-    String idOne = processDefinitionOne.getId();
-    //one is deleted from the deployment
-    repositoryService.deleteProcessDefinition(idOne);
+      String idOne = processDefinitionOne.getId();
+      //one is deleted from the deployment
+      repositoryService.deleteProcessDefinition(idOne);
 
-    //when clearing the deployment cache
-    processEngineConfiguration.getDeploymentCache().discardProcessDefinitionCache();
+      //when clearing the deployment cache
+      processEngineConfiguration.getDeploymentCache().discardProcessDefinitionCache();
 
-    //then creating process instance from the existing process definition
-    ProcessInstanceWithVariables procInst = runtimeService.createProcessInstanceByKey("two").executeWithVariablesInReturn();
-    assertNotNull(procInst);
-    assertTrue(procInst.getProcessDefinitionId().contains("two"));
+      //then creating process instance from the existing process definition
+      ProcessInstanceWithVariables procInst = runtimeService.createProcessInstanceByKey("two").executeWithVariablesInReturn();
+      assertThat(procInst).isNotNull();
+      assertThat(procInst.getProcessDefinitionId().contains("two")).isTrue();
 
-    //should refill the cache
-    Cache cache = processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache();
-    assertNotNull(cache.get(processDefinitionTwo.getId()));
-    //The deleted process definition should not be recreated after the cache is refilled
-    assertNull(cache.get(processDefinitionOne.getId()));
+      //should refill the cache
+      Cache cache = processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache();
+      assertThat(cache.get(processDefinitionTwo.getId())).isNotNull();
+      //The deleted process definition should not be recreated after the cache is refilled
+      assertThat(cache.get(processDefinitionOne.getId())).isNull();
   }
 
   @Test

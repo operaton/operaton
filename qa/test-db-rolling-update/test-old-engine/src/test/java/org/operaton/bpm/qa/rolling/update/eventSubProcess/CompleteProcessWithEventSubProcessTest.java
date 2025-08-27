@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.qa.rolling.update.eventSubProcess;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -37,9 +36,9 @@ public class CompleteProcessWithEventSubProcessTest extends AbstractRollingUpdat
   public void testCompleteProcessWithEventSubProcess() {
     //given process within event sub process
     ProcessInstance oldInstance = rule.processInstance();
-    Assert.assertNotNull(oldInstance);
+    assertThat(oldInstance).isNotNull();
     Job job = rule.jobQuery().singleResult();
-    Assert.assertNotNull(job);
+    assertThat(job).isNotNull();
 
     //when job is executed
     rule.getManagementService().executeJob(job.getId());
@@ -49,7 +48,7 @@ public class CompleteProcessWithEventSubProcessTest extends AbstractRollingUpdat
                     .createTaskQuery()
                     .processInstanceId(oldInstance.getId())
                     .taskName("TaskInEventSubProcess").singleResult();
-    Assert.assertNotNull(task);
+    assertThat(task).isNotNull();
     rule.getTaskService().complete(task.getId());
     rule.assertScenarioEnded();
   }
@@ -63,7 +62,7 @@ public class CompleteProcessWithEventSubProcessTest extends AbstractRollingUpdat
                     .createTaskQuery()
                     .processInstanceId(oldInstance.getId())
                     .taskName("TaskInEventSubProcess").singleResult();
-    Assert.assertNotNull(task);
+    assertThat(task).isNotNull();
 
     //when task is completed
     rule.getTaskService().complete(task.getId());

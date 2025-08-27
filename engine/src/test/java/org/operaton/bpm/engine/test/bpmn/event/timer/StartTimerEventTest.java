@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.bpmn.event.timer;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -62,6 +63,7 @@ import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.Assert.assertNotSame;
 
 /**
@@ -69,7 +71,6 @@ import static org.junit.Assert.assertNotSame;
  */
 class StartTimerEventTest {
 
-  protected static final long ONE_HOUR = TimeUnit.HOURS.toMillis(1L);
   protected static final long TWO_HOURS = TimeUnit.HOURS.toMillis(2L);
   private static final Date START_DATE = new GregorianCalendar(2023, Calendar.AUGUST, 18, 8, 0, 0).getTime();
 
@@ -173,7 +174,7 @@ class StartTimerEventTest {
   }
 
   private void moveByMinutes(int minutes) {
-    ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() + ((minutes * 60 * 1000) + 5000)));
+    ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() + (((long) minutes * 60 * 1000) + 5000)));
   }
 
   @Deployment
@@ -282,7 +283,7 @@ class StartTimerEventTest {
     assertThat(newDate).isNotEqualTo(oldDate);
     assertThat(oldDate.before(newDate)).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(currentTime).plusHours(2).toDate();
-    assertThat(newDate).isCloseTo(expectedDate, 1000l);
+    assertThat(newDate).isCloseTo(expectedDate, 1000L);
 
     // move the clock forward 2 hours and 2 min
     moveByMinutes(122);
@@ -1580,7 +1581,7 @@ class StartTimerEventTest {
     assertThat(newDuedate).isNotEqualTo(oldDueDate);
     assertThat(oldDueDate.before(newDuedate)).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(currentTime).plusSeconds(70).toDate();
-    assertThat(newDuedate).isCloseTo(expectedDate, 1000l);
+    assertThat(newDuedate).isCloseTo(expectedDate, 1000L);
 
     managementService.executeJob(jobId);
     assertThat(taskService.createTaskQuery().taskName("taskInSubprocess").list()).hasSize(1);
@@ -1696,8 +1697,8 @@ class StartTimerEventTest {
 
     // then one more job is left due in 2 hours
     Date duedate = managementService.createJobQuery().singleResult().getDuedate();
-    assertThat(duedate)
-        .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
   }
 
   @Test
@@ -1758,8 +1759,8 @@ class StartTimerEventTest {
 
     // then one more job is left due in 2 hours
     Date duedate = managementService.createJobQuery().singleResult().getDuedate();
-    assertThat(duedate)
-        .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
   }
 
   @Test
@@ -1779,8 +1780,8 @@ class StartTimerEventTest {
 
     // then one more job is left due in 2 hours
     Date duedate = managementService.createJobQuery().singleResult().getDuedate();
-    assertThat(duedate)
-        .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
   }
 
   @Test
@@ -1801,15 +1802,15 @@ class StartTimerEventTest {
 
     // then one more job is left due in 2 hours
     Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate)
-        .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
 
     moveByHours(2); // execute first job from new cycle
 
     // one more job is left due in 2 hours
     duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate)
-        .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
 
     moveByHours(2); // execute second job from new cycle
 
@@ -1836,15 +1837,15 @@ class StartTimerEventTest {
 
     // then one more job is left due in 4 hours
     Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate)
-        .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.HOURS.toMillis(4L)));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.HOURS.toMillis(4L)).toInstant(), within(59, ChronoUnit.MINUTES));
 
     moveByHours(4); // execute first job from new cycle, "2023/8/18 14:00:00"
 
     // one more job is left due in 30 minutes
     duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate)
-        .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(30L)));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(30L)).toInstant(), within(59, ChronoUnit.MINUTES));
 
     moveByHours(1); // execute second job from new cycle
 
@@ -1871,15 +1872,15 @@ class StartTimerEventTest {
 
     // then one more job is left due in 2 hours
     Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate)
-        .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
 
     moveByHours(2); // execute first job from new cycle, "2023/8/18 12:00:00"
 
     // one more job is left due in 2 hours
     duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate)
-        .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
 
     moveByHours(2); // execute second job from new cycle
 
@@ -1906,15 +1907,15 @@ class StartTimerEventTest {
 
     // then one more job is left due in 2 hours
     Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate)
-    .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
 
     moveByHours(2); // execute first job from new cycle, "2023/8/18 12:00:00"
 
     // one more job is left due in 2 hours
     duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate)
-    .isEqualToIgnoringMinutes(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS));
+    assertThat(duedate.toInstant())
+            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
 
     moveByHours(2); // execute second job from new cycle
 

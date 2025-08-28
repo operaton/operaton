@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.RuntimeService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = {SpinApplication.class},
   webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -53,6 +52,6 @@ class SpinApplicationTestIT {
 
       // when
       runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"));
-    assertTrue(exception.getMessage().contains("SPIN/JACKSON-JSON-01006 Cannot deserialize"));
+    assertThat(exception.getMessage()).contains("SPIN/JACKSON-JSON-01006 Cannot deserialize");
   }
 }

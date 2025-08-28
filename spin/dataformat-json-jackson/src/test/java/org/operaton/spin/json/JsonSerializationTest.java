@@ -36,8 +36,6 @@ import org.operaton.spin.spi.DataFormatWriter;
 
 import static org.operaton.spin.DataFormats.json;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class JsonSerializationTest {
 
@@ -56,8 +54,8 @@ class JsonSerializationTest {
     assertThat(o).isInstanceOf(CustomerList.class);
 
     CustomerList<?> deserializedCustomerList = (CustomerList<?>) o;
-    assertEquals("someCustomer", deserializedCustomerList.get(0).getName());
-    assertEquals(5, deserializedCustomerList.get(0).getContractStartDate());
+    assertThat(deserializedCustomerList.get(0).getName()).isEqualTo("someCustomer");
+    assertThat(deserializedCustomerList.get(0).getContractStartDate()).isEqualTo(5);
   }
 
   @Test
@@ -91,8 +89,8 @@ class JsonSerializationTest {
     assertThat(o).isInstanceOf(int[].class);
 
     int[] deserializedArray = (int[]) o;
-    assertEquals(5, deserializedArray[0]);
-    assertEquals(10, deserializedArray[1]);
+    assertThat(deserializedArray[0]).isEqualTo(5);
+    assertThat(deserializedArray[1]).isEqualTo(10);
   }
 
   @Test
@@ -110,8 +108,8 @@ class JsonSerializationTest {
     assertThat(o).isInstanceOf(GenericCustomerList.class);
 
     GenericCustomerList<?> deserializedCustomerList = (GenericCustomerList<?>) o;
-    assertEquals("someCustomer", deserializedCustomerList.get(0).getName());
-    assertEquals(5, deserializedCustomerList.get(0).getContractStartDate());
+    assertThat(deserializedCustomerList.get(0).getName()).isEqualTo("someCustomer");
+    assertThat(deserializedCustomerList.get(0).getContractStartDate()).isEqualTo(5);
 
   }
 
@@ -142,10 +140,10 @@ class JsonSerializationTest {
     final byte[] bytes = "{\"foo\": \"bar\"}".getBytes();
     assertThat(bytes).isNotEmpty();
 
-    final Object o = deserializeFromByteArray(bytes, "java.util.HashMap<java.lang.String, java.lang.String>");
-    assertThat(o).isInstanceOf(HashMap.class);
-    assertTrue(((HashMap<?, ?>)o).containsKey("foo"));
-    assertEquals("bar", ((HashMap<?, ?>)o).get("foo"));
+    final HashMap<String,String> deserializedMap = (HashMap<String, String>) deserializeFromByteArray(bytes, "java.util.HashMap<java.lang.String, java.lang.String>");
+    assertThat(deserializedMap)
+      .containsKey("foo")
+      .containsEntry("foo", "bar");
   }
 
   protected byte[] serializeToByteArray(Object deserializedObject) throws Exception {

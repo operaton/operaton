@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
 
 import static org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider.BASIC_AUTH_HEADER_PREFIX;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class HttpBasicAuthenticationProviderTest {
 
@@ -63,24 +63,24 @@ class HttpBasicAuthenticationProviderTest {
   void testExtractAuthenticatedUserNoAuthHeader() {
     Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(null);
     AuthenticationResult result = provider.extractAuthenticatedUser(request, engine);
-    assertFalse(result.isAuthenticated());
-    assertNull(result.getAuthenticatedUser());
+    assertThat(result.isAuthenticated()).isFalse();
+    assertThat(result.getAuthenticatedUser()).isNull();
   }
 
   @Test
   void testExtractAuthenticatedUserHeaderNotBasic() {
     Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("NOTBASIC user:password");
     AuthenticationResult result = provider.extractAuthenticatedUser(request, engine);
-    assertFalse(result.isAuthenticated());
-    assertNull(result.getAuthenticatedUser());
+    assertThat(result.isAuthenticated()).isFalse();
+    assertThat(result.getAuthenticatedUser()).isNull();
   }
 
   @Test
   void testExtractAuthenticatedUserNoCredentials() {
     Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BASIC_AUTH_HEADER_PREFIX);
     AuthenticationResult result = provider.extractAuthenticatedUser(request, engine);
-    assertFalse(result.isAuthenticated());
-    assertNull(result.getAuthenticatedUser());
+    assertThat(result.isAuthenticated()).isFalse();
+    assertThat(result.getAuthenticatedUser()).isNull();
   }
 
   @Test
@@ -88,8 +88,8 @@ class HttpBasicAuthenticationProviderTest {
     Mockito.when(identityService.checkPassword(USER_ID, PASSWORD)).thenReturn(true);
     Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(AUTHORIZATION_HEADER);
     AuthenticationResult result = provider.extractAuthenticatedUser(request, engine);
-    assertTrue(result.isAuthenticated());
-    assertEquals(USER_ID, result.getAuthenticatedUser());
+    assertThat(result.isAuthenticated()).isTrue();
+    assertThat(result.getAuthenticatedUser()).isEqualTo(USER_ID);
   }
 
   @Test
@@ -97,16 +97,16 @@ class HttpBasicAuthenticationProviderTest {
     Mockito.when(identityService.checkPassword(USER_ID, PASSWORD)).thenReturn(false);
     Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(AUTHORIZATION_HEADER);
     AuthenticationResult result = provider.extractAuthenticatedUser(request, engine);
-    assertFalse(result.isAuthenticated());
-    assertEquals(USER_ID, result.getAuthenticatedUser());
+    assertThat(result.isAuthenticated()).isFalse();
+    assertThat(result.getAuthenticatedUser()).isEqualTo(USER_ID);
   }
 
   @Test
   void testExtractAuthenticatedUserInvalidBase64() {
     Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BASIC_AUTH_HEADER_PREFIX + "!!!invalidbase64!!!");
     AuthenticationResult result = provider.extractAuthenticatedUser(request, engine);
-    assertFalse(result.isAuthenticated());
-    assertNull(result.getAuthenticatedUser());
+    assertThat(result.isAuthenticated()).isFalse();
+    assertThat(result.getAuthenticatedUser()).isNull();
   }
 
   @Test

@@ -18,7 +18,6 @@ package org.operaton.bpm.qa.rolling.update.task;
 
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
@@ -28,6 +27,8 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test ensures that the old engine can complete an
@@ -43,23 +44,23 @@ public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends Abstra
   public void testCompleteProcessWithParallelGateway() {
     //given an already started process instance with one user task
     ProcessInstance oldInstance = rule.processInstance();
-    Assert.assertNotNull(oldInstance);
+    assertThat(oldInstance).isNotNull();
     Task task = rule.taskQuery().singleResult();
-    Assert.assertNotNull(task);
+    assertThat(task).isNotNull();
     //and completed service task
     HistoricActivityInstanceQuery historicActQuery = rule.getHistoryService()
             .createHistoricActivityInstanceQuery()
             .activityType("serviceTask")
             .processInstanceId(oldInstance.getId())
             .finished();
-    Assert.assertEquals(1, historicActQuery.count());
+    assertThat(historicActQuery.count()).isEqualTo(1);
 
     //when completing the user task
     rule.getTaskService().complete(task.getId());
 
     //then there exists no more tasks
     //and the process instance is also completed
-    Assert.assertEquals(0, rule.taskQuery().count());
+    assertThat(rule.taskQuery().count()).isZero();
     rule.assertScenarioEnded();
   }
 
@@ -69,13 +70,13 @@ public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends Abstra
   public void testCompleteProcessWithParallelGatewayAndSingleUserTask() {
     //given an already started process instance
     ProcessInstance oldInstance = rule.processInstance();
-    Assert.assertNotNull(oldInstance);
+    assertThat(oldInstance).isNotNull();
     //with one user task
     List<Task> tasks = rule.taskQuery().list();
-    Assert.assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     //and async service task
     Job job = rule.jobQuery().singleResult();
-    Assert.assertNotNull(job);
+    assertThat(job).isNotNull();
 
     //when job is executed
     rule.getManagementService().executeJob(job.getId());
@@ -84,7 +85,7 @@ public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends Abstra
 
     //then there exists no more tasks
     //and the process instance is also completed
-    Assert.assertEquals(0, rule.taskQuery().count());
+    assertThat(rule.taskQuery().count()).isZero();
     rule.assertScenarioEnded();
   }
 
@@ -93,23 +94,23 @@ public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends Abstra
   public void testQueryHistoricProcessWithParallelGateway() {
     //given an already started process instance
     ProcessInstance oldInstance = rule.processInstance();
-    Assert.assertNotNull(oldInstance);
+    assertThat(oldInstance).isNotNull();
     //with one completed user task
     HistoricTaskInstanceQuery historicTaskQuery = rule.getHistoryService()
             .createHistoricTaskInstanceQuery()
             .processInstanceId(oldInstance.getId())
             .finished();
-    Assert.assertEquals(1, historicTaskQuery.count());
+    assertThat(historicTaskQuery.count()).isEqualTo(1);
     //and one async service task
     Job job = rule.jobQuery().singleResult();
-    Assert.assertNotNull(job);
+    assertThat(job).isNotNull();
 
     //when job is executed
     rule.getManagementService().executeJob(job.getId());
 
     //then there exists no more tasks
     //and the process instance is also completed
-    Assert.assertEquals(0, rule.taskQuery().count());
+    assertThat(rule.taskQuery().count()).isZero();
     rule.assertScenarioEnded();
   }
 

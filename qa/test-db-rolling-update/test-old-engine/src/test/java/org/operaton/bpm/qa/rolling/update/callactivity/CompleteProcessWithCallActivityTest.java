@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -51,18 +51,18 @@ public class CompleteProcessWithCallActivityTest extends AbstractRollingUpdateTe
 
     TaskQuery taskQuery = rule.getTaskService().createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.processInstanceId(processInstance.getId()).taskName("Task before subprocess").singleResult();
-    assertNotNull(taskBeforeSubProcess);
+    assertThat(taskBeforeSubProcess).isNotNull();
 
     // Completing the task continues the process which leads to calling the subprocess
     rule.getTaskService().complete(taskBeforeSubProcess.getId());
     Execution subProcess = runtimeService.createProcessInstanceQuery().superProcessInstanceId(processInstance.getId()).singleResult();
     Task taskInSubProcess = taskQuery.processInstanceId(subProcess.getId()).taskName("Task in subprocess").singleResult();
-    assertNotNull(taskInSubProcess);
+    assertThat(taskInSubProcess).isNotNull();
 
     // Completing the task in the subprocess, finishes the subprocess
     rule.getTaskService().complete(taskInSubProcess.getId());
     Task taskAfterSubProcess = taskQuery.processInstanceId(processInstance.getId()).taskName("Task after subprocess").singleResult();
-    assertNotNull(taskAfterSubProcess);
+    assertThat(taskAfterSubProcess).isNotNull();
 
     // Completing this task end the process instance
     rule.getTaskService().complete(taskAfterSubProcess.getId());
@@ -78,12 +78,12 @@ public class CompleteProcessWithCallActivityTest extends AbstractRollingUpdateTe
 
     TaskQuery taskQuery = rule.getTaskService().createTaskQuery();
     Task taskInSubProcess = taskQuery.processInstanceId(subProcess.getId()).taskName("Task in subprocess").singleResult();
-    assertNotNull(taskInSubProcess);
+    assertThat(taskInSubProcess).isNotNull();
 
     // Completing the task in the subprocess, finishes the subprocess
     rule.getTaskService().complete(taskInSubProcess.getId());
     Task taskAfterSubProcess = taskQuery.processInstanceId(processInstance.getId()).taskName("Task after subprocess").singleResult();
-    assertNotNull(taskAfterSubProcess);
+    assertThat(taskAfterSubProcess).isNotNull();
 
     // Completing this task end the process instance
     rule.getTaskService().complete(taskAfterSubProcess.getId());

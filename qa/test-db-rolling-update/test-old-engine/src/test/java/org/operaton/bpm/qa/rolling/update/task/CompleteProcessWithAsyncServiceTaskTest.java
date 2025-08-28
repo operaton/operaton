@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.qa.rolling.update.task;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test ensures that the old engine can complete an
@@ -38,9 +39,9 @@ public class CompleteProcessWithAsyncServiceTaskTest extends AbstractRollingUpda
   public void testCompleteWithAsyncServiceTask() {
     //given process with async service task
     ProcessInstance oldInstance = rule.processInstance();
-    Assert.assertNotNull(oldInstance);
+    assertThat(oldInstance).isNotNull();
     Job job = rule.jobQuery().singleResult();
-    Assert.assertNotNull(job);
+    assertThat(job).isNotNull();
 
     //when job is executed
     rule.getManagementService().executeJob(job.getId());

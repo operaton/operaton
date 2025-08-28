@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade;
 
-import org.junit.Assert;
 import org.junit.runner.Description;
 
 import org.operaton.bpm.engine.history.HistoricIncidentQuery;
@@ -33,6 +32,8 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -153,8 +154,9 @@ public class UpgradeTestRule extends ProcessEngineRule {
   }
 
   public void assertScenarioEnded() {
-    Assert.assertTrue("Process instance for scenario " + getBuisnessKey() + " should have ended",
-            processInstanceQuery().singleResult() == null);
+    assertThat(processInstanceQuery().singleResult() == null)
+      .withFailMessage("Process instance for scenario " + getBuisnessKey() + " should have ended")
+      .isTrue();
   }
 
   // case //////////////////////////////////////////////////

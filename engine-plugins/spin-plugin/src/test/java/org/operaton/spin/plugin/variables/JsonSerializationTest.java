@@ -51,8 +51,8 @@ import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueDeserializedNull;
 import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueSerializedNull;
 import static org.operaton.spin.plugin.variables.TypedValueAssert.assertUntypedNullValue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ProcessEngineExtension.class)
 class JsonSerializationTest {
@@ -81,20 +81,20 @@ class JsonSerializationTest {
 
     // validate untyped value
     Object value = runtimeService.getVariable(instance.getId(), "simpleBean");
-    assertEquals(bean, value);
+    assertThat(value).isEqualTo(bean);
 
     // validate typed value
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
-    assertEquals(ValueType.OBJECT, typedValue.getType());
+    assertThat(typedValue.getType()).isEqualTo(ValueType.OBJECT);
 
-    assertTrue(typedValue.isDeserialized());
+    assertThat(typedValue.isDeserialized()).isTrue();
 
-    assertEquals(bean, typedValue.getValue());
-    assertEquals(bean, typedValue.getValue(JsonSerializable.class));
-    assertEquals(JsonSerializable.class, typedValue.getObjectType());
+    assertThat(typedValue.getValue()).isEqualTo(bean);
+    assertThat(typedValue.getValue(JsonSerializable.class)).isEqualTo(bean);
+    assertThat(typedValue.getObjectType()).isEqualTo(JsonSerializable.class);
 
-    assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
-    assertEquals(JsonSerializable.class.getName(), typedValue.getObjectTypeName());
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
+    assertThat(typedValue.getObjectTypeName()).isEqualTo(JsonSerializable.class.getName());
     JSONAssert.assertEquals(bean.toExpectedJsonString(), typedValue.getValueSerialized(), true);
   }
 
@@ -112,15 +112,15 @@ class JsonSerializationTest {
 
     // validate untyped value
     Object value = runtimeService.getVariable(instance.getId(), "simpleBeans");
-    assertEquals(beans, value);
+    assertThat(value).isEqualTo(beans);
 
     // validate typed value
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBeans");
-    assertEquals(ValueType.OBJECT, typedValue.getType());
-    assertEquals(beans, typedValue.getValue());
-    assertTrue(typedValue.isDeserialized());
-    assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
-    assertNotNull(typedValue.getObjectTypeName());
+    assertThat(typedValue.getType()).isEqualTo(ValueType.OBJECT);
+    assertThat(typedValue.getValue()).isEqualTo(beans);
+    assertThat(typedValue.isDeserialized()).isTrue();
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
+    assertThat(typedValue.getObjectTypeName()).isNotNull();
     JSONAssert.assertEquals(toExpectedJsonArray(beans), typedValue.getValueSerialized(), true);
 
   }
@@ -156,9 +156,9 @@ class JsonSerializationTest {
 
     // However, I can access the serialized value
     ObjectValue objectValue = runtimeService.getVariableTyped(instanceId, "simpleBean", false);
-    assertFalse(objectValue.isDeserialized());
-    assertNotNull(objectValue.getObjectTypeName());
-    assertNotNull(objectValue.getValueSerialized());
+    assertThat(objectValue.isDeserialized()).isFalse();
+    assertThat(objectValue.getObjectTypeName()).isNotNull();
+    assertThat(objectValue.getValueSerialized()).isNotNull();
 
     // but not the deserialized properties
     assertThatThrownBy(objectValue::getValue)
@@ -199,7 +199,7 @@ class JsonSerializationTest {
         runtimeService.setVariable(instance.getId(), "simpleBean", bean);
 
         Object returnedBean = runtimeService.getVariable(instance.getId(), "simpleBean");
-        assertSame(bean, returnedBean);
+        assertThat(returnedBean).isSameAs(bean);
 
         return null;
       });
@@ -208,7 +208,7 @@ class JsonSerializationTest {
 
     Object returnedBean = variableInstance.getValue();
     Object theSameReturnedBean = variableInstance.getValue();
-    assertSame(returnedBean, theSameReturnedBean);
+    assertThat(theSameReturnedBean).isSameAs(returnedBean);
   }
 
   @Test
@@ -240,13 +240,13 @@ class JsonSerializationTest {
 
     // java object can be retrieved
     JsonSerializable returnedBean = (JsonSerializable) runtimeService.getVariable(instance.getId(), "simpleBean");
-    assertEquals(bean, returnedBean);
+    assertThat(returnedBean).isEqualTo(bean);
 
     // validate typed value metadata
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
-    assertEquals(bean, typedValue.getValue());
-    assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
-    assertEquals(bean.getClass().getCanonicalName(), typedValue.getObjectTypeName());
+    assertThat(typedValue.getValue()).isEqualTo(bean);
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
+    assertThat(typedValue.getObjectTypeName()).isEqualTo(bean.getClass().getCanonicalName());
   }
 
   @Test
@@ -305,14 +305,14 @@ class JsonSerializationTest {
 
     // null can be retrieved
     JsonSerializable returnedBean = (JsonSerializable) runtimeService.getVariable(instance.getId(), "simpleBean");
-    assertNull(returnedBean);
+    assertThat(returnedBean).isNull();
 
     // validate typed value metadata
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
-    assertNull(typedValue.getValue());
-    assertNull(typedValue.getValueSerialized());
-    assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
-    assertEquals(JsonSerializable.class.getCanonicalName(), typedValue.getObjectTypeName());
+    assertThat(typedValue.getValue()).isNull();
+    assertThat(typedValue.getValueSerialized()).isNull();
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
+    assertThat(typedValue.getObjectTypeName()).isEqualTo(JsonSerializable.class.getCanonicalName());
   }
 
   @Test
@@ -328,14 +328,14 @@ class JsonSerializationTest {
 
     // null can be retrieved
     JsonSerializable returnedBean = (JsonSerializable) runtimeService.getVariable(instance.getId(), "simpleBean");
-    assertNull(returnedBean);
+    assertThat(returnedBean).isNull();
 
     // validate typed value metadata
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
-    assertNull(typedValue.getValue());
-    assertNull(typedValue.getValueSerialized());
-    assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
-    assertNull(typedValue.getObjectTypeName());
+    assertThat(typedValue.getValue()).isNull();
+    assertThat(typedValue.getValueSerialized()).isNull();
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
+    assertThat(typedValue.getObjectTypeName()).isNull();
   }
 
   @Test
@@ -351,7 +351,7 @@ class JsonSerializationTest {
         .create());
 
     // get null value via untyped api
-    assertNull(runtimeService.getVariable(instance.getId(), "nullObject"));
+    assertThat(runtimeService.getVariable(instance.getId(), "nullObject")).isNull();
 
     // get null via typed api
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "nullObject");
@@ -372,7 +372,7 @@ class JsonSerializationTest {
         .create()); // Note: no object type name provided
 
     // get null value via untyped api
-    assertNull(runtimeService.getVariable(instance.getId(), "nullObject"));
+    assertThat(runtimeService.getVariable(instance.getId(), "nullObject")).isNull();
 
     // get null via typed api
     ObjectValue deserializedTypedValue = runtimeService.getVariableTyped(instance.getId(), "nullObject");
@@ -398,24 +398,24 @@ class JsonSerializationTest {
         .create());
 
     // get null value via untyped api
-    assertNull(runtimeService.getVariable(instance.getId(), "nullObject"));
+    assertThat(runtimeService.getVariable(instance.getId(), "nullObject")).isNull();
 
     // get null via typed api
     ObjectValue deserializedTypedValue = runtimeService.getVariableTyped(instance.getId(), "nullObject");
-    assertNotNull(deserializedTypedValue);
-    assertTrue(deserializedTypedValue.isDeserialized());
-    assertEquals(JSON_FORMAT_NAME, deserializedTypedValue.getSerializationDataFormat());
-    assertNull(deserializedTypedValue.getValue());
-    assertNull(deserializedTypedValue.getValueSerialized());
-    assertNull(deserializedTypedValue.getObjectType());
-    assertEquals(typeName, deserializedTypedValue.getObjectTypeName());
+    assertThat(deserializedTypedValue).isNotNull();
+    assertThat(deserializedTypedValue.isDeserialized()).isTrue();
+    assertThat(deserializedTypedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
+    assertThat(deserializedTypedValue.getValue()).isNull();
+    assertThat(deserializedTypedValue.getValueSerialized()).isNull();
+    assertThat(deserializedTypedValue.getObjectType()).isNull();
+    assertThat(deserializedTypedValue.getObjectTypeName()).isEqualTo(typeName);
 
     ObjectValue serializedTypedValue = runtimeService.getVariableTyped(instance.getId(), "nullObject", false);
-    assertNotNull(serializedTypedValue);
-    assertFalse(serializedTypedValue.isDeserialized());
-    assertEquals(JSON_FORMAT_NAME, serializedTypedValue.getSerializationDataFormat());
-    assertNull(serializedTypedValue.getValueSerialized());
-    assertEquals(typeName, serializedTypedValue.getObjectTypeName());
+    assertThat(serializedTypedValue).isNotNull();
+    assertThat(serializedTypedValue.isDeserialized()).isFalse();
+    assertThat(serializedTypedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
+    assertThat(serializedTypedValue.getValueSerialized()).isNull();
+    assertThat(serializedTypedValue.getObjectTypeName()).isEqualTo(typeName);
   }
 
   @Test
@@ -433,7 +433,7 @@ class JsonSerializationTest {
         .create());
 
     // get value via untyped api
-    assertEquals(object, runtimeService.getVariable(instance.getId(), "varName"));
+    assertThat(runtimeService.getVariable(instance.getId(), "varName")).isEqualTo(object);
 
     // set the variable to null via untyped Api
     runtimeService.setVariable(instance.getId(), "varName", null);
@@ -458,7 +458,7 @@ class JsonSerializationTest {
         .create());
 
     // get value via untyped api
-    assertEquals(javaSerializable, runtimeService.getVariable(instance.getId(), "varName"));
+    assertThat(runtimeService.getVariable(instance.getId(), "varName")).isEqualTo(javaSerializable);
 
     // set the variable to null via typed Api
     runtimeService.setVariable(instance.getId(), "varName", objectValue(null));
@@ -486,9 +486,9 @@ class JsonSerializationTest {
     runtimeService.removeVariable(instance.getId(), "simpleBean");
 
     // then
-    assertNull(runtimeService.getVariable(instance.getId(), "simpleBean"));
-    assertNull(runtimeService.getVariableTyped(instance.getId(), "simpleBean"));
-    assertNull(runtimeService.getVariableTyped(instance.getId(), "simpleBean", false));
+    assertThat(runtimeService.getVariable(instance.getId(), "simpleBean")).isNull();
+    assertThat((Object) runtimeService.getVariableTyped(instance.getId(), "simpleBean")).isNull();
+    assertThat((Object) runtimeService.getVariableTyped(instance.getId(), "simpleBean", false)).isNull();
   }
 
   /**
@@ -507,12 +507,12 @@ class JsonSerializationTest {
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "listVar");
     // this should match Jackson's format
     String expectedTypeName = ArrayList.class.getName() + "<" + JsonSerializable.class.getName() + ">";
-    assertEquals(expectedTypeName, typedValue.getObjectTypeName());
+    assertThat(typedValue.getObjectTypeName()).isEqualTo(expectedTypeName);
 
     List<JsonSerializable> list = (List<JsonSerializable>) typedValue.getValue();
-    assertEquals(1, list.size());
-    assertTrue(list.get(0) instanceof JsonSerializable);
-    assertEquals(UpdateValueDelegate.STRING_PROPERTY, list.get(0).getStringProperty());
+    assertThat(list).hasSize(1);
+    assertThat(list.get(0)).isInstanceOf(JsonSerializable.class);
+    assertThat(list.get(0).getStringProperty()).isEqualTo(UpdateValueDelegate.STRING_PROPERTY);
   }
 
   @Test
@@ -545,11 +545,11 @@ class JsonSerializationTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+    assertThat(variableInstances).isEmpty();
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("userTask1", task.getTaskDefinitionKey());
+    assertThat(task).isNotNull();
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("userTask1");
   }
 
   protected String toExpectedJsonArray(List<JsonSerializable> beans) {

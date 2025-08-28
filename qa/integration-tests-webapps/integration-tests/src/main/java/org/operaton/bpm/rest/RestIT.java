@@ -38,10 +38,7 @@ import org.operaton.bpm.AbstractWebIntegrationTest;
 import org.operaton.bpm.engine.rest.hal.Hal;
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class RestIT extends AbstractWebIntegrationTest {
@@ -81,33 +78,33 @@ public class RestIT extends AbstractWebIntegrationTest {
     response = target.request(MediaType.APPLICATION_JSON)
             .get(Response.class);
 
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
 
     ObjectMapper objectMapper = new ObjectMapper();
     ArrayNode definitionsJson = (ArrayNode) objectMapper.readTree(response.getEntity().toString());
 
     // invoice example
-    assertEquals(3, definitionsJson.size());
+    assertThat(definitionsJson.size()).isEqualTo(3);
 
     // order of results is not consistent between database types
     for (int i = 0; i < definitionsJson.size(); i++) {
       JsonNode definitionJson = definitionsJson.get(i);
 
       // Check if 'description' is null
-      assertTrue(definitionJson.get("description") == null);
+      assertThat(definitionJson.get("description") == null).isTrue();
 
       // Check if 'suspended' is false
-      assertFalse(definitionJson.get("suspended").asBoolean());
+      assertThat(definitionJson.get("suspended").asBoolean()).isFalse();
 
       // Check conditions based on 'key'
       if ("ReviewInvoice".equals(definitionJson.get("key").asText())) {
-        assertEquals("http://bpmn.io/schema/bpmn", definitionJson.get("category").asText());
-        assertEquals("Review Invoice", definitionJson.get("name").asText());
-        assertEquals("reviewInvoice.bpmn", definitionJson.get("resource").asText());
+        assertThat(definitionJson.get("category").asText()).isEqualTo("http://bpmn.io/schema/bpmn");
+        assertThat(definitionJson.get("name").asText()).isEqualTo("Review Invoice");
+        assertThat(definitionJson.get("resource").asText()).isEqualTo("reviewInvoice.bpmn");
       } else if ("invoice".equals(definitionJson.get("key").asText())) {
-        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", definitionJson.get("category").asText());
-        assertEquals("Invoice Receipt", definitionJson.get("name").asText());
-        assertTrue(definitionJson.get("resource").asText().matches("invoice\\.v[1,2]\\.bpmn"));
+        assertThat(definitionJson.get("category").asText()).isEqualTo("http://www.omg.org/spec/BPMN/20100524/MODEL");
+        assertThat(definitionJson.get("name").asText()).isEqualTo("Invoice Receipt");
+        assertThat(definitionJson.get("resource").asText()).matches("invoice\\.v[1,2]\\.bpmn");
       } else {
         fail("Unexpected definition key in response JSON.");
       }
@@ -125,11 +122,11 @@ public class RestIT extends AbstractWebIntegrationTest {
     response = target.request(MediaType.APPLICATION_JSON)
             .get(Response.class);
 
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
 
     ObjectMapper objectMapper = new ObjectMapper();
     ArrayNode definitionsJson = (ArrayNode) objectMapper.readTree(response.getEntity().toString());
-    assertEquals(6, definitionsJson.size());
+    assertThat(definitionsJson.size()).isEqualTo(6);
   }
 
   @Test
@@ -149,7 +146,7 @@ public class RestIT extends AbstractWebIntegrationTest {
     response = target.request(MediaType.APPLICATION_JSON)
             .header("Content-Type", MediaType.APPLICATION_JSON)
             .put(Entity.entity(requestBody, MediaType.APPLICATION_JSON));
-    assertEquals(204, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(204);
   }
 
   @Test
@@ -190,7 +187,7 @@ public class RestIT extends AbstractWebIntegrationTest {
             .accept(MediaType.APPLICATION_JSON)
             .post(Entity.entity(filter, MediaType.APPLICATION_JSON));
 
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
 
     // Get the 'id' from the response
     String responseBody = response.readEntity(String.class);
@@ -210,7 +207,7 @@ public class RestIT extends AbstractWebIntegrationTest {
     // delete test filter
     target = client.target(appBasePath + FILTER_PATH + "/" + filterId);
     response = target.request().delete(Response.class);
-    assertEquals(204, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(204);
   }
 
   @Test
@@ -222,7 +219,7 @@ public class RestIT extends AbstractWebIntegrationTest {
             .get(Response.class);
 
     // Then
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
 
     // Parse the response body to a JsonNode (assuming it's an array)
     String responseBody = response.readEntity(String.class);
@@ -254,7 +251,7 @@ public class RestIT extends AbstractWebIntegrationTest {
     JsonNode historicVariableUpdate = getFirstHistoricVariableUpdates();
 
     // Assert that the 'variableName' field is present
-    assertTrue(historicVariableUpdate.has("variableName"));
+    assertThat(historicVariableUpdate.has("variableName")).isTrue();
   }
 
   /**
@@ -279,11 +276,11 @@ public class RestIT extends AbstractWebIntegrationTest {
     JsonNode instancesJson = objectMapper.readTree(responseBody);
 
     // Assert the response status is 200
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
 
     // Assert the number of instances in the response
     // The response is expected to be a JSON array, so use instancesJson.size() to get the length
-    assertEquals(2, instancesJson.size());
+    assertThat(instancesJson.size()).isEqualTo(2);
   }
 
   @Test
@@ -304,29 +301,29 @@ public class RestIT extends AbstractWebIntegrationTest {
     JsonNode definitionStatistics = objectMapper.readTree(responseBody);
 
     // Assert the response status is 200 (We already know the response is 200 since we are manually reading the response body)
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
 
     // Assert the length of the definition statistics array
-    assertEquals(3, definitionStatistics.size());
+    assertThat(definitionStatistics.size()).isEqualTo(3);
 
     // Check that the definition is also serialized correctly
     for (int i = 0; i < definitionStatistics.size(); i++) {
       JsonNode definitionStatistic = definitionStatistics.get(i);
 
       // Assert the class type
-      assertEquals("org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto", definitionStatistic.get("@class").asText());
+      assertThat(definitionStatistic.get("@class").asText()).isEqualTo("org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto");
 
       // Assert the incidents length
-      assertEquals(0, definitionStatistic.get("incidents").size());
+      assertThat(definitionStatistic.get("incidents")).isEmpty();
 
       // Get the definition object
       JsonNode definition = definitionStatistic.get("definition");
 
       // Check the name contains "invoice" (case-insensitive)
-      assertTrue(definition.get("name").asText().toLowerCase().contains("invoice"));
+      assertThat(definition.get("name").asText().toLowerCase()).contains("invoice");
 
       // Check if the definition is not suspended
-      assertFalse(definition.get("suspended").asBoolean());
+      assertThat(definition.get("suspended").asBoolean()).isFalse();
     }
   }
 
@@ -342,8 +339,8 @@ public class RestIT extends AbstractWebIntegrationTest {
     response = target.request().options(Response.class);
 
     // Then
-    assertNotNull(response);
-    assertEquals(200, response.getStatus());
+    assertThat(response).isNotNull();
+    assertThat(response.getStatus()).isEqualTo(200);
 
     // Parse the response entity using Jackson (convert response entity to a JsonNode)
     String responseBody = response.readEntity(String.class);
@@ -353,7 +350,7 @@ public class RestIT extends AbstractWebIntegrationTest {
     JsonNode entity = objectMapper.readTree(responseBody);
 
     // Assert that the "links" field is present in the response entity
-    assertNotNull(entity.get("links"));
+    assertThat(entity.get("links")).isNotNull();
   }
 
   @Test
@@ -365,7 +362,7 @@ public class RestIT extends AbstractWebIntegrationTest {
             .accept(MediaType.APPLICATION_JSON)
             .post(Entity.entity(null, MediaType.APPLICATION_JSON));
 
-    assertEquals(400, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(400);
     response.close();
   }
 
@@ -441,9 +438,10 @@ public class RestIT extends AbstractWebIntegrationTest {
 
   protected void assertMediaType(Response response, String expected) {
     MediaType actual = response.getMediaType();
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     // use startsWith cause sometimes server also returns quality parameters (e.g. websphere/wink)
-    assertTrue(actual.toString().startsWith(expected), "Expected: " + expected + " Actual: " + actual);
+    assertThat(actual.toString())
+            .as("Expected: %s Actual: %s", expected, actual)
+            .startsWith(expected);
   }
-
 }

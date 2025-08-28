@@ -24,9 +24,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CsrfPreventionIT extends AbstractWebIntegrationTest {
 
@@ -45,15 +43,15 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
     response = target.request().get(Response.class);
 
     // then
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     String xsrfTokenHeader = getXsrfTokenHeader(response);
     String xsrfCookieValue = getXsrfCookieValue(response);
     response.close();
 
-    assertNotNull(xsrfTokenHeader);
-    assertEquals(32, xsrfTokenHeader.length());
-    assertNotNull(xsrfCookieValue);
-    assertTrue(xsrfCookieValue.contains(";SameSite=Lax"));
+    assertThat(xsrfTokenHeader).isNotNull();
+    assertThat(xsrfTokenHeader).hasSize(32);
+    assertThat(xsrfCookieValue).isNotNull();
+    assertThat(xsrfCookieValue).contains(";SameSite=Lax");
   }
 
   @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
@@ -69,8 +67,8 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
             .post(null, Response.class);
 
     // then
-    assertEquals(403, response.getStatus());
-    assertTrue("Required".equals(getXsrfTokenHeader(response)));
+    assertThat(response.getStatus()).isEqualTo(403);
+    assertThat("Required").isEqualTo(getXsrfTokenHeader(response));
   }
 
 }

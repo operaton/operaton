@@ -31,7 +31,7 @@ import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.rolling.update.RollingUpdateConstants;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ScenarioUnderTest("SetRemovalTimeToProcessInstanceScenario")
 public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTestCase {
@@ -70,9 +70,9 @@ public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTe
           .activityId("theTask")
           .processInstanceId(processInstanceId)
           .singleResult();
-      assertEquals(removalTime, historicActivityInstance.getRemovalTime());
+      assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(removalTime);
 
-      assertEquals(0, managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count());
+      assertThat(managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count()).isZero();
     }
   }
 
@@ -97,9 +97,9 @@ public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTe
           .activityId("theTask")
           .processInstanceId(processInstanceId)
           .singleResult();
-      assertEquals(removalTime, historicActivityInstance.getRemovalTime());
+      assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(removalTime);
 
-      assertEquals(0, managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count());
+      assertThat(managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count()).isZero();
     }
   }
 

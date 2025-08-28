@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -40,13 +40,13 @@ public class CompleteProcessWithMultiInstanceCallActivityTest extends AbstractRo
     ProcessInstance processInstance = rule.processInstance();
     TaskQuery taskQuery = rule.getTaskService().createTaskQuery().processInstanceId(processInstance.getId());
     Task taskBeforeSubProcess = taskQuery.taskName("Task before multi-instance").singleResult();
-    assertNotNull(taskBeforeSubProcess);
+    assertThat(taskBeforeSubProcess).isNotNull();
 
     //when the task before is complete the process leads to calling the multi-instance subprocess
     rule.getTaskService().complete(taskBeforeSubProcess.getId());
 
     Task taskAfterSubProcess = taskQuery.taskName("Task after multi-instance").singleResult();
-    assertNotNull(taskAfterSubProcess);
+    assertThat(taskAfterSubProcess).isNotNull();
 
     //after completing the after task the process instance ends
     rule.getTaskService().complete(taskAfterSubProcess.getId());
@@ -60,7 +60,7 @@ public class CompleteProcessWithMultiInstanceCallActivityTest extends AbstractRo
     ProcessInstance processInstance = rule.processInstance();
     TaskQuery taskQuery = rule.getTaskService().createTaskQuery().processInstanceId(processInstance.getId());
     Task taskAfterSubProcess = taskQuery.taskName("Task after multi-instance").singleResult();
-    assertNotNull(taskAfterSubProcess);
+    assertThat(taskAfterSubProcess).isNotNull();
 
     // Completing this task end the process instance
     rule.getTaskService().complete(taskAfterSubProcess.getId());

@@ -46,8 +46,7 @@ import org.junit.jupiter.api.Timeout;
 
 import org.operaton.bpm.AbstractWebIntegrationTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestJaxRs2IT extends AbstractWebIntegrationTest {
 
@@ -73,11 +72,11 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
             .accept(MediaType.APPLICATION_JSON)
             .post(Entity.entity(payload, MediaType.APPLICATION_JSON));
 
-    assertEquals(400, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(400);
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode responseJson = objectMapper.readTree(response.getEntity().toString());
     String responseMessage = responseJson.get("message").asText();
-    assertTrue("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds".equals(responseMessage));
+    assertThat("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds").isEqualTo(responseMessage);
     response.close();
   }
 
@@ -125,7 +124,7 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
     service.awaitTermination(1, TimeUnit.HOURS);
 
     for (Future<String> future : futures) {
-      assertEquals(future.get(), "[]");
+      assertThat("[]").isEqualTo(future.get());
     }
   }
 

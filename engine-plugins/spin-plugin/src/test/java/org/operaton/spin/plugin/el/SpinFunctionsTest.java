@@ -35,10 +35,7 @@ import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.plugin.script.TestVariableScope;
 import org.operaton.spin.xml.SpinXmlElement;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Testcase ensuring integration of operaton Spin into Process Engine expression language.</p>
@@ -72,40 +69,38 @@ class SpinFunctionsTest {
   void spinSAvailable() {
 
     SpinXmlElement spinXmlEl = executeExpression("${ S('" + xmlString + "') }");
-    assertNotNull(spinXmlEl);
-    assertEquals("elementName", spinXmlEl.name());
+    assertThat(spinXmlEl).isNotNull();
+    assertThat(spinXmlEl.name()).isEqualTo("elementName");
   }
 
   @Test
   void spinXMLAvailable() {
 
     SpinXmlElement spinXmlEl = executeExpression("${ XML('" + xmlString + "') }");
-    assertNotNull(spinXmlEl);
-    assertEquals("elementName", spinXmlEl.name());
+    assertThat(spinXmlEl).isNotNull();
+    assertThat(spinXmlEl.name()).isEqualTo("elementName");
   }
 
   @Test
   void spinJSONAvailable() {
 
     SpinJsonNode spinJsonEl = executeExpression("${ JSON('" + jsonString + "') }");
-    assertNotNull(spinJsonEl);
-    assertEquals("bar", spinJsonEl.prop("foo").stringValue());
+    assertThat(spinJsonEl).isNotNull();
+    assertThat(spinJsonEl.prop("foo").stringValue()).isEqualTo("bar");
   }
 
   @Test
   void spinXPathAvailable() {
 
     String elName = executeExpression("${ S('" + xmlString + "').xPath('/elementName').element().name() }");
-    assertNotNull(elName);
-    assertEquals("elementName", elName);
+    assertThat(elName).isEqualTo("elementName");
   }
 
   @Test
   void spinJsonPathAvailable() {
 
     String property = executeExpression("${ S('" + jsonString + "').jsonPath('$.foo').stringValue() }");
-    assertNotNull(property);
-    assertEquals("bar", property);
+    assertThat(property).isEqualTo("bar");
   }
 
   @Test
@@ -130,9 +125,10 @@ class SpinFunctionsTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
     String customerXml = (String) runtimeService.getVariable(pi.getId(), "customer");
-    assertNotNull(customerXml);
-    assertTrue(customerXml.contains("customer"));
-    assertFalse(customerXml.contains("customers"));
+    assertThat(customerXml)
+      .isNotNull()
+      .contains("customer")
+      .doesNotContain("customers");
 
     runtimeService.signal(pi.getId());
 

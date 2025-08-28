@@ -30,7 +30,7 @@ import org.operaton.spin.DataFormats;
 import org.operaton.spin.plugin.variable.type.JsonValueType;
 import org.operaton.spin.plugin.variable.type.XmlValueType;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Ronny Bräunlich
@@ -50,7 +50,7 @@ class SpinProcessEnginePluginTest {
     Mockito.when(mockConfig.getVariableSerializers()).thenReturn(serializers);
     new SpinProcessEnginePlugin().registerSerializers(mockConfig);
 
-    assertNull(serializers.getSerializerByName(XmlValueType.TYPE_NAME));
+    assertThat(serializers.getSerializerByName(XmlValueType.TYPE_NAME)).isNull();
   }
 
   @Test
@@ -63,7 +63,7 @@ class SpinProcessEnginePluginTest {
     Mockito.when(mockConfig.getVariableSerializers()).thenReturn(serializers);
     new SpinProcessEnginePlugin().registerSerializers(mockConfig);
 
-    assertNull(serializers.getSerializerByName(JsonValueType.TYPE_NAME));
+    assertThat(serializers.getSerializerByName(JsonValueType.TYPE_NAME)).isNull();
   }
 
   @Test
@@ -73,7 +73,7 @@ class SpinProcessEnginePluginTest {
     Mockito.when(mockConfig.getVariableSerializers()).thenReturn(processEngineConfiguration.getVariableSerializers());
     new SpinProcessEnginePlugin().registerSerializers(mockConfig);
 
-    assertTrue(processEngineConfiguration.getVariableSerializers().getSerializerByName(XmlValueType.TYPE_NAME) instanceof XmlValueSerializer);
+    assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(XmlValueType.TYPE_NAME)).isInstanceOf(XmlValueSerializer.class);
   }
 
   @Test
@@ -83,6 +83,6 @@ class SpinProcessEnginePluginTest {
     Mockito.when(mockConfig.getVariableSerializers()).thenReturn(processEngineConfiguration.getVariableSerializers());
     new SpinProcessEnginePlugin().registerSerializers(mockConfig);
 
-    assertTrue(processEngineConfiguration.getVariableSerializers().getSerializerByName(JsonValueType.TYPE_NAME) instanceof JsonValueSerializer);
+    assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(JsonValueType.TYPE_NAME)).isInstanceOf(JsonValueSerializer.class);
   }
 }

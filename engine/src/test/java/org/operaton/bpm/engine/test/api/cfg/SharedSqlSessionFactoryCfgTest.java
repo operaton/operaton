@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotSame;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -103,7 +102,7 @@ class SharedSqlSessionFactoryCfgTest {
 
     // then
     assertThat(ProcessEngineConfigurationImpl.cachedSqlSessionFactory).isSameAs(existingSessionFactory);
-    assertNotSame(existingSessionFactory, cfg.getSqlSessionFactory());
+    assertThat(cfg.getSqlSessionFactory()).isNotSameAs(existingSessionFactory);
   }
 
   static class TestEngineCfg extends StandaloneInMemProcessEngineConfiguration {

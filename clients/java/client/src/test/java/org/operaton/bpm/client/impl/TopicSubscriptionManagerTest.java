@@ -37,11 +37,9 @@ import org.operaton.bpm.client.variable.impl.TypedValueField;
 import org.operaton.bpm.client.variable.impl.TypedValues;
 import org.operaton.bpm.engine.variable.value.PrimitiveValue;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
@@ -97,7 +95,7 @@ class TopicSubscriptionManagerTest {
 	@Test
 	void isRunningAfterStart() {
 		topicSubscriptionManager.start();
-		assertTrue(topicSubscriptionManager.isRunning());
+		assertThat(topicSubscriptionManager.isRunning()).isTrue();
 
 		topicSubscriptionManager.stop();
 	}
@@ -106,7 +104,7 @@ class TopicSubscriptionManagerTest {
 	void isNotRunningAfterStop() {
 		topicSubscriptionManager.start();
 		topicSubscriptionManager.stop();
-		assertFalse(topicSubscriptionManager.isRunning());
+		assertThat(topicSubscriptionManager.isRunning()).isFalse();
 	}
 
 	@Test
@@ -116,7 +114,7 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(1, t0Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -126,7 +124,7 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(1, t0Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -136,7 +134,7 @@ class TopicSubscriptionManagerTest {
 		waitMillies(1500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
 	}
 
 	@Test
@@ -147,8 +145,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(1, t0Handler.getExecuteCount());
-		assertEquals(1, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(1);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -159,8 +157,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(1500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
-		assertEquals(2, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(2);
 	}
 
 	@Test
@@ -173,8 +171,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500); // 3000 ... t0 executed second time, t1 executed once
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
-		assertEquals(1, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -187,8 +185,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(1000); // t0 executed second time
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
-		assertEquals(1, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -201,8 +199,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(0, t0Handler.getExecuteCount());
-		assertEquals(0, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(0);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(0);
 	}
 
 	@Test
@@ -215,8 +213,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(250); // t0 and t1 executed second time because timer restart
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
-		assertEquals(2, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(2);
 	}
 
 	private void waitMillies(int millies) {

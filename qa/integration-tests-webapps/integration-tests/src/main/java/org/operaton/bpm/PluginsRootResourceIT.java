@@ -29,8 +29,7 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Parameterized
 public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
@@ -75,13 +74,13 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
 
   protected void assertResponse(String asset, Response response) {
     if (assetAllowed) {
-      assertEquals(Status.OK.getStatusCode(), response.getStatus());
+      assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
     } else {
-      assertEquals(Status.FORBIDDEN.getStatusCode(), response.getStatus());
-      assertTrue(response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON));
+      assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
+      assertThat(response.getMediaType().toString()).startsWith(MediaType.APPLICATION_JSON);
       String responseEntity = response.getEntity().toString();
-      assertTrue(responseEntity.contains("\"type\":\"RestException\""));
-      assertTrue(responseEntity.contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\""));
+      assertThat(responseEntity).contains("\"type\":\"RestException\"");
+      assertThat(responseEntity).contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
     }
   }
 

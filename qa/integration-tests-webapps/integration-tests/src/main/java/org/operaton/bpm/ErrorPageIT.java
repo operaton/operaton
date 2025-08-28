@@ -22,9 +22,7 @@ import jakarta.ws.rs.core.Response.Status;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ErrorPageIT extends AbstractWebIntegrationTest {
 
@@ -42,11 +40,11 @@ public class ErrorPageIT extends AbstractWebIntegrationTest {
     response = target.request().get();
 
     // then
-    assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
-    assertTrue(response.getMediaType().toString().startsWith(MediaType.TEXT_HTML));
+    assertThat(response.getStatus()).isEqualTo(Status.NOT_FOUND.getStatusCode());
+    assertThat(response.getMediaType().toString()).startsWith(MediaType.TEXT_HTML);
     String responseEntity = response.getEntity().toString();
-    assertTrue(responseEntity.contains("Operaton"));
-    assertTrue(responseEntity.contains("Not Found"));
+    assertThat(responseEntity).contains("Operaton");
+    assertThat(responseEntity).contains("Not Found");
   }
 
 }

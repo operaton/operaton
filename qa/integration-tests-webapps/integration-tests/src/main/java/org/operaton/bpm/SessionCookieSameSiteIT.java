@@ -25,8 +25,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
 
@@ -47,8 +46,8 @@ public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
     response = target.request().get(Response.class);
 
     // then
-    assertEquals(200, response.getStatus());
-    assertTrue(isCookieHeaderValuePresent("SameSite=Lax", response));
+    assertThat(response.getStatus()).isEqualTo(200);
+    assertThat(isCookieHeaderValuePresent("SameSite=Lax", response)).isTrue();
   }
 
   protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {

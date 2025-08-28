@@ -26,14 +26,13 @@ import java.util.Map.Entry;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.operaton.bpm.engine.variable.Variables.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -52,25 +51,24 @@ class VariableApiTest {
     VariableMap variables = createVariables()
       .putValue(DESERIALIZED_OBJECT_VAR_NAME, objectValue(DESERIALIZED_OBJECT_VAR_VALUE));
 
-    assertEquals(DESERIALIZED_OBJECT_VAR_VALUE, variables.get(DESERIALIZED_OBJECT_VAR_NAME));
-    assertEquals(DESERIALIZED_OBJECT_VAR_VALUE, variables.getValue(DESERIALIZED_OBJECT_VAR_NAME, ExampleObject.class));
+    assertThat(variables).containsEntry(DESERIALIZED_OBJECT_VAR_NAME, DESERIALIZED_OBJECT_VAR_VALUE);
+    assertThat(variables.getValue(DESERIALIZED_OBJECT_VAR_NAME, ExampleObject.class)).isEqualTo(DESERIALIZED_OBJECT_VAR_VALUE);
 
     Object untypedValue = variables.getValueTyped(DESERIALIZED_OBJECT_VAR_NAME).getValue();
-    assertEquals(DESERIALIZED_OBJECT_VAR_VALUE, untypedValue);
+    assertThat(untypedValue).isEqualTo(DESERIALIZED_OBJECT_VAR_VALUE);
 
     ExampleObject typedValue = variables.<ObjectValue>getValueTyped(DESERIALIZED_OBJECT_VAR_NAME).getValue(ExampleObject.class);
-    assertEquals(DESERIALIZED_OBJECT_VAR_VALUE, typedValue);
+    assertThat(typedValue).isEqualTo(DESERIALIZED_OBJECT_VAR_VALUE);
 
     // object type name is not yet available
-    assertNull(variables.<ObjectValue>getValueTyped(DESERIALIZED_OBJECT_VAR_NAME).getObjectTypeName());
+    assertThat(variables.<ObjectValue>getValueTyped(DESERIALIZED_OBJECT_VAR_NAME).getObjectTypeName()).isNull();
     // class is available
-    assertEquals(DESERIALIZED_OBJECT_VAR_VALUE.getClass(), variables.<ObjectValue>getValueTyped(DESERIALIZED_OBJECT_VAR_NAME).getObjectType());
-
+    assertThat(variables.<ObjectValue>getValueTyped(DESERIALIZED_OBJECT_VAR_NAME).getObjectType()).isEqualTo(DESERIALIZED_OBJECT_VAR_VALUE.getClass());
 
     variables = createVariables()
-        .putValue(DESERIALIZED_OBJECT_VAR_NAME, objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SERIALIZATION_DATA_FORMAT_NAME));
+      .putValue(DESERIALIZED_OBJECT_VAR_NAME, objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SERIALIZATION_DATA_FORMAT_NAME));
 
-    assertEquals(DESERIALIZED_OBJECT_VAR_VALUE, variables.get(DESERIALIZED_OBJECT_VAR_NAME));
+    assertThat(variables).containsEntry(DESERIALIZED_OBJECT_VAR_NAME, DESERIALIZED_OBJECT_VAR_VALUE);
   }
 
   @Test
@@ -78,8 +76,7 @@ class VariableApiTest {
     VariableMap map1 = putValue("foo", true).putValue("bar", 20);
     VariableMap map2 = putValueTyped("foo", booleanValue(true)).putValue("bar", integerValue(20));
 
-    assertEquals(map1, map2);
-    assertTrue(map1.values().containsAll(map2.values()));
+    assertThat(map2).containsExactlyEntriesOf(map1);
   }
 
   @Test
@@ -103,55 +100,54 @@ class VariableApiTest {
     map3.put("bar", 20);
 
     // equals()
-    assertEquals(map1, map2);
-    assertEquals(map2, map3);
-    assertEquals(map1, Variables.fromMap(map1));
-    assertEquals(map1, Variables.fromMap(map3));
+    assertThat(map2).isEqualTo(map1);
+    assertThat(map3).isEqualTo(map2);
+    assertThat(fromMap(map1)).isEqualTo(map1);
+    assertThat(fromMap(map3)).isEqualTo(map1);
 
     // hashCode()
-    assertEquals(map1.hashCode(), map2.hashCode());
-    assertEquals(map2.hashCode(), map3.hashCode());
+    assertThat(map2).hasSameHashCodeAs(map1);
+    assertThat(map3).hasSameHashCodeAs(map2);
 
     // values()
     Collection<Object> values1 = map1.values();
     Collection<Object> values2 = map2.values();
     Collection<Object> values3 = map3.values();
-    assertTrue(values1.containsAll(values2));
-    assertTrue(values2.containsAll(values1));
-    assertTrue(values2.containsAll(values3));
-    assertTrue(values3.containsAll(values2));
+    assertThat(values1).containsAll(values2);
+    assertThat(values2).containsAll(values1).containsAll(values3);
+    assertThat(values3).containsAll(values2);
 
     // entry set
-    assertEquals(map1.entrySet(), map2.entrySet());
-    assertEquals(map2.entrySet(), map3.entrySet());
+    assertThat(map2.entrySet()).isEqualTo(map1.entrySet());
+    assertThat(map3.entrySet()).isEqualTo(map2.entrySet());
   }
 
   @Test
   void serializationDataFormats() {
     ObjectValue objectValue = objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SerializationDataFormats.JAVA).create();
-    assertEquals(SerializationDataFormats.JAVA.getName(), objectValue.getSerializationDataFormat());
+    assertThat(objectValue.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
 
     objectValue = objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SerializationDataFormats.JSON).create();
-    assertEquals(SerializationDataFormats.JSON.getName(), objectValue.getSerializationDataFormat());
+    assertThat(objectValue.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JSON.getName());
 
     objectValue = objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SerializationDataFormats.XML).create();
-    assertEquals(SerializationDataFormats.XML.getName(), objectValue.getSerializationDataFormat());
+    assertThat(objectValue.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.XML.getName());
   }
 
   @Test
   void emptyVariableMapAsVariableContext() {
     VariableContext varContext = createVariables().asVariableContext();
-    assertEquals(0, varContext.keySet().size());
-    assertNull(varContext.resolve("nonExisting"));
-    assertFalse(varContext.containsVariable("nonExisting"));
+    assertThat(varContext.keySet()).isEmpty();
+    assertThat(varContext.resolve("nonExisting")).isNull();
+    assertThat(varContext.containsVariable("nonExisting")).isFalse();
   }
 
   @Test
   void testEmptyVariableContext() {
     VariableContext varContext = emptyVariableContext();
-    assertEquals(0, varContext.keySet().size());
-    assertNull(varContext.resolve("nonExisting"));
-    assertFalse(varContext.containsVariable("nonExisting"));
+    assertThat(varContext.keySet()).isEmpty();
+    assertThat(varContext.resolve("nonExisting")).isNull();
+    assertThat(varContext.containsVariable("nonExisting")).isFalse();
   }
 
   @Test
@@ -159,13 +155,13 @@ class VariableApiTest {
     VariableContext varContext = createVariables()
         .putValueTyped("someValue", integerValue(1)).asVariableContext();
 
-    assertEquals(1, varContext.keySet().size());
+    assertThat(varContext.keySet()).hasSize(1);
 
-    assertNull(varContext.resolve("nonExisting"));
-    assertFalse(varContext.containsVariable("nonExisting"));
+    assertThat(varContext.resolve("nonExisting")).isNull();
+    assertThat(varContext.containsVariable("nonExisting")).isFalse();
 
-    assertEquals(1, varContext.resolve("someValue").getValue());
-    assertTrue(varContext.containsVariable("someValue"));
+    assertThat(varContext.resolve("someValue").getValue()).isEqualTo(1);
+    assertThat(varContext.containsVariable("someValue")).isTrue();
   }
 
   @Test
@@ -187,7 +183,9 @@ class VariableApiTest {
 
     for (Entry<String, Object> e : variableMap.entrySet()) {
       TypedValue value = variableMap.getValueTyped(e.getKey());
-      assertTrue(value.isTransient(), "Variable '" + e.getKey() + "' is not transient: " + value);
+      assertThat(value.isTransient())
+              .as("Variable '%s' is not transient: %s", e.getKey(), value)
+              .isTrue();
     }
   }
 
@@ -212,7 +210,9 @@ class VariableApiTest {
 
     for (Entry<String, Object> e : variableMap.entrySet()) {
       TypedValue value = variableMap.getValueTyped(e.getKey());
-      assertTrue(value.isTransient(), "Variable '" + e.getKey() + "' is not transient: " + value);
+      assertThat(value.isTransient())
+              .as("Variable '%s' is not transient: %s", e.getKey(), value)
+              .isTrue();
     }
   }
 }

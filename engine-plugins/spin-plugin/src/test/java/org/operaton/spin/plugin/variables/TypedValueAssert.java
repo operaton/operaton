@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -36,45 +36,45 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TypedValueAssert {
 
   public static void assertObjectValueDeserializedNull(ObjectValue typedValue) {
-    assertNotNull(typedValue);
-    assertTrue(typedValue.isDeserialized());
-    assertNotNull(typedValue.getSerializationDataFormat());
-    assertNull(typedValue.getValue());
-    assertNull(typedValue.getValueSerialized());
-    assertNull(typedValue.getObjectType());
-    assertNull(typedValue.getObjectTypeName());
+    assertThat(typedValue).isNotNull();
+    assertThat(typedValue.isDeserialized()).isTrue();
+    assertThat(typedValue.getSerializationDataFormat()).isNotNull();
+    assertThat(typedValue.getValue()).isNull();
+    assertThat(typedValue.getValueSerialized()).isNull();
+    assertThat(typedValue.getObjectType()).isNull();
+    assertThat(typedValue.getObjectTypeName()).isNull();
   }
 
   public static void assertObjectValueSerializedNull(ObjectValue typedValue) {
-    assertNotNull(typedValue);
-    assertFalse(typedValue.isDeserialized());
-    assertNotNull(typedValue.getSerializationDataFormat());
-    assertNull(typedValue.getValueSerialized());
-    assertNull(typedValue.getObjectTypeName());
+    assertThat(typedValue).isNotNull();
+    assertThat(typedValue.isDeserialized()).isFalse();
+    assertThat(typedValue.getSerializationDataFormat()).isNotNull();
+    assertThat(typedValue.getValueSerialized()).isNull();
+    assertThat(typedValue.getObjectTypeName()).isNull();
   }
 
   public static void assertObjectValueDeserialized(ObjectValue typedValue, Object value) {
     Class<? extends Object> expectedObjectType = value.getClass();
-    assertTrue(typedValue.isDeserialized());
+    assertThat(typedValue.isDeserialized()).isTrue();
 
-    assertEquals(ValueType.OBJECT, typedValue.getType());
+    assertThat(typedValue.getType()).isEqualTo(ValueType.OBJECT);
 
-    assertEquals(value, typedValue.getValue());
-    assertEquals(value, typedValue.getValue(expectedObjectType));
+    assertThat(typedValue.getValue()).isEqualTo(value);
+    assertThat(typedValue.getValue(expectedObjectType)).isEqualTo(value);
 
-    assertEquals(expectedObjectType, typedValue.getObjectType());
-    assertEquals(expectedObjectType.getName(), typedValue.getObjectTypeName());
+    assertThat(typedValue.getObjectType()).isEqualTo(expectedObjectType);
+    assertThat(typedValue.getObjectTypeName()).isEqualTo(expectedObjectType.getName());
   }
 
   public static void assertObjectValueSerializedJava(ObjectValue typedValue, Object value) {
-    assertEquals(Variables.SerializationDataFormats.JAVA.getName(), typedValue.getSerializationDataFormat());
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(Variables.SerializationDataFormats.JAVA.getName());
 
     try {
       // validate this is the base 64 encoded string representation of the serialized value of the java object
       String valueSerialized = typedValue.getValueSerialized();
       byte[] decodedObject = Base64.getDecoder().decode(valueSerialized.getBytes(StandardCharsets.UTF_8));
       ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(decodedObject));
-      assertEquals(value, objectInputStream.readObject());
+      assertThat(objectInputStream.readObject()).isEqualTo(value);
     }
     catch (IOException | ClassNotFoundException e) {
       throw new RuntimeException(e);
@@ -82,9 +82,9 @@ public class TypedValueAssert {
   }
 
   public static void assertUntypedNullValue(TypedValue nullValue) {
-    assertNotNull(nullValue);
-    assertNull(nullValue.getValue());
-    assertEquals(ValueType.NULL, nullValue.getType());
+    assertThat(nullValue).isNotNull();
+    assertThat(nullValue.getValue()).isNull();
+    assertThat(nullValue.getType()).isEqualTo(ValueType.NULL);
   }
 
 

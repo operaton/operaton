@@ -152,8 +152,9 @@ public class UpgradeTestRule extends ProcessEngineRule {
   }
 
   public void assertScenarioEnded() {
-    assertThat("Process instance for scenario " + getBuisnessKey() + " should have ended",
-            processInstanceQuery().singleResult() == null).isTrue();
+    assertThat(processInstanceQuery().singleResult() == null)
+      .withFailMessage("Process instance for scenario " + getBuisnessKey() + " should have ended")
+      .isTrue();
   }
 
   // case //////////////////////////////////////////////////

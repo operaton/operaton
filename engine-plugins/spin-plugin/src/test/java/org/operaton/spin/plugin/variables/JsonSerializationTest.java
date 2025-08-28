@@ -16,6 +16,14 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.skyscreamer.jsonassert.JSONAssert;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -37,22 +45,14 @@ import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuild
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.spin.DataFormats;
+
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueDeserializedNull;
 import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueSerializedNull;
 import static org.operaton.spin.plugin.variables.TypedValueAssert.assertUntypedNullValue;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.skyscreamer.jsonassert.JSONAssert;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(ProcessEngineExtension.class)
 class JsonSerializationTest {

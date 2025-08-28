@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.qa.rolling.update.task;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.Test;
 
 /**
  * This test ensures that the old engine can complete an

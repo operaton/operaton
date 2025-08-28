@@ -17,11 +17,14 @@
 package org.operaton.bpm.qa.rolling.update.externalTask;
 
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

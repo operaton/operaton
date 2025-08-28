@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class BitMaskUtilTest {
 

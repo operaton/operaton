@@ -16,19 +16,19 @@
  */
 package org.operaton.spin.plugin.impl;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.variable.serializer.DefaultVariableSerializers;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.spin.DataFormats;
-import org.operaton.spin.plugin.variable.type.JsonValueType;
-import org.operaton.spin.plugin.variable.type.XmlValueType;
-
 import java.net.URL;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.variable.serializer.DefaultVariableSerializers;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.spin.DataFormats;
+import org.operaton.spin.plugin.variable.type.JsonValueType;
+import org.operaton.spin.plugin.variable.type.XmlValueType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

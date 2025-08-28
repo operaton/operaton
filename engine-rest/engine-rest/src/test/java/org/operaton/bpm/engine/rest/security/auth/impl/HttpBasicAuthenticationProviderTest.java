@@ -15,19 +15,21 @@
  */
 package org.operaton.bpm.engine.rest.security.auth.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider.BASIC_AUTH_HEADER_PREFIX;
-
+import java.util.Base64;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.core.HttpHeaders;
-import java.util.Base64;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
+
+import static org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider.BASIC_AUTH_HEADER_PREFIX;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class HttpBasicAuthenticationProviderTest {
 

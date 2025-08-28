@@ -28,9 +28,9 @@ import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnDiagram;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiGeneratorForFlowNodesTest {
 

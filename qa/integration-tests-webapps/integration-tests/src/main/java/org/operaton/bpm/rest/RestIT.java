@@ -38,6 +38,7 @@ import org.operaton.bpm.AbstractWebIntegrationTest;
 import org.operaton.bpm.engine.rest.hal.Hal;
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class RestIT extends AbstractWebIntegrationTest {

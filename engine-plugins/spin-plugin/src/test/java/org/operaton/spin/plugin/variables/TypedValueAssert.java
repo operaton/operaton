@@ -68,6 +68,7 @@ public class TypedValueAssert {
 
   public static void assertObjectValueSerializedJava(ObjectValue typedValue, Object value) {
     assertThat(typedValue.getSerializationDataFormat()).isEqualTo(Variables.SerializationDataFormats.JAVA.getName());
+
     try {
       // validate this is the base 64 encoded string representation of the serialized value of the java object
       String valueSerialized = typedValue.getValueSerialized();

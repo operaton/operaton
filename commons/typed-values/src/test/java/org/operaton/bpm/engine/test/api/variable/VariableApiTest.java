@@ -65,8 +65,8 @@ class VariableApiTest {
     // class is available
     assertThat(variables.<ObjectValue>getValueTyped(DESERIALIZED_OBJECT_VAR_NAME).getObjectType()).isEqualTo(DESERIALIZED_OBJECT_VAR_VALUE.getClass());
 
-    variables = createVariables()
-      .putValue(DESERIALIZED_OBJECT_VAR_NAME, objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SERIALIZATION_DATA_FORMAT_NAME));
+    variables = createVariables().putValue(DESERIALIZED_OBJECT_VAR_NAME,
+      objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SERIALIZATION_DATA_FORMAT_NAME));
 
     assertThat(variables.get(DESERIALIZED_OBJECT_VAR_NAME)).isEqualTo(DESERIALIZED_OBJECT_VAR_VALUE);
   }
@@ -84,7 +84,9 @@ class VariableApiTest {
   void variableMapCompatibility() {
 
     // test compatibility with Map<String, Object>
-    VariableMap map1 = createVariables().putValue("foo", 10).putValue("bar", 20);
+    VariableMap map1 = createVariables()
+        .putValue("foo", 10)
+        .putValue("bar", 20);
 
     // assert the map is assignable to Map<String,Object>
     @SuppressWarnings("unused")
@@ -125,13 +127,13 @@ class VariableApiTest {
   @Test
   void serializationDataFormats() {
     ObjectValue objectValue = objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SerializationDataFormats.JAVA).create();
-      assertThat(objectValue.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
+    assertThat(objectValue.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
 
     objectValue = objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SerializationDataFormats.JSON).create();
-      assertThat(objectValue.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JSON.getName());
+    assertThat(objectValue.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JSON.getName());
 
     objectValue = objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SerializationDataFormats.XML).create();
-      assertThat(objectValue.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.XML.getName());
+    assertThat(objectValue.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.XML.getName());
   }
 
   @Test
@@ -183,9 +185,9 @@ class VariableApiTest {
 
     for (Entry<String, Object> e : variableMap.entrySet()) {
       TypedValue value = variableMap.getValueTyped(e.getKey());
-        assertThat(value.isTransient())
-                .as("Variable '%s' is not transient: %s", e.getKey(), value)
-                .isTrue();
+      assertThat(value.isTransient())
+              .as("Variable '%s' is not transient: %s", e.getKey(), value)
+              .isTrue();
     }
   }
 
@@ -210,9 +212,9 @@ class VariableApiTest {
 
     for (Entry<String, Object> e : variableMap.entrySet()) {
       TypedValue value = variableMap.getValueTyped(e.getKey());
-        assertThat(value.isTransient())
-                .as("Variable '%s' is not transient: %s", e.getKey(), value)
-                .isTrue();
+      assertThat(value.isTransient())
+              .as("Variable '%s' is not transient: %s", e.getKey(), value)
+              .isTrue();
     }
   }
 }

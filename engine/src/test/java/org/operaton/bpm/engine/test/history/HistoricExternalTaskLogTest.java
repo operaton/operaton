@@ -229,7 +229,7 @@ class HistoricExternalTaskLogTest {
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       String expectedMessage = "No historic external task log found with id foo";
-      assertThat(re.getMessage().contains(expectedMessage)).isTrue();
+      assertThat(re.getMessage()).contains(expectedMessage);
     }
   }
 
@@ -240,7 +240,7 @@ class HistoricExternalTaskLogTest {
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       String expectedMessage = "historicExternalTaskLogId is null";
-      assertThat(re.getMessage().contains(expectedMessage)).isTrue();
+      assertThat(re.getMessage()).contains(expectedMessage);
     }
   }
 

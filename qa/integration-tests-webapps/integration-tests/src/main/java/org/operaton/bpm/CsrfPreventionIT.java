@@ -49,9 +49,9 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
     response.close();
 
     assertThat(xsrfTokenHeader).isNotNull();
-    assertThat(xsrfTokenHeader.length()).isEqualTo(32);
+    assertThat(xsrfTokenHeader).hasSize(32);
     assertThat(xsrfCookieValue).isNotNull();
-    assertThat(xsrfCookieValue.contains(";SameSite=Lax")).isTrue();
+    assertThat(xsrfCookieValue).contains(";SameSite=Lax");
   }
 
   @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
@@ -68,7 +68,7 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
 
     // then
     assertThat(response.getStatus()).isEqualTo(403);
-    assertThat("Required".equals(getXsrfTokenHeader(response))).isTrue();
+    assertThat("Required").isEqualTo(getXsrfTokenHeader(response));
   }
 
 }

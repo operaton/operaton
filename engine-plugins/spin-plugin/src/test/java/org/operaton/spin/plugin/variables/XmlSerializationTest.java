@@ -475,7 +475,7 @@ class XmlSerializationTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();

@@ -51,7 +51,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnDiagram> bpmnDiagrams = instance.getModelElementsByType(BpmnDiagram.class);
-    assertThat(bpmnDiagrams.size()).isEqualTo(1);
+    assertThat(bpmnDiagrams).hasSize(1);
 
     BpmnDiagram diagram = bpmnDiagrams.iterator().next();
     assertThat(diagram.getId()).isNotNull();
@@ -74,7 +74,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(2);
+    assertThat(allShapes).hasSize(2);
 
     assertEventShapeProperties(START_EVENT_ID);
   }
@@ -93,7 +93,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(2);
+    assertThat(allShapes).hasSize(2);
 
     assertTaskShapeProperties(USER_TASK_ID);
   }
@@ -112,7 +112,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(2);
+    assertThat(allShapes).hasSize(2);
 
     assertTaskShapeProperties(SEND_TASK_ID);
   }
@@ -131,7 +131,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(2);
+    assertThat(allShapes).hasSize(2);
 
     assertTaskShapeProperties(SERVICE_TASK_ID);
   }
@@ -150,7 +150,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(2);
+    assertThat(allShapes).hasSize(2);
 
     assertTaskShapeProperties(TASK_ID);
   }
@@ -169,7 +169,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(2);
+    assertThat(allShapes).hasSize(2);
 
     assertTaskShapeProperties(TASK_ID);
   }
@@ -188,7 +188,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(2);
+    assertThat(allShapes).hasSize(2);
 
     assertTaskShapeProperties(TASK_ID);
   }
@@ -207,7 +207,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(2);
+    assertThat(allShapes).hasSize(2);
 
     assertTaskShapeProperties(TASK_ID);
   }
@@ -227,7 +227,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(3);
+    assertThat(allShapes).hasSize(3);
 
     assertEventShapeProperties(CATCH_ID);
   }
@@ -253,7 +253,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(5);
+    assertThat(allShapes).hasSize(5);
 
     assertEventShapeProperties(BOUNDARY_ID);
   }
@@ -272,7 +272,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(3);
+    assertThat(allShapes).hasSize(3);
 
     assertEventShapeProperties("inter");
   }
@@ -291,7 +291,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(2);
+    assertThat(allShapes).hasSize(2);
 
     assertEventShapeProperties(END_EVENT_ID);
   }
@@ -311,7 +311,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(3);
+    assertThat(allShapes).hasSize(3);
 
     BpmnShape bpmnShapeSubProcess = findBpmnShape(SUB_PROCESS_ID);
     assertThat(bpmnShapeSubProcess).isNotNull();
@@ -339,7 +339,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(6);
+    assertThat(allShapes).hasSize(6);
 
     assertEventShapeProperties("innerStartEvent");
     assertTaskShapeProperties("innerUserTask");
@@ -370,7 +370,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(5);
+    assertThat(allShapes).hasSize(5);
 
     assertEventShapeProperties("innerStartEvent");
     assertEventShapeProperties("innerEndEvent");
@@ -395,7 +395,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(3);
+    assertThat(allShapes).hasSize(3);
 
     assertTaskShapeProperties(CALL_ACTIVITY_ID);
   }
@@ -420,7 +420,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(6);
+    assertThat(allShapes).hasSize(6);
 
     assertEventShapeProperties("innerStartEvent");
     assertTaskShapeProperties("innerUserTask");
@@ -446,7 +446,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(3);
+    assertThat(allShapes).hasSize(3);
 
     assertGatewayShapeProperties("and");
   }
@@ -466,7 +466,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(3);
+    assertThat(allShapes).hasSize(3);
 
     assertGatewayShapeProperties("inclusive");
   }
@@ -487,7 +487,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(3);
+    assertThat(allShapes).hasSize(3);
 
     assertGatewayShapeProperties("eventBased");
   }
@@ -507,7 +507,7 @@ class DiGeneratorForFlowNodesTest {
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
-    assertThat(allShapes.size()).isEqualTo(3);
+    assertThat(allShapes).hasSize(3);
 
     assertGatewayShapeProperties("or");
     BpmnShape bpmnShape = findBpmnShape("or");

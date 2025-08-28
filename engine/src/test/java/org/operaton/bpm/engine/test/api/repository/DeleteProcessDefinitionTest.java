@@ -137,7 +137,7 @@ class DeleteProcessDefinitionTest {
     } catch (ProcessEngineException pex) {
       // then Exception is expected, the deletion should fail since there exist a process instance
       // and the cascade flag is per default false
-      assertThat(pex.getMessage().contains("Deletion of process definition without cascading failed.")).isTrue();
+      assertThat(pex.getMessage()).contains("Deletion of process definition without cascading failed.");
     }
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
@@ -209,7 +209,7 @@ class DeleteProcessDefinitionTest {
     //then creating process instance from the existing process definition
     ProcessInstanceWithVariables procInst = runtimeService.createProcessInstanceByKey("two").executeWithVariablesInReturn();
     assertThat(procInst).isNotNull();
-    assertThat(procInst.getProcessDefinitionId().contains("two")).isTrue();
+    assertThat(procInst.getProcessDefinitionId()).contains("two");
 
     //should refill the cache
     Cache cache = processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache();

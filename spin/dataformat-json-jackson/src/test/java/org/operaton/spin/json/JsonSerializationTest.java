@@ -140,10 +140,10 @@ class JsonSerializationTest {
     final byte[] bytes = "{\"foo\": \"bar\"}".getBytes();
     assertThat(bytes).isNotEmpty();
 
-    final Object o = deserializeFromByteArray(bytes, "java.util.HashMap<java.lang.String, java.lang.String>");
-    assertThat(o).isInstanceOf(HashMap.class);
-    assertThat(((HashMap<?, ?>) o).containsKey("foo")).isTrue();
-    assertThat(((HashMap<?, ?>) o).get("foo")).isEqualTo("bar");
+    final HashMap<String,String> deserializedMap = (HashMap<String, String>) deserializeFromByteArray(bytes, "java.util.HashMap<java.lang.String, java.lang.String>");
+    assertThat(deserializedMap)
+      .containsKey("foo")
+      .containsEntry("foo", "bar");
   }
 
   protected byte[] serializeToByteArray(Object deserializedObject) throws Exception {

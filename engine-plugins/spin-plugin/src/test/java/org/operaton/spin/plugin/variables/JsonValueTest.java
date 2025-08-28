@@ -212,7 +212,7 @@ class JsonValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -227,7 +227,7 @@ class JsonValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
   }
 
   @Test
@@ -242,7 +242,7 @@ class JsonValueTest {
     // then
     assertThat(jsonValue.isTransient()).isTrue();
     Map<String, Object> returnedValueInfo = JSON.getValueInfo(jsonValue);
-    assertThat(returnedValueInfo.get(ValueType.VALUE_INFO_TRANSIENT)).isEqualTo(true);
+    assertThat(returnedValueInfo).containsEntry(ValueType.VALUE_INFO_TRANSIENT, true);
   }
 
   /**
@@ -294,7 +294,7 @@ class JsonValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();

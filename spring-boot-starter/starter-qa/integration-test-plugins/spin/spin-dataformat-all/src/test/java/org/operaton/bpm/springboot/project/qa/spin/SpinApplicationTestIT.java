@@ -52,6 +52,6 @@ class SpinApplicationTestIT {
 
       // when
       runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"));
-    assertThat(exception.getMessage().contains("SPIN/JACKSON-JSON-01006 Cannot deserialize")).isTrue();
+    assertThat(exception.getMessage()).contains("SPIN/JACKSON-JSON-01006 Cannot deserialize");
   }
 }

@@ -51,7 +51,7 @@ class VariableApiTest {
     VariableMap variables = createVariables()
       .putValue(DESERIALIZED_OBJECT_VAR_NAME, objectValue(DESERIALIZED_OBJECT_VAR_VALUE));
 
-    assertThat(variables.get(DESERIALIZED_OBJECT_VAR_NAME)).isEqualTo(DESERIALIZED_OBJECT_VAR_VALUE);
+    assertThat(variables).containsEntry(DESERIALIZED_OBJECT_VAR_NAME, DESERIALIZED_OBJECT_VAR_VALUE);
     assertThat(variables.getValue(DESERIALIZED_OBJECT_VAR_NAME, ExampleObject.class)).isEqualTo(DESERIALIZED_OBJECT_VAR_VALUE);
 
     Object untypedValue = variables.getValueTyped(DESERIALIZED_OBJECT_VAR_NAME).getValue();
@@ -68,7 +68,7 @@ class VariableApiTest {
     variables = createVariables().putValue(DESERIALIZED_OBJECT_VAR_NAME,
       objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SERIALIZATION_DATA_FORMAT_NAME));
 
-    assertThat(variables.get(DESERIALIZED_OBJECT_VAR_NAME)).isEqualTo(DESERIALIZED_OBJECT_VAR_VALUE);
+    assertThat(variables).containsEntry(DESERIALIZED_OBJECT_VAR_NAME, DESERIALIZED_OBJECT_VAR_VALUE);
   }
 
   @Test
@@ -77,7 +77,7 @@ class VariableApiTest {
     VariableMap map2 = putValueTyped("foo", booleanValue(true)).putValue("bar", integerValue(20));
 
     assertThat(map2).isEqualTo(map1);
-    assertThat(map1.values().containsAll(map2.values())).isTrue();
+    assertThat(map1.values()).containsAll(map2.values());
   }
 
   @Test
@@ -93,8 +93,8 @@ class VariableApiTest {
     Map<String, Object> assignable = map1;
 
     VariableMap map2 = createVariables()
-      .putValueTyped("foo", integerValue(10))
-      .putValueTyped("bar", integerValue(20));
+        .putValueTyped("foo", integerValue(10))
+        .putValueTyped("bar", integerValue(20));
 
     Map<String, Object> map3 = new HashMap<>();
     map3.put("foo", 10);
@@ -114,10 +114,10 @@ class VariableApiTest {
     Collection<Object> values1 = map1.values();
     Collection<Object> values2 = map2.values();
     Collection<Object> values3 = map3.values();
-    assertThat(values1.containsAll(values2)).isTrue();
-    assertThat(values2.containsAll(values1)).isTrue();
-    assertThat(values2.containsAll(values3)).isTrue();
-    assertThat(values3.containsAll(values2)).isTrue();
+    assertThat(values1).containsAll(values2);
+    assertThat(values2).containsAll(values1);
+    assertThat(values2).containsAll(values3);
+    assertThat(values3).containsAll(values2);
 
     // entry set
     assertThat(map2.entrySet()).isEqualTo(map1.entrySet());
@@ -139,7 +139,7 @@ class VariableApiTest {
   @Test
   void emptyVariableMapAsVariableContext() {
     VariableContext varContext = createVariables().asVariableContext();
-    assertThat(varContext.keySet().size()).isEqualTo(0);
+    assertThat(varContext.keySet()).hasSize(0);
     assertThat(varContext.resolve("nonExisting")).isNull();
     assertThat(varContext.containsVariable("nonExisting")).isFalse();
   }
@@ -147,7 +147,7 @@ class VariableApiTest {
   @Test
   void testEmptyVariableContext() {
     VariableContext varContext = emptyVariableContext();
-    assertThat(varContext.keySet().size()).isEqualTo(0);
+    assertThat(varContext.keySet()).hasSize(0);
     assertThat(varContext.resolve("nonExisting")).isNull();
     assertThat(varContext.containsVariable("nonExisting")).isFalse();
   }
@@ -157,7 +157,7 @@ class VariableApiTest {
     VariableContext varContext = createVariables()
         .putValueTyped("someValue", integerValue(1)).asVariableContext();
 
-    assertThat(varContext.keySet().size()).isEqualTo(1);
+    assertThat(varContext.keySet()).hasSize(1);
 
     assertThat(varContext.resolve("nonExisting")).isNull();
     assertThat(varContext.containsVariable("nonExisting")).isFalse();

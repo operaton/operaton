@@ -76,7 +76,7 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode responseJson = objectMapper.readTree(response.getEntity().toString());
     String responseMessage = responseJson.get("message").asText();
-    assertThat("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds".equals(responseMessage)).isTrue();
+    assertThat("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds").isEqualTo(responseMessage);
     response.close();
   }
 

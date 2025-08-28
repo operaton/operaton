@@ -88,7 +88,7 @@ class XmlValueTest {
     // then
     assertThat(value.hasAttr("attrName")).isTrue();
     assertThat(value.attr("attrName").value()).isEqualTo("attrValue");
-    assertThat(value.childElements().isEmpty()).isTrue();
+    assertThat(value.childElements()).isEmpty();
     assertThat(value.getDataFormatName()).isEqualTo(xml().getName());
   }
 
@@ -108,7 +108,7 @@ class XmlValueTest {
     SpinXmlElement value = typedValue.getValue();
     assertThat(value.hasAttr("attrName")).isTrue();
     assertThat(value.attr("attrName").value()).isEqualTo("attrValue");
-    assertThat(value.childElements().isEmpty()).isTrue();
+    assertThat(value.childElements()).isEmpty();
 
     assertThat(typedValue.isDeserialized()).isTrue();
     assertThat(typedValue.getType()).isEqualTo(XML);
@@ -202,7 +202,7 @@ class XmlValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -217,7 +217,7 @@ class XmlValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
   }
 
   /**
@@ -255,7 +255,7 @@ class XmlValueTest {
     // then
     assertThat(xmlValue.isTransient()).isTrue();
     Map<String, Object> returnedValueInfo = XML.getValueInfo(xmlValue);
-    assertThat(returnedValueInfo.get(ValueType.VALUE_INFO_TRANSIENT)).isEqualTo(true);
+    assertThat(returnedValueInfo).containsEntry(ValueType.VALUE_INFO_TRANSIENT, true);
   }
 
   @Test
@@ -284,7 +284,7 @@ class XmlValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -82,17 +81,17 @@ class ProcessInstantiationWithVariablesInReturnTest {
             .asc()
             .list();
 
-    assertThat(variables.size()).isEqualTo(expectedSize);
+    assertThat(variables).hasSize(expectedSize);
 
-    assertThat(map.size()).isEqualTo(variables.size());
+    assertThat(map).hasSize(variables.size());
     for (HistoricVariableInstance instance : variables) {
-      assertThat(map.containsKey(instance.getName())).isTrue();
+      assertThat(map).containsKey(instance.getName());
       Object instanceValue = instance.getTypedValue().getValue();
       Object mapValue = map.getValueTyped(instance.getName()).getValue();
       if (instanceValue == null) {
         assertThat(mapValue).isNull();
       } else if (instanceValue instanceof byte[] bytes) {
-        assertThat(Arrays.equals(bytes, (byte[]) mapValue)).isTrue();
+        assertThat((byte[]) mapValue).isEqualTo(bytes);
       } else {
         assertThat(mapValue).isEqualTo(instanceValue);
       }

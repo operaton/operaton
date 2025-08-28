@@ -104,7 +104,7 @@ public class RestIT extends AbstractWebIntegrationTest {
       } else if ("invoice".equals(definitionJson.get("key").asText())) {
         assertThat(definitionJson.get("category").asText()).isEqualTo("http://www.omg.org/spec/BPMN/20100524/MODEL");
         assertThat(definitionJson.get("name").asText()).isEqualTo("Invoice Receipt");
-        assertThat(definitionJson.get("resource").asText().matches("invoice\\.v[1,2]\\.bpmn")).isTrue();
+        assertThat(definitionJson.get("resource").asText()).matches("invoice\\.v[1,2]\\.bpmn");
       } else {
         fail("Unexpected definition key in response JSON.");
       }
@@ -320,7 +320,7 @@ public class RestIT extends AbstractWebIntegrationTest {
       JsonNode definition = definitionStatistic.get("definition");
 
       // Check the name contains "invoice" (case-insensitive)
-      assertThat(definition.get("name").asText().toLowerCase().contains("invoice")).isTrue();
+      assertThat(definition.get("name").asText().toLowerCase()).contains("invoice");
 
       // Check if the definition is not suspended
       assertThat(definition.get("suspended").asBoolean()).isFalse();

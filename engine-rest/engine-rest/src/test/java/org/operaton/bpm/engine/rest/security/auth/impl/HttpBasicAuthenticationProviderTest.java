@@ -83,9 +83,9 @@ class HttpBasicAuthenticationProviderTest {
 
   @Test
   void testExtractAuthenticatedUserValidCredentials() {
-      Mockito.when(identityService.checkPassword(USER_ID, PASSWORD)).thenReturn(true);
-      Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(AUTHORIZATION_HEADER);
-      AuthenticationResult result = provider.extractAuthenticatedUser(request, engine);
+    Mockito.when(identityService.checkPassword(USER_ID, PASSWORD)).thenReturn(true);
+    Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(AUTHORIZATION_HEADER);
+    AuthenticationResult result = provider.extractAuthenticatedUser(request, engine);
     assertThat(result.isAuthenticated()).isTrue();
     assertThat(result.getAuthenticatedUser()).isEqualTo(USER_ID);
   }

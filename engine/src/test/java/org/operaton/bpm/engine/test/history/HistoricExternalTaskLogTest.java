@@ -180,10 +180,10 @@ class HistoricExternalTaskLogTest {
 
     // when
     String failedHistoricExternalTaskLogId = historyService
-            .createHistoricExternalTaskLogQuery()
-            .failureLog()
-            .singleResult()
-            .getId();
+      .createHistoricExternalTaskLogQuery()
+      .failureLog()
+      .singleResult()
+      .getId();
 
     // then
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
@@ -203,11 +203,11 @@ class HistoricExternalTaskLogTest {
 
     // when
     List<HistoricExternalTaskLog> list = historyService
-            .createHistoricExternalTaskLogQuery()
-            .failureLog()
-            .orderByTimestamp()
-            .asc()
-            .list();
+      .createHistoricExternalTaskLogQuery()
+      .failureLog()
+      .orderByTimestamp()
+      .asc()
+      .list();
 
     String firstFailedLogId = list.get(0).getId();
     String secondFailedLogId = list.get(1).getId();
@@ -228,8 +228,8 @@ class HistoricExternalTaskLogTest {
       historyService.getHistoricExternalTaskLogErrorDetails("foo");
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
-        String expectedMessage = "No historic external task log found with id foo";
-        assertThat(re.getMessage().contains(expectedMessage)).isTrue();
+      String expectedMessage = "No historic external task log found with id foo";
+      assertThat(re.getMessage().contains(expectedMessage)).isTrue();
     }
   }
 
@@ -239,8 +239,8 @@ class HistoricExternalTaskLogTest {
       historyService.getHistoricExternalTaskLogErrorDetails(null);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
-        String expectedMessage = "historicExternalTaskLogId is null";
-        assertThat(re.getMessage().contains(expectedMessage)).isTrue();
+      String expectedMessage = "historicExternalTaskLogId is null";
+      assertThat(re.getMessage().contains(expectedMessage)).isTrue();
     }
   }
 
@@ -253,9 +253,9 @@ class HistoricExternalTaskLogTest {
 
     // when
     HistoricExternalTaskLog failedLog = historyService
-            .createHistoricExternalTaskLogQuery()
-            .failureLog()
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .failureLog()
+      .singleResult();
 
     String errorMessage = failedLog.getErrorMessage();
     String expectedErrorMessage = exceptionMessage.substring(0, ExternalTaskEntity.MAX_EXCEPTION_MESSAGE_LENGTH);

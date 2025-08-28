@@ -94,11 +94,11 @@ class TopicSubscriptionManagerTest {
 
 	@Test
 	void isRunningAfterStart() {
-        topicSubscriptionManager.start();
-        assertThat(topicSubscriptionManager.isRunning()).isTrue();
+		topicSubscriptionManager.start();
+		assertThat(topicSubscriptionManager.isRunning()).isTrue();
 
-        topicSubscriptionManager.stop();
-    }
+		topicSubscriptionManager.stop();
+	}
 
 	@Test
 	void isNotRunningAfterStop() {

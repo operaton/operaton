@@ -48,10 +48,10 @@ class SpinApplicationTestIT {
 
   @Test
   void shouldFailWithSpinException() {
-      Throwable exception = assertThrows(Exception.class, () ->
+    Throwable exception = assertThrows(Exception.class, () ->
 
-              // when
-              runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"));
-      assertThat(exception.getMessage().contains("SPIN/JACKSON-JSON-01006 Cannot deserialize")).isTrue();
+      // when
+      runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"));
+    assertThat(exception.getMessage().contains("SPIN/JACKSON-JSON-01006 Cannot deserialize")).isTrue();
   }
 }

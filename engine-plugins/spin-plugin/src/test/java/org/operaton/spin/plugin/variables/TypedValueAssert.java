@@ -36,39 +36,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TypedValueAssert {
 
   public static void assertObjectValueDeserializedNull(ObjectValue typedValue) {
-      assertThat(typedValue).isNotNull();
-      assertThat(typedValue.isDeserialized()).isTrue();
-      assertThat(typedValue.getSerializationDataFormat()).isNotNull();
-      assertThat(typedValue.getValue()).isNull();
-      assertThat(typedValue.getValueSerialized()).isNull();
-      assertThat(typedValue.getObjectType()).isNull();
-      assertThat(typedValue.getObjectTypeName()).isNull();
+    assertThat(typedValue).isNotNull();
+    assertThat(typedValue.isDeserialized()).isTrue();
+    assertThat(typedValue.getSerializationDataFormat()).isNotNull();
+    assertThat(typedValue.getValue()).isNull();
+    assertThat(typedValue.getValueSerialized()).isNull();
+    assertThat(typedValue.getObjectType()).isNull();
+    assertThat(typedValue.getObjectTypeName()).isNull();
   }
 
   public static void assertObjectValueSerializedNull(ObjectValue typedValue) {
-      assertThat(typedValue).isNotNull();
-      assertThat(typedValue.isDeserialized()).isFalse();
-      assertThat(typedValue.getSerializationDataFormat()).isNotNull();
-      assertThat(typedValue.getValueSerialized()).isNull();
-      assertThat(typedValue.getObjectTypeName()).isNull();
+    assertThat(typedValue).isNotNull();
+    assertThat(typedValue.isDeserialized()).isFalse();
+    assertThat(typedValue.getSerializationDataFormat()).isNotNull();
+    assertThat(typedValue.getValueSerialized()).isNull();
+    assertThat(typedValue.getObjectTypeName()).isNull();
   }
 
   public static void assertObjectValueDeserialized(ObjectValue typedValue, Object value) {
-      Class<? extends Object> expectedObjectType = value.getClass();
-      assertThat(typedValue.isDeserialized()).isTrue();
+    Class<? extends Object> expectedObjectType = value.getClass();
+    assertThat(typedValue.isDeserialized()).isTrue();
 
-      assertThat(typedValue.getType()).isEqualTo(ValueType.OBJECT);
+    assertThat(typedValue.getType()).isEqualTo(ValueType.OBJECT);
 
-      assertThat(typedValue.getValue()).isEqualTo(value);
-      assertThat(typedValue.getValue(expectedObjectType)).isEqualTo(value);
+    assertThat(typedValue.getValue()).isEqualTo(value);
+    assertThat(typedValue.getValue(expectedObjectType)).isEqualTo(value);
 
-      assertThat(typedValue.getObjectType()).isEqualTo(expectedObjectType);
-      assertThat(typedValue.getObjectTypeName()).isEqualTo(expectedObjectType.getName());
+    assertThat(typedValue.getObjectType()).isEqualTo(expectedObjectType);
+    assertThat(typedValue.getObjectTypeName()).isEqualTo(expectedObjectType.getName());
   }
 
   public static void assertObjectValueSerializedJava(ObjectValue typedValue, Object value) {
-      assertThat(typedValue.getSerializationDataFormat())
-              .isEqualTo(Variables.SerializationDataFormats.JAVA.getName());
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(Variables.SerializationDataFormats.JAVA.getName());
     try {
       // validate this is the base 64 encoded string representation of the serialized value of the java object
       String valueSerialized = typedValue.getValueSerialized();
@@ -82,9 +81,9 @@ public class TypedValueAssert {
   }
 
   public static void assertUntypedNullValue(TypedValue nullValue) {
-      assertThat(nullValue).isNotNull();
-      assertThat(nullValue.getValue()).isNull();
-      assertThat(nullValue.getType()).isEqualTo(ValueType.NULL);
+    assertThat(nullValue).isNotNull();
+    assertThat(nullValue.getValue()).isNull();
+    assertThat(nullValue.getType()).isEqualTo(ValueType.NULL);
   }
 
 

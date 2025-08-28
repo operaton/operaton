@@ -69,8 +69,8 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -85,9 +85,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .logId(logId)
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .logId(logId)
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -115,9 +115,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .logId("foo")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .logId("foo")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -131,9 +131,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .externalTaskId(logExternalTaskId)
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .externalTaskId(logExternalTaskId)
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -161,9 +161,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .externalTaskId("foo")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .externalTaskId("foo")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -179,9 +179,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .topicName(DEFAULT_TOPIC)
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .topicName(DEFAULT_TOPIC)
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -209,9 +209,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .topicName("foo bar")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .topicName("foo bar")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -227,9 +227,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .workerId(WORKER_ID)
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .workerId(WORKER_ID)
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -258,9 +258,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .workerId("foo")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .workerId("foo")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -276,9 +276,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .errorMessage(errorMessage)
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .errorMessage(errorMessage)
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -306,9 +306,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .errorMessage("asdfasdf")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .errorMessage("asdfasdf")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -322,9 +322,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .activityIdIn(DEFAULT_EXTERNAL_TASK_NAME)
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .activityIdIn(DEFAULT_EXTERNAL_TASK_NAME)
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -379,9 +379,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .activityIdIn("foo")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .activityIdIn("foo")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -393,15 +393,15 @@ class HistoricExternalTaskLogQueryTest {
     startExternalTaskProcessGivenActivityId("dummyName");
     ExternalTask task = startExternalTaskProcess();
     String activityInstanceId = historyService.createHistoricActivityInstanceQuery()
-            .activityId(DEFAULT_EXTERNAL_TASK_NAME)
-            .singleResult()
-            .getId();
+      .activityId(DEFAULT_EXTERNAL_TASK_NAME)
+      .singleResult()
+      .getId();
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .activityInstanceIdIn(activityInstanceId)
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .activityInstanceIdIn(activityInstanceId)
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -456,9 +456,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .activityInstanceIdIn("foo")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .activityInstanceIdIn("foo")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -472,9 +472,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .executionIdIn(taskLog.getExecutionId())
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .executionIdIn(taskLog.getExecutionId())
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -530,9 +530,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .executionIdIn("foo")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .executionIdIn("foo")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -546,9 +546,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .processInstanceId(processInstanceId)
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .processInstanceId(processInstanceId)
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -575,9 +575,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .processInstanceId("foo")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .processInstanceId("foo")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -591,9 +591,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .processDefinitionId(definitionId)
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .processDefinitionId(definitionId)
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -621,9 +621,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .processDefinitionId("foo")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .processDefinitionId("foo")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -637,9 +637,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .processDefinitionKey(task.getProcessDefinitionKey())
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .processDefinitionKey(task.getProcessDefinitionKey())
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -667,9 +667,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .processDefinitionKey("foo")
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .processDefinitionKey("foo")
+      .singleResult();
 
     // then
     assertThat(log).isNull();
@@ -683,9 +683,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .creationLog()
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .creationLog()
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -700,9 +700,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .failureLog()
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .failureLog()
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -717,9 +717,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .successLog()
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .successLog()
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -734,9 +734,9 @@ class HistoricExternalTaskLogQueryTest {
 
     // when
     HistoricExternalTaskLog log = historyService
-            .createHistoricExternalTaskLogQuery()
-            .deletionLog()
-            .singleResult();
+      .createHistoricExternalTaskLogQuery()
+      .deletionLog()
+      .singleResult();
 
     // then
     assertThat(log).isNotNull();
@@ -758,7 +758,7 @@ class HistoricExternalTaskLogQueryTest {
     // then
     assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
-        assertThat(log.getPriority() <= 2).isTrue();
+      assertThat(log.getPriority() <= 2).isTrue();
     }
 
   }
@@ -778,7 +778,7 @@ class HistoricExternalTaskLogQueryTest {
     // then
     assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
-        assertThat(log.getPriority() >= 2).isTrue();
+      assertThat(log.getPriority() >= 2).isTrue();
     }
 
   }
@@ -799,7 +799,7 @@ class HistoricExternalTaskLogQueryTest {
     // then
     assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
-        assertThat(log.getPriority() <= 3 && log.getPriority() >= 1).isTrue();
+      assertThat(log.getPriority() <= 3 && log.getPriority() >= 1).isTrue();
     }
 
   }

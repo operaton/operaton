@@ -247,11 +247,11 @@ public class RestIT extends AbstractWebIntegrationTest {
    */
   @Test
   public void testPolymorphicSerialization() throws Exception {
-      // Get the first historic variable update
-      JsonNode historicVariableUpdate = getFirstHistoricVariableUpdates();
+    // Get the first historic variable update
+    JsonNode historicVariableUpdate = getFirstHistoricVariableUpdates();
 
-      // Assert that the 'variableName' field is present
-      assertThat(historicVariableUpdate.has("variableName")).isTrue();
+    // Assert that the 'variableName' field is present
+    assertThat(historicVariableUpdate.has("variableName")).isTrue();
   }
 
   /**

@@ -33,18 +33,18 @@ public class ErrorPageIT extends AbstractWebIntegrationTest {
 
   @Test
   public void shouldCheckNonFoundResponse() {
-      // given
-      target = client.target(appBasePath + "nonexisting");
+    // given
+    target = client.target(appBasePath + "nonexisting");
 
-      // when
-      response = target.request().get();
+    // when
+    response = target.request().get();
 
-      // then
-      assertThat(response.getStatus()).isEqualTo(Status.NOT_FOUND.getStatusCode());
-      assertThat(response.getMediaType().toString().startsWith(MediaType.TEXT_HTML)).isTrue();
-      String responseEntity = response.getEntity().toString();
-      assertThat(responseEntity.contains("Operaton")).isTrue();
-      assertThat(responseEntity.contains("Not Found")).isTrue();
+    // then
+    assertThat(response.getStatus()).isEqualTo(Status.NOT_FOUND.getStatusCode());
+    assertThat(response.getMediaType().toString().startsWith(MediaType.TEXT_HTML)).isTrue();
+    String responseEntity = response.getEntity().toString();
+    assertThat(responseEntity.contains("Operaton")).isTrue();
+    assertThat(responseEntity.contains("Not Found")).isTrue();
   }
 
 }

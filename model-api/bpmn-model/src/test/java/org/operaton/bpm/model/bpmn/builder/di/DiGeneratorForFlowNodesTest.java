@@ -68,9 +68,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -87,9 +87,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .userTask(USER_TASK_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .userTask(USER_TASK_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -106,9 +106,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .sendTask(SEND_TASK_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .sendTask(SEND_TASK_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -125,9 +125,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .serviceTask(SERVICE_TASK_ID)
-            .done();
+                   .startEvent(START_EVENT_ID)
+                   .serviceTask(SERVICE_TASK_ID)
+                   .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -144,9 +144,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .receiveTask(TASK_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .receiveTask(TASK_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -163,9 +163,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .manualTask(TASK_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .manualTask(TASK_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -182,9 +182,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .businessRuleTask(TASK_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .businessRuleTask(TASK_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -201,9 +201,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .scriptTask(TASK_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .scriptTask(TASK_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -220,10 +220,10 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .intermediateCatchEvent(CATCH_ID)
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .intermediateCatchEvent(CATCH_ID)
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -240,16 +240,16 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .userTask(USER_TASK_ID)
-            .endEvent(END_EVENT_ID)
-            .moveToActivity(USER_TASK_ID)
-            .boundaryEvent(BOUNDARY_ID)
-            .conditionalEventDefinition(CONDITION_ID)
-            .condition(TEST_CONDITION)
-            .conditionalEventDefinitionDone()
-            .endEvent()
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .userTask(USER_TASK_ID)
+                  .endEvent(END_EVENT_ID)
+                    .moveToActivity(USER_TASK_ID)
+                      .boundaryEvent(BOUNDARY_ID)
+                        .conditionalEventDefinition(CONDITION_ID)
+                          .condition(TEST_CONDITION)
+                        .conditionalEventDefinitionDone()
+                      .endEvent()
+                 .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -266,9 +266,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .intermediateThrowEvent("inter")
-            .endEvent(END_EVENT_ID).done();
+                  .startEvent(START_EVENT_ID)
+                  .intermediateThrowEvent("inter")
+                  .endEvent(END_EVENT_ID).done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -285,9 +285,9 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -304,10 +304,10 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .subProcess(SUB_PROCESS_ID)
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .subProcess(SUB_PROCESS_ID)
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -327,15 +327,15 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .subProcess(SUB_PROCESS_ID)
-            .embeddedSubProcess()
-            .startEvent("innerStartEvent")
-            .userTask("innerUserTask")
-            .endEvent("innerEndEvent")
-            .subProcessDone()
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .subProcess(SUB_PROCESS_ID)
+                    .embeddedSubProcess()
+                      .startEvent("innerStartEvent")
+                      .userTask("innerUserTask")
+                      .endEvent("innerEndEvent")
+                    .subProcessDone()
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -358,15 +358,15 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .endEvent(END_EVENT_ID)
-            .subProcess(SUB_PROCESS_ID)
-            .triggerByEvent()
-            .embeddedSubProcess()
-            .startEvent("innerStartEvent")
-            .endEvent("innerEndEvent")
-            .subProcessDone()
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .endEvent(END_EVENT_ID)
+                  .subProcess(SUB_PROCESS_ID)
+                    .triggerByEvent()
+                      .embeddedSubProcess()
+                        .startEvent("innerStartEvent")
+                        .endEvent("innerEndEvent")
+                      .subProcessDone()
+                    .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -388,10 +388,10 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .callActivity(CALL_ACTIVITY_ID)
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .callActivity(CALL_ACTIVITY_ID)
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -408,15 +408,15 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .transaction(TRANSACTION_ID)
-            .embeddedSubProcess()
-            .startEvent("innerStartEvent")
-            .userTask("innerUserTask")
-            .endEvent("innerEndEvent")
-            .transactionDone()
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .transaction(TRANSACTION_ID)
+                  .embeddedSubProcess()
+                    .startEvent("innerStartEvent")
+                    .userTask("innerUserTask")
+                    .endEvent("innerEndEvent")
+                  .transactionDone()
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -439,10 +439,10 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .parallelGateway("and")
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .parallelGateway("and")
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -459,10 +459,10 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .inclusiveGateway("inclusive")
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .inclusiveGateway("inclusive")
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -479,11 +479,11 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .eventBasedGateway()
-            .id("eventBased")
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .eventBasedGateway()
+                    .id("eventBased")
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);
@@ -500,10 +500,10 @@ class DiGeneratorForFlowNodesTest {
 
     // when
     instance = processBuilder
-            .startEvent(START_EVENT_ID)
-            .exclusiveGateway("or")
-            .endEvent(END_EVENT_ID)
-            .done();
+                  .startEvent(START_EVENT_ID)
+                  .exclusiveGateway("or")
+                  .endEvent(END_EVENT_ID)
+                  .done();
 
     // then
     Collection<BpmnShape> allShapes = instance.getModelElementsByType(BpmnShape.class);

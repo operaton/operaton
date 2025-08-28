@@ -217,8 +217,8 @@ class XmlSerializationTest {
     String beanAsXml = bean.toExpectedXmlString();
 
     SerializedObjectValueBuilder serializedValue = serializedObjectValue(beanAsXml)
-            .serializationDataFormat(XML_FORMAT_NAME)
-            .objectTypeName(bean.getClass().getCanonicalName());
+      .serializationDataFormat(XML_FORMAT_NAME)
+      .objectTypeName(bean.getClass().getCanonicalName());
 
     runtimeService.setVariable(instance.getId(), "simpleBean", serializedValue);
 
@@ -275,8 +275,8 @@ class XmlSerializationTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     SerializedObjectValueBuilder serializedValue = serializedObjectValue()
-            .serializationDataFormat(XML_FORMAT_NAME)
-            .objectTypeName(XmlSerializable.class.getCanonicalName());
+      .serializationDataFormat(XML_FORMAT_NAME)
+      .objectTypeName(XmlSerializable.class.getCanonicalName());
 
     runtimeService.setVariable(instance.getId(), "simpleBean", serializedValue);
 
@@ -298,7 +298,7 @@ class XmlSerializationTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     SerializedObjectValueBuilder serializedValue = serializedObjectValue()
-            .serializationDataFormat(XML_FORMAT_NAME);
+      .serializationDataFormat(XML_FORMAT_NAME);
     // no objectTypeName specified
 
     runtimeService.setVariable(instance.getId(), "simpleBean", serializedValue);
@@ -323,9 +323,9 @@ class XmlSerializationTest {
 
     // set null value as "deserialized" object
     runtimeService.setVariable(instance.getId(), "nullObject",
-            objectValue(null)
-                    .serializationDataFormat(XML_FORMAT_NAME)
-                    .create());
+        objectValue(null)
+        .serializationDataFormat(XML_FORMAT_NAME)
+        .create());
 
     // get null value via untyped api
     assertThat(runtimeService.getVariable(instance.getId(), "nullObject")).isNull();
@@ -343,9 +343,9 @@ class XmlSerializationTest {
 
     // set null value as "serialized" object
     runtimeService.setVariable(instance.getId(), "nullObject",
-            serializedObjectValue()
-                    .serializationDataFormat(XML_FORMAT_NAME)
-                    .create()); // Note: no object type name provided
+        serializedObjectValue()
+        .serializationDataFormat(XML_FORMAT_NAME)
+        .create()); // Note: no object type name provided
 
     // get null value via untyped api
     assertThat(runtimeService.getVariable(instance.getId(), "nullObject")).isNull();
@@ -368,10 +368,10 @@ class XmlSerializationTest {
 
     // set null value as "serialized" object
     runtimeService.setVariable(instance.getId(), "nullObject",
-            serializedObjectValue()
-                    .serializationDataFormat(XML_FORMAT_NAME)
-                    .objectTypeName(typeName) // This time an objectTypeName is provided
-                    .create());
+        serializedObjectValue()
+        .serializationDataFormat(XML_FORMAT_NAME)
+        .objectTypeName(typeName) // This time an objectTypeName is provided
+        .create());
 
     // get null value via untyped api
     assertThat(runtimeService.getVariable(instance.getId(), "nullObject")).isNull();
@@ -404,9 +404,9 @@ class XmlSerializationTest {
     XmlSerializable object = new XmlSerializable();
 
     runtimeService.setVariable(instance.getId(), "varName",
-            objectValue(object)
-                    .serializationDataFormat(XML_FORMAT_NAME)
-                    .create());
+        objectValue(object)
+        .serializationDataFormat(XML_FORMAT_NAME)
+        .create());
 
     // get value via untyped api
     assertThat(runtimeService.getVariable(instance.getId(), "varName")).isEqualTo(object);
@@ -430,9 +430,9 @@ class XmlSerializationTest {
     XmlSerializable javaSerializable = new XmlSerializable();
 
     runtimeService.setVariable(instance.getId(), "varName",
-            objectValue(javaSerializable)
-                    .serializationDataFormat(XML_FORMAT_NAME)
-                    .create());
+        objectValue(javaSerializable)
+        .serializationDataFormat(XML_FORMAT_NAME)
+        .create());
 
     // get value via untyped api
     assertThat(runtimeService.getVariable(instance.getId(), "varName")).isEqualTo(javaSerializable);
@@ -449,25 +449,25 @@ class XmlSerializationTest {
   void transientXmlValue() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo")
-            .startEvent()
-            .exclusiveGateway("gtw")
-            .sequenceFlowId("flow1")
-            .condition("cond", "${x.stringProperty == \"bar\"}")
-            .userTask("userTask1")
-            .endEvent()
-            .moveToLastGateway()
-            .sequenceFlowId("flow2")
-            .userTask("userTask2")
-            .endEvent()
-            .done();
+        .startEvent()
+        .exclusiveGateway("gtw")
+          .sequenceFlowId("flow1")
+          .condition("cond", "${x.stringProperty == \"bar\"}")
+          .userTask("userTask1")
+          .endEvent()
+        .moveToLastGateway()
+          .sequenceFlowId("flow2")
+          .userTask("userTask2")
+          .endEvent()
+        .done();
 
     deploymentExtension.deploy(modelInstance);
 
     XmlSerializable bean = new XmlSerializable("bar", 42, true);
     ObjectValue xmlValue = serializedObjectValue(bean.toExpectedXmlString(), true)
-            .serializationDataFormat(XML_FORMAT_NAME)
-            .objectTypeName(XmlSerializable.class.getName())
-            .create();
+        .serializationDataFormat(XML_FORMAT_NAME)
+        .objectTypeName(XmlSerializable.class.getName())
+        .create();
     VariableMap variables = Variables.createVariables().putValueTyped("x", xmlValue);
 
     // when

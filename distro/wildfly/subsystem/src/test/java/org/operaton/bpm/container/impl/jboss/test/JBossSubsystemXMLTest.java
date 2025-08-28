@@ -235,8 +235,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_PROCESS_ENGINES_ELEMENT_ONLY);
 
     KernelServices services = createKernelServicesBuilder(null)
-            .setSubsystemXml(subsystemXml)
-            .build();
+        .setSubsystemXml(subsystemXml)
+        .build();
 
     ServiceContainer container = services.getContainer();
 
@@ -250,8 +250,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_PROCESS_ENGINES_ELEMENT_ONLY);
 
     KernelServices services = createKernelServicesBuilder(null)
-            .setSubsystemXml(subsystemXml)
-            .build();
+        .setSubsystemXml(subsystemXml)
+        .build();
 
     ServiceContainer container = services.getContainer();
     ServiceController<?> serviceController = container.getService(PLATFORM_BPM_PLATFORM_PLUGINS_SERVICE_NAME);
@@ -269,8 +269,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES);
 
     KernelServices services = createKernelServicesBuilder(null)
-            .setSubsystemXml(subsystemXml)
-            .build();
+        .setSubsystemXml(subsystemXml)
+        .build();
 
 
     ServiceContainer container = services.getContainer();
@@ -286,8 +286,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES_AND_PROPERTIES);
 
     KernelServices services = createKernelServicesBuilder(null)
-            .setSubsystemXml(subsystemXml)
-            .build();
+        .setSubsystemXml(subsystemXml)
+        .build();
     ServiceContainer container = services.getContainer();
 
 
@@ -333,8 +333,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_SINGLE_ENGINE);
 
     KernelServices services = createKernelServicesBuilder(null)
-            .setSubsystemXml(subsystemXml)
-            .build();
+        .setSubsystemXml(subsystemXml)
+        .build();
     ServiceContainer container = services.getContainer();
 
     assertThat(container.getService(PLATFORM_SERVICE_NAME)).withFailMessage("platform service should be installed").isNotNull();
@@ -448,8 +448,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_JOB_EXECUTOR_AND_PROPERTIES);
 
     KernelServices services = createKernelServicesBuilder(null)
-            .setSubsystemXml(subsystemXml)
-            .build();
+        .setSubsystemXml(subsystemXml)
+        .build();
     ServiceContainer container = services.getContainer();
 
     commonSubsystemServicesAreInstalled(container);
@@ -542,8 +542,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_PROCESS_ENGINES_AND_JOB_EXECUTOR);
 
     KernelServices services = createKernelServicesBuilder(null)
-            .setSubsystemXml(subsystemXml)
-            .build();
+        .setSubsystemXml(subsystemXml)
+        .build();
     ServiceContainer container = services.getContainer();
 
     commonSubsystemServicesAreInstalled(container);
@@ -602,8 +602,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     try {
       String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ALL_OPTIONS_WITH_EXPRESSIONS);
       KernelServices services = createKernelServicesBuilder(null)
-              .setSubsystemXml(subsystemXml)
-              .build();
+          .setSubsystemXml(subsystemXml)
+          .build();
       ServiceContainer container = services.getContainer();
 
       assertThat(container.getRequiredService(PLATFORM_SERVICE_NAME)).withFailMessage("platform service should be installed").isNotNull();

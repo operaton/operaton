@@ -37,18 +37,18 @@ public class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
 
   @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfProperties() {
-      // given
+    // given
 
-      // when
-      target = client.target(appBasePath + TASKLIST_PATH);
+    // when
+    target = client.target(appBasePath + TASKLIST_PATH);
 
-      // Send GET request and return the Response
-      response = target.request().get(Response.class);
+    // Send GET request and return the Response
+    response = target.request().get(Response.class);
 
-      // then
-      assertThat(response.getStatus()).isEqualTo(200);
-      assertThat(isCookieHeaderValuePresent("HttpOnly", response)).isTrue();
-      assertThat(isCookieHeaderValuePresent("Secure", response)).isFalse();
+    // then
+    assertThat(response.getStatus()).isEqualTo(200);
+    assertThat(isCookieHeaderValuePresent("HttpOnly", response)).isTrue();
+    assertThat(isCookieHeaderValuePresent("Secure", response)).isFalse();
   }
 
   protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {

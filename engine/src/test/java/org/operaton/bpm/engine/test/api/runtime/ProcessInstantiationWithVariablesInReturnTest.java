@@ -85,16 +85,16 @@ class ProcessInstantiationWithVariablesInReturnTest {
 
     assertThat(map.size()).isEqualTo(variables.size());
     for (HistoricVariableInstance instance : variables) {
-        assertThat(map.containsKey(instance.getName())).isTrue();
-        Object instanceValue = instance.getTypedValue().getValue();
-        Object mapValue = map.getValueTyped(instance.getName()).getValue();
-        if (instanceValue == null) {
-          assertThat(mapValue).isNull();
-        } else if (instanceValue instanceof byte[] bytes) {
-          assertThat(Arrays.equals(bytes, (byte[]) mapValue)).isTrue();
-        } else {
-          assertThat(mapValue).isEqualTo(instanceValue);
-        }
+      assertThat(map.containsKey(instance.getName())).isTrue();
+      Object instanceValue = instance.getTypedValue().getValue();
+      Object mapValue = map.getValueTyped(instance.getName()).getValue();
+      if (instanceValue == null) {
+        assertThat(mapValue).isNull();
+      } else if (instanceValue instanceof byte[] bytes) {
+        assertThat(Arrays.equals(bytes, (byte[]) mapValue)).isTrue();
+      } else {
+        assertThat(mapValue).isEqualTo(instanceValue);
+      }
     }
   }
 

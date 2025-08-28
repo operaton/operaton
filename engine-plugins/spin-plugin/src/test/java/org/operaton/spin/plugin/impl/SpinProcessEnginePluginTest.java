@@ -23,7 +23,6 @@ import org.operaton.spin.DataFormats;
 import org.operaton.spin.plugin.variable.type.JsonValueType;
 import org.operaton.spin.plugin.variable.type.XmlValueType;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 
@@ -42,7 +41,7 @@ class SpinProcessEnginePluginTest {
   ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
-  void pluginDoesNotRegisterXmlSerializerIfNotPresentInClasspath() throws IOException {
+  void pluginDoesNotRegisterXmlSerializerIfNotPresentInClasspath() throws Exception {
     ClassLoader mockClassloader = Mockito.mock(ClassLoader.class);
     Mockito.when(mockClassloader.getResources(Mockito.anyString())).thenReturn(Collections.enumeration(Collections.<URL>emptyList()));
     DataFormats.loadDataFormats(mockClassloader);
@@ -55,7 +54,7 @@ class SpinProcessEnginePluginTest {
   }
 
   @Test
-  void pluginDoesNotRegisterJsonSerializerIfNotPresentInClasspath() throws IOException {
+  void pluginDoesNotRegisterJsonSerializerIfNotPresentInClasspath() throws Exception {
     ClassLoader mockClassloader = Mockito.mock(ClassLoader.class);
     Mockito.when(mockClassloader.getResources(Mockito.anyString())).thenReturn(Collections.enumeration(Collections.<URL>emptyList()));
     DataFormats.loadDataFormats(mockClassloader);
@@ -69,21 +68,21 @@ class SpinProcessEnginePluginTest {
 
   @Test
   void pluginRegistersXmlSerializerIfPresentInClasspath() {
-      DataFormats.loadDataFormats(null);
-      ProcessEngineConfigurationImpl mockConfig = Mockito.mock(ProcessEngineConfigurationImpl.class);
-      Mockito.when(mockConfig.getVariableSerializers()).thenReturn(processEngineConfiguration.getVariableSerializers());
-      new SpinProcessEnginePlugin().registerSerializers(mockConfig);
+    DataFormats.loadDataFormats(null);
+    ProcessEngineConfigurationImpl mockConfig = Mockito.mock(ProcessEngineConfigurationImpl.class);
+    Mockito.when(mockConfig.getVariableSerializers()).thenReturn(processEngineConfiguration.getVariableSerializers());
+    new SpinProcessEnginePlugin().registerSerializers(mockConfig);
 
-      assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(XmlValueType.TYPE_NAME) instanceof XmlValueSerializer).isTrue();
+    assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(XmlValueType.TYPE_NAME) instanceof XmlValueSerializer).isTrue();
   }
 
   @Test
   void pluginRegistersJsonSerializerIfPresentInClasspath() {
-      DataFormats.loadDataFormats(null);
-      ProcessEngineConfigurationImpl mockConfig = Mockito.mock(ProcessEngineConfigurationImpl.class);
-      Mockito.when(mockConfig.getVariableSerializers()).thenReturn(processEngineConfiguration.getVariableSerializers());
-      new SpinProcessEnginePlugin().registerSerializers(mockConfig);
+    DataFormats.loadDataFormats(null);
+    ProcessEngineConfigurationImpl mockConfig = Mockito.mock(ProcessEngineConfigurationImpl.class);
+    Mockito.when(mockConfig.getVariableSerializers()).thenReturn(processEngineConfiguration.getVariableSerializers());
+    new SpinProcessEnginePlugin().registerSerializers(mockConfig);
 
-      assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(JsonValueType.TYPE_NAME) instanceof JsonValueSerializer).isTrue();
+    assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(JsonValueType.TYPE_NAME) instanceof JsonValueSerializer).isTrue();
   }
 }

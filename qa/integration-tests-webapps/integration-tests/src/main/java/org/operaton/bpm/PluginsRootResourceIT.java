@@ -74,13 +74,13 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
 
   protected void assertResponse(String asset, Response response) {
     if (assetAllowed) {
-        assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
+      assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
     } else {
-        assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
-        assertThat(response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON)).isTrue();
-        String responseEntity = response.getEntity().toString();
-        assertThat(responseEntity.contains("\"type\":\"RestException\"")).isTrue();
-        assertThat(responseEntity.contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"")).isTrue();
+      assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
+      assertThat(response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON)).isTrue();
+      String responseEntity = response.getEntity().toString();
+      assertThat(responseEntity.contains("\"type\":\"RestException\"")).isTrue();
+      assertThat(responseEntity.contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"")).isTrue();
     }
   }
 

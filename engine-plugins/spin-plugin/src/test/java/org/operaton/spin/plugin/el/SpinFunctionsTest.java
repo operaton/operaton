@@ -108,32 +108,32 @@ class SpinFunctionsTest {
   @Test
   void spinAvailableInBpmn() {
 
-      BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("testProcess")
-              .startEvent()
-              .serviceTask()
-              .operatonExpression("${ execution.setVariable('customer', "
-                      + "S(xmlVar).xPath('/customers/customer').element().toString()"
-                      + ")}")
-              .receiveTask("wait")
-              .endEvent()
-              .done();
+    BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("testProcess")
+      .startEvent()
+      .serviceTask()
+        .operatonExpression("${ execution.setVariable('customer', "
+                                + "S(xmlVar).xPath('/customers/customer').element().toString()"
+                             +")}")
+      .receiveTask("wait")
+      .endEvent()
+    .done();
 
-      Deployment deployment = repositoryService.createDeployment()
-              .addModelInstance("process.bpmn", bpmnModelInstance)
-              .deploy();
+    Deployment deployment = repositoryService.createDeployment()
+      .addModelInstance("process.bpmn", bpmnModelInstance)
+      .deploy();
 
-      Map<String, Object> variables = new HashMap<>();
-      variables.put("xmlVar", "<customers><customer /></customers>");
-      ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("xmlVar", "<customers><customer /></customers>");
+    ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
-      String customerXml = (String) runtimeService.getVariable(pi.getId(), "customer");
-      assertThat(customerXml).isNotNull();
-      assertThat(customerXml).contains("customer");
-      assertThat(customerXml).doesNotContain("customers");
+    String customerXml = (String) runtimeService.getVariable(pi.getId(), "customer");
+    assertThat(customerXml).isNotNull();
+    assertThat(customerXml).contains("customer");
+    assertThat(customerXml).doesNotContain("customers");
 
-      runtimeService.signal(pi.getId());
+    runtimeService.signal(pi.getId());
 
-      repositoryService.deleteDeployment(deployment.getId(), true);
+    repositoryService.deleteDeployment(deployment.getId(), true);
 
   }
 }

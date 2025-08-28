@@ -36,39 +36,39 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
 
   @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfCsrfPreventionCookie() {
-      // given
-      target = client.target(appBasePath + TASKLIST_PATH);
+    // given
+    target = client.target(appBasePath + TASKLIST_PATH);
 
-      // when
-      response = target.request().get(Response.class);
+    // when
+    response = target.request().get(Response.class);
 
-      // then
-      assertThat(response.getStatus()).isEqualTo(200);
-      String xsrfTokenHeader = getXsrfTokenHeader(response);
-      String xsrfCookieValue = getXsrfCookieValue(response);
-      response.close();
+    // then
+    assertThat(response.getStatus()).isEqualTo(200);
+    String xsrfTokenHeader = getXsrfTokenHeader(response);
+    String xsrfCookieValue = getXsrfCookieValue(response);
+    response.close();
 
-      assertThat(xsrfTokenHeader).isNotNull();
-      assertThat(xsrfTokenHeader.length()).isEqualTo(32);
-      assertThat(xsrfCookieValue).isNotNull();
-      assertThat(xsrfCookieValue.contains(";SameSite=Lax")).isTrue();
+    assertThat(xsrfTokenHeader).isNotNull();
+    assertThat(xsrfTokenHeader.length()).isEqualTo(32);
+    assertThat(xsrfCookieValue).isNotNull();
+    assertThat(xsrfCookieValue.contains(";SameSite=Lax")).isTrue();
   }
 
   @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
   public void shouldRejectModifyingRequest() {
-      // given
-      String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
-      String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
-      target = client.target(baseUrl + modifyingRequestPath);
+    // given
+    String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
+    String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
+    target = client.target(baseUrl + modifyingRequestPath);
 
-      // when
-      response = target.request()
-              .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
-              .post(null, Response.class);
+    // when
+    response = target.request()
+            .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
+            .post(null, Response.class);
 
-      // then
-      assertThat(response.getStatus()).isEqualTo(403);
-      assertThat("Required".equals(getXsrfTokenHeader(response))).isTrue();
+    // then
+    assertThat(response.getStatus()).isEqualTo(403);
+    assertThat("Required".equals(getXsrfTokenHeader(response))).isTrue();
   }
 
 }

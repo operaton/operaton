@@ -50,28 +50,28 @@ class JavaSerializationTest {
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
   void serializationAsJava() {
-      ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
-      JavaSerializable bean = new JavaSerializable("a String", 42, true);
-      // request object to be serialized as Java
-      runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(bean).serializationDataFormat(Variables.SerializationDataFormats.JAVA).create());
+    JavaSerializable bean = new JavaSerializable("a String", 42, true);
+    // request object to be serialized as Java
+    runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(bean).serializationDataFormat(Variables.SerializationDataFormats.JAVA).create());
 
-      // validate untyped value
-      Object value = runtimeService.getVariable(instance.getId(), "simpleBean");
-      assertThat(value).isEqualTo(bean);
+    // validate untyped value
+    Object value = runtimeService.getVariable(instance.getId(), "simpleBean");
+    assertThat(value).isEqualTo(bean);
 
-      // validate typed value
-      ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
-      assertThat(typedValue.getType()).isEqualTo(ValueType.OBJECT);
+    // validate typed value
+    ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
+    assertThat(typedValue.getType()).isEqualTo(ValueType.OBJECT);
 
-      assertThat(typedValue.isDeserialized()).isTrue();
+    assertThat(typedValue.isDeserialized()).isTrue();
 
-      assertThat(typedValue.getValue()).isEqualTo(bean);
-      assertThat(typedValue.getValue(JavaSerializable.class)).isEqualTo(bean);
-      assertThat(typedValue.getObjectType()).isEqualTo(JavaSerializable.class);
+    assertThat(typedValue.getValue()).isEqualTo(bean);
+    assertThat(typedValue.getValue(JavaSerializable.class)).isEqualTo(bean);
+    assertThat(typedValue.getObjectType()).isEqualTo(JavaSerializable.class);
 
-      assertThat(typedValue.getSerializationDataFormat()).isEqualTo(Variables.SerializationDataFormats.JAVA.getName());
-      assertThat(typedValue.getObjectTypeName()).isEqualTo(JavaSerializable.class.getName());
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(Variables.SerializationDataFormats.JAVA.getName());
+    assertThat(typedValue.getObjectTypeName()).isEqualTo(JavaSerializable.class.getName());
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)

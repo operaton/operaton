@@ -37,17 +37,17 @@ public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
 
   @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
   public void shouldCheckPresenceOfSameSiteProperties() {
-      // given
+    // given
 
-      // when
-      target = client.target(appBasePath + TASKLIST_PATH);
+    // when
+    target = client.target(appBasePath + TASKLIST_PATH);
 
-      // Send GET request and return the Response
-      response = target.request().get(Response.class);
+    // Send GET request and return the Response
+    response = target.request().get(Response.class);
 
-      // then
-      assertThat(response.getStatus()).isEqualTo(200);
-      assertThat(isCookieHeaderValuePresent("SameSite=Lax", response)).isTrue();
+    // then
+    assertThat(response.getStatus()).isEqualTo(200);
+    assertThat(isCookieHeaderValuePresent("SameSite=Lax", response)).isTrue();
   }
 
   protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {

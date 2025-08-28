@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.qa.rolling.update.multiInstance;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;

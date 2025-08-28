@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.qa.rolling.update.task;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;

@@ -19,8 +19,8 @@ package org.operaton.bpm.qa.rolling.update.batch;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -39,7 +39,7 @@ public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTe
   protected ManagementService managementService;
   protected RuntimeService runtimeService;
 
-  @BeforeEach
+  @Before
   public void setUp() {
     managementService = rule.getManagementService();
     runtimeService = rule.getRuntimeService();

@@ -18,7 +18,7 @@ package org.operaton.bpm.qa.rolling.update.task;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;

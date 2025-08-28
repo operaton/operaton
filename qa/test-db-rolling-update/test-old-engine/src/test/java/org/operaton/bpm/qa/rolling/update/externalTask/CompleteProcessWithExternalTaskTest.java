@@ -18,7 +18,7 @@ package org.operaton.bpm.qa.rolling.update.externalTask;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;

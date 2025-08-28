@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.qa.rolling.update.callactivity;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -38,7 +38,7 @@ public class CompleteProcessWithCallActivityTest extends AbstractRollingUpdateTe
 
   protected RuntimeService runtimeService;
 
-  @BeforeEach
+  @Before
   public void setUp() {
     runtimeService = rule.getRuntimeService();
   }

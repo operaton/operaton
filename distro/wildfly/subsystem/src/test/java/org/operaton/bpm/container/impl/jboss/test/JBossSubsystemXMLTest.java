@@ -37,7 +37,7 @@ import org.jboss.dmr.ModelType;
 import org.jboss.msc.service.ServiceContainer;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceName;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
 import org.operaton.bpm.container.impl.jboss.extension.Attribute;

@@ -93,7 +93,6 @@ class SpinFunctionsTest {
   void spinXPathAvailable() {
 
     String elName = executeExpression("${ S('" + xmlString + "').xPath('/elementName').element().name() }");
-    assertThat(elName).isNotNull();
     assertThat(elName).isEqualTo("elementName");
   }
 
@@ -101,7 +100,6 @@ class SpinFunctionsTest {
   void spinJsonPathAvailable() {
 
     String property = executeExpression("${ S('" + jsonString + "').jsonPath('$.foo').stringValue() }");
-    assertThat(property).isNotNull();
     assertThat(property).isEqualTo("bar");
   }
 
@@ -127,9 +125,10 @@ class SpinFunctionsTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
     String customerXml = (String) runtimeService.getVariable(pi.getId(), "customer");
-    assertThat(customerXml).isNotNull();
-    assertThat(customerXml).contains("customer");
-    assertThat(customerXml).doesNotContain("customers");
+    assertThat(customerXml)
+      .isNotNull()
+      .contains("customer")
+      .doesNotContain("customers");
 
     runtimeService.signal(pi.getId());
 

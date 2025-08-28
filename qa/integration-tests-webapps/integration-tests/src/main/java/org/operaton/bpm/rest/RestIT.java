@@ -314,7 +314,7 @@ public class RestIT extends AbstractWebIntegrationTest {
       assertThat(definitionStatistic.get("@class").asText()).isEqualTo("org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto");
 
       // Assert the incidents length
-      assertThat(definitionStatistic.get("incidents").size()).isEqualTo(0);
+      assertThat(definitionStatistic.get("incidents")).isEmpty();
 
       // Get the definition object
       JsonNode definition = definitionStatistic.get("definition");

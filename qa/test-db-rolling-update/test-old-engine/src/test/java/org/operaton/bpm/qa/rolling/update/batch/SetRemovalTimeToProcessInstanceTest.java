@@ -72,7 +72,7 @@ public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTe
           .singleResult();
       assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(removalTime);
 
-      assertThat(managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count()).isEqualTo(0);
+      assertThat(managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count()).isZero();
     }
   }
 
@@ -99,7 +99,7 @@ public class SetRemovalTimeToProcessInstanceTest extends AbstractRollingUpdateTe
           .singleResult();
       assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(removalTime);
 
-      assertThat(managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count()).isEqualTo(0);
+      assertThat(managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).count()).isZero();
     }
   }
 

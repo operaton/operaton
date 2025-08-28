@@ -73,9 +73,7 @@ class InvoiceTestCase {
     for (IdentityLink link : links) {
       approverGroups.add(link.getGroupId());
     }
-    assertThat(approverGroups).hasSize(2);
-    assertThat(approverGroups).contains("accounting");
-    assertThat(approverGroups).contains("sales");
+    assertThat(approverGroups).containsExactly("accounting", "sales");
 
     variables.clear();
     variables.put("approved", Boolean.TRUE);
@@ -117,9 +115,7 @@ class InvoiceTestCase {
     for (IdentityLink link : links) {
       approverGroups.add(link.getGroupId());
     }
-    assertThat(approverGroups).hasSize(2);
-    assertThat(approverGroups).contains("accounting");
-    assertThat(approverGroups).contains("sales");
+    assertThat(approverGroups).containsExactly("accounting", "sales");
 
     variables.clear();
     variables.put("approved", Boolean.TRUE);
@@ -168,9 +164,7 @@ class InvoiceTestCase {
     for (IdentityLink link : links) {
       approverGroups.add(link.getGroupId());
     }
-    assertThat(approverGroups).hasSize(2);
-    assertThat(approverGroups).contains("accounting");
-    assertThat(approverGroups).contains("sales");
+    assertThat(approverGroups).containsExactly("accounting", "sales");
 
     // and variable approver is null
     assertThat(taskService.getVariable(task.getId(), "approver")).isNull();
@@ -206,9 +200,7 @@ class InvoiceTestCase {
     for (IdentityLink link : links) {
       approverGroups.add(link.getGroupId());
     }
-    assertThat(approverGroups).hasSize(2);
-    assertThat(approverGroups).contains("accounting");
-    assertThat(approverGroups).contains("sales");
+    assertThat(approverGroups).containsExactly("accounting", "sales");
 
     variables.clear();
     variables.put("approved", Boolean.FALSE);

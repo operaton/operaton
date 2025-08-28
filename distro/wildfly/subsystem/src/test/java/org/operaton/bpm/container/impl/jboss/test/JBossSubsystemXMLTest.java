@@ -171,8 +171,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES_PROPERTIES_PLUGINS);
 
     KernelServices services = createKernelServicesBuilder(null)
-            .setSubsystemXml(subsystemXml)
-            .build();
+        .setSubsystemXml(subsystemXml)
+        .build();
 
     ServiceContainer container = services.getContainer();
 
@@ -197,7 +197,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
     // check we have parsed the plugin configurations
     metadata = ((MscManagedProcessEngineController) container.getRequiredService(ServiceNames.forManagedProcessEngine("__test")).getService())
-            .getProcessEngineMetadata();
+        .getProcessEngineMetadata();
     List<ProcessEnginePluginXml> pluginConfigurations = metadata.getPluginConfigurations();
 
     ProcessEnginePluginXml processEnginePluginXml = pluginConfigurations.get(0);

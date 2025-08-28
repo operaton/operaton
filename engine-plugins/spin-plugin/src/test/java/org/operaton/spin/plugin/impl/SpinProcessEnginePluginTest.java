@@ -73,7 +73,7 @@ class SpinProcessEnginePluginTest {
     Mockito.when(mockConfig.getVariableSerializers()).thenReturn(processEngineConfiguration.getVariableSerializers());
     new SpinProcessEnginePlugin().registerSerializers(mockConfig);
 
-    assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(XmlValueType.TYPE_NAME) instanceof XmlValueSerializer).isTrue();
+    assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(XmlValueType.TYPE_NAME)).isInstanceOf(XmlValueSerializer.class);
   }
 
   @Test
@@ -83,6 +83,6 @@ class SpinProcessEnginePluginTest {
     Mockito.when(mockConfig.getVariableSerializers()).thenReturn(processEngineConfiguration.getVariableSerializers());
     new SpinProcessEnginePlugin().registerSerializers(mockConfig);
 
-    assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(JsonValueType.TYPE_NAME) instanceof JsonValueSerializer).isTrue();
+    assertThat(processEngineConfiguration.getVariableSerializers().getSerializerByName(JsonValueType.TYPE_NAME)).isInstanceOf(JsonValueSerializer.class);
   }
 }

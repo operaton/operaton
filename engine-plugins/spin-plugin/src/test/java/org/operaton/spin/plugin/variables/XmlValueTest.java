@@ -202,7 +202,7 @@ class XmlValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances).hasSize(0);
+    assertThat(variableInstances).isEmpty();
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -284,7 +284,7 @@ class XmlValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances).hasSize(0);
+    assertThat(variableInstances).isEmpty();
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();

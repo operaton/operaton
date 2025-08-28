@@ -511,7 +511,7 @@ class JsonSerializationTest {
 
     List<JsonSerializable> list = (List<JsonSerializable>) typedValue.getValue();
     assertThat(list).hasSize(1);
-    assertThat(list.get(0) instanceof JsonSerializable).isTrue();
+    assertThat(list.get(0)).isInstanceOf(JsonSerializable.class);
     assertThat(list.get(0).getStringProperty()).isEqualTo(UpdateValueDelegate.STRING_PROPERTY);
   }
 
@@ -545,7 +545,7 @@ class JsonSerializationTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances).hasSize(0);
+    assertThat(variableInstances).isEmpty();
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();

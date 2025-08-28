@@ -55,7 +55,7 @@ public class CompleteProcessWithParallelGatewayTest extends AbstractRollingUpdat
 
     //then there exists no more tasks
     //and the process instance is also completed
-    assertThat(rule.taskQuery().count()).isEqualTo(0);
+    assertThat(rule.taskQuery().count()).isZero();
     rule.assertScenarioEnded();
   }
 
@@ -82,7 +82,7 @@ public class CompleteProcessWithParallelGatewayTest extends AbstractRollingUpdat
     rule.getTaskService().complete(task.getId());
 
     //then there exists no more tasks
-    assertThat(rule.taskQuery().count()).isEqualTo(0);
+    assertThat(rule.taskQuery().count()).isZero();
     //and two historic tasks
     assertThat(historicTaskQuery.count()).isEqualTo(2);
     //and the process instance is also completed

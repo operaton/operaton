@@ -60,7 +60,7 @@ public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends Abstra
 
     //then there exists no more tasks
     //and the process instance is also completed
-    assertThat(rule.taskQuery().count()).isEqualTo(0);
+    assertThat(rule.taskQuery().count()).isZero();
     rule.assertScenarioEnded();
   }
 
@@ -85,7 +85,7 @@ public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends Abstra
 
     //then there exists no more tasks
     //and the process instance is also completed
-    assertThat(rule.taskQuery().count()).isEqualTo(0);
+    assertThat(rule.taskQuery().count()).isZero();
     rule.assertScenarioEnded();
   }
 
@@ -110,7 +110,7 @@ public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends Abstra
 
     //then there exists no more tasks
     //and the process instance is also completed
-    assertThat(rule.taskQuery().count()).isEqualTo(0);
+    assertThat(rule.taskQuery().count()).isZero();
     rule.assertScenarioEnded();
   }
 

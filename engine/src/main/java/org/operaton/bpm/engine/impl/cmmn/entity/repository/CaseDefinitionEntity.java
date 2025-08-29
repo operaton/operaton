@@ -108,7 +108,7 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
   @Override
   public void setVersion(int version) {
     this.version = version;
-    this.firstVersion = (this.version == 1);
+    this.firstVersion = this.version == 1;
   }
 
   @Override

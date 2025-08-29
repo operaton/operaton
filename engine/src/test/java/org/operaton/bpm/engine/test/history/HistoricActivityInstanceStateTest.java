@@ -516,7 +516,7 @@ class HistoricActivityInstanceStateTest {
     for (HistoricActivityInstance instance : allInstances) {
       if (instance.getActivityId().equals(activityId)) {
         found++;
-        assertThat(instance.isCanceled()).as("expect <%s> to be %scanceled".formatted(activityId, (canceled ? "" : "non-"))).isEqualTo(canceled);
+        assertThat(instance.isCanceled()).as("expect <%s> to be %scanceled".formatted(activityId, canceled ? "" : "non-")).isEqualTo(canceled);
       }
     }
 
@@ -549,7 +549,7 @@ class HistoricActivityInstanceStateTest {
     for (HistoricActivityInstance instance : allInstances) {
       if (instance.getActivityId().equals(activityId)) {
         found++;
-        assertThat(instance.isCompleteScope()).as("expect <%s> to be %scompleting".formatted(activityId, (completing ? "" : "non-"))).isEqualTo(completing);
+        assertThat(instance.isCompleteScope()).as("expect <%s> to be %scompleting".formatted(activityId, completing ? "" : "non-")).isEqualTo(completing);
       }
     }
 

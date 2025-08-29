@@ -90,7 +90,7 @@ public class LaunchTask extends Task {
 
   public boolean exists(String path) {
     File file = new File(path);
-    return (file.exists());
+    return file.exists();
   }
 
   public void setDir(File dir) {

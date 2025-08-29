@@ -74,7 +74,7 @@ public class ByteArrayEntity implements Serializable, DbEntity, HasDbRevision {
 
   @Override
   public Object getPersistentState() {
-    return (bytes != null ? bytes : PERSISTENTSTATE_NULL);
+    return bytes != null ? bytes : PERSISTENTSTATE_NULL;
   }
 
   @Override

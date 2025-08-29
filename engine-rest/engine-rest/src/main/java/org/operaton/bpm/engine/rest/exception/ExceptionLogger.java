@@ -59,7 +59,7 @@ public class ExceptionLogger extends BaseLogger {
   }
 
   protected boolean isPersistenceConnectionError(Throwable throwable) {
-    boolean isPersistenceException = (throwable instanceof ProcessEnginePersistenceException);
+    boolean isPersistenceException = throwable instanceof ProcessEnginePersistenceException;
 
     if (!isPersistenceException) {
       return false;

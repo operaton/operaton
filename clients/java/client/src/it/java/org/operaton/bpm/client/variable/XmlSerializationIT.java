@@ -249,7 +249,7 @@ public class XmlSerializationIT {
 
     SpinXmlElement serializedValue = Spin.XML(typedValue.getValueSerialized());
     SpinList<SpinXmlElement> childElements = serializedValue.childElements();
-    childElements.forEach((c) -> {
+    childElements.forEach(c -> {
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getStringProperty()).isEqualTo(c.childElement("stringProperty").textContent());
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getBooleanProperty()).isEqualTo(Boolean.parseBoolean(c.childElement("booleanProperty").textContent()));
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getIntProperty()).isEqualTo(Integer.parseInt(c.childElement("intProperty").textContent()));
@@ -699,7 +699,7 @@ public class XmlSerializationIT {
 
     SpinXmlElement spinElement = Spin.XML(serializedValue.getValueSerialized());
     SpinList<SpinXmlElement> childElements = spinElement.childElements();
-    childElements.forEach((c) -> {
+    childElements.forEach(c -> {
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getStringProperty()).isEqualTo(c.childElement("stringProperty").textContent());
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getBooleanProperty()).isEqualTo(Boolean.parseBoolean(c.childElement("booleanProperty").textContent()));
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getIntProperty()).isEqualTo(Integer.parseInt(c.childElement("intProperty").textContent()));

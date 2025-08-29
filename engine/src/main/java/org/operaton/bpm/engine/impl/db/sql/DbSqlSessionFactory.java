@@ -1103,7 +1103,7 @@ public class DbSqlSessionFactory implements SessionFactory {
       return statement;
     }
     String mappedStatement = statementMappings.get(statement);
-    return (mappedStatement!=null ? mappedStatement : statement);
+    return mappedStatement!=null ? mappedStatement : statement;
   }
 
   // customized getters and setters ///////////////////////////////////////////

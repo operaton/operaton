@@ -519,7 +519,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
                                                      Resource resource, String resourceId) {
     boolean sameUserId = areIdsEqual(authEntity.getUserId(), userId);
     boolean sameGroupId = areIdsEqual(authEntity.getGroupId(), groupId);
-    boolean sameResourceId = areIdsEqual(authEntity.getResourceId(), (resourceId));
+    boolean sameResourceId = areIdsEqual(authEntity.getResourceId(), resourceId);
     boolean sameResourceType = authEntity.getResourceType() == resource.resourceType();
     boolean sameAuthorizationType = authEntity.getAuthorizationType() == AUTH_TYPE_GRANT;
     return sameUserId && sameGroupId &&

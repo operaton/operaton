@@ -60,7 +60,7 @@ public class EntityRemoveRule extends TestWatcher {
   @Override
   public Statement apply(Statement base, Description description) {
     RemoveAfter removeAfterAnnotation = getAnnotation(description, RemoveAfter.class);
-    boolean methodHasRemoveAfterAnnotation = (removeAfterAnnotation != null);
+    boolean methodHasRemoveAfterAnnotation = removeAfterAnnotation != null;
 
     try {
       return new Statement() {

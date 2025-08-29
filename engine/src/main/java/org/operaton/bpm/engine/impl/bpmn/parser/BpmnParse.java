@@ -3030,7 +3030,7 @@ public class BpmnParse extends Parse {
           stringBuilder.delete(0, stringBuilder.length());
         }
 
-        if (character != ',' || (insideExpression)) {
+        if (character != ',' || insideExpression) {
           stringBuilder.append(character);
         }
 

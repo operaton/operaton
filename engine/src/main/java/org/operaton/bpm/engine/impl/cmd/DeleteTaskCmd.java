@@ -82,7 +82,7 @@ public class DeleteTaskCmd implements Command<Void>, Serializable {
       checkDeleteTask(task, commandContext);
       task.logUserOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE);
 
-      String reason = (deleteReason == null || deleteReason.isEmpty()) ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
+      String reason = deleteReason == null || deleteReason.isEmpty() ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
       task.delete(reason, cascade);
     } else if (cascade) {
       Context

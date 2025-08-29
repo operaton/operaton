@@ -38,19 +38,19 @@ public class TestUtil {
   }
 
   public static void waitUntil(BooleanSupplier condition) {
-    doRepeatedly(() -> null).until((r) -> condition.getAsBoolean());
+    doRepeatedly(() -> null).until(r -> condition.getAsBoolean());
   }
 
   public static void waitUntil(BooleanSupplier condition, String message, Object... args) {
-    doRepeatedly(() -> null).until((r) -> condition.getAsBoolean(), message, args);
+    doRepeatedly(() -> null).until(r -> condition.getAsBoolean(), message, args);
   }
 
   public static void waitUntil(BooleanSupplier condition, int retries) {
-    doRepeatedly(() -> null).until((r) -> condition.getAsBoolean(), retries);
+    doRepeatedly(() -> null).until(r -> condition.getAsBoolean(), retries);
   }
 
   public static void waitUntil(BooleanSupplier condition, int retries, String message, Object... args) {
-    doRepeatedly(() -> null).until((r) -> condition.getAsBoolean(), retries, message, args);
+    doRepeatedly(() -> null).until(r -> condition.getAsBoolean(), retries, message, args);
   }
 
   public static class Invocation<T> {
@@ -61,23 +61,23 @@ public class TestUtil {
     }
 
     public T until(Function<T, Boolean> resultCondition) {
-      return until(resultCondition, (e) -> false);
+      return until(resultCondition, e -> false);
     }
 
     public T until(Function<T, Boolean> resultCondition, String message, Object... args) {
-      return until(resultCondition, (e) -> false, message, args);
+      return until(resultCondition, e -> false, message, args);
     }
 
     public T until(Function<T, Boolean> resultCondition, int retries) {
-      return until(resultCondition, (e) -> false, retries);
+      return until(resultCondition, e -> false, retries);
     }
 
     public T until(Function<T, Boolean> resultCondition, int retries, String message, Object... args) {
-      return until(resultCondition, (e) -> false, retries, message, args);
+      return until(resultCondition, e -> false, retries, message, args);
     }
 
     public T until(Function<T, Boolean> resultCondition, Function<Exception, Boolean> exceptionCondition) {
-      T result = whileConditionHolds((t) -> !resultCondition.apply(t), (e) -> !exceptionCondition.apply(e));
+      T result = whileConditionHolds(t -> !resultCondition.apply(t), e -> !exceptionCondition.apply(e));
 
       assertThat(resultCondition.apply(result)).isTrue();
 
@@ -85,7 +85,7 @@ public class TestUtil {
     }
 
     public T until(Function<T, Boolean> resultCondition, Function<Exception, Boolean> exceptionCondition, String message, Object... args) {
-      T result = whileConditionHolds((t) -> !resultCondition.apply(t), (e) -> !exceptionCondition.apply(e));
+      T result = whileConditionHolds(t -> !resultCondition.apply(t), e -> !exceptionCondition.apply(e));
 
       assertThat(resultCondition.apply(result)).withFailMessage(message, args).isTrue();
 
@@ -93,7 +93,7 @@ public class TestUtil {
     }
 
     public T until(Function<T, Boolean> resultCondition, Function<Exception, Boolean> exceptionCondition, int retries) {
-      T result = whileConditionHolds((t) -> !resultCondition.apply(t), (e) -> !exceptionCondition.apply(e), retries);
+      T result = whileConditionHolds(t -> !resultCondition.apply(t), e -> !exceptionCondition.apply(e), retries);
 
       assertThat(resultCondition.apply(result)).isTrue();
 
@@ -102,7 +102,7 @@ public class TestUtil {
 
     public T until(Function<T, Boolean> resultCondition, Function<Exception, Boolean> exceptionCondition, int retries, String message,
         Object... args) {
-      T result = whileConditionHolds((t) -> !resultCondition.apply(t), (e) -> !exceptionCondition.apply(e), retries);
+      T result = whileConditionHolds(t -> !resultCondition.apply(t), e -> !exceptionCondition.apply(e), retries);
 
       assertThat(resultCondition.apply(result)).withFailMessage(message, args).isTrue();
 
@@ -110,11 +110,11 @@ public class TestUtil {
     }
 
     public T whileConditionHolds(Function<T, Boolean> resultCondition) {
-      return whileConditionHolds(resultCondition, (e) -> true);
+      return whileConditionHolds(resultCondition, e -> true);
     }
 
     public T whileConditionHolds(Function<T, Boolean> resultCondition, int retires) {
-      return whileConditionHolds(resultCondition, (e) -> true, retires);
+      return whileConditionHolds(resultCondition, e -> true, retires);
     }
 
     public T whileConditionHolds(Function<T, Boolean> resultCondition, Function<Exception, Boolean> exceptionCondition) {

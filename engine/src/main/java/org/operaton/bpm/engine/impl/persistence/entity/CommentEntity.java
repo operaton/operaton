@@ -66,11 +66,11 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   }
 
   public byte[] getFullMessageBytes() {
-    return (fullMessage != null ? StringUtil.toByteArray(fullMessage) : null);
+    return fullMessage != null ? StringUtil.toByteArray(fullMessage) : null;
   }
 
   public void setFullMessageBytes(byte[] fullMessageBytes) {
-    fullMessage = (fullMessageBytes != null ? StringUtil.fromBytes(fullMessageBytes) : null );
+    fullMessage = fullMessageBytes != null ? StringUtil.fromBytes(fullMessageBytes) : null;
   }
 
   public static final String MESSAGE_PARTS_MARKER = "_|_";

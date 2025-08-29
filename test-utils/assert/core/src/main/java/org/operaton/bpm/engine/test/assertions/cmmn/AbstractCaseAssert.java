@@ -645,7 +645,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     message.append("Expecting %s to hold ");
     if (shouldHaveVariables) {
       message.append("case variables");
-      message.append((shouldHaveSpecificVariables ? " %s, " : ", "));
+      message.append(shouldHaveSpecificVariables ? " %s, " : ", ");
     } else {
       message.append("no variables at all, ");
     }

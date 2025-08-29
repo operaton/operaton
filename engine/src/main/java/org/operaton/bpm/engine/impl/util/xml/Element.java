@@ -49,12 +49,12 @@ public class Element {
 
   public Element(String uri, String localName, String qName, Attributes attributes, Locator locator) {
     this.uri = uri;
-    this.tagName = (uri == null || "".equals(uri)) ? qName : localName;
+    this.tagName = uri == null || "".equals(uri) ? qName : localName;
 
     if (attributes!=null) {
       for (int i=0; i<attributes.getLength(); i++) {
         String attributeUri = attributes.getURI(i);
-        String name = (attributeUri == null || "".equals(attributeUri)) ? attributes.getQName(i) : attributes.getLocalName(i);
+        String name = attributeUri == null || "".equals(attributeUri) ? attributes.getQName(i) : attributes.getLocalName(i);
         String value = attributes.getValue(i);
         this.attributeMap.put(composeMapKey(attributeUri, name),
           new Attribute(name, value, attributeUri));

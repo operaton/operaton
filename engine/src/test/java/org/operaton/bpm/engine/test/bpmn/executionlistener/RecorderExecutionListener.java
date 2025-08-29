@@ -96,7 +96,7 @@ public class RecorderExecutionListener implements ExecutionListener, Serializabl
 
   @Override
   public void notify(DelegateExecution execution) throws Exception {
-    ExecutionEntity executionCasted = ((ExecutionEntity)execution);
+    ExecutionEntity executionCasted = (ExecutionEntity)execution;
     String parameterValue = null;
     if (parameter != null) {
       parameterValue = (String)parameter.getValue(execution);

@@ -75,7 +75,7 @@ public final class BitMaskUtil {
    */
   public static boolean isBitOn(int value, int bitNumber) {
     ensureBitRange(bitNumber);
-    return ((value & MASKS[bitNumber - 1]) == MASKS[bitNumber - 1]);
+    return (value & MASKS[bitNumber - 1]) == MASKS[bitNumber - 1];
   }
 
   /**

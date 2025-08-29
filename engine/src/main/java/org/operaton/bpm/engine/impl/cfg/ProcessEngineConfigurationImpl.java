@@ -2828,7 +2828,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (adminGroups == null) {
       adminGroups = new ArrayList<>();
     }
-    if (adminGroups.isEmpty() || !(adminGroups.contains(Groups.OPERATON_ADMIN))) {
+    if (adminGroups.isEmpty() || !adminGroups.contains(Groups.OPERATON_ADMIN)) {
       adminGroups.add(Groups.OPERATON_ADMIN);
     }
   }

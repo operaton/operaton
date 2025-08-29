@@ -109,7 +109,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   public DeploymentBuilder addString(String resourceName, String text) {
     ensureNotNull("text", text);
 
-    byte[] bytes = (repositoryService != null && repositoryService.getDeploymentCharset() != null)
+    byte[] bytes = repositoryService != null && repositoryService.getDeploymentCharset() != null
       ? text.getBytes(repositoryService.getDeploymentCharset())
       : text.getBytes();
 

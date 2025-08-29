@@ -39,7 +39,7 @@ public class XmlSerializables {
     StringBuilder xmlBuilder = new StringBuilder();
 
     xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmlSerializables>");
-    serializables.forEach((s) -> {
+    serializables.forEach(s -> {
       xmlBuilder.append("<serializable>");
       xmlBuilder.append(String.format("<booleanProperty>%s</booleanProperty>", s.getBooleanProperty()));
       xmlBuilder.append(String.format("<intProperty>%s</intProperty>", s.getIntProperty()));
@@ -72,7 +72,7 @@ public class XmlSerializables {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((serializables == null) ? 0 : serializables.hashCode());
+    result = prime * result + (serializables == null ? 0 : serializables.hashCode());
     return result;
   }
 

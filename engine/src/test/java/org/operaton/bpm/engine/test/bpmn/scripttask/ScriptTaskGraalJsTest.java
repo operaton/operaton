@@ -267,8 +267,8 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
         // this is not allowed in the JS ScriptEngine
           .isInstanceOf(ScriptEvaluationException.class)
           .hasMessageContaining(
-              (spinEnabled && !configureHostAccess) ? "ReferenceError" :
-              (enableExternalResources && !configureHostAccess) ? "TypeError" :
+              spinEnabled && !configureHostAccess ? "ReferenceError" :
+              enableExternalResources && !configureHostAccess ? "TypeError" :
               "Operation is not allowed");
       }
   }

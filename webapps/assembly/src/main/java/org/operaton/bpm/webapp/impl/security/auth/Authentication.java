@@ -76,8 +76,8 @@ public class Authentication implements Principal, Serializable {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((identityId == null) ? 0 : identityId.hashCode());
-    result = prime * result + ((processEngineName == null) ? 0 : processEngineName.hashCode());
+    result = prime * result + (identityId == null ? 0 : identityId.hashCode());
+    result = prime * result + (processEngineName == null ? 0 : processEngineName.hashCode());
     return result;
   }
 

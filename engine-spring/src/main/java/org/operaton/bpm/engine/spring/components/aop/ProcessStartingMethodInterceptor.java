@@ -59,7 +59,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
     }
 
     boolean shouldReturnProcessInstance(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
-        return (result instanceof ProcessInstance || methodInvocation.getMethod().getReturnType().isAssignableFrom(ProcessInstance.class));
+        return result instanceof ProcessInstance || methodInvocation.getMethod().getReturnType().isAssignableFrom(ProcessInstance.class);
     }
 
     boolean shouldReturnProcessInstanceId(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
@@ -68,7 +68,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
 
     @SuppressWarnings("unused")
     boolean shouldReturnAsyncResultWithProcessInstance(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
-        return (result instanceof Future || methodInvocation.getMethod().getReturnType().isAssignableFrom(Future.class));
+        return result instanceof Future || methodInvocation.getMethod().getReturnType().isAssignableFrom(Future.class);
     }
 
   @Override

@@ -270,7 +270,7 @@ class VariableInstanceTest {
                 .withFailMessage("The type of the variable should be null after the update")
                 .isEqualTo("null");
 
-        assertThat(((MySerializable) variable.getValue()))
+        assertThat((MySerializable) variable.getValue())
                 .withFailMessage("The variable changed value to null")
                 .isNull();
 

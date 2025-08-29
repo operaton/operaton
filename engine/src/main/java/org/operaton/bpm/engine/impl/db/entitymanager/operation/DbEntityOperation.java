@@ -78,8 +78,8 @@ public class DbEntityOperation extends DbOperation {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((entity == null) ? 0 : entity.hashCode());
-    result = prime * result + ((operationType == null) ? 0 : operationType.hashCode());
+    result = prime * result + (entity == null ? 0 : entity.hashCode());
+    result = prime * result + (operationType == null ? 0 : operationType.hashCode());
     return result;
   }
 

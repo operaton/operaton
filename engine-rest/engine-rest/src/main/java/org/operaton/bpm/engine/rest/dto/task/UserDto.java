@@ -34,7 +34,7 @@ public class UserDto {
     if (firstName == null && lastName == null) {
       this.displayName = id;
     }else {
-      this.displayName = (lastName != null) ? firstName + " " + lastName : firstName;
+      this.displayName = lastName != null ? firstName + " " + lastName : firstName;
     }
   }
 

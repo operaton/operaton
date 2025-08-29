@@ -24,7 +24,7 @@ public class EntityTypeComparatorForInserts extends EntityTypeComparatorForModif
 
   @Override
   public int compare(Class<?> firstEntityType, Class<?> secondEntityType) {
-    return super.compare(firstEntityType, secondEntityType) * (-1);
+    return super.compare(firstEntityType, secondEntityType) * -1;
   }
 
 }

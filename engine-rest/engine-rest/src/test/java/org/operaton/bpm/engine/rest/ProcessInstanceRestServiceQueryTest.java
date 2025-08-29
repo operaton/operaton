@@ -1567,7 +1567,7 @@ public class ProcessInstanceRestServiceQueryTest extends
       .post(PROCESS_INSTANCE_QUERY_URL);
 
     ArgumentCaptor<ProcessInstanceQueryImpl> argument = ArgumentCaptor.forClass(ProcessInstanceQueryImpl.class);
-    verify(((ProcessInstanceQueryImpl) query)).addOrQuery(argument.capture());
+    verify((ProcessInstanceQueryImpl) query).addOrQuery(argument.capture());
 
     // then
     assertThat(argument.getValue().getProcessDefinitionId()).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);

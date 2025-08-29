@@ -1567,7 +1567,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   public String getDelegationStateString() {
-    return (delegationState!=null ? delegationState.toString() : null);
+    return delegationState!=null ? delegationState.toString() : null;
   }
 
   public String getCandidateUser() {

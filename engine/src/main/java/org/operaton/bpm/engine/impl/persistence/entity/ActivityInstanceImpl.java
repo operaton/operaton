@@ -146,7 +146,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
 
     for (int i = 0; i < childActivityInstances.length; i++) {
       ActivityInstanceImpl child = (ActivityInstanceImpl) childActivityInstances[i];
-      child.writeTree(writer, prefix + (isTail ? "    " : "│   "), (i==(childActivityInstances.length-1)));
+      child.writeTree(writer, prefix + (isTail ? "    " : "│   "), i==(childActivityInstances.length-1));
     }
   }
 

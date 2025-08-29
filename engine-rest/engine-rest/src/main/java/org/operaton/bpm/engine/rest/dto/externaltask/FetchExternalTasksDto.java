@@ -311,7 +311,7 @@ public class FetchExternalTasksDto {
     protected final FetchAndLockBuilder builder;
 
     protected SortMapper(List<SortingDto> sorting, FetchAndLockBuilder builder) {
-      this.sorting = (sorting == null) ? Collections.emptyList() : sorting;
+      this.sorting = sorting == null ? Collections.emptyList() : sorting;
       this.builder = builder;
     }
 

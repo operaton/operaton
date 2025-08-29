@@ -125,7 +125,7 @@ public class HistoryTimeToLiveParser {
     protected final Integer valueAsInteger;
 
     public HTTLParsedResult(String historyTimeToLiveString) {
-      this.systemDefaultConfigWillBeUsed = (historyTimeToLiveString == null);
+      this.systemDefaultConfigWillBeUsed = historyTimeToLiveString == null;
       this.value = systemDefaultConfigWillBeUsed ? httlConfigValue : historyTimeToLiveString;
       this.valueAsInteger = ParseUtil.parseHistoryTimeToLive(value);
     }

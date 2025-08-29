@@ -492,7 +492,7 @@ public class DevProcessApplication extends ServletProcessApplication {
     int currentMonth = calendar.get(Calendar.MONTH);
     int currentYear = calendar.get(Calendar.YEAR);
 
-    calendar.add(Calendar.MONTH, offset * (-1));
+    calendar.add(Calendar.MONTH, offset * -1);
     ClockUtil.setCurrentTime(calendar.getTime());
 
     createDeployment(engine, "reports", model);

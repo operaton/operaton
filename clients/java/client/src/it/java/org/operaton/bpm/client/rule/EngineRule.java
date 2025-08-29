@@ -183,9 +183,8 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback {
     String endpoint = String.format(URI_DEPLOYMENT_DELETE, getEngineUrl(), deploymentId);
 
     List<String> queryParameters = new ArrayList<>();
-    parameters.forEach((key, value) -> {
-      queryParameters.add(key + "=" + value);
-    });
+    parameters.forEach((key, value) ->
+      queryParameters.add(key + "=" + value));
 
     if (!queryParameters.isEmpty()) {
       endpoint = endpoint + "?" + String.join("&", queryParameters);

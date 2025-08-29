@@ -68,9 +68,8 @@ class JobExecutorShutdownTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .randomEngineName().closeEngineAfterEachTest()
-    .configurator(configuration -> {
-      configuration.setJobExecutor(buildControllableJobExecutor());
-    })
+    .configurator(configuration ->
+      configuration.setJobExecutor(buildControllableJobExecutor()))
     .build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

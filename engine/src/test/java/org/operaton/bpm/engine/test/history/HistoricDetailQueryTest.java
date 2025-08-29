@@ -523,9 +523,8 @@ class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery();
 
     // then
-    assertThatThrownBy(() -> {
-      query.variableNameLike(null);
-    })
+    assertThatThrownBy(() ->
+      query.variableNameLike(null))
         .isInstanceOf(NullValueException.class)
         .hasMessageContaining("Variable name like is null");
   }

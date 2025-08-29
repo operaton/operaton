@@ -112,10 +112,10 @@ public abstract class AbstractScriptTaskTest {
 
     // THEN
     // an exception is thrown
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
         // WHEN
         // we start an instance of this process
-        runtimeService.startProcessInstanceByKey("testProcess");})
+        runtimeService.startProcessInstanceByKey("testProcess"))
       .isInstanceOf(ScriptEvaluationException.class)
       .hasMessageContaining("testbean");
   }

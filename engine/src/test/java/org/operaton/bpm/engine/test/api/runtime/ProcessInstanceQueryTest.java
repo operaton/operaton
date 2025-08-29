@@ -2255,7 +2255,7 @@ public class ProcessInstanceQueryTest {
   }
 
     @Test
-    public void testQueryByRootProcessInstanceId() {
+    void testQueryByRootProcessInstanceId() {
         // given a parent process instance with a couple of subprocesses
         BpmnModelInstance baseProcess = Bpmn.createExecutableProcess("baseProcess")
                 .startEvent("startRoot")
@@ -2286,11 +2286,12 @@ public class ProcessInstanceQueryTest {
                 .rootProcessInstanceId(rootProcessId);
 
         // then
-        assertThat(3).isEqualTo(allProcessInstances.stream()
+        assertThat(allProcessInstances.stream()
                 .filter(process -> process.getRootProcessInstanceId().equals(rootProcessId))
-                .count());
-        assertThat(3).isEqualTo(processInstanceQuery.count());
-        assertThat(3).isEqualTo(processInstanceQuery.list().size());
+                .count())
+                .isEqualTo(3);
+        assertThat(processInstanceQuery.count()).isEqualTo(3);
+        assertThat(processInstanceQuery.list().size()).isEqualTo(3);
     }
 
   @Test

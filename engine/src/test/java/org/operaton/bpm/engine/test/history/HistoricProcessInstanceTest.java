@@ -2721,7 +2721,7 @@ class HistoricProcessInstanceTest {
     }
 
     @Test
-    public void shouldQueryByRootProcessInstanceId() {
+    void shouldQueryByRootProcessInstanceId() {
         // given a parent process instance with a couple of subprocesses
         BpmnModelInstance rootProcess = Bpmn.createExecutableProcess("rootProcess")
                 .startEvent("startRoot")
@@ -2753,12 +2753,13 @@ class HistoricProcessInstanceTest {
                 .rootProcessInstanceId(rootProcessId);
 
         // then
-        assertThat(3).isEqualTo(allHistoricProcessInstances.size());
-        assertThat(3).isEqualTo(allHistoricProcessInstances.stream()
+        assertThat(allHistoricProcessInstances.size()).isEqualTo(3);
+        assertThat(allHistoricProcessInstances.stream()
                 .filter(process -> process.getRootProcessInstanceId().equals(rootProcessId))
-                .count());
-        assertThat(3).isEqualTo(historicProcessInstanceQuery.count());
-        assertThat(3).isEqualTo(historicProcessInstanceQuery.list().size());
+                .count())
+                .isEqualTo(3);
+        assertThat(historicProcessInstanceQuery.count()).isEqualTo(3);
+        assertThat(historicProcessInstanceQuery.list().size()).isEqualTo(3);
   }
 
 

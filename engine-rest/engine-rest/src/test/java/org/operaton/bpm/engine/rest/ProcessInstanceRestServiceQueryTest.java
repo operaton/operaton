@@ -920,7 +920,7 @@ public class ProcessInstanceRestServiceQueryTest extends
   }
 
   @Test
-  public void testGetProcessInstancesForRootProcessInstanceId() {
+  void testGetProcessInstancesForRootProcessInstanceId() {
     Response response = given().queryParam("rootProcessInstanceId", MockProvider.EXAMPLE_ROOT_PROCESS_INSTANCE_ID)
             .header("accept", MediaType.APPLICATION_JSON)
             .then()
@@ -944,13 +944,13 @@ public class ProcessInstanceRestServiceQueryTest extends
     Boolean returnedIsSuspended = from(content).getBoolean("[0].suspended");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    assertThat(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID).isEqualTo(returnedProcessInstanceId);
-    assertThat(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID).isEqualTo(returnedProcessDefinitionId);
-    assertThat(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY).isEqualTo(returnedProcessInstanceBusinessKey);
-    assertThat(MockProvider.EXAMPLE_CASE_INSTANCE_ID).isEqualTo(returnedCaseInstanceId);
-    assertThat(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_ENDED).isEqualTo(returnedIsEnded);
-    assertThat(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED).isEqualTo(returnedIsSuspended);
-    assertThat(MockProvider.EXAMPLE_TENANT_ID).isEqualTo(returnedTenantId);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedProcessInstanceBusinessKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY);
+    assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
+    assertThat(returnedIsEnded).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_ENDED);
+    assertThat(returnedIsSuspended).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
 }
 
   @Test

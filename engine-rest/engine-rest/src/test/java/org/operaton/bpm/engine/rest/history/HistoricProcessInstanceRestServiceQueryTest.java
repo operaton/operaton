@@ -458,7 +458,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
     @Test
-    public void testGetHistoryProcessInstancesForRootProcessInstanceId() {
+    void testGetHistoryProcessInstancesForRootProcessInstanceId() {
         Response response = given().queryParam("rootProcessInstanceId",
                         MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_ROOT_PROCESS_INSTANCE_ID)
                 .header("accept", MediaType.APPLICATION_JSON)

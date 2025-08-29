@@ -872,7 +872,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
       String compositeId = activityId + ":" + nextId;
       if (compositeId.length() > 64) {
-        return String.valueOf(nextId);
+        return nextId;
       } else {
         return compositeId;
       }

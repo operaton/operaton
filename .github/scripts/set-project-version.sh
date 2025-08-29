@@ -69,7 +69,7 @@ POM_FILES=(\
 ./distro/run/modules/rest/pom.xml \
 )
 
-for POM_FILE in ${POM_FILES[@]}; do
+for POM_FILE in "${POM_FILES[@]}"; do
   sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" $POM_FILE
 done
 

@@ -268,7 +268,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
     if (activity != null) {
       Object value = activity.getProperty(property);
-      if (value != null && value instanceof String string) {
+      if (value instanceof String string) {
         result = string;
       }
     }

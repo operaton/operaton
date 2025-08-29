@@ -103,7 +103,7 @@ public class DomElementImpl implements DomElement {
   public DomElement getParentElement() {
     synchronized(document) {
       Node parentNode = element.getParentNode();
-      if (parentNode != null && parentNode instanceof Element elem) {
+      if (parentNode instanceof Element elem) {
         return new DomElementImpl(elem);
       }
       else {

@@ -241,7 +241,7 @@ public final class ModelUtil {
   public static void setNewIdentifier(ModelElementType type, ModelElementInstance modelElementInstance,
                                    String newId, boolean withReferenceUpdate) {
     Attribute<?> id = type.getAttribute(ID_ATTRIBUTE_NAME);
-    if (id != null && id instanceof StringAttribute stringAttr && id.isIdAttribute()) {
+    if (id instanceof StringAttribute stringAttr && id.isIdAttribute()) {
       stringAttr.setValue(modelElementInstance, newId, withReferenceUpdate);
     }
   }

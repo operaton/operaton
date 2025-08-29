@@ -63,7 +63,7 @@ public class UserDto {
 
     if (firstName != null ? !firstName.equals(userDto.firstName) : userDto.firstName != null) return false;
     if (id != null ? !id.equals(userDto.id) : userDto.id != null) return false;
-    return !(lastName != null ? !lastName.equals(userDto.lastName) : userDto.lastName != null);
+    return lastName == null ? userDto.lastName != null : !lastName.equals(userDto.lastName);
   }
 
   @Override

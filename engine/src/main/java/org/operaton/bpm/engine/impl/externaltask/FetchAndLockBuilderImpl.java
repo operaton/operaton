@@ -95,7 +95,7 @@ public class FetchAndLockBuilderImpl implements FetchAndLockBuilder {
   }
 
   protected void configureLastOrderingPropertyDirection(Direction direction) {
-    QueryOrderingProperty lastProperty = !orderingProperties.isEmpty() ? getLastElement(orderingProperties) : null;
+    QueryOrderingProperty lastProperty = orderingProperties.isEmpty() ? null : getLastElement(orderingProperties);
 
     ensureNotNull(NotValidException.class, "You should call any of the orderBy methods first before specifying a direction", "currentOrderingProperty", lastProperty);
 

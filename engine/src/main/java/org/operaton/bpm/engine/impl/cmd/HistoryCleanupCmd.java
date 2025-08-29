@@ -95,7 +95,7 @@ public class HistoryCleanupCmd implements Command<Job> {
 
     writeUserOperationLog(context);
 
-    return !historyCleanupJobs.isEmpty() ? historyCleanupJobs.get(0) : null;
+    return historyCleanupJobs.isEmpty() ? null : historyCleanupJobs.get(0);
   }
 
   protected List<Job> getHistoryCleanupJobs() {

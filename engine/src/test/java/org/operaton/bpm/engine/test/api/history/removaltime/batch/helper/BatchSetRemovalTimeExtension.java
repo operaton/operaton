@@ -164,10 +164,9 @@ public class BatchSetRemovalTimeExtension extends BatchExtension {
     engineRule.getAuthorizationService()
         .createAuthorizationQuery()
         .list()
-        .forEach(authorization -> {
+        .forEach(authorization ->
           engineRule.getAuthorizationService()
-              .deleteAuthorization(authorization.getId());
-        });
+              .deleteAuthorization(authorization.getId()));
   }
 
   public class TestProcessBuilder {

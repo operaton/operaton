@@ -50,9 +50,8 @@ class JobAcquisitionTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .randomEngineName().closeEngineAfterAllTests()
-    .configurator(configuration -> {
-      configuration.setJobExecutor(new ControllableJobExecutor());
-    })
+    .configurator(configuration ->
+      configuration.setJobExecutor(new ControllableJobExecutor()))
     .build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

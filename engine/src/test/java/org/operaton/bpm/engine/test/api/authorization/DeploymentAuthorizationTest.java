@@ -554,10 +554,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotRegisterProcessApplicationWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.registerProcessApplication(null, null);
-    })
+      managementService.registerProcessApplication(null, null))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
   }
@@ -619,10 +618,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotUnregisterProcessApplicationWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.unregisterProcessApplication("anyDeploymentId", true);
-    })
+      managementService.unregisterProcessApplication("anyDeploymentId", true))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
   }
@@ -685,10 +683,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotGetProcessApplicationForDeploymentWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getProcessApplicationForDeployment("anyDeploymentId");
-    })
+      managementService.getProcessApplicationForDeployment("anyDeploymentId"))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -742,10 +739,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotGetRegisteredDeploymentsWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getRegisteredDeployments();
-    })
+      managementService.getRegisteredDeployments())
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -802,10 +798,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
     enableAuthorization();
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.registerDeploymentForJobExecutor(deploymentId);
-    })
+      managementService.registerDeploymentForJobExecutor(deploymentId))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
   }
@@ -859,10 +854,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotUnregisterDeploymentWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.unregisterDeploymentForJobExecutor("anyDeploymentId");
-    })
+      managementService.unregisterDeploymentForJobExecutor("anyDeploymentId"))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
   }

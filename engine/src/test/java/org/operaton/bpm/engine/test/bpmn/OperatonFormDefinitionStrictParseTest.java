@@ -82,9 +82,8 @@ class OperatonFormDefinitionStrictParseTest {
     processEngineConfiguration.setDisableStrictOperatonFormParsing(false);
 
     // then deployment fails with an exception
-    assertThatThrownBy(() -> {
-      testRule.deploy(FORM);
-    }).isInstanceOf(ProcessEngineException.class)
+    assertThatThrownBy(() ->
+      testRule.deploy(FORM)).isInstanceOf(ProcessEngineException.class)
     .hasMessageContaining("ENGINE-09033 Could not parse Operaton Form resource org/operaton/bpm/engine/test/bpmn/OperatonFormDefinitionStrictParseTest.anyForm.form.");
     assertThat(repositoryService.createDeploymentQuery().list()).isEmpty();
   }

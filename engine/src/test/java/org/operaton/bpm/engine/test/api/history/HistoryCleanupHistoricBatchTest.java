@@ -69,9 +69,8 @@ class HistoryCleanupHistoricBatchTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .configurator(configuration -> {
-      configuration.setHistoryCleanupDegreeOfParallelism(3);
-    }).build();
+    .configurator(configuration ->
+      configuration.setHistoryCleanupDegreeOfParallelism(3)).build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension

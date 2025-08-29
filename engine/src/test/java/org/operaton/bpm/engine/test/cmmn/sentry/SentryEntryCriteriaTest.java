@@ -543,19 +543,16 @@ class SentryEntryCriteriaTest extends CmmnTest {
     assertThat(thirdHumanTask.isAvailable()).isTrue();
 
 
-    assertThatThrownBy(() -> {
-      manualStart(firstHumanTaskId);
-    }).withFailMessage("First human task should be available.")
+    assertThatThrownBy(() ->
+      manualStart(firstHumanTaskId)).withFailMessage("First human task should be available.")
       .isInstanceOf(NotAllowedException.class);
 
-    assertThatThrownBy(() -> {
-      manualStart(secondHumanTaskId);
-    }).withFailMessage("It should not be possible to start the second human task manually.")
+    assertThatThrownBy(() ->
+      manualStart(secondHumanTaskId)).withFailMessage("It should not be possible to start the second human task manually.")
       .isInstanceOf(NotAllowedException.class);
 
-    assertThatThrownBy(() -> {
-      manualStart(thirdHumanTaskId);
-    }).withFailMessage("It should not be possible to third the second human task manually.")
+    assertThatThrownBy(() ->
+      manualStart(thirdHumanTaskId)).withFailMessage("It should not be possible to third the second human task manually.")
       .isInstanceOf(NotAllowedException.class);
   }
 

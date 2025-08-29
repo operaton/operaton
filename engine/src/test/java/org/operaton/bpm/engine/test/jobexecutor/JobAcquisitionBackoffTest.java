@@ -49,9 +49,8 @@ class JobAcquisitionBackoffTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .randomEngineName().closeEngineAfterEachTest()
-    .configurator(configuration -> {
-      configuration.setJobExecutor(new ControllableJobExecutor());
-    })
+    .configurator(configuration ->
+      configuration.setJobExecutor(new ControllableJobExecutor()))
     .build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

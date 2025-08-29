@@ -52,9 +52,8 @@ class HistoryCleanupDmnDisabledTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .configurator(configuration -> {
-      configuration.setDmnEnabled(false);
-    }).build();
+    .configurator(configuration ->
+      configuration.setDmnEnabled(false)).build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

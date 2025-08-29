@@ -50,7 +50,7 @@ class CustomErrorCodeProviderTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .randomEngineName().closeEngineAfterAllTests()
-    .configurator(c -> {
+    .configurator(c ->
       c.setCustomExceptionCodeProvider(new ExceptionCodeProvider() {
         
         @Override
@@ -63,8 +63,7 @@ class CustomErrorCodeProviderTest {
           return PROVIDED_CUSTOM_CODE;
         }
         
-      });
-    })
+      }))
     .build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

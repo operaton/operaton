@@ -54,7 +54,7 @@ public enum PlanItemTransition {
 
   suspend,
 
-  terminate;
+  terminate
 
 
 }

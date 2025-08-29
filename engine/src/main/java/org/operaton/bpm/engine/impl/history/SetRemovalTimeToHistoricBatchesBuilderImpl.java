@@ -109,7 +109,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
   {
     CALCULATED_REMOVAL_TIME,
     ABSOLUTE_REMOVAL_TIME,
-    CLEARED_REMOVAL_TIME;
+    CLEARED_REMOVAL_TIME
   }
 
 }

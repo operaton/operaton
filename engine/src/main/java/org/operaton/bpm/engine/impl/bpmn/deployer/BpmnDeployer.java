@@ -397,7 +397,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   }
 
   enum ExprType {
-	  USER, GROUP;
+	  USER, GROUP
 
   }
 

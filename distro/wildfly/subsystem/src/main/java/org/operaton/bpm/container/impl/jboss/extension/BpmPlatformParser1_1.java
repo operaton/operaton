@@ -94,7 +94,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
       switch(attribute) {
         case NAME: {
           engineName = rawAttributeText(reader, NAME.getLocalName());
-          if (engineName != null && !engineName.equals("null")) {
+          if (engineName != null && !"null".equals(engineName)) {
             SubsystemAttributeDefinitons.NAME.parseAndSetParameter(engineName, addProcessEngineOp, reader);
           } else {
             throw missingRequiredElement(reader, Collections.singleton(NAME.getLocalName()));
@@ -321,7 +321,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
       switch(attribute) {
         case NAME: {
           acquisitionName = rawAttributeText(reader, NAME.getLocalName());
-          if (acquisitionName != null && !acquisitionName.equals("null")) {
+          if (acquisitionName != null && !"null".equals(acquisitionName)) {
             SubsystemAttributeDefinitons.NAME.parseAndSetParameter(acquisitionName, addJobAcquisitionOp, reader);
           } else {
             throw missingRequiredElement(reader, Collections.singleton(NAME.getLocalName()));

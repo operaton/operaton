@@ -255,8 +255,6 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       processModelIn = engine.getRepositoryService().getProcessModel(processDefinitionId);
       byte[] processModel = IoUtil.readInputStream(processModelIn, "processModelBpmn20Xml");
       return ProcessDefinitionDiagramDto.create(processDefinitionId, new String(processModel, UTF_8));
-    } catch (AuthorizationException e) {
-      throw e;
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, "No matching definition with id " + processDefinitionId);
     } finally {

@@ -280,8 +280,6 @@ public class TableDataManager extends AbstractManager {
           result.addColumnMetaData(name, type);
         }
 
-      } catch (SQLException se) {
-        throw se;
       } finally {
         if (resultSet != null) {
           resultSet.close();

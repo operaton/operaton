@@ -465,8 +465,6 @@ public class TaskResourceImpl implements TaskResource {
     try {
       identityService.clearAuthentication();
       return action.get();
-    } catch (Exception e) {
-      throw e;
     } finally {
       identityService.setAuthentication(currentAuthentication);
     }

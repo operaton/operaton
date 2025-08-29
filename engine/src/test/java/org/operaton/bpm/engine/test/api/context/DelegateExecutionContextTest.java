@@ -70,7 +70,7 @@ class DelegateExecutionContextTest {
       .endEvent()
       .done();
 
-  protected static final BpmnModelInstance getSingleUserTaskProcessWithSignalStartEventSubprocess() {
+  protected static BpmnModelInstance getSingleUserTaskProcessWithSignalStartEventSubprocess() {
     ProcessBuilder processBuilder = Bpmn.createExecutableProcess();
     BpmnModelInstance model = processBuilder
         .operatonHistoryTimeToLive(180)

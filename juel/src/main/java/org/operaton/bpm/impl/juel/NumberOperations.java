@@ -61,7 +61,7 @@ public final class NumberOperations {
 		return value instanceof BigDecimal || isFloatOrDoubleOrDotEe(value);
 	}
 
-	public static final Number add(TypeConverter converter, Object o1, Object o2) {
+	public static Number add(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == null && o2 == null) {
 			return LONG_ZERO;
 		}
@@ -80,7 +80,7 @@ public final class NumberOperations {
 		return converter.convert(o1, Long.class) + converter.convert(o2, Long.class);
 	}
 
-	public static final Number sub(TypeConverter converter, Object o1, Object o2) {
+	public static Number sub(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == null && o2 == null) {
 			return LONG_ZERO;
 		}
@@ -99,7 +99,7 @@ public final class NumberOperations {
 		return converter.convert(o1, Long.class) - converter.convert(o2, Long.class);
 	}
 
-	public static final Number mul(TypeConverter converter, Object o1, Object o2) {
+	public static Number mul(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == null && o2 == null) {
 			return LONG_ZERO;
 		}
@@ -118,7 +118,7 @@ public final class NumberOperations {
 		return converter.convert(o1, Long.class) * converter.convert(o2, Long.class);
 	}
 
-	public static final Number div(TypeConverter converter, Object o1, Object o2) {
+	public static Number div(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == null && o2 == null) {
 			return LONG_ZERO;
 		}
@@ -128,7 +128,7 @@ public final class NumberOperations {
 		return converter.convert(o1, Double.class) / converter.convert(o2, Double.class);
 	}
 
-	public static final Number mod(TypeConverter converter, Object o1, Object o2) {
+	public static Number mod(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == null && o2 == null) {
 			return LONG_ZERO;
 		}
@@ -141,7 +141,7 @@ public final class NumberOperations {
 		return converter.convert(o1, Long.class) % converter.convert(o2, Long.class);
 	}
 
-	public static final Number neg(TypeConverter converter, Object value) {
+	public static Number neg(TypeConverter converter, Object value) {
 		if (value == null) {
 			return LONG_ZERO;
 		}

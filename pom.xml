@@ -83,10 +83,27 @@
         <version>6.12.0</version>
         <configuration>
           <activeRecipes>
-            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
+            <recipe>org.operaton.recipe.CodeCleanup</recipe>
           </activeRecipes>
+          <failOnDryRunResults>true</failOnDryRunResults>
+          <exclusions>
+            <exclusion>**/node/**</exclusion>
+            <!-- undesired changes, e.g. recipes that break compilation -->
+            <!-- org.openrewrite.staticanalysis.FinalizePrivateFields -->
+            <exclusion>**/FeelIntegrationTest.java</exclusion>
+            <exclusion>**/RegisterNewProcessEngineTest.java</exclusion>
+            <!-- org.openrewrite.staticanalysis.UseDiamondOperator -->
+            <exclusion>**/OperatonListImpl.java</exclusion>
+            <!-- org.openrewrite.staticanalysis.SimplifyBooleanExpression -->
+            <exclusion>**/DmnEvaluated*putImpl.java</exclusion>
+          </exclusions>
         </configuration>
         <dependencies>
+          <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-static-analysis</artifactId>
+            <version>1.20.0</version>
+          </dependency>
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-testing-frameworks</artifactId>
@@ -591,41 +608,6 @@
           <plugin>
             <groupId>com.mycila</groupId>
             <artifactId>license-maven-plugin</artifactId>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>openrewrite</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.openrewrite.maven</groupId>
-            <artifactId>rewrite-maven-plugin</artifactId>
-            <version>6.12.0</version>
-            <configuration>
-              <activeRecipes>
-                org.openrewrite.java.RemoveUnusedImports,
-                org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic,
-                org.openrewrite.staticanalysis.ModifierOrder
-              </activeRecipes>
-              <failOnDryRunResults>true</failOnDryRunResults>
-              <exclusions>
-                **/node/**
-              </exclusions>
-            </configuration>
-            <dependencies>
-              <dependency>
-                <groupId>org.openrewrite.recipe</groupId>
-                <artifactId>rewrite-static-analysis</artifactId>
-                <version>1.20.0</version>
-              </dependency>
-              <dependency>
-                <groupId>org.openrewrite.recipe</groupId>
-                <artifactId>rewrite-testing-frameworks</artifactId>
-                <version>3.12.0</version>
-              </dependency>
-            </dependencies>
           </plugin>
         </plugins>
       </build>

@@ -21,3 +21,86 @@ styleConfigs:
       indentSize: 2
       continuationIndent: 2
       indentsRelativeToExpressionStart: false
+---
+# see https://docs.openrewrite.org/recipes/staticanalysis/codecleanup
+type: specs.openrewrite.org/v1beta/recipe
+name: org.operaton.recipe.CodeCleanup
+displayName: Code cleanup
+description: Automatically cleanup code and common SAST issues, e.g. remove unnecessary parentheses, simplify expressions.
+recipeList:
+  # Applicable recipes from org.openrewrite.staticanalysis.CommonStaticAnalysis
+  - org.openrewrite.staticanalysis.AbstractClassPublicConstructor
+  - org.openrewrite.staticanalysis.AtomicPrimitiveEqualsUsesGet
+  - org.openrewrite.staticanalysis.BigDecimalDoubleConstructorRecipe
+  - org.openrewrite.staticanalysis.BigDecimalRoundingConstantsToEnums
+  - org.openrewrite.staticanalysis.BooleanChecksNotInverted
+  - org.openrewrite.staticanalysis.CaseInsensitiveComparisonsDoNotChangeCase
+  - org.openrewrite.staticanalysis.CatchClauseOnlyRethrows
+  # Disabled due to https://github.com/operaton/operaton/issues/1157:
+  #- org.openrewrite.staticanalysis.ChainStringBuilderAppendCalls
+  - org.openrewrite.staticanalysis.CollectionToArrayShouldHaveProperType
+  - org.openrewrite.staticanalysis.CovariantEquals
+  - org.openrewrite.staticanalysis.DefaultComesLast
+  - org.openrewrite.staticanalysis.EmptyBlock
+  - org.openrewrite.staticanalysis.EqualsAvoidsNull
+  - org.openrewrite.staticanalysis.ExplicitInitialization
+  - org.openrewrite.staticanalysis.ExternalizableHasNoArgsConstructor
+  - org.openrewrite.staticanalysis.FinalizePrivateFields
+  # Not safe:
+  # - org.openrewrite.staticanalysis.FallThrough
+  - org.openrewrite.staticanalysis.FinalClass
+  - org.openrewrite.staticanalysis.FixStringFormatExpressions
+  - org.openrewrite.staticanalysis.ForLoopIncrementInUpdate
+  - org.openrewrite.staticanalysis.IndexOfChecksShouldUseAStartPosition
+  - org.openrewrite.staticanalysis.IndexOfReplaceableByContains
+  - org.openrewrite.staticanalysis.IndexOfShouldNotCompareGreaterThanZero
+  - org.openrewrite.staticanalysis.InlineVariable
+  - org.openrewrite.staticanalysis.IsEmptyCallOnCollections
+  - org.openrewrite.staticanalysis.LambdaBlockToExpression
+  - org.openrewrite.staticanalysis.MethodNameCasing
+  - org.openrewrite.staticanalysis.MinimumSwitchCases
+  - org.openrewrite.staticanalysis.ModifierOrder
+  - org.openrewrite.staticanalysis.MultipleVariableDeclarations
+  # Too much noise in equals/hashCode implementations:
+  # - org.openrewrite.staticanalysis.NeedBraces
+  - org.openrewrite.staticanalysis.NestedEnumsAreNotStatic
+  - org.openrewrite.staticanalysis.NewStringBuilderBufferWithCharArgument
+  - org.openrewrite.staticanalysis.NoDoubleBraceInitialization
+  - org.openrewrite.staticanalysis.NoEmptyCollectionWithRawType
+  - org.openrewrite.staticanalysis.NoEqualityInForCondition
+  - org.openrewrite.staticanalysis.NoFinalizer
+  - org.openrewrite.staticanalysis.NoPrimitiveWrappersForToStringOrCompareTo
+  - org.openrewrite.staticanalysis.NoRedundantJumpStatements
+  - org.openrewrite.staticanalysis.NoToStringOnStringType
+  - org.openrewrite.staticanalysis.NoValueOfOnStringType
+  - org.openrewrite.staticanalysis.ObjectFinalizeCallsSuper
+  - org.openrewrite.staticanalysis.PreferSystemGetPropertyOverGetenv
+  - org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+  - org.openrewrite.staticanalysis.RedundantFileCreation
+  - org.openrewrite.staticanalysis.RemoveExtraSemicolons
+  - org.openrewrite.staticanalysis.RemoveRedundantNullCheckBeforeInstanceof
+  - org.openrewrite.staticanalysis.RemoveRedundantNullCheckBeforeLiteralEquals
+  - org.openrewrite.staticanalysis.RenameMethodsNamedHashcodeEqualOrToString
+  - org.openrewrite.staticanalysis.ReplaceClassIsInstanceWithInstanceof
+  - org.openrewrite.staticanalysis.ReplaceLambdaWithMethodReference
+  - org.openrewrite.staticanalysis.ReplaceStringBuilderWithString
+  - org.openrewrite.staticanalysis.SimplifyArraysAsList
+  - org.openrewrite.staticanalysis.SimplifyBooleanExpression
+  - org.openrewrite.staticanalysis.SimplifyBooleanReturn
+  - org.openrewrite.staticanalysis.StaticMethodNotFinal
+  - org.openrewrite.staticanalysis.StringLiteralEquality
+  - org.openrewrite.staticanalysis.UnnecessaryCloseInTryWithResources
+  - org.openrewrite.staticanalysis.UnnecessaryExplicitTypeArguments
+  - org.openrewrite.staticanalysis.UnnecessaryParentheses
+  - org.openrewrite.staticanalysis.UnnecessaryPrimitiveAnnotations
+  - org.openrewrite.staticanalysis.UnnecessaryReturnAsLastStatement
+  - org.openrewrite.staticanalysis.UpperCaseLiteralSuffixes
+  - org.openrewrite.staticanalysis.UseDiamondOperator
+  - org.openrewrite.staticanalysis.UseJavaStyleArrayDeclarations
+  - org.openrewrite.staticanalysis.WhileInsteadOfFor
+  - org.openrewrite.staticanalysis.WriteOctalValuesAsDecimal
+  - org.openrewrite.kotlin.cleanup.EqualsMethodUsage
+  - org.openrewrite.kotlin.cleanup.ImplicitParameterInLambda
+  - org.openrewrite.kotlin.cleanup.ReplaceCharToIntWithCode
+  - org.openrewrite.staticanalysis.CustomImportOrder
+

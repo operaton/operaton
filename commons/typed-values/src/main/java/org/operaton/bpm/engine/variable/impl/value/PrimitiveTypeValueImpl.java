@@ -78,7 +78,7 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
         return false;
     } else if (!value.equals(other.value))
       return false;
-    return !(isTransient != other.isTransient());
+    return isTransient == other.isTransient();
   }
 
 

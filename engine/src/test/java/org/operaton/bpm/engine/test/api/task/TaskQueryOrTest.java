@@ -1359,9 +1359,9 @@ class TaskQueryOrTest {
   }
 
   protected HashMap<String, Date> createFollowUpAndDueDateTasks() throws ParseException {
-    final Date date = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("27/07/2017 01:12:13"),
-      oneHourAgo = new Date(date.getTime() - 60 * 60 * 1000),
-      oneHourLater = new Date(date.getTime() + 60 * 60 * 1000);
+    final Date date = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("27/07/2017 01:12:13");
+    final Date oneHourAgo = new Date(date.getTime() - 60 * 60 * 1000);
+    final Date oneHourLater = new Date(date.getTime() + 60 * 60 * 1000);
 
     Task taskDueBefore = taskService.newTask();
     taskDueBefore.setFollowUpDate(new Date(oneHourAgo.getTime() - 1000));

@@ -291,7 +291,8 @@ class GetCompletedHistoricActivityInstancesForOptimizeTest {
   }
 
   private void assertThatActivitiesHaveAllImportantInformation(List<HistoricActivityInstance> completedHistoricActivityInstances) {
-    HistoricActivityInstance startEvent = null, endEvent = null;
+    HistoricActivityInstance startEvent = null;
+    HistoricActivityInstance endEvent = null;
     for (HistoricActivityInstance completedHistoricActivityInstance : completedHistoricActivityInstances) {
       if ("startEvent".equals(completedHistoricActivityInstance.getActivityId())) {
         startEvent = completedHistoricActivityInstance;

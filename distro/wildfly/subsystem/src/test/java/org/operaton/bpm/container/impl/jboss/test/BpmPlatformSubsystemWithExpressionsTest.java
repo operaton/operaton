@@ -33,7 +33,7 @@ import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
  */
 public class BpmPlatformSubsystemWithExpressionsTest extends AbstractSubsystemBaseTest {
 
-  private static Map<String, String> PROPERTIES = new HashMap<>();
+  private static final Map<String, String> PROPERTIES = new HashMap<>();
 
   static {
     PROPERTIES.put("org.operaton.bpm.jboss.process-engine.test.isDefault", "true");

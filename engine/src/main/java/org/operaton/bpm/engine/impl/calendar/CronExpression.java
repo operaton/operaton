@@ -238,7 +238,7 @@ public class CronExpression implements Serializable, Cloneable {
         dayMap.put("SAT", 7);
     }
 
-    private String cronExpressionValue;
+  private final String cronExpressionValue;
     private TimeZone timeZone;
     protected transient TreeSet<Integer> seconds;
     protected transient TreeSet<Integer> minutes;

@@ -48,8 +48,8 @@ public enum OptimizePermissions implements Permission {
 
   private static final Resource[] RESOURCES = new Resource[] { Resources.OPTIMIZE };
 
-  private String name;
-  private int id;
+  private final String name;
+  private final int id;
 
   OptimizePermissions(String name, int id) {
     this.name = name;

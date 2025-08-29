@@ -37,12 +37,12 @@ import org.operaton.bpm.engine.impl.jobexecutor.ExecuteJobsRunnable;
 
 public class MscExecutorService implements Service<MscExecutorService>, ExecutorService {
 
-  private static Logger log = Logger.getLogger(MscExecutorService.class.getName());
+  private static final Logger log = Logger.getLogger(MscExecutorService.class.getName());
 
   protected final Supplier<ManagedQueueExecutorService> managedQueueSupplier;
   protected final Consumer<ExecutorService> provider;
 
-  private long lastWarningLogged = System.currentTimeMillis();
+  private final long lastWarningLogged = System.currentTimeMillis();
 
   public MscExecutorService(Supplier<ManagedQueueExecutorService> managedQueueSupplier, Consumer<ExecutorService> provider) {
     this.managedQueueSupplier = managedQueueSupplier;

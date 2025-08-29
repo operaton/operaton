@@ -51,7 +51,7 @@ class GenericPropertiesConfigurationTest {
   @Test
   void genericBindingTestAsString() {
     final int batchPollTimeValue = Integer.MAX_VALUE;
-    operatonBpmProperties.getGenericProperties().getProperties().put("batch-poll-time", Integer.valueOf(batchPollTimeValue).toString());
+    operatonBpmProperties.getGenericProperties().getProperties().put("batch-poll-time", Integer.toString(batchPollTimeValue));
     genericPropertiesConfiguration.preInit(processEngineConfiguration);
     assertThat(processEngineConfiguration.getBatchPollTime()).isEqualTo(batchPollTimeValue);
   }

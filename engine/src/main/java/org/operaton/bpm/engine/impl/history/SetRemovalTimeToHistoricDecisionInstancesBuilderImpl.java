@@ -114,7 +114,7 @@ public class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements Set
   public enum Mode {
     CALCULATED_REMOVAL_TIME,
     ABSOLUTE_REMOVAL_TIME,
-    CLEARED_REMOVAL_TIME;
+    CLEARED_REMOVAL_TIME
   }
 
   public boolean isHierarchical() {

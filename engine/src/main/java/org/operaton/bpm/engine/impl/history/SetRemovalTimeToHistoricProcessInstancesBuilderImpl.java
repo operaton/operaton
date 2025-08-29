@@ -147,6 +147,6 @@ public class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetR
   {
     CALCULATED_REMOVAL_TIME,
     ABSOLUTE_REMOVAL_TIME,
-    CLEARED_REMOVAL_TIME;
+    CLEARED_REMOVAL_TIME
   }
 }

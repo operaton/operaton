@@ -36,6 +36,6 @@ public enum CaseFileItemTransition {
 
   replace,
 
-  update;
+  update
 
 }

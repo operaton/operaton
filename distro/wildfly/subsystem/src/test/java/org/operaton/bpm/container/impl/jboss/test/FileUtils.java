@@ -52,8 +52,7 @@ public final class FileUtils {
         if (is != null) {
           is.close();
         }
-      } finally {
-        ; // Cannot handle exception
+      } finally { // Cannot handle exception
       }
     }
 

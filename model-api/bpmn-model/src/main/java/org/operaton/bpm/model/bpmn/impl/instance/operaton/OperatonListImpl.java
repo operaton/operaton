@@ -50,97 +50,92 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
     super(instanceContext);
   }
 
-  @Override
-  @SuppressWarnings("unchecked")
-  public <T extends BpmnModelElementInstance> Collection<T> getValues() {
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends BpmnModelElementInstance> Collection<T> getValues() {
+        return new ModelElementCollection<>(this);
+    }
 
-    return new Collection<T>() {
+    private static class ModelElementCollection<T extends BpmnModelElementInstance> implements Collection<T> {
+        private final OperatonListImpl parent;
 
-      protected Collection<T> getElements() {
-        return ModelUtil.getModelElementCollection(getDomElement().getChildElements(), getModelInstance());
-      }
-
-      @Override
-      public int size() {
-        return getElements().size();
-      }
-
-      @Override
-      public boolean isEmpty() {
-        return getElements().isEmpty();
-      }
-
-      @Override
-      public boolean contains(Object o) {
-        return getElements().contains(o);
-      }
-
-      @Override
-      public Iterator<T> iterator() {
-        return getElements().iterator();
-      }
-
-      @Override
-      public Object[] toArray() {
-        return getElements().toArray();
-      }
-
-      public <T1> T1[] toArray(T1[] a) {
-        return getElements().toArray(a);
-      }
-
-      @Override
-      public boolean add(T t) {
-        getDomElement().appendChild(t.getDomElement());
-        return true;
-      }
-
-      @Override
-      public boolean remove(Object o) {
-        ModelUtil.ensureInstanceOf(o, BpmnModelElementInstance.class);
-        return getDomElement().removeChild(((BpmnModelElementInstance) o).getDomElement());
-      }
-
-      @Override
-      public boolean containsAll(Collection<?> c) {
-        for (Object o : c) {
-          if (!contains(o)) {
-            return false;
-          }
+        ModelElementCollection(OperatonListImpl parent) {
+            this.parent = parent;
         }
-        return true;
-      }
 
-      public boolean addAll(Collection<? extends T> c) {
-        for (T element : c) {
-          add(element);
+        protected Collection<T> getElements() {
+            return ModelUtil.getModelElementCollection(parent.getDomElement().getChildElements(), parent.getModelInstance());
         }
-        return true;
-      }
 
-      @Override
-      public boolean removeAll(Collection<?> c) {
-        boolean result = false;
-        for (Object o : c) {
-          result |= remove(o);
+        @Override
+        public int size() { return getElements().size(); }
+
+        @Override
+        public boolean isEmpty() { return getElements().isEmpty(); }
+
+        @Override
+        public boolean contains(Object o) { return getElements().contains(o); }
+
+        @Override
+        public Iterator<T> iterator() { return getElements().iterator(); }
+
+        @Override
+        public Object[] toArray() { return getElements().toArray(); }
+
+        @Override
+        public <T1> T1[] toArray(T1[] a) { return getElements().toArray(a); }
+
+        @Override
+        public boolean add(T t) {
+            parent.getDomElement().appendChild(t.getDomElement());
+            return true;
         }
-        return result;
-      }
 
-      @Override
-      public boolean retainAll(Collection<?> c) {
-        throw new UnsupportedModelOperationException("retainAll()", "not implemented");
-      }
-
-      @Override
-      public void clear() {
-        DomElement domElement = getDomElement();
-        List<DomElement> childElements = domElement.getChildElements();
-        for (DomElement childElement : childElements) {
-          domElement.removeChild(childElement);
+        @Override
+        public boolean remove(Object o) {
+            ModelUtil.ensureInstanceOf(o, BpmnModelElementInstance.class);
+            return parent.getDomElement().removeChild(((BpmnModelElementInstance) o).getDomElement());
         }
-      }
-    };
+
+        @Override
+        public boolean containsAll(Collection<?> c) {
+            for (Object o : c) {
+                if (!contains(o)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends T> c) {
+            for (T element : c) {
+                add(element);
+            }
+            return true;
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> c) {
+            boolean result = false;
+            for (Object o : c) {
+                result |= remove(o);
+            }
+            return result;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            throw new UnsupportedModelOperationException("retainAll()", "not implemented");
+        }
+
+        @Override
+        public void clear() {
+            DomElement domElement = parent.getDomElement();
+            List<DomElement> childElements = domElement.getChildElements();
+            for (DomElement childElement : childElements) {
+                domElement.removeChild(childElement);
+            }
+        }
   }
-
 }

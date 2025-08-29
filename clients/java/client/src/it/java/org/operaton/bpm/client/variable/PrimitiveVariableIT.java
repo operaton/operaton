@@ -61,7 +61,7 @@ public class PrimitiveVariableIT {
   protected static final String VARIABLE_NAME_NULL = "nullValue";
 
   protected static final int VARIABLE_VALUE_INT = 123;
-  protected static final long VARIABLE_VALUE_LONG = 123l;
+  protected static final long VARIABLE_VALUE_LONG = 123L;
   protected static final short VARIABLE_VALUE_SHORT = (short) 123;
   protected static final double VARIABLE_VALUE_DOUBLE = 12.34;
   protected static final String VARIABLE_VALUE_STRING = "bar";

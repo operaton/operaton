@@ -57,8 +57,8 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   private static final String EXAMPLE_CD_NAME = "aName";
   private static final int EXAMPLE_CD_VERSION = 42;
   private static final int EXAMPLE_TTL = 5;
-  private static final long EXAMPLE_FINISHED_CI_COUNT = 10l;
-  private static final long EXAMPLE_CLEANABLE_CI_COUNT = 5l;
+   private static final long EXAMPLE_FINISHED_CI_COUNT = 10L;
+  private static final long EXAMPLE_CLEANABLE_CI_COUNT = 5L;
   private static final String EXAMPLE_TENANT_ID = "aTenantId";
 
   protected static final String ANOTHER_EXAMPLE_CD_ID = "anotherCaseDefId";

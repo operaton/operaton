@@ -56,8 +56,8 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   private static final String EXAMPLE_PD_KEY = "aKey";
   private static final int EXAMPLE_PD_VERSION = 42;
   private static final int EXAMPLE_TTL = 5;
-  private static final long EXAMPLE_FINISHED_PI_COUNT = 10l;
-  private static final long EXAMPLE_CLEANABLE_PI_COUNT = 5l;
+  private static final long EXAMPLE_FINISHED_PI_COUNT = 10L;
+  private static final long EXAMPLE_CLEANABLE_PI_COUNT = 5L;
   private static final String EXAMPLE_TENANT_ID = "aTenantId";
 
   protected static final String ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID = "anotherDefId";

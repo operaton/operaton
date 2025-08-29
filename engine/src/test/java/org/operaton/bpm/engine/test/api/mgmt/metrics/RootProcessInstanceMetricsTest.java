@@ -89,7 +89,7 @@ public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
   @Test
   void shouldCountRootProcessInstanceWithCallActivities() {
     // given
-    BpmnModelInstance callingInstance = getCallingInstance(BASE_INSTANCE_KEY, Collections.EMPTY_MAP);
+    BpmnModelInstance callingInstance = getCallingInstance(BASE_INSTANCE_KEY, Collections.emptyMap());
     testRule.deploy(BASE_INSTANCE, callingInstance);
 
     // when

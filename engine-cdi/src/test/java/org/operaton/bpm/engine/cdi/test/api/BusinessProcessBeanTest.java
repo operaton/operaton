@@ -152,7 +152,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
-    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariable("aVariableName", "aVariableValue");
@@ -166,7 +166,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariable("anotherVariableName", "aVariableValue");
@@ -181,7 +181,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
-    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariable("aVariableName", "aVariableValue");
@@ -195,7 +195,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariable("anotherVariableName", "aVariableValue");
@@ -211,7 +211,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
-    assertThat(businessProcess.getAndClearVariableCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearVariableCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariable("aVariableName", "aVariableValue");
@@ -220,12 +220,12 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     assertThat(businessProcess.getAndClearVariableCache()).isEqualTo(Collections.singletonMap("aVariableName", "aVariableValue"));
 
     // now the variable cache is empty
-    assertThat(businessProcess.getAndClearVariableCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearVariableCache()).isEqualTo(Collections.emptyMap());
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariable("anotherVariableName", "aVariableValue");
@@ -240,7 +240,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
-    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariable("aVariableName", "aVariableValue");
@@ -249,12 +249,12 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.singletonMap("aVariableName", "aVariableValue"));
 
     // now the variable cache is empty
-    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.emptyMap());
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariable("anotherVariableName", "aVariableValue");
@@ -270,7 +270,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
-    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable - this should fail before the process is started
     try {
@@ -284,7 +284,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariableLocal("anotherVariableName", "aVariableValue");
@@ -302,7 +302,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
-    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable - this should fail before the process is started
     try {
@@ -316,7 +316,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariableLocal("anotherVariableName", "aVariableValue");
@@ -357,7 +357,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
-    assertThat(businessProcess.getAndClearVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearVariableLocalCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable - this should fail before the process is started
     try {
@@ -369,12 +369,12 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     }
 
     // the variable cache is still empty
-    assertThat(businessProcess.getAndClearVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearVariableLocalCache()).isEqualTo(Collections.emptyMap());
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariableLocal("anotherVariableName", "aVariableValue");
@@ -389,7 +389,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
-    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable - this should fail before the process is started
     try {
@@ -401,12 +401,12 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     }
 
     // the variable cache is still empty
-    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.emptyMap());
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable
     businessProcess.setVariableLocal("anotherVariableName", "aVariableValue");
@@ -454,10 +454,10 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     assertThat(runtimeService.getVariable(businessProcess.getExecutionId(), "aVariableLocalName")).isNotNull();
 
     // the cache is empty
-    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.emptyMap());
 
     // the cache is empty
-    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
+    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.emptyMap());
 
   }
 

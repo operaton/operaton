@@ -1239,7 +1239,7 @@ class TaskServiceTest {
     taskService.saveTask(task);
 
     String taskId = task.getId();
-    taskService.complete(taskId, Collections.EMPTY_MAP);
+    taskService.complete(taskId, Collections.emptyMap());
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
       historyService.deleteHistoricTaskInstance(taskId);
@@ -1580,7 +1580,7 @@ class TaskServiceTest {
     taskService.saveTask(task);
 
     String taskId = task.getId();
-    taskService.resolveTask(taskId, Collections.EMPTY_MAP);
+    taskService.resolveTask(taskId, Collections.emptyMap());
 
     if (processEngineConfiguration.getHistoryLevel().getId()>= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       historyService.deleteHistoricTaskInstance(taskId);
@@ -2303,7 +2303,7 @@ class TaskServiceTest {
   @Test
   void testRemoveVariablesNullTaskId() {
     try {
-      taskService.removeVariables(null, Collections.EMPTY_LIST);
+      taskService.removeVariables(null, Collections.emptyList());
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
       testRule.assertTextPresent("taskId is null", ae.getMessage());
@@ -2379,7 +2379,7 @@ class TaskServiceTest {
   @Test
   void testRemoveVariablesLocalNullTaskId() {
     try {
-      taskService.removeVariablesLocal(null, Collections.EMPTY_LIST);
+      taskService.removeVariablesLocal(null, Collections.emptyList());
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
       testRule.assertTextPresent("taskId is null", ae.getMessage());

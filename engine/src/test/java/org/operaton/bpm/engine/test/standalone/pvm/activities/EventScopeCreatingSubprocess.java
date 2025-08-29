@@ -72,7 +72,7 @@ public class EventScopeCreatingSubprocess implements CompositeActivityBehavior {
     if(outgoingTransitions.isEmpty()) {
       outgoingExecution.end(true);
     }else {
-      outgoingExecution.leaveActivityViaTransitions(outgoingTransitions, Collections.EMPTY_LIST);
+      outgoingExecution.leaveActivityViaTransitions(outgoingTransitions, Collections.emptyList());
     }
   }
 

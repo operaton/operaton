@@ -1230,7 +1230,7 @@ class RepositoryServiceTest {
     assertThat(start.getId()).isEqualTo("start");
     assertThat(start.getProperty("name")).isEqualTo("S t a r t");
     assertThat(start.getProperty("documentation")).isEqualTo("the start event");
-    assertThat(start.getActivities()).isEqualTo(Collections.EMPTY_LIST);
+    assertThat(start.getActivities()).isEqualTo(Collections.emptyList());
     List<PvmTransition> outgoingTransitions = start.getOutgoingTransitions();
     assertThat(outgoingTransitions).hasSize(1);
     assertThat(outgoingTransitions.get(0).getProperty(BpmnParse.PROPERTYNAME_CONDITION_TEXT)).isEqualTo("${a == b}");

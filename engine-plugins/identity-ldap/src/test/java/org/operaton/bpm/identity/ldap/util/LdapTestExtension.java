@@ -39,10 +39,10 @@ public class LdapTestExtension implements BeforeAllCallback, AfterAllCallback {
     private static final String ADMIN_DN = "cn=admin,dc=operaton,dc=org";
     private LdapTestContext ldapTestContextContext;
 
-    private int additionalNumberOfUsers = 0;
-    private int additionalNumberOfGroups = 0;
-    private int additionalNumberOfRoles = 0;
-    private boolean posixContext = false;
+    private int additionalNumberOfUsers;
+    private int additionalNumberOfGroups;
+    private int additionalNumberOfRoles;
+    private boolean posixContext;
 
     private final GenericContainer<?> ldapContainer = new GenericContainer<>("osixia/openldap:latest")
             .withExposedPorts(389)

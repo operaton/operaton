@@ -238,6 +238,7 @@ public class ProcessInstanceRestServiceQueryTest extends
     verify(mockedQuery).incidentMessage(queryParameters.get("incidentMessage"));
     verify(mockedQuery).incidentMessageLike(queryParameters.get("incidentMessageLike"));
     verify(mockedQuery).incidentType(queryParameters.get("incidentType"));
+    verify(mockedQuery).rootProcessInstanceId(queryParameters.get("rootProcessInstanceId"));
     verify(mockedQuery).list();
   }
 
@@ -260,6 +261,7 @@ public class ProcessInstanceRestServiceQueryTest extends
     parameters.put("incidentMessageLike", "incMessageLike");
     parameters.put("incidentType", "incType");
     parameters.put("caseInstanceId", "aCaseInstanceId");
+    parameters.put("rootProcessInstanceId", "aRootProcessInstanceId");
 
     return parameters;
   }
@@ -913,8 +915,43 @@ public class ProcessInstanceRestServiceQueryTest extends
     verify(mockedQuery).incidentMessage(queryParameters.get("incidentMessage"));
     verify(mockedQuery).incidentMessageLike(queryParameters.get("incidentMessageLike"));
     verify(mockedQuery).incidentType(queryParameters.get("incidentType"));
+    verify(mockedQuery).rootProcessInstanceId(queryParameters.get("rootProcessInstanceId"));
     verify(mockedQuery).list();
   }
+
+  @Test
+  public void testGetProcessInstancesForRootProcessInstanceId() {
+    Response response = given().queryParam("rootProcessInstanceId", MockProvider.EXAMPLE_ROOT_PROCESS_INSTANCE_ID)
+            .header("accept", MediaType.APPLICATION_JSON)
+            .then()
+            .expect()
+            .statusCode(Status.OK.getStatusCode())
+            .contentType(ContentType.JSON)
+            .when()
+            .get(PROCESS_INSTANCE_QUERY_URL);
+
+    verify(mockedQuery).list();
+
+    String content = response.asString();
+    List<String> instances = from(content).getList("");
+    assertThat(instances).size().isGreaterThan(0);
+
+    String returnedProcessInstanceId = from(content).getString("[0].id");
+    String returnedProcessDefinitionId = from(content).getString("[0].definitionId");
+    String returnedProcessInstanceBusinessKey = from(content).getString("[0].businessKey");
+    String returnedCaseInstanceId = from(content).getString("[0].caseInstanceId");
+    Boolean returnedIsEnded = from(content).getBoolean("[0].ended");
+    Boolean returnedIsSuspended = from(content).getBoolean("[0].suspended");
+    String returnedTenantId = from(content).getString("[0].tenantId");
+
+    assertThat(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID).isEqualTo(returnedProcessInstanceId);
+    assertThat(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID).isEqualTo(returnedProcessDefinitionId);
+    assertThat(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY).isEqualTo(returnedProcessInstanceBusinessKey);
+    assertThat(MockProvider.EXAMPLE_CASE_INSTANCE_ID).isEqualTo(returnedCaseInstanceId);
+    assertThat(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_ENDED).isEqualTo(returnedIsEnded);
+    assertThat(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED).isEqualTo(returnedIsSuspended);
+    assertThat(MockProvider.EXAMPLE_TENANT_ID).isEqualTo(returnedTenantId);
+}
 
   @Test
   void testTenantIdListParameter() {

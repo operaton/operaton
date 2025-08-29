@@ -2720,6 +2720,47 @@ class HistoricProcessInstanceTest {
         assertThat(count).isZero();
     }
 
+    @Test
+    public void shouldQueryByRootProcessInstanceId() {
+        // given a parent process instance with a couple of subprocesses
+        BpmnModelInstance rootProcess = Bpmn.createExecutableProcess("rootProcess")
+                .startEvent("startRoot")
+                .callActivity()
+                .calledElement("levelOneProcess")
+                .endEvent("endRoot")
+                .done();
+
+        BpmnModelInstance levelOneProcess = Bpmn.createExecutableProcess("levelOneProcess")
+                .startEvent("startLevelOne")
+                .callActivity()
+                .calledElement("levelTwoProcess")
+                .endEvent("endLevelOne")
+                .done();
+
+        BpmnModelInstance levelTwoProcess = Bpmn.createExecutableProcess("levelTwoProcess")
+                .startEvent("startLevelTwo")
+                .userTask("Task1")
+                .endEvent("endLevelTwo")
+                .done();
+
+        deployment(rootProcess, levelOneProcess, levelTwoProcess);
+        String rootProcessId = runtimeService.startProcessInstanceByKey("rootProcess").getId();
+        List<HistoricProcessInstance> allHistoricProcessInstances = historyService.createHistoricProcessInstanceQuery()
+                .list();
+
+        // when
+        HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+                .rootProcessInstanceId(rootProcessId);
+
+        // then
+        assertThat(3).isEqualTo(allHistoricProcessInstances.size());
+        assertThat(3).isEqualTo(allHistoricProcessInstances.stream()
+                .filter(process -> process.getRootProcessInstanceId().equals(rootProcessId))
+                .count());
+        assertThat(3).isEqualTo(historicProcessInstanceQuery.count());
+        assertThat(3).isEqualTo(historicProcessInstanceQuery.list().size());
+  }
+
 
   protected void deployment(String... resources) {
     testHelper.deploy(resources);

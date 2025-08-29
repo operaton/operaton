@@ -53,6 +53,7 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByBusinessKey;
@@ -2252,6 +2253,45 @@ public class ProcessInstanceQueryTest {
     assertThat(list).hasSize(1);
     assertThat(list.get(0).getId()).isEqualTo(processInstanceId);
   }
+
+    @Test
+    public void testQueryByRootProcessInstanceId() {
+        // given a parent process instance with a couple of subprocesses
+        BpmnModelInstance baseProcess = Bpmn.createExecutableProcess("baseProcess")
+                .startEvent("startRoot")
+                .callActivity()
+                .calledElement("levelOneProcess")
+                .endEvent("endRoot")
+                .done();
+
+        BpmnModelInstance levelOneProcess = Bpmn.createExecutableProcess("levelOneProcess")
+                .startEvent("startLevelOne")
+                .callActivity()
+                .calledElement("levelTwoProcess")
+                .endEvent("endLevelOne")
+                .done();
+
+        BpmnModelInstance levelTwoProcess = Bpmn.createExecutableProcess("levelTwoProcess")
+                .startEvent("startLevelTwo")
+                .userTask("Task1")
+                .endEvent("endLevelTwo")
+                .done();
+
+        testHelper.deploy(baseProcess, levelOneProcess, levelTwoProcess);
+        String rootProcessId = runtimeService.startProcessInstanceByKey("baseProcess").getId();
+        List<ProcessInstance> allProcessInstances = runtimeService.createProcessInstanceQuery().list();
+
+        // when
+        ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery()
+                .rootProcessInstanceId(rootProcessId);
+
+        // then
+        assertThat(3).isEqualTo(allProcessInstances.stream()
+                .filter(process -> process.getRootProcessInstanceId().equals(rootProcessId))
+                .count());
+        assertThat(3).isEqualTo(processInstanceQuery.count());
+        assertThat(3).isEqualTo(processInstanceQuery.list().size());
+    }
 
   @Test
   void testQueryByRootProcessInstancesAndSuperProcess() {

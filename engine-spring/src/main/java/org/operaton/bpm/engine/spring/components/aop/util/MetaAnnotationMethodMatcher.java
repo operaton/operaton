@@ -54,7 +54,7 @@ public class MetaAnnotationMethodMatcher extends AnnotationMethodMatcher {
 		}
 		// The method may be on an interface, so let's check on the target class as well.
 		Method specificMethod = AopUtils.getMostSpecificMethod(method, targetClass);
-		return (specificMethod != method &&
-				(AnnotationUtils.getAnnotation(specificMethod, this.annotationType) != null));
+		return specificMethod != method &&
+				(AnnotationUtils.getAnnotation(specificMethod, this.annotationType) != null);
 	}
 }

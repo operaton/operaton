@@ -133,10 +133,10 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity, Seri
       return false;
     }
     final MetricIntervalEntity other = (MetricIntervalEntity) obj;
-    if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+    if (this.name == null ? (other.name != null) : !this.name.equals(other.name)) {
       return false;
     }
-    if ((this.reporter == null) ? (other.reporter != null) : !this.reporter.equals(other.reporter)) {
+    if (this.reporter == null ? (other.reporter != null) : !this.reporter.equals(other.reporter)) {
       return false;
     }
     if (this.timestamp != other.timestamp && (this.timestamp == null || !this.timestamp.equals(other.timestamp))) {

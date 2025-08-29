@@ -90,7 +90,7 @@ public final class ResourceTypeUtil {
     if (clazz == null) {
       return Permissions.values();
     }
-    return ((Permission[]) clazz.getEnumConstants());
+    return (Permission[]) clazz.getEnumConstants();
   }
 
   /**

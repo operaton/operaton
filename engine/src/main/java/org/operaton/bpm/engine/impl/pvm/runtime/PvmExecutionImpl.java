@@ -2193,10 +2193,10 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
                                    String currentActivityInstanceId, String currentActivityId) {
     return
       //activityInstanceId's can be null on transitions, so the activityId must be equal
-      ((lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && lastActivityId.equals(currentActivityId))
+      (lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && lastActivityId.equals(currentActivityId))
         //if activityInstanceId's are not null they must be equal -> otherwise execution changed
         || (lastActivityInstanceId != null && lastActivityInstanceId.equals(currentActivityInstanceId)
-        && (lastActivityId == null || lastActivityId.equals(currentActivityId))));
+        && (lastActivityId == null || lastActivityId.equals(currentActivityId)));
 
   }
 
@@ -2211,7 +2211,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       return targetScope.getActivityInstanceId();
     } else {
       ActivityImpl targetActivity = targetScope.getActivity();
-      if ((targetActivity != null && targetActivity.getActivities().isEmpty())) {
+      if (targetActivity != null && targetActivity.getActivities().isEmpty()) {
         return targetScope.getActivityInstanceId();
       } else {
         return targetScope.getParentActivityInstanceId();

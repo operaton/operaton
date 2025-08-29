@@ -82,7 +82,7 @@ public class XmlSerializableNoAnnotation {
     int result = 1;
     result = prime * result + (booleanProperty ? 1231 : 1237);
     result = prime * result + intProperty;
-    result = prime * result + ((stringProperty == null) ? 0 : stringProperty.hashCode());
+    result = prime * result + (stringProperty == null ? 0 : stringProperty.hashCode());
     return result;
   }
 

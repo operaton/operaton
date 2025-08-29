@@ -189,7 +189,7 @@ public class AuthorizationException extends ProcessEngineException {
     builder.append("'");
     builder.append(permissionName);
     builder.append("' permission on resource '");
-    builder.append((resourceId != null ? (resourceId+"' of type '") : "" ));
+    builder.append(resourceId != null ? (resourceId+"' of type '") : "");
     builder.append(resourceType);
     builder.append("'");
 

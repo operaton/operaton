@@ -719,7 +719,7 @@ public class BusinessProcess implements Serializable {
    */
   public ProcessInstance getProcessInstance() {
     Execution execution = getExecution();
-    if(execution != null && !(execution.getProcessInstanceId().equals(execution.getId()))){
+    if(execution != null && !execution.getProcessInstanceId().equals(execution.getId())){
       return processEngine
             .getRuntimeService()
             .createProcessInstanceQuery()

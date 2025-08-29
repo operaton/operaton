@@ -62,7 +62,7 @@ public class ManagedJobExecutorTest {
 
   @BeforeEach
   void setUpCdiProcessEngineTestCase() {
-    processEngine = (ProgrammaticBeanLookup.lookup(ManagedJobExecutorBean.class)).getProcessEngine();
+    processEngine = ProgrammaticBeanLookup.lookup(ManagedJobExecutorBean.class).getProcessEngine();
     managementService = processEngine.getManagementService();
     runtimeService = processEngine.getRuntimeService();
   }

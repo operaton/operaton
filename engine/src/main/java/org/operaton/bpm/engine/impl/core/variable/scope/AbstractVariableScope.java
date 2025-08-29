@@ -106,7 +106,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
   }
 
   public void collectVariables(VariableMapImpl resultVariables, Collection<String> variableNames, boolean isLocal, boolean deserializeValues) {
-    boolean collectAll = (variableNames == null);
+    boolean collectAll = variableNames == null;
 
     List<CoreVariableInstance> localVariables = getVariableInstancesLocal(variableNames);
     for (CoreVariableInstance variableInstance : localVariables) {

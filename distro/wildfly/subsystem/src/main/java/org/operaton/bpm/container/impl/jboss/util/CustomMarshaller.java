@@ -161,7 +161,7 @@ public final class CustomMarshaller {
     @Override
     public void marshallAsElement(AttributeDefinition attribute, ModelNode resourceModel, boolean marshallDefault, XMLStreamWriter writer) throws XMLStreamException {
       assert attribute instanceof ObjectListAttributeDefinition;
-      ObjectListAttributeDefinition list = ((ObjectListAttributeDefinition) attribute);
+      ObjectListAttributeDefinition list = (ObjectListAttributeDefinition) attribute;
 
       ObjectTypeAttributeDefinition objectType = (ObjectTypeAttributeDefinition) CustomMarshaller.getValueType(list, ObjectListAttributeDefinition.class);
       AttributeDefinition[] valueTypes = CustomMarshaller.getValueTypes(list, ObjectTypeAttributeDefinition.class);

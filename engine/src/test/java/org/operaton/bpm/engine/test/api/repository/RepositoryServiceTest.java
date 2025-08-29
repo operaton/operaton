@@ -1281,11 +1281,11 @@ class RepositoryServiceTest {
   @Test
   void testGetProcessDefinitions() {
     List<String> deploymentIds = new ArrayList<>();
-    deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='IDR' name='Insurance Damage Report 1' isExecutable='true'><startEvent id='start'/></process></definitions>")));
-    deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='IDR' name='Insurance Damage Report 2' isExecutable='true'><startEvent id='start'/></process></definitions>")));
-    deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='IDR' name='Insurance Damage Report 3' isExecutable='true'><startEvent id='start'/></process></definitions>")));
-    deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='EN' name='Expense Note 1' isExecutable='true'><startEvent id='start'/></process></definitions>")));
-    deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='EN' name='Expense Note 2' isExecutable='true'><startEvent id='start'/></process></definitions>")));
+    deploymentIds.add(deployProcessString("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='IDR' name='Insurance Damage Report 1' isExecutable='true'><startEvent id='start'/></process></definitions>"));
+    deploymentIds.add(deployProcessString("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='IDR' name='Insurance Damage Report 2' isExecutable='true'><startEvent id='start'/></process></definitions>"));
+    deploymentIds.add(deployProcessString("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='IDR' name='Insurance Damage Report 3' isExecutable='true'><startEvent id='start'/></process></definitions>"));
+    deploymentIds.add(deployProcessString("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='EN' name='Expense Note 1' isExecutable='true'><startEvent id='start'/></process></definitions>"));
+    deploymentIds.add(deployProcessString("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + ">" + "  <process id='EN' name='Expense Note 2' isExecutable='true'><startEvent id='start'/></process></definitions>"));
 
     List<ProcessDefinition> processDefinitions = repositoryService
       .createProcessDefinitionQuery()
@@ -1333,8 +1333,8 @@ class RepositoryServiceTest {
   @Test
   void testDeployIdenticalProcessDefinitions() {
     List<String> deploymentIds = new ArrayList<>();
-    deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + "><process id='IDR' name='Insurance Damage Report' isExecutable='true'><startEvent id='start'/></process></definitions>")));
-    deploymentIds.add(deployProcessString(("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + "><process id='IDR' name='Insurance Damage Report' isExecutable='true'><startEvent id='start'/></process></definitions>")));
+    deploymentIds.add(deployProcessString("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + "><process id='IDR' name='Insurance Damage Report' isExecutable='true'><startEvent id='start'/></process></definitions>"));
+    deploymentIds.add(deployProcessString("<definitions " + NAMESPACE + " " + TARGET_NAMESPACE + "><process id='IDR' name='Insurance Damage Report' isExecutable='true'><startEvent id='start'/></process></definitions>"));
 
     List<ProcessDefinition> processDefinitions = repositoryService
       .createProcessDefinitionQuery()

@@ -117,8 +117,8 @@ public class MeterLogManager extends AbstractManager {
       .getDbMetricsReporter()
       .getReportingIntervalInSeconds();
 
-    return (query.getEndDate() == null
-        || query.getEndDateMilliseconds()>= ClockUtil.getCurrentTime().getTime() - (1000 * reportingIntervalInSeconds));
+    return query.getEndDate() == null
+        || query.getEndDateMilliseconds()>= ClockUtil.getCurrentTime().getTime() - (1000 * reportingIntervalInSeconds);
   }
 
   protected boolean shouldAddCurrentUnloggedCount(MetricsQueryImpl query) {

@@ -190,7 +190,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((topicName == null) ? 0 : topicName.hashCode());
+    result = prime * result + (topicName == null ? 0 : topicName.hashCode());
     return result;
   }
 

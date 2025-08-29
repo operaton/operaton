@@ -1548,7 +1548,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   protected void verifyMigrationExecutionBuilderInteraction(InOrder inOrder, Map<String, Object> migrationExecution) {
-    List<String> processInstanceIds = ((List<String>) migrationExecution.get(MigrationExecutionDtoBuilder.PROP_PROCESS_INSTANCE_IDS));
+    List<String> processInstanceIds = (List<String>) migrationExecution.get(MigrationExecutionDtoBuilder.PROP_PROCESS_INSTANCE_IDS);
 
     inOrder.verify(migrationPlanExecutionBuilderMock).processInstanceIds(processInstanceIds);
     ProcessInstanceQueryDto processInstanceQuery = (ProcessInstanceQueryDto) migrationExecution.get(MigrationExecutionDtoBuilder.PROP_PROCESS_INSTANCE_QUERY);

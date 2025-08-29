@@ -75,7 +75,7 @@ public class JsonSerializable {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((dateProperty == null) ? 0 : dateProperty.hashCode());
+    result = prime * result + (dateProperty == null ? 0 : dateProperty.hashCode());
     return result;
   }
 

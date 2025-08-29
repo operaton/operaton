@@ -56,8 +56,8 @@ public class QueryPropertyImpl implements QueryProperty {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((function == null) ? 0 : function.hashCode());
-    result = prime * result + ((name == null) ? 0 : name.hashCode());
+    result = prime * result + (function == null ? 0 : function.hashCode());
+    result = prime * result + (name == null ? 0 : name.hashCode());
     return result;
   }
 

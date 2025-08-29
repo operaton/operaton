@@ -42,7 +42,7 @@ public class ResourceUtil implements Resource {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((resourceName == null) ? 0 : resourceName.hashCode());
+    result = prime * result + (resourceName == null ? 0 : resourceName.hashCode());
     result = prime * result + resourceType;
     return result;
   }

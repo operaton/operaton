@@ -266,7 +266,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
       if (scope != -1) {
         // Methods are added as variables in the ScriptScope
         Object attributeValue = scriptContext.getAttribute(functionName);
-        return (attributeValue instanceof Method method) ? method : null;
+        return attributeValue instanceof Method method ? method : null;
       } else {
         return null;
       }

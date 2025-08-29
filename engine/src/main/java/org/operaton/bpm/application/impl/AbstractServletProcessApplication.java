@@ -35,7 +35,7 @@ public class AbstractServletProcessApplication extends AbstractProcessApplicatio
 
   @Override
   protected String autodetectProcessApplicationName() {
-    String name = (servletContextName != null && !servletContextName.isEmpty()) ? servletContextName : servletContextPath;
+    String name = servletContextName != null && !servletContextName.isEmpty() ? servletContextName : servletContextPath;
     if(name.startsWith("/")) {
       name = name.substring(1);
     }

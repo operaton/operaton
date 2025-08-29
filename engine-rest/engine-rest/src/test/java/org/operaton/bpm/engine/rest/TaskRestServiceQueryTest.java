@@ -2294,7 +2294,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
       .post(TASK_QUERY_URL);
 
     ArgumentCaptor<TaskQueryImpl> argument = ArgumentCaptor.forClass(TaskQueryImpl.class);
-    verify(((TaskQueryImpl) mockQuery)).addOrQuery(argument.capture());
+    verify((TaskQueryImpl) mockQuery).addOrQuery(argument.capture());
     assertEquals(MockProvider.EXAMPLE_TASK_NAME, argument.getValue().getName());
     assertEquals(MockProvider.EXAMPLE_TASK_DESCRIPTION, argument.getValue().getDescription());
   }

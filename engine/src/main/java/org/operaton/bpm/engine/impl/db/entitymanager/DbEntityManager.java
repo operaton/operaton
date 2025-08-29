@@ -228,7 +228,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     if (loadedObjects.isEmpty() || loadedObjects.get(0) == null) {
       return loadedObjects;
     }
-    if (! (DbEntity.class.isAssignableFrom(loadedObjects.get(0).getClass()))) {
+    if (! DbEntity.class.isAssignableFrom(loadedObjects.get(0).getClass())) {
       return loadedObjects;
     }
     List<DbEntity> filteredObjects = new ArrayList<>(loadedObjects.size());

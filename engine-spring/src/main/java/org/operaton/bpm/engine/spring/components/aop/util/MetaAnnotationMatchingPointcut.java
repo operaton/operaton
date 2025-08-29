@@ -61,7 +61,7 @@ public class MetaAnnotationMatchingPointcut implements Pointcut {
 	public MetaAnnotationMatchingPointcut(
 			Class<? extends Annotation> classAnnotationType, Class<? extends Annotation> methodAnnotationType) {
 
-		Assert.isTrue((classAnnotationType != null || methodAnnotationType != null),
+		Assert.isTrue(classAnnotationType != null || methodAnnotationType != null,
 				"Either Class annotation type or Method annotation type needs to be specified (or both)");
 
 		if (classAnnotationType != null) {

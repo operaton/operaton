@@ -158,16 +158,16 @@ class ExceptionBuiltinCodesTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("calling").getId();
 
     List<Execution> executions = runtimeService.createExecutionQuery().list();
-    executions.forEach((execution -> {
+    executions.forEach(execution -> {
       ((ExecutionEntity) execution).setCachedEntityState(0);
 
       engineRule.getProcessEngineConfiguration()
           .getCommandExecutorTxRequired()
           .execute((Command<Void>) commandContext -> {
-            commandContext.getDbEntityManager().merge(((ExecutionEntity) execution));
+            commandContext.getDbEntityManager().merge((ExecutionEntity) execution);
             return null;
           });
-    }));
+    });
 
     assertThatThrownBy(() -> runtimeService.deleteProcessInstance(processInstanceId, ""))
         .isInstanceOf(ProcessEngineException.class)

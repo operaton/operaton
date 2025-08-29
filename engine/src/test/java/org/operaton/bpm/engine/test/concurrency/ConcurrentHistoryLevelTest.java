@@ -50,7 +50,7 @@ class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
   @RequiredDatabase(excludes = {DbSqlSessionFactory.H2, DbSqlSessionFactory.MARIADB})
   void test() throws Exception {
     Integer transactionIsolationLevel = DatabaseHelper.getTransactionIsolationLevel(processEngineConfiguration);
-    assumeThat((transactionIsolationLevel != null && !transactionIsolationLevel.equals(Connection.TRANSACTION_READ_COMMITTED)));
+    assumeThat(transactionIsolationLevel != null && !transactionIsolationLevel.equals(Connection.TRANSACTION_READ_COMMITTED));
     ThreadControl thread1 = executeControllableCommand(new ControllableUpdateHistoryLevelCommand());
     thread1.reportInterrupts();
     thread1.waitForSync();

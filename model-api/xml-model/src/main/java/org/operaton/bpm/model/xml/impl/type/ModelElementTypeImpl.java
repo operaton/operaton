@@ -332,9 +332,9 @@ public class ModelElementTypeImpl implements ModelElementType {
   public int hashCode() {
     int prime = 31;
     int result = 1;
-    result = prime * result + ((model == null) ? 0 : model.hashCode());
-    result = prime * result + ((typeName == null) ? 0 : typeName.hashCode());
-    result = prime * result + ((typeNamespace == null) ? 0 : typeNamespace.hashCode());
+    result = prime * result + (model == null ? 0 : model.hashCode());
+    result = prime * result + (typeName == null ? 0 : typeName.hashCode());
+    result = prime * result + (typeNamespace == null ? 0 : typeNamespace.hashCode());
     return result;
   }
 

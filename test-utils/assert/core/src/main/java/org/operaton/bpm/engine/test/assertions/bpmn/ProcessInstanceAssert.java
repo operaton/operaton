@@ -345,7 +345,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     message.append("Expecting %s to hold ");
     if (shouldHaveVariables) {
       message.append("process variables");
-      message.append((shouldHaveSpecificVariables ? " %s, " : ", "));
+      message.append(shouldHaveSpecificVariables ? " %s, " : ", ");
     } else {
       message.append("no variables at all, ");
     }

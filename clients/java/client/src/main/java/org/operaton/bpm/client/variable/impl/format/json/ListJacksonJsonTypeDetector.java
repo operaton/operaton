@@ -51,7 +51,7 @@ public class ListJacksonJsonTypeDetector implements TypeDetector {
 
   private boolean bindingsArePresent(Class<?> erasedType) {
     TypeVariable<?>[] vars = erasedType.getTypeParameters();
-    int varLen = (vars == null) ? 0 : vars.length;
+    int varLen = vars == null ? 0 : vars.length;
     if (varLen == 0) {
       return false;
     }

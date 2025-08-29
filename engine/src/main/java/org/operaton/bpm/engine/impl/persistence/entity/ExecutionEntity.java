@@ -1775,14 +1775,14 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     // Only mark a flag as false when the list is not-null and empty. If null,
     // we can't be sure there are no entries in it since
     // the list hasn't been initialized/queried yet.
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, TASKS_STATE_BIT, (tasks == null || !tasks.isEmpty()));
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, EVENT_SUBSCRIPTIONS_STATE_BIT, (eventSubscriptions == null || !eventSubscriptions.isEmpty()));
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, JOBS_STATE_BIT, (jobs == null || !jobs.isEmpty()));
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, INCIDENT_STATE_BIT, (incidents == null || !incidents.isEmpty()));
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, VARIABLES_STATE_BIT, (!variableStore.isInitialized() || !variableStore.isEmpty()));
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, TASKS_STATE_BIT, tasks == null || !tasks.isEmpty());
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, EVENT_SUBSCRIPTIONS_STATE_BIT, eventSubscriptions == null || !eventSubscriptions.isEmpty());
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, JOBS_STATE_BIT, jobs == null || !jobs.isEmpty());
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, INCIDENT_STATE_BIT, incidents == null || !incidents.isEmpty());
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, VARIABLES_STATE_BIT, !variableStore.isInitialized() || !variableStore.isEmpty());
     cachedEntityState = BitMaskUtil.setBit(cachedEntityState, SUB_PROCESS_INSTANCE_STATE_BIT, shouldQueryForSubprocessInstance);
     cachedEntityState = BitMaskUtil.setBit(cachedEntityState, SUB_CASE_INSTANCE_STATE_BIT, shouldQueryForSubCaseInstance);
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, EXTERNAL_TASKS_BIT, (externalTasks == null || !externalTasks.isEmpty()));
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, EXTERNAL_TASKS_BIT, externalTasks == null || !externalTasks.isEmpty());
 
     return cachedEntityState;
   }

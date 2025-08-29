@@ -113,7 +113,7 @@ public class DeployBarTask extends Task {
     StringBuilder builder = new StringBuilder("Could not find a process engine with name ");
     builder.append(name).append(", engines loaded:\n");
     for (ProcessEngineInfo engineInfo : processEngineInfos) {
-      String engineName = (engineInfo.getName() != null) ? engineInfo.getName() : "unknown";
+      String engineName = engineInfo.getName() != null ? engineInfo.getName() : "unknown";
       builder.append("Process engine name: ").append(engineName);
       builder.append(" - resource: ").append(engineInfo.getResourceUrl());
       builder.append(" - status: ");

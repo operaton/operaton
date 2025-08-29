@@ -457,7 +457,7 @@ class FoxJobRetryCmdTest {
 
     //then
     Date expectedDate = simpleDateFormat.parse("2017-01-01T10:15:00");
-    Date duedateTime = (managementService.createJobQuery().singleResult()).getDuedate();
+    Date duedateTime = managementService.createJobQuery().singleResult().getDuedate();
     assertThat(duedateTime).isEqualTo(expectedDate);
   }
 

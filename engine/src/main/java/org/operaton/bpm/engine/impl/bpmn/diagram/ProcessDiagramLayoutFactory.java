@@ -156,10 +156,10 @@ public class ProcessDiagramLayoutFactory {
           minY = y;
         }
         if (maxX == null || maxX < (x + width)) {
-          maxX = (x + width);
+          maxX = x + width;
         }
         if (maxY == null || maxY < (y + height)) {
-          maxY = (y + height);
+          maxY = y + height;
         }
       }
     }

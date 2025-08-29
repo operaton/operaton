@@ -101,7 +101,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 
     ProcessEngines.registerProcessEngine(this);
 
-    if ((jobExecutor != null)) {
+    if (jobExecutor != null) {
       // register process engine with Job Executor
       jobExecutor.registerProcessEngine(this);
     }
@@ -148,7 +148,7 @@ public class ProcessEngineImpl implements ProcessEngine {
       processEngineConfiguration.getDbMetricsReporter().stop();
     }
 
-    if ((jobExecutor != null)) {
+    if (jobExecutor != null) {
       // unregister process engine with Job Executor
       jobExecutor.unregisterProcessEngine(this);
     }

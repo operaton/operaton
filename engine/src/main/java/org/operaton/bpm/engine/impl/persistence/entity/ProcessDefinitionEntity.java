@@ -325,7 +325,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   @Override
   public void setVersion(int version) {
     this.version = version;
-    firstVersion = (this.version == 1);
+    firstVersion = this.version == 1;
   }
 
   @Override

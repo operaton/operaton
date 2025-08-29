@@ -468,7 +468,7 @@ public class CronExpression implements Serializable, Cloneable {
                 incr = 1;
             }
             addToSet(sval, eval, incr, type);
-            return (i + 3);
+            return i + 3;
         }
 
         if (c == '?') {
@@ -896,7 +896,7 @@ public class CronExpression implements Serializable, Cloneable {
         }
         ValueSet val = new ValueSet();
 
-        val.pos = (i < s.length()) ? i : i + 1;
+        val.pos = i < s.length() ? i : i + 1;
         val.value = Integer.parseInt(s1.toString());
         return val;
     }
@@ -1343,14 +1343,14 @@ public class CronExpression implements Serializable, Cloneable {
 
 
     protected boolean isLeapYear(int year) {
-        return ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0));
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
     protected int getLastDayOfMonth(int monthNum, int year) {
 
         return switch (monthNum) {
         case 1 -> 31;
-        case 2 -> (isLeapYear(year)) ? 29 : 28;
+        case 2 -> isLeapYear(year) ? 29 : 28;
         case 3 -> 31;
         case 4 -> 30;
         case 5 -> 31;

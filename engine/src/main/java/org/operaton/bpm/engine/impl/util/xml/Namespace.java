@@ -62,7 +62,7 @@ public class Namespace {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((namespaceUri == null) ? 0 : namespaceUri.hashCode());
+    result = prime * result + (namespaceUri == null ? 0 : namespaceUri.hashCode());
     return result;
   }
 

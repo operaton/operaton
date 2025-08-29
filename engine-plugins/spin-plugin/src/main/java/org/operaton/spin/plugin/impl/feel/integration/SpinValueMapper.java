@@ -142,7 +142,7 @@ public class SpinValueMapper extends JavaCustomValueMapper {
   protected String nodeName(SpinXmlNode<?> n) {
     String prefix = n.prefix();
     String name = n.name();
-    return (prefix != null && !prefix.isEmpty())? prefix + "$" + name : name;
+    return prefix != null && !prefix.isEmpty()? prefix + "$" + name : name;
   }
 }
 

@@ -419,19 +419,19 @@ public class Scanner {
 	}
 
 	protected Token nextToken() throws ScanException {
+		char inputCharAtPosition = input.charAt(position);
 		if (isEval()) {
-			if (input.charAt(position) == '}') {
+			if (inputCharAtPosition == '}') {
 				return fixed(Symbol.END_EVAL);
 			}
 			return nextEval();
 		} else {
 			if (position+1 < input.length() && input.charAt(position+1) == '{') {
-				switch (input.charAt(position)) {
-					case '#':
-						return fixed(Symbol.START_EVAL_DEFERRED);
-					case '$':
-						return fixed(Symbol.START_EVAL_DYNAMIC);
-				}
+        if (inputCharAtPosition == '#') {
+          return fixed(Symbol.START_EVAL_DEFERRED);
+        } else if (inputCharAtPosition == '$') {
+          return fixed(Symbol.START_EVAL_DYNAMIC);
+        }
 			}
 			return nextText();
 		}

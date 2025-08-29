@@ -395,14 +395,12 @@ public class BpmPlatformParser1_1 extends AbstractParser {
 
 
       while(reader.hasNext() && !reader.isEndElement()) {
-        switch (reader.getLocalName()) {
-          case SUBSYSTEM: {
-            try {
-              final BpmPlatformParser1_1 parser = new BpmPlatformParser1_1();
-              parser.parse(reader, operations, subsystemAddress);
-            } catch (Exception e) {
-              throw new XMLStreamException(e);
-            }
+        if (reader.getLocalName() == SUBSYSTEM) {
+          try {
+            final BpmPlatformParser1_1 parser = new BpmPlatformParser1_1();
+            parser.parse(reader, operations, subsystemAddress);
+          } catch (Exception e) {
+            throw new XMLStreamException(e);
           }
         }
       }

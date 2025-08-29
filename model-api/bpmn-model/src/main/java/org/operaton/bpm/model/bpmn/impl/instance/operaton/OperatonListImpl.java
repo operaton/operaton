@@ -53,18 +53,16 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
     @Override
     @SuppressWarnings("unchecked")
     public <T extends BpmnModelElementInstance> Collection<T> getValues() {
-        return new ModelElementCollection<>(this);
+        return new ModelElementCollection<>();
     }
 
-    private static class ModelElementCollection<T extends BpmnModelElementInstance> implements Collection<T> {
-        private final OperatonListImpl parent;
-
-        ModelElementCollection(OperatonListImpl parent) {
-            this.parent = parent;
-        }
+    private class ModelElementCollection<T extends BpmnModelElementInstance> implements Collection<T> {
 
         protected Collection<T> getElements() {
-            return ModelUtil.getModelElementCollection(parent.getDomElement().getChildElements(), parent.getModelInstance());
+            return ModelUtil.getModelElementCollection(
+                    OperatonListImpl.this.getDomElement().getChildElements(),
+                    OperatonListImpl.this.getModelInstance()
+            );
         }
 
         @Override
@@ -87,14 +85,14 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
 
         @Override
         public boolean add(T t) {
-            parent.getDomElement().appendChild(t.getDomElement());
+            OperatonListImpl.this.getDomElement().appendChild(t.getDomElement());
             return true;
         }
 
         @Override
         public boolean remove(Object o) {
             ModelUtil.ensureInstanceOf(o, BpmnModelElementInstance.class);
-            return parent.getDomElement().removeChild(((BpmnModelElementInstance) o).getDomElement());
+            return OperatonListImpl.this.getDomElement().removeChild(((BpmnModelElementInstance) o).getDomElement());
         }
 
         @Override
@@ -131,7 +129,7 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
 
         @Override
         public void clear() {
-            DomElement domElement = parent.getDomElement();
+            DomElement domElement = OperatonListImpl.this.getDomElement();
             List<DomElement> childElements = domElement.getChildElements();
             for (DomElement childElement : childElements) {
                 domElement.removeChild(childElement);

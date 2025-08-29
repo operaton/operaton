@@ -33,7 +33,6 @@ import org.operaton.bpm.client.topic.TopicSubscription;
 import org.operaton.bpm.client.topic.impl.TopicSubscriptionBuilderImpl;
 import org.operaton.bpm.client.topic.impl.TopicSubscriptionManager;
 import org.operaton.bpm.client.variable.impl.DefaultValueMappers;
-import org.operaton.bpm.client.variable.impl.TypedValueField;
 import org.operaton.bpm.client.variable.impl.TypedValues;
 import org.operaton.bpm.engine.variable.value.PrimitiveValue;
 
@@ -66,15 +65,15 @@ class TopicSubscriptionManagerTest {
 		topicSubscriptionManager = new TopicSubscriptionManagerForTesting(engineClient, typedValues, 0L);
 		topicSubscriptionManager.setBackoffStrategy(new OneSecondBackOffStrategy());
 		t0Handler = new RecordingExternalTaskHandler();
-		taskList = new ArrayList<ExternalTask>();
+		taskList = new ArrayList<>();
 		ExternalTaskImpl externalt0Task = new ExternalTaskImpl();
 		externalt0Task.setTopicName(T0);
-		externalt0Task.setVariables(new HashMap<String, TypedValueField>());
+		externalt0Task.setVariables(new HashMap<>());
 		taskList.add(externalt0Task);
 		t1Handler = new RecordingExternalTaskHandler();
 		ExternalTaskImpl externalt1Task = new ExternalTaskImpl();
 		externalt1Task.setTopicName(T1);
-		externalt1Task.setVariables(new HashMap<String, TypedValueField>());
+		externalt1Task.setVariables(new HashMap<>());
 		taskList.add(externalt1Task);
 		when(engineClient.fetchAndLock(anyList())).thenReturn(taskList);
 	}

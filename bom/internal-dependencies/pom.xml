@@ -518,7 +518,7 @@
       <dependency>
         <groupId>org.jboss.ironjacamar</groupId>
         <artifactId>ironjacamar-spec-api</artifactId>
-        <version>1.0.10.Final</version>
+        <version>1.4.35.Final</version>
         <scope>provided</scope>
       </dependency>
 

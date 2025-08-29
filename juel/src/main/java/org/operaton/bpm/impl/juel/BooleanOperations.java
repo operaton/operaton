@@ -95,7 +95,7 @@ public final class BooleanOperations {
 		throw new ELException(LocalMessages.get("error.compare.types", o1.getClass(), o2.getClass()));
 	}
 
-	public static final boolean lt(TypeConverter converter, Object o1, Object o2) {
+	public static boolean lt(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == o2) {
 			return false;
 		}
@@ -105,7 +105,7 @@ public final class BooleanOperations {
 		return lt0(converter, o1, o2);
 	}
 
-	public static final boolean gt(TypeConverter converter, Object o1, Object o2) {
+	public static boolean gt(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == o2) {
 			return false;
 		}
@@ -115,7 +115,7 @@ public final class BooleanOperations {
 		return gt0(converter, o1, o2);
 	}
 
-	public static final boolean ge(TypeConverter converter, Object o1, Object o2) {
+	public static boolean ge(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == o2) {
 			return true;
 		}
@@ -125,7 +125,7 @@ public final class BooleanOperations {
 		return !lt0(converter, o1, o2);
 	}
 
-	public static final boolean le(TypeConverter converter, Object o1, Object o2) {
+	public static boolean le(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == o2) {
 			return true;
 		}
@@ -135,7 +135,7 @@ public final class BooleanOperations {
 		return !gt0(converter, o1, o2);
 	}
 
-	public static final boolean eq(TypeConverter converter, Object o1, Object o2) {
+	public static boolean eq(TypeConverter converter, Object o1, Object o2) {
 		if (o1 == o2) {
 			return true;
 		}
@@ -171,11 +171,11 @@ public final class BooleanOperations {
 		return o1.equals(o2);
 	}
 
-	public static final boolean ne(TypeConverter converter, Object o1, Object o2) {
+	public static boolean ne(TypeConverter converter, Object o1, Object o2) {
 		return !eq(converter, o1, o2);
 	}
 
-	public static final boolean empty(TypeConverter converter, Object o) {
+	public static boolean empty(TypeConverter converter, Object o) {
 		if (o == null || "".equals(o)) {
 			return true;
 		}

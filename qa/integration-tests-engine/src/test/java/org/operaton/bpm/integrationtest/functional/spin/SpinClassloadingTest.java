@@ -39,7 +39,7 @@ import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 public class SpinClassloadingTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name="pa")
-  public static final WebArchive createPaDeployment() {
+  public static WebArchive createPaDeployment() {
 
     var webArchive = initWebArchiveDeployment().addAsResource("org/operaton/bpm/integrationtest/functional/spin/SpinClassloadingTest.bpmn")
             .addClass(XmlSerializable.class)
@@ -50,7 +50,7 @@ public class SpinClassloadingTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Deployment(name="client-app")
-  public static final WebArchive createClientAppDeployment() {
+  public static WebArchive createClientAppDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
         .addClass(AbstractFoxPlatformIntegrationTest.class);
 

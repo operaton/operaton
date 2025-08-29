@@ -49,7 +49,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(ArquillianExtension.class)
 public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegrationTest {
 
-  public static final BpmnModelInstance oneTaskProcess(String key) {
+  public static BpmnModelInstance oneTaskProcess(String key) {
     return  Bpmn.createExecutableProcess(key)
         .operatonHistoryTimeToLive(180)
       .startEvent()
@@ -58,7 +58,7 @@ public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegr
       .done();
   }
 
-  public static final BpmnModelInstance subProcessProcess(String key) {
+  public static BpmnModelInstance subProcessProcess(String key) {
     return  Bpmn.createExecutableProcess(key)
         .operatonHistoryTimeToLive(180)
       .startEvent()

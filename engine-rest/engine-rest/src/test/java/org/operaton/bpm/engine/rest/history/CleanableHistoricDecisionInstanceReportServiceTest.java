@@ -57,8 +57,8 @@ public class CleanableHistoricDecisionInstanceReportServiceTest extends Abstract
   private static final String EXAMPLE_DD_NAME = "aName";
   private static final int EXAMPLE_DD_VERSION = 42;
   private static final int EXAMPLE_TTL = 5;
-  private static final long EXAMPLE_FINISHED_DI_COUNT = 1000l;
-  private static final long EXAMPLE_CLEANABLE_DI_COUNT = 567l;
+  private static final long EXAMPLE_FINISHED_DI_COUNT = 1000L;
+  private static final long EXAMPLE_CLEANABLE_DI_COUNT = 567L;
   private static final String EXAMPLE_TENANT_ID = "aTenantId";
 
   protected static final String ANOTHER_EXAMPLE_DD_ID = "anotherDefId";

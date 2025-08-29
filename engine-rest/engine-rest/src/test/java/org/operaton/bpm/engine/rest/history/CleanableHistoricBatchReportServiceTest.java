@@ -51,8 +51,8 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
 
   private static final String EXAMPLE_TYPE = "batchId1";
   private static final int EXAMPLE_TTL = 5;
-  private static final long EXAMPLE_FINISHED_COUNT = 10l;
-  private static final long EXAMPLE_CLEANABLE_COUNT = 5l;
+  private static final long EXAMPLE_FINISHED_COUNT = 10L;
+  private static final long EXAMPLE_CLEANABLE_COUNT = 5L;
 
   @RegisterExtension
   public static TestContainerExtension rule = new TestContainerExtension();

@@ -197,8 +197,8 @@ class ExpressionManagerTest {
     // when
     runtimeService.startProcessInstanceByKey("testProcess",
         Variables.createVariables()
-            .putValue("total", new BigDecimal(123))
-            .putValue("myValue", new BigDecimal(0)));
+            .putValue("total", BigDecimal.valueOf(123))
+            .putValue("myValue", BigDecimal.valueOf(0)));
 
     // then
     HistoricActivityInstance userTask = historyService.createHistoricActivityInstanceQuery()

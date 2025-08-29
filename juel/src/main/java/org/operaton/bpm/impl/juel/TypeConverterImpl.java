@@ -80,7 +80,7 @@ public class TypeConverterImpl implements TypeConverter {
       }
     }
     if (value instanceof Character character) {
-      return new BigDecimal((short) character.charValue());
+      return BigDecimal.valueOf((short) character.charValue());
     }
     throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), BigDecimal.class));
   }

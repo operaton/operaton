@@ -811,7 +811,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
   @Test
   void testQueryWithJobsRetryingAsPost() {
-    Map<String, Boolean> body = new HashMap<String, Boolean>();
+    Map<String, Boolean> body = new HashMap<>();
     body.put("withJobsRetrying", true);
 
     given()
@@ -1130,9 +1130,9 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
   @Test
   void testQueryByProcessInstanceIdNotInAsPost() {
-    Map<String, Set<String>> parameters = new HashMap<String, Set<String>>();
+    Map<String, Set<String>> parameters = new HashMap<>();
 
-    Set<String> processInstanceIds = new HashSet<String>();
+    Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add("firstProcessInstanceId");
     processInstanceIds.add("secondProcessInstanceId");
 

@@ -56,16 +56,8 @@ public class BatchDbSqlSession extends DbSqlSession {
   @Override
   public FlushResult executeDbOperations(List<DbOperation> operations) {
     for (DbOperation operation : operations) {
-
-      try {
-        // stage operation
-        executeDbOperation(operation);
-
-      } catch (Exception ex) {
-        // exception is wrapped later
-        throw ex;
-
-      }
+      // stage operation
+      executeDbOperation(operation);
     }
 
     List<BatchResult> batchResults;

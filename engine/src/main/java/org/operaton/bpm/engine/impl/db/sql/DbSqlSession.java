@@ -303,12 +303,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   protected void executeInsertEntity(String insertStatement, Object parameter) {
     LOG.executeDatabaseOperation("INSERT", parameter);
-    try {
-      sqlSession.insert(insertStatement, parameter);
-    } catch (Exception e) {
-      // exception is wrapped later
-      throw e;
-    }
+    sqlSession.insert(insertStatement, parameter);
   }
 
   @SuppressWarnings("unused")
@@ -334,24 +329,14 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   protected int executeDelete(String deleteStatement, Object parameter) {
     // map the statement
     String mappedDeleteStatement = dbSqlSessionFactory.mapStatement(deleteStatement);
-    try {
-      return sqlSession.delete(mappedDeleteStatement, parameter);
-    } catch (Exception e) {
-      // Exception is wrapped later
-      throw e;
-    }
+    return sqlSession.delete(mappedDeleteStatement, parameter);
   }
 
   // update ////////////////////////////////////////
 
   public int executeUpdate(String updateStatement, Object parameter) {
     String mappedUpdateStatement = dbSqlSessionFactory.mapStatement(updateStatement);
-    try {
-      return sqlSession.update(mappedUpdateStatement, parameter);
-    } catch (Exception e) {
-      // Exception is wrapped later
-      throw e;
-    }
+    return sqlSession.update(mappedUpdateStatement, parameter);
   }
 
   public int update(String updateStatement, Object parameter) {
@@ -390,14 +375,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   }
 
   public List<BatchResult> flushBatchOperations() {
-    try {
-      return sqlSession.flushStatements();
-
-    } catch (PersistenceException ex) {
-      // exception is wrapped later
-      throw ex;
-
-    }
+    return sqlSession.flushStatements();
   }
 
   @Override
@@ -648,8 +626,6 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
           }
           LOG.fetchDatabaseTables("jdbc metadata", tableNames);
         }
-      } catch (SQLException se) {
-        throw se;
       } finally {
         if (tablesRs != null) {
           tablesRs.close();

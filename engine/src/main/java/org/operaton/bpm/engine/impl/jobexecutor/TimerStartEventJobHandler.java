@@ -44,13 +44,7 @@ public class TimerStartEventJobHandler extends TimerEventJobHandler {
 
     String definitionKey = configuration.getTimerElementKey();
     ProcessDefinition processDefinition = deploymentCache.findDeployedLatestProcessDefinitionByKeyAndTenantId(definitionKey, tenantId);
-
-    try {
-      startProcessInstance(commandContext, tenantId, processDefinition);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
+    startProcessInstance(commandContext, tenantId, processDefinition);
   }
 
   protected void startProcessInstance(CommandContext commandContext, String tenantId, ProcessDefinition processDefinition) {

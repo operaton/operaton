@@ -10,7 +10,7 @@
   <name>Operaton - QA - test new schema with old engine</name>
   <description>${project.name}</description>
   <properties>
-    <operaton.old.engine.version>7.23.0</operaton.old.engine.version>
+    <operaton.old.engine.version>7.23.1</operaton.old.engine.version>
     <surefire.memArgs>-Xmx2g -XX:MetaspaceSize=128m</surefire.memArgs>
   </properties>
   <build>
@@ -92,7 +92,7 @@
             <groupId>org.operaton.bpm</groupId>
             <artifactId>operaton-bom</artifactId>
             <!-- Cannot use variables due to bug in Maven Release Plugin -->
-            <version>7.23.0</version>
+            <version>1.0.0-beta-5</version>
             <scope>import</scope>
             <type>pom</type>
           </dependency>

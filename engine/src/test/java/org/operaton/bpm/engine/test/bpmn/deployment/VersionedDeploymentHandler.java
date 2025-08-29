@@ -69,7 +69,7 @@ public class VersionedDeploymentHandler implements DeploymentHandler {
 
     String deploymentId = repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey(candidateProcessDefinitionKey)
-        .versionTag(String.valueOf(candidateVersionTag))
+        .versionTag(candidateVersionTag)
         .orderByProcessDefinitionVersion()
         .desc()
         .singleResult()

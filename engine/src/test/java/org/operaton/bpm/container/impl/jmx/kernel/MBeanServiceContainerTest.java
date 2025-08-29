@@ -194,7 +194,7 @@ class MBeanServiceContainerTest {
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
     assertThat(serviceNames).containsExactlyInAnyOrder(service1Name, service2Name);
 
-    serviceNames = serviceContainer.<TestService>getServiceNames(TestServiceType.TYPE2);
+    serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE2);
     assertThat(serviceNames).containsExactlyInAnyOrder(service3Name, service4Name);
 
   }

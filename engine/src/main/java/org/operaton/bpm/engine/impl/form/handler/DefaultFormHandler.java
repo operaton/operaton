@@ -344,8 +344,7 @@ public class DefaultFormHandler implements FormHandler {
           final TypedValue value = properties.getValueTyped(variableName);
 
           // NOTE: SerializableValues are never stored as form properties
-          if (!(value instanceof SerializableValue)
-              && value.getValue() != null && value.getValue() instanceof String) {
+          if (!(value instanceof SerializableValue) && value.getValue() instanceof String) {
             final String stringValue = (String) value.getValue();
 
             HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {

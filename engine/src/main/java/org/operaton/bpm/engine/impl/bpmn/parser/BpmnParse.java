@@ -1799,7 +1799,7 @@ public class BpmnParse extends Parse {
     // find all cancel end events
     for (ActivityImpl childActivity : transaction.getActivities()) {
       ActivityBehavior activityBehavior = childActivity.getActivityBehavior();
-      if (activityBehavior != null && activityBehavior instanceof CancelEndEventActivityBehavior cancelEndEventBehavior) {
+      if (activityBehavior instanceof CancelEndEventActivityBehavior cancelEndEventBehavior) {
         cancelEndEventBehavior.setCancelBoundaryEvent(activity);
       }
     }

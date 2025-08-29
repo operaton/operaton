@@ -227,7 +227,7 @@ class DeploymentAwareJobExecutorTest {
         .setProcessEngineName(OTHER_PROCESS_ENGINE_NAME)
         .buildProcessEngine();
     } catch (RuntimeException ex) {
-      if (ex.getCause() != null && ex.getCause() instanceof FileNotFoundException) {
+      if (ex.getCause() instanceof FileNotFoundException) {
         otherProcessEngine = ProcessEngineConfiguration
           .createProcessEngineConfigurationFromResource("activiti.cfg.xml")
           .setProcessEngineName(OTHER_PROCESS_ENGINE_NAME)

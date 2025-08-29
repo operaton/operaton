@@ -637,27 +637,24 @@ public class Parser {
 	 */
 	protected AstNode nonliteral() throws Scanner.ScanException, ParseException {
 		AstNode v = null;
-		switch (token.getSymbol()) {
-			case IDENTIFIER:
-				String name = consumeToken().getImage();
-				if (token.getSymbol() == Scanner.Symbol.COLON && lookahead(0).getSymbol() == Scanner.Symbol.IDENTIFIER && lookahead(1).getSymbol() == Scanner.Symbol.LPAREN) { // ns:f(...)
-					consumeToken();
-					name += ":" + token.getImage();
-					consumeToken();
-				}
-				if (token.getSymbol() == Scanner.Symbol.LPAREN) { // function
-					v = function(name, params());
-				} else { // identifier
-					v = identifier(name);
-				}
-				break;
-			case LPAREN:
-				consumeToken();
-				v = expr(true);
-				consumeToken(Scanner.Symbol.RPAREN);
-				v = new AstNested(v);
-				break;
-		}
+    if (token.getSymbol() == Scanner.Symbol.IDENTIFIER) {
+      String name = consumeToken().getImage();
+      if (token.getSymbol() == Scanner.Symbol.COLON && lookahead(0).getSymbol() == Scanner.Symbol.IDENTIFIER && lookahead(1).getSymbol() == Scanner.Symbol.LPAREN) { // ns:f(...)
+        consumeToken();
+        name += ":" + token.getImage();
+        consumeToken();
+      }
+      if (token.getSymbol() == Scanner.Symbol.LPAREN) { // function
+        v = function(name, params());
+      } else { // identifier
+        v = identifier(name);
+      }
+    } else if (token.getSymbol() == Scanner.Symbol.LPAREN) {
+      consumeToken();
+      v = expr(true);
+      consumeToken(Scanner.Symbol.RPAREN);
+      v = new AstNested(v);
+    }
 		return v;
 	}
 

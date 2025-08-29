@@ -67,7 +67,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class AuthorizationTestExtension implements BeforeEachCallback, AfterEachCallback {
 
-  private ProcessEngineExtension processEngineExtension;
+  private final ProcessEngineExtension processEngineExtension;
 
   private final AuthorizationExceptionInterceptor interceptor;
   private AuthorizationScenarioInstance scenarioInstance;

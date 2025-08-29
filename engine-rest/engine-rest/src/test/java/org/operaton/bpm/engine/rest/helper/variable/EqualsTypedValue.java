@@ -44,12 +44,8 @@ public class EqualsTypedValue<S extends EqualsTypedValue<S>> extends BaseMatcher
 
     TypedValue typedValue = (TypedValue) argument;
 
-    if (type != null &&
-        !type.equals(typedValue.getType())) {
-      return false;
-    }
-
-    return true;
+    return !(type != null &&
+      !type.equals(typedValue.getType()));
   }
 
   @Override

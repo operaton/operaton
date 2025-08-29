@@ -89,9 +89,7 @@ public interface CaseExecutionState {
       if (getClass() != obj.getClass())
         return false;
       CaseExecutionStateImpl other = (CaseExecutionStateImpl) obj;
-      if (stateCode != other.stateCode)
-        return false;
-      return true;
+      return stateCode == other.stateCode;
     }
 
     @Override

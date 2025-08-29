@@ -84,10 +84,7 @@ public class UntypedValueImpl implements TypedValue {
         return false;
     } else if (!value.equals(other.value))
       return false;
-    if (isTransient != other.isTransient()) {
-      return false;
-    }
-    return true;
+    return isTransient == other.isTransient();
   }
 
   @Override

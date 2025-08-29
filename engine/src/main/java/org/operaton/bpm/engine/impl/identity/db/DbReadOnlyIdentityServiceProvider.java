@@ -96,11 +96,7 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
   @Override
   public boolean checkPassword(String userId, String password) {
     UserEntity user = findUserById(userId);
-    if ((user != null) && (password != null) && matchPassword(password, user)) {
-      return true;
-    } else {
-      return false;
-    }
+    return (user != null) && (password != null) && matchPassword(password, user);
   }
 
   protected boolean matchPassword(String password, UserEntity user) {

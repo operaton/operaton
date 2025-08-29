@@ -97,9 +97,7 @@ public class DbEntityOperation extends DbOperation {
         return false;
     } else if (!entity.equals(other.entity))
       return false;
-    if (operationType != other.operationType)
-      return false;
-    return true;
+    return operationType == other.operationType;
   }
 
 }

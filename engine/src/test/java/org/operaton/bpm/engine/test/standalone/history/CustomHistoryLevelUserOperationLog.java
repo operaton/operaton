@@ -34,9 +34,6 @@ public class CustomHistoryLevelUserOperationLog implements HistoryLevel {
 
   @Override
   public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
-    if (eventType.equals(HistoryEventTypes.USER_OPERATION_LOG)){
-      return true;
-    }
-    return false;
+    return eventType.equals(HistoryEventTypes.USER_OPERATION_LOG);
   }
 }

@@ -139,10 +139,7 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity, Seri
     if (this.reporter == null ? (other.reporter != null) : !this.reporter.equals(other.reporter)) {
       return false;
     }
-    if (this.timestamp != other.timestamp && (this.timestamp == null || !this.timestamp.equals(other.timestamp))) {
-      return false;
-    }
-    return true;
+    return !(this.timestamp != other.timestamp && (this.timestamp == null || !this.timestamp.equals(other.timestamp)));
   }
 
 }

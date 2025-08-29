@@ -153,11 +153,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
     @Override
     public boolean canConvertFromTypedValue(TypedValue typedValue) {
-      if (typedValue.getType() != ValueType.NUMBER) {
-        return false;
-      }
-
-      return true;
+      return typedValue.getType() == ValueType.NUMBER;
     }
 
     @Override

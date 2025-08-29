@@ -61,8 +61,6 @@ public class ResourceUtil implements Resource {
         return false;
     } else if (!resourceName.equals(other.resourceName))
       return false;
-    if (resourceType != other.resourceType)
-      return false;
-    return true;
+    return !(resourceType != other.resourceType);
   }
 }

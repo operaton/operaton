@@ -58,8 +58,6 @@ public class SimpleSerializableBean implements Serializable {
     if (getClass() != obj.getClass())
       return false;
     SimpleSerializableBean other = (SimpleSerializableBean) obj;
-    if (intProperty != other.intProperty)
-      return false;
-    return true;
+    return intProperty == other.intProperty;
   }
 }

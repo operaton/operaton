@@ -39,9 +39,7 @@ public abstract class AbstractHistoryLevel implements HistoryLevel {
     if (getClass() != obj.getClass())
       return false;
     AbstractHistoryLevel other = (AbstractHistoryLevel) obj;
-    if (getId() != other.getId())
-      return false;
-    return true;
+    return getId() == other.getId();
   }
 
   @Override

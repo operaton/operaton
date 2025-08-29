@@ -76,6 +76,9 @@ done
 echo "🔄 Updating version in license-book.txt"
 sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" ./distro/license-book/src/main/resources/license-book.txt
 
+echo "🔄 Updating version in jreleaser.yml"
+sed -i '' -E "s/previousTagName: v.+/previousTagName: v$CURRENT_VERSION_WITHOUT_SNAPSHOT/" jreleaser.yml
+
 echo "🔄 Updating version in release.yml"
 sed -i '' -E "s/default: '[0-9]+\.[0-9]+\.[0-9]+[^']*'/default: '$NEXT_VERSION_WITHOUT_SNAPSHOT'/" .github/workflows/release.yml
 

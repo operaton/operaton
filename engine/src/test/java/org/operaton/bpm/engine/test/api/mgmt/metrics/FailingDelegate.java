@@ -27,7 +27,7 @@ public class FailingDelegate implements JavaDelegate {
 
     Boolean fail = (Boolean) execution.getVariable("fail");
 
-    if (fail != null && fail == true) {
+    if (fail != null && fail) {
       throw new ProcessEngineException("Expected exception");
     }
   }

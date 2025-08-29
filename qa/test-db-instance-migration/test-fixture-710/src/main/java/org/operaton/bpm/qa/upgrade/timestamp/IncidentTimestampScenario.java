@@ -95,7 +95,7 @@ public class IncidentTimestampScenario extends AbstractTimestampMigrationScenari
 
       Boolean fail = (Boolean) execution.getVariable("fail");
 
-      if (fail == null || fail == true) {
+      if (fail == null || fail) {
         throw new ProcessEngineException(EXCEPTION_MESSAGE);
       }
 

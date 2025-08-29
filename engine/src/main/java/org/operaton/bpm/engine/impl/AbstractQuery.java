@@ -213,7 +213,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   public long evaluateExpressionsAndExecuteCount(CommandContext commandContext) {
     validate();
     evaluateExpressions();
-    return !hasExcludingConditions() ? executeCount(commandContext) : 0l;
+    return hasExcludingConditions() ? 0l : executeCount(commandContext);
   }
 
   public abstract long executeCount(CommandContext commandContext);
@@ -222,7 +222,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     checkMaxResultsLimit();
     validate();
     evaluateExpressions();
-    return !hasExcludingConditions() ? executeList(commandContext, page) : new ArrayList<>();
+    return hasExcludingConditions() ? new ArrayList<>() : executeList(commandContext, page);
   }
 
   /**
@@ -392,7 +392,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   public List<String> evaluateExpressionsAndExecuteIdsList(CommandContext commandContext) {
     validate();
     evaluateExpressions();
-    return !hasExcludingConditions() ? executeIdsList(commandContext) : new ArrayList<>();
+    return hasExcludingConditions() ? new ArrayList<>() : executeIdsList(commandContext);
   }
 
   public List<String> executeIdsList(CommandContext commandContext) {
@@ -402,7 +402,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   public List<ImmutablePair<String, String>> evaluateExpressionsAndExecuteDeploymentIdMappingsList(CommandContext commandContext) {
     validate();
     evaluateExpressions();
-    return !hasExcludingConditions() ? executeDeploymentIdMappingsList(commandContext) : new ArrayList<>();
+    return hasExcludingConditions() ? new ArrayList<>() : executeDeploymentIdMappingsList(commandContext);
   }
 
   public List<ImmutablePair<String, String>> executeDeploymentIdMappingsList(CommandContext commandContext) {

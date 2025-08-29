@@ -31,7 +31,7 @@ public class FailingDelegate implements JavaDelegate {
     String message = execution.hasVariable("message") ?
         (String) execution.getVariable("message") : EXCEPTION_MESSAGE;
 
-    if (fail == null || fail == true) {
+    if (fail == null || fail) {
       throw new ProcessEngineException(message);
     }
 

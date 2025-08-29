@@ -595,18 +595,18 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   @Override
   protected String toString(A caseExecution) {
     if (caseExecution != null) {
-      return !actual.getCaseInstanceId().equals(actual.getId()) ? "%s {id='%s', activityId='%s', caseInstanceId='%s'}".formatted(
-        caseExecution.getActivityType(),
-        caseExecution.getId(),
-        caseExecution.getActivityId(),
-        caseExecution.getCaseInstanceId())
-          : (
+      return actual.getCaseInstanceId().equals(actual.getId()) ? (
         "%s {id='%s', activityId='%s'" + (((CaseInstance) caseExecution).getBusinessKey() != null ? ", businessKey='%s'}"
           : "}")).formatted(
         CaseInstance.class.getSimpleName(),
         caseExecution.getId(),
         caseExecution.getActivityId(),
-        ((CaseInstance) caseExecution).getBusinessKey());
+        ((CaseInstance) caseExecution).getBusinessKey())
+          : "%s {id='%s', activityId='%s', caseInstanceId='%s'}".formatted(
+        caseExecution.getActivityType(),
+        caseExecution.getId(),
+        caseExecution.getActivityId(),
+        caseExecution.getCaseInstanceId());
     }
     return null;
   }

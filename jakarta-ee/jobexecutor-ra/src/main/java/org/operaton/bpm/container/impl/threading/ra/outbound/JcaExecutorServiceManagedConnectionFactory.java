@@ -98,9 +98,7 @@ public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnec
       return false;
     if (other == this)
       return true;
-    if (!(other instanceof JcaExecutorServiceManagedConnectionFactory))
-      return false;
-    return true;
+    return other instanceof JcaExecutorServiceManagedConnectionFactory;
   }
 
 }

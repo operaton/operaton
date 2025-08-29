@@ -40,11 +40,7 @@ public class EqualsNullValue extends BaseMatcher<TypedValue> {
       return false;
     }
 
-    if (typedValue.getValue() != null) {
-      return false;
-    }
-
-    return true;
+    return !(typedValue.getValue() != null);
   }
 
   public static EqualsNullValue matcher() {

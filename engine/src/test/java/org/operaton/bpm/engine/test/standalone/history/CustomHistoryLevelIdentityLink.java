@@ -60,9 +60,6 @@ public class CustomHistoryLevelIdentityLink implements HistoryLevel {
         }
       }
     }
-    if (eventType.equals(HistoryEventTypes.TASK_INSTANCE_CREATE)) {
-      return true;
-    }
-    return false;
+    return eventType.equals(HistoryEventTypes.TASK_INSTANCE_CREATE);
   }
 }

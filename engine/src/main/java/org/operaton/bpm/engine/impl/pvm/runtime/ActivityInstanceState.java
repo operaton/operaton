@@ -66,9 +66,7 @@ public interface ActivityInstanceState {
       if (getClass() != obj.getClass())
         return false;
       ActivityInstanceStateImpl other = (ActivityInstanceStateImpl) obj;
-      if (stateCode != other.stateCode)
-        return false;
-      return true;
+      return stateCode == other.stateCode;
     }
 
     @Override

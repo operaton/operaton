@@ -88,11 +88,7 @@ public class ExecutionTreeStructureAssertion implements ExecutionTreeAssertion {
       }
     }
 
-    if (!unmatchedChildAssertions.isEmpty()) {
-      return false;
-    }
-
-    return true;
+    return unmatchedChildAssertions.isEmpty();
   }
 
   @Override

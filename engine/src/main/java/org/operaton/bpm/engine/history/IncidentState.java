@@ -63,9 +63,7 @@ public interface IncidentState {
       if (getClass() != obj.getClass())
         return false;
       IncidentStateImpl other = (IncidentStateImpl) obj;
-      if (stateCode != other.stateCode)
-        return false;
-      return true;
+      return stateCode == other.stateCode;
     }
 
     @Override

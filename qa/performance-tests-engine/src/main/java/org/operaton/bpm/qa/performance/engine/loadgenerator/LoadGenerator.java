@@ -138,7 +138,7 @@ public class LoadGenerator {
       StringBuilder statusMessage = new StringBuilder();
 
       if (color) {
-        statusMessage.append(CLEAR_LINE + ANSI_YELLOW);
+        statusMessage.append(CLEAR_LINE).append(ANSI_YELLOW);
       }
 
       statusMessage.append("%6.2f".formatted(progress));

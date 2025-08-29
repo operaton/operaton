@@ -240,13 +240,13 @@ public class ProcessDiagramRetrievalTest {
     html.append("        border-radius: 5px; -moz-border-radius: 5px;\n");
     html.append("      }\n");
     if (highlightedActivityId != null && !highlightedActivityId.isEmpty()) {
-      html.append("      #" + highlightedActivityId + " {border: 2px solid red;}\n");
+      html.append("      #").append(highlightedActivityId).append(" {border: 2px solid red;}\n");
     }
     html.append("    --></style>");
     html.append("  </head>\n");
     html.append("  <body>\n");
     html.append("    <div style=\"position: relative\">\n");
-    html.append("      <img src=\"" + imageUrl + "\" />\n");
+    html.append("      <img src=\"").append(imageUrl).append("\" />\n");
 
     List<DiagramNode> nodes = new ArrayList<>(processDiagramLayout.getNodes());
     // sort the nodes according to their ID property.
@@ -254,12 +254,12 @@ public class ProcessDiagramRetrievalTest {
     for (DiagramNode node : nodes) {
       html.append("      <div");
       html.append(" class=\"BPMNElement\"");
-      html.append(" id=\"" + node.getId() + "\"");
+      html.append(" id=\"").append(node.getId()).append("\"");
       html.append(" style=\"");
       html.append(" left: " + (int) (node.getX() - 2) + "px;");
       html.append(" top: " + (int) (node.getY() - 2) + "px;");
-      html.append(" width: " + node.getWidth().intValue() + "px;");
-      html.append(" height: " + node.getHeight().intValue() + "px;\"></div>\n");
+      html.append(" width: ").append(node.getWidth().intValue()).append("px;");
+      html.append(" height: ").append(node.getHeight().intValue()).append("px;\"></div>\n");
     }
     html.append("    </div>\n");
     html.append("  </body>\n");

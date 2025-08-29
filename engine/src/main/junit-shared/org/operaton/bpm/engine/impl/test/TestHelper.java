@@ -194,9 +194,9 @@ public abstract class TestHelper {
   private static String createResourceName(Class< ? > type, String name, String suffix) {
     StringBuilder r = new StringBuilder(type.getName().replace('.', '/'));
     if (name != null) {
-      r.append("." + name);
+      r.append(".").append(name);
     }
-    return r.append("." + suffix).toString();
+    return r.append(".").append(suffix).toString();
   }
 
   public static boolean annotationRequiredHistoryLevelCheck(ProcessEngine processEngine, RequiredHistoryLevel annotation, Class<?> testClass, String methodName) {

@@ -135,7 +135,7 @@ class DataFormatLoadingTest {
 
     // when a map of configuration properties is passed to the "load" method
     DataFormats.getInstance().registerDataFormats(DataFormats.class.getClassLoader(),
-                                                  Collections.EMPTY_LIST,
+      Collections.emptyList(),
                                                   Collections.singletonMap("conditional-prop", true));
 
     // then the configuration property is applied

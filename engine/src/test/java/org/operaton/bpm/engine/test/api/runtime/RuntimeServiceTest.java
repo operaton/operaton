@@ -997,7 +997,7 @@ public class RuntimeServiceTest {
   @Test
   void testSetVariablesUnexistingExecutionId() {
     try {
-      runtimeService.setVariables("unexistingexecution", Collections.EMPTY_MAP);
+      runtimeService.setVariables("unexistingexecution", Collections.emptyMap());
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
       testRule.assertTextPresent("execution unexistingexecution doesn't exist", ae.getMessage());
@@ -1008,7 +1008,7 @@ public class RuntimeServiceTest {
   @Test
   void testSetVariablesNullExecutionId() {
     try {
-      runtimeService.setVariables(null, Collections.EMPTY_MAP);
+      runtimeService.setVariables(null, Collections.emptyMap());
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
       testRule.assertTextPresent("executionId is null", ae.getMessage());
@@ -1221,7 +1221,7 @@ public class RuntimeServiceTest {
   @Test
   void testRemoveVariablesNullExecutionId() {
     try {
-      runtimeService.removeVariables(null, Collections.EMPTY_LIST);
+      runtimeService.removeVariables(null, Collections.emptyList());
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
       testRule.assertTextPresent("executionId is null", ae.getMessage());
@@ -1279,7 +1279,7 @@ public class RuntimeServiceTest {
   @Test
   void testRemoveVariablesLocalNullExecutionId() {
     try {
-      runtimeService.removeVariablesLocal(null, Collections.EMPTY_LIST);
+      runtimeService.removeVariablesLocal(null, Collections.emptyList());
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
       testRule.assertTextPresent("executionId is null", ae.getMessage());

@@ -44,7 +44,7 @@ public class XmlListSerializable<T> {
 
     jsonBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmlSerializable>");
     for (int i = 0; i < listProperty.size(); i++) {
-      jsonBuilder.append("<listProperty>" + listProperty.get(i) + "</listProperty>");
+      jsonBuilder.append("<listProperty>").append(listProperty.get(i)).append("</listProperty>");
     }
     jsonBuilder.append("</xmlSerializable>");
 

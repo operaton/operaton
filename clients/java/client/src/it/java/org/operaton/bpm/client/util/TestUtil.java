@@ -77,7 +77,7 @@ public class TestUtil {
     }
 
     public T until(Function<T, Boolean> resultCondition, Function<Exception, Boolean> exceptionCondition) {
-      T result = whileConditionHolds(t -> !resultCondition.apply(t), e -> !exceptionCondition.apply(e));
+      T result = whileConditionHolds(t -> Boolean.FALSE.equals(resultCondition.apply(t)), e -> Boolean.FALSE.equals(exceptionCondition.apply(e)));
 
       assertThat(resultCondition.apply(result)).isTrue();
 
@@ -85,7 +85,7 @@ public class TestUtil {
     }
 
     public T until(Function<T, Boolean> resultCondition, Function<Exception, Boolean> exceptionCondition, String message, Object... args) {
-      T result = whileConditionHolds(t -> !resultCondition.apply(t), e -> !exceptionCondition.apply(e));
+      T result = whileConditionHolds(t -> Boolean.FALSE.equals(resultCondition.apply(t)), e -> Boolean.FALSE.equals(exceptionCondition.apply(e)));
 
       assertThat(resultCondition.apply(result)).withFailMessage(message, args).isTrue();
 
@@ -93,7 +93,7 @@ public class TestUtil {
     }
 
     public T until(Function<T, Boolean> resultCondition, Function<Exception, Boolean> exceptionCondition, int retries) {
-      T result = whileConditionHolds(t -> !resultCondition.apply(t), e -> !exceptionCondition.apply(e), retries);
+      T result = whileConditionHolds(t -> Boolean.FALSE.equals(resultCondition.apply(t)), e -> Boolean.FALSE.equals(exceptionCondition.apply(e)), retries);
 
       assertThat(resultCondition.apply(result)).isTrue();
 
@@ -102,7 +102,7 @@ public class TestUtil {
 
     public T until(Function<T, Boolean> resultCondition, Function<Exception, Boolean> exceptionCondition, int retries, String message,
         Object... args) {
-      T result = whileConditionHolds(t -> !resultCondition.apply(t), e -> !exceptionCondition.apply(e), retries);
+      T result = whileConditionHolds(t -> Boolean.FALSE.equals(resultCondition.apply(t)), e -> Boolean.FALSE.equals(exceptionCondition.apply(e)), retries);
 
       assertThat(resultCondition.apply(result)).withFailMessage(message, args).isTrue();
 
@@ -136,7 +136,7 @@ public class TestUtil {
 
           result = callable.call();
         } catch (Exception e) {
-          if (!exceptionCondition.apply(e)) {
+          if (Boolean.FALSE.equals(exceptionCondition.apply(e))) {
             throw new RuntimeException("Unexpected exception while checking condition", e);
           }
         }

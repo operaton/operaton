@@ -68,7 +68,7 @@ public class JacksonJsonPathQuery implements SpinJsonPathQuery {
   @Override
   public SpinList<SpinJsonNode> elementList() {
     JacksonJsonNode node = (JacksonJsonNode) element();
-    if(node.isArray()) {
+    if(Boolean.TRUE.equals(node.isArray())) {
       return node.elements();
     } else {
       throw LOG.unableToParseValue(SpinList.class.getSimpleName(), node.getNodeType());
@@ -78,7 +78,7 @@ public class JacksonJsonPathQuery implements SpinJsonPathQuery {
   @Override
   public String stringValue() {
     JacksonJsonNode node = (JacksonJsonNode) element();
-    if(node.isString()) {
+    if(Boolean.TRUE.equals(node.isString())) {
       return node.stringValue();
     } else {
       throw LOG.unableToParseValue(String.class.getSimpleName(), node.getNodeType());
@@ -88,7 +88,7 @@ public class JacksonJsonPathQuery implements SpinJsonPathQuery {
   @Override
   public Number numberValue() {
     JacksonJsonNode node = (JacksonJsonNode) element();
-    if(node.isNumber()) {
+    if(Boolean.TRUE.equals(node.isNumber())) {
       return node.numberValue();
     } else {
       throw LOG.unableToParseValue(Number.class.getSimpleName(), node.getNodeType());
@@ -98,7 +98,7 @@ public class JacksonJsonPathQuery implements SpinJsonPathQuery {
   @Override
   public Boolean boolValue() {
     JacksonJsonNode node = (JacksonJsonNode) element();
-    if(node.isBoolean()) {
+    if(Boolean.TRUE.equals(node.isBoolean())) {
       return node.boolValue();
     } else {
       throw LOG.unableToParseValue(Boolean.class.getSimpleName(), node.getNodeType());

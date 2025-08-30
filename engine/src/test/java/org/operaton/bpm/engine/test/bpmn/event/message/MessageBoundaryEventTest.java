@@ -41,7 +41,6 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertNotSame;
 
 
 /**
@@ -367,7 +366,7 @@ class MessageBoundaryEventTest {
         .singleResult();
     assertThat(execution2).isNotNull();
 
-    assertNotSame(execution1.getId(), execution2.getId());
+    assertThat(execution2.getId()).isNotSameAs(execution1.getId());
 
     // ///////////////////////////////////////////////////////////
     // first case: we complete the inner usertask.

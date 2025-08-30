@@ -64,7 +64,6 @@ import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.within;
-import static org.junit.Assert.assertNotSame;
 
 /**
  * @author Joram Barrez
@@ -820,7 +819,7 @@ class StartTimerEventTest {
     assertThat(taskQuery.count()).isEqualTo(1);
     assertThat(jobQuery.count()).isEqualTo(1);
     String jobIdSecondLoop = jobQuery.list().get(0).getId();
-    assertNotSame(jobIdFirstLoop, jobIdSecondLoop);
+    assertThat(jobIdSecondLoop).isNotSameAs(jobIdFirstLoop);
     // execute timer job
     managementService.executeJob(jobIdSecondLoop);
 
@@ -870,7 +869,7 @@ class StartTimerEventTest {
     assertThat(taskQuery.count()).isEqualTo(1);
     assertThat(jobQuery.count()).isEqualTo(1);
     String jobIdSecondLoop = jobQuery.list().get(0).getId();
-    assertNotSame(jobIdFirstLoop, jobIdSecondLoop);
+    assertThat(jobIdSecondLoop).isNotSameAs(jobIdFirstLoop);
     // execute timer job
     managementService.executeJob(jobIdSecondLoop);
 

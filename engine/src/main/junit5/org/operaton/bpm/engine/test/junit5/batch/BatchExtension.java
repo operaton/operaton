@@ -50,11 +50,11 @@ public class BatchExtension implements TestWatcher, BeforeTestExecutionCallback,
   }
 
   @Override
-  public void beforeTestExecution(ExtensionContext context) throws Exception {
+  public void beforeTestExecution(ExtensionContext context) {
   }
 
   @Override
-  public void afterTestExecution(ExtensionContext context) throws Exception {
+  public void afterTestExecution(ExtensionContext context) {
     engineRule.getProcessEngineConfiguration()
         .setInvocationsPerBatchJob(DEFAULT_INVOCATIONS_PER_BATCH_JOB);
     ClockUtil.reset();

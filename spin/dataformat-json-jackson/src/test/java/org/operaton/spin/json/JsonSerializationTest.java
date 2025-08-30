@@ -140,6 +140,7 @@ class JsonSerializationTest {
     final byte[] bytes = "{\"foo\": \"bar\"}".getBytes();
     assertThat(bytes).isNotEmpty();
 
+    @SuppressWarnings("unchecked")
     final HashMap<String,String> deserializedMap = (HashMap<String, String>) deserializeFromByteArray(bytes, "java.util.HashMap<java.lang.String, java.lang.String>");
     assertThat(deserializedMap)
       .containsKey("foo")

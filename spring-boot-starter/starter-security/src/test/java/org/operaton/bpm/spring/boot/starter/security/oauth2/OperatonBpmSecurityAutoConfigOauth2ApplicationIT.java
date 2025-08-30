@@ -76,10 +76,8 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
 
   private OAuth2AuthenticationProvider spiedAuthenticationProvider;
 
-  @Override
   @BeforeEach
-  public void setup() throws Exception {
-    super.setup();
+  void init() throws Exception {
     spyAuthenticationProvider();
   }
 

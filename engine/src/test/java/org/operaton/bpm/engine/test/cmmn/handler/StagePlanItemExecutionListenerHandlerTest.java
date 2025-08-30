@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.Stage;
 
-import static org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.*;
+import static org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 
 /**
  * @author Thorben Lindhauer

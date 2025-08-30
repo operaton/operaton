@@ -30,7 +30,7 @@ import org.operaton.spin.DataFormats;
 import org.operaton.spin.json.SpinJsonException;
 
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

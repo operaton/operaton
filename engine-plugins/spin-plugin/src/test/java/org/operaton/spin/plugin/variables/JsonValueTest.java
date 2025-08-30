@@ -48,7 +48,7 @@ import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
 import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Roman Smirnov

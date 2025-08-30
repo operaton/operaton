@@ -30,7 +30,8 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.operaton.bpm.engine.variable.Variables.*;
 import static org.operaton.bpm.engine.variable.type.ValueType.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * @author Philipp Ossler *

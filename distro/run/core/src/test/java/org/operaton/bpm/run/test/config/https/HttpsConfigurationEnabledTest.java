@@ -35,7 +35,7 @@ import org.operaton.bpm.run.test.AbstractRestTest;
 import org.operaton.bpm.run.test.util.TestUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(classes = {OperatonApp.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = {"test-https-enabled"})

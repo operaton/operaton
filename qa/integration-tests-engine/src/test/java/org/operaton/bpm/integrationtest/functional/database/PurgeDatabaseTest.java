@@ -32,8 +32,6 @@ import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.PersistenceSession;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
@@ -104,16 +102,13 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
       if (databaseTablePrefix.isEmpty()) {
         processEngineConfiguration
           .getCommandExecutorSchemaOperations()
-          .execute(new Command<Object>() {
-          @Override
-          public Object execute(CommandContext commandContext) {
-              PersistenceSession persistenceSession = commandContext.getSession(PersistenceSession.class);
-              persistenceSession.dbSchemaDrop();
-              persistenceSession.dbSchemaCreate();
-              HistoryLevelSetupCommand.dbCreateHistoryLevel(commandContext);
-              return null;
-            }
-          });
+          .execute(commandContext -> {
+          PersistenceSession persistenceSession = commandContext.getSession(PersistenceSession.class);
+          persistenceSession.dbSchemaDrop();
+          persistenceSession.dbSchemaCreate();
+          HistoryLevelSetupCommand.dbCreateHistoryLevel(commandContext);
+          return null;
+        });
       }
       fail(outputMessage.toString());
     }

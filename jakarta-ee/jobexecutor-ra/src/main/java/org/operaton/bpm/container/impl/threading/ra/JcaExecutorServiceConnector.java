@@ -17,7 +17,6 @@
 package org.operaton.bpm.container.impl.threading.ra;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.resource.ResourceException;

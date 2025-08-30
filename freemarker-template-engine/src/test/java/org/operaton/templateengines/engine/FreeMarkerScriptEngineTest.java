@@ -26,7 +26,8 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.templateengines.engine.util.Greeter;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Sebastian Menski

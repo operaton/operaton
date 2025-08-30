@@ -56,6 +56,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Serial private static final long serialVersionUID = 1L;
   private static final String MSG_ALREADY_QUERYING = "Already querying for historic process instance with another state";
   protected String processInstanceId;
+  protected String rootProcessInstanceId;
   protected String processDefinitionId;
   protected String processDefinitionName;
   protected String processDefinitionNameLike;
@@ -129,6 +130,12 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   public HistoricProcessInstanceQuery processInstanceIdNotIn(String... processInstanceIdNotIn){
     ensureNotNull("processInstanceIdNotIn", (Object[]) processInstanceIdNotIn);
     this.processInstanceIdNotIn = processInstanceIdNotIn;
+    return this;
+  }
+
+  public HistoricProcessInstanceQuery rootProcessInstanceId(String rootProcessInstanceId) {
+    ensureNotNull("Root process instance id", rootProcessInstanceId);
+    this.rootProcessInstanceId = rootProcessInstanceId;
     return this;
   }
 
@@ -569,6 +576,10 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
 
   public Date getExecutedActivityBefore() {
     return executedActivityBefore;
+  }
+
+  public String getRootProcessInstanceId() {
+    return rootProcessInstanceId;
   }
 
   public Date getExecutedJobAfter() {

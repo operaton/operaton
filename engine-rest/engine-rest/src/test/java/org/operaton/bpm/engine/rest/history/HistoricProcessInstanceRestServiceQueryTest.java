@@ -457,6 +457,70 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, restartedProcessInstanceId);
   }
 
+    @Test
+    void testGetHistoryProcessInstancesForRootProcessInstanceId() {
+        Response response = given().queryParam("rootProcessInstanceId",
+                        MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_ROOT_PROCESS_INSTANCE_ID)
+                .header("accept", MediaType.APPLICATION_JSON)
+                .then()
+                .expect()
+                .statusCode(Status.OK.getStatusCode())
+                .contentType(ContentType.JSON)
+                .when()
+                .get(HISTORIC_PROCESS_INSTANCE_RESOURCE_URL);
+
+        verify(mockedQuery).list();
+
+        String content = response.asString();
+        List<String> instances = from(content).getList("");
+        assertThat(instances).size().isGreaterThan(0);
+
+        String returnedProcessInstanceId = from(content).getString("[0].id");
+        String returnedProcessInstanceBusinessKey = from(content).getString("[0].businessKey");
+        String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
+        String returnedProcessDefinitionKey = from(content).getString("[0].processDefinitionKey");
+        String returnedProcessDefinitionName = from(content).getString("[0].processDefinitionName");
+        int returnedProcessDefinitionVersion = from(content).getInt("[0].processDefinitionVersion");
+        String returnedStartTime = from(content).getString("[0].startTime");
+        String returnedEndTime = from(content).getString("[0].endTime");
+        String returnedRemovalTime = from(content).getString("[0].removalTime");
+        long returnedDurationInMillis = from(content).getLong("[0].durationInMillis");
+        String returnedStartUserId = from(content).getString("[0].startUserId");
+        String returnedStartActivityId = from(content).getString("[0].startActivityId");
+        String returnedDeleteReason = from(content).getString("[0].deleteReason");
+        String returnedRootProcessInstanceId = from(content).getString("[0].rootProcessInstanceId");
+        String returnedSuperProcessInstanceId = from(content).getString("[0].superProcessInstanceId");
+        String returnedSuperCaseInstanceId = from(content).getString("[0].superCaseInstanceId");
+        String returnedCaseInstanceId = from(content).getString("[0].caseInstanceId");
+        String returnedTenantId = from(content).getString("[0].tenantId");
+        String returnedState = from(content).getString("[0].state");
+        String restartedProcessInstanceId = from(content).getString("[0].restartedProcessInstanceId");
+
+        Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
+        Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY, returnedProcessInstanceBusinessKey);
+        Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
+        Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedProcessDefinitionKey);
+        Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME, returnedProcessDefinitionName);
+        Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION, returnedProcessDefinitionVersion);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_TIME, returnedStartTime);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_END_TIME, returnedEndTime);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_REMOVAL_TIME, returnedRemovalTime);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DURATION_MILLIS, returnedDurationInMillis);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_USER_ID, returnedStartUserId);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_ACTIVITY_ID, returnedStartActivityId);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DELETE_REASON, returnedDeleteReason);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_ROOT_PROCESS_INSTANCE_ID,
+                returnedRootProcessInstanceId);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_PROCESS_INSTANCE_ID,
+                returnedSuperProcessInstanceId);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_CASE_INSTANCE_ID,
+                returnedSuperCaseInstanceId);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_CASE_INSTANCE_ID, returnedCaseInstanceId);
+        Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+        Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STATE, returnedState);
+        Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, restartedProcessInstanceId);
+    }
+
   @Test
   void testAdditionalParametersExcludingProcesses() {
     Map<String, String> stringQueryParameters = getCompleteStringQueryParameters();
@@ -506,6 +570,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     parameters.put("caseInstanceId", MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_CASE_INSTANCE_ID);
     parameters.put("state", MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STATE);
     parameters.put("incidentType", MockProvider.EXAMPLE_INCIDENT_TYPE);
+    parameters.put("rootProcessInstanceId", MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_ROOT_PROCESS_INSTANCE_ID);
 
     return parameters;
   }
@@ -527,6 +592,8 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     verify(mockedQuery).subCaseInstanceId(stringQueryParameters.get("subCaseInstanceId"));
     verify(mockedQuery).caseInstanceId(stringQueryParameters.get("caseInstanceId"));
     verify(mockedQuery).incidentType(stringQueryParameters.get("incidentType"));
+    verify(mockedQuery).rootProcessInstanceId(stringQueryParameters.get("rootProcessInstanceId"));
+
 
     verify(mockedQuery).list();
   }

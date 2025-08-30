@@ -42,6 +42,12 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    */
   ProcessInstanceQuery processInstanceIds(Set<String> processInstanceIds);
 
+
+  /**
+   * Select process instances for the given root process instance id
+   */
+  ProcessInstanceQuery rootProcessInstanceId(String rootProcessInstanceId);
+
   /**
    * Select process instances with the given business key
    */

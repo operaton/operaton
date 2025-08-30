@@ -58,9 +58,6 @@ public class OperatonBpmPluginConfiguration {
       return new OperatonJacksonFormatConfiguratorJSR310();
     }
 
-    private SpinDataFormatConfigurationJSR310() {
-    }
-
   }
 
   @ConditionalOnClass({JacksonJsonDataFormat.class, ParameterNamesModule.class})
@@ -72,9 +69,6 @@ public class OperatonBpmPluginConfiguration {
     @ConditionalOnMissingBean(name = "spinDataFormatConfiguratorParameterNames")
     public static OperatonJacksonFormatConfiguratorParameterNames spinDataFormatConfiguratorParameterNames() {
       return new OperatonJacksonFormatConfiguratorParameterNames();
-    }
-
-    private SpinDataFormatConfigurationParameterNames() {
     }
 
   }
@@ -90,9 +84,6 @@ public class OperatonBpmPluginConfiguration {
       return new OperatonJacksonFormatConfiguratorJdk8();
     }
 
-    private SpinDataFormatConfigurationJdk8() {
-    }
-
   }
 
   @ConditionalOnClass(SpinProcessEnginePlugin.class)
@@ -105,9 +96,6 @@ public class OperatonBpmPluginConfiguration {
       return new SpringBootSpinProcessEnginePlugin();
     }
 
-    private SpinConfiguration() {
-    }
-
   }
 
   @ConditionalOnClass(ConnectProcessEnginePlugin.class)
@@ -118,9 +106,6 @@ public class OperatonBpmPluginConfiguration {
     @ConditionalOnMissingBean(name = "connectProcessEnginePlugin")
     public static ProcessEnginePlugin connectProcessEnginePlugin() {
       return new ConnectProcessEnginePlugin();
-    }
-
-    private ConnectConfiguration() {
     }
   }
 

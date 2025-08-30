@@ -23,7 +23,7 @@ import org.operaton.bpm.client.ExternalTaskClientBuilder;
 
 import static org.mockito.Mockito.*;
 
-public class MockHelper {
+public final class MockHelper {
 
   protected static MockedStatic<ExternalTaskClient> mockedStatic;
   protected static ExternalTaskClientBuilder clientBuilder;

@@ -29,7 +29,7 @@ import org.operaton.spin.json.mapping.RegularCustomer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-public class JsonTestConstants {
+public final class JsonTestConstants {
 
   public static final String EXAMPLE_JSON_FILE_NAME = "org/operaton/spin/json/example.json";
 

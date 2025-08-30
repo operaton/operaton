@@ -79,7 +79,7 @@ class CustomExpressionManagerFunctionsTest {
      assertThat(runtimeService.getVariable(processInstanceId, "baz")).isEqualTo("foobar");
   }
 
-  public static class TestFunctions {
+  public static final class TestFunctions {
     public static String foobar() {
       return "foobar";
     }

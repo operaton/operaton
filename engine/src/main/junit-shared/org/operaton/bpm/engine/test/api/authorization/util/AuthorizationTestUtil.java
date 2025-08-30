@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Thorben Lindhauer
  *
  */
-public class AuthorizationTestUtil {
+public final class AuthorizationTestUtil {
 
   protected static Map<Integer, Resource> resourcesByType = new HashMap<>();
 

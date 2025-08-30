@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
  * @author Thorben Lindhauer
  *
  */
-public class MultiInstanceProcessModels {
+public final class MultiInstanceProcessModels {
 
   public static final BpmnModelInstance PAR_MI_ONE_TASK_PROCESS =
       modify(ProcessModels.ONE_TASK_PROCESS)

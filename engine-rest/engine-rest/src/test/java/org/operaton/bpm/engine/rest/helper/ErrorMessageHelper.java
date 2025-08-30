@@ -20,7 +20,7 @@ package org.operaton.bpm.engine.rest.helper;
  * @author Thorben Lindhauer
  *
  */
-public class ErrorMessageHelper {
+public final class ErrorMessageHelper {
 
   protected static final String EXPECTED_CONVERSION_FAILURE_MESSAGE = "Cannot convert value '%s' of type '%s' to java type %s";
 

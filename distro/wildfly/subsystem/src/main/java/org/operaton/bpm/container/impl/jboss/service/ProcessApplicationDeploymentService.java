@@ -231,11 +231,16 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
     } else if (isValidValueForResumePreviousBy(resumePreviousBy)) {
       deploymentBuilder.resumePreviousVersionsBy(resumePreviousBy);
     } else {
-      StringBuilder b = new StringBuilder();
-      b.append("Illegal value passed for property ").append(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY);
-      b.append(". Value was ").append(resumePreviousBy);
-      b.append(" expected ").append(ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME);
-      b.append(" or ").append(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY).append(".");
+      b.append("Illegal value passed for property ")
+        .append(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY)
+        .append(". Value was ")
+        .append(resumePreviousBy)
+        .append(", expected ")
+        .append(ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME)
+        .append(" or ")
+        .append(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY)
+        .append(".");
+
       throw new IllegalArgumentException(b.toString());
     }
   }
@@ -251,11 +256,16 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   protected void logDeploymentSummary(Collection<String> resourceNames, String deploymentName, String processApplicationName) {
     // log a summary of the deployment
     StringBuilder builder = new StringBuilder();
-    builder.append("Deployment summary for process archive '"+deploymentName+"' of process application '"+processApplicationName+"': \n");
-    builder.append("\n");
+    builder.append("Deployment summary for process archive '")
+          .append(deploymentName)
+          .append("' of process application '")
+          .append(processApplicationName)
+          .append("':\n\n");
+
     for (String resourceName : resourceNames) {
-      builder.append("        "+resourceName);
-      builder.append("\n");
+      builder.append("        ")
+              .append(resourceName)
+              .append("\n");
     }
     LOGGER.log(Level.INFO, builder.toString());
   }

@@ -205,7 +205,9 @@ public class ManagedProcessEngineMetadata {
       ProcessEnginePluginXml pluginConfiguration = pluginConfigurations.get(i);
       if (pluginConfiguration.getPluginClass() == null || pluginConfiguration.getPluginClass().isEmpty()) {
         isValid = false;
-        validationErrorBuilder.append(" property 'class' in plugin[" + i + "] cannot be null \n");
+        validationErrorBuilder.append(" property 'class' in plugin[")
+          .append(i)
+          .append("] cannot be null \n");
       }
     }
 

@@ -35,9 +35,7 @@ public class MeterLogTimestampScenario extends AbstractTimestampMigrationScenari
   @DescribesScenario("initMeterLogTimestamp")
   @Times(1)
   public static ScenarioSetup initMeterLogTimestamp() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine processEngine, String s) {
+    return (processEngine, s) ->
 
       ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration())
         .getCommandExecutorTxRequired()
@@ -51,7 +49,5 @@ public class MeterLogTimestampScenario extends AbstractTimestampMigrationScenari
             return null;
           }
         });
-      }
-    };
   }
 }

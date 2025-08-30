@@ -103,17 +103,14 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   public void start(final StartContext context) throws StartException {
     provider.accept(this);
     context.asynchronous();
-    executorSupplier.get().submit(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          performDeployment();
-          context.complete();
-        } catch (StartException e) {
-          context.failed(e);
-        } catch (Throwable e) {
-          context.failed(new StartException(e));
-        }
+    executorSupplier.get().submit((Runnable) () -> {
+      try {
+        performDeployment();
+        context.complete();
+      } catch (StartException e) {
+        context.failed(e);
+      } catch (Throwable e) {
+        context.failed(new StartException(e));
       }
     });
   }
@@ -122,14 +119,11 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   public void stop(final StopContext context) {
     provider.accept(null);
     context.asynchronous();
-    executorSupplier.get().submit(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          performUndeployment();
-        } finally {
-          context.complete();
-        }
+    executorSupplier.get().submit((Runnable) () -> {
+      try {
+        performUndeployment();
+      } finally {
+        context.complete();
       }
     });
   }

@@ -39,18 +39,16 @@ public final class NestedInterruptingErrorEventSubprocessScenario {
   @DescribesScenario("init")
   @Times(5)
   public static ScenarioSetup instantiate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NestedInterruptingErrorEventSubprocessScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NestedInterruptingErrorEventSubprocessScenario", scenarioName);
 
-        // trigger the inner, non-interrupting event subprocess
-        engine.getRuntimeService()
-          .createMessageCorrelation("Message")
-          .processInstanceBusinessKey(scenarioName)
-          .correlate();
-      }
+      // trigger the inner, non-interrupting event subprocess
+      engine.getRuntimeService()
+        .createMessageCorrelation("Message")
+        .processInstanceBusinessKey(scenarioName)
+        .correlate();
     };
   }
 }

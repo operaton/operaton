@@ -50,41 +50,39 @@ public class AuthorizationScenario {
   @DescribesScenario("startProcessInstance")
   @Times(1)
   public static ScenarioSetup startProcessInstance() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        IdentityService identityService = engine.getIdentityService();
+    return (engine, scenarioName) -> {
+      IdentityService identityService = engine.getIdentityService();
 
-        String userId = USER_ID + scenarioName;
-        String groupid = GROUP_ID + scenarioName;
-        // create an user
-        User user = identityService.newUser(userId);
-        identityService.saveUser(user);
+      String userId = USER_ID + scenarioName;
+      String groupid = GROUP_ID + scenarioName;
+      // create an user
+      User user = identityService.newUser(userId);
+      identityService.saveUser(user);
 
-        // create group
-        Group group = identityService.newGroup(groupid);
-        identityService.saveGroup(group);
+      // create group
+      Group group = identityService.newGroup(groupid);
+      identityService.saveGroup(group);
 
-        // create membership
-        identityService.createMembership(userId, groupid);
+      // create membership
+      identityService.createMembership(userId, groupid);
 
-        //create full authorization
-        AuthorizationService authorizationService = engine.getAuthorizationService();
+      //create full authorization
+      AuthorizationService authorizationService = engine.getAuthorizationService();
 
-        //authorization for process definition
-        Authorization authProcDef = createAuthorization(authorizationService, Permissions.ALL, Resources.PROCESS_DEFINITION, userId);
-        engine.getAuthorizationService().saveAuthorization(authProcDef);
+      //authorization for process definition
+      Authorization authProcDef = createAuthorization(authorizationService, Permissions.ALL, Resources.PROCESS_DEFINITION, userId);
+      engine.getAuthorizationService().saveAuthorization(authProcDef);
 
-        //authorization for deployment
-        Authorization authDeployment = createAuthorization(authorizationService, Permissions.ALL, Resources.DEPLOYMENT, userId);
-        engine.getAuthorizationService().saveAuthorization(authDeployment);
+      //authorization for deployment
+      Authorization authDeployment = createAuthorization(authorizationService, Permissions.ALL, Resources.DEPLOYMENT, userId);
+      engine.getAuthorizationService().saveAuthorization(authDeployment);
 
-        //authorization for process instance create
-        Authorization authProcessInstance = createAuthorization(authorizationService, Permissions.CREATE, Resources.PROCESS_INSTANCE, userId);
-        engine.getAuthorizationService().saveAuthorization(authProcessInstance);
+      //authorization for process instance create
+      Authorization authProcessInstance = createAuthorization(authorizationService, Permissions.CREATE, Resources.PROCESS_INSTANCE, userId);
+      engine.getAuthorizationService().saveAuthorization(authProcessInstance);
 
-        // start a process instance
-        engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
-      }
+      // start a process instance
+      engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
     };
   }
 

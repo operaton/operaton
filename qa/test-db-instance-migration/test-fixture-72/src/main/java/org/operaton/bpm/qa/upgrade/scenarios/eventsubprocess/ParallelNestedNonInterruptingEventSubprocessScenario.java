@@ -41,17 +41,15 @@ public final class ParallelNestedNonInterruptingEventSubprocessScenario {
   @DescribesScenario("init")
   @Times(6)
   public static ScenarioSetup instantiateAndTriggerSubprocess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("ParallelNestedNonInterruptingEventSubprocessScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("ParallelNestedNonInterruptingEventSubprocessScenario", scenarioName);
 
-        engine.getRuntimeService()
-          .createMessageCorrelation("Message")
-          .processInstanceBusinessKey(scenarioName)
-          .correlate();
-      }
+      engine.getRuntimeService()
+        .createMessageCorrelation("Message")
+        .processInstanceBusinessKey(scenarioName)
+        .correlate();
     };
   }
 
@@ -59,17 +57,15 @@ public final class ParallelNestedNonInterruptingEventSubprocessScenario {
   @ExtendsScenario("init")
   @Times(6)
   public static ScenarioSetup completeSubprocessTask() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        Task task = engine
-          .getTaskService()
-          .createTaskQuery()
-          .processInstanceBusinessKey(scenarioName)
-          .taskDefinitionKey("innerTask")
-          .singleResult();
+    return (engine, scenarioName) -> {
+      Task task = engine
+        .getTaskService()
+        .createTaskQuery()
+        .processInstanceBusinessKey(scenarioName)
+        .taskDefinitionKey("innerTask")
+        .singleResult();
 
-        engine.getTaskService().complete(task.getId());
-      }
+      engine.getTaskService().complete(task.getId());
     };
   }
 

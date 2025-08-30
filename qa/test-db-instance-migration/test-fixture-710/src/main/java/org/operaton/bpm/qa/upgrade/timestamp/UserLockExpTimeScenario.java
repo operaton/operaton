@@ -40,31 +40,28 @@ public class UserLockExpTimeScenario extends AbstractTimestampMigrationScenario 
   @DescribesScenario("initUserLockExpirationTime")
   @Times(1)
   public static ScenarioSetup initUserLockExpirationTime() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine processEngine, String s) {
+    return (processEngine, s) -> {
 
-        final IdentityService identityService = processEngine.getIdentityService();
+      final IdentityService identityService = processEngine.getIdentityService();
 
-        User user = identityService.newUser(USER_ID);
-        user.setPassword(PASSWORD);
-        identityService.saveUser(user);
+      User user = identityService.newUser(USER_ID);
+      user.setPassword(PASSWORD);
+      identityService.saveUser(user);
 
-        ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequired().execute(new Command<Void>() {
-          @Override
-          public Void execute(CommandContext context) {
-            IdentityInfoManager identityInfoManager = Context.getCommandContext()
-              .getSession(IdentityInfoManager.class);
+      ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequired().execute(new Command<Void>() {
+        @Override
+        public Void execute(CommandContext context) {
+          IdentityInfoManager identityInfoManager = Context.getCommandContext()
+            .getSession(IdentityInfoManager.class);
 
-            UserEntity userEntity = (UserEntity) identityService.createUserQuery()
-              .userId(USER_ID)
-              .singleResult();
+          UserEntity userEntity = (UserEntity) identityService.createUserQuery()
+            .userId(USER_ID)
+            .singleResult();
 
-            identityInfoManager.updateUserLock(userEntity, 10, TIMESTAMP);
-            return null;
-          }
-        });
-      }
+          identityInfoManager.updateUserLock(userEntity, 10, TIMESTAMP);
+          return null;
+        }
+      });
     };
   }
 }

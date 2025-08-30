@@ -42,28 +42,26 @@ public final class DeleteHistoricDecisionsBatchScenario {
 
   @DescribesScenario("initDeleteHistoricDecisionsBatch")
   public static ScenarioSetup initDeleteHistoricDecisionsBatch() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        VariableMap variables = Variables.createVariables()
-          .putValue("status", "silver")
-          .putValue("sum", 723);
+      VariableMap variables = Variables.createVariables()
+        .putValue("status", "silver")
+        .putValue("sum", 723);
 
-        for (int i = 0; i < 10; i++) {
-          engine.getDecisionService().evaluateDecisionByKey("decision_710")
-            .variables(variables)
-            .evaluate();
-        }
-
-        List<String> decisionInstanceIds = new ArrayList<>();
-
-        List<HistoricDecisionInstance> decisionInstances = engine.getHistoryService().createHistoricDecisionInstanceQuery().list();
-        for (HistoricDecisionInstance decisionInstance : decisionInstances) {
-          decisionInstanceIds.add(decisionInstance.getId());
-        }
-
-        engine.getHistoryService().deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
+      for (int i = 0; i < 10; i++) {
+        engine.getDecisionService().evaluateDecisionByKey("decision_710")
+          .variables(variables)
+          .evaluate();
       }
+
+      List<String> decisionInstanceIds = new ArrayList<>();
+
+      List<HistoricDecisionInstance> decisionInstances = engine.getHistoryService().createHistoricDecisionInstanceQuery().list();
+      for (HistoricDecisionInstance decisionInstance : decisionInstances) {
+        decisionInstanceIds.add(decisionInstance.getId());
+      }
+
+      engine.getHistoryService().deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
     };
   }
 }

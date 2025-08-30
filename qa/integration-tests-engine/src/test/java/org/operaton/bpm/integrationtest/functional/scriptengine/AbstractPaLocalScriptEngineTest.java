@@ -24,8 +24,6 @@ import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.engine.impl.application.ProcessApplicationManager;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -62,16 +60,13 @@ public abstract class AbstractPaLocalScriptEngineTest extends AbstractFoxPlatfor
   }
 
   protected ProcessApplicationInterface getProcessApplication() {
-    ProcessApplicationReference reference = processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<ProcessApplicationReference>() {
-      @Override
-      public ProcessApplicationReference execute(CommandContext commandContext) {
-        ProcessDefinitionEntity definition = commandContext
-            .getProcessDefinitionManager()
-            .findLatestProcessDefinitionByKey(PROCESS_ID);
-        String deploymentId = definition.getDeploymentId();
-        ProcessApplicationManager processApplicationManager = processEngineConfiguration.getProcessApplicationManager();
-        return processApplicationManager.getProcessApplicationForDeployment(deploymentId);
-      }
+    ProcessApplicationReference reference = processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      ProcessDefinitionEntity definition = commandContext
+        .getProcessDefinitionManager()
+        .findLatestProcessDefinitionByKey(PROCESS_ID);
+      String deploymentId = definition.getDeploymentId();
+      ProcessApplicationManager processApplicationManager = processEngineConfiguration.getProcessApplicationManager();
+      return processApplicationManager.getProcessApplicationForDeployment(deploymentId);
     });
 
     assertThat(reference).isNotNull();

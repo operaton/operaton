@@ -34,17 +34,15 @@ public final class DeployUserWithoutSaltForPasswordHashingScenario {
   @DescribesScenario("initUser")
   @Times(1)
   public static ScenarioSetup initUser() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        // given
-        IdentityService identityService = engine.getIdentityService();
-        User user = identityService.newUser(USER_NAME);
-        user.setPassword(USER_PWD);
+    return (engine, scenarioName) -> {
+      // given
+      IdentityService identityService = engine.getIdentityService();
+      User user = identityService.newUser(USER_NAME);
+      user.setPassword(USER_PWD);
 
-        // when
-        identityService.saveUser(user);
+      // when
+      identityService.saveUser(user);
 
-      }
     };
   }
 }

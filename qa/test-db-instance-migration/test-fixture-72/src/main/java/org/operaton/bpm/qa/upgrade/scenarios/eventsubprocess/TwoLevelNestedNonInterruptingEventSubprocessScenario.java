@@ -41,18 +41,16 @@ public final class TwoLevelNestedNonInterruptingEventSubprocessScenario {
   @DescribesScenario("initLevel1")
   @Times(7)
   public static ScenarioSetup initLevelOneEventSubProcess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NestedNonInterruptingMessageEventSubprocessScenarioNestedSubprocess",
-              scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NestedNonInterruptingMessageEventSubprocessScenarioNestedSubprocess",
+          scenarioName);
 
-        engine.getRuntimeService()
-          .createMessageCorrelation("OuterEventSubProcessMessage")
-          .processInstanceBusinessKey(scenarioName)
-          .correlate();
-      }
+      engine.getRuntimeService()
+        .createMessageCorrelation("OuterEventSubProcessMessage")
+        .processInstanceBusinessKey(scenarioName)
+        .correlate();
     };
   }
 
@@ -60,13 +58,10 @@ public final class TwoLevelNestedNonInterruptingEventSubprocessScenario {
   @ExtendsScenario("initLevel1")
   @Times(7)
   public static ScenarioSetup initNestedSubProcessEnterSubprocess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine.getRuntimeService()
-          .createMessageCorrelation("InnerEventSubProcessMessage")
-          .processInstanceBusinessKey(scenarioName)
-          .correlate();
-      }
-    };
+    return (engine, scenarioName) ->
+      engine.getRuntimeService()
+        .createMessageCorrelation("InnerEventSubProcessMessage")
+        .processInstanceBusinessKey(scenarioName)
+        .correlate();
   }
 }

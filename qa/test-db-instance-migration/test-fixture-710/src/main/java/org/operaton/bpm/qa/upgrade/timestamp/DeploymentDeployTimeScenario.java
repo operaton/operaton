@@ -43,16 +43,13 @@ public class DeploymentDeployTimeScenario extends AbstractTimestampMigrationScen
   @DescribesScenario("initDeploymentDeployTime")
   @Times(1)
   public static ScenarioSetup initDeploymentDeployTime() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine processEngine, String s) {
+    return (processEngine, s) -> {
 
-        ClockUtil. setCurrentTime(TIMESTAMP);
+      ClockUtil. setCurrentTime(TIMESTAMP);
 
-        deployModel(processEngine, DEPLOYMENT_NAME, PROCESS_DEFINITION_KEY, DEPLOYMENT_MODEL);
+      deployModel(processEngine, DEPLOYMENT_NAME, PROCESS_DEFINITION_KEY, DEPLOYMENT_MODEL);
 
-        ClockUtil.reset();
-      }
+      ClockUtil.reset();
     };
   }
 }

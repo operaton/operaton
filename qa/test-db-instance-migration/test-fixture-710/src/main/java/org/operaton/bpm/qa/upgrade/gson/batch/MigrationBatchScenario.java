@@ -35,45 +35,43 @@ public final class MigrationBatchScenario {
 
   @DescribesScenario("initMigrationBatch")
   public static ScenarioSetup initMigrationBatch() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        String sourceProcessDefinitionId = engine.getRepositoryService().createDeployment()
-          .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessMigrationV1.bpmn20.xml")
-          .deployWithResult()
-          .getDeployedProcessDefinitions()
-          .get(0)
-          .getId();
+      String sourceProcessDefinitionId = engine.getRepositoryService().createDeployment()
+        .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessMigrationV1.bpmn20.xml")
+        .deployWithResult()
+        .getDeployedProcessDefinitions()
+        .get(0)
+        .getId();
 
-        List<String> processInstanceIds = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-          String processInstanceId = engine.getRuntimeService()
-            .startProcessInstanceById(sourceProcessDefinitionId, "MigrationBatchScenario").getId();
+      List<String> processInstanceIds = new ArrayList<>();
+      for (int i = 0;i < 10;i++) {
+        String processInstanceId = engine.getRuntimeService()
+          .startProcessInstanceById(sourceProcessDefinitionId, "MigrationBatchScenario").getId();
 
-          processInstanceIds.add(processInstanceId);
-        }
-
-        String targetProcessDefinitionId = engine.getRepositoryService().createDeployment()
-          .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessMigrationV2.bpmn20.xml")
-          .deployWithResult()
-          .getDeployedProcessDefinitions()
-          .get(0)
-          .getId();
-
-        MigrationPlan migrationPlan = engine.getRuntimeService()
-          .createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
-          .mapActivities("userTask1", "userTask1")
-          .mapActivities("conditional", "conditional")
-            .updateEventTrigger()
-          .build();
-
-        Batch batch = engine.getRuntimeService().newMigration(migrationPlan)
-          .processInstanceIds(processInstanceIds)
-          .skipIoMappings()
-          .skipCustomListeners()
-          .executeAsync();
-        engine.getManagementService().setProperty("MigrationBatchScenario.batchId", batch.getId());
+        processInstanceIds.add(processInstanceId);
       }
+
+      String targetProcessDefinitionId = engine.getRepositoryService().createDeployment()
+        .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessMigrationV2.bpmn20.xml")
+        .deployWithResult()
+        .getDeployedProcessDefinitions()
+        .get(0)
+        .getId();
+
+      MigrationPlan migrationPlan = engine.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
+        .mapActivities("userTask1", "userTask1")
+        .mapActivities("conditional", "conditional")
+        .updateEventTrigger()
+        .build();
+
+      Batch batch = engine.getRuntimeService().newMigration(migrationPlan)
+        .processInstanceIds(processInstanceIds)
+        .skipIoMappings()
+        .skipCustomListeners()
+        .executeAsync();
+      engine.getManagementService().setProperty("MigrationBatchScenario.batchId", batch.getId());
     };
   }
 }

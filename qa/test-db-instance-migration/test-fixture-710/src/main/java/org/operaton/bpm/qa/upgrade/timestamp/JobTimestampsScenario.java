@@ -49,40 +49,37 @@ public class JobTimestampsScenario extends AbstractTimestampMigrationScenario {
   @DescribesScenario("initJobTimestamps")
   @Times(1)
   public static ScenarioSetup initJobTimestamps() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(final ProcessEngine processEngine, String scenarioName) {
+    return (processEngine, scenarioName) -> {
 
-        ClockUtil.setCurrentTime(TIMESTAMP);
+      ClockUtil.setCurrentTime(TIMESTAMP);
 
-        deployModel(processEngine, PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY, SINGLE_JOB_MODEL);
+      deployModel(processEngine, PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY, SINGLE_JOB_MODEL);
 
-        final String processInstanceId = processEngine.getRuntimeService()
-          .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, scenarioName)
-          .getId();
+      final String processInstanceId = processEngine.getRuntimeService()
+        .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, scenarioName)
+        .getId();
 
-        ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration())
-          .getCommandExecutorTxRequired()
-          .execute(new Command<Void>() {
-            @Override
-            public Void execute(CommandContext commandContext) {
+      ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration())
+        .getCommandExecutorTxRequired()
+        .execute(new Command<Void>() {
+          @Override
+          public Void execute(CommandContext commandContext) {
 
-              JobEntity job = (JobEntity) processEngine.getManagementService()
-                .createJobQuery()
-                .processInstanceId(processInstanceId)
-                .singleResult();
+            JobEntity job = (JobEntity) processEngine.getManagementService()
+              .createJobQuery()
+              .processInstanceId(processInstanceId)
+              .singleResult();
 
-              job.setLockExpirationTime(LOCK_EXP_TIME);
+            job.setLockExpirationTime(LOCK_EXP_TIME);
 
-              commandContext.getJobManager()
-                .updateJob(job);
+            commandContext.getJobManager()
+              .updateJob(job);
 
-              return null;
-            }
-          });
+            return null;
+          }
+        });
 
-        ClockUtil.reset();
-      }
+      ClockUtil.reset();
     };
   }
 }

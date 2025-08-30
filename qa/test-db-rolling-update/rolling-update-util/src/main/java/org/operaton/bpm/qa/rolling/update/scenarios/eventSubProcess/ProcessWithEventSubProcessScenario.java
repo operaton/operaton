@@ -43,27 +43,20 @@ public final class ProcessWithEventSubProcessScenario {
   @DescribesScenario("init")
   @Times(1)
   public static ScenarioSetup startProcess() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
-      }
-    };
+    return (engine, scenarioName) ->
+      engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
   }
 
   @DescribesScenario("init.error")
   @Times(1)
   public static ScenarioSetup startProcessWithThrowedBpmnError() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine engine, String scenarioName) {
-        ProcessInstance procInstance = engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
-        Job job = engine.getManagementService()
-                        .createJobQuery()
-                        .processInstanceId(procInstance.getId())
-                        .singleResult();
-        engine.getManagementService().executeJob(job.getId());
-      }
+    return (engine, scenarioName) -> {
+      ProcessInstance procInstance = engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
+      Job job = engine.getManagementService()
+        .createJobQuery()
+        .processInstanceId(procInstance.getId())
+        .singleResult();
+      engine.getManagementService().executeJob(job.getId());
     };
   }
 }

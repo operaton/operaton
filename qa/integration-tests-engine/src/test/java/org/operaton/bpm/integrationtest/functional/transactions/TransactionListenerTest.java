@@ -24,7 +24,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
-import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
@@ -54,16 +53,11 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
 
     try {
 
-      processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+        commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, rolledBackListener);
+        commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);
 
-        @Override
-        public Void execute(CommandContext commandContext) {
-          commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, rolledBackListener);
-          commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);
-
-          throw new RuntimeException("Booum! Rollback!");
-        }
-
+        throw new RuntimeException("Booum! Rollback!");
       });
 
     }catch(Exception e) {
@@ -86,15 +80,10 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
 
     try {
 
-      processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-
-        @Override
-        public Void execute(CommandContext commandContext) {
-          commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, rolledBackListener);
-          commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);
-          return null;
-        }
-
+      processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+        commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, rolledBackListener);
+        commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);
+        return null;
       });
 
     }catch(Exception e) {

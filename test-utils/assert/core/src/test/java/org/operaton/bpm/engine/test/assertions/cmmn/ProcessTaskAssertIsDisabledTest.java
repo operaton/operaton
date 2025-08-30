@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
@@ -49,12 +48,7 @@ public class ProcessTaskAssertIsDisabledTest extends ProcessAssertTestCase {
     // When
     final CaseInstance caseInstance = givenCaseIsCreated();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).processTask(TASK_A).isDisabled();
-      }
-    });
+    expect(() -> assertThat(caseInstance).processTask(TASK_A).isDisabled());
   }
 
   private CaseInstance givenCaseIsCreated() {

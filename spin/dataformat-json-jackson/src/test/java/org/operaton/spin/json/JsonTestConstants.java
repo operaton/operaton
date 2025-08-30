@@ -128,4 +128,7 @@ public class JsonTestConstants {
     assertThat(customer.getContractStartDate()).isEqualTo(20130505);
   }
 
+  private JsonTestConstants() {
+  }
+
 }

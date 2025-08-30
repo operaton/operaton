@@ -66,4 +66,7 @@ public class MultiInstanceProcessModels {
         .cardinality("3")
         .done();
 
+  private MultiInstanceProcessModels() {
+  }
+
 }

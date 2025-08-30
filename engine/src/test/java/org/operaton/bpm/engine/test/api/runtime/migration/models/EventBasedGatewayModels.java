@@ -56,4 +56,7 @@ public class EventBasedGatewayModels {
       .userTask("afterSignalCatch")
       .endEvent()
       .done();
+
+  private EventBasedGatewayModels() {
+  }
 }

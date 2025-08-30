@@ -33,4 +33,7 @@ public class ServiceTaskModels {
       .endEvent()
       .done();
   }
+
+  private ServiceTaskModels() {
+  }
 }

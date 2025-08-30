@@ -106,4 +106,7 @@ public final class LdapTestUtilities {
     users = identityService.createUserQuery().memberOfGroup("all").listPage(12, 2);
     assertEquals(0, users.size());
   }
+
+  private LdapTestUtilities() {
+  }
 }

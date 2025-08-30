@@ -27,4 +27,7 @@ public class JdkUtil {
       return vendor.contains("IBM");
     }
   }
+
+  private JdkUtil() {
+  }
 }

@@ -70,4 +70,7 @@ public class TestContainer {
     webArchive.addAsManifestResource("jboss-deployment-structure-with-commons-logging.xml", "jboss-deployment-structure.xml");
   }
 
+  private TestContainer() {
+  }
+
 }

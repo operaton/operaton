@@ -60,4 +60,7 @@ public final class JsonTestUtil {
       return new CommandImpl(count);
     }
   }
+
+  private JsonTestUtil() {
+  }
 }

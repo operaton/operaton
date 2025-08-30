@@ -159,4 +159,7 @@ public class XmlTestConstants {
     return order;
   }
 
+  private XmlTestConstants() {
+  }
+
 }

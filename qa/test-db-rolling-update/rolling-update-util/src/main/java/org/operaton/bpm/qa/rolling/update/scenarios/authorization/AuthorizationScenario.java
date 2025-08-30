@@ -94,4 +94,7 @@ public class AuthorizationScenario {
     auth.setUserId(userId);
     return auth;
   }
+
+  private AuthorizationScenario() {
+  }
 }

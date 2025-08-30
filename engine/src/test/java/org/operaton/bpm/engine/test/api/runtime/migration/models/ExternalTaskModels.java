@@ -51,5 +51,8 @@ public class ExternalTaskModels {
       .endEvent()
       .done();
 
+  private ExternalTaskModels() {
+  }
+
 
 }

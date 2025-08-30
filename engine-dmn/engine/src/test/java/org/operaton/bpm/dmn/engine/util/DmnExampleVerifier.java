@@ -78,4 +78,7 @@ public final class DmnExampleVerifier {
       .containsEntry("reason", "you get anything you want");
   }
 
+  private DmnExampleVerifier() {
+  }
+
 }

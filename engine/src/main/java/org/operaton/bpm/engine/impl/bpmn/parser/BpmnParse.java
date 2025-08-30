@@ -184,6 +184,7 @@ import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDel
  * @author Deivarayan Azhagappan
  * @author Ingo Richtsmeier
  */
+@SuppressWarnings({"java:S3776", "java:S6541"}) // this class is complex by its nature
 public class BpmnParse extends Parse {
 
   public static final String MULTI_INSTANCE_BODY_ID_SUFFIX = "#multiInstanceBody";
@@ -235,7 +236,7 @@ public class BpmnParse extends Parse {
   public static final String CONDITION_EXPRESSION = "conditionExpression";
   public static final String CONDITION = "condition";
 
-  public static final List<String> VARIABLE_EVENTS = Arrays.asList(
+  private static final List<String> VARIABLE_EVENTS = Arrays.asList(
       VariableListener.CREATE,
       VariableListener.DELETE,
       VariableListener.UPDATE

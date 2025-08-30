@@ -149,13 +149,8 @@ public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcess
 						registry.registerActivitiStateHandler(registration);
 					}
 				},
-				new ReflectionUtils.MethodFilter() {
-          @Override
-          public boolean matches(Method method) {
-						return null != AnnotationUtils.getAnnotation(method,
-								State.class);
-					}
-				});
+				method -> AnnotationUtils.getAnnotation(method, State.class) != null
+		);
 
 		return bean;
 	}

@@ -173,20 +173,18 @@ public class ContainerIntegrationLogger extends ProcessEngineLogger {
   }
 
   public void deploymentSummary(Collection<String> deploymentResourceNames, String deploymentName) {
-      StringBuilder builder = new StringBuilder();
-      builder.append("Deployment summary for process archive '")
-              .append(deploymentName)
-              .append("':\n\n");
+    StringBuilder builder = new StringBuilder();
+    builder.append("Deployment summary for process archive '")
+      .append(deploymentName)
+      .append("':\n\n");
 
-      for (String resourceName : deploymentResourceNames) {
-          builder.append("        ")
-                  .append(resourceName)
-                  .append("\n");
-      }
+    for (String resourceName : deploymentResourceNames) {
+      builder.append("        ")
+        .append(resourceName)
+        .append("\n");
+    }
 
-      logInfo(
-              "023",
-              builder.toString());
+    logInfo("023", builder.toString());
   }
 
   public void foundProcessesXmlFile(String string) {

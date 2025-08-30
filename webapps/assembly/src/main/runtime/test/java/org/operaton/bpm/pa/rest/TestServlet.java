@@ -108,11 +108,11 @@ public class TestServlet extends HttpServlet {
       if (!TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK.contains(tableNameWithoutPrefix)) {
         Long count = tableCounts.get(tableName);
         if (count != 0L) {
-            outputMessage.append("  ")
-                    .append(tableName)
-                    .append(": ")
-                    .append(count)
-                    .append(" record(s)\n");
+          outputMessage.append("  ")
+            .append(tableName)
+            .append(": ")
+            .append(count)
+            .append(" record(s)\n");
         }
       }
     }

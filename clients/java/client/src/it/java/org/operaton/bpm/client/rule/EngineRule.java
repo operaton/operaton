@@ -284,13 +284,13 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback {
       if (!map.isEmpty()) {
         String variablesAsString = objectMapper.writeValueAsString(map);
         payload.append("\"variables\": ")
-                .append(variablesAsString)
-                .append(",");
+          .append(variablesAsString)
+          .append(",");
       }
       if (businessKey != null) {
         payload.append("\"businessKey\": \"")
-                .append(businessKey)
-                .append("\"");
+          .append(businessKey)
+          .append("\"");
       } else {
         payload.append("\"businessKey\": null");
       }

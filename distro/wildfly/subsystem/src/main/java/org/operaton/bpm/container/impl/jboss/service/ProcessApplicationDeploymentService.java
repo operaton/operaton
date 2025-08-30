@@ -231,17 +231,17 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
     } else if (isValidValueForResumePreviousBy(resumePreviousBy)) {
       deploymentBuilder.resumePreviousVersionsBy(resumePreviousBy);
     } else {
-        b.append("Illegal value passed for property ")
-                .append(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY)
-                .append(". Value was ")
-                .append(resumePreviousBy)
-                .append(", expected ")
-                .append(ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME)
-                .append(" or ")
-                .append(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY)
-                .append(".");
+      b.append("Illegal value passed for property ")
+        .append(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY)
+        .append(". Value was ")
+        .append(resumePreviousBy)
+        .append(", expected ")
+        .append(ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME)
+        .append(" or ")
+        .append(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY)
+        .append(".");
 
-        throw new IllegalArgumentException(b.toString());
+      throw new IllegalArgumentException(b.toString());
     }
   }
 

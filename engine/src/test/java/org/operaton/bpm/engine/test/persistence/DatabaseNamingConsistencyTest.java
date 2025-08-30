@@ -63,14 +63,14 @@ public class DatabaseNamingConsistencyTest {
               lineNumber.getAndIncrement();
               Matcher matcher = pattern.matcher(line);
               while (matcher.find()) {
-                  errorMessageBuilder
-                          .append("Found illegal lowercase column name ")
-                          .append(matcher.group(1))
-                          .append(" in SQL ")
-                          .append(file)
-                          .append(" at line ")
-                          .append(lineNumber.get())
-                          .append(". All SQL column names should be uppercase.\n");
+                errorMessageBuilder
+                  .append("Found illegal lowercase column name ")
+                  .append(matcher.group(1))
+                  .append(" in SQL ")
+                  .append(file)
+                  .append(" at line ")
+                  .append(lineNumber.get())
+                  .append(". All SQL column names should be uppercase.\n");
               }
             });
           }

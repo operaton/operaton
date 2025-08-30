@@ -96,6 +96,18 @@
             <exclusion>**/OperatonListImpl.java</exclusion>
             <!-- org.openrewrite.staticanalysis.SimplifyBooleanExpression -->
             <exclusion>**/DmnEvaluated*putImpl.java</exclusion>
+            <!-- org.openrewrite.staticanalysis.UseLambdaForFunctionalInterface: IndexOutOfBoundsException -->
+            <exclusion>**/MscManagedProcessEngineController.java</exclusion>
+            <!-- org.openrewrite.staticanalysis.UnnecessaryThrows, -->
+            <exclusion>**/DmnEngineApiTest.java</exclusion>
+            <exclusion>**/ProcessEngineRule.java</exclusion>
+            <exclusion>**/ProcessEngineTestCase.java</exclusion>
+            <exclusion>**/EntityRemoveRule.java</exclusion>
+            <exclusion>**/CronExpressionTest.java</exclusion>
+            <exclusion>**/JsonSerializationTest.java</exclusion>
+            <exclusion>**/JsonTreeCreateTest.java</exclusion>
+            <exclusion>**/DomXmlDataFormatWriterTest.java</exclusion>
+            <exclusion>**/JerseyServerBootstrap.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>

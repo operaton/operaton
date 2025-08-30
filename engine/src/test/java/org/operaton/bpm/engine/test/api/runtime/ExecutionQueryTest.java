@@ -57,7 +57,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertNotSame;
 
 
 /**
@@ -1363,7 +1362,7 @@ class ExecutionQueryTest {
 
     assertThat(executionList).hasSize(1);
     // execution id of subprocess != process instance id
-    assertNotSame(processInstance.getId(), executionList.get(0).getId());
+    assertThat(executionList.get(0).getId()).isNotSameAs(processInstance.getId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
@@ -1384,7 +1383,7 @@ class ExecutionQueryTest {
 
     assertThat(executionList).hasSize(1);
     // execution id of subprocess != process instance id
-    assertNotSame(processInstance.getId(), executionList.get(0).getId());
+    assertThat(executionList.get(0).getId()).isNotSameAs(processInstance.getId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
@@ -1405,7 +1404,7 @@ class ExecutionQueryTest {
 
     assertThat(executionList).hasSize(1);
     // execution id of subprocess != process instance id
-    assertNotSame(processInstance.getId(), executionList.get(0).getId());
+    assertThat(executionList.get(0).getId()).isNotSameAs(processInstance.getId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
@@ -1426,7 +1425,7 @@ class ExecutionQueryTest {
 
     assertThat(executionList).hasSize(1);
     // execution id of subprocess != process instance id
-    assertNotSame(processInstance.getId(), executionList.get(0).getId());
+    assertThat(executionList.get(0).getId()).isNotSameAs(processInstance.getId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml",

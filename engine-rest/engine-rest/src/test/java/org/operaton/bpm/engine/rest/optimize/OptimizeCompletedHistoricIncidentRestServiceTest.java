@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -159,7 +159,7 @@ class OptimizeCompletedHistoricIncidentRestServiceTest extends AbstractRestServi
     String content = response.asString();
     String processInstanceId = from(content).getString("[0].processInstanceId");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, processInstanceId);
+    assertThat(processInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
   }
 
 }

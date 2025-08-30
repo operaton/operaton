@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotSame;
 
 @ExtendWith(ProcessEngineExtension.class)
 class ShellTaskTest {
@@ -61,7 +60,7 @@ class ShellTaskTest {
 
   @Test
   void testOsDetection() {
-    assertNotSame(OsType.UNKNOWN, osType);
+    assertThat(osType).isNotSameAs(OsType.UNKNOWN);
   }
 
   @Deployment

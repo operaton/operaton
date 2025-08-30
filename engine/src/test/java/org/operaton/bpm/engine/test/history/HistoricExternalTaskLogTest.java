@@ -187,7 +187,6 @@ class HistoricExternalTaskLogTest {
 
     // then
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
-    assertThat(stacktrace).isNotNull();
     assertThat(stacktrace).isEqualTo(ERROR_DETAILS);
   }
 

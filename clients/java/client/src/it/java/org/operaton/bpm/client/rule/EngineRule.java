@@ -288,9 +288,9 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback {
                 .append(",");
       }
       if (businessKey != null) {
-          payload.append("\"businessKey\": \"")
-                  .append(businessKey)
-                  .append("\"");
+        payload.append("\"businessKey\": \"")
+                .append(businessKey)
+                .append("\"");
       } else {
         payload.append("\"businessKey\": null");
       }

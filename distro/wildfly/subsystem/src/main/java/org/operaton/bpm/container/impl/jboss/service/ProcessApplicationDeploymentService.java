@@ -254,7 +254,7 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
    * @param deploymentName
    */
   protected void logDeploymentSummary(Collection<String> resourceNames, String deploymentName, String processApplicationName) {
-    // log a summary of the deploymen
+    // log a summary of the deployment
     StringBuilder builder = new StringBuilder();
     builder.append("Deployment summary for process archive '")
           .append(deploymentName)

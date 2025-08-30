@@ -46,8 +46,7 @@ public class ExecutionTreeProcessDefinitionIdAssertion implements ExecutionTreeA
               .append("\nExecutions with unexpected process definition id:\n")
               .append("[\n");
       for (Execution execution : nonMatchingExecutions) {
-          sb.append(execution)
-                  .append("\n");
+          sb.append(execution).append("\n");
       }
       sb.append("]\n");
       fail(sb.toString());

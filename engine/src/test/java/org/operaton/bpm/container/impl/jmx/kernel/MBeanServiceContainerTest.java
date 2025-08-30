@@ -34,7 +34,8 @@ import org.operaton.bpm.container.impl.jmx.kernel.util.TestServiceType;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.engine.ProcessEngineException;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Testcases for the {@link MBeanServiceContainer} Kernel.

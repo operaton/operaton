@@ -33,7 +33,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(ProcessEngineExtension.class)
 class HistoricDecisionInstanceSerializationTest {

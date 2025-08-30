@@ -50,7 +50,6 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertNotSame;
 
 /**
  * @author Thorben Lindhauer
@@ -1146,7 +1145,7 @@ class ProcessInstanceModificationAsyncTest {
     Incident newIncident = runtimeService.createIncidentQuery().singleResult();
     assertThat(newIncident).isNotNull();
 
-    assertNotSame(incident.getId(), newIncident.getId());
+    assertThat(newIncident.getId()).isNotSameAs(incident.getId());
   }
 
   protected String getInstanceIdForActivity(ActivityInstance activityInstance, String activityId) {

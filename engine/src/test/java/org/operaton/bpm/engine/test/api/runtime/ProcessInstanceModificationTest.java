@@ -58,7 +58,6 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertNotSame;
 
 /**
  * @author Thorben Lindhauer
@@ -1307,7 +1306,7 @@ class ProcessInstanceModificationTest {
         .hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask").done());
 
     Task newTask = taskService.createTaskQuery().singleResult();
-    assertNotSame(task.getId(), newTask.getId());
+    assertThat(newTask.getId()).isNotSameAs(task.getId());
 
     completeTasksInOrder("undoTask", "afterCancel");
     testRule.assertProcessEnded(processInstance.getId());
@@ -1487,7 +1486,7 @@ class ProcessInstanceModificationTest {
     Task secondUndoTask = taskService.createTaskQuery().executionId(taskExecutionId).singleResult();
 
     assertThat(secondUndoTask).isNotNull();
-    assertNotSame(firstUndoTask.getId(), secondUndoTask.getId());
+    assertThat(secondUndoTask.getId()).isNotSameAs(firstUndoTask.getId());
     taskService.complete(secondUndoTask.getId());
 
     tree = runtimeService.getActivityInstance(processInstance.getId());

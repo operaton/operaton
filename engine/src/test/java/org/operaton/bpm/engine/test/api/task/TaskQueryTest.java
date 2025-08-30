@@ -77,7 +77,6 @@ import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertThrows;
 
 /**
  * @author Joram Barrez
@@ -755,50 +754,50 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupLike("management");
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test with "shortened" group name for like query
     query = taskService.createTaskQuery().taskCandidateGroupLike("mana%");
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test with "shortened" group name for like query (different part)
     query = taskService.createTaskQuery().taskCandidateGroupLike("%ment");
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test management candidates group with assigned tasks included
     query = taskService.createTaskQuery().taskCandidateGroupLike("management").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
     assertThat(query.list()).hasSize(3);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test with "shortened" group name for like query (assigned tasks included)
     query = taskService.createTaskQuery().taskCandidateGroupLike("mana%").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
     assertThat(query.list()).hasSize(3);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test with "shortened" group name for like query (different part, assigned tasks included)
     query = taskService.createTaskQuery().taskCandidateGroupLike("%ment").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
     assertThat(query.list()).hasSize(3);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test query that matches tasks with the "management" the "accountancy" candidate groups
     // accountancy group is candidate for 3 tasks, one of them is already assigned
     query = taskService.createTaskQuery().taskCandidateGroupLike("%an%");
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test query that matches tasks with the "management" the "accountancy" candidate groups (assigned tasks included)
     query = taskService.createTaskQuery().taskCandidateGroupLike("%an%").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(5);
     assertThat(query.list()).hasSize(5);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

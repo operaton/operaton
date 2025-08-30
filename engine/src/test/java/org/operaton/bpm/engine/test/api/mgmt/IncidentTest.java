@@ -54,7 +54,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertNotSame;
 
 class IncidentTest {
 
@@ -180,7 +179,7 @@ class IncidentTest {
 
     String executionIdOfNestedFailingExecution = job.getExecutionId();
 
-    assertNotSame(processInstance.getId(), executionIdOfNestedFailingExecution);
+    assertThat(executionIdOfNestedFailingExecution).isNotSameAs(processInstance.getId());
 
     assertThat(incident.getId()).isNotNull();
     assertThat(incident.getIncidentTimestamp()).isNotNull();
@@ -518,7 +517,7 @@ class IncidentTest {
 
     Incident incident = runtimeService.createIncidentQuery().singleResult();
     assertThat(incident).isNotNull();
-    assertNotSame(processInstanceId, incident.getExecutionId());
+    assertThat(incident.getExecutionId()).isNotSameAs(processInstanceId);
 
     runtimeService.correlateMessage("Message");
 

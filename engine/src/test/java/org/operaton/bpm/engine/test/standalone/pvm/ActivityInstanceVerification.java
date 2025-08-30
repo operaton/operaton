@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * @author Daniel Meyer
  *
  */
-public class ActivityInstanceVerification extends Assert implements ExecutionListener {
+public class ActivityInstanceVerification implements ExecutionListener {
 
   class ActivityInstance {
 

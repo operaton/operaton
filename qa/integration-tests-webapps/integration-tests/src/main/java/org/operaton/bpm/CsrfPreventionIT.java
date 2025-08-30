@@ -26,16 +26,17 @@ import org.junit.jupiter.api.Timeout;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CsrfPreventionIT extends AbstractWebIntegrationTest {
+class CsrfPreventionIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
-  @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfCsrfPreventionCookie() {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfCsrfPreventionCookie() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
 
@@ -54,8 +55,9 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
     assertThat(xsrfCookieValue).contains(";SameSite=Lax");
   }
 
-  @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
-  public void shouldRejectModifyingRequest() {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldRejectModifyingRequest() {
     // given
     String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
     String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";

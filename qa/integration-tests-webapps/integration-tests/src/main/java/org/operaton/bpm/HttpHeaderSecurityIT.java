@@ -34,13 +34,14 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
   public static final String CSP_VALUE = "base-uri 'self';script-src 'nonce-([-_a-zA-Z\\d]*)' 'strict-dynamic' 'unsafe-eval' https: 'self' 'unsafe-inline';style-src 'unsafe-inline' 'self';default-src 'self';img-src 'self' data:;block-all-mixed-content;form-action 'self';frame-ancestors 'none';object-src 'none';sandbox allow-forms allow-scripts allow-same-origin allow-popups allow-downloads";
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfXssProtectionHeader() {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfXssProtectionHeader() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
 
@@ -52,8 +53,9 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     assertHeaderPresent("X-XSS-Protection", "1; mode=block", response);
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfContentSecurityPolicyHeader() {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfContentSecurityPolicyHeader() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
 
@@ -65,8 +67,9 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     assertHeaderPresent("Content-Security-Policy", CSP_VALUE, response);
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfContentTypeOptions() {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfContentTypeOptions() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
 
@@ -78,8 +81,9 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     assertHeaderPresent("X-Content-Type-Options", "nosniff", response);
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckAbsenceOfHsts() {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckAbsenceOfHsts() {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
 

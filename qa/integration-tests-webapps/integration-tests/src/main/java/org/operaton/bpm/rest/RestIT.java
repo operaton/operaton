@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class RestIT extends AbstractWebIntegrationTest {
+class RestIT extends AbstractWebIntegrationTest {
 
   private static final String ENGINE_DEFAULT_PATH = "engine/default";
 
@@ -63,13 +63,13 @@ public class RestIT extends AbstractWebIntegrationTest {
   private static final Logger log = Logger.getLogger(RestIT.class.getName());
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() throws Exception {
     preventRaceConditions();
     createClient(getRestCtxPath());
   }
 
   @Test
-  public void testScenario() throws Exception {
+  void testScenario() throws Exception {
     // get process definitions for default engine
     log.info("Checking " + appBasePath + PROCESS_DEFINITION_PATH);
     target = client.target(appBasePath + PROCESS_DEFINITION_PATH);
@@ -112,7 +112,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void assertJodaTimePresent() throws Exception {
+  void assertJodaTimePresent() throws Exception {
     log.info("Checking " + appBasePath + TASK_PATH);
 
     target = client.target(appBasePath + TASK_PATH)
@@ -130,7 +130,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testDelayedJobDefinitionSuspension() {
+  void testDelayedJobDefinitionSuspension() {
     log.info("Checking " + appBasePath + JOB_DEFINITION_PATH + "/suspended");
 
     target = client.target(appBasePath + JOB_DEFINITION_PATH + "/suspended");
@@ -150,14 +150,14 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testTaskQueryContentType() {
+  void testTaskQueryContentType() {
     String resourcePath = appBasePath + TASK_PATH;
     log.info("Checking " + resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
 
   @Test
-  public void testSingleTaskContentType() throws Exception {
+  void testSingleTaskContentType() throws Exception {
     // get id of first task
     String taskId = getFirstTask().get("id").asText();
 
@@ -167,7 +167,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testTaskFilterResultContentType() throws Exception {
+  void testTaskFilterResultContentType() throws Exception {
     // create filter for first task, so single result will not throw an exception
     JsonNode firstTask = getFirstTask();
     Map<String, Object> query = new HashMap<>();
@@ -211,7 +211,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void shouldSerializeDateWithDefinedFormat() throws Exception {
+  void shouldSerializeDateWithDefinedFormat() throws Exception {
     // when
     target = client.target(appBasePath + SCHEMA_LOG_PATH);
     response = target.request()
@@ -246,7 +246,7 @@ public class RestIT extends AbstractWebIntegrationTest {
    * polymorphic serialization of historic details
    */
   @Test
-  public void testPolymorphicSerialization() throws Exception {
+  void testPolymorphicSerialization() throws Exception {
     // Get the first historic variable update
     JsonNode historicVariableUpdate = getFirstHistoricVariableUpdates();
 
@@ -258,7 +258,7 @@ public class RestIT extends AbstractWebIntegrationTest {
    * Uses Jackson's object mapper directly
    */
   @Test
-  public void testProcessInstanceQuery() throws Exception {
+  void testProcessInstanceQuery() throws Exception {
     // Make the GET request with the query parameter 'variables'
     target = client.target(appBasePath + PROCESS_INSTANCE_PATH);
 
@@ -284,7 +284,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testComplexObjectJacksonSerialization() throws Exception {
+  void testComplexObjectJacksonSerialization() throws Exception {
     // Make the GET request to retrieve process definition statistics
     target = client.target(appBasePath + PROCESS_DEFINITION_PATH + "/statistics");
 
@@ -328,7 +328,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testOptionsRequest() throws Exception {
+  void testOptionsRequest() throws Exception {
     // Given
     String resourcePath = appBasePath + FILTER_PATH;
     log.info("Send OPTIONS request to " + resourcePath);
@@ -354,7 +354,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testEmptyBodyFilterIsActive() {
+  void testEmptyBodyFilterIsActive() {
     target = client.target(appBasePath + FILTER_PATH + "/create");
 
     // Send POST request with null entity and JSON media type

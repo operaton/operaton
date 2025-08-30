@@ -47,19 +47,20 @@ import org.operaton.bpm.AbstractWebIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RestJaxRs2IT extends AbstractWebIntegrationTest {
+class RestJaxRs2IT extends AbstractWebIntegrationTest {
 
   private static final String ENGINE_DEFAULT_PATH = "engine/default";
   private static final String FETCH_AND_LOCK_PATH = ENGINE_DEFAULT_PATH + "/external-task/fetchAndLock";
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() throws Exception {
     preventRaceConditions();
     createClient(getRestCtxPath());
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldUseJaxRs2Artifact() throws Exception {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldUseJaxRs2Artifact() throws Exception {
     Map<String, Object> payload = new HashMap<>();
     payload.put("workerId", "aWorkerId");
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
@@ -80,7 +81,7 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void shouldPerform500ConcurrentRequests() throws Exception {
+  void shouldPerform500ConcurrentRequests() throws Exception {
     PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     final CloseableHttpClient httpClient = HttpClients.custom()
       .setConnectionManager(cm)

@@ -58,7 +58,7 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   }
 
   @Test
-  public void shouldLoginToCockpit() {
+  void shouldLoginToCockpit() {
     assertThatCode(() -> {
       try {
         loginToCockpit();
@@ -80,7 +80,7 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   }
 
   @Test
-  public void shouldLoginToTasklist() {
+  void shouldLoginToTasklist() {
     assertThatCode(() -> {
       try {
         loginToTasklist();
@@ -102,7 +102,7 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   }
 
   @Test
-  public void shouldLoginToAdmin() {
+  void shouldLoginToAdmin() {
     assertThatCode(() -> {
       try {
         loginToAdmin();
@@ -124,7 +124,7 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   }
 
   @Test
-  public void shouldLoginToWelcome() {
+  void shouldLoginToWelcome() {
     assertThatCode(() -> {
       try {
         loginToWelcome();

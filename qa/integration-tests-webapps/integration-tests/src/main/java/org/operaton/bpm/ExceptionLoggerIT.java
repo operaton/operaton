@@ -23,15 +23,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ExceptionLoggerIT extends AbstractWebIntegrationTest {
+class ExceptionLoggerIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() throws Exception {
     createClient(getWebappCtxPath());
   }
 
   @Test
-  public void shouldNotFailForUndefinedUser() {
+  void shouldNotFailForUndefinedUser() {
     // given
     target = client.target(appBasePath + "app/admin/default/#/users/undefined?tab=profile");
 

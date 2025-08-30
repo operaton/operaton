@@ -24,15 +24,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ErrorPageIT extends AbstractWebIntegrationTest {
+class ErrorPageIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() throws Exception {
     createClient(getWebappCtxPath());
   }
 
   @Test
-  public void shouldCheckNonFoundResponse() {
+  void shouldCheckNonFoundResponse() {
     // given
     target = client.target(appBasePath + "nonexisting");
 

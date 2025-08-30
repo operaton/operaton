@@ -49,18 +49,23 @@ public class ResourceUtil implements Resource {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     ResourceUtil other = (ResourceUtil) obj;
     if (resourceName == null) {
-      if (other.resourceName != null)
+      if (other.resourceName != null) {
         return false;
-    } else if (!resourceName.equals(other.resourceName))
+      }
+    } else if (!resourceName.equals(other.resourceName)) {
       return false;
+    }
     return resourceType == other.resourceType;
   }
 }

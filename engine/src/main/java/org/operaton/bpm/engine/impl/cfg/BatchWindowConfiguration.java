@@ -93,15 +93,18 @@ public class BatchWindowConfiguration {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o)
+    if (this == o) {
       return true;
-    if (o == null || getClass() != o.getClass())
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
+    }
 
     BatchWindowConfiguration that = (BatchWindowConfiguration) o;
 
-    if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null)
+    if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) {
       return false;
+    }
     return endTime != null ? endTime.equals(that.endTime) : that.endTime == null;
   }
 

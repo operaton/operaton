@@ -59,8 +59,7 @@ recipeList:
   - org.openrewrite.staticanalysis.MinimumSwitchCases
   - org.openrewrite.staticanalysis.ModifierOrder
   - org.openrewrite.staticanalysis.MultipleVariableDeclarations
-  # Too much noise in equals/hashCode implementations:
-  # - org.openrewrite.staticanalysis.NeedBraces
+  - org.openrewrite.staticanalysis.NeedBraces
   - org.openrewrite.staticanalysis.NestedEnumsAreNotStatic
   - org.openrewrite.staticanalysis.NewStringBuilderBufferWithCharArgument
   - org.openrewrite.staticanalysis.NoDoubleBraceInitialization

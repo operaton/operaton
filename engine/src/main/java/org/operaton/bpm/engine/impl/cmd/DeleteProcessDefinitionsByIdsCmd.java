@@ -230,23 +230,30 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
+      }
       ProcessDefinitionGroup other = (ProcessDefinitionGroup) obj;
       if (key == null) {
-        if (other.key != null)
+        if (other.key != null) {
           return false;
-      } else if (!key.equals(other.key))
+        }
+      } else if (!key.equals(other.key)) {
         return false;
+      }
       if (tenant == null) {
-        if (other.tenant != null)
+        if (other.tenant != null) {
           return false;
-      } else if (!tenant.equals(other.tenant))
+        }
+      } else if (!tenant.equals(other.tenant)) {
         return false;
+      }
       return true;
     }
 

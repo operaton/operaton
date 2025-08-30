@@ -56,13 +56,21 @@ public class UserDto {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
 
     UserDto userDto = (UserDto) o;
 
-    if (firstName != null ? !firstName.equals(userDto.firstName) : userDto.firstName != null) return false;
-    if (id != null ? !id.equals(userDto.id) : userDto.id != null) return false;
+    if (firstName != null ? !firstName.equals(userDto.firstName) : userDto.firstName != null) {
+      return false;
+    }
+    if (id != null ? !id.equals(userDto.id) : userDto.id != null) {
+      return false;
+    }
     return lastName == null ? userDto.lastName != null : !lastName.equals(userDto.lastName);
   }
 

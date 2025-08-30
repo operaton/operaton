@@ -88,22 +88,29 @@ public class XmlSerializableNoAnnotation {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     XmlSerializableNoAnnotation other = (XmlSerializableNoAnnotation) obj;
-    if (booleanProperty != other.booleanProperty)
+    if (booleanProperty != other.booleanProperty) {
       return false;
-    if (intProperty != other.intProperty)
+    }
+    if (intProperty != other.intProperty) {
       return false;
+    }
     if (stringProperty == null) {
-      if (other.stringProperty != null)
+      if (other.stringProperty != null) {
         return false;
-    } else if (!stringProperty.equals(other.stringProperty))
+      }
+    } else if (!stringProperty.equals(other.stringProperty)) {
       return false;
+    }
     return true;
   }
 

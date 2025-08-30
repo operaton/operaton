@@ -102,10 +102,12 @@ public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnec
 
   @Override
   public boolean equals(Object other) {
-    if (other == null)
+    if (other == null) {
       return false;
-    if (other == this)
+    }
+    if (other == this) {
       return true;
+    }
     return other instanceof JcaExecutorServiceManagedConnectionFactory;
   }
 

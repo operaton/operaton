@@ -47,8 +47,12 @@ public class TestPojo implements Serializable {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     TestPojo testPojo = (TestPojo) o;
     return Objects.equals(foo, testPojo.foo) &&
         Objects.equals(bar, testPojo.bar);

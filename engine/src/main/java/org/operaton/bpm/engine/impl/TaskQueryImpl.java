@@ -2354,8 +2354,12 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
     @Override
     public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
 
       TaskQueryVariableValue other = ((TaskQueryVariableValueComparable) o).getVariableValue();
 

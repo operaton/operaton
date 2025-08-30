@@ -115,7 +115,7 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
 
     try {
       processBuilder.redirectErrorStream(redirectErrorFlag);
-      if (cleanEnvBoolan) {
+      if (Boolean.TRUE.equals(cleanEnvBoolan)) {
         Map<String, String> env = processBuilder.environment();
         env.clear();
       }
@@ -125,7 +125,7 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
 
       Process process = processBuilder.start();
 
-      if (waitFlag) {
+      if (Boolean.TRUE.equals(waitFlag)) {
         int errorCode = process.waitFor();
 
         if (resultVariableStr != null) {

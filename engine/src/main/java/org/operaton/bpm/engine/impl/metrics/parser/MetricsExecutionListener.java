@@ -43,7 +43,7 @@ public class MetricsExecutionListener implements ExecutionListener {
 
   @Override
   public void notify(DelegateExecution execution) throws Exception {
-    if (condition.apply(execution)) {
+    if (Boolean.TRUE.equals(condition.apply(execution))) {
       Context.getProcessEngineConfiguration()
           .getMetricsRegistry()
           .markOccurrence(metricsName);

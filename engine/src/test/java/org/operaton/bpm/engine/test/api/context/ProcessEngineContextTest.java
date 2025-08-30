@@ -144,7 +144,7 @@ class ProcessEngineContextTest {
           .processDefinitionKey(SIMPLE_PROCESS_KEY)
           .singleResult();
 
-      if (requiresNew) {
+      if (Boolean.TRUE.equals(requiresNew)) {
         try {
           ProcessEngineContext.withNewProcessEngineContext(this::executeNestedCommand);
         } catch (Exception e) {

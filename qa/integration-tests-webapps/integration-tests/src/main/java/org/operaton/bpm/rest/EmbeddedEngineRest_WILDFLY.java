@@ -54,7 +54,7 @@ public class EmbeddedEngineRest_WILDFLY {
 
   @Test
   @RunAsClient
-  public void testDeploymentWorks() {
+  void testDeploymentWorks() {
     try {
       deployer.deploy(EMBEDDED_ENGINE_REST);
       deployer.undeploy(EMBEDDED_ENGINE_REST);

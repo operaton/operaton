@@ -31,19 +31,19 @@ import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class DateSerializationIT extends AbstractWebIntegrationTest {
+class DateSerializationIT extends AbstractWebIntegrationTest {
 
   private static final String SCHEMA_LOG_PATH = "api/engine/engine/default/schema/log";
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     getTokens();
   }
 
   @Test
-  public void shouldSerializeDateWithDefinedFormat() throws Exception {
+  void shouldSerializeDateWithDefinedFormat() throws Exception {
     // given
     target = client.target(appBasePath + SCHEMA_LOG_PATH);
 

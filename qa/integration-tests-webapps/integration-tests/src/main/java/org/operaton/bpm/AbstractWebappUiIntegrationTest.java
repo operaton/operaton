@@ -42,7 +42,7 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
   public SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
 
   @BeforeAll
-  public static void createDriver() {
+  static void createDriver() {
     String chromeDriverExecutable = "chromedriver";
     if (System.getProperty("os.name").toLowerCase(Locale.US).contains("windows")) {
       chromeDriverExecutable += ".exe";
@@ -89,19 +89,19 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
   }
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
   @AfterEach
-  public void after() {
+  void after() {
     testUtil.destroy();
   }
 
   @AfterAll
-  public static void quitDriver() {
+  static void quitDriver() {
     driver.quit();
   }
 

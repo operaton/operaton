@@ -41,7 +41,7 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   public boolean assetAllowed;
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() throws Exception {
     createClient(getWebappCtxPath());
   }
 
@@ -57,7 +57,7 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void shouldGetAssetIfAllowed() {
+  void shouldGetAssetIfAllowed() {
     // when
     response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
 

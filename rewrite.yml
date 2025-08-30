@@ -103,4 +103,30 @@ recipeList:
   - org.openrewrite.kotlin.cleanup.ImplicitParameterInLambda
   - org.openrewrite.kotlin.cleanup.ReplaceCharToIntWithCode
   - org.openrewrite.staticanalysis.CustomImportOrder
+  # Java cleanups
+  # - org.openrewrite.java.OrderImports
+  - org.openrewrite.staticanalysis.ModifierOrder
+  - org.openrewrite.staticanalysis.UnnecessaryThrows
+  - org.openrewrite.java.RemoveUnusedImports
+  #- org.openrewrite.staticanalysis.UseStandardCharset
+  #- org.openrewrite.staticanalysis.MissingOverrideAnnotation
+  #- org.openrewrite.staticanalysis.HideUtilityClassConstructor
+  - org.openrewrite.staticanalysis.UseLambdaForFunctionalInterface
+  #- org.openrewrite.staticanalysis.CombineSemanticallyEqualCatchBlocks
+  #- org.openrewrite.staticanalysis.AvoidBoxedBooleanExpressions
+  #- org.openrewrite.java.SimplifySingleElementAnnotation
+  #- org.openrewrite.java.migrate.lang.StringFormatted
+  #- org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+  #- org.openrewrite.java.migrate.UpgradeToJava17
+  #- org.openrewrite.java.migrate.DeprecatedLogRecordThreadID
+  #- org.openrewrite.staticanalysis.InstanceOfPatternMatch
+  #- org.openrewrite.staticanalysis.ExplicitInitialization
+  # Testing
+  #- org.openrewrite.java.testing.assertj.SimplifyChainedAssertJAssertions
+  #- org.openrewrite.java.testing.assertj.SimplifyAssertJAssertion
+  #- org.openrewrite.java.testing.cleanup.SimplifyTestThrows
+  #- org.openrewrite.java.testing.mockito.SimplifyMockitoVerifyWhenGiven
+  #- org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic
+  #- org.openrewrite.java.testing.cleanup.AssertionsArgumentOrder
+  #- org.openrewrite.java.testing.assertj.CollapseConsecutiveAssertThatStatements
 

@@ -32,4 +32,7 @@ public class VariableTypeHelper {
 
     return typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
   }
+
+  private VariableTypeHelper() {
+  }
 }

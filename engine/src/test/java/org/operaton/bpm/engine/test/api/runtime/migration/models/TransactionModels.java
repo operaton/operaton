@@ -57,4 +57,7 @@ public class TransactionModels {
     CancelEventDefinition eventDefinition = model.newInstance(CancelEventDefinition.class);
     element.addChildElement(eventDefinition);
   }
+
+  private TransactionModels() {
+  }
 }

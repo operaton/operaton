@@ -44,4 +44,7 @@ public class MockHelper {
     return clientBuilder;
   }
 
+  private MockHelper() {
+  }
+
 }

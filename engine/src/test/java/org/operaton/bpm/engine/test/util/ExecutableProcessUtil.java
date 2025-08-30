@@ -26,4 +26,7 @@ public class ExecutableProcessUtil {
       .userTask("task1")
       .endEvent()
       .done();
+
+  private ExecutableProcessUtil() {
+  }
 }

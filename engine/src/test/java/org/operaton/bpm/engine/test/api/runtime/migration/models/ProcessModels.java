@@ -289,4 +289,7 @@ public class ProcessModels {
         .done();
   }
 
+  private ProcessModels() {
+  }
+
 }

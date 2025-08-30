@@ -46,4 +46,7 @@ public class SignalCatchModels {
       .subProcessDone()
       .endEvent()
       .done();
+
+  private SignalCatchModels() {
+  }
 }

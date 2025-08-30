@@ -35,5 +35,8 @@ public class OperatonBpmTelemetryConfiguration {
     public static OperatonApplicationServerConfigurator applicationServerConfigurator() {
       return new OperatonApplicationServerConfigurator();
     }
+
+    private TelemetryApplicationServerConfiguration() {
+    }
   }
 }

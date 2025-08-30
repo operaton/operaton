@@ -71,4 +71,7 @@ public class TestUtils {
       return sc;
     }
   }
+
+  private TestUtils() {
+  }
 }

@@ -264,5 +264,8 @@ public class ExecutionListenerCases {
               .expectRegistrationFor(ItemHandler.CASE_PLAN_MODEL_EVENTS)}
       });
 
+  private ExecutionListenerCases() {
+  }
+
 
 }

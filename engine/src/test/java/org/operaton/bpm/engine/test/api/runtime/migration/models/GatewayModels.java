@@ -95,4 +95,7 @@ public class GatewayModels {
       .subProcessDone()
       .endEvent()
       .done();
+
+  private GatewayModels() {
+  }
 }

@@ -61,4 +61,7 @@ public class MessageReceiveModels {
     .userTask("userTask")
     .endEvent()
     .done();
+
+  private MessageReceiveModels() {
+  }
 }

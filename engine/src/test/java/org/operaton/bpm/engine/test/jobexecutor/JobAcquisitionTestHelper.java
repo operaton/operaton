@@ -65,4 +65,7 @@ public class JobAcquisitionTestHelper {
     assertThat(actualValue >= minimum && actualValue <= maximum).as("Expected '" + actualValue + "' to be between '" + minimum + "' and '" + maximum + "'").isTrue();
   }
 
+  private JobAcquisitionTestHelper() {
+  }
+
 }

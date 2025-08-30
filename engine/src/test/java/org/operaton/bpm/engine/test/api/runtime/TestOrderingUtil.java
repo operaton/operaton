@@ -565,4 +565,7 @@ public class TestOrderingUtil {
     verifySorting(elements, expectedOrdering);
   }
 
+  private TestOrderingUtil() {
+  }
+
 }

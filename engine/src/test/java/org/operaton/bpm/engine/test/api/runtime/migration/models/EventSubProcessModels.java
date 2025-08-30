@@ -152,4 +152,7 @@ public class EventSubProcessModels {
         .endEvent()
       .subProcessDone()
       .done();
+
+  private EventSubProcessModels() {
+  }
 }

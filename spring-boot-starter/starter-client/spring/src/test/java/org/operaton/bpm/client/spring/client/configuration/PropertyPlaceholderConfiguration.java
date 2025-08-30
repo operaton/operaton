@@ -41,4 +41,7 @@ public class PropertyPlaceholderConfiguration {
     return configurer;
   }
 
+  private PropertyPlaceholderConfiguration() {
+  }
+
 }

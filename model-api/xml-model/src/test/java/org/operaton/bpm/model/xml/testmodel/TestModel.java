@@ -66,4 +66,7 @@ public final class TestModel {
     return modelBuilder;
   }
 
+  private TestModel() {
+  }
+
 }

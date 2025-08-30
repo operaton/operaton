@@ -27,4 +27,7 @@ public class ErrorMessageHelper {
   public static String getExpectedFailingConversionMessage(Object value, String submittedValueType, Class<?> conversionClass) {
     return EXPECTED_CONVERSION_FAILURE_MESSAGE.formatted(value, submittedValueType, conversionClass.getName());
   }
+
+  private ErrorMessageHelper() {
+  }
 }

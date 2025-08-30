@@ -147,4 +147,7 @@ public class TestUtil {
       return result;
     }
   }
+
+  private TestUtil() {
+  }
 }

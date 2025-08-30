@@ -87,5 +87,8 @@ public class TypedValueAssert {
     assertThat(nullValue.getType()).isEqualTo(ValueType.NULL);
   }
 
+  private TypedValueAssert() {
+  }
+
 
 }

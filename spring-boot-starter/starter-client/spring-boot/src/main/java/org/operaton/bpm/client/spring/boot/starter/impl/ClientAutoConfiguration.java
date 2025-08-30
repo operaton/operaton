@@ -41,4 +41,7 @@ public class ClientAutoConfiguration {
     return new ClientPostProcessor(PropertiesAwareClientFactory.class);
   }
 
+  private ClientAutoConfiguration() {
+  }
+
 }

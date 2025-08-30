@@ -44,4 +44,7 @@ public class TimerCatchModels {
       .subProcessDone()
       .endEvent()
       .done();
+
+  private TimerCatchModels() {
+  }
 }

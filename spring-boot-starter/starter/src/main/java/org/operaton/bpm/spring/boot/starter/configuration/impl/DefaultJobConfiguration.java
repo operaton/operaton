@@ -125,5 +125,8 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
     public static JobExecutorStartingEventListener jobExecutorStartingEventListener() {
       return new JobExecutorStartingEventListener();
     }
+
+    private JobConfiguration() {
+    }
   }
 }

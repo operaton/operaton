@@ -143,4 +143,7 @@ public class ProcessModels {
       .userTask(USER_TASK_AFTER_BPMN_ERROR)
       .endEvent()
       .done();
+
+  private ProcessModels() {
+  }
 }

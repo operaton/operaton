@@ -37,4 +37,7 @@ public class PostProcessorConfiguration {
     return new ClientPostProcessor(ClientFactory.class);
   }
 
+  private PostProcessorConfiguration() {
+  }
+
 }

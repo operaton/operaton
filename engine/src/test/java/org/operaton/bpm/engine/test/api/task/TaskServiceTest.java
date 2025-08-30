@@ -2302,12 +2302,10 @@ class TaskServiceTest {
   @SuppressWarnings("unchecked")
   @Test
   void testRemoveVariablesNullTaskId() {
-    try {
-      taskService.removeVariables(null, Collections.emptyList());
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    List<String> variableNames = Collections.emptyList();
+    assertThatThrownBy(() -> taskService.removeVariables(null, variableNames))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Deployment(resources = {
@@ -2378,12 +2376,10 @@ class TaskServiceTest {
   @SuppressWarnings("unchecked")
   @Test
   void testRemoveVariablesLocalNullTaskId() {
-    try {
-      taskService.removeVariablesLocal(null, Collections.emptyList());
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    List<String> variableNames = Collections.emptyList();
+    assertThatThrownBy(() -> taskService.removeVariablesLocal(null, variableNames))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})

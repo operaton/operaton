@@ -87,6 +87,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.SubProcessBuilder;
 import org.operaton.commons.utils.CollectionUtil;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_PROCESS;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
@@ -996,23 +997,19 @@ public class RuntimeServiceTest {
   @SuppressWarnings("unchecked")
   @Test
   void testSetVariablesUnexistingExecutionId() {
-    try {
-      runtimeService.setVariables("unexistingexecution", Collections.emptyMap());
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("execution unexistingexecution doesn't exist", ae.getMessage());
-    }
+    Map<String, Object> variables = Collections.emptyMap();
+    assertThatThrownBy(() -> runtimeService.setVariables("unexistingexecution", variables))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("execution unexistingexecution doesn't exist");
   }
 
   @SuppressWarnings("unchecked")
   @Test
   void testSetVariablesNullExecutionId() {
-    try {
-      runtimeService.setVariables(null, Collections.emptyMap());
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-    }
+    Map<String, Object> variables = Collections.emptyMap();
+    assertThatThrownBy(() -> runtimeService.setVariables(null, variables))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("executionId is null");
   }
 
 
@@ -1220,12 +1217,10 @@ public class RuntimeServiceTest {
   @SuppressWarnings("unchecked")
   @Test
   void testRemoveVariablesNullExecutionId() {
-    try {
-      runtimeService.removeVariables(null, Collections.emptyList());
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-    }
+    List<String> variableNames = Collections.emptyList();
+    assertThatThrownBy(() -> runtimeService.removeVariables(null, variableNames))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("executionId is null");
   }
 
   @Deployment(resources = {
@@ -1278,12 +1273,10 @@ public class RuntimeServiceTest {
   @SuppressWarnings("unchecked")
   @Test
   void testRemoveVariablesLocalNullExecutionId() {
-    try {
-      runtimeService.removeVariablesLocal(null, Collections.emptyList());
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-    }
+    List<String> variableNames = Collections.emptyList();
+    assertThatThrownBy(() -> runtimeService.removeVariablesLocal(null, variableNames))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("executionId is null");
   }
 
   @Deployment(resources = {
@@ -3030,10 +3023,10 @@ public class RuntimeServiceTest {
       .putValue("anObjectValue", objectValue(new SimpleSerializableBean(10)).serializationDataFormat(Variables.SerializationDataFormats.JAVA))
       .putValue("anUntypedObjectValue", new SimpleSerializableBean(30));
 
-    runtimeService.startProcessInstanceByKey("testProcess", variables);
-
     // assertions are part of the java delegate AssertVariableInstancesDelegate
     // only there we can access the VariableScope methods
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
+      .doesNotThrowAnyException();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testSetVariableInScope.bpmn20.xml")

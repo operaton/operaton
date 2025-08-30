@@ -83,23 +83,30 @@ public class Authentication implements Principal, Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Authentication other = (Authentication) obj;
     if (identityId == null) {
-      if (other.identityId != null)
+      if (other.identityId != null) {
         return false;
-    } else if (!identityId.equals(other.identityId))
+      }
+    } else if (!identityId.equals(other.identityId)) {
       return false;
+    }
     if (processEngineName == null) {
-      if (other.processEngineName != null)
+      if (other.processEngineName != null) {
         return false;
-    } else if (!processEngineName.equals(other.processEngineName))
+      }
+    } else if (!processEngineName.equals(other.processEngineName)) {
       return false;
+    }
     return true;
   }
 

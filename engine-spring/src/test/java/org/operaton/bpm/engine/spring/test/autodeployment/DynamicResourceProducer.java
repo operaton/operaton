@@ -64,4 +64,7 @@ public class DynamicResourceProducer {
       return description;
     }
   }
+
+  private DynamicResourceProducer() {
+  }
 }

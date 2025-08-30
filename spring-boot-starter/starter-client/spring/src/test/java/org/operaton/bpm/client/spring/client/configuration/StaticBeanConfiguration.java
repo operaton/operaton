@@ -30,4 +30,7 @@ public class StaticBeanConfiguration {
     return "a static bean";
   }
 
+  private StaticBeanConfiguration() {
+  }
+
 }

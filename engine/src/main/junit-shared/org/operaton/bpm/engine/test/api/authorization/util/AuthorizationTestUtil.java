@@ -71,4 +71,7 @@ public class AuthorizationTestUtil {
 
     return authorization.getPermissions(permissionsByResourceType);
   }
+
+  private AuthorizationTestUtil() {
+  }
 }

@@ -39,4 +39,7 @@ public class DatabaseHelper {
     return processEngineConfiguration.getDbSqlSessionFactory().getDatabaseType();
   }
 
+  private DatabaseHelper() {
+  }
+
 }

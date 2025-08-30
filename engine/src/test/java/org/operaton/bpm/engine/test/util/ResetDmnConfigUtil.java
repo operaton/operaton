@@ -29,4 +29,7 @@ public class ResetDmnConfigUtil {
         .feelEngineFactory(null);
   }
 
+  private ResetDmnConfigUtil() {
+  }
+
 }

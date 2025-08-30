@@ -56,6 +56,9 @@ class GetAnnotatedBeanTest {
       return () -> {};
     }
 
+    private WithName() {
+    }
+
   }
 
   @Autowired

@@ -30,4 +30,7 @@ public class ProcessEngineUtils {
         String result = "processEngine-rnd" + RANDOM.nextLong();
         return ProcessEngines.isRegisteredProcessEngine(result) ? newRandomProcessEngineName() : result;
     }
+
+  private ProcessEngineUtils() {
+  }
 }

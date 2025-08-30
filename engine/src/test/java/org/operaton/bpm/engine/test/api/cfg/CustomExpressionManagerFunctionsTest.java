@@ -83,5 +83,8 @@ class CustomExpressionManagerFunctionsTest {
     public static String foobar() {
       return "foobar";
     }
+
+    private TestFunctions() {
+    }
   }
 }

@@ -62,4 +62,7 @@ public class DmnHelper {
     element.setId(identifier);
     return element;
   }
+
+  private DmnHelper() {
+  }
 }

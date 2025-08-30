@@ -43,4 +43,7 @@ public class XmlTestUtil {
 
     return input.substring(0, indexOfTimezone) + input.substring(indexOfClosingBracket);
   }
+
+  private XmlTestUtil() {
+  }
 }

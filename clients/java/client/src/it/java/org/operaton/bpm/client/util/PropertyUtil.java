@@ -48,4 +48,7 @@ public class PropertyUtil {
     return PropertyUtil.loadProperties("service.properties");
   }
 
+  private PropertyUtil() {
+  }
+
 }

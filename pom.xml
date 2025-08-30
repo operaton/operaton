@@ -114,6 +114,9 @@
             <exclusion>**/ScopingTest.java</exclusion>
             <!-- org.openrewrite.java.testing.mockito.SimplifyMockitoVerifyWhenGiven -->
             <exclusion>**/AuthorizationCheckRevokesCfgTest.java</exclusion>
+            <!-- org.openrewrite.staticanalysis.HideUtilityClassConstructor -->
+            <exclusion>**/ClassLoaderUtil.java</exclusion>
+            <exclusion>**/Variables.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>

@@ -28,4 +28,7 @@ public class SpecUtil {
     parentElement.addChildElement(element);
     return element;
   }
+
+  private SpecUtil() {
+  }
 }

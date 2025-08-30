@@ -87,7 +87,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
   }
 
   @Override
-  public void beforeEach(ExtensionContext context) throws Exception {
+  public void beforeEach(ExtensionContext context) {
     ProcessEngineConfigurationImpl engineConfiguration =
         (ProcessEngineConfigurationImpl) processEngineExtension.getProcessEngine().getProcessEngineConfiguration();
     interceptor.reset();
@@ -96,7 +96,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
   }
 
   @Override
-  public void afterEach(ExtensionContext context) throws Exception {
+  public void afterEach(ExtensionContext context) {
     processEngineExtension.getProcessEngine().getIdentityService().clearAuthentication();
     deleteManagedAuthorizations();
     ProcessEngineConfigurationImpl engineConfiguration =

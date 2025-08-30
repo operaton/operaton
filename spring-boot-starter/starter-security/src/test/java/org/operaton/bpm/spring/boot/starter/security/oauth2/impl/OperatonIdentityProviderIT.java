@@ -80,12 +80,6 @@ public class OperatonIdentityProviderIT extends AbstractSpringSecurityIT {
     mockIdentityProviderFactory();
   }
 
-  @Override
-  @BeforeEach
-  public void setup() throws Exception {
-    super.setup();
-  }
-
   @Test
   void testIdentityProviderForUsersWithoutSpringSecurity() {
     // given no spring security authentication

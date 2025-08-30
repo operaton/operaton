@@ -61,7 +61,7 @@ public abstract class AbstractSpringSecurityIT {
   protected int port;
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void setup() {
     baseUrl = "http://localhost:%d".formatted(port);
   }
 

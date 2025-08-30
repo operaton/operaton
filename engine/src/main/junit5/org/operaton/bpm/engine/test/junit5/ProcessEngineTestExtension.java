@@ -90,7 +90,7 @@ public class ProcessEngineTestExtension
   }
 
   @Override
-  public void beforeEach(ExtensionContext context) throws Exception {
+  public void beforeEach(ExtensionContext context) {
     if (processEngineExtension != null) {
       this.processEngine = processEngineExtension.getProcessEngine();
     } else {
@@ -99,7 +99,7 @@ public class ProcessEngineTestExtension
   }
 
   @Override
-  public void afterEach(ExtensionContext context) throws Exception {
+  public void afterEach(ExtensionContext context) {
     this.processEngine = null;
   }
 

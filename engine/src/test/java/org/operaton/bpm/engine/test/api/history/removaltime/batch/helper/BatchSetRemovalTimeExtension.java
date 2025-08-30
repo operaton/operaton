@@ -55,7 +55,7 @@ public class BatchSetRemovalTimeExtension extends BatchExtension {
   }
 
   @Override
-  public void beforeTestExecution(ExtensionContext context) throws Exception {
+  public void beforeTestExecution(ExtensionContext context) {
     getProcessEngineConfiguration()
       .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
       .setHistoryRemovalTimeStrategy(ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -74,7 +74,7 @@ public class BatchSetRemovalTimeExtension extends BatchExtension {
   }
 
   @Override
-  public void afterTestExecution(ExtensionContext context) throws Exception {
+  public void afterTestExecution(ExtensionContext context) {
     super.afterTestExecution(context);
 
     getProcessEngineConfiguration()

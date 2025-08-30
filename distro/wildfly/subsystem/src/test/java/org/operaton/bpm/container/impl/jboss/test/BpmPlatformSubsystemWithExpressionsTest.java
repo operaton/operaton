@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.test;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,7 +60,7 @@ public class BpmPlatformSubsystemWithExpressionsTest extends AbstractSubsystemBa
   }
 
   @Override
-  protected String getSubsystemXml() throws IOException {
+  protected String getSubsystemXml() {
     try {
       return FileUtils.readFile(JBossSubsystemXMLTest.SUBSYSTEM_WITH_ALL_OPTIONS_WITH_EXPRESSIONS);
     } catch (Exception e) {

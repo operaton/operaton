@@ -67,7 +67,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
   ManagementService managementService;
 
   @BeforeEach
-  void setUp() throws Exception {
+  void setUp() {
     engineRule = ProcessEngineExtension.builder()
         .configurator(CompetingHistoryCleanupAcquisitionTest::configureEngine)
         .randomEngineName()

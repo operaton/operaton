@@ -175,12 +175,12 @@ public class ResteasySpecifics implements ContainerSpecifics {
     }
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
       bootstrap.start();
     }
 
     @Override
-    public void afterAll(ExtensionContext context) throws Exception {
+    public void afterAll(ExtensionContext context) {
       bootstrap.stop();
     }
   }

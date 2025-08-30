@@ -237,7 +237,7 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   @Override
-  public void beforeEach(ExtensionContext context) throws Exception {
+  public void beforeEach(ExtensionContext context) {
     LOG.debug("beforeEach: {}", context.getDisplayName());
 
     if (!ProcessEngines.isRegisteredProcessEngine(processEngine.getName())) {
@@ -267,7 +267,7 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   @Override
-  public void afterEach(ExtensionContext context) throws Exception {
+  public void afterEach(ExtensionContext context) {
     identityService.clearAuthentication();
 
     final String testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set")).getName();

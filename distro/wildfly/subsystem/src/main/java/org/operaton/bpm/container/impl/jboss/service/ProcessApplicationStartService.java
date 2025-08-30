@@ -249,7 +249,7 @@ public class ProcessApplicationStartService implements Service<ProcessApplicatio
 
   }
 
-  protected void invokePreUndeploy(final ProcessApplicationInterface processApplication) throws ClassNotFoundException {
+  protected void invokePreUndeploy(final ProcessApplicationInterface processApplication) {
     if(preUndeployDescription != null) {
       Class<?> paClass = getPaClass(preUndeployDescription);
       final Method preUndeployMethod = InjectionUtil.detectAnnotatedMethod(paClass, PreUndeploy.class);

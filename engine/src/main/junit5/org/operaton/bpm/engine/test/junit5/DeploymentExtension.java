@@ -97,7 +97,7 @@ public class DeploymentExtension implements AfterEachCallback, BeforeEachCallbac
     }
 
     @Override
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) {
         ProcessEngine processEngine = (ProcessEngine) context.getStore(ExtensionContext.Namespace.create("Operaton")).get(ProcessEngine.class);
         if (processEngine != null && repositoryService == null) {
             repositoryService = processEngine.getRepositoryService();

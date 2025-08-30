@@ -108,6 +108,12 @@
             <exclusion>**/JsonTreeCreateTest.java</exclusion>
             <exclusion>**/DomXmlDataFormatWriterTest.java</exclusion>
             <exclusion>**/JerseyServerBootstrap.java</exclusion>
+            <!-- org.openrewrite.java.RemoveUnusedImports -->
+            <exclusion>**/TestConstants.java</exclusion>
+            <!-- org.openrewrite.java.testing.cleanup.SimplifyTestThrows -->
+            <exclusion>**/ScopingTest.java</exclusion>
+            <!-- org.openrewrite.java.testing.mockito.SimplifyMockitoVerifyWhenGiven -->
+            <exclusion>**/AuthorizationCheckRevokesCfgTest.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>

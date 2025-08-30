@@ -101,7 +101,6 @@ public class XmlTestConstants {
     }
 
     List<Customer> customers = order.getCustomer();
-    assertThat(customers).isNotNull();
     assertThat(customers).hasSize(3);
 
     assertThat(customers).extracting("name", "contractStartDate")

@@ -78,23 +78,30 @@ public class DbBulkOperation extends DbOperation {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     DbBulkOperation other = (DbBulkOperation) obj;
     if (parameter == null) {
-      if (other.parameter != null)
+      if (other.parameter != null) {
         return false;
-    } else if (!parameter.equals(other.parameter))
+      }
+    } else if (!parameter.equals(other.parameter)) {
       return false;
+    }
     if (statement == null) {
-      if (other.statement != null)
+      if (other.statement != null) {
         return false;
-    } else if (!statement.equals(other.statement))
+      }
+    } else if (!statement.equals(other.statement)) {
       return false;
+    }
     return true;
   }
 

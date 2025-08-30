@@ -42,18 +42,23 @@ public class NonXmlRootElementType {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     NonXmlRootElementType other = (NonXmlRootElementType) obj;
     if (property == null) {
-      if (other.property != null)
+      if (other.property != null) {
         return false;
-    } else if (!property.equals(other.property))
+      }
+    } else if (!property.equals(other.property)) {
       return false;
+    }
     return true;
   }
 

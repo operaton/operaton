@@ -634,16 +634,21 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     JobEntity other = (JobEntity) obj;
     if (id == null) {
       return other.id == null;
-    } else return id.equals(other.id);
+    } else {
+      return id.equals(other.id);
+    }
   }
 
   @Override

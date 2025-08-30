@@ -36,12 +36,18 @@ public class HitPolicyEntry {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
 
     HitPolicyEntry that = (HitPolicyEntry) o;
 
-    if (hitPolicy != that.hitPolicy) return false;
+    if (hitPolicy != that.hitPolicy) {
+      return false;
+    }
     return aggregator == that.aggregator;
 
   }

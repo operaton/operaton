@@ -67,12 +67,18 @@ public class StatefulObject implements Serializable, InitializingBean {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
 
         StatefulObject that = (StatefulObject) o;
 
-        if (visitedCount != that.visitedCount) return false;
+      if (visitedCount != that.visitedCount) {
+        return false;
+      }
         return Objects.equals(name, that.name);
     }
 

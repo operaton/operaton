@@ -139,7 +139,7 @@ public final class ProcessEngines {
   protected static void initProcessEngineFromSpringResource(URL resource) {
     try {
       Class< ? > springConfigurationHelperClass = ReflectUtil.loadClass("org.operaton.bpm.engine.spring.SpringConfigurationHelper");
-      Method method = springConfigurationHelperClass.getMethod("buildProcessEngine", new Class<?>[]{URL.class});
+      Method method = springConfigurationHelperClass.getMethod("buildProcessEngine", URL.class);
       ProcessEngine processEngine = (ProcessEngine) method.invoke(null, new Object[]{resource});
 
       String processEngineName = processEngine.getName();
@@ -198,7 +198,7 @@ public final class ProcessEngines {
       processEngineInfo = new ProcessEngineInfoImpl(processEngineName, resourceUrlString, null);
       processEngines.put(processEngineName, processEngine);
       PROCESS_ENGINE_INFOS_BY_NAME.put(processEngineName, processEngineInfo);
-    } catch (Throwable e) {
+    } catch (RuntimeException e) {
       LOG.exceptionWhileInitializingProcessengine(e);
       processEngineInfo = new ProcessEngineInfoImpl(null, resourceUrlString, getExceptionString(e));
     }

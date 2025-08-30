@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.util;
 
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 
-public class ResetDmnConfigUtil {
+public final class ResetDmnConfigUtil {
 
   public static DefaultDmnEngineConfiguration reset(DefaultDmnEngineConfiguration configuration) {
     return configuration

@@ -26,7 +26,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
  * @author Thorben Lindhauer
  *
  */
-public class ProcessModels {
+public final class ProcessModels {
 
   public static final String PROCESS_KEY = "Process";
 

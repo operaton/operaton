@@ -26,7 +26,7 @@ import org.springframework.core.io.Resource;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class DynamicResourceProducer {
+public final class DynamicResourceProducer {
 
   private static final List<Resource> resources = new ArrayList<>();
 

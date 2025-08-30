@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
  * @author Thorben Lindhauer
  *
  */
-public class EventSubProcessModels {
+public final class EventSubProcessModels {
 
   public static final String MESSAGE_NAME = "Message";
   public static final String SIGNAL_NAME = "Signal";

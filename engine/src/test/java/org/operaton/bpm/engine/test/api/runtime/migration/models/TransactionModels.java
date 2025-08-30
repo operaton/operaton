@@ -26,7 +26,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
  * @author Thorben Lindhauer
  *
  */
-public class TransactionModels {
+public final class TransactionModels {
 
   public static final BpmnModelInstance ONE_TASK_TRANSACTION = ProcessModels.newModel()
     .startEvent()

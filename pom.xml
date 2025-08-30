@@ -117,6 +117,16 @@
             <!-- org.openrewrite.staticanalysis.HideUtilityClassConstructor -->
             <exclusion>**/ClassLoaderUtil.java</exclusion>
             <exclusion>**/Variables.java</exclusion>
+            <!-- org.openrewrite.staticanalysis.FallThrough -->
+            <exclusion>**/BpmPlatformParser1_1.java</exclusion>
+            <exclusion>**/Parser.java</exclusion>
+            <!-- org.openrewrite.staticanalysis.FinalClass -->
+            <exclusion>**/OperatonBpmPluginConfiguration.java</exclusion>
+            <exclusion>**/OperatonBpmTelemetryConfiguration.java</exclusion>
+            <exclusion>**/ClientAutoConfiguration.java</exclusion>
+            <exclusion>**/PostProcessorConfiguration.java</exclusion>
+            <exclusion>**/PropertyPlaceholderConfiguration.java</exclusion>
+            <exclusion>**/StaticBeanConfiguration.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>

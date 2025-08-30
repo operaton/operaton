@@ -20,7 +20,7 @@ import java.sql.SQLException;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
-public class DatabaseHelper {
+public final class DatabaseHelper {
 
   public static Integer getTransactionIsolationLevel(ProcessEngineConfigurationImpl processEngineConfiguration) {
     final Integer[] transactionIsolation = new Integer[1];

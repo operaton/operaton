@@ -28,7 +28,7 @@ import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
-public class TestUtils {
+public final class TestUtils {
 
   public static ClientHttpRequestFactory createClientHttpRequestFactory() throws Exception {
     SSLContext sslContext = trustSelfSignedSSL();

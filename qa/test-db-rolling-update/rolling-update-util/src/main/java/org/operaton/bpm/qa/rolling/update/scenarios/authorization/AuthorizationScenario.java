@@ -36,7 +36,7 @@ import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRAN
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class AuthorizationScenario {
+public final class AuthorizationScenario {
 
   protected static final String USER_ID = "user";
   protected static final String GROUP_ID = "group";

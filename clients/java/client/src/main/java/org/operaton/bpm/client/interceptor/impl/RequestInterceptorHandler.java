@@ -51,7 +51,7 @@ public class RequestInterceptorHandler implements HttpRequestInterceptor {
       try {
         requestInterceptor.intercept(interceptedRequest);
       }
-      catch (Throwable e) {
+      catch (RuntimeException e) {
         LOG.requestInterceptorException(e);
       }
     });

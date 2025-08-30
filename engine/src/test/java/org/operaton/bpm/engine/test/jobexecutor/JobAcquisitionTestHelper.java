@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Thorben Lindhauer
  *
  */
-public class JobAcquisitionTestHelper {
+public final class JobAcquisitionTestHelper {
 
 
   /**

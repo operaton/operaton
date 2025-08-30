@@ -23,7 +23,7 @@ import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
 
 @Configuration
 @EnableExternalTaskClient("http://localhost:8080/engine-rest")
-public class StaticBeanConfiguration {
+public final class StaticBeanConfiguration {
 
   @Bean
   public static String staticBean() {

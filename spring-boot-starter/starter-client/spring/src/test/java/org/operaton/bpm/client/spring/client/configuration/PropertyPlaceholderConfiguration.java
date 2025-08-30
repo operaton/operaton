@@ -31,7 +31,7 @@ import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
   dateFormat = "${client.dateFormat}",
   defaultSerializationFormat = "${client.serializationFormat}"
 )
-public class PropertyPlaceholderConfiguration {
+public final class PropertyPlaceholderConfiguration {
 
   @Bean
   public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {

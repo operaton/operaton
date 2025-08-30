@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 import org.operaton.bpm.engine.test.form.deployment.FindOperatonFormDefinitionsCmd;
 
-public class OperatonFormUtils {
+public final class OperatonFormUtils {
 
   public static List<OperatonFormDefinition> findAllOperatonFormDefinitionEntities(ProcessEngineConfigurationImpl config) {
     return config.getCommandExecutorTxRequired()

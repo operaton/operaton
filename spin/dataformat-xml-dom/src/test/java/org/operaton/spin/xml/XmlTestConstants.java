@@ -42,7 +42,7 @@ import static org.assertj.core.api.Assertions.tuple;
  * @author Daniel Meyer
  *
  */
-public class XmlTestConstants {
+public final class XmlTestConstants {
 
   public static final String EXAMPLE_NAMESPACE = "http://operaton.org/example";
 

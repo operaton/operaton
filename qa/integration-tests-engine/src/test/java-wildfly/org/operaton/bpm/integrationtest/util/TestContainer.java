@@ -23,7 +23,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
  *
  * @author christian.lipphardt
  */
-public class TestContainer {
+public final class TestContainer {
 
   public static void addContainerSpecificResourcesEmbedCdiLib(WebArchive webArchive) {
     addContainerSpecificResources(webArchive);

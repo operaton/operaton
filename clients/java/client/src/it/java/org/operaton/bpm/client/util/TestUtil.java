@@ -22,7 +22,7 @@ import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestUtil {
+public final class TestUtil {
 
   public static int MAX_RETRIES = 100;
 

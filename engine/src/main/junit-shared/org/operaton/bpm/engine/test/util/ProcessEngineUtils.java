@@ -19,7 +19,7 @@ import java.util.Random;
 
 import org.operaton.bpm.engine.ProcessEngines;
 
-public class ProcessEngineUtils {
+public final class ProcessEngineUtils {
     private static final Random RANDOM = new Random();
 
     /**

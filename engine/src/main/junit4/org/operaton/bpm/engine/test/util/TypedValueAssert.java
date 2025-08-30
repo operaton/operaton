@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
-public class TypedValueAssert {
+public final class TypedValueAssert {
 
   public static void assertObjectValueDeserializedNull(ObjectValue typedValue) {
     assertThat(typedValue).isNotNull();

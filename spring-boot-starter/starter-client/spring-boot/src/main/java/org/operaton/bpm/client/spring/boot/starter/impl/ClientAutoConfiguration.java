@@ -27,7 +27,7 @@ import org.operaton.bpm.client.spring.impl.subscription.SubscriptionPostProcesso
 
 @Configuration
 @EnableConfigurationProperties({ClientProperties.class})
-public class ClientAutoConfiguration {
+public final class ClientAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean

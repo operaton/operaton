@@ -42,7 +42,7 @@ class GetAnnotatedBeanTest {
 
   @SpringBootApplication
   @EnableProcessApplication("withNameApplication")
-  public static class WithName {
+  public static final class WithName {
 
     static class Foo {}
 

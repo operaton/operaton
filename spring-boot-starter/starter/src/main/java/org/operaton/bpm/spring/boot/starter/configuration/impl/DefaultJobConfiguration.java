@@ -73,7 +73,7 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
 
   }
 
-  public static class JobConfiguration {
+  public static final class JobConfiguration {
 
     public static final String CAMUNDA_TASK_EXECUTOR_QUALIFIER = "operatonTaskExecutor";
 

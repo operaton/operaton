@@ -50,7 +50,7 @@ public class OperatonBpmPluginConfiguration {
   @ConditionalOnClass({JacksonJsonDataFormat.class, JavaTimeModule.class})
   @ConditionalOnMissingClass("spinjar.com.fasterxml.jackson.databind.ObjectMapper")
   @Configuration
-  static class SpinDataFormatConfigurationJSR310 {
+  static final class SpinDataFormatConfigurationJSR310 {
 
     @Bean
     @ConditionalOnMissingBean(name = "spinDataFormatConfiguratorJSR310")
@@ -66,7 +66,7 @@ public class OperatonBpmPluginConfiguration {
   @ConditionalOnClass({JacksonJsonDataFormat.class, ParameterNamesModule.class})
   @ConditionalOnMissingClass("spinjar.com.fasterxml.jackson.databind.ObjectMapper")
   @Configuration
-  static class SpinDataFormatConfigurationParameterNames {
+  static final class SpinDataFormatConfigurationParameterNames {
 
     @Bean
     @ConditionalOnMissingBean(name = "spinDataFormatConfiguratorParameterNames")
@@ -82,7 +82,7 @@ public class OperatonBpmPluginConfiguration {
   @ConditionalOnClass({JacksonJsonDataFormat.class, Jdk8Module.class})
   @ConditionalOnMissingClass("spinjar.com.fasterxml.jackson.databind.ObjectMapper")
   @Configuration
-  static class SpinDataFormatConfigurationJdk8 {
+  static final class SpinDataFormatConfigurationJdk8 {
 
     @Bean
     @ConditionalOnMissingBean(name = "spinDataFormatConfiguratorJdk8")
@@ -97,7 +97,7 @@ public class OperatonBpmPluginConfiguration {
 
   @ConditionalOnClass(SpinProcessEnginePlugin.class)
   @Configuration
-  static class SpinConfiguration {
+  static final class SpinConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(name = "spinProcessEnginePlugin")
@@ -112,7 +112,7 @@ public class OperatonBpmPluginConfiguration {
 
   @ConditionalOnClass(ConnectProcessEnginePlugin.class)
   @Configuration
-  static class ConnectConfiguration {
+  static final class ConnectConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(name = "connectProcessEnginePlugin")

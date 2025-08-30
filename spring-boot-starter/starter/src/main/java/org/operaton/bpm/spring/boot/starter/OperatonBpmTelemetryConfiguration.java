@@ -29,7 +29,7 @@ public class OperatonBpmTelemetryConfiguration {
 
   @Configuration
   @ConditionalOnClass(ServletContext.class)
-  static class TelemetryApplicationServerConfiguration {
+  static final class TelemetryApplicationServerConfiguration {
 
     @Bean
     public static OperatonApplicationServerConfigurator applicationServerConfigurator() {

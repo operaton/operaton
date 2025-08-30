@@ -25,7 +25,7 @@ import org.operaton.bpm.client.spring.impl.subscription.SpringTopicSubscriptionI
 import org.operaton.bpm.client.spring.impl.subscription.SubscriptionPostProcessor;
 
 @Configuration
-public class PostProcessorConfiguration {
+public final class PostProcessorConfiguration {
 
   @Bean
   public static SubscriptionPostProcessor subscriptionPostprocessor() {

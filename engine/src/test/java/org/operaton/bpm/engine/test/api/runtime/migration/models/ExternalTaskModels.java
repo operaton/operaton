@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Thorben Lindhauer
  *
  */
-public class ExternalTaskModels {
+public final class ExternalTaskModels {
 
   public static final String EXTERNAL_TASK_TYPE = "external";
   public static final String TOPIC = "foo";

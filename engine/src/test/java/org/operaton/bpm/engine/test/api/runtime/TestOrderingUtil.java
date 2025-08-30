@@ -53,7 +53,7 @@ import org.operaton.bpm.engine.task.Task;
  * @author Thorben Lindhauer
  *
  */
-public class TestOrderingUtil {
+public final class TestOrderingUtil {
 
   // EXECUTION
 

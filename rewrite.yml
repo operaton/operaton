@@ -36,8 +36,7 @@ recipeList:
   - org.openrewrite.staticanalysis.BooleanChecksNotInverted
   - org.openrewrite.staticanalysis.CaseInsensitiveComparisonsDoNotChangeCase
   - org.openrewrite.staticanalysis.CatchClauseOnlyRethrows
-  # Disabled due to https://github.com/operaton/operaton/issues/1157:
-  #- org.openrewrite.staticanalysis.ChainStringBuilderAppendCalls
+  - org.openrewrite.staticanalysis.ChainStringBuilderAppendCalls
   - org.openrewrite.staticanalysis.CollectionToArrayShouldHaveProperType
   - org.openrewrite.staticanalysis.CovariantEquals
   - org.openrewrite.staticanalysis.DefaultComesLast
@@ -46,8 +45,7 @@ recipeList:
   - org.openrewrite.staticanalysis.ExplicitInitialization
   - org.openrewrite.staticanalysis.ExternalizableHasNoArgsConstructor
   - org.openrewrite.staticanalysis.FinalizePrivateFields
-  # Not safe:
-  # - org.openrewrite.staticanalysis.FallThrough
+  - org.openrewrite.staticanalysis.FallThrough
   - org.openrewrite.staticanalysis.FinalClass
   - org.openrewrite.staticanalysis.FixStringFormatExpressions
   - org.openrewrite.staticanalysis.ForLoopIncrementInUpdate
@@ -116,7 +114,7 @@ recipeList:
   - org.openrewrite.java.SimplifySingleElementAnnotation
   - org.openrewrite.java.migrate.lang.StringFormatted
   - org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
-  #- org.openrewrite.java.migrate.UpgradeToJava17
+  - org.openrewrite.java.migrate.UpgradeToJava17
   - org.openrewrite.java.migrate.DeprecatedLogRecordThreadID
   - org.openrewrite.staticanalysis.InstanceOfPatternMatch
   # Testing

@@ -77,10 +77,12 @@ public abstract class SpinValueImpl extends AbstractTypedValue<Spin<?>> implemen
     return (SpinValueType) super.getType();
   }
 
+  @Override
   public boolean isDeserialized() {
     return isDeserialized;
   }
 
+  @Override
   public String getValueSerialized() {
     return serializedValue;
   }
@@ -89,6 +91,7 @@ public abstract class SpinValueImpl extends AbstractTypedValue<Spin<?>> implemen
     this.serializedValue = serializedValue;
   }
 
+  @Override
   public String getSerializationDataFormat() {
     return dataFormatName;
   }

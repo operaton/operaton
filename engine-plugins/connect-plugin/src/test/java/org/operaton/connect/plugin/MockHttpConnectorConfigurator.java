@@ -61,6 +61,7 @@ public class MockHttpConnectorConfigurator implements ConnectorConfigurator<Http
       super(HttpVersion.HTTP_1_1, 200, "OK");
     }
 
+    @Override
     public void close() {
       // no-op
     }

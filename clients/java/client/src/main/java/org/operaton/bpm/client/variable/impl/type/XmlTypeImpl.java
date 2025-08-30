@@ -33,6 +33,7 @@ public class XmlTypeImpl extends PrimitiveValueTypeImpl {
     super(XML_TYPE_NAME, String.class);
   }
 
+  @Override
   public XmlValue createValue(Object value, Map<String, Object> valueInfo) {
     return ClientValues.xmlValue((String) value, isTransient(valueInfo));
   }

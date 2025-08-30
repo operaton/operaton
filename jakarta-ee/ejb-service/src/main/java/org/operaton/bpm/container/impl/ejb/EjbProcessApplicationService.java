@@ -49,10 +49,12 @@ public class EjbProcessApplicationService implements ProcessApplicationService {
     processApplicationServiceDelegate = ejbBpmPlatform.getProcessApplicationService();
   }
 
+  @Override
   public Set<String> getProcessApplicationNames() {
     return processApplicationServiceDelegate.getProcessApplicationNames();
   }
 
+  @Override
   public ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
     return processApplicationServiceDelegate.getProcessApplicationInfo(processApplicationName);
   }

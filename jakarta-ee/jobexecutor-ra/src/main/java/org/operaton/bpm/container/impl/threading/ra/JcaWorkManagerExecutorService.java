@@ -51,6 +51,7 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
     this.ra = connector;
   }
 
+  @Override
   public boolean schedule(Runnable runnable, boolean isLongRunning) {
     if(isLongRunning) {
       return scheduleLongRunning(runnable);
@@ -89,6 +90,7 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
     return false;
   }
 
+  @Override
   public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
     return new JcaInflowExecuteJobsRunnable(jobIds, processEngine, ra);
   }
@@ -97,10 +99,12 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
 
   protected Reference reference;
 
+  @Override
   public Reference getReference() {
     return reference;
   }
 
+  @Override
   public void setReference(Reference reference) {
     this.reference = reference;
   }

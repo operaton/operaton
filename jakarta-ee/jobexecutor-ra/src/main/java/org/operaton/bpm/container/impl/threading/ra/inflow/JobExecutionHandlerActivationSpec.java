@@ -39,14 +39,17 @@ public class JobExecutionHandlerActivationSpec implements ActivationSpec, Serial
   /** Please check #CAM-9811  */
   private String dummyPojo;
 
+  @Override
   public void validate() throws InvalidPropertyException {
     // nothing to do (the endpoint has no activation properties)
   }
 
+  @Override
   public ResourceAdapter getResourceAdapter() {
     return ra;
   }
 
+  @Override
   public void setResourceAdapter(ResourceAdapter ra) {
     this.ra = ra;
   }

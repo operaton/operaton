@@ -32,6 +32,7 @@ public class SpinFallbackSerializerFactory implements VariableSerializerFactory 
 
   public static final Pattern SPIN_SERIALIZER_NAME_PATTERN = Pattern.compile("spin://(.*)");
 
+  @Override
   public TypedValueSerializer<?> getSerializer(String serializerName) {
     Matcher matcher = SPIN_SERIALIZER_NAME_PATTERN.matcher(serializerName);
     if (matcher.matches()) {
@@ -43,6 +44,7 @@ public class SpinFallbackSerializerFactory implements VariableSerializerFactory 
     }
   }
 
+  @Override
   public TypedValueSerializer<?> getSerializer(TypedValue value) {
     if (value instanceof ObjectValue objectValue && objectValue.getSerializationDataFormat() != null && !objectValue.isDeserialized()) {
         return new FallbackSpinObjectValueSerializer(objectValue.getSerializationDataFormat());

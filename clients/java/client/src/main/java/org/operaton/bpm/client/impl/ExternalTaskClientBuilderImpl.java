@@ -118,6 +118,7 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder urlResolver(UrlResolver urlResolver) {
     this.urlResolver = urlResolver;
     return this;

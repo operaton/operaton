@@ -203,6 +203,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
     return getScopedAssociation().getTask();
   }
 
+  @Override
   public void setTask(Task task) {
     ensureCommandContextNotActive();
     getScopedAssociation().setTask(task);

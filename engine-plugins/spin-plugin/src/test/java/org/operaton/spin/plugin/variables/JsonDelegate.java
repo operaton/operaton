@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class JsonDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) {
     execution.setVariable("jsonVariable", Variables.untypedValue(jsonValue("{}"),true));
 

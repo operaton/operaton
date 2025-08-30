@@ -38,6 +38,7 @@ public class ByteArrayValueMapper extends PrimitiveValueMapper<BytesValue> {
     super(ValueType.BYTES);
   }
 
+  @Override
   public BytesValue convertToTypedValue(UntypedValueImpl untypedValue) {
     byte[] byteArr;
 

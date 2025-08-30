@@ -95,6 +95,7 @@ public class ObjectValueMapper extends AbstractTypedValueMapper<ObjectValue> {
     }
   }
 
+  @Override
   public ObjectValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.objectValue(untypedValue.getValue()).create();
   }

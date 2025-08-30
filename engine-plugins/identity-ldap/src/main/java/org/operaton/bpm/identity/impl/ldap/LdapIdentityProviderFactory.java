@@ -28,10 +28,12 @@ public class LdapIdentityProviderFactory implements SessionFactory {
 
   protected LdapConfiguration ldapConfiguration;
 
+  @Override
   public Class<?> getSessionType() {
     return ReadOnlyIdentityProvider.class;
   }
 
+  @Override
   public Session openSession() {
     return new LdapIdentityProviderSession(ldapConfiguration);
   }

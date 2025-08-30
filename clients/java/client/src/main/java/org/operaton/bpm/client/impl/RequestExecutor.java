@@ -95,6 +95,7 @@ public class RequestExecutor {
 
   protected <T> HttpClientResponseHandler<T> handleResponse(final Class<T> responseClass) {
     return new AbstractHttpClientResponseHandler<>() {
+      @Override
       public T handleEntity(HttpEntity responseEntity) throws IOException {
         T response = null;
         if (responseClass.isAssignableFrom(byte[].class)) {

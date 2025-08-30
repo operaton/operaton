@@ -87,6 +87,7 @@ class ExternalTaskClientBuilderImplTest {
       this.baseUrl = baseURl;
     }
 
+    @Override
     public String getBaseUrl() {
       return baseUrl;
     }

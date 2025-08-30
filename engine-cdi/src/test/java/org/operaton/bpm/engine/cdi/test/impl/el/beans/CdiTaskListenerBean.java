@@ -40,6 +40,7 @@ public class CdiTaskListenerBean implements TaskListener {
   @Inject
   BusinessProcess businessProcess;
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     String variable = businessProcess.getVariable(VARIABLE_NAME);
     assertThat(variable).isEqualTo(INITIAL_VALUE);

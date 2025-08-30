@@ -47,7 +47,8 @@ public class VariableScopeElResolver extends ELResolver {
   public static final String EXTERNAL_TASK_KEY = "externalTask";
   public static final String LOGGED_IN_USER_KEY = "authenticatedUserId";
 
-  public Object getValue(ELContext context, Object base, Object property)  {
+  @Override
+  public Object getValue(ELContext context, Object base, Object property) {
 
     Object object = context.getContext(VariableScope.class);
     if(object != null) {
@@ -93,6 +94,7 @@ public class VariableScopeElResolver extends ELResolver {
     return null;
   }
 
+  @Override
   public boolean isReadOnly(ELContext context, Object base, Object property) {
     if (base == null) {
       String variable = (String) property;
@@ -102,6 +104,7 @@ public class VariableScopeElResolver extends ELResolver {
     return true;
   }
 
+  @Override
   public void setValue(ELContext context, Object base, Object property, Object value) {
     if (base == null) {
       String variable = (String) property;
@@ -116,11 +119,13 @@ public class VariableScopeElResolver extends ELResolver {
     }
   }
 
-  public Class< ? > getCommonPropertyType(ELContext arg0, Object arg1) {
+  @Override
+  public Class<?> getCommonPropertyType(ELContext arg0, Object arg1) {
     return Object.class;
   }
 
-  public Class< ? > getType(ELContext arg0, Object arg1, Object arg2) {
+  @Override
+  public Class<?> getType(ELContext arg0, Object arg1, Object arg2) {
     return Object.class;
   }
 

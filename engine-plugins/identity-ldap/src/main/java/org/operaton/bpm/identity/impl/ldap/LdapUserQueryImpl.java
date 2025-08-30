@@ -47,11 +47,13 @@ public class LdapUserQueryImpl extends UserQueryImpl {
 
   // execute queries /////////////////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     final LdapIdentityProviderSession provider = getLdapIdentityProvider(commandContext);
     return provider.findUserCountByQueryCriteria(this);
   }
 
+  @Override
   public List<User> executeList(CommandContext commandContext, Page page) {
     final LdapIdentityProviderSession provider = getLdapIdentityProvider(commandContext);
     return provider.findUserByQueryCriteria(this);

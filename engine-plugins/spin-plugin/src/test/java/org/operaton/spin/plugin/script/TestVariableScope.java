@@ -41,6 +41,7 @@ public class TestVariableScope extends AbstractVariableScope {
     return (VariableStore) variableStore;
   }
 
+  @Override
   public AbstractVariableScope getParentVariableScope() {
     return null;
   }

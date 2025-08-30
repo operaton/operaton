@@ -50,18 +50,22 @@ public class EjbProcessEngineService implements ProcessEngineService {
     processEngineServiceDelegate = ejbBpmPlatform.getProcessEngineService();
   }
 
+  @Override
   public ProcessEngine getDefaultProcessEngine() {
     return processEngineServiceDelegate.getDefaultProcessEngine();
   }
 
+  @Override
   public List<ProcessEngine> getProcessEngines() {
     return processEngineServiceDelegate.getProcessEngines();
   }
 
+  @Override
   public Set<String> getProcessEngineNames() {
     return processEngineServiceDelegate.getProcessEngineNames();
   }
 
+  @Override
   public ProcessEngine getProcessEngine(String name) {
     return processEngineServiceDelegate.getProcessEngine(name);
   }

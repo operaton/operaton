@@ -291,12 +291,13 @@ public class CronExpression implements Serializable, Cloneable {
         return timeZone;
     }
 
-    /**
-     * Returns the string representation of the <CODE>CronExpression</CODE>
-     *
-     * @return a string representation of the <CODE>CronExpression</CODE>
-     */
-    public String toString() {
+  /**
+   * Returns the string representation of the <CODE>CronExpression</CODE>
+   *
+   * @return a string representation of the <CODE>CronExpression</CODE>
+   */
+  @Override
+  public String toString() {
         return cronExpressionValue;
     }
 

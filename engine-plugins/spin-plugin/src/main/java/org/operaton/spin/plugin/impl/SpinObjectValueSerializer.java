@@ -51,6 +51,7 @@ public class SpinObjectValueSerializer extends AbstractObjectValueSerializer {
     this.dataFormat = dataFormat;
   }
 
+  @Override
   public String getName() {
     return name;
   }

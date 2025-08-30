@@ -60,6 +60,7 @@ public class CommonJWorkManagerExecutorService implements ExecutorService {
     this.commonJWorkManagerName = commonJWorkManagerName;
   }
 
+  @Override
   public boolean schedule(Runnable runnable, boolean isLongRunning) {
     if(isLongRunning) {
       return scheduleLongRunning(runnable);
@@ -103,6 +104,7 @@ public class CommonJWorkManagerExecutorService implements ExecutorService {
     }
   }
 
+  @Override
   public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
     return new JcaInflowExecuteJobsRunnable(jobIds, processEngine, ra);
   }

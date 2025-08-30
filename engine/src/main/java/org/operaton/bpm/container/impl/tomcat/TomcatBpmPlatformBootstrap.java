@@ -52,6 +52,7 @@ public class TomcatBpmPlatformBootstrap implements LifecycleListener {
 
   protected RuntimeContainerDelegateImpl containerDelegate;
 
+  @Override
   public void lifecycleEvent(LifecycleEvent event) {
 
     if (Lifecycle.START_EVENT.equals(event.getType())) {

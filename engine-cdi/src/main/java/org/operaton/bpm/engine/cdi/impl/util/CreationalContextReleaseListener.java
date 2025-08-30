@@ -41,10 +41,12 @@ public class CreationalContextReleaseListener implements CommandContextListener 
     context = ctx;
   }
 
+  @Override
   public void onCommandContextClose(CommandContext commandContext) {
     release(context);
   }
 
+  @Override
   public void onCommandFailed(CommandContext commandContext, Throwable t) {
     // ignore
   }

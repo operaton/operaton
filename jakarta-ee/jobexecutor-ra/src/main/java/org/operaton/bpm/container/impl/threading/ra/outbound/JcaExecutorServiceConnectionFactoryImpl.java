@@ -49,10 +49,12 @@ public class JcaExecutorServiceConnectionFactoryImpl implements JcaExecutorServi
     return (JcaExecutorServiceConnection) connectionManager.allocateConnection(mcf, null);
   }
 
+  @Override
   public Reference getReference() {
     return reference;
   }
 
+  @Override
   public void setReference(Reference reference) {
     this.reference = reference;
   }

@@ -45,6 +45,7 @@ public class SignalEventTest extends CdiProcessEngineTestCase {
     @Inject
     private BusinessProcess businessProcess;
 
+    @Override
     public void execute(DelegateExecution execution) {
       businessProcess.setVariable("processName", "catchSignal-visited (was " + businessProcess.getVariable("processName")  + ")");
     }
@@ -60,6 +61,7 @@ public class SignalEventTest extends CdiProcessEngineTestCase {
     @Inject
     private BusinessProcess businessProcess;
 
+    @Override
     public void execute(DelegateExecution execution) {
       businessProcess.setVariable("processName", "throwSignal-visited (was " + businessProcess.getVariable("processName")  + ")");
 

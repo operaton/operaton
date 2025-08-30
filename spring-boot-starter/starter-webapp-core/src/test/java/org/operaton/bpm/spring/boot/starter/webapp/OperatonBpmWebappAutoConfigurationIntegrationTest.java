@@ -50,91 +50,82 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
 
   @Test
   void bpm_is_not_disabled_and_webapp_is_not_disabled_should_init_webapp() {
-    contextRunner.run(context -> {
+    contextRunner.run(context ->
       assertThat(context)
         .hasNotFailed()
         .hasSingleBean(OperatonBpmWebappInitializer.class)
-        .hasSingleBean(FaviconResourceResolver.class);
-    });
+        .hasSingleBean(FaviconResourceResolver.class));
   }
 
   @Test
   void bpm_is_enabled_and_webapp_is_not_disabled_should_init_webapp() {
-    contextRunner.withPropertyValues(bpmEnabled).run(context -> {
+    contextRunner.withPropertyValues(bpmEnabled).run(context ->
       assertThat(context)
         .hasNotFailed()
         .hasSingleBean(OperatonBpmWebappInitializer.class)
-        .hasSingleBean(FaviconResourceResolver.class);
-    });
+        .hasSingleBean(FaviconResourceResolver.class));
   }
 
   @Test
   void bpm_is_disabled_and_webapp_is_not_disabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(bpmDisabled).run(context -> {
+    contextRunner.withPropertyValues(bpmDisabled).run(context ->
       assertThat(context)
         .hasNotFailed()
         .doesNotHaveBean(OperatonBpmWebappInitializer.class)
-        .doesNotHaveBean(FaviconResourceResolver.class);
-    });
+        .doesNotHaveBean(FaviconResourceResolver.class));
   }
 
   @Test
   void bpm_is_not_disabled_and_webapp_is_enabled_should_init_webapp() {
-    contextRunner.withPropertyValues(webappEnabled).run(context -> {
+    contextRunner.withPropertyValues(webappEnabled).run(context ->
       assertThat(context)
         .hasNotFailed()
         .hasSingleBean(OperatonBpmWebappInitializer.class)
-        .hasSingleBean(FaviconResourceResolver.class);
-    });
+        .hasSingleBean(FaviconResourceResolver.class));
   }
 
   @Test
   void bpm_is_enabled_and_webapp_is_enabled_should_init_webapp() {
-    contextRunner.withPropertyValues(bpmEnabled, webappEnabled).run(context -> {
+    contextRunner.withPropertyValues(bpmEnabled, webappEnabled).run(context ->
       assertThat(context)
         .hasNotFailed()
         .hasSingleBean(OperatonBpmWebappInitializer.class)
-        .hasSingleBean(FaviconResourceResolver.class);
-    });
+        .hasSingleBean(FaviconResourceResolver.class));
   }
 
   @Test
   void bpm_is_disabled_and_webapp_is_enabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(bpmDisabled, webappEnabled).run(context -> {
+    contextRunner.withPropertyValues(bpmDisabled, webappEnabled).run(context ->
       assertThat(context)
         .hasNotFailed()
         .doesNotHaveBean(OperatonBpmWebappInitializer.class)
-        .doesNotHaveBean(FaviconResourceResolver.class);
-    });
+        .doesNotHaveBean(FaviconResourceResolver.class));
   }
 
   @Test
   void bpm_is_not_disabled_and_webapp_is_disabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(webappDisabled).run(context -> {
+    contextRunner.withPropertyValues(webappDisabled).run(context ->
       assertThat(context)
         .hasNotFailed()
         .doesNotHaveBean(OperatonBpmWebappInitializer.class)
-        .doesNotHaveBean(FaviconResourceResolver.class);
-    });
+        .doesNotHaveBean(FaviconResourceResolver.class));
   }
 
   @Test
   void bpm_is_enabled_and_webapp_is_disabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(bpmEnabled, webappDisabled).run(context -> {
+    contextRunner.withPropertyValues(bpmEnabled, webappDisabled).run(context ->
       assertThat(context)
         .hasNotFailed()
         .doesNotHaveBean(OperatonBpmWebappInitializer.class)
-        .doesNotHaveBean(FaviconResourceResolver.class);
-    });
+        .doesNotHaveBean(FaviconResourceResolver.class));
   }
 
   @Test
   void bpm_is_disabled_and_webapp_is_disabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(bpmDisabled, webappDisabled).run(context -> {
+    contextRunner.withPropertyValues(bpmDisabled, webappDisabled).run(context ->
       assertThat(context)
         .hasNotFailed()
         .doesNotHaveBean(OperatonBpmWebappInitializer.class)
-        .doesNotHaveBean(FaviconResourceResolver.class);
-    });
+        .doesNotHaveBean(FaviconResourceResolver.class));
   }
 }

@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class XmlDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) {
     execution.setVariable("xmlVariable", Variables.untypedValue(xmlValue("<xml />"),true));
 

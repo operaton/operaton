@@ -32,10 +32,12 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  */
 public class StopJcaExecutorServiceStep extends DeploymentOperationStep {
 
+  @Override
   public String getName() {
     return "Stop JCA Executor Service";
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
 

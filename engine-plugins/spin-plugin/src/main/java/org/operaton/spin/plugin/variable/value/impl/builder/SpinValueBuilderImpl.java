@@ -35,6 +35,7 @@ public abstract class SpinValueBuilderImpl<T extends SpinValue> implements SpinV
     variableValue = value;
   }
 
+  @Override
   public T create() {
     return variableValue;
   }
@@ -45,6 +46,7 @@ public abstract class SpinValueBuilderImpl<T extends SpinValue> implements SpinV
     return this;
   }
 
+  @Override
   public SpinValueBuilder<T> serializationDataFormat(SerializationDataFormat dataFormat) {
     return serializationDataFormat(dataFormat.getName());
   }

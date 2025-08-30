@@ -45,18 +45,22 @@ public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnec
   protected transient ResourceAdapter ra;
   protected transient PrintWriter logwriter;
 
+  @Override
   public Object createConnectionFactory(ConnectionManager cxManager) throws ResourceException {
     return new JcaExecutorServiceConnectionFactoryImpl(this, cxManager);
   }
 
+  @Override
   public Object createConnectionFactory() throws ResourceException {
     throw new ResourceException("This resource adapter doesn't support non-managed environments");
   }
 
+  @Override
   public ManagedConnection createManagedConnection(Subject subject, ConnectionRequestInfo cxRequestInfo) throws ResourceException {
     return new JcaExecutorServiceManagedConnection(this);
   }
 
+  @Override
   @SuppressWarnings("rawtypes")
   public ManagedConnection matchManagedConnections(Set connectionSet, Subject subject, ConnectionRequestInfo cxRequestInfo) throws ResourceException {
     ManagedConnection result = null;
@@ -71,18 +75,22 @@ public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnec
     return result;
   }
 
+  @Override
   public PrintWriter getLogWriter() throws ResourceException {
     return logwriter;
   }
 
+  @Override
   public void setLogWriter(PrintWriter out) throws ResourceException {
     logwriter = out;
   }
 
+  @Override
   public ResourceAdapter getResourceAdapter() {
     return ra;
   }
 
+  @Override
   public void setResourceAdapter(ResourceAdapter ra) {
     this.ra = ra;
   }

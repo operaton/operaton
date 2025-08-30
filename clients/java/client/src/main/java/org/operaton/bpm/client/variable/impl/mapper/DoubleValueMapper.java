@@ -28,6 +28,7 @@ public class DoubleValueMapper extends NumberValueMapper<DoubleValue> {
     super(ValueType.DOUBLE);
   }
 
+  @Override
   public DoubleValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.doubleValue((Double) untypedValue.getValue());
   }

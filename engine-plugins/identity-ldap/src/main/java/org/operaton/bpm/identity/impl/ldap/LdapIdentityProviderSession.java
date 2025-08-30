@@ -91,14 +91,17 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
   // Users /////////////////////////////////////////////////
 
+  @Override
   public User findUserById(String userId) {
     return createUserQuery(getCommandContext()).userId(userId).singleResult();
   }
 
+  @Override
   public UserQuery createUserQuery() {
     return new LdapUserQueryImpl(getProcessEngineConfiguration().getCommandExecutorTxRequired(), ldapConfiguration);
   }
 
+  @Override
   public UserQueryImpl createUserQuery(CommandContext commandContext) {
     return new LdapUserQueryImpl(ldapConfiguration);
   }
@@ -191,6 +194,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     return userList;
   }
 
+  @Override
   public boolean checkPassword(String userId, String password) {
 
     // prevent a null password
@@ -304,14 +308,17 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
   // Groups ///////////////////////////////////////////////
 
+  @Override
   public Group findGroupById(String groupId) {
     return createGroupQuery(getCommandContext()).groupId(groupId).singleResult();
   }
 
+  @Override
   public GroupQuery createGroupQuery() {
     return new LdapGroupQuery(getProcessEngineConfiguration().getCommandExecutorTxRequired());
   }
 
+  @Override
   public GroupQuery createGroupQuery(CommandContext commandContext) {
     return new LdapGroupQuery();
   }

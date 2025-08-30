@@ -26,6 +26,7 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
 
   protected abstract ELResolver getElResolverDelegate();
 
+  @Override
   public Class<?> getCommonPropertyType(ELContext context, Object base) {
     ELResolver delegate = getElResolverDelegate();
     if(delegate == null) {
@@ -35,6 +36,7 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
     }
   }
 
+  @Override
   public Class<?> getType(ELContext context, Object base, Object property) {
     context.setPropertyResolved(false);
     ELResolver delegate = getElResolverDelegate();
@@ -46,6 +48,7 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
   }
 
 
+  @Override
   public Object getValue(ELContext context, Object base, Object property) {
     context.setPropertyResolved(false);
     ELResolver delegate = getElResolverDelegate();
@@ -56,6 +59,7 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
     }
   }
 
+  @Override
   public boolean isReadOnly(ELContext context, Object base, Object property) {
     context.setPropertyResolved(false);
     ELResolver delegate = getElResolverDelegate();
@@ -66,6 +70,7 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
     }
   }
 
+  @Override
   public void setValue(ELContext context, Object base, Object property, Object value) {
     context.setPropertyResolved(false);
     ELResolver delegate = getElResolverDelegate();

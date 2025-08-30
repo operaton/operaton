@@ -33,6 +33,7 @@ public class NullValueMapper extends AbstractTypedValueMapper<NullValueImpl> {
     return ValueType.NULL.getName().toLowerCase();
   }
 
+  @Override
   public NullValueImpl convertToTypedValue(UntypedValueImpl untypedValue) {
     return NullValueImpl.INSTANCE;
   }

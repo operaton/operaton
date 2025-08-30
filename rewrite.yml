@@ -108,7 +108,7 @@ recipeList:
   - org.openrewrite.staticanalysis.UnnecessaryThrows
   - org.openrewrite.java.RemoveUnusedImports
   - org.openrewrite.staticanalysis.UseStandardCharset
-  #- org.openrewrite.staticanalysis.MissingOverrideAnnotation
+  - org.openrewrite.staticanalysis.MissingOverrideAnnotation
   #- org.openrewrite.staticanalysis.HideUtilityClassConstructor
   - org.openrewrite.staticanalysis.UseLambdaForFunctionalInterface
   - org.openrewrite.staticanalysis.CombineSemanticallyEqualCatchBlocks

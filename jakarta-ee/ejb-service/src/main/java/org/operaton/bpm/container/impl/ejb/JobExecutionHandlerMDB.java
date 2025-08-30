@@ -39,6 +39,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobFailureCollector;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class JobExecutionHandlerMDB implements JobExecutionHandler {
 
+  @Override
   public JobFailureCollector executeJob(String job, CommandExecutor commandExecutor) {
     JobFailureCollector jobFailureCollector = new JobFailureCollector(job);
     ExecuteJobHelper.executeJob(job, commandExecutor, jobFailureCollector, new ExecuteJobsCmd(job, jobFailureCollector));

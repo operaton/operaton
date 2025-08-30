@@ -46,6 +46,7 @@ public class QueryServiceImpl implements QueryService {
     return commandExecutor.executeCommand(new ExecuteSingleQueryCmd<T>(statement, parameter, clazz));
   }
 
+  @Override
   public Long executeQueryRowCount(String statement, ListQueryParameterObject parameter) {
     return commandExecutor.executeCommand(new QueryServiceRowCountCmd(statement, parameter));
   }

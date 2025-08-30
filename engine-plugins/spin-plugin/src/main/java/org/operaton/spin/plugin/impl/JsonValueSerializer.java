@@ -41,6 +41,7 @@ public class JsonValueSerializer extends SpinValueSerializer {
     this(DataFormats.json());
   }
 
+  @Override
   public SpinValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return SpinValues.jsonValue((SpinJsonNode) untypedValue.getValue()).create();
   }

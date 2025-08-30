@@ -70,6 +70,7 @@ public class ConnectorVariableScope extends AbstractVariableScope {
     return Collections.emptyList();
   }
 
+  @Override
   public AbstractVariableScope getParentVariableScope() {
     return parent;
   }

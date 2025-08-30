@@ -60,11 +60,13 @@ public class VariableContextElResolver extends ELResolver {
     return true;
   }
 
-  public Class< ? > getCommonPropertyType(ELContext arg0, Object arg1) {
+  @Override
+  public Class<?> getCommonPropertyType(ELContext arg0, Object arg1) {
     return Object.class;
   }
 
-  public Class< ? > getType(ELContext arg0, Object arg1, Object arg2) {
+  @Override
+  public Class<?> getType(ELContext arg0, Object arg1, Object arg2) {
     return Object.class;
   }
 

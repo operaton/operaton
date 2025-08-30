@@ -400,26 +400,32 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
     commandExecutor.execute(new DeleteTaskCommentCmd(taskId, commentId));
   }
 
+  @Override
   public void deleteProcessInstanceComment(String processInstanceId, String commentId) {
     commandExecutor.execute(new DeleteProcessInstanceCommentCmd(processInstanceId, commentId));
   }
 
+  @Override
   public void deleteTaskComments(String taskId) {
     commandExecutor.execute(new DeleteTaskCommentCmd(taskId));
   }
 
+  @Override
   public void deleteProcessInstanceComments(String processInstanceId) {
     commandExecutor.execute(new DeleteProcessInstanceCommentCmd(processInstanceId));
   }
 
+  @Override
   public void updateTaskComment(String taskId, String commentId, String message) {
     commandExecutor.execute(new UpdateCommentCmd(taskId, null, commentId, message));
   }
 
+  @Override
   public void updateProcessInstanceComment(String processInstanceId, String commentId, String message) {
     commandExecutor.execute(new UpdateCommentCmd(null, processInstanceId, commentId, message));
   }
 
+  @Override
   public List<Comment> getTaskComments(String taskId) {
     return commandExecutor.execute(new GetTaskCommentsCmd(taskId));
   }

@@ -47,8 +47,6 @@ public class FieldSpec {
     assertThat(field.getName()).isEqualTo(fieldName);
 
     Object fieldValue = field.getValue();
-    assertThat(fieldValue).isNotNull();
-
     assertThat(fieldValue).isInstanceOf(Expression.class);
     Expression expressionValue = (Expression) fieldValue;
     assertThat(expressionValue.getExpressionText()).isEqualTo(getExpectedExpression());

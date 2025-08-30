@@ -503,8 +503,9 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
   protected void verifySorting(String sortBy, String sortOrder, int expectedResult) {
     List<IncidentDto> result = queryIncidents(sortBy, sortOrder);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(expectedResult);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(expectedResult);
   }
 
 }

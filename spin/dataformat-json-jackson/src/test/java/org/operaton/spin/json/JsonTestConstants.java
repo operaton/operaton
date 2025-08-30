@@ -97,7 +97,6 @@ public class JsonTestConstants {
     assertThat(orderDetails.getCurrencies()).containsExactly("euro", "dollar");
 
     List<RegularCustomer> customers = order.getCustomers();
-    assertThat(customers).isNotNull();
     assertThat(customers).hasSize(3);
 
     assertThat(customers).extracting("name", "contractStartDate")

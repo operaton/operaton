@@ -42,21 +42,19 @@ public final class SetAssigneeProcessInstanceTaskScenario {
 
   @DescribesScenario("createUserOperationLogEntries")
   public static ScenarioSetup createUserOperationLogEntries() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        IdentityService identityService = engine.getIdentityService();
-        String processInstanceBusinessKey = "SetAssigneeProcessInstanceTaskScenario";
-        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_userOpLog", processInstanceBusinessKey);
+    return (engine, scenarioName) -> {
+      IdentityService identityService = engine.getIdentityService();
+      String processInstanceBusinessKey = "SetAssigneeProcessInstanceTaskScenario";
+      engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_userOpLog", processInstanceBusinessKey);
 
-        identityService.setAuthentication("mary02", null);
+      identityService.setAuthentication("mary02", null);
 
-        TaskService taskService = engine.getTaskService();
-        List<Task> list = taskService.createTaskQuery().processInstanceBusinessKey(processInstanceBusinessKey).list();
-        Task task = list.get(0);
-        taskService.setAssignee(task.getId(), "john");
+      TaskService taskService = engine.getTaskService();
+      List<Task> list = taskService.createTaskQuery().processInstanceBusinessKey(processInstanceBusinessKey).list();
+      Task task = list.get(0);
+      taskService.setAssignee(task.getId(), "john");
 
-        identityService.clearAuthentication();
-      }
+      identityService.clearAuthentication();
     };
   }
 }

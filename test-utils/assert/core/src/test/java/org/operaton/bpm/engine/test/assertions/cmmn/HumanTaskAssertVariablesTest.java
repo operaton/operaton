@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
@@ -85,12 +84,7 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
     setAVariableOnHumanTaskAndCompleteHumanTask();
 
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).humanTask(TASK_A).variables().containsEntry("aVariable", "aValue");
-      }
-    });
+    expect(() -> assertThat(caseInstance).humanTask(TASK_A).variables().containsEntry("aVariable", "aValue"));
   }
 
   @Test
@@ -121,12 +115,7 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
     // When
 
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).humanTask(TASK_A).hasVariables();
-      }
-    });
+    expect(() -> assertThat(caseInstance).humanTask(TASK_A).hasVariables());
   }
 
   @Test
@@ -151,12 +140,7 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
     setVariablesOnHumanTask();
 
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).humanTask(TASK_A).hasNoVariables();
-      }
-    });
+    expect(() -> assertThat(caseInstance).humanTask(TASK_A).hasNoVariables());
   }
 
   @Test
@@ -180,12 +164,7 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
     // When
 
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).humanTask(TASK_A).variables().isNotEmpty();
-      }
-    });
+    expect(() -> assertThat(caseInstance).humanTask(TASK_A).variables().isNotEmpty());
   }
 
   @Test
@@ -209,12 +188,7 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
     // When
 
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).humanTask(TASK_A).hasVariables();
-      }
-    });
+    expect(() -> assertThat(caseInstance).humanTask(TASK_A).hasVariables());
   }
 
   private CaseInstance createCaseInstance() {

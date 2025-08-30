@@ -41,18 +41,16 @@ public final class SingleActivityConcurrentCompensationScenario {
   @DescribesScenario("init")
   @Times(3)
   public static ScenarioSetup instantiate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("SingleActivityConcurrentCompensationScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("SingleActivityConcurrentCompensationScenario", scenarioName);
 
-        // create the compensation event subscription and wait before throwing compensation
-        Task userTask = engine.getTaskService()
-            .createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(userTask.getId());
-      }
+      // create the compensation event subscription and wait before throwing compensation
+      Task userTask = engine.getTaskService()
+        .createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(userTask.getId());
     };
   }
 
@@ -60,16 +58,14 @@ public final class SingleActivityConcurrentCompensationScenario {
   @ExtendsScenario("init")
   @Times(3)
   public static ScenarioSetup instantiateAndTriggerCompensation() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        // throw compensation; the compensation handler for userTask should then be active
-        Task beforeCompensateTask = engine.getTaskService()
-            .createTaskQuery()
-            .taskDefinitionKey("beforeCompensate")
-            .processInstanceBusinessKey(scenarioName)
-            .singleResult();
-        engine.getTaskService().complete(beforeCompensateTask.getId());
-      }
+    return (engine, scenarioName) -> {
+      // throw compensation; the compensation handler for userTask should then be active
+      Task beforeCompensateTask = engine.getTaskService()
+        .createTaskQuery()
+        .taskDefinitionKey("beforeCompensate")
+        .processInstanceBusinessKey(scenarioName)
+        .singleResult();
+      engine.getTaskService().complete(beforeCompensateTask.getId());
     };
   }
 }

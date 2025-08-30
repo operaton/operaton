@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
@@ -56,12 +55,7 @@ public class ProcessTaskAssertIsAvailableTest extends ProcessAssertTestCase {
     // When
     complete(task(USER_TASK, calledProcessInstance(caseInstance)));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).processTask(TASK_B).isAvailable();
-      }
-    });
+    expect(() -> assertThat(caseInstance).processTask(TASK_B).isAvailable());
   }
 
   private ProcessInstance calledProcessInstance(CaseInstance caseInstance) {

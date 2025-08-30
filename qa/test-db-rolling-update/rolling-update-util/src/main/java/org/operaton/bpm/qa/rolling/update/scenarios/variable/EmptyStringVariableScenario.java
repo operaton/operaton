@@ -38,11 +38,8 @@ public final class EmptyStringVariableScenario {
   @DescribesScenario("init")
   @Times(1)
   public static ScenarioSetup startProcess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName,
-            Variables.createVariables().putValue("myStringVar", ""));
-      }
-    };
+    return (engine, scenarioName) ->
+      engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName,
+        Variables.createVariables().putValue("myStringVar", ""));
   }
 }

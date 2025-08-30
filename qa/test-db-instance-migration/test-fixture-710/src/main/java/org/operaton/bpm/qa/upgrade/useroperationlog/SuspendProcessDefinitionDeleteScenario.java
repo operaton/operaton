@@ -42,27 +42,25 @@ public final class SuspendProcessDefinitionDeleteScenario {
 
   @DescribesScenario("createUserOperationLogEntriesForDelete")
   public static ScenarioSetup createUserOperationLogEntries() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        String processInstanceBusinessKey = "SuspendProcessDefinitionDeleteScenario";
-        ProcessInstance processInstance1 = engine.getRuntimeService().startProcessInstanceByKey("timerBoundaryProcess", processInstanceBusinessKey);
-        ProcessInstance processInstance2 = engine.getRuntimeService().startProcessInstanceByKey("timerBoundaryProcess", processInstanceBusinessKey);
-        ProcessInstance processInstance3 = engine.getRuntimeService().startProcessInstanceByKey("timerBoundaryProcess", processInstanceBusinessKey);
+    return (engine, scenarioName) -> {
+      String processInstanceBusinessKey = "SuspendProcessDefinitionDeleteScenario";
+      ProcessInstance processInstance1 = engine.getRuntimeService().startProcessInstanceByKey("timerBoundaryProcess", processInstanceBusinessKey);
+      ProcessInstance processInstance2 = engine.getRuntimeService().startProcessInstanceByKey("timerBoundaryProcess", processInstanceBusinessKey);
+      ProcessInstance processInstance3 = engine.getRuntimeService().startProcessInstanceByKey("timerBoundaryProcess", processInstanceBusinessKey);
 
-        IdentityService identityService = engine.getIdentityService();
-        identityService.setAuthentication("jane01", null);
+      IdentityService identityService = engine.getIdentityService();
+      identityService.setAuthentication("jane01", null);
 
-        engine.getProcessEngineConfiguration().setAuthorizationEnabled(false);
-        ClockUtil.setCurrentTime(new Date(1549000000000L));
-        engine.getRuntimeService().suspendProcessInstanceById(processInstance1.getId());
-        ClockUtil.setCurrentTime(new Date(1549100000000L));
-        engine.getRuntimeService().suspendProcessInstanceById(processInstance2.getId());
-        ClockUtil.setCurrentTime(new Date(1549200000000L));
-        engine.getRuntimeService().suspendProcessInstanceById(processInstance3.getId());
+      engine.getProcessEngineConfiguration().setAuthorizationEnabled(false);
+      ClockUtil.setCurrentTime(new Date(1549000000000L));
+      engine.getRuntimeService().suspendProcessInstanceById(processInstance1.getId());
+      ClockUtil.setCurrentTime(new Date(1549100000000L));
+      engine.getRuntimeService().suspendProcessInstanceById(processInstance2.getId());
+      ClockUtil.setCurrentTime(new Date(1549200000000L));
+      engine.getRuntimeService().suspendProcessInstanceById(processInstance3.getId());
 
-        ClockUtil.reset();
-        identityService.clearAuthentication();
-      }
+      ClockUtil.reset();
+      identityService.clearAuthentication();
     };
   }
 }

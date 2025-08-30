@@ -46,17 +46,15 @@ public final class CreateProcessInstanceWithJsonVariablesScenario {
 
   @DescribesScenario("initProcessInstanceWithDifferentVariables")
   public static ScenarioSetup initProcessInstance() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        // given
-        ProcessInstance processInstance = engine.getRuntimeService().startProcessInstanceByKey("Process", "processWithJsonVariables");
-        // when
-        Execution execution = engine.getRuntimeService().createExecutionQuery().processInstanceId(processInstance.getId()).singleResult();
-        engine.getRuntimeService().setVariable(execution.getId(), "objectVariable", createObjectVariable());
-        engine.getRuntimeService().setVariable(execution.getId(), "plainTypeArrayVariable", createPlainTypeArray());
-        engine.getRuntimeService().setVariable(execution.getId(), "notGenericObjectListVariable", createNotGenericObjectList());
-        engine.getRuntimeService().setVariable(execution.getId(), "serializedMapVariable", createSerializedMap());
-      }
+    return (engine, scenarioName) -> {
+      // given
+      ProcessInstance processInstance = engine.getRuntimeService().startProcessInstanceByKey("Process", "processWithJsonVariables");
+      // when
+      Execution execution = engine.getRuntimeService().createExecutionQuery().processInstanceId(processInstance.getId()).singleResult();
+      engine.getRuntimeService().setVariable(execution.getId(), "objectVariable", createObjectVariable());
+      engine.getRuntimeService().setVariable(execution.getId(), "plainTypeArrayVariable", createPlainTypeArray());
+      engine.getRuntimeService().setVariable(execution.getId(), "notGenericObjectListVariable", createNotGenericObjectList());
+      engine.getRuntimeService().setVariable(execution.getId(), "serializedMapVariable", createSerializedMap());
     };
   }
 

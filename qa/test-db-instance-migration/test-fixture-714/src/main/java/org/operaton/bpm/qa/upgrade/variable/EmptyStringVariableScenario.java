@@ -35,13 +35,10 @@ public final class EmptyStringVariableScenario {
 
   @DescribesScenario("emptyStringVariableScenario")
   public static ScenarioSetup createUserOperationLogEntries() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine engine, String scenarioName) {
-        RuntimeService runtimeService = engine.getRuntimeService();
-        runtimeService.startProcessInstanceByKey("oneTaskProcess_714", scenarioName,
-            Variables.createVariables().putValue("myStringVar", ""));
-      }
+    return (engine, scenarioName) -> {
+      RuntimeService runtimeService = engine.getRuntimeService();
+      runtimeService.startProcessInstanceByKey("oneTaskProcess_714", scenarioName,
+        Variables.createVariables().putValue("myStringVar", ""));
     };
   }
 }

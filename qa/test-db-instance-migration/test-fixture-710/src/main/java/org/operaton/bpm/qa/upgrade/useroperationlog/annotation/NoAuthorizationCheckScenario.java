@@ -29,22 +29,20 @@ public final class NoAuthorizationCheckScenario {
   @DescribesScenario("prepareNoAuthorizationCheck")
   public static ScenarioSetup prepareNoAuthorizationCheck() {
 
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        engine.getIdentityService()
-            .setAuthentication("demo", null);
+      engine.getIdentityService()
+        .setAuthentication("demo", null);
 
-        Task task = engine.getTaskService()
-            .newTask("myTaskForUserOperationLogUpdate");
+      Task task = engine.getTaskService()
+        .newTask("myTaskForUserOperationLogUpdate");
 
-        engine.getTaskService()
-            .saveTask(task);
+      engine.getTaskService()
+        .saveTask(task);
 
-        engine.getIdentityService()
-            .clearAuthentication();
+      engine.getIdentityService()
+        .clearAuthentication();
 
-      }
     };
   }
 }

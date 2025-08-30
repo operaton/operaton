@@ -21,8 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
 

@@ -47,21 +47,19 @@ public final class NestedMultiInstanceCompensationScenario {
   @DescribesScenario("init.throwInner")
   @Times(3)
   public static ScenarioSetup instantitiateThrowCompensateInSubprocess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine.getRuntimeService()
-          .startProcessInstanceByKey("NestedMultiInstanceCompensationThrowInnerScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine.getRuntimeService()
+        .startProcessInstanceByKey("NestedMultiInstanceCompensationThrowInnerScenario", scenarioName);
 
-        // throw compensation within the mi subprocess
-        List<Task> subProcessTasks = engine
-            .getTaskService()
-            .createTaskQuery()
-            .processInstanceBusinessKey(scenarioName)
-            .list();
+      // throw compensation within the mi subprocess
+      List<Task> subProcessTasks = engine
+        .getTaskService()
+        .createTaskQuery()
+        .processInstanceBusinessKey(scenarioName)
+        .list();
 
-        for (Task subProcessTask : subProcessTasks) {
-          engine.getTaskService().complete(subProcessTask.getId());
-        }
+      for (Task subProcessTask : subProcessTasks) {
+        engine.getTaskService().complete(subProcessTask.getId());
       }
     };
   }
@@ -69,21 +67,19 @@ public final class NestedMultiInstanceCompensationScenario {
   @DescribesScenario("init.throwOuter")
   @Times(3)
   public static ScenarioSetup instantitiateThrowCompensateAfterSubprocess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine.getRuntimeService()
-          .startProcessInstanceByKey("NestedMultiInstanceCompensationThrowOuterScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine.getRuntimeService()
+        .startProcessInstanceByKey("NestedMultiInstanceCompensationThrowOuterScenario", scenarioName);
 
-        // throw compensation after the mi subprocess has ended
-        List<Task> subProcessTasks = engine
-            .getTaskService()
-            .createTaskQuery()
-            .processInstanceBusinessKey(scenarioName)
-            .list();
+      // throw compensation after the mi subprocess has ended
+      List<Task> subProcessTasks = engine
+        .getTaskService()
+        .createTaskQuery()
+        .processInstanceBusinessKey(scenarioName)
+        .list();
 
-        for (Task subProcessTask : subProcessTasks) {
-          engine.getTaskService().complete(subProcessTask.getId());
-        }
+      for (Task subProcessTask : subProcessTasks) {
+        engine.getTaskService().complete(subProcessTask.getId());
       }
     };
   }

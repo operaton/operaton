@@ -235,12 +235,9 @@ public class ProcessApplicationStartService implements Service<ProcessApplicatio
 
     if(postDeployMethod != null) {
       try {
-        processApplication.execute(new Callable<Void>() {
-          @Override
-          public Void call() throws Exception {
-            postDeployMethod.invoke(processApplication.getRawObject(), getInjections(postDeployMethod));
-            return null;
-          }
+        processApplication.execute(() -> {
+          postDeployMethod.invoke(processApplication.getRawObject(), getInjections(postDeployMethod));
+          return null;
         });
       }catch(Exception e) {
         throw new StartException("Exception while invoking the @PostDeploy method ", e);
@@ -256,12 +253,9 @@ public class ProcessApplicationStartService implements Service<ProcessApplicatio
 
       if(preUndeployMethod != null) {
         try {
-          processApplication.execute(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-              preUndeployMethod.invoke(processApplication.getRawObject(), getInjections(preUndeployMethod));
-              return null;
-            }
+          processApplication.execute(() -> {
+            preUndeployMethod.invoke(processApplication.getRawObject(), getInjections(preUndeployMethod));
+            return null;
           });
         } catch(Exception e) {
           throw new RuntimeException("Exception while invoking the @PreUndeploy method ", e);

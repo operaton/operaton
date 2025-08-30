@@ -37,27 +37,23 @@ public class EventSubscriptionCreateTimeScenario extends AbstractTimestampMigrat
   @DescribesScenario("initEventSubscriptionCreateTime")
   @Times(1)
   public static ScenarioSetup initEventSubscriptionCreateTime() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine processEngine, String s) {
+    return (processEngine, s) ->
 
-        ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration())
-          .getCommandExecutorTxRequired()
-          .execute(new Command<Void>() {
+      ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration())
+        .getCommandExecutorTxRequired()
+        .execute(new Command<Void>() {
 
-            @Override
-            public Void execute(CommandContext commandContext) {
+          @Override
+          public Void execute(CommandContext commandContext) {
 
-              EventSubscriptionEntity messageEventSubscriptionEntity = new EventSubscriptionEntity(EventType.MESSAGE);
-              messageEventSubscriptionEntity.setEventName(EVENT_NAME);
-              messageEventSubscriptionEntity.setActivityId(ACTIVITY_ID);
-              messageEventSubscriptionEntity.setCreated(TIMESTAMP);
-              messageEventSubscriptionEntity.insert();
+            EventSubscriptionEntity messageEventSubscriptionEntity = new EventSubscriptionEntity(EventType.MESSAGE);
+            messageEventSubscriptionEntity.setEventName(EVENT_NAME);
+            messageEventSubscriptionEntity.setActivityId(ACTIVITY_ID);
+            messageEventSubscriptionEntity.setCreated(TIMESTAMP);
+            messageEventSubscriptionEntity.insert();
 
-              return null;
-            }
-          });
-      }
-    };
+            return null;
+          }
+        });
   }
 }

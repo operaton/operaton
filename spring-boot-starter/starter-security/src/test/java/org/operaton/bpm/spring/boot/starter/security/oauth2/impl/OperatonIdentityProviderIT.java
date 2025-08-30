@@ -94,8 +94,7 @@ public class OperatonIdentityProviderIT extends AbstractSpringSecurityIT {
     assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     verify(spiedIdentityProvider, atLeastOnce()).createUserQuery();
     UserQuery userQueryResult = resultCaptor.result;
-    assertThat(userQueryResult)
-      .isInstanceOf(DbUserQueryImpl.class);
+    assertThat(userQueryResult).isInstanceOf(DbUserQueryImpl.class);
     assertThat(entity.getBody()).contains(newUser.getId());
   }
 

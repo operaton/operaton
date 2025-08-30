@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
@@ -52,12 +51,7 @@ public class CaseTaskAssertIsActiveTest extends ProcessAssertTestCase {
     // When
     complete(caseExecution(TASK_B, caseInstanceB));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).caseTask(TASK_A).isActive();
-      }
-    });
+    expect(() -> assertThat(caseInstance).caseTask(TASK_A).isActive());
   }
 
   private CaseInstance givenCaseIsCreated() {

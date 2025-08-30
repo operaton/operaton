@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
@@ -42,11 +41,6 @@ class MilestoneAssertIsTerminatedTest extends ProcessAssertTestCase {
   void is_terminated_fail() {
     final CaseInstance caseInstance = caseService().createCaseInstanceByKey("MilestoneAssertIsTerminatedTest");
 
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).stage("Stage").milestone("Milestone").isTerminated();
-      }
-    });
+    expect(() -> assertThat(caseInstance).stage("Stage").milestone("Milestone").isTerminated());
   }
 }

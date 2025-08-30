@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
@@ -54,12 +53,7 @@ public class CaseInstanceAssertIsTerminatedTest extends ProcessAssertTestCase {
     final CaseInstance caseInstance = givenCaseIsCreated();
     // When
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).isTerminated();
-      }
-    });
+    expect(() -> assertThat(caseInstance).isTerminated());
   }
 
   private CaseInstance givenCaseIsCreated() {

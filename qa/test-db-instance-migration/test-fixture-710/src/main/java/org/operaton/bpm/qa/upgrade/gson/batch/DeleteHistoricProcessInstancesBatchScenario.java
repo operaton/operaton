@@ -40,34 +40,32 @@ public final class DeleteHistoricProcessInstancesBatchScenario {
 
   @DescribesScenario("initDeleteHistoricProcessInstancesBatch")
   public static ScenarioSetup initDeleteHistoricProcessInstancesBatch() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        for (int i = 0; i < 10; i++) {
-          engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710", "DeleteHistoricProcessInstancesBatchScenario");
+      for (int i = 0; i < 10; i++) {
+        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710", "DeleteHistoricProcessInstancesBatchScenario");
 
-          String taskId = engine.getTaskService().createTaskQuery()
-            .processDefinitionKey("oneTaskProcess_710")
-            .processInstanceBusinessKey("DeleteHistoricProcessInstancesBatchScenario")
-            .singleResult()
-            .getId();
-
-          engine.getTaskService().complete(taskId);
-        }
-
-        List<String> processInstanceIds = new ArrayList<>();
-
-        List<HistoricProcessInstance> processInstances = engine.getHistoryService().createHistoricProcessInstanceQuery()
+        String taskId = engine.getTaskService().createTaskQuery()
           .processDefinitionKey("oneTaskProcess_710")
           .processInstanceBusinessKey("DeleteHistoricProcessInstancesBatchScenario")
-          .list();
+          .singleResult()
+          .getId();
 
-        for (HistoricProcessInstance processInstance : processInstances) {
-          processInstanceIds.add(processInstance.getId());
-        }
-
-        engine.getHistoryService().deleteHistoricProcessInstancesAsync(processInstanceIds, null);
+        engine.getTaskService().complete(taskId);
       }
+
+      List<String> processInstanceIds = new ArrayList<>();
+
+      List<HistoricProcessInstance> processInstances = engine.getHistoryService().createHistoricProcessInstanceQuery()
+        .processDefinitionKey("oneTaskProcess_710")
+        .processInstanceBusinessKey("DeleteHistoricProcessInstancesBatchScenario")
+        .list();
+
+      for (HistoricProcessInstance processInstance : processInstances) {
+        processInstanceIds.add(processInstance.getId());
+      }
+
+      engine.getHistoryService().deleteHistoricProcessInstancesAsync(processInstanceIds, null);
     };
   }
 }

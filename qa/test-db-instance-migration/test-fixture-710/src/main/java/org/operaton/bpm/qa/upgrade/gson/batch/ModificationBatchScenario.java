@@ -39,33 +39,31 @@ public final class ModificationBatchScenario {
 
   @DescribesScenario("ModificationBatchScenario")
   public static ScenarioSetup initModificationBatch() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        String processDefinitionId = engine.getRepositoryService().createProcessDefinitionQuery()
-          .processDefinitionKey("oneTaskProcessModification_710")
-          .singleResult()
-          .getId();
+      String processDefinitionId = engine.getRepositoryService().createProcessDefinitionQuery()
+        .processDefinitionKey("oneTaskProcessModification_710")
+        .singleResult()
+        .getId();
 
-        List<String> processInstanceIds = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-          String processInstanceId = engine.getRuntimeService()
-            .startProcessInstanceById(processDefinitionId, "ModificationBatchScenario").getId();
+      List<String> processInstanceIds = new ArrayList<>();
+      for (int i = 0;i < 10;i++) {
+        String processInstanceId = engine.getRuntimeService()
+          .startProcessInstanceById(processDefinitionId, "ModificationBatchScenario").getId();
 
-          processInstanceIds.add(processInstanceId);
-        }
-
-        engine.getRuntimeService().createModification(processDefinitionId)
-          .startAfterActivity("theStart")
-          .startBeforeActivity("theTask")
-          .startBeforeActivity("userTask4")
-          .startTransition("flow2")
-          .cancelAllForActivity("userTask4", false)
-          .processInstanceIds(processInstanceIds)
-          .skipCustomListeners()
-          .skipIoMappings()
-          .executeAsync();
+        processInstanceIds.add(processInstanceId);
       }
+
+      engine.getRuntimeService().createModification(processDefinitionId)
+        .startAfterActivity("theStart")
+        .startBeforeActivity("theTask")
+        .startBeforeActivity("userTask4")
+        .startTransition("flow2")
+        .cancelAllForActivity("userTask4", false)
+        .processInstanceIds(processInstanceIds)
+        .skipCustomListeners()
+        .skipIoMappings()
+        .executeAsync();
     };
   }
 }

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.rest;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,28 +86,23 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
       .setConnectionManager(cm)
       .build();
 
-    Callable<String> performRequest = new Callable<>() {
+    Callable<String> performRequest = () -> {
+      HttpPost request = new HttpPost(appBasePath + FETCH_AND_LOCK_PATH);
+      request.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+      StringEntity stringEntity = new StringEntity("{ \"workerId\": \"aWorkerId\", \"asyncResponseTimeout\": 1000 }");
+      request.setEntity(stringEntity);
 
-      @Override
-      public String call() throws IOException {
-        HttpPost request = new HttpPost(appBasePath + FETCH_AND_LOCK_PATH);
-        request.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-        StringEntity stringEntity = new StringEntity("{ \"workerId\": \"aWorkerId\", \"asyncResponseTimeout\": 1000 }");
-        request.setEntity(stringEntity);
-
-        var response = httpClient.execute(request, HttpClientContext.create());
-        String responseBody = null;
-        try {
-          HttpEntity entity = response.getEntity();
-          responseBody = EntityUtils.toString(entity);
-          request.releaseConnection();
-        } finally {
-          response.close();
-        }
-
-        return responseBody;
+      var response = httpClient.execute(request, HttpClientContext.create());
+      String responseBody = null;
+      try {
+        HttpEntity entity = response.getEntity();
+        responseBody = EntityUtils.toString(entity);
+        request.releaseConnection();
+      } finally {
+        response.close();
       }
 
+      return responseBody;
     };
 
     int requestsCount = 500;

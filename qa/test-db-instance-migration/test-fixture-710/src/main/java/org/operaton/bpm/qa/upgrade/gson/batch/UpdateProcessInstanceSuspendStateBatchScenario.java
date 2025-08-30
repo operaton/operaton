@@ -40,20 +40,18 @@ public final class UpdateProcessInstanceSuspendStateBatchScenario {
 
   @DescribesScenario("initUpdateProcessInstanceSuspendStateBatch")
   public static ScenarioSetup initUpdateProcessInstanceSuspendStateBatch() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        List<String> processInstanceIds = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-          ProcessInstance processInstance = engine.getRuntimeService()
-            .startProcessInstanceByKey("oneTaskProcess_710", "UpdateProcessInstanceSuspendStateBatchScenario");
+    return (engine, scenarioName) -> {
+      List<String> processInstanceIds = new ArrayList<>();
+      for (int i = 0;i < 10;i++) {
+        ProcessInstance processInstance = engine.getRuntimeService()
+          .startProcessInstanceByKey("oneTaskProcess_710", "UpdateProcessInstanceSuspendStateBatchScenario");
 
-          processInstanceIds.add(processInstance.getId());
-        }
-
-        engine.getRuntimeService().updateProcessInstanceSuspensionState()
-          .byProcessInstanceIds(processInstanceIds)
-          .suspendAsync();
+        processInstanceIds.add(processInstance.getId());
       }
+
+      engine.getRuntimeService().updateProcessInstanceSuspensionState()
+        .byProcessInstanceIds(processInstanceIds)
+        .suspendAsync();
     };
   }
 }

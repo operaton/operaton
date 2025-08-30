@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
@@ -41,11 +40,6 @@ class MilestoneAssertIsAvailableTest extends ProcessAssertTestCase {
 
     complete(caseExecution("PI_TaskA", caseInstance));
 
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).milestone("Milestone").isAvailable();
-      }
-    });
+    expect(() -> assertThat(caseInstance).milestone("Milestone").isAvailable());
   }
 }

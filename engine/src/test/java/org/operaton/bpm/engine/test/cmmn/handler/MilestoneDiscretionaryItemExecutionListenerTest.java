@@ -27,7 +27,7 @@ import org.operaton.bpm.model.cmmn.instance.DiscretionaryItem;
 import org.operaton.bpm.model.cmmn.instance.Milestone;
 import org.operaton.bpm.model.cmmn.instance.PlanningTable;
 
-import static org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.*;
+import static org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 
 /**
  * @author Roman Smirnov

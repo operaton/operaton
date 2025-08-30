@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine.engine;
 
-import javax.script.ScriptContext;
-
 /**
  * @author Roman Smirnov
  *
@@ -25,13 +23,7 @@ import javax.script.ScriptContext;
 public class DummyScriptEngineFactory extends AbstractScriptEngineFactory {
 
   public DummyScriptEngineFactory() {
-    super("dummy", "0.1.0", new ScriptEngineBehavior() {
-
-      @Override
-      public Object eval(String script, ScriptContext context) {
-        return script;
-      }
-    });
+    super("dummy", "0.1.0", (script, context) -> script);
   }
 
 

@@ -39,86 +39,84 @@ public final class TaskFilterVariablesScenario {
 
   @DescribesScenario("initTaskFilterVariables")
   public static ScenarioSetup initTaskFilterVariables() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        // boolean filter
-        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
-          "TaskFilterVariablesScenario_filterBooleanVariable",
-          Variables.createVariables().putValue("booleanVariable", true));
+    return (engine, scenarioName) -> {
+      // boolean filter
+      engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
+        "TaskFilterVariablesScenario_filterBooleanVariable",
+        Variables.createVariables().putValue("booleanVariable", true));
 
-        TaskQuery query = engine.getTaskService().createTaskQuery()
-          .processVariableValueEquals("booleanVariable", true);
+      TaskQuery query = engine.getTaskService().createTaskQuery()
+        .processVariableValueEquals("booleanVariable", true);
 
-        Filter filter = engine.getFilterService().newTaskFilter("filterBooleanVariable");
-        filter.setQuery(query);
+      Filter filter = engine.getFilterService().newTaskFilter("filterBooleanVariable");
+      filter.setQuery(query);
 
-        engine.getFilterService().saveFilter(filter);
+      engine.getFilterService().saveFilter(filter);
 
-        // int filter
-        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
-          "TaskFilterVariablesScenario_filterIntVariable",
-          Variables.createVariables().putValue("intVariable", 7));
+      // int filter
+      engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
+        "TaskFilterVariablesScenario_filterIntVariable",
+        Variables.createVariables().putValue("intVariable", 7));
 
-        query = engine.getTaskService().createTaskQuery()
-          .processVariableValueEquals("intVariable", 7);
+      query = engine.getTaskService().createTaskQuery()
+        .processVariableValueEquals("intVariable", 7);
 
-        filter = engine.getFilterService().newTaskFilter("filterIntVariable");
-        filter.setQuery(query);
+      filter = engine.getFilterService().newTaskFilter("filterIntVariable");
+      filter.setQuery(query);
 
-        engine.getFilterService().saveFilter(filter);
+      engine.getFilterService().saveFilter(filter);
 
-        // int out of range filter
-        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
-          "TaskFilterVariablesScenario_filterIntOutOfRangeVariable",
-          Variables.createVariables().putValue("longVariable", Integer.MAX_VALUE+1L));
+      // int out of range filter
+      engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
+        "TaskFilterVariablesScenario_filterIntOutOfRangeVariable",
+        Variables.createVariables().putValue("longVariable", Integer.MAX_VALUE + 1L));
 
-        query = engine.getTaskService().createTaskQuery()
-          .processVariableValueEquals("longVariable", Integer.MAX_VALUE+1L);
+      query = engine.getTaskService().createTaskQuery()
+        .processVariableValueEquals("longVariable", Integer.MAX_VALUE + 1L);
 
-        filter = engine.getFilterService().newTaskFilter("filterIntOutOfRangeVariable");
-        filter.setQuery(query);
+      filter = engine.getFilterService().newTaskFilter("filterIntOutOfRangeVariable");
+      filter.setQuery(query);
 
-        engine.getFilterService().saveFilter(filter);
+      engine.getFilterService().saveFilter(filter);
 
-        // double filter
-        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
-          "TaskFilterVariablesScenario_filterDoubleVariable",
-          Variables.createVariables().putValue("doubleVariable", 88.89D));
+      // double filter
+      engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
+        "TaskFilterVariablesScenario_filterDoubleVariable",
+        Variables.createVariables().putValue("doubleVariable", 88.89D));
 
-        query = engine.getTaskService().createTaskQuery()
-          .processVariableValueEquals("doubleVariable", 88.89D);
+      query = engine.getTaskService().createTaskQuery()
+        .processVariableValueEquals("doubleVariable", 88.89D);
 
-        filter = engine.getFilterService().newTaskFilter("filterDoubleVariable");
-        filter.setQuery(query);
+      filter = engine.getFilterService().newTaskFilter("filterDoubleVariable");
+      filter.setQuery(query);
 
-        engine.getFilterService().saveFilter(filter);
+      engine.getFilterService().saveFilter(filter);
 
-        // string filter
-        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
-          "TaskFilterVariablesScenario_filterStringVariable",
-          Variables.createVariables().putValue("stringVariable", "aVariableValue"));
+      // string filter
+      engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
+        "TaskFilterVariablesScenario_filterStringVariable",
+        Variables.createVariables().putValue("stringVariable", "aVariableValue"));
 
-        query = engine.getTaskService().createTaskQuery()
-          .processVariableValueEquals("stringVariable", "aVariableValue");
+      query = engine.getTaskService().createTaskQuery()
+        .processVariableValueEquals("stringVariable", "aVariableValue");
 
-        filter = engine.getFilterService().newTaskFilter("filterStringVariable");
-        filter.setQuery(query);
+      filter = engine.getFilterService().newTaskFilter("filterStringVariable");
+      filter.setQuery(query);
 
-        engine.getFilterService().saveFilter(filter);
+      engine.getFilterService().saveFilter(filter);
 
-        // filter null
-        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
-          "TaskFilterVariablesScenario_filterNullVariable",
+      // filter null
+      engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710",
+        "TaskFilterVariablesScenario_filterNullVariable",
         Variables.createVariables().putValue("nullVariable", null));
 
-        query = engine.getTaskService().createTaskQuery()
-          .processVariableValueEquals("nullVariable", null);
+      query = engine.getTaskService().createTaskQuery()
+        .processVariableValueEquals("nullVariable", null);
 
-        filter = engine.getFilterService().newTaskFilter("filterNullVariable");
-        filter.setQuery(query);
+      filter = engine.getFilterService().newTaskFilter("filterNullVariable");
+      filter.setQuery(query);
 
-        engine.getFilterService().saveFilter(filter);
-      }
+      engine.getFilterService().saveFilter(filter);
     };
   }
 }

@@ -84,14 +84,7 @@ public class PaContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
   @OperateOnDeployment("pa1")
   void testNoContextSwitchOnInnerCommand() throws Exception {
 
-    ProcessInstance pi = withProcessApplicationContext(new Callable<ProcessInstance>() {
-
-      @Override
-      public ProcessInstance call() throws Exception {
-        return runtimeService.startProcessInstanceByKey("process");
-      }
-
-    }, "pa2");
+    ProcessInstance pi = withProcessApplicationContext((Callable<ProcessInstance>) () -> runtimeService.startProcessInstanceByKey("process"), "pa2");
 
     JsonSerializable expectedJsonSerializable = RuntimeServiceDelegate.createJsonSerializable();
     String expectedJsonString = expectedJsonSerializable.toExpectedJsonString(JsonDataFormatConfigurator.DATE_FORMAT);

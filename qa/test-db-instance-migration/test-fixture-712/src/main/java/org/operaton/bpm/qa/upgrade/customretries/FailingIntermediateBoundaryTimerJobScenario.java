@@ -42,31 +42,28 @@ public final class FailingIntermediateBoundaryTimerJobScenario {
 
   @DescribesScenario("failingTimerJob")
   public static ScenarioSetup createFailingTimerJob() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
+      try {
+        ManagementService managementService = engine.getManagementService();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date startDate = simpleDateFormat.parse("2019-01-01T10:00:00");
+        ClockUtil.setCurrentTime(startDate);
+
+        engine.getRuntimeService().startProcessInstanceByKey("failingTimer");
+
+        ClockUtil.setCurrentTime(simpleDateFormat.parse("2019-01-01T11:00:01"));
+
+        Job firstJob = managementService.createJobQuery().processDefinitionKey("failingTimer").singleResult();
         try {
-          ManagementService managementService = engine.getManagementService();
-
-          SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-          Date startDate = simpleDateFormat.parse("2019-01-01T10:00:00");
-          ClockUtil.setCurrentTime(startDate);
-
-          engine.getRuntimeService().startProcessInstanceByKey("failingTimer");
-
-          ClockUtil.setCurrentTime(simpleDateFormat.parse("2019-01-01T11:00:01"));
-
-          Job firstJob = managementService.createJobQuery().processDefinitionKey("failingTimer").singleResult();
-          try {
-            managementService.executeJob(firstJob.getId());
-          } catch (Exception e) {
-            // ignore
-          }
-        } catch (ParseException e) {
-          fail("Unexpected Exception: " + e.getMessage());
-        } finally {
-          ClockUtil.reset();
+          managementService.executeJob(firstJob.getId());
+        } catch (Exception e) {
+          // ignore
         }
+      } catch (ParseException e) {
+        fail("Unexpected Exception: " + e.getMessage());
+      } finally {
+        ClockUtil.reset();
       }
     };
   }

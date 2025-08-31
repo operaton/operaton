@@ -39,9 +39,6 @@ class DefaultHistoryConfigurationTest {
   @Mock
   private SpringProcessEngineConfiguration springProcessEngineConfiguration;
 
-  @InjectMocks
-  private HistoryEventHandler historyEventHandler;
-
   private OperatonBpmProperties operatonBpmProperties;
 
   private DefaultHistoryConfiguration defaultHistoryConfiguration;
@@ -49,7 +46,7 @@ class DefaultHistoryConfigurationTest {
   @BeforeEach
   void before() {
     operatonBpmProperties = new OperatonBpmProperties();
-    defaultHistoryConfiguration = new DefaultHistoryConfiguration(operatonBpmProperties, historyEventHandler);
+    defaultHistoryConfiguration = new DefaultHistoryConfiguration(operatonBpmProperties);
     defaultHistoryConfiguration.operatonBpmProperties = operatonBpmProperties;
   }
 

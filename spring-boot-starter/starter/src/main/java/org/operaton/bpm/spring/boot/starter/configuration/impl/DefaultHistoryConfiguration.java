@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import java.util.Optional;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonHistoryConfiguration;
@@ -26,10 +27,8 @@ public class DefaultHistoryConfiguration extends AbstractOperatonConfiguration i
 
   protected HistoryEventHandler historyEventHandler;
 
-  public DefaultHistoryConfiguration(OperatonBpmProperties operatonBpmProperties,
-                                     HistoryEventHandler historyEventHandler) {
+  public DefaultHistoryConfiguration(OperatonBpmProperties operatonBpmProperties) {
     super(operatonBpmProperties);
-    this.historyEventHandler = historyEventHandler;
   }
 
   @Override
@@ -42,6 +41,11 @@ public class DefaultHistoryConfiguration extends AbstractOperatonConfiguration i
       logger.debug("registered history event handler: {}", historyEventHandler.getClass());
       configuration.getCustomHistoryEventHandlers().add(historyEventHandler);
     }
+  }
+
+  @Autowired(required = false)
+  public void setHistoryEventHandler(HistoryEventHandler historyEventHandler) {
+    this.historyEventHandler = historyEventHandler;
   }
 
 }

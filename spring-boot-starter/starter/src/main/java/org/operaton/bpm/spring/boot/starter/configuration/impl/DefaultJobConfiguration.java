@@ -50,17 +50,20 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
   protected List<JobHandler<?>> customJobHandlers;
 
   public DefaultJobConfiguration(OperatonBpmProperties operatonBpmProperties,
-                                 JobExecutor jobExecutor,
-                                 List<JobHandler<?>> customJobHandlers) {
+                                 JobExecutor jobExecutor) {
     super(operatonBpmProperties);
     this.jobExecutor = jobExecutor;
-    this.customJobHandlers = customJobHandlers;
   }
 
   @Override
   public void preInit(final SpringProcessEngineConfiguration configuration) {
     configureJobExecutor(configuration);
     registerCustomJobHandlers(configuration);
+  }
+
+  @Autowired(required = false)
+  public void setCustomJobHandlers(List<JobHandler<?>> customJobHandlers) {
+    this.customJobHandlers = customJobHandlers;
   }
 
   protected void registerCustomJobHandlers(SpringProcessEngineConfiguration configuration) {

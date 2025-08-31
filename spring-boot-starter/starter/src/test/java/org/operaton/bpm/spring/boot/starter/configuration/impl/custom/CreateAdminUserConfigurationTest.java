@@ -43,8 +43,7 @@ class CreateAdminUserConfigurationTest {
     properties.getAdminUser().setId("admin");
     properties.getAdminUser().setPassword("password");
 
-    var adminUserConfiguration = new CreateAdminUserConfiguration();
-    ReflectionTestUtils.setField(adminUserConfiguration, "operatonBpmProperties", properties);
+    var adminUserConfiguration = new CreateAdminUserConfiguration(properties);
     adminUserConfiguration.init();
     return adminUserConfiguration;
   }

@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.run;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.plugin.AdministratorAuthorizationPlugin;
@@ -33,10 +24,19 @@ import org.operaton.bpm.run.property.OperatonBpmRunAdministratorAuthorizationPro
 import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @EnableConfigurationProperties(OperatonBpmRunProperties.class)
 @Configuration
-@AutoConfigureAfter({OperatonBpmAutoConfiguration.class})
+@AutoConfigureAfter({ OperatonBpmAutoConfiguration.class })
 public class OperatonBpmRunConfiguration {
 
   @Bean
@@ -64,8 +64,9 @@ public class OperatonBpmRunConfiguration {
   }
 
   @Bean
-  public OperatonBpmRunDeploymentConfiguration operatonDeploymentConfiguration(@Value("${operaton.deploymentDir:#{null}}") String deploymentDir) {
-    return new OperatonBpmRunDeploymentConfiguration(deploymentDir);
+  public OperatonBpmRunDeploymentConfiguration operatonDeploymentConfiguration(@Value(
+      "${operaton" + ".deploymentDir:#{null}}") String deploymentDir, OperatonBpmProperties operatonBpmProperties) {
+    return new OperatonBpmRunDeploymentConfiguration(deploymentDir, operatonBpmProperties);
   }
 
 }

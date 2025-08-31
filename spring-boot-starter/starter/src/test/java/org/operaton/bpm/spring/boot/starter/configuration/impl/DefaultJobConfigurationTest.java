@@ -49,17 +49,15 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 class DefaultJobConfigurationTest {
 
   private final SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
-  private final DefaultJobConfiguration jobConfiguration = new DefaultJobConfiguration();
+  private DefaultJobConfiguration jobConfiguration;
   private final OperatonBpmProperties properties = new OperatonBpmProperties();
 
   @Autowired
   JobExecutor jobExecutor;
-  @Autowired
-  protected List<JobHandler<?>> customJobHandlers;
 
   @BeforeEach
   void setUp() {
-    jobConfiguration = new DefaultJobConfiguration(properties, jobExecutor, customJobHandlers);
+    jobConfiguration = new DefaultJobConfiguration(properties, jobExecutor);
   }
 
   @Test

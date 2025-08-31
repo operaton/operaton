@@ -16,19 +16,24 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
-import jakarta.annotation.PostConstruct;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.AbstractOperatonConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.FilterProperty;
 
+import jakarta.annotation.PostConstruct;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Optional;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 public class CreateFilterConfiguration extends AbstractOperatonConfiguration {
 
   protected String filterName;
+
+  public CreateFilterConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    super(operatonBpmProperties);
+  }
 
   @PostConstruct
   public void init() {
@@ -40,16 +45,12 @@ public class CreateFilterConfiguration extends AbstractOperatonConfiguration {
   @Override
   public void postProcessEngineBuild(final ProcessEngine processEngine) {
     Objects.requireNonNull(filterName);
-    long filterCount = processEngine.getFilterService()
-        .createFilterQuery()
-        .filterName(filterName)
-        .count();
+    long filterCount = processEngine.getFilterService().createFilterQuery().filterName(filterName).count();
     if (filterCount == 0) {
       Filter filter = processEngine.getFilterService().newTaskFilter(filterName);
       processEngine.getFilterService().saveFilter(filter);
       LOG.createInitialFilter(filter);
-    }
-    else {
+    } else {
       LOG.skipCreateInitialFilter(filterName);
     }
   }

@@ -16,21 +16,26 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.impl;
 
-import java.util.function.Predicate;
+import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.spring.boot.starter.ClientProperties;
+import org.operaton.bpm.client.spring.impl.subscription.SpringTopicSubscriptionImpl;
+import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationEvent;
 
-import org.operaton.bpm.client.spring.boot.starter.ClientProperties;
-import org.operaton.bpm.client.spring.impl.subscription.SpringTopicSubscriptionImpl;
-import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
+import java.util.function.Predicate;
+import org.springframework.context.ApplicationEventPublisher;
 
 public class PropertiesAwareSpringTopicSubscription extends SpringTopicSubscriptionImpl {
 
   protected ClientProperties clientProperties;
 
-  public PropertiesAwareSpringTopicSubscription(ClientProperties clientProperties) {
+  public PropertiesAwareSpringTopicSubscription(ClientProperties clientProperties,
+                                                ExternalTaskClient client,
+                                                ApplicationEventPublisher applicationEventPublisher) {
+    super(client, applicationEventPublisher);
     this.clientProperties = clientProperties;
   }
 
@@ -49,8 +54,7 @@ public class PropertiesAwareSpringTopicSubscription extends SpringTopicSubscript
     SubscriptionConfiguration merge = getSubscriptionConfiguration();
 
     String topicName = merge.getTopicName();
-    SubscriptionConfiguration subscriptionProperties =
-        clientProperties.findSubscriptionPropsByTopicName(topicName);
+    SubscriptionConfiguration subscriptionProperties = clientProperties.findSubscriptionPropsByTopicName(topicName);
 
     if (subscriptionProperties != null) {
       if (subscriptionProperties.getAutoOpen() != null) {

@@ -27,9 +27,7 @@ import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonAuthorizationConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonDatasourceConfiguration;
@@ -104,22 +102,20 @@ public class OperatonBpmConfiguration {
   @ConditionalOnMissingBean(OperatonJobConfiguration.class)
   @ConditionalOnProperty(prefix = "operaton.bpm.job-execution", name = "enabled", havingValue = "true", matchIfMissing = true)
   public static OperatonJobConfiguration operatonJobConfiguration(OperatonBpmProperties operatonBpmProperties,
-                                                                  JobExecutor jobExecutor,
-                                                                  List<JobHandler<?>> customJobHandlers) {
-    return new DefaultJobConfiguration(operatonBpmProperties, jobExecutor, customJobHandlers);
+                                                                  JobExecutor jobExecutor) {
+    return new DefaultJobConfiguration(operatonBpmProperties, jobExecutor);
   }
 
   @Bean
   @ConditionalOnMissingBean(OperatonHistoryConfiguration.class)
-  public static OperatonHistoryConfiguration operatonHistoryConfiguration(OperatonBpmProperties operatonBpmProperties,
-                                                                          HistoryEventHandler historyEventHandler) {
-    return new DefaultHistoryConfiguration(operatonBpmProperties, historyEventHandler);
+  public static OperatonHistoryConfiguration operatonHistoryConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    return new DefaultHistoryConfiguration(operatonBpmProperties);
   }
 
   @Bean
   @ConditionalOnMissingBean(OperatonMetricsConfiguration.class)
-  public static OperatonMetricsConfiguration operatonMetricsConfiguration() {
-    return new DefaultMetricsConfiguration();
+  public static OperatonMetricsConfiguration operatonMetricsConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    return new DefaultMetricsConfiguration(operatonBpmProperties);
   }
 
   //TODO to be removed within CAM-8108
@@ -153,37 +149,37 @@ public class OperatonBpmConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(OperatonAuthorizationConfiguration.class)
-  public static OperatonAuthorizationConfiguration operatonAuthorizationConfiguration() {
-    return new DefaultAuthorizationConfiguration();
+  public static OperatonAuthorizationConfiguration operatonAuthorizationConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    return new DefaultAuthorizationConfiguration(operatonBpmProperties);
   }
 
   @Bean
   @ConditionalOnMissingBean(OperatonDeploymentConfiguration.class)
-  public static OperatonDeploymentConfiguration operatonDeploymentConfiguration() {
-    return new DefaultDeploymentConfiguration();
+  public static OperatonDeploymentConfiguration operatonDeploymentConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    return new DefaultDeploymentConfiguration(operatonBpmProperties);
   }
 
   @Bean
-  public GenericPropertiesConfiguration genericPropertiesConfiguration() {
-    return new GenericPropertiesConfiguration();
+  public GenericPropertiesConfiguration genericPropertiesConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    return new GenericPropertiesConfiguration(operatonBpmProperties);
   }
 
   @Bean
   @ConditionalOnProperty(prefix = "operaton.bpm.admin-user", name = "id")
-  public CreateAdminUserConfiguration createAdminUserConfiguration() {
-    return new CreateAdminUserConfiguration();
+  public CreateAdminUserConfiguration createAdminUserConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    return new CreateAdminUserConfiguration(operatonBpmProperties);
   }
 
   @Bean
   @ConditionalOnMissingBean(OperatonFailedJobConfiguration.class)
-  public static OperatonFailedJobConfiguration failedJobConfiguration() {
-    return new DefaultFailedJobConfiguration();
+  public static OperatonFailedJobConfiguration failedJobConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    return new DefaultFailedJobConfiguration(operatonBpmProperties);
   }
 
   @Bean
   @ConditionalOnProperty(prefix = "operaton.bpm.filter", name = "create")
-  public CreateFilterConfiguration createFilterConfiguration() {
-    return new CreateFilterConfiguration();
+  public CreateFilterConfiguration createFilterConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    return new CreateFilterConfiguration(operatonBpmProperties);
   }
 
   @Bean

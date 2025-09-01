@@ -466,7 +466,7 @@ class ConcurrentJobExecutorTest {
     public void run() {
       try {
         JobFailureCollector jobFailureCollector = new JobFailureCollector(jobId);
-        ExecuteJobHelper.executeJob(jobId, processEngineConfiguration.getCommandExecutorTxRequired(),jobFailureCollector,
+        ExecuteJobHelper.executeJob(processEngineConfiguration.getCommandExecutorTxRequired(),jobFailureCollector,
             new ControlledCommand<>(activeThread, new ExecuteJobsCmd(jobId, jobFailureCollector)));
 
       }

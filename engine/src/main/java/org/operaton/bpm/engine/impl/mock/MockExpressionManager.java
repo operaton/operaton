@@ -23,16 +23,11 @@ import jakarta.el.ELResolver;
 import jakarta.el.ListELResolver;
 import jakarta.el.MapELResolver;
 
-import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
 import org.operaton.bpm.engine.impl.el.VariableContextElResolver;
 import org.operaton.bpm.engine.impl.el.VariableScopeElResolver;
 
 public class MockExpressionManager extends JuelExpressionManager {
-
-  protected ELResolver createElResolver(VariableScope scope) {
-    return createElResolver();
-  }
 
   @Override
   protected ELResolver createElResolver() {

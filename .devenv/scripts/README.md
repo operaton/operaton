@@ -71,3 +71,16 @@ Example:
 ```bash
 ./build/build-and-run-database-update-tests.sh --db=h2
 ```
+
+# Directory `build`
+
+## `code-cleanup.sh`
+
+Use this script to perform code cleanup tasks. 
+The cleanups are performed using OpenRewrite.
+
+Execute this script from the root of the repository:
+
+```bash
+.devenv/scripts/maintenance/code-cleanup.sh
+```

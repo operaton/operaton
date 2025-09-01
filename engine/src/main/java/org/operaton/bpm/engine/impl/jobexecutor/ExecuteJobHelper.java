@@ -91,7 +91,7 @@ public final class ExecuteJobHelper {
         }
 
       } else {
-        SuccessfulJobListener successListener = createSuccessfulJobListener(commandExecutor);
+        SuccessfulJobListener successListener = createSuccessfulJobListener();
         commandExecutor.execute(successListener);
       }
     }
@@ -124,7 +124,7 @@ public final class ExecuteJobHelper {
     return new FailedJobListener(commandExecutor, jobFailureCollector);
   }
 
-  protected static SuccessfulJobListener createSuccessfulJobListener(CommandExecutor commandExecutor) {
+  protected static SuccessfulJobListener createSuccessfulJobListener() {
     return new SuccessfulJobListener();
   }
 

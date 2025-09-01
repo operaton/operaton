@@ -225,6 +225,7 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
     } else if (isValidValueForResumePreviousBy(resumePreviousBy)) {
       deploymentBuilder.resumePreviousVersionsBy(resumePreviousBy);
     } else {
+      var b = new StringBuilder();
       b.append("Illegal value passed for property ")
         .append(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY)
         .append(". Value was ")

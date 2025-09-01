@@ -28,8 +28,7 @@ import static org.mockito.Mockito.verify;
 class EvaluateDecisionCmdTest {
 
   @ParameterizedTest
-  @CsvSource(
-    value = {
+  @CsvSource({
       "true,true",
       "true,false",
       "false,true",

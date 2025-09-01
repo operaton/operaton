@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * @author Thorben Lindhauer
  *
  */
-@Target(value = {ElementType.TYPE, ElementType.METHOD})
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Origin {
 

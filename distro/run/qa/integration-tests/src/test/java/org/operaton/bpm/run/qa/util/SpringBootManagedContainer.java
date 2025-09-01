@@ -238,7 +238,7 @@ public class SpringBootManagedContainer {
       Files.deleteIfExists(Path.of(baseDirectory, filePath));
       createConfigurationYml(filePath, source);
     } catch (IOException e) {
-        log.error("Could not replace {}", filePath, e);
+      log.error("Could not replace " + filePath, e);
     }
   }
 

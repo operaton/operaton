@@ -88,7 +88,7 @@ class CompetingForkTest {
       } catch (OptimisticLockingException e) {
         this.exception = e;
       }
-      LOG.debug(getName()+" ends");
+      LOG.debug("{} ends", getName());
     }
   }
 

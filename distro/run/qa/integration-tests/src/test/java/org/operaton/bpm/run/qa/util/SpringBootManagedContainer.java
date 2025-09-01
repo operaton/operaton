@@ -100,7 +100,7 @@ public class SpringBootManagedContainer {
       final ProcessBuilder startupProcessBuilder = new ProcessBuilder(commands);
       startupProcessBuilder.redirectErrorStream(true);
       startupProcessBuilder.directory(new File(baseDirectory));
-      log.info("Starting Spring Boot application with: " + startupProcessBuilder.command());
+      log.info("Starting Spring Boot application with: {}", startupProcessBuilder.command());
       startupProcess = startupProcessBuilder.start();
       pid = startupProcess.pid();
       new Thread(new ConsoleConsumer()).start();

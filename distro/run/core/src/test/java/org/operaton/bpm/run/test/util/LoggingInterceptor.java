@@ -54,7 +54,7 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
       return;
     }
     log.info("Headers:");
-    message.getHeaders().forEach((k, v) -> log.info("    " + k + ": " + v));
+    message.getHeaders().forEach((k, v) -> log.info("    {}: {}", k, v));
     log.info("----------------------------------------------------------------------------");
   }
 }

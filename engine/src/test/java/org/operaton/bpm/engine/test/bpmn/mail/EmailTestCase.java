@@ -56,10 +56,10 @@ public abstract class EmailTestCase {
       wiser.setPort(port);
 
       try {
-        LOG.info("Starting Wiser mail server on port: " + port);
+        LOG.info("Starting Wiser mail server on port: {}", port);
         wiser.start();
         serverUpAndRunning = true;
-        LOG.info("Wiser mail server listening on port: " + port);
+        LOG.info("Wiser mail server listening on port: {}", port);
       } catch (RuntimeException e) { // Fix for slow port-closing Jenkins
         if (e.getMessage().toLowerCase().contains("BindException")) {
           Thread.sleep(250L);

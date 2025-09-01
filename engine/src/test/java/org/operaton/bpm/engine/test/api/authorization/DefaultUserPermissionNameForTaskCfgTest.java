@@ -88,7 +88,7 @@ class DefaultUserPermissionNameForTaskCfgTest {
     // if
     assertThatThrownBy(testProcessEngineCfg::initDefaultUserPermissionForTask)
         .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Invalid value 'null' for configuration property 'defaultUserPermissionNameForTask'.".formatted());
+        .hasMessageContaining("Invalid value 'null' for configuration property 'defaultUserPermissionNameForTask'.");
   }
 
   @Test

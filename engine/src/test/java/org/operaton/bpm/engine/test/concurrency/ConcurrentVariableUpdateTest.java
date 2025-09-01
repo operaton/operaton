@@ -98,7 +98,7 @@ class ConcurrentVariableUpdateTest {
       } catch (Exception e) {
         this.exception = e;
       }
-      LOG.debug(getName()+" ends");
+      LOG.debug("{} ends", getName());
     }
   }
 

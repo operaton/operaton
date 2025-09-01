@@ -39,7 +39,7 @@ public class EventCollector implements ExecutionListener {
   @Override
   public void notify(DelegateExecution execution) throws Exception {
     PvmExecutionImpl executionImpl = (PvmExecutionImpl) execution;
-    LOG.debug("collecting event: "+execution.getEventName()+" on "+executionImpl.getEventSource());
+    LOG.debug("collecting event: {} on {}", execution.getEventName(), executionImpl.getEventSource());
     events.add(execution.getEventName()+" on "+executionImpl.getEventSource());
   }
 

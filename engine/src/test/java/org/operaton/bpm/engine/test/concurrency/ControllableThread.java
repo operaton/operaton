@@ -45,7 +45,7 @@ public class ControllableThread extends Thread {
   }
 
   public synchronized void startAndWaitUntilControlIsReturned() {
-    LOG.debug("test thread will start "+getName()+" and wait till it returns control");
+    LOG.debug("test thread will start {} and wait till it returns control", getName());
     start();
     try {
       wait();
@@ -55,7 +55,7 @@ public class ControllableThread extends Thread {
   }
 
   public synchronized void returnControlToTestThreadAndWait() {
-    LOG.debug(getName()+" will notify test thread and till test thread proceeds this thread");
+    LOG.debug("{} will notify test thread and till test thread proceeds this thread", getName());
     this.notify();
     try {
       this.wait();
@@ -65,7 +65,7 @@ public class ControllableThread extends Thread {
   }
 
   public synchronized void proceedAndWaitTillDone() {
-    LOG.debug("test thread will notify "+getName()+" and wait until it completes");
+    LOG.debug("test thread will notify {} and wait until it completes", getName());
     notify();
     try {
       join();

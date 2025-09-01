@@ -893,7 +893,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
       .when().get(TASK_QUERY_URL);
   }
 
-  protected void executeAndVerifySortingAsPost(List<Map<String, Object>> sortingJson, Status expectedStatus) {
+  protected void executeAndVerifySortingAsPost(List<Map<String, Object>> sortingJson) {
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", sortingJson);
 
@@ -910,8 +910,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
       OrderingBuilder.create()
         .orderBy("dueDate").desc()
         .orderBy("caseExecutionId").asc()
-        .getJson(),
-      Status.OK);
+        .getJson());
 
     inOrder.verify(mockQuery).orderByDueDate();
     inOrder.verify(mockQuery).desc();
@@ -936,8 +935,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
         .orderBy("caseExecutionVariable").desc()
           .parameter("variable", "var5")
           .parameter("type", "Date")
-        .getJson(),
-      Status.OK);
+        .getJson());
 
     inOrder.verify(mockQuery).orderByProcessVariable("var", ValueType.STRING);
     inOrder.verify(mockQuery).desc();

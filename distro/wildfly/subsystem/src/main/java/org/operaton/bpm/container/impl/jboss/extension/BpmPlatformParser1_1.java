@@ -46,7 +46,7 @@ import static org.jboss.as.controller.parsing.ParseUtils.*;
 
 public class BpmPlatformParser1_1 extends AbstractParser {
 
-  public void parse(final XMLExtendedStreamReader reader, final List<ModelNode> operations, ModelNode subsystemAddress) {
+  public void parse(final XMLExtendedStreamReader reader, final List<ModelNode> operations, ModelNode subsystemAddress) throws Exception {
     while (reader.hasNext() && reader.nextTag() != END_ELEMENT) {
       final Element element = Element.forName(reader.getLocalName());
       switch (element) {
@@ -128,7 +128,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     parseAdditionalProcessEngineSettings(reader, operations, addProcessEngineOp);
   }
 
-  protected void parseAdditionalProcessEngineSettings(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode addProcessEngineOp) {
+  protected void parseAdditionalProcessEngineSettings(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode addProcessEngineOp) throws XMLStreamException {
     // iterate deeper
     while (reader.hasNext() && reader.nextTag() != END_ELEMENT) {
       final Element element = Element.forName(reader.getLocalName());
@@ -160,7 +160,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     }
   }
 
-  protected void parsePlugins(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode addProcessEngine) {
+  protected void parsePlugins(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode addProcessEngine) throws XMLStreamException {
     requireNoAttributes(reader);
 
     ModelNode plugins = new ModelNode();
@@ -181,7 +181,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     addProcessEngine.get(Element.PLUGINS.getLocalName()).set(plugins);
   }
 
-  protected void parsePlugin(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode plugins) {
+  protected void parsePlugin(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode plugins) throws XMLStreamException {
     requireNoAttributes(reader);
     ModelNode plugin = new ModelNode();
 
@@ -205,7 +205,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     plugins.add(plugin);
   }
 
-  protected void parseProperties(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode parentAddress) {
+  protected void parseProperties(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode parentAddress) throws XMLStreamException {
     requireNoAttributes(reader);
 
     while (reader.hasNext() && reader.nextTag() != END_ELEMENT) {
@@ -225,7 +225,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     }
   }
 
-  protected void parseJobExecutor(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode parentAddress) {
+  protected void parseJobExecutor(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode parentAddress) throws XMLStreamException {
     // Add the 'add' operation for 'job-executor' parent
     ModelNode addJobExecutorOp = new ModelNode();
     addJobExecutorOp.get(OP).set(ADD);
@@ -284,7 +284,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     }
   }
 
-  protected void parseJobAcquisitions(XMLExtendedStreamReader reader, List<ModelNode> operation, ModelNode parentAddress) {
+  protected void parseJobAcquisitions(XMLExtendedStreamReader reader, List<ModelNode> operation, ModelNode parentAddress) throws XMLStreamException {
     while (reader.hasNext()) {
       switch (reader.nextTag()) {
         case END_ELEMENT: {
@@ -309,7 +309,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     }
   }
 
-  protected void parseJobAcquisition(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode parentAddress) {
+  protected void parseJobAcquisition(XMLExtendedStreamReader reader, List<ModelNode> operations, ModelNode parentAddress) throws XMLStreamException {
     String acquisitionName = null;
 
     // Add the 'add' operation for each 'job-acquisition' child
@@ -368,7 +368,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     }
   }
 
-  protected void parseElement(AttributeDefinition attributeDefinition, ModelNode operation, XMLExtendedStreamReader reader) {
+  protected void parseElement(AttributeDefinition attributeDefinition, ModelNode operation, XMLExtendedStreamReader reader) throws XMLStreamException {
     String value = rawElementText(reader);
     ((SimpleAttributeDefinition) attributeDefinition).parseAndSetParameter(value, operation, reader);
   }
@@ -407,7 +407,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     }
 
     @Override
-    public void writeContent(XMLExtendedStreamWriter writer, SubsystemMarshallingContext context) {
+    public void writeContent(XMLExtendedStreamWriter writer, SubsystemMarshallingContext context) throws XMLStreamException {
       context.startSubsystemElement(Namespace.CURRENT.getUriString(), false);
 
       writeProcessEnginesContent(writer, context);
@@ -417,7 +417,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
       writer.writeEndElement();
     }
 
-    protected void writeProcessEnginesContent(final XMLExtendedStreamWriter writer, final SubsystemMarshallingContext context) {
+    protected void writeProcessEnginesContent(final XMLExtendedStreamWriter writer, final SubsystemMarshallingContext context) throws XMLStreamException {
 
       writer.writeStartElement(Element.PROCESS_ENGINES.getLocalName());
 
@@ -445,7 +445,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
       writer.writeEndElement();
     }
 
-    protected void writeJobExecutorContent(final XMLExtendedStreamWriter writer, final SubsystemMarshallingContext context) {
+    protected void writeJobExecutorContent(final XMLExtendedStreamWriter writer, final SubsystemMarshallingContext context) throws XMLStreamException {
       ModelNode node = context.getModelNode();
       ModelNode jobExecutorNode = node.get(Element.JOB_EXECUTOR.getLocalName());
 
@@ -472,7 +472,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
       }
     }
 
-    protected void writeJobAcquisitionsContent(final XMLExtendedStreamWriter writer, final SubsystemMarshallingContext context, ModelNode parentNode) {
+    protected void writeJobAcquisitionsContent(final XMLExtendedStreamWriter writer, final SubsystemMarshallingContext context, ModelNode parentNode) throws XMLStreamException {
       writer.writeStartElement(Element.JOB_AQUISITIONS.getLocalName());
 
       ModelNode jobAcquisitionConfigurations = parentNode.get(Element.JOB_AQUISITIONS.getLocalName());

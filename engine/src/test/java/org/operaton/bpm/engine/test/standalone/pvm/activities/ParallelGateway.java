@@ -47,11 +47,11 @@ public class ParallelGateway implements ActivityBehavior {
     int nbrOfExecutionsJoined = joinedExecutions.size();
 
     if (nbrOfExecutionsJoined==nbrOfExecutionsToJoin) {
-      LOG.debug("parallel gateway '"+activity.getId()+"' activates: "+nbrOfExecutionsJoined+" of "+nbrOfExecutionsToJoin+" joined");
+      LOG.debug("parallel gateway '{}' activates: {} of {} joined", activity.getId(), nbrOfExecutionsJoined, nbrOfExecutionsToJoin);
       execution.leaveActivityViaTransitions(outgoingTransitions, joinedExecutions);
 
     } else {
-      LOG.debug("parallel gateway '"+activity.getId()+"' does not activate: "+nbrOfExecutionsJoined+" of "+nbrOfExecutionsToJoin+" joined");
+      LOG.debug("parallel gateway '{}' does not activate: {} of {} joined", activity.getId(), nbrOfExecutionsJoined, nbrOfExecutionsToJoin);
     }
   }
 }

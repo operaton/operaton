@@ -53,7 +53,7 @@ public class CaseExecutionStateTransitionCollector implements CaseExecutionListe
 
     String stateTransition = previousStateName + " --" + execution.getEventName() + "(" + activityId + ")--> " + newState;
 
-    LOG.debug("collecting state transition: " +  stateTransition);
+    LOG.debug("collecting state transition: {}", stateTransition);
 
     stateTransitions.add(stateTransition);
   }

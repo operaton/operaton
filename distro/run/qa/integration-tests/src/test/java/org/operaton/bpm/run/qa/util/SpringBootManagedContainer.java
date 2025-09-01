@@ -100,7 +100,7 @@ public class SpringBootManagedContainer {
       final ProcessBuilder startupProcessBuilder = new ProcessBuilder(commands);
       startupProcessBuilder.redirectErrorStream(true);
       startupProcessBuilder.directory(new File(baseDirectory));
-      log.info("Starting Spring Boot application with: " + startupProcessBuilder.command());
+      log.info("Starting Spring Boot application with: {}", startupProcessBuilder.command());
       startupProcess = startupProcessBuilder.start();
       pid = startupProcess.pid();
       new Thread(new ConsoleConsumer()).start();
@@ -238,7 +238,7 @@ public class SpringBootManagedContainer {
       Files.deleteIfExists(Path.of(baseDirectory, filePath));
       createConfigurationYml(filePath, source);
     } catch (IOException e) {
-      log.error("Could not replace " + filePath, e);
+      log.error("Could not replace {}", filePath, e);
     }
   }
 
@@ -250,7 +250,7 @@ public class SpringBootManagedContainer {
       Files.copy(source, testYmlPath);
       configurationFiles.add(testYmlPath.toFile());
     } catch (IOException e) {
-      log.error("Could not create " + filePath, e);
+      log.error("Could not create {}", filePath, e);
     }
   }
 

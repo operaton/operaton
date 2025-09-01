@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: ${{ matrix.java }}
+          java-version: 17
       - name: Code Cleanup
         run: .devenv/scripts/maintenance/code-cleanup.sh
       - name: Create Pull Request

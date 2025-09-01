@@ -1674,8 +1674,7 @@ public class BpmnParse extends Parse {
             nestedActivityImpl,
             ActivityTypes.INTERMEDIATE_EVENT_MESSAGE_THROW,
             messageEventDefinitionElement,
-            intermediateEventElement,
-            scopeElement);
+            intermediateEventElement);
       } else {
         // default to non behavior if no service task
         // properties have been specified
@@ -2249,7 +2248,7 @@ public class BpmnParse extends Parse {
     parseAsynchronousContinuationForActivity(serviceTaskElement, activity);
 
     String elementName = "serviceTask";
-    parseServiceTaskLike(activity, elementName, serviceTaskElement, serviceTaskElement, scope);
+    parseServiceTaskLike(activity, elementName, serviceTaskElement, serviceTaskElement);
 
     parseExecutionListenersOnScope(serviceTaskElement, activity);
 
@@ -2270,15 +2269,13 @@ public class BpmnParse extends Parse {
    *   (e.g. operaton:class attributes)
    * @param operatonPropertiesElement the element that contains the operaton:properties extension elements
    *   that apply to this service task. Usually, but not always, this is the same as serviceTaskElement
-   * @param scope
    * @return
    */
   public void parseServiceTaskLike(
       ActivityImpl activity,
       String elementName,
       Element serviceTaskElement,
-      Element operatonPropertiesElement,
-      ScopeImpl scope) {
+      Element operatonPropertiesElement) {
 
     String type = serviceTaskElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, TYPE);
     String className = serviceTaskElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, PROPERTYNAME_CLASS);
@@ -2344,8 +2341,7 @@ public class BpmnParse extends Parse {
           activity,
           elementName,
           businessRuleTaskElement,
-          businessRuleTaskElement,
-          scope);
+          businessRuleTaskElement);
 
       parseExecutionListenersOnScope(businessRuleTaskElement, activity);
 
@@ -2519,7 +2515,7 @@ public class BpmnParse extends Parse {
       String elementName = "sendTask";
       parseAsynchronousContinuationForActivity(sendTaskElement, activity);
 
-      parseServiceTaskLike(activity, elementName, sendTaskElement, sendTaskElement, scope);
+      parseServiceTaskLike(activity, elementName, sendTaskElement, sendTaskElement);
 
       parseExecutionListenersOnScope(sendTaskElement, activity);
 
@@ -3188,8 +3184,7 @@ public class BpmnParse extends Parse {
               activity,
               ActivityTypes.END_EVENT_MESSAGE,
               messageEventDefinitionElement,
-              endEventElement,
-              scope);
+              endEventElement);
           activity.getProperties().set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_MESSAGE);
         } else {
           // default to non behavior if no service task
@@ -4002,7 +3997,7 @@ public class BpmnParse extends Parse {
     parseInputParameter(callActivityElement, callableElement);
 
     // parse output parameter
-    parseOutputParameter(callActivityElement, activity, callableElement);
+    parseOutputParameter(callActivityElement, callableElement);
 
     if (!isMultiInstance) {
       // turn activity into a scope unless it is a multi instance activity, in
@@ -4108,7 +4103,7 @@ public class BpmnParse extends Parse {
     }
   }
 
-  protected void parseOutputParameter(Element callActivityElement, ActivityImpl activity, CallableElement callableElement) {
+  protected void parseOutputParameter(Element callActivityElement, CallableElement callableElement) {
     Element extensionsElement = callActivityElement.element(EXTENSION_ELEMENTS_TAG);
 
     if (extensionsElement != null) {

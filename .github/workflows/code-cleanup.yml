@@ -33,6 +33,8 @@ jobs:
         run: .devenv/scripts/build/build.sh --profile=max --skip-tests
       - name: Code Cleanup
         run: .devenv/scripts/maintenance/code-cleanup.sh
+      - name: Verification Build
+        run: .devenv/scripts/build/build.sh --profile=max --skip-tests
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e #v7.0.8
         with:

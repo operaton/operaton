@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.calendar;
 
-import java.util.Date;
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
 import org.operaton.bpm.engine.task.Task;
+
+import java.util.Date;
 
 public class CycleBusinessCalendar implements BusinessCalendar {
 
@@ -51,8 +51,8 @@ public class CycleBusinessCalendar implements BusinessCalendar {
         durationHelper.setRepeatOffset(repeatOffset);
         return durationHelper.getDateAfter(startDate);
       } else {
-        CronExpression ce = new CronExpression(duedateDescription);
-        return ce.getTimeAfter(startDate == null ? ClockUtil.getCurrentTime() : startDate);
+        CronTimer cronTimer = CronTimer.parse(duedateDescription);
+        return cronTimer.getDueDate(startDate == null ? ClockUtil.getCurrentTime() : startDate);
       }
 
     }

@@ -117,7 +117,7 @@ public final class ReflectUtil {
    return clazz;
   }
 
-  public static <T> Class<? extends T> loadClass(String className, ClassLoader customClassloader, Class<T> clazz) throws ClassNotFoundException, ClassCastException {
+  public static <T> Class<? extends T> loadClass(String className, ClassLoader customClassloader) throws ClassNotFoundException, ClassCastException {
     if(customClassloader != null) {
       return (Class<? extends T>) customClassloader.loadClass(className);
     } else {

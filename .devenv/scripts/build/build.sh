@@ -75,7 +75,7 @@ case "$BUILD_PROFILE" in
     PROFILES+=(distro distro-webjar distro-run distro-tomcat tomcat h2-in-memory)
     ;;
   "max")
-    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter distro-serverless testcontainers h2-in-memory)
+    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter distro-serverless h2-in-memory)
     ;;
 esac
 

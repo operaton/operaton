@@ -108,6 +108,7 @@
             <exclusion>**/JsonTreeCreateTest.java</exclusion>
             <exclusion>**/DomXmlDataFormatWriterTest.java</exclusion>
             <exclusion>**/JerseyServerBootstrap.java</exclusion>
+            <exclusion>**/ProcessApplicationStartService.java</exclusion>
             <!-- org.openrewrite.java.RemoveUnusedImports -->
             <exclusion>**/TestConstants.java</exclusion>
             <!-- org.openrewrite.java.testing.cleanup.SimplifyTestThrows -->

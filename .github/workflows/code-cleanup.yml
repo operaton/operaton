@@ -29,6 +29,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
+      - name: Build
+        run: ./mvnw install -DskipTests -Dskip.frontend.build=true
       - name: Code Cleanup
         run: .devenv/scripts/maintenance/code-cleanup.sh
       - name: Create Pull Request

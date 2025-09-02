@@ -391,4 +391,42 @@ class UserQueryTest {
     assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(2, 1)).hasSize(1);
   }
 
+  @Test
+  void testQueryByAfterId() {
+    // Sort users by ID to ensure deterministic order
+    List<User> allUsers = identityService.createUserQuery().orderByUserId().asc().list();
+    assertThat(allUsers).hasSize(4);
+    
+    String secondUserId = allUsers.get(1).getId();
+    
+    // Query for users after the second user ID
+    UserQuery query = identityService.createUserQuery().afterId(secondUserId).orderByUserId().asc();
+    List<User> result = query.list();
+    
+    // Should return users with IDs greater than the second user ID
+    assertThat(result).hasSize(2);
+    for (User user : result) {
+      assertThat(user.getId().compareTo(secondUserId)).isGreaterThan(0);
+    }
+  }
+
+  @Test
+  void testQueryByAfterIdInvalidId() {
+    UserQuery query = identityService.createUserQuery().afterId("zzz_nonexistent");
+    assertThat(query.list()).isEmpty(); // Should return no users since all user IDs are less than "zzz_nonexistent" 
+    assertThat(query.count()).isZero();
+  }
+
+  @Test
+  void testQueryByAfterIdNullValue() {
+    UserQuery userQuery = identityService.createUserQuery();
+    
+    try {
+      userQuery.afterId(null);
+      fail("ProcessEngineException expected");
+    } catch (ProcessEngineException e) {
+      // expected
+    }
+  }
+
 }

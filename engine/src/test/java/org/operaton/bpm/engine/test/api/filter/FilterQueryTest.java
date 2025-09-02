@@ -271,4 +271,38 @@ class FilterQueryTest {
     assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Filter.class)).listPage(2, 2)).hasSize(2);
   }
 
+  @Test
+  void testQueryByAfterId() {
+    // Sort filters by ID to ensure deterministic order
+    List<Filter> allFilters = filterService.createFilterQuery().orderByFilterId().asc().list();
+    assertThat(allFilters).hasSize(4);
+    
+    String secondFilterId = allFilters.get(1).getId();
+    
+    // Query for filters after the second filter ID
+    FilterQuery query = filterService.createFilterQuery().afterId(secondFilterId).orderByFilterId().asc();
+    List<Filter> result = query.list();
+    
+    // Should return filters with IDs greater than the second filter ID
+    assertThat(result).hasSize(2);
+    for (Filter filter : result) {
+      assertThat(filter.getId().compareTo(secondFilterId)).isGreaterThan(0);
+    }
+  }
+
+  @Test
+  void testQueryByAfterIdInvalidId() {
+    FilterQuery query = filterService.createFilterQuery().afterId("nonexistent");
+    assertThat(query.list()).hasSize(4); // Should return all filters since no filter has ID greater than "nonexistent"
+    assertThat(query.count()).isEqualTo(4);
+  }
+
+  @Test
+  void testQueryByAfterIdNullValue() {
+    FilterQuery filterQuery = filterService.createFilterQuery();
+    
+    assertThatThrownBy(() -> filterQuery.afterId(null))
+      .isInstanceOf(ProcessEngineException.class);
+  }
+
 }

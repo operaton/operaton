@@ -5996,6 +5996,45 @@ class TaskQueryTest {
     assertThat(taskResult.hasComment()).isTrue();
     assertThat(taskResult.hasAttachment()).isTrue();
   }
+
+  @Test
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+  void testQueryByAfterId() {
+    // Start multiple process instances to create tasks
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    
+    // Sort tasks by ID to ensure deterministic order
+    List<Task> allTasks = taskService.createTaskQuery().orderByTaskId().asc().list();
+    assertThat(allTasks).hasSize(3);
+    
+    String secondTaskId = allTasks.get(1).getId();
+    
+    // Query for tasks after the second task ID
+    List<Task> tasksAfter = taskService.createTaskQuery().afterId(secondTaskId).orderByTaskId().asc().list();
+    
+    // Should return tasks with IDs greater than the second task ID
+    assertThat(tasksAfter).hasSize(1);
+    for (Task task : tasksAfter) {
+      assertThat(task.getId().compareTo(secondTaskId)).isGreaterThan(0);
+    }
+  }
+
+  @Test
+  void testQueryByAfterIdInvalidId() {
+    // Query for tasks after a non-existent ID
+    List<Task> tasks = taskService.createTaskQuery().afterId("zzz_nonexistent").list();
+    assertThat(tasks).isEmpty(); // Should return no tasks since all task IDs are less than "zzz_nonexistent"
+  }
+
+  @Test
+  void testQueryByAfterIdNullValue() {
+    // Test null validation
+    assertThatThrownBy(() -> taskService.createTaskQuery().afterId(null))
+      .isInstanceOf(ProcessEngineException.class);
+  }
+
   // ---------------------- HELPER ------------------------------
 
   // make sure that time passes between two fast operations

@@ -53,8 +53,7 @@ class HistoricActivityInstanceAuthorizationTest extends AuthorizationTest {
   @Override
   @BeforeEach
   public void setUp() {
-    deploymentId = createDeployment(null,
-        "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
+    deploymentId = createDeployment("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
         "org/operaton/bpm/engine/test/api/authorization/messageStartEventProcess.bpmn20.xml")
             .getId();
     super.setUp();

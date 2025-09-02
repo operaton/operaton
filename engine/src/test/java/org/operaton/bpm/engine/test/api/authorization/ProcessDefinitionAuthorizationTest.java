@@ -1234,8 +1234,7 @@ class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
   @Test
   void shouldNotResolveUnauthorizedCalledProcessDefinitions() {
-    Deployment deployment = createDeployment("test",
-      "org/operaton/bpm/engine/test/api/repository/call-activities-with-references.bpmn",
+    Deployment deployment = createDeployment("org/operaton/bpm/engine/test/api/repository/call-activities-with-references.bpmn",
       "org/operaton/bpm/engine/test/api/repository/first-process.bpmn20.xml");
     try {
       //given

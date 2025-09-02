@@ -142,6 +142,12 @@ public class OperatonBpmProperties {
   @NestedConfigurationProperty
   private WebappProperty webapp = new WebappProperty();
 
+  /**
+   * REST API configuration
+   */
+  @NestedConfigurationProperty
+  private RestApiProperty restApi = new RestApiProperty();
+
   @NestedConfigurationProperty
   private AuthorizationProperty authorization = new AuthorizationProperty();
 
@@ -250,6 +256,14 @@ public class OperatonBpmProperties {
     this.webapp = webapp;
   }
 
+  public RestApiProperty getRestApi() {
+    return restApi;
+  }
+
+  public void setRestApi(RestApiProperty restApi) {
+    this.restApi = restApi;
+  }
+
   public AuthorizationProperty getAuthorization() {
     return authorization;
   }
@@ -347,6 +361,7 @@ public class OperatonBpmProperties {
       .add("database=" + database)
       .add("jobExecution=" + jobExecution)
       .add("webapp=" + webapp)
+      .add("restApi=" + restApi)
       .add("authorization=" + authorization)
       .add("genericProperties=" + genericProperties)
       .add("adminUser=" + adminUser)

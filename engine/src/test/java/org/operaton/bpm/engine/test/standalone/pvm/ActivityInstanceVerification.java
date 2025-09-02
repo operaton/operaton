@@ -22,12 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
-import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
+
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer

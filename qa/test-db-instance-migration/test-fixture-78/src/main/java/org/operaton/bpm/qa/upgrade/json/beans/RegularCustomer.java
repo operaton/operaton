@@ -30,12 +30,15 @@ public class RegularCustomer implements Customer {
     this.contractStartDate = contractStartDate;
   }
 
+  @Override
   public String getName() {
     return name;
   }
   public void setName(String name) {
     this.name = name;
   }
+
+  @Override
   public int getContractStartDate() {
     return contractStartDate;
   }

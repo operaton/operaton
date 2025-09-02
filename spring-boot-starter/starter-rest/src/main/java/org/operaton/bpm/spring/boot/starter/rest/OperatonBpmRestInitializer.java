@@ -22,7 +22,6 @@ import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +30,7 @@ import org.springframework.boot.web.servlet.ServletContextInitializer;
 
 import org.operaton.bpm.engine.rest.filter.CacheControlFilter;
 import org.operaton.bpm.engine.rest.filter.EmptyBodyFilter;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 /**
  * Inspired by:
@@ -47,13 +47,18 @@ public class OperatonBpmRestInitializer implements ServletContextInitializer {
 
   private final JerseyApplicationPath applicationPath;
 
-  public OperatonBpmRestInitializer(JerseyApplicationPath applicationPath) {
+  private final OperatonBpmProperties properties;
+
+  public OperatonBpmRestInitializer(JerseyApplicationPath applicationPath, OperatonBpmProperties properties) {
     this.applicationPath = applicationPath;
+    this.properties = properties;
   }
 
   @Override
-  public void onStartup(ServletContext servletContext) throws ServletException {
+  public void onStartup(ServletContext servletContext) {
     this.servletContext = servletContext;
+
+    properties.getRestApi().getFetchAndLock().getInitParams().forEach(servletContext::setInitParameter);
 
     String restApiPathPattern = applicationPath.getUrlMapping();
 

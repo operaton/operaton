@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Bean;
 
 import org.operaton.bpm.engine.rest.impl.FetchAndLockContextListener;
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 @AutoConfigureBefore({JerseyAutoConfiguration.class})
 @AutoConfigureAfter({OperatonBpmAutoConfiguration.class})
@@ -42,7 +43,7 @@ public class OperatonBpmRestJerseyAutoConfiguration {
   }
 
   @Bean
-  public OperatonBpmRestInitializer operatonBpmRestInitializer(JerseyApplicationPath applicationPath) {
-    return new OperatonBpmRestInitializer(applicationPath);
+  public OperatonBpmRestInitializer operatonBpmRestInitializer(JerseyApplicationPath applicationPath, OperatonBpmProperties props) {
+    return new OperatonBpmRestInitializer(applicationPath, props);
   }
 }

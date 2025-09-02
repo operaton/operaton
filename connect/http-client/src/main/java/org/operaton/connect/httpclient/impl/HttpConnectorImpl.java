@@ -16,7 +16,7 @@
  */
 package org.operaton.connect.httpclient.impl;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 
 import org.operaton.connect.httpclient.HttpConnector;
 import org.operaton.connect.httpclient.HttpRequest;

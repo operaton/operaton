@@ -429,6 +429,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
       .queryParams(booleanQueryParameters)
       .queryParam("activityInstanceIdIn", String.join(",", arrayQueryParameters.get("activityInstanceIdIn")))
       .queryParam("taskDefinitionKeyIn", String.join(",", arrayQueryParameters.get("taskDefinitionKeyIn")))
+      .queryParam("taskDefinitionKeyNotIn", String.join(",", arrayQueryParameters.get("taskDefinitionKeyNotIn")))
       .queryParam("taskIdIn", String.join(",", arrayQueryParameters.get("taskIdIn")))
       .queryParam("processDefinitionKeyIn", String.join(",", arrayQueryParameters.get("processDefinitionKeyIn")))
       .queryParam("processInstanceBusinessKeyIn", String.join(",", arrayQueryParameters.get("processInstanceBusinessKeyIn")))
@@ -471,6 +472,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
     String[] activityInstanceIds = { "anActivityInstanceId", "anotherActivityInstanceId" };
     String[] taskDefinitionKeys = { "aTaskDefinitionKey", "anotherTaskDefinitionKey" };
+    String[] taskDefinitionKeyNotIn = { "anUnwantedTaskDefinitionKey", "anotherUnwantedTaskDefinitionKey" };
     String[] processDefinitionKeys = { "aProcessDefinitionKey", "anotherProcessDefinitionKey" };
     String[] processInstanceBusinessKeys = { "aBusinessKey", "anotherBusinessKey" };
     String[] tenantIds = { MockProvider.EXAMPLE_TENANT_ID, MockProvider.ANOTHER_EXAMPLE_TENANT_ID };
@@ -482,6 +484,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
     parameters.put("activityInstanceIdIn", activityInstanceIds);
     parameters.put("taskDefinitionKeyIn", taskDefinitionKeys);
+    parameters.put("taskDefinitionKeyNotIn", taskDefinitionKeyNotIn);
     parameters.put("taskIdIn", taskId);
     parameters.put("processDefinitionKeyIn", processDefinitionKeys);
     parameters.put("processInstanceBusinessKeyIn", processInstanceBusinessKeys);
@@ -595,6 +598,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
     verify(mockQuery).activityInstanceIdIn(stringArrayParameters.get("activityInstanceIdIn"));
     verify(mockQuery).taskDefinitionKeyIn(stringArrayParameters.get("taskDefinitionKeyIn"));
+    verify(mockQuery).taskDefinitionKeyNotIn(stringArrayParameters.get("taskDefinitionKeyNotIn"));
     verify(mockQuery).processDefinitionKeyIn(stringArrayParameters.get("processDefinitionKeyIn"));
     verify(mockQuery).processInstanceBusinessKeyIn(stringArrayParameters.get("processInstanceBusinessKeyIn"));
     verify(mockQuery).tenantIdIn(stringArrayParameters.get("tenantIdIn"));

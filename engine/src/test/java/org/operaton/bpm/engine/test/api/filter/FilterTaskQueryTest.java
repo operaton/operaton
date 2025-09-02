@@ -223,6 +223,7 @@ class FilterTaskQueryTest {
     query.taskUpdatedAfterExpression(testString);
     query.taskDefinitionKey(testString);
     query.taskDefinitionKeyIn(testKeys);
+    query.taskDefinitionKeyNotIn(testKeys);
     query.taskDefinitionKeyLike(testString);
     query.processDefinitionKey(testString);
     query.processDefinitionKeyIn(testKeys);
@@ -337,6 +338,10 @@ class FilterTaskQueryTest {
     assertThat(query.getKeys()).hasSameSizeAs(testKeys);
     for (int i = 0; i < query.getKeys().length; i++) {
       assertThat(query.getKeys()[i]).isEqualTo(testKeys[i]);
+    }
+    assertThat(query.getKeyNotIn()).hasSameSizeAs(testKeys);
+    for (int i = 0; i < query.getKeyNotIn().length; i++) {
+      assertThat(query.getKeyNotIn()[i]).isEqualTo(testKeys[i]);
     }
     assertThat(query.getKeyLike()).isEqualTo(testString);
     assertThat(query.getProcessDefinitionKey()).isEqualTo(testString);

@@ -46,7 +46,6 @@ class DefaultHistoryLevelAutoHandlingConfigurationTest {
     operatonBpmProperties = new OperatonBpmProperties();
     historyLevelAutoHandlingConfiguration = new DefaultHistoryLevelAutoHandlingConfiguration(operatonBpmProperties,
         historyLevelDeterminator);
-    historyLevelAutoHandlingConfiguration.historyLevelDeterminator = historyLevelDeterminator;
   }
 
   @Test

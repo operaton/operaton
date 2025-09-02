@@ -91,9 +91,9 @@ public class OperatonBpmConfiguration {
   @ConditionalOnMissingBean(OperatonDatasourceConfiguration.class)
   public static OperatonDatasourceConfiguration operatonDatasourceConfiguration(OperatonBpmProperties operatonBpmProperties,
                                                                                 PlatformTransactionManager transactionManager,
-                                                                                PlatformTransactionManager operatonTransactionManager,
+                                                                                Optional<PlatformTransactionManager> operatonTransactionManager,
                                                                                 DataSource dataSource,
-                                                                                DataSource operatonDataSource) {
+                                                                                Optional<DataSource> operatonDataSource) {
     return new DefaultDatasourceConfiguration(operatonBpmProperties, transactionManager, operatonTransactionManager,
         dataSource, operatonDataSource);
   }

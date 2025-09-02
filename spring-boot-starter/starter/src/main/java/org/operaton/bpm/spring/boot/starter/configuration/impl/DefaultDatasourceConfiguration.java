@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import jakarta.annotation.Nullable;
+import java.util.Optional;
 import javax.sql.DataSource;
 
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
@@ -42,14 +44,14 @@ public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguratio
 
   public DefaultDatasourceConfiguration(OperatonBpmProperties operatonBpmProperties,
                                         PlatformTransactionManager transactionManager,
-                                        PlatformTransactionManager operatonTransactionManager,
+                                        Optional<PlatformTransactionManager> operatonTransactionManager,
                                         DataSource dataSource,
-                                        DataSource operatonDataSource) {
+                                        Optional<DataSource> operatonDataSource) {
     super(operatonBpmProperties);
     this.transactionManager = transactionManager;
-    this.operatonTransactionManager = operatonTransactionManager;
+    this.operatonTransactionManager = operatonTransactionManager.orElse(null);
     this.dataSource = dataSource;
-    this.operatonDataSource = operatonDataSource;
+    this.operatonDataSource = operatonDataSource.orElse(null);
   }
 
   @Override

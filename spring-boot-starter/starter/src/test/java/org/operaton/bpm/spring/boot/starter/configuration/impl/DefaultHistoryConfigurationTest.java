@@ -47,7 +47,6 @@ class DefaultHistoryConfigurationTest {
   void before() {
     operatonBpmProperties = new OperatonBpmProperties();
     defaultHistoryConfiguration = new DefaultHistoryConfiguration(operatonBpmProperties);
-    defaultHistoryConfiguration.operatonBpmProperties = operatonBpmProperties;
   }
 
   @Test

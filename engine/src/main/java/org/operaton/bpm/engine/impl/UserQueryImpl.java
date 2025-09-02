@@ -42,6 +42,7 @@ public abstract class UserQueryImpl extends AbstractQuery<UserQuery, User> imple
   protected String groupId;
   protected String procDefId;
   protected String tenantId;
+  protected String afterId;
 
   protected UserQueryImpl() {
   }
@@ -122,6 +123,13 @@ public abstract class UserQueryImpl extends AbstractQuery<UserQuery, User> imple
   public UserQuery memberOfTenant(String tenantId) {
     ensureNotNull("Provided tenantId", tenantId);
     this.tenantId = tenantId;
+    return this;
+  }
+
+  @Override
+  public UserQuery afterId(String afterId) {
+    ensureNotNull("afterId", afterId);
+    this.afterId = afterId;
     return this;
   }
 

@@ -159,6 +159,9 @@
       <if test="owner != null">
         and RES.OWNER_ = #{owner}
       </if>
+      <if test="afterId != null">
+        and RES.ID_ &gt; #{afterId}
+      </if>
 
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.queryAuthorizationCheck" />
 

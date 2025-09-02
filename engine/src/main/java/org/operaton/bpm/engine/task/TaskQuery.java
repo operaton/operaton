@@ -1130,6 +1130,15 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
   TaskQuery endOr();
 
   /**
+   * Only select tasks after the given task id (for cursor-based pagination).
+   * The id acts as a cursor for pagination to improve performance on large datasets.
+   * 
+   * @param afterId the task id to use as a cursor
+   * @return this query
+   */
+  TaskQuery afterId(String afterId);
+
+  /**
    * Evaluates existence of attachment and comments associated with the task, defaults to false.
    * Adding the filter will do additional attachment and comments queries to the database,
    * it might slow down the query in case of tables having high volume of data.

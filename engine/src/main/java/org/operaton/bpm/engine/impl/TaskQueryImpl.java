@@ -190,6 +190,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected List<TaskQueryImpl> queries = new ArrayList<>(List.of(this));
   protected boolean isOrQueryActive;
   protected boolean withCommentAttachmentInfo;
+  protected String afterId;
 
   public TaskQueryImpl() {
   }
@@ -1101,6 +1102,13 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   @Override
   public TaskQuery withCommentAttachmentInfo() {
     this.withCommentAttachmentInfo = true;
+    return this;
+  }
+
+  @Override
+  public TaskQuery afterId(String afterId) {
+    ensureNotNull("afterId", afterId);
+    this.afterId = afterId;
     return this;
   }
 

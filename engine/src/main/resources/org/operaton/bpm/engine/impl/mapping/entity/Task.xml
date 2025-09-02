@@ -717,6 +717,11 @@
         </trim>
         )
       </foreach>
+      
+      <!-- Global afterId filter for cursor-based pagination -->
+      <if test="afterId != null">
+        and RES.ID_ &gt; #{afterId}
+      </if>
 
       <!-- Task query does not use left join if cmmn is disabled,
         so we don't need to account for case tasks in this case. -->

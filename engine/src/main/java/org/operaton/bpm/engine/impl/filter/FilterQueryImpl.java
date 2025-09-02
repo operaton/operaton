@@ -39,6 +39,7 @@ public class FilterQueryImpl extends AbstractQuery<FilterQuery, Filter> implemen
   protected String name;
   protected String nameLike;
   protected String owner;
+  protected String afterId;
 
   public FilterQueryImpl() {
   }
@@ -79,6 +80,13 @@ public class FilterQueryImpl extends AbstractQuery<FilterQuery, Filter> implemen
   public FilterQuery filterOwner(String owner) {
     ensureNotNull("owner", owner);
     this.owner = owner;
+    return this;
+  }
+
+  @Override
+  public FilterQuery afterId(String afterId) {
+    ensureNotNull("afterId", afterId);
+    this.afterId = afterId;
     return this;
   }
 

@@ -22,12 +22,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.config.RequestConfig.Builder;
-import org.apache.http.client.methods.*;
-import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.config.RequestConfig.Builder;
+import org.apache.hc.client5.http.classic.methods.*;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.io.entity.InputStreamEntity;
 
 import org.operaton.connect.httpclient.HttpBaseRequest;
 import org.operaton.connect.httpclient.HttpResponse;
@@ -62,7 +62,7 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
   @Override
   public R execute(Q request) {
     R invocationResult;
-    HttpRequestBase httpRequest = createHttpRequest(request);
+    HttpUriRequestBase httpRequest = createHttpRequest(request);
     HttpRequestInvocation invocation = new HttpRequestInvocation(httpRequest, request, requestInterceptors, httpClient);
     try {
       invocationResult = createResponse((CloseableHttpResponse) invocation.proceed());
@@ -91,9 +91,9 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
    * creates a apache Http* representation of the request.
    *
    * @param request the given request
-   * @return {@link HttpRequestBase} an apache representation of the request
+   * @return {@link HttpUriRequestBase} an apache representation of the request
    */
-  protected <T extends HttpRequestBase> T createHttpRequest(Q request) {
+  protected <T extends HttpUriRequestBase> T createHttpRequest(Q request) {
     T httpRequest = createHttpRequestBase(request);
 
     applyConfig(httpRequest, request.getConfigOptions());
@@ -106,7 +106,7 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
   }
 
   @SuppressWarnings("unchecked")
-  protected <T extends HttpRequestBase> T createHttpRequestBase(Q request) {
+  protected <T extends HttpUriRequestBase> T createHttpRequestBase(Q request) {
     String url = request.getUrl();
     if (url != null && !url.trim().isEmpty()) {
       String method = request.getMethod();
@@ -135,7 +135,7 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
     }
   }
 
-  protected <T extends HttpRequestBase> void applyHeaders(T httpRequest, Map<String, String> headers) {
+  protected <T extends HttpUriRequestBase> void applyHeaders(T httpRequest, Map<String, String> headers) {
     if (headers != null) {
       for (Map.Entry<String, String> entry : headers.entrySet()) {
         httpRequest.setHeader(entry.getKey(), entry.getValue());
@@ -144,7 +144,7 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
     }
   }
 
-  protected <T extends HttpRequestBase> void applyPayload(T httpRequest, Q request) {
+  protected <T extends HttpUriRequestBase> void applyPayload(T httpRequest, Q request) {
     if (httpMethodSupportsPayload(httpRequest)) {
       if (request.getPayload() != null) {
         byte[] bytes = request.getPayload().getBytes(charset);
@@ -158,11 +158,11 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
     }
   }
 
-  protected <T extends HttpRequestBase> boolean httpMethodSupportsPayload(T httpRequest) {
+  protected <T extends HttpUriRequestBase> boolean httpMethodSupportsPayload(T httpRequest) {
     return httpRequest instanceof HttpEntityEnclosingRequestBase;
   }
 
-  protected <T extends HttpRequestBase> void applyConfig(T httpRequest, Map<String, Object> configOptions) {
+  protected <T extends HttpUriRequestBase> void applyConfig(T httpRequest, Map<String, Object> configOptions) {
     Builder configBuilder = RequestConfig.custom();
     if (configOptions != null && !configOptions.isEmpty()) {
       ParseUtil.parseConfigOptions(configOptions, configBuilder);

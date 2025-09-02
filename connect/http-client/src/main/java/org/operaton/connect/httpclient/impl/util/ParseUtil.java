@@ -18,7 +18,7 @@ package org.operaton.connect.httpclient.impl.util;
 
 import java.util.Map;
 
-import org.apache.http.client.config.RequestConfig.Builder;
+import org.apache.hc.client5.http.config.RequestConfig.Builder;
 
 import org.operaton.connect.httpclient.impl.HttpConnectorLogger;
 import org.operaton.connect.httpclient.impl.HttpLogger;

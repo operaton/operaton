@@ -18,18 +18,18 @@ package org.operaton.connect.httpclient.impl;
 
 import java.util.List;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 
 import org.operaton.connect.impl.AbstractRequestInvocation;
 import org.operaton.connect.spi.ConnectorRequest;
 import org.operaton.connect.spi.ConnectorRequestInterceptor;
 
-public class HttpRequestInvocation  extends AbstractRequestInvocation<HttpRequestBase> {
+public class HttpRequestInvocation  extends AbstractRequestInvocation<HttpUriRequestBase> {
 
   protected HttpClient client;
 
-  public HttpRequestInvocation(HttpRequestBase target, ConnectorRequest<?> request, List<ConnectorRequestInterceptor> interceptorChain, HttpClient client) {
+  public HttpRequestInvocation(HttpUriRequestBase target, ConnectorRequest<?> request, List<ConnectorRequestInterceptor> interceptorChain, HttpClient client) {
     super(target, request, interceptorChain);
     this.client = client;
   }

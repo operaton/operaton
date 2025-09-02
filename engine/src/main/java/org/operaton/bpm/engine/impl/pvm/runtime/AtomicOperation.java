@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 public interface AtomicOperation extends CoreAtomicOperation<PvmExecutionImpl> {
 
   AtomicOperation PROCESS_START = PvmAtomicOperation.PROCESS_START;
-  AtomicOperation PROCESS_START_INITIAL = PvmAtomicOperation.PROCESS_START_INITIAL;
+  AtomicOperation PROCESS_START_INITIAL = AtomicOperation.PROCESS_START_INITIAL;
   AtomicOperation PROCESS_END = PvmAtomicOperation.PROCESS_END;
 
   AtomicOperation ACTIVITY_START = PvmAtomicOperation.ACTIVITY_START;

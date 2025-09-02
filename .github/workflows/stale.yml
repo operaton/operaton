@@ -22,3 +22,4 @@ jobs:
         stale-pr-message: 'This pull request has been automatically marked as stale due to inactivity.'
         stale-issue-label: 'status:stale'
         stale-pr-label: 'status:stale'
+        exempt-milestones: '1.x-backlog'

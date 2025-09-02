@@ -51,3 +51,4 @@ jobs:
           labels: refactoring
           milestone: '1.0.0-rc-1'
           reviewers: kthoms
+          draft: true

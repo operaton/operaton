@@ -79,13 +79,13 @@ public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguratio
           URL url = resource.getURL();
           return !url.toString().endsWith("/");
         } catch (IOException e) {
-          LOGGER.debug("unable to handle " + resource + " as URL", e);
+          LOGGER.debug("unable to handle {} as URL", resource, e);
         }
       } else {
         try {
           return !resource.getFile().isDirectory();
         } catch (IOException e) {
-          LOGGER.debug("unable to handle " + resource + " as file", e);
+          LOGGER.debug("unable to handle {} as file", resource, e);
         }
       }
     }

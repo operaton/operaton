@@ -29,7 +29,7 @@ public class LogEngineNameDelegate implements JavaDelegate {
   @Override
   public void execute(DelegateExecution execution) throws Exception {
     Logger logger = LoggerFactory.getLogger(this.getClass());
-    logger.debug(LOG_MESSAGE + " {}", execution.getProcessEngine().getName());
+    logger.debug("{} {}", execution.getProcessEngine().getName(), LOG_MESSAGE);
   }
 
 }

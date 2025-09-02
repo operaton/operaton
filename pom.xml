@@ -128,6 +128,8 @@
             <exclusion>**/PostProcessorConfiguration.java</exclusion>
             <exclusion>**/PropertyPlaceholderConfiguration.java</exclusion>
             <exclusion>**/StaticBeanConfiguration.java</exclusion>
+            <!-- org.openrewrite.java.logging.slf4j.ParameterizedLogging -->
+            <exclusion>**/SpringBootManagedContainer.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>
@@ -140,6 +142,11 @@
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-testing-frameworks</artifactId>
             <version>3.12.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-logging-frameworks</artifactId>
+            <version>3.13.2</version>
           </dependency>
         </dependencies>
       </plugin>

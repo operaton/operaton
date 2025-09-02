@@ -20,8 +20,9 @@ import java.net.InetAddress;
 import java.util.Collection;
 import java.util.function.BiConsumer;
 
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig.Builder;
+import org.apache.hc.client5.http.config.RequestConfig.Builder;
+import org.apache.hc.core5.http.HttpHost;
+import org.apache.hc.core5.util.Timeout;
 
 public enum RequestConfigOption {
 
@@ -30,9 +31,37 @@ public enum RequestConfigOption {
   CIRCULAR_REDIRECTS_ALLOWED("circular-redirects-allowed",
       (builder, value) -> builder.setCircularRedirectsAllowed((boolean) value)),
   CONNECTION_TIMEOUT("connection-timeout",
-      (builder, value) -> builder.setConnectTimeout((int) value)),
+      (builder, value) -> {
+        if (value instanceof Timeout) {
+          builder.setConnectTimeout((Timeout) value);
+        } else if (value instanceof Integer) {
+          // Backward compatibility: convert integer milliseconds to Timeout
+          int millis = (Integer) value;
+          if (millis > 0) {
+            builder.setConnectTimeout(Timeout.ofMilliseconds(millis));
+          } else {
+            builder.setConnectTimeout(Timeout.DISABLED);
+          }
+        } else {
+          throw new ClassCastException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
+        }
+      }),
   CONNECTION_REQUEST_TIMEOUT("connection-request-timeout",
-      (builder, value) -> builder.setConnectionRequestTimeout((int) value)),
+      (builder, value) -> {
+        if (value instanceof Timeout) {
+          builder.setConnectionRequestTimeout((Timeout) value);
+        } else if (value instanceof Integer) {
+          // Backward compatibility: convert integer milliseconds to Timeout
+          int millis = (Integer) value;
+          if (millis > 0) {
+            builder.setConnectionRequestTimeout(Timeout.ofMilliseconds(millis));
+          } else {
+            builder.setConnectionRequestTimeout(Timeout.DISABLED);
+          }
+        } else {
+          throw new ClassCastException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
+        }
+      }),
   CONTENT_COMPRESSION_ENABLED("content-compression-enabled",
       (builder, value) -> builder.setContentCompressionEnabled((boolean) value)),
   COOKIE_SPEC("cookie-spec",
@@ -56,7 +85,21 @@ public enum RequestConfigOption {
   RELATIVE_REDIRECTS_ALLOWED("relative-redirects-allowed",
       (builder, value) -> builder.setRelativeRedirectsAllowed((boolean) value)),
   SOCKET_TIMEOUT("socket-timeout",
-      (builder, value) -> builder.setSocketTimeout((int) value)),
+      (builder, value) -> {
+        if (value instanceof Timeout) {
+          builder.setResponseTimeout((Timeout) value);
+        } else if (value instanceof Integer) {
+          // Backward compatibility: convert integer milliseconds to Timeout
+          int millis = (Integer) value;
+          if (millis > 0) {
+            builder.setResponseTimeout(Timeout.ofMilliseconds(millis));
+          } else {
+            builder.setResponseTimeout(Timeout.DISABLED);
+          }
+        } else {
+          throw new ClassCastException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
+        }
+      }),
   STALE_CONNECTION_CHECK_ENABLED("stale-connection-check-enabled",
       (builder, value) -> builder.setStaleConnectionCheckEnabled((boolean) value)),
   TARGET_PREFERRED_AUTH_SCHEMES("target-preferred-auth-schemes",

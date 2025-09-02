@@ -93,6 +93,7 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 
@@ -543,6 +544,69 @@ public class TaskRestServiceInteractionTest extends
     if (expected.getTaskId() != null) {
       assertHalLink(links, "task", TaskRestService.PATH + "/" + expected.getTaskId());
     }
+  }
+
+  @Test
+  void testGetSingleTaskWithTaskVariablesInReturn() {
+    // Setup variables mock
+    VariableMap variablesMock = Variables.createVariables()
+        .putValue("testVariable", "testValue")
+        .putValue("anotherVariable", 42);
+    when(taskServiceMock.getVariablesTyped(EXAMPLE_TASK_ID, true)).thenReturn(variablesMock);
+
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskVariablesInReturn", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("variables.testVariable.value", equalTo("testValue"))
+      .body("variables.testVariable.type", equalTo("String"))
+      .body("variables.anotherVariable.value", equalTo(42))
+      .body("variables.anotherVariable.type", equalTo("Integer"))
+      .when().get(SINGLE_TASK_URL);
+  }
+
+  @Test
+  void testGetSingleTaskWithTaskLocalVariablesInReturn() {
+    // Setup local variables mock  
+    VariableMap localVariablesMock = Variables.createVariables()
+        .putValue("localVariable", "localValue");
+    when(taskServiceMock.getVariablesLocalTyped(EXAMPLE_TASK_ID, true)).thenReturn(localVariablesMock);
+
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskLocalVariablesInReturn", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("variables.localVariable.value", equalTo("localValue"))
+      .body("variables.localVariable.type", equalTo("String"))
+      .when().get(SINGLE_TASK_URL);
+  }
+
+  @Test
+  void testGetSingleTaskWithTaskVariablesAndCommentAttachment() {
+    // Setup variables mock
+    VariableMap variablesMock = Variables.createVariables()
+        .putValue("testVariable", "testValue");
+    when(taskServiceMock.getVariablesTyped(EXAMPLE_TASK_ID, true)).thenReturn(variablesMock);
+
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskVariablesInReturn", true)
+      .queryParam("withCommentAttachmentInfo", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("variables.testVariable.value", equalTo("testValue"))
+      .body("variables.testVariable.type", equalTo("String"))
+      .body("attachment", equalTo(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE))
+      .body("comment", equalTo(MockProvider.EXAMPLE_TASK_COMMENT_STATE))
+      .when().get(SINGLE_TASK_URL);
   }
 
   @Test

@@ -143,6 +143,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected String key;
   protected String keyLike;
   protected String[] taskDefinitionKeys;
+  protected String[] taskDefinitionKeyNotIn;
   protected String processDefinitionKey;
   protected String[] processDefinitionKeys;
   protected String processDefinitionId;
@@ -670,6 +671,12 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   @Override
+  public TaskQuery taskDefinitionKeyNotIn(String... taskDefinitionKeyNotIn) {
+    this.taskDefinitionKeyNotIn = taskDefinitionKeyNotIn;
+    return this;
+  }
+
+  @Override
   public TaskQuery taskParentTaskId(String taskParentTaskId) {
     this.parentTaskId = taskParentTaskId;
     return this;
@@ -1086,6 +1093,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       || CompareUtil.areNotInAscendingOrder(followUpAfter, followUpDate, followUpBefore)
       || CompareUtil.areNotInAscendingOrder(createTimeAfter, createTime, createTimeBefore)
       || CompareUtil.elementIsNotContainedInArray(key, taskDefinitionKeys)
+      || CompareUtil.elementIsContainedInArray(key, taskDefinitionKeyNotIn)
       || CompareUtil.elementIsNotContainedInArray(processDefinitionKey, processDefinitionKeys)
       || CompareUtil.elementIsNotContainedInArray(processInstanceBusinessKey, processInstanceBusinessKeys);
   }
@@ -1662,6 +1670,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     return taskDefinitionKeys;
   }
 
+  public String[] getKeyNotIn() {
+    return taskDefinitionKeyNotIn;
+  }
+
   public String getKeyLike() {
     return keyLike;
   }
@@ -1788,6 +1800,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   public String[] getTaskDefinitionKeys() {
     return taskDefinitionKeys;
+  }
+
+  public String[] getTaskDefinitionKeyNotIn() {
+    return taskDefinitionKeyNotIn;
   }
 
   public boolean getIsTenantIdSet() {
@@ -2085,6 +2101,13 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     }
     else if (this.getKeys() != null) {
       extendedQuery.taskDefinitionKeyIn(this.getKeys());
+    }
+
+    if (extendingQuery.getKeyNotIn() != null) {
+      extendedQuery.taskDefinitionKeyNotIn(extendingQuery.getKeyNotIn());
+    }
+    else if (this.getKeyNotIn() != null) {
+      extendedQuery.taskDefinitionKeyNotIn(this.getKeyNotIn());
     }
 
     if (extendingQuery.getParentTaskId() != null) {

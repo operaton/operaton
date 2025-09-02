@@ -130,6 +130,9 @@
             <exclusion>**/StaticBeanConfiguration.java</exclusion>
             <!-- org.openrewrite.java.logging.slf4j.ParameterizedLogging -->
             <exclusion>**/SpringBootManagedContainer.java</exclusion>
+            <!-- org.openrewrite.java.AddLicenseHeader -->
+            <exclusion>**/*.groovy</exclusion>
+            <exclusion>**/Dummy.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>

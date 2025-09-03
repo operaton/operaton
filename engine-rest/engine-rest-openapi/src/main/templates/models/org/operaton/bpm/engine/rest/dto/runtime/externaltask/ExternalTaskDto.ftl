@@ -36,12 +36,6 @@
       desc = "The date that the task's most recent lock expires or has expired." />
 
   <@lib.property
-      name = "createTime"
-      type = "string"
-      format = "date-time"
-      desc = "The date that the task was created." />
-
-  <@lib.property
       name = "processDefinitionId"
       type = "string"
       desc = "The id of the process definition the external task is defined in." />
@@ -96,9 +90,13 @@
   <@lib.property
       name = "businessKey"
       type = "string"
-      desc = "The business key of the process instance the external task belongs to."
-      last = true />
+      desc = "The business key of the process instance the external task belongs to." />
 
+  <@lib.property
+      name = "createTime"
+      type = "string"
+      format = "date-time"
+      desc = "The date that the task was created." />
 
 </@lib.dto>
 

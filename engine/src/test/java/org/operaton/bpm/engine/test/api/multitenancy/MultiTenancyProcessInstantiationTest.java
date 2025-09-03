@@ -422,7 +422,7 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testRestartProcessInstanceSyncWithTenantId() {
     // given
-    ProcessInstance processInstance = startAndDeleteProcessInstance(TENANT_ONE, PROCESS);
+    ProcessInstance processInstance = startAndDeleteProcessInstance();
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
 
@@ -444,7 +444,7 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testRestartProcessInstanceAsyncWithTenantId() {
     // given
-    ProcessInstance processInstance = startAndDeleteProcessInstance(TENANT_ONE, PROCESS);
+    ProcessInstance processInstance = startAndDeleteProcessInstance();
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
 
@@ -468,7 +468,7 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testFailToRestartProcessInstanceSyncWithOtherTenantId() {
     // given
-    ProcessInstance processInstance = startAndDeleteProcessInstance(TENANT_ONE, PROCESS);
+    ProcessInstance processInstance = startAndDeleteProcessInstance();
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_TWO));
     var restartProcessInstanceBuilder = runtimeService.restartProcessInstances(processInstance.getProcessDefinitionId())
@@ -490,7 +490,7 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testFailToRestartProcessInstanceAsyncWithOtherTenantId() {
     // given
-    ProcessInstance processInstance = startAndDeleteProcessInstance(TENANT_ONE, PROCESS);
+    ProcessInstance processInstance = startAndDeleteProcessInstance();
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_TWO));
 
@@ -511,7 +511,7 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testRestartProcessInstanceSyncWithTenantIdByHistoricProcessInstanceQuery() {
     // given
-    ProcessInstance processInstance = startAndDeleteProcessInstance(TENANT_ONE, PROCESS);
+    ProcessInstance processInstance = startAndDeleteProcessInstance();
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processInstance.getProcessDefinitionId());
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
@@ -534,7 +534,7 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testRestartProcessInstanceAsyncWithTenantIdByHistoricProcessInstanceQuery() {
     // given
-    ProcessInstance processInstance = startAndDeleteProcessInstance(TENANT_ONE, PROCESS);
+    ProcessInstance processInstance = startAndDeleteProcessInstance();
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processInstance.getProcessDefinitionId());
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
@@ -559,7 +559,7 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testFailToRestartProcessInstanceSyncWithOtherTenantIdByHistoricProcessInstanceQuery() {
     // given
-    ProcessInstance processInstance = startAndDeleteProcessInstance(TENANT_ONE, PROCESS);
+    ProcessInstance processInstance = startAndDeleteProcessInstance();
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processInstance.getProcessDefinitionId());
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_TWO));
@@ -582,7 +582,7 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testFailToRestartProcessInstanceAsyncWithOtherTenantIdByHistoricProcessInstanceQuery() {
     // given
-    ProcessInstance processInstance = startAndDeleteProcessInstance(TENANT_ONE, PROCESS);
+    ProcessInstance processInstance = startAndDeleteProcessInstance();
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processInstance.getProcessDefinitionId());
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_TWO));
@@ -601,7 +601,7 @@ class MultiTenancyProcessInstantiationTest {
   }
 
 
-  public ProcessInstance startAndDeleteProcessInstance(String tenantId, BpmnModelInstance modelInstance) {
+  public ProcessInstance startAndDeleteProcessInstance() {
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, PROCESS);
     ProcessDefinition processDefinition = repositoryService
         .createProcessDefinitionQuery()

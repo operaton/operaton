@@ -50,7 +50,7 @@ class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTest {
   public void setUp() {
     super.setUp();
 
-    deploymentId = createDeployment(null, "processes/user-task-process.bpmn").getId();
+    deploymentId = createDeployment("processes/user-task-process.bpmn").getId();
 
     startProcessInstances(USER_TASK_PROCESS_KEY, 3);
 

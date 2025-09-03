@@ -899,7 +899,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(json)
       .header("accept", MediaType.APPLICATION_JSON)
-      .then().expect().statusCode(Status.OK.getStatusCode())
+      .then().expect().statusCode(expectedStatus.getStatusCode())
       .when().post(TASK_QUERY_URL);
   }
 

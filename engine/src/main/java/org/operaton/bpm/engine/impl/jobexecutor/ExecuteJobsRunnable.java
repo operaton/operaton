@@ -107,7 +107,7 @@ public class ExecuteJobsRunnable implements Runnable {
    * org.operaton.bpm.container.impl.threading.ra.inflow.JcaInflowExecuteJobsRunnable.executeJob(String, CommandExecutor)
    */
   protected void executeJob(String nextJobId, CommandExecutor commandExecutor, JobFailureCollector jobFailureCollector) {
-    ExecuteJobHelper.executeJob(nextJobId, commandExecutor, jobFailureCollector, new ExecuteJobsCmd(nextJobId, jobFailureCollector), processEngine.getProcessEngineConfiguration());
+    ExecuteJobHelper.executeJob(commandExecutor, jobFailureCollector, new ExecuteJobsCmd(nextJobId, jobFailureCollector), processEngine.getProcessEngineConfiguration());
   }
 
   protected void unlockJob(String nextJobId, CommandExecutor commandExecutor) {

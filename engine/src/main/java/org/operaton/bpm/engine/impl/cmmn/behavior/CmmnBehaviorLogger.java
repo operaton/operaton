@@ -135,13 +135,8 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
     return alreadyStateCaseException(transition, id, "suspended");
   }
 
-  public CaseIllegalStateTransitionException wrongCaseStateException(String transition, String id,
-      String acceptedState, String currentState) {
-    return wrongCaseStateException(transition, id, transition, acceptedState, currentState);
-  }
-
-  public CaseIllegalStateTransitionException wrongCaseStateException(String transition, String id, String altTransition,
-      String acceptedState, String currentState) {
+  public CaseIllegalStateTransitionException wrongCaseStateException(String transition, String id, String acceptedState,
+      String currentState) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "008",
       MSG_CANNOT_PERFORM_STATE_TRANSITION +

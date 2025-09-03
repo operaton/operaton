@@ -524,7 +524,7 @@ public abstract class AuthorizationTest {
     });
   }
 
-  protected Deployment createDeployment(final String name, final String... resources) {
+  protected Deployment createDeployment(final String... resources) {
     return runWithoutAuthorization(() -> {
       DeploymentBuilder builder = repositoryService.createDeployment();
       for (String resource : resources) {

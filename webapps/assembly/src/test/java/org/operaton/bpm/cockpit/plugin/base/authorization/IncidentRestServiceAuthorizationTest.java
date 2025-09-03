@@ -50,7 +50,7 @@ class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
   public void setUp() {
     super.setUp();
 
-    deploymentId = createDeployment(null, "processes/failing-process.bpmn").getId();
+    deploymentId = createDeployment("processes/failing-process.bpmn").getId();
 
     resource = new IncidentRestService(engineName);
 

@@ -76,7 +76,7 @@ public class SpinFactoryImpl extends SpinFactory {
       return createSpinFromReader(reader, format);
 
     } else if (parameter instanceof Spin) {
-      return createSpinFromSpin((T) parameter, format);
+      return createSpinFromSpin((T) parameter);
 
     } else {
       return createSpinFromObject(parameter, format);
@@ -136,17 +136,6 @@ public class SpinFactoryImpl extends SpinFactory {
     }
 
     return createSpin(rewindableReader, matchingDataFormat);
-  }
-
-  /**
-   *
-   * @throws SpinDataFormatException in case the parameter cannot be read using this data format
-   * @throws IllegalArgumentException in case the parameter is null or dd:
-   */
-  public <T extends Spin<?>> T createSpinFromSpin(T parameter, DataFormat<T> format) {
-    ensureNotNull("parameter", parameter);
-
-    return parameter;
   }
 
   public <T extends Spin<?>> T createSpinFromString(String parameter, DataFormat<T> format) {

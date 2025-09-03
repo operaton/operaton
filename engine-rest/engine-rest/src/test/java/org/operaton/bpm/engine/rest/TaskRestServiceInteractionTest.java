@@ -4123,11 +4123,11 @@ public class TaskRestServiceInteractionTest extends
 
   private void verifyCreatedTaskAttachment(Attachment mockTaskAttachment, Response response, boolean urlExist) {
     String content = response.asString();
-    verifyTaskAttachmentValues(mockTaskAttachment, content, urlExist);
+    verifyTaskAttachmentValues(content, urlExist);
     verifyTaskAttachmentLink(mockTaskAttachment, content);
   }
 
-  private void verifyTaskAttachmentValues(Attachment mockTaskAttachment, String responseContent, boolean urlExist) {
+  private void verifyTaskAttachmentValues(String responseContent, boolean urlExist) {
     JsonPath path = from(responseContent);
     String returnedId = path.get("id");
     String returnedTaskId = path.get("taskId");

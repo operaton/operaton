@@ -52,7 +52,7 @@ class ProcessDefinitionRestServiceAuthorizationTest  extends AuthorizationTest {
 
     resource = new ProcessDefinitionRestService(engineName);
 
-    deploymentId = createDeployment(null, "processes/user-task-process.bpmn", "processes/calling-user-task-process.bpmn").getId();
+    deploymentId = createDeployment("processes/user-task-process.bpmn", "processes/calling-user-task-process.bpmn").getId();
 
     startProcessInstances(CALLING_USER_TASK_PROCESS_KEY, 3);
 

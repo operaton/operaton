@@ -170,7 +170,7 @@ public abstract class AuthorizationTest extends AbstractCockpitPluginTest {
     enableAuthorization();
   }
 
-  protected Deployment createDeployment(String name, String... resources) {
+  protected Deployment createDeployment(String... resources) {
     disableAuthorization();
     DeploymentBuilder builder = repositoryService.createDeployment();
     for (String resource : resources) {

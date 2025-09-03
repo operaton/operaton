@@ -353,7 +353,8 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
       OrderingBuilder.create()
         .orderBy("processDefinitionKey").desc()
         .orderBy("lockExpirationTime").asc()
-        .getJson());
+        .getJson(),
+      Status.OK);
 
     inOrder.verify(mockQuery).orderByProcessDefinitionKey();
     inOrder.verify(mockQuery).desc();
@@ -361,7 +362,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     inOrder.verify(mockQuery).asc();
   }
 
-  protected void executeAndVerifyPOSTSorting(List<Map<String, Object>> sortingJson) {
+  protected void executeAndVerifyPOSTSorting(List<Map<String, Object>> sortingJson, Status expectedStatus) {
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", sortingJson);
 

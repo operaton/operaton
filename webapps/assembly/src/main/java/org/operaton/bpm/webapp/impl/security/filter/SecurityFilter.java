@@ -75,12 +75,12 @@ public class SecurityFilter implements Filter {
       String application = authorization.getApplication();
 
       if (application != null) {
-        sendForbiddenApplicationAccess(application, request, response);
+        sendForbiddenApplicationAccess(application, response);
       } else {
-        sendForbidden(request, response);
+        sendForbidden(response);
       }
     } else {
-      sendUnauthorized(request, response);
+      sendUnauthorized(response);
     }
   }
 
@@ -127,19 +127,19 @@ public class SecurityFilter implements Filter {
     }
   }
 
-  protected void sendForbidden(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  protected void sendForbidden(HttpServletResponse response) throws IOException {
     response.sendError(403);
   }
 
-  protected void sendUnauthorized(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  protected void sendUnauthorized(HttpServletResponse response) throws IOException {
     response.sendError(401);
   }
 
-  protected void sendForbiddenApplicationAccess(String application, HttpServletRequest request, HttpServletResponse response) throws IOException {
+  protected void sendForbiddenApplicationAccess(String application, HttpServletResponse response) throws IOException {
     response.sendError(403, "No access rights for " + application);
   }
 
-  protected boolean isAuthenticated(HttpServletRequest request) {
+  protected boolean isAuthenticated() {
     return Authentications.getCurrent() != null;
   }
 

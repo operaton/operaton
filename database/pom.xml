@@ -20,7 +20,7 @@
     <version.h2>2.3.232</version.h2>
     <version.h2-v1>1.4.200</version.h2-v1><!-- used for instance migration qa -->
     <version.oracle>23.9.0.25.07</version.oracle>
-    <version.mariadb>1.8.0</version.mariadb>
+    <version.mariadb>3.5.5</version.mariadb>
     <version.mariadb-v1>1.1.8</version.mariadb-v1>
     <version.mysql>9.4.0</version.mysql>
     <version.sqlserver>12.10.1.jre11</version.sqlserver>

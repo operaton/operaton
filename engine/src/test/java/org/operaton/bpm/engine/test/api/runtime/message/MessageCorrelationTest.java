@@ -333,7 +333,7 @@ class MessageCorrelationTest {
     assertThat(resultList).hasSize(1);
     //then result should contain process definitions and start event activity ids on which messages was correlated
     for (MessageCorrelationResult result : resultList) {
-      checkProcessDefinitionMessageCorrelationResult(result, "theStart", "messageStartEvent");
+      checkProcessDefinitionMessageCorrelationResult(result, "messageStartEvent");
     }
   }
 
@@ -841,10 +841,10 @@ class MessageCorrelationTest {
 
     //then
     //message correlation result contains information from receiver
-    checkProcessDefinitionMessageCorrelationResult(result, "theStart", "process");
+    checkProcessDefinitionMessageCorrelationResult(result, "process");
   }
 
-  protected void checkProcessDefinitionMessageCorrelationResult(MessageCorrelationResult result, String startActivityId, String processDefinitionId) {
+  protected void checkProcessDefinitionMessageCorrelationResult(MessageCorrelationResult result, String processDefinitionId) {
     assertThat(result).isNotNull();
     assertThat(result.getProcessInstance().getId()).isNotNull();
     assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.ProcessDefinition);
@@ -919,7 +919,7 @@ class MessageCorrelationTest {
         assertThat(entity.getActivityId()).isEqualTo("messageCatch");
         executionResultCount++;
       } else {
-        checkProcessDefinitionMessageCorrelationResult(result, "theStart", "process");
+        checkProcessDefinitionMessageCorrelationResult(result, "process");
         procDefResultCount++;
       }
     }

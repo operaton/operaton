@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.test.standalone.calendar;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.calendar.CycleBusinessCalendar;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -94,41 +97,47 @@ class CycleBusinessCalendarTest {
     assertThat(duedate).isEqualTo(expectedDuedate);
   }
 
-  @Test
-  public void testResolveDueDate() throws Exception {
+  @ParameterizedTest
+  @CsvSource({
+    "'0 0 * * * ?'      , '2010 02 11 18:00'",
+    "'*/10 * * * 2 ?'   , '2010 02 11 17:23'",
+    "'0 * * * 2 ?'      , '2010 02 11 17:24'",
+    "'0 0 * * 2 ?'      , '2010 02 11 18:00'",
+    "'0 0 8-10 * * ?'   , '2010 02 12 08:00'",
+    "'0 0/30 8-10 * * ?', '2010 02 12 08:00'",
+    "'0 0 9-17 * * ?'   , '2010 02 12 09:00'",
+    "'0 0 0 25 12 ?'    , '2010 12 25 00:00'",
+    "'0 0 0 L 12 ?'     , '2010 12 31 00:00'",
+    "'0 0 * 1|2 * ?'    , '2010 03 01 00:00'",
+    "'0 0 * 1,2 * ?'    , '2010 03 01 00:00'",
+    "'0 0 6,19 * * ?'   , '2010 02 11 19:00'"
+  })
+  void testResolveDueDate(String cronExpression, String expectedDueDate) throws Exception {
     CycleBusinessCalendar cbc = new CycleBusinessCalendar();
-
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
     Date startDate = sdf.parse("2010 02 11 17:23");
-
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 * * * ?", startDate))).isEqualTo("2010 02 11 18:00");
-    assertThat(sdf.format(cbc.resolveDuedate("*/10 * * * 2 ?", startDate))).isEqualTo("2010 02 11 17:23");
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 8-10 * * ?", startDate))).isEqualTo("2010 02 12 08:00");
-    assertThat(sdf.format(cbc.resolveDuedate("0 0/30 8-10 * * ?", startDate))).isEqualTo("2010 02 12 08:00");
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 9-17 * * ?", startDate))).isEqualTo("2010 02 12 09:00");
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 0 25 12 ?", startDate))).isEqualTo("2010 12 25 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 0 L 12 ?", startDate))).isEqualTo("2010 12 31 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 * 1|2 * ?", startDate))).isEqualTo("2010 03 01 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 6,19 * * ?", startDate))).isEqualTo("2010 02 11 19:00");
+    assertThat(sdf.format(cbc.resolveDuedate(cronExpression, startDate))).isEqualTo(expectedDueDate);
   }
 
-  @Test
-  public void testSpecialCharactersResolveDueDate() throws Exception {
+  @ParameterizedTest
+  @CsvSource({
+    "'0 0 0 * * THUL', '2010 02 25 00:00'",
+    "'0 0 0 * * THU' , '2010 02 18 00:00'",
+    "'0 0 0 1W * *'  , '2010 03 01 00:00'",
+    "'0 0 0 ? * 5#2' , '2010 02 12 00:00'",
+    "'@monthly'      , '2010 03 01 00:00'",
+    "'@annually'     , '2011 01 01 00:00'",
+    "'@yearly'       , '2011 01 01 00:00'",
+    "'@weekly'       , '2010 02 14 00:00'",
+    "'@daily'        , '2010 02 12 00:00'",
+    "'@midnight'     , '2010 02 12 00:00'",
+    "'@hourly'       , '2010 02 11 18:00'"
+  })
+  void testSpecialCharactersResolveDueDate(String cronExpression, String expectedDueDate) throws Exception {
     CycleBusinessCalendar cbc = new CycleBusinessCalendar();
-
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
     Date startDate = sdf.parse("2010 02 11 17:23");
-
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 0 * * THUL", startDate))).isEqualTo("2010 02 25 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 0 1W * *", startDate))).isEqualTo("2010 03 01 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("0 0 0 ? * 5#2", startDate))).isEqualTo("2010 02 12 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("@monthly", startDate))).isEqualTo("2010 03 01 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("@annually", startDate))).isEqualTo("2011 01 01 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("@yearly", startDate))).isEqualTo("2011 01 01 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("@weekly", startDate))).isEqualTo("2010 02 14 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("@daily", startDate))).isEqualTo("2010 02 12 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("@midnight", startDate))).isEqualTo("2010 02 12 00:00");
-    assertThat(sdf.format(cbc.resolveDuedate("@hourly", startDate))).isEqualTo("2010 02 11 18:00");
+    assertThat(sdf.format(cbc.resolveDuedate(cronExpression, startDate))).isEqualTo(expectedDueDate);
   }
 
   @Test

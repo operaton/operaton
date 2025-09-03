@@ -175,7 +175,7 @@ public final class BooleanOperations {
 		return !eq(converter, o1, o2);
 	}
 
-	public static boolean empty(TypeConverter converter, Object o) {
+	public static boolean empty(Object o) {
 		if (o == null || "".equals(o)) {
 			return true;
 		}

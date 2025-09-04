@@ -80,7 +80,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     // all queries that are created with a dedicated command executor
     // are treated as adhoc queries (i.e. queries not created in the context
     // of a command)
-    addValidator(AdhocQueryValidator.<AbstractQuery<?, ?>>get());
+     addValidator(AdhocQueryValidator.get());
   }
 
   public AbstractQuery<T, U> setCommandExecutor(CommandExecutor commandExecutor) {

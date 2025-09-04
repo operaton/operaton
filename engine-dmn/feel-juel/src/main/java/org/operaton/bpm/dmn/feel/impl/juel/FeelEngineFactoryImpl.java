@@ -34,6 +34,8 @@ import org.operaton.bpm.impl.juel.ExpressionFactoryImpl;
 import org.operaton.commons.utils.cache.Cache;
 import org.operaton.commons.utils.cache.ConcurrentLruCache;
 
+import static java.util.Collections.emptyList;
+
 public class FeelEngineFactoryImpl implements FeelEngineFactory {
 
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
@@ -50,7 +52,7 @@ public class FeelEngineFactoryImpl implements FeelEngineFactory {
   }
 
   public FeelEngineFactoryImpl(int expressionCacheSize) {
-      this(expressionCacheSize, Collections.<FeelToJuelFunctionTransformer> emptyList());
+      this(expressionCacheSize, emptyList());
   }
 
   public FeelEngineFactoryImpl(List<FeelToJuelFunctionTransformer> customFunctionTransformers) {

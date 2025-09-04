@@ -114,7 +114,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   @Test
   void generateMigrationPlanWithInitialEmptyInstructions() {
     Map<String, Object> initialMigrationPlan = new MigrationPlanDtoBuilder(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
-      .instructions(Collections.<Map<String, Object>>emptyList())
+      .instructions(Collections.emptyList())
       .build();
 
     Response response = given()

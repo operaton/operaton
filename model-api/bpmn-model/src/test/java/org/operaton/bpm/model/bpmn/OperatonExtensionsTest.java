@@ -926,7 +926,7 @@ public class OperatonExtensionsTest {
     initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonCandidateUsers()).isNotEmpty();
     assertThat(userTask.getOperatonCandidateUsersList()).isNotEmpty();
-    userTask.setOperatonCandidateUsersList(Collections.<String>emptyList());
+    userTask.setOperatonCandidateUsersList(Collections.emptyList());
     assertThat(userTask.getOperatonCandidateUsers()).isNull();
     assertThat(userTask.getOperatonCandidateUsersList()).isEmpty();
   }

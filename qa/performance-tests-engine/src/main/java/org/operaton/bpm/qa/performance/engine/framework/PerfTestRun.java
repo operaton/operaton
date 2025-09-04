@@ -78,7 +78,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
       }
 
     } catch (Exception t) {
-      runner.failed(this, t);
+      runner.failed(t);
 
     } finally {
       PerfTestRunContext.currentContext.remove();

@@ -254,7 +254,7 @@ public class PerfTestRunner {
     }
   }
 
-  public void failed(PerfTestRun perfTestRun, Throwable t) {
+  public void failed(Throwable t) {
     synchronized (doneMonitor) {
       this.exception = t;
       isDone = true;

@@ -67,7 +67,7 @@ public final class InvoiceApplicationHelper {
     processEngineConfiguration.setDbMetricsReporterActivate(false);
   }
 
-  public static void createDeployment(String processArchiveName, ProcessEngine processEngine, ClassLoader classLoader, ProcessApplicationReference applicationReference) {
+  public static void createDeployment(ProcessEngine processEngine, ClassLoader classLoader, ProcessApplicationReference applicationReference) {
     // Hack: deploy the first version of the invoice process once before the process application
     //   is deployed the first time
     if (processEngine != null) {

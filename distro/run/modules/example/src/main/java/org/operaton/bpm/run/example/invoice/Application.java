@@ -53,7 +53,7 @@ public class Application implements WebMvcConfigurer {
   @PostConstruct
   public void deployInvoice() {
     LOG.info("Invoice example started, creating deployment");
-    InvoiceApplicationHelper.createDeployment("invoiceProcessApplicationSpringBoot", processEngine, invoicePa.getClass().getClassLoader(), invoicePa.getReference());
+    InvoiceApplicationHelper.createDeployment(processEngine, invoicePa.getClass().getClassLoader(), invoicePa.getReference());
   }
 
   @EventListener

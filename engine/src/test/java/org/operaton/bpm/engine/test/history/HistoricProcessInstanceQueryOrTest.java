@@ -812,4 +812,80 @@ class HistoricProcessInstanceQueryOrTest {
     assertThat(processInstances).hasSize(2);
   }
 
+  @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  public void shouldReturnHistoricProcInstWithMultipleStates() {
+    // given
+    setupMultipleProcessInstances();
+
+    // when
+    List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
+        .or()
+        .active()
+        .suspended()
+        .endOr()
+        .list();
+
+    // then
+    assertThat(processInstances).hasSize(2);
+  }
+
+  @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  public void shouldReturnHistoricProcInstWithMatchingState() {
+    // given
+    setupMultipleProcessInstances();
+
+    // when
+    List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
+        .or()
+        .active()
+        .endOr()
+        .list();
+
+    // then
+    assertThat(processInstances).hasSize(1);
+    assertThat(processInstances.get(0).getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
+  }
+
+  protected void setupMultipleProcessInstances() {
+    BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
+        .name("process1")
+        .startEvent()
+        .userTask()
+        .endEvent()
+        .done();
+
+    String deploymentId = repositoryService
+        .createDeployment()
+        .addModelInstance("foo.bpmn", aProcessDefinition)
+        .deploy()
+        .getId();
+
+    deploymentIds.add(deploymentId);
+
+    ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("aProcessDefinition");
+
+    BpmnModelInstance anotherProcessDefinition = Bpmn.createExecutableProcess("anotherProcessDefinition")
+        .startEvent()
+        .userTask()
+        .endEvent()
+        .done();
+
+    deploymentId = repositoryService
+        .createDeployment()
+        .addModelInstance("foo.bpmn", anotherProcessDefinition)
+        .deploy()
+        .getId();
+
+    deploymentIds.add(deploymentId);
+
+    runtimeService.startProcessInstanceByKey("anotherProcessDefinition");
+    runtimeService.updateProcessInstanceSuspensionState()
+        .byProcessInstanceId(processInstance1.getId()).suspend();
+  }
+
+
 }

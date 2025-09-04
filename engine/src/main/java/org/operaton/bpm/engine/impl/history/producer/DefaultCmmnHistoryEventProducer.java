@@ -101,7 +101,7 @@ public class DefaultCmmnHistoryEventProducer implements CmmnHistoryEventProducer
     final CaseExecutionEntity caseExecutionEntity = (CaseExecutionEntity) caseExecution;
 
     // create event instance
-    HistoricCaseActivityInstanceEventEntity evt = newCaseActivityInstanceEventEntity(caseExecutionEntity);
+    HistoricCaseActivityInstanceEventEntity evt = newCaseActivityInstanceEventEntity();
 
     // initialize event
     initCaseActivityInstanceEvent(evt, caseExecutionEntity, HistoryEventTypes.CASE_ACTIVITY_INSTANCE_CREATE);
@@ -178,12 +178,12 @@ public class DefaultCmmnHistoryEventProducer implements CmmnHistoryEventProducer
     evt.setTenantId(caseExecutionEntity.getTenantId());
   }
 
-  protected HistoricCaseActivityInstanceEventEntity newCaseActivityInstanceEventEntity(CaseExecutionEntity caseExecutionEntity) {
+  protected HistoricCaseActivityInstanceEventEntity newCaseActivityInstanceEventEntity() {
     return new HistoricCaseActivityInstanceEventEntity();
   }
 
   protected HistoricCaseActivityInstanceEventEntity loadCaseActivityInstanceEventEntity(CaseExecutionEntity caseExecutionEntity) {
-    return newCaseActivityInstanceEventEntity(caseExecutionEntity);
+    return newCaseActivityInstanceEventEntity();
   }
 
   protected void initCaseActivityInstanceEvent(HistoricCaseActivityInstanceEventEntity evt, CaseExecutionEntity caseExecutionEntity, HistoryEventTypes eventType) {

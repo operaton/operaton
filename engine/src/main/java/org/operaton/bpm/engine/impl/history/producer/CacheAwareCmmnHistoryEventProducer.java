@@ -52,7 +52,7 @@ public class CacheAwareCmmnHistoryEventProducer extends DefaultCmmnHistoryEventP
       return cachedEntity;
     }
     else {
-      return newCaseActivityInstanceEventEntity(caseExecutionEntity);
+      return newCaseActivityInstanceEventEntity();
     }
 
   }

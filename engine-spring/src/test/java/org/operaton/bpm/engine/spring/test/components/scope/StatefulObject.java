@@ -85,8 +85,7 @@ public class StatefulObject implements Serializable, InitializingBean {
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + visitedCount;
-        return result;
+        return 31 * result + visitedCount;
     }
 
     @Override

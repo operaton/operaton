@@ -2395,8 +2395,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     public int hashCode() {
       int result = variableValue.getName() != null ? variableValue.getName().hashCode() : 0;
       result = 31 * result + (variableValue.isProcessInstanceVariable() ? 1 : 0);
-      result = 31 * result + (variableValue.isLocal() ? 1 : 0);
-      return result;
+      return 31 * result + (variableValue.isLocal() ? 1 : 0);
     }
 
   }

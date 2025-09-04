@@ -111,7 +111,6 @@ public class BatchWindowConfiguration {
   @Override
   public int hashCode() {
     int result = startTime != null ? startTime.hashCode() : 0;
-    result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-    return result;
+    return 31 * result + (endTime != null ? endTime.hashCode() : 0);
   }
 }

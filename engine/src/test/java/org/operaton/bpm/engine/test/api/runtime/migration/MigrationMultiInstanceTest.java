@@ -139,7 +139,6 @@ public class MigrationMultiInstanceTest {
 
     for (Task task : tasks) {
       Integer loopCounter = (Integer) rule.getTaskService().getVariable(task.getId(), LOOP_COUNTER);
-      assertThat(loopCounter).isNotNull();
       assertThat(loopCounter).isEqualTo(loopCounterDistribution.get(task.getId()));
     }
   }

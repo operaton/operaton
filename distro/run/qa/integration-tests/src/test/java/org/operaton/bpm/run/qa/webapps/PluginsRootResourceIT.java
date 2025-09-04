@@ -119,8 +119,9 @@ class PluginsRootResourceIT extends AbstractWebIT {
       assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
       assertThat(response.getMediaType().toString()).startsWith(MediaType.APPLICATION_JSON);
       String responseEntity = response.readEntity(String.class);
-      assertThat(responseEntity).contains("\"type\":\"RestException\"");
-      assertThat(responseEntity).contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
+      assertThat(responseEntity)
+              .contains("\"type\":\"RestException\"")
+              .contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
     }
   }
 

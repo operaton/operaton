@@ -136,8 +136,9 @@ public class AbstractAppPluginRootResourceTest {
         e.printStackTrace();
         fail("should not throw RestException for '%s'", assetName);
       } else {
-        assertThat(e).isInstanceOf(RestException.class);
-        assertThat(e).hasMessage("Not allowed to load the following file '" + assetName + "'.");
+        assertThat(e)
+                .isInstanceOf(RestException.class)
+                .hasMessage("Not allowed to load the following file '" + assetName + "'.");
 
         Mockito.verify(runtimeDelegate, Mockito.never()).getAppPluginRegistry();
         Mockito.verify(pluginRegistry, Mockito.never()).getPlugin(PLUGIN_NAME);

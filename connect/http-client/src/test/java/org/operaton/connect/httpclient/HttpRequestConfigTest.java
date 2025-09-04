@@ -394,8 +394,9 @@ public class HttpRequestConfigTest {
           .execute();
     } catch (ConnectorRequestException e) {
       // then
-      assertThat(e).hasMessageContaining("Unable to execute HTTP request");
-      assertThat(e).hasCauseExactlyInstanceOf(ConnectTimeoutException.class);
+      assertThat(e)
+              .hasMessageContaining("Unable to execute HTTP request")
+              .hasCauseExactlyInstanceOf(ConnectTimeoutException.class);
     }
   }
 
@@ -408,8 +409,9 @@ public class HttpRequestConfigTest {
           .execute();
     } catch (ConnectorRequestException e) {
       // then
-      assertThat(e).hasMessageContaining("Invalid value for request configuration option: " + CONNECTION_TIMEOUT.getName());
-      assertThat(e).hasCauseInstanceOf(ClassCastException.class);
+      assertThat(e)
+              .hasMessageContaining("Invalid value for request configuration option: " + CONNECTION_TIMEOUT.getName())
+              .hasCauseInstanceOf(ClassCastException.class);
       assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class java.lang.Integer");
     }
   }
@@ -423,8 +425,9 @@ public class HttpRequestConfigTest {
           .execute();
     } catch (ConnectorRequestException e) {
       // then
-      assertThat(e).hasMessageContaining("Invalid value for request configuration option: " + AUTHENTICATION_ENABLED.getName());
-      assertThat(e).hasCauseInstanceOf(ClassCastException.class);
+      assertThat(e)
+              .hasMessageContaining("Invalid value for request configuration option: " + AUTHENTICATION_ENABLED.getName())
+              .hasCauseInstanceOf(ClassCastException.class);
       assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class java.lang.Boolean");
     }
   }
@@ -438,8 +441,9 @@ public class HttpRequestConfigTest {
       .execute();
     } catch (ConnectorRequestException e) {
       // then
-      assertThat(e).hasMessageContaining("Invalid value for request configuration option: " + PROXY.getName());
-      assertThat(e).hasCauseInstanceOf(ClassCastException.class);
+      assertThat(e)
+              .hasMessageContaining("Invalid value for request configuration option: " + PROXY.getName())
+              .hasCauseInstanceOf(ClassCastException.class);
       assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class org.apache.http.HttpHost");
     }
   }
@@ -453,8 +457,9 @@ public class HttpRequestConfigTest {
       .execute();
     } catch (ConnectorRequestException e) {
       // then
-      assertThat(e).hasMessageContaining("Invalid value for request configuration option: " + PROXY_PREFERRED_AUTH_SCHEMES.getName());
-      assertThat(e).hasCauseInstanceOf(ClassCastException.class);
+      assertThat(e)
+              .hasMessageContaining("Invalid value for request configuration option: " + PROXY_PREFERRED_AUTH_SCHEMES.getName())
+              .hasCauseInstanceOf(ClassCastException.class);
       assertThat(e.getCause()).hasMessageContaining("java.lang.Integer cannot be cast to class java.util.Collection");
     }
   }

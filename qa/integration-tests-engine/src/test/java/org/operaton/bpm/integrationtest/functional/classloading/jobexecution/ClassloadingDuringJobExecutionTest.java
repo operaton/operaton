@@ -88,8 +88,9 @@ public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformInteg
     assertThat(!failedJobs.isEmpty()).isTrue();
     for (Job job : failedJobs) {
       String jobExceptionStacktrace = managementService.getJobExceptionStacktrace(job.getId());
-      assertThat(jobExceptionStacktrace).doesNotContain("ClassNotFoundException");
-      assertThat(jobExceptionStacktrace).contains("Test error thrown");
+      assertThat(jobExceptionStacktrace)
+              .doesNotContain("ClassNotFoundException")
+              .contains("Test error thrown");
     }
     // clean up
     repositoryService.deleteDeployment(deploymentId, true);

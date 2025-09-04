@@ -1001,10 +1001,11 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   protected void assertHistoricDuration(String activityId, long expectedDuration) {
     Long actualDuration = queryHistoricActivityCaseInstance(activityId).getDurationInMillis();
-    assertThat(actualDuration).isNotNull();
-    // test that duration is as expected with a maximal difference of one second
-    assertThat(actualDuration).isGreaterThanOrEqualTo(expectedDuration);
-    assertThat(actualDuration).isLessThan(expectedDuration + 1000);
+    assertThat(actualDuration)
+            .isNotNull()
+            // test that duration is as expected with a maximal difference of one second
+            .isGreaterThanOrEqualTo(expectedDuration)
+            .isLessThan(expectedDuration + 1000);
   }
 
   protected void assertCount(long count, Query<?, ?> historicQuery) {

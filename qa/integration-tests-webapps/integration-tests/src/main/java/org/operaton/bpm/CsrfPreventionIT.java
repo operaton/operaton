@@ -49,9 +49,7 @@ class CsrfPreventionIT extends AbstractWebIntegrationTest {
     String xsrfCookieValue = getXsrfCookieValue(response);
     response.close();
 
-    assertThat(xsrfTokenHeader).isNotNull();
     assertThat(xsrfTokenHeader).hasSize(32);
-    assertThat(xsrfCookieValue).isNotNull();
     assertThat(xsrfCookieValue).contains(";SameSite=Lax");
   }
 

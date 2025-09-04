@@ -133,6 +133,16 @@
             <!-- org.openrewrite.java.AddLicenseHeader -->
             <exclusion>**/*.groovy</exclusion>
             <exclusion>**/Dummy.java</exclusion>
+            <!-- org.openrewrite.staticanalysis.UnnecessaryExplicitTypeArguments -->
+            <exclusion>**/VariableApiTest.java</exclusion>
+            <exclusion>**/FormServiceTest.java</exclusion>
+            <exclusion>**/MigrationAddSubprocessTest.java</exclusion>
+            <exclusion>**/TargetVariableScopeTest.java</exclusion>
+            <exclusion>**/BoundaryConditionalEventTest.java</exclusion>
+            <exclusion>**//ConditionalEventTriggeredByExecutionListenerTest.java</exclusion>
+            <exclusion>**/TriggerConditionalEventFromDelegationCodeTest.java</exclusion>
+            <exclusion>**/ExecutionListenerTest.java</exclusion>
+            <exclusion>**/MigrationPlanGenerationTest.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>

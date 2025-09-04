@@ -72,8 +72,7 @@ public class XmlSerializables {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (serializables == null ? 0 : serializables.hashCode());
-    return result;
+    return prime * result + (serializables == null ? 0 : serializables.hashCode());
   }
 
   @Override

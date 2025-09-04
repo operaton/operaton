@@ -55,8 +55,7 @@ public class HitPolicyEntry {
   @Override
   public int hashCode() {
     int result = hitPolicy != null ? hitPolicy.hashCode() : 0;
-    result = 31 * result + (aggregator != null ? aggregator.hashCode() : 0);
-    return result;
+    return 31 * result + (aggregator != null ? aggregator.hashCode() : 0);
   }
 
   public HitPolicy getHitPolicy() {

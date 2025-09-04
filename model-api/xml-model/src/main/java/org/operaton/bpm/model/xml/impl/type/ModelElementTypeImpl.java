@@ -334,8 +334,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     int result = 1;
     result = prime * result + (model == null ? 0 : model.hashCode());
     result = prime * result + (typeName == null ? 0 : typeName.hashCode());
-    result = prime * result + (typeNamespace == null ? 0 : typeNamespace.hashCode());
-    return result;
+    return prime * result + (typeNamespace == null ? 0 : typeNamespace.hashCode());
   }
 
   @Override

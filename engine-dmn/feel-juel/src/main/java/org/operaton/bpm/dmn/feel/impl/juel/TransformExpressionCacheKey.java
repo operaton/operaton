@@ -31,8 +31,7 @@ public class TransformExpressionCacheKey {
     final int prime = 31;
     int result = 1;
     result = prime * result + (expression == null ? 0 : expression.hashCode());
-    result = prime * result + (inputName == null ? 0 : inputName.hashCode());
-    return result;
+    return prime * result + (inputName == null ? 0 : inputName.hashCode());
   }
 
   @Override

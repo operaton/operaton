@@ -78,7 +78,6 @@ public class UserDto {
   public int hashCode() {
     int result = firstName != null ? firstName.hashCode() : 0;
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-    result = 31 * result + (id != null ? id.hashCode() : 0);
-    return result;
+    return 31 * result + (id != null ? id.hashCode() : 0);
   }
 }

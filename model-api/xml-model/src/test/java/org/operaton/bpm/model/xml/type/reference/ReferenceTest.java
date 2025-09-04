@@ -171,7 +171,7 @@ public class ReferenceTest extends TestModelTest {
   void testTargetElementsCollection(TestModelArgs args) {
     init(args);
     Collection<FlyingAnimal> referenceTargetElements = flightPartnerRefsColl.getReferenceTargetElements(tweety);
-    Collection<FlyingAnimal> flightPartners = Arrays.asList(new FlyingAnimal[]{birdo, daffy, daisy, plucky});
+    Collection<FlyingAnimal> flightPartners = Arrays.asList(birdo, daffy, daisy, plucky);
 
     // directly test collection methods and not use the	appropriate assertion methods
     assertThat(referenceTargetElements)

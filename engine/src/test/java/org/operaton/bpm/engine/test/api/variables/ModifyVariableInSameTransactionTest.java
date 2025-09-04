@@ -57,7 +57,7 @@ class ModifyVariableInSameTransactionTest {
         .endEvent()
         .done();
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(bpmnModel);
-    VariableMap variables = Variables.createVariables().putValue("listVar", Arrays.asList(new int[] { 1, 2, 3 }));
+    VariableMap variables = Variables.createVariables().putValue("listVar", Arrays.asList( 1, 2, 3));
     ProcessInstance instance = engineRule.getRuntimeService().startProcessInstanceById(processDefinition.getId(), variables);
 
     Task task = engineRule.getTaskService().createTaskQuery().singleResult();
@@ -111,7 +111,7 @@ class ModifyVariableInSameTransactionTest {
         .endEvent()
         .done();
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(bpmnModel);
-    VariableMap variables = Variables.createVariables().putValue("listVar", Arrays.asList(new int[] { 1, 2, 3 }));
+    VariableMap variables = Variables.createVariables().putValue("listVar", Arrays.asList( 1, 2, 3));
     ProcessInstance instance = engineRule.getRuntimeService().startProcessInstanceById(processDefinition.getId(), variables);
 
     Task task = engineRule.getTaskService().createTaskQuery().singleResult();

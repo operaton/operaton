@@ -1318,8 +1318,7 @@ public class HistoryServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
-    List<String> processInstanceIds = new ArrayList<>(Arrays.asList(
-        new String[]{processInstance.getId(), processInstance2.getId()}));
+    List<String> processInstanceIds = new ArrayList<>(Arrays.asList(processInstance.getId(), processInstance2.getId()));
     runtimeService.deleteProcessInstances(processInstanceIds, null, true, true);
 
     return processInstanceIds;

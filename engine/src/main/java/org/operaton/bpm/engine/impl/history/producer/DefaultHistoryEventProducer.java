@@ -82,7 +82,6 @@ import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.IdentityLink;
-import org.operaton.bpm.engine.task.Task;
 
 /**
  * @author Daniel Meyer
@@ -157,7 +156,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
       provideRemovalTime(evt);
     }
 
-    fillProcessDefinitionData(evt, execution);
+    fillProcessDefinitionData(evt, execution.getProcessDefinitionId());
 
     evt.setActivityId(eventSource.getId());
     evt.setActivityName((String) eventSource.getProperty("name"));
@@ -184,7 +183,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     String caseInstanceId = execution.getCaseInstanceId();
     String tenantId = execution.getTenantId();
 
-    fillProcessDefinitionData(evt, execution);
+    fillProcessDefinitionData(evt, execution.getProcessDefinitionId());
 
     evt.setId(processInstanceId);
     evt.setEventType(eventType.getEventName());
@@ -205,7 +204,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   }
 
   protected void initTaskInstanceEvent(HistoricTaskInstanceEventEntity evt, TaskEntity taskEntity, HistoryEventType eventType) {
-    fillProcessDefinitionData(evt, taskEntity);
+    fillProcessDefinitionData(evt, taskEntity.getProcessDefinitionId());
 
     String processInstanceId = taskEntity.getProcessInstanceId();
     String executionId = taskEntity.getExecutionId();
@@ -279,7 +278,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
     ExecutionEntity execution = variableInstance.getExecution();
     if (execution != null) {
-      fillProcessDefinitionData(evt, execution);
+      fillProcessDefinitionData(evt, execution.getProcessDefinitionId());
       evt.setRootProcessInstanceId(execution.getRootProcessInstanceId());
 
       if (isHistoryRemovalTimeStrategyStart()) {
@@ -309,7 +308,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   protected void initUserOperationLogEvent(UserOperationLogEntryEventEntity evt, UserOperationLogContext context,
       UserOperationLogContextEntry contextEntry, PropertyChange propertyChange) {
     // init properties
-    fillProcessDefinitionData(evt, contextEntry);
+    fillProcessDefinitionData(evt, contextEntry.getProcessDefinitionId());
     evt.setDeploymentId(contextEntry.getDeploymentId());
     evt.setEntityType(contextEntry.getEntityType());
     evt.setOperationType(contextEntry.getOperationType());
@@ -345,7 +344,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
   protected void initHistoricIncidentEvent(HistoricIncidentEventEntity evt, Incident incident, HistoryEventType eventType) {
     // init properties
-    fillProcessDefinitionData(evt, incident);
+    fillProcessDefinitionData(evt, incident.getProcessDefinitionId());
     evt.setId(incident.getId());
     evt.setProcessInstanceId(incident.getProcessInstanceId());
     evt.setExecutionId(incident.getExecutionId());
@@ -860,7 +859,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
     HistoricFormPropertyEventEntity historicFormPropertyEntity = newHistoricFormPropertyEvent();
 
-    fillProcessDefinitionData(historicFormPropertyEntity, execution);
+    fillProcessDefinitionData(historicFormPropertyEntity, execution.getProcessDefinitionId());
     historicFormPropertyEntity.setId(idGenerator.getNextId());
     historicFormPropertyEntity.setEventType(HistoryEventTypes.FORM_PROPERTY_UPDATE.getEventName());
     historicFormPropertyEntity.setTimestamp(ClockUtil.getCurrentTime());
@@ -964,7 +963,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
           .findTaskById(identityLink.getTaskId());
 
       if (task.getProcessDefinition() != null) {
-        fillProcessDefinitionData(evt, task);
+        fillProcessDefinitionData(evt, task.getProcessDefinitionId());
       }
 
       ExecutionEntity execution = task.getExecution();
@@ -978,7 +977,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     }
 
     if (identityLink.getProcessDefId() != null) {
-      fillProcessDefinitionData(evt, identityLink);
+      fillProcessDefinitionData(evt, identityLink.getProcessDefId());
     }
 
     evt.setTime(ClockUtil.getCurrentTime());
@@ -1158,7 +1157,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
       evt.setJobDefinitionType(jobEntity.getJobHandlerType());
     }
 
-    fillProcessDefinitionData(evt, jobEntity);
+    fillProcessDefinitionData(evt, jobEntity.getProcessDefinitionId());
     evt.setActivityId(jobEntity.getActivityId());
     evt.setFailedActivityId(jobEntity.getFailedActivityId());
     evt.setExecutionId(jobEntity.getExecutionId());
@@ -1223,7 +1222,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   protected HistoricExternalTaskLogEntity initHistoricExternalTaskLog(ExternalTaskEntity entity, ExternalTaskState state) {
     HistoricExternalTaskLogEntity event = new HistoricExternalTaskLogEntity();
 
-    fillProcessDefinitionData(event, entity);
+    fillProcessDefinitionData(event, entity.getProcessDefinitionId());
 
     event.setTimestamp(getTimestamp(entity, state));
     event.setExternalTaskId(entity.getId());
@@ -1372,79 +1371,21 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     event.setSequenceCounter(sequenceCounter);
   }
 
-  private void fillProcessDefinitionData(HistoryEvent event, ExternalTask externalTask) {
-    String processDefinitionId = externalTask.getProcessDefinitionId();
-    if (processDefinitionId != null) {
-      fillProcessDefinitionData(event, processDefinitionId);
-    } else {
-      event.setProcessDefinitionId(externalTask.getProcessDefinitionId());
-    }
-  }
-
-  private void fillProcessDefinitionData(HistoryEvent event, Task task) {
-    String processDefinitionId = task.getProcessDefinitionId();
-    if (processDefinitionId != null) {
-      fillProcessDefinitionData(event, processDefinitionId);
-    } else {
-      event.setProcessDefinitionId(task.getProcessDefinitionId());
-    }
-  }
-
-  private void fillProcessDefinitionData(HistoricJobLogEventEntity event, JobEntity jobEntity) {
-    String processDefinitionId = jobEntity.getProcessDefinitionId();
-    if (processDefinitionId != null) {
-      fillProcessDefinitionData(event, processDefinitionId);
-    } else {
-      event.setProcessDefinitionId(jobEntity.getProcessDefinitionId());
-      event.setProcessDefinitionKey(jobEntity.getProcessDefinitionKey());
-    }
-  }
-
-  private void fillProcessDefinitionData(HistoricIdentityLinkLogEventEntity event, IdentityLink identityLink) {
-    String processDefinitionId = identityLink.getProcessDefId();
-    if (processDefinitionId != null) {
-      fillProcessDefinitionData(event, processDefinitionId);
-    } else {
-      event.setProcessDefinitionId(identityLink.getProcessDefId());
-    }
-  }
-
-  private void fillProcessDefinitionData(HistoryEvent event, ExecutionEntity execution) {
-    String processDefinitionId = execution.getProcessDefinitionId();
-    if (processDefinitionId != null) {
-      fillProcessDefinitionData(event, processDefinitionId);
-    } else {
-      event.setProcessDefinitionId(execution.getProcessDefinitionId());
-      event.setProcessDefinitionKey(execution.getProcessDefinitionKey());
-    }
-  }
-
-  private void fillProcessDefinitionData(HistoricIncidentEventEntity event, Incident incident) {
-    String processDefinitionId = incident.getProcessDefinitionId();
-    if (processDefinitionId != null) {
-      fillProcessDefinitionData(event, processDefinitionId);
-    } else {
-      event.setProcessDefinitionId(incident.getProcessDefinitionId());
-    }
-  }
-
-  private void fillProcessDefinitionData(HistoryEvent event, UserOperationLogContextEntry userOperationLogContextEntry) {
-    String processDefinitionId = userOperationLogContextEntry.getProcessDefinitionId();
-    if (processDefinitionId != null) {
-      fillProcessDefinitionData(event, processDefinitionId);
-    } else {
-      event.setProcessDefinitionId(userOperationLogContextEntry.getProcessDefinitionId());
-      event.setProcessDefinitionKey(userOperationLogContextEntry.getProcessDefinitionKey());
-    }
-  }
-
   private void fillProcessDefinitionData(HistoryEvent event, String processDefinitionId) {
-    ProcessDefinitionEntity entity = this.getProcessDefinitionEntity(processDefinitionId);
+    ProcessDefinitionEntity entity = processDefinitionId != null
+      ? getProcessDefinitionEntity(processDefinitionId)
+      : null;
+
     if (entity != null) {
       event.setProcessDefinitionId(entity.getId());
       event.setProcessDefinitionKey(entity.getKey());
       event.setProcessDefinitionVersion(entity.getVersion());
       event.setProcessDefinitionName(entity.getName());
+    } else {
+      event.setProcessDefinitionId(null);
+      event.setProcessDefinitionKey(null);
+      event.setProcessDefinitionVersion(null);
+      event.setProcessDefinitionName(null);
     }
   }
 

@@ -139,7 +139,7 @@
             <exclusion>**/MigrationAddSubprocessTest.java</exclusion>
             <exclusion>**/TargetVariableScopeTest.java</exclusion>
             <exclusion>**/BoundaryConditionalEventTest.java</exclusion>
-            <exclusion>**//ConditionalEventTriggeredByExecutionListenerTest.java</exclusion>
+            <exclusion>**/ConditionalEventTriggeredByExecutionListenerTest.java</exclusion>
             <exclusion>**/TriggerConditionalEventFromDelegationCodeTest.java</exclusion>
             <exclusion>**/ExecutionListenerTest.java</exclusion>
             <exclusion>**/MigrationPlanGenerationTest.java</exclusion>

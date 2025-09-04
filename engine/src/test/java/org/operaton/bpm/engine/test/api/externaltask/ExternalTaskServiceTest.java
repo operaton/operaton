@@ -3176,10 +3176,9 @@ class ExternalTaskServiceTest {
 
     externalTaskService.handleBpmnError(externalTasks.get(0).getId(), workerID, errorCode);
 
-    externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
+    return externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    return externalTasks;
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")

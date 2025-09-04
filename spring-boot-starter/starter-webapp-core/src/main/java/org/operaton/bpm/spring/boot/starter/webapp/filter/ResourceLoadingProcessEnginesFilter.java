@@ -111,8 +111,6 @@ public class ResourceLoadingProcessEnginesFilter extends ProcessEnginesFilter im
    */
   protected String trimChar(String input, char charachter) {
     input = StringUtils.trimLeadingCharacter(input, charachter);
-    input = StringUtils.trimTrailingCharacter(input, charachter);
-
-    return input;
+    return StringUtils.trimTrailingCharacter(input, charachter);
   }
 }

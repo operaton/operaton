@@ -46,7 +46,7 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
  * <p>
  *
  * Subresources must properly initialize the subresources via
- * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource, String) }.
+ * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource) }.
  *
  * <pre>
  * @Path("myplugin")
@@ -106,10 +106,9 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
    *
    * @param <T>
    * @param subResource
-   * @param engineName
    * @return
    */
-  protected <S extends AbstractAppPluginResource<T>> S subResource(S subResource, String engineName) {
+  protected <S extends AbstractAppPluginResource<T>> S subResource(S subResource) {
     return subResource;
   }
 

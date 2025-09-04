@@ -144,13 +144,13 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
     when(fetchTopicBuilder.topic(any(), anyLong())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.businessKey(any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processDefinitionId(any())).thenReturn(fetchTopicBuilder);
-    when(fetchTopicBuilder.processDefinitionIdIn(Mockito.<String>any())).thenReturn(fetchTopicBuilder);
+    when(fetchTopicBuilder.processDefinitionIdIn(Mockito.any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processDefinitionKey(any())).thenReturn(fetchTopicBuilder);
-    when(fetchTopicBuilder.processDefinitionKeyIn(Mockito.<String>any())).thenReturn(fetchTopicBuilder);
+    when(fetchTopicBuilder.processDefinitionKeyIn(Mockito.any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processInstanceVariableEquals(any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processDefinitionVersionTag(any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.withoutTenantId()).thenReturn(fetchTopicBuilder);
-    when(fetchTopicBuilder.tenantIdIn(Mockito.<String>any())).thenReturn(fetchTopicBuilder);
+    when(fetchTopicBuilder.tenantIdIn(Mockito.any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.includeExtensionProperties()).thenReturn(fetchTopicBuilder);
 
     fetchAndLockBuilder = mock(FetchAndLockBuilderImpl.class);

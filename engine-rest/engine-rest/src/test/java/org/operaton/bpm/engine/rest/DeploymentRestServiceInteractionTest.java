@@ -2088,7 +2088,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   private void verifyStandardDeploymentValues(Deployment mockDeployment, JsonPath path) {
     String returnedId = path.get("id");
     String returnedName = path.get("name");
-    Date returnedDeploymentTime = DateTimeUtil.parseDate(path.<String>get("deploymentTime"));
+    Date returnedDeploymentTime = DateTimeUtil.parseDate(path.get("deploymentTime"));
 
     assertThat(returnedId).isEqualTo(mockDeployment.getId());
     assertThat(returnedName).isEqualTo(mockDeployment.getName());

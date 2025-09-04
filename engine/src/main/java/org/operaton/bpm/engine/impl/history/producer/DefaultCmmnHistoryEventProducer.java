@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.producer;
 
+import java.util.Optional;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
@@ -101,7 +102,7 @@ public class DefaultCmmnHistoryEventProducer implements CmmnHistoryEventProducer
     final CaseExecutionEntity caseExecutionEntity = (CaseExecutionEntity) caseExecution;
 
     // create event instance
-    HistoricCaseActivityInstanceEventEntity evt = newCaseActivityInstanceEventEntity();
+    HistoricCaseActivityInstanceEventEntity evt = newCaseActivityInstanceEventEntity(caseExecutionEntity);
 
     // initialize event
     initCaseActivityInstanceEvent(evt, caseExecutionEntity, HistoryEventTypes.CASE_ACTIVITY_INSTANCE_CREATE);
@@ -178,18 +179,20 @@ public class DefaultCmmnHistoryEventProducer implements CmmnHistoryEventProducer
     evt.setTenantId(caseExecutionEntity.getTenantId());
   }
 
-  protected HistoricCaseActivityInstanceEventEntity newCaseActivityInstanceEventEntity() {
-    return new HistoricCaseActivityInstanceEventEntity();
+  protected HistoricCaseActivityInstanceEventEntity newCaseActivityInstanceEventEntity(CaseExecutionEntity caseExecutionEntity) {
+    var entity = new HistoricCaseActivityInstanceEventEntity();
+    initCaseActivityInstanceEvent(entity, caseExecutionEntity, null);
+    return entity;
   }
 
   protected HistoricCaseActivityInstanceEventEntity loadCaseActivityInstanceEventEntity(CaseExecutionEntity caseExecutionEntity) {
-    return newCaseActivityInstanceEventEntity();
+    return newCaseActivityInstanceEventEntity(caseExecutionEntity);
   }
 
   protected void initCaseActivityInstanceEvent(HistoricCaseActivityInstanceEventEntity evt, CaseExecutionEntity caseExecutionEntity, HistoryEventTypes eventType) {
     evt.setId(caseExecutionEntity.getId());
     evt.setParentCaseActivityInstanceId(caseExecutionEntity.getParentId());
-    evt.setEventType(eventType.getEventName());
+    evt.setEventType(Optional.ofNullable(eventType).map(HistoryEventTypes::getEventName).orElse(null));
     evt.setCaseDefinitionId(caseExecutionEntity.getCaseDefinitionId());
     evt.setCaseInstanceId(caseExecutionEntity.getCaseInstanceId());
     evt.setCaseExecutionId(caseExecutionEntity.getId());

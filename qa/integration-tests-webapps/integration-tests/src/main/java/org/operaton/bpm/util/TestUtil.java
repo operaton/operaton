@@ -81,9 +81,9 @@ public class TestUtil {
     }
   }
 
-  public void deleteUser() {
+  public void deleteUser(String id) {
     // Delete the user
-    var webTarget = client.target(testProperties.getApplicationPath("/engine-rest/user/admin"));
+    var webTarget = client.target(testProperties.getApplicationPath("/engine-rest/user/" + id));
 
     // Send DELETE request
     var response = webTarget

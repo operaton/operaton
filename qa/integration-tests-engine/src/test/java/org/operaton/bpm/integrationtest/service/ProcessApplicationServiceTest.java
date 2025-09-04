@@ -63,7 +63,7 @@ public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegratio
     Set<String> processApplicationNames = processApplicationService.getProcessApplicationNames();
 
     // check if the new applications are deployed with allowed names
-    processApplicationNames.retainAll(Arrays.asList(new String [] {"test1", "test2", "/test1", "/test2"}));
+    processApplicationNames.retainAll(Arrays.asList("test1", "test2", "/test1", "/test2"));
 
     Assertions.assertEquals(2, processApplicationNames.size());
 

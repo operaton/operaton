@@ -184,7 +184,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
 
   private void setupAndExecuteProcessListBasedTest() {
     //given
-    List<String> processInstances = Arrays.asList(new String[]{processInstance.getId(), processInstance2.getId()});
+    List<String> processInstances = Arrays.asList(processInstance.getId(), processInstance2.getId());
     authRule
         .init(scenario)
         .withUser("userId")

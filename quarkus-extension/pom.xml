@@ -49,6 +49,9 @@
   <profiles>
     <profile>
       <id>quarkus-tests</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <build>
         <pluginManagement>
           <plugins>

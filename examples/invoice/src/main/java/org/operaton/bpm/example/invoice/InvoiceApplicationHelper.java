@@ -85,7 +85,7 @@ public final class InvoiceApplicationHelper {
   }
 
   protected static boolean isProcessDeployed(RepositoryService repositoryService, String key) {
-    return repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCDEFKEY_INVOICE).count() > 0;
+    return repositoryService.createProcessDefinitionQuery().processDefinitionKey(key).count() > 0;
   }
 
   protected static void startProcessInstances(ProcessEngine processEngine, String processDefinitionKey, Integer version) {

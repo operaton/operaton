@@ -131,7 +131,7 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
 
     if (plugin != null) {
       InputStream assetStream = getPluginAssetAsStream(plugin, file);
-      final InputStream filteredStream = applyResourceOverrides(file, assetStream);
+      final InputStream filteredStream = applyResourceOverrides(assetStream);
 
       if (assetStream != null) {
         String contentType = getContentType(file);
@@ -158,10 +158,9 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
   }
 
   /**
-   * @param file
    * @param assetStream
    */
-  protected InputStream applyResourceOverrides(String file, InputStream assetStream) {
+  protected InputStream applyResourceOverrides(InputStream assetStream) {
     // use a copy of the list cause it could be modified during iteration
     List<PluginResourceOverride> resourceOverrides = new ArrayList<>(runtimeDelegate.getResourceOverrides());
     for (PluginResourceOverride pluginResourceOverride : resourceOverrides) {

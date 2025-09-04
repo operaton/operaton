@@ -45,7 +45,6 @@ jobs:
   
               This PR cleans up the code using OpenRewrite recipes configured in [`rewrite.yml`](https://github.com/operaton/operaton/blob/main/rewrite.yml).
           branch: 'refactor/automatic-code-cleanup'
-          token: ${{ secrets.CI_PAT }}
           labels: refactoring
           milestone: '1.0.0-rc-1'
           reviewers: kthoms

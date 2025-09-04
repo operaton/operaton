@@ -2752,14 +2752,14 @@ class HistoricProcessInstanceTest {
         HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
                 .rootProcessInstanceId(rootProcessId);
 
-        // then
-        assertThat(allHistoricProcessInstances.size()).isEqualTo(3);
+      // then
+      assertThat(allHistoricProcessInstances).hasSize(3);
         assertThat(allHistoricProcessInstances.stream()
                 .filter(process -> process.getRootProcessInstanceId().equals(rootProcessId))
                 .count())
                 .isEqualTo(3);
         assertThat(historicProcessInstanceQuery.count()).isEqualTo(3);
-        assertThat(historicProcessInstanceQuery.list().size()).isEqualTo(3);
+      assertThat(historicProcessInstanceQuery.list()).hasSize(3);
   }
 
 

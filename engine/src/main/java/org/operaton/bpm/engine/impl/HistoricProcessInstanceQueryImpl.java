@@ -133,6 +133,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  @Override
   public HistoricProcessInstanceQuery rootProcessInstanceId(String rootProcessInstanceId) {
     ensureNotNull("Root process instance id", rootProcessInstanceId);
     this.rootProcessInstanceId = rootProcessInstanceId;

@@ -41,17 +41,15 @@ public final class SingleActivityCompensationScenario {
   @DescribesScenario("init")
   @Times(3)
   public static ScenarioSetup instantiate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("SingleActivityCompensationScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("SingleActivityCompensationScenario", scenarioName);
 
-        // create the compensation event subscription and wait before throwing compensation
-        Task userTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(userTask.getId());
-      }
+      // create the compensation event subscription and wait before throwing compensation
+      Task userTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(userTask.getId());
     };
   }
 
@@ -59,13 +57,11 @@ public final class SingleActivityCompensationScenario {
   @ExtendsScenario("init")
   @Times(3)
   public static ScenarioSetup instantiateAndTriggerCompensation() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        // throw compensation; the compensation handler for userTask should then be active
-        Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(beforeCompensateTask.getId());
-      }
+    return (engine, scenarioName) -> {
+      // throw compensation; the compensation handler for userTask should then be active
+      Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(beforeCompensateTask.getId());
     };
   }
 }

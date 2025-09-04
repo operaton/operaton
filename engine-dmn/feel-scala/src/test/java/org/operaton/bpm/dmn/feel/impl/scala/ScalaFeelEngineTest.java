@@ -15,18 +15,20 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the {@code ScalaFeelEngine} implementation.
@@ -302,9 +304,8 @@ class ScalaFeelEngineTest {
     // Test for invalid expression syntax
     VariableContext emptyContext = Variables.emptyVariableContext();
 
-    Exception exception = assertThrows(RuntimeException.class, () -> {
-      engine.evaluateSimpleExpression("1 + )", emptyContext);
-    });
+    Exception exception = assertThrows(RuntimeException.class, () ->
+      engine.evaluateSimpleExpression("1 + )", emptyContext));
 
     assertTrue(exception.getMessage().contains("failed to parse expression"));
   }
@@ -313,9 +314,8 @@ class ScalaFeelEngineTest {
   void throwsExceptionForInvalidUnaryTestExpression() {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
-    Exception exception = assertThrows(RuntimeException.class, () -> {
-      engine.evaluateSimpleUnaryTests("in [1..]", "cellInput", variableCtx);
-    });
+    Exception exception = assertThrows(RuntimeException.class, () ->
+      engine.evaluateSimpleUnaryTests("in [1..]", "cellInput", variableCtx));
 
     assertTrue(exception.getMessage().contains("failed to parse"));
   }

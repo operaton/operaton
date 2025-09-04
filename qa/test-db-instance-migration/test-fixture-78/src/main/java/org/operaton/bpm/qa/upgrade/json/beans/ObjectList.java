@@ -27,7 +27,7 @@ import java.util.ListIterator;
  */
 public class ObjectList implements List<Object> {
 
-  protected List<Object> innerList = new ArrayList<Object>();
+  protected List<Object> innerList = new ArrayList<>();
 
   @Override
   public int size() {

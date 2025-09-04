@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.test.standalone.calendar;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,10 +27,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.calendar.CycleBusinessCalendar;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -141,7 +140,7 @@ class CycleBusinessCalendarTest {
   }
 
   @Test
-  public void testEndOfMonthRelativeExpressions() throws ParseException {
+  void testEndOfMonthRelativeExpressions() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
     CycleBusinessCalendar cbc = new CycleBusinessCalendar();
 
@@ -162,7 +161,7 @@ class CycleBusinessCalendarTest {
   }
 
   @Test
-  public void testTooManyArgumentExpressions() throws ParseException {
+  void testTooManyArgumentExpressions() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
     CycleBusinessCalendar cbc = new CycleBusinessCalendar();
 

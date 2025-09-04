@@ -17,15 +17,17 @@
 package org.operaton.bpm.spring.boot.starter.rest.config.fetchandlock;
 
 import jakarta.servlet.ServletContext;
-import org.operaton.bpm.spring.boot.starter.rest.test.TestRestApplication;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.spring.boot.starter.rest.test.TestRestApplication;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { TestRestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {TestRestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"operaton.bpm.rest-api.fetch-and-lock.queue-capacity=333"})
 class FetchAndLockHandlerConfigureQueueCapacityIT {
 

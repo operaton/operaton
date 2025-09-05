@@ -21,9 +21,15 @@ import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.batch.history.HistoricBatchEntity;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
-import org.operaton.bpm.engine.impl.history.event.*;
+import org.operaton.bpm.engine.impl.history.event.HistoricActivityInstanceEventEntity;
+import org.operaton.bpm.engine.impl.history.event.HistoricIncidentEventEntity;
+import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEntity;
+import org.operaton.bpm.engine.impl.history.event.HistoricTaskInstanceEventEntity;
+import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.handler.DbHistoryEventHandler;
+import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.runtime.Incident;
 
 /**
@@ -41,14 +47,11 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricActivityInstanceEventEntity cachedEntity = findInCache(HistoricActivityInstanceEventEntity.class, activityInstanceId);
 
-    if(cachedEntity != null) {
+    if (cachedEntity != null) {
       return cachedEntity;
-
     } else {
       return newActivityInstanceEventEntity(execution);
-
     }
-
   }
 
   @Override
@@ -57,14 +60,11 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricProcessInstanceEventEntity cachedEntity = findInCache(HistoricProcessInstanceEventEntity.class, processInstanceId);
 
-    if(cachedEntity != null) {
+    if (cachedEntity != null) {
       return cachedEntity;
-
     } else {
       return newProcessInstanceEventEntity(execution);
-
     }
-
   }
 
   @Override
@@ -73,12 +73,10 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricTaskInstanceEventEntity cachedEntity = findInCache(HistoricTaskInstanceEventEntity.class, taskId);
 
-    if(cachedEntity != null) {
+    if (cachedEntity != null) {
       return cachedEntity;
-
     } else {
       return newTaskInstanceEventEntity(task);
-
     }
   }
 
@@ -88,12 +86,10 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricIncidentEventEntity cachedEntity = findInCache(HistoricIncidentEventEntity.class, incidentId);
 
-    if(cachedEntity != null) {
+    if (cachedEntity != null) {
       return cachedEntity;
-
     } else {
       return newIncidentEventEntity(incident);
-
     }
   }
 
@@ -103,12 +99,10 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricBatchEntity cachedEntity = findInCache(HistoricBatchEntity.class, batchId);
 
-    if(cachedEntity != null) {
+    if (cachedEntity != null) {
       return cachedEntity;
-
     } else {
       return newBatchEventEntity(batch);
-
     }
   }
 
@@ -119,4 +113,24 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
       .getCachedEntity(type, id);
   }
 
+  @Override
+  protected ProcessDefinitionEntity getProcessDefinitionEntity(String processDefinitionId) {
+    CommandContext commandContext = Context.getCommandContext();
+    if (commandContext == null) {
+      return null;
+    }
+
+    DbEntityManager dbEntityManager = commandContext.getDbEntityManager();
+    if (dbEntityManager == null) {
+      return null;
+    }
+
+    ProcessDefinitionEntity cachedEntity = dbEntityManager.getCachedEntity(ProcessDefinitionEntity.class, processDefinitionId);
+
+    if (cachedEntity != null) {
+      return cachedEntity;
+    } else {
+      return super.getProcessDefinitionEntity(processDefinitionId);
+    }
+  }
 }

@@ -882,7 +882,7 @@ class HistoricProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/camunda/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   void shouldReturnHistoricProcInstWithVarValue1OrVarValue23() {
     // given
     Map<String, Object> vars = new HashMap<>();

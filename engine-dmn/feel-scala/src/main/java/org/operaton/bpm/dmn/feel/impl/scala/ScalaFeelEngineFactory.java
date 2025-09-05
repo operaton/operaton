@@ -23,8 +23,6 @@ import org.operaton.bpm.dmn.feel.impl.FeelEngine;
 import org.operaton.bpm.dmn.feel.impl.FeelEngineFactory;
 import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
 
-import java.util.List;
-
 /**
  * Factory class to create instances of {@link FeelEngine}, specifically {@link ScalaFeelEngine}.
  * Allows configuration of custom function providers for extending the functionality of

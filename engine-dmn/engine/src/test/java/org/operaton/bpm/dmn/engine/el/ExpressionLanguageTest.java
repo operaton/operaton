@@ -221,8 +221,9 @@ class ExpressionLanguageTest extends DmnEngineTest {
       failBecauseExceptionWasNotThrown(FeelException.class);
     }
     catch (FeelException e) {
-      assertThat(e).hasMessageStartingWith("FEEL-01017");
-      assertThat(e).hasMessageContaining("'10'");
+      assertThat(e)
+              .hasMessageStartingWith("FEEL-01017")
+              .hasMessageContaining("'10'");
       assertThat(e.getMessage()).doesNotContain("cellInput");
     }
   }

@@ -42,19 +42,19 @@ public class BaseRootResource extends AbstractCockpitPluginRootResource {
 
   @Path("{engine}" + ProcessDefinitionRestService.PATH)
   public ProcessDefinitionRestService getProcessDefinitionResource(@PathParam("engine") String engineName) {
-    return subResource(new ProcessDefinitionRestService(engineName), engineName);
+    return subResource(new ProcessDefinitionRestService(engineName));
   }
 
   @Path("{engine}" + ProcessInstanceRestService.PATH)
   public ProcessInstanceRestService getProcessInstanceRestService(@PathParam("engine") String engineName) {
     ProcessInstanceRestService subResource = new ProcessInstanceRestService(engineName);
     subResource.setObjectMapper(getObjectMapper());
-    return subResource(subResource, engineName);
+    return subResource(subResource);
   }
 
   @Path("{engine}" + IncidentRestService.PATH)
   public IncidentRestService getIncidentRestService(@PathParam("engine") String engineName) {
-    return subResource(new IncidentRestService(engineName), engineName);
+    return subResource(new IncidentRestService(engineName));
   }
 
   protected ObjectMapper getObjectMapper() {

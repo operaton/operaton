@@ -117,8 +117,7 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity, Seri
     int hash = 7;
     hash = 67 * hash + (this.timestamp != null ? this.timestamp.hashCode() : 0);
     hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
-    hash = 67 * hash + (this.reporter != null ? this.reporter.hashCode() : 0);
-    return hash;
+    return 67 * hash + (this.reporter != null ? this.reporter.hashCode() : 0);
   }
 
   @Override

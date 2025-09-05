@@ -602,7 +602,7 @@ class ProcessDataLoggingContextTest {
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "DEBUG")
   void shouldLogFailureFromNestedDelegateInOuterContext() {
     // given
-    manageDeployment("failing.bpmn", Bpmn.createExecutableProcess(FAILING_PROCESS)
+    manageDeployment(Bpmn.createExecutableProcess(FAILING_PROCESS)
         .startEvent("failing_start")
         .serviceTask("failing_task")
           .operatonClass(FailingDelegate.class)
@@ -633,7 +633,7 @@ class ProcessDataLoggingContextTest {
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "DEBUG")
   void shouldLogFailureFromNestedExecutionListenerInOuterContext() {
     // given
-    manageDeployment("failing.bpmn", Bpmn.createExecutableProcess(FAILING_PROCESS)
+    manageDeployment(Bpmn.createExecutableProcess(FAILING_PROCESS)
         .startEvent("failing_start")
         .serviceTask("failing_task")
           .operatonClass(NoneDelegate.class.getName())
@@ -983,10 +983,6 @@ class ProcessDataLoggingContextTest {
   }
 
   protected void manageDeployment(BpmnModelInstance model) {
-    manageDeployment("test.bpmn", model);
-  }
-
-  protected void manageDeployment(String name, BpmnModelInstance model) {
     testRule.deployForTenant(TENANT_ID, model);
   }
 

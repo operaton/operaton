@@ -67,6 +67,10 @@ public final class PerfTestProcessEngine {
     processEngineConfiguration.setHistory(properties.getProperty("historyLevel"));
 
     processEngineConfiguration.setJdbcBatchProcessing(Boolean.parseBoolean(properties.getProperty("jdbcBatchProcessing")));
+    
+    // Disable History Time To Live enforcement for performance tests
+    // Performance tests don't need strict history cleanup policies
+    processEngineConfiguration.setEnforceHistoryTimeToLive(false);
 
     // load plugins
     String processEnginePlugins = properties.getProperty("processEnginePlugins", "");

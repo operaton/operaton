@@ -507,8 +507,8 @@ class SecurityFilterRulesTest {
     HashSet<String> authorizedApps = new HashSet<>(Arrays.asList(appName));
 
     UserAuthentication engineAuth = new UserAuthentication(LOGGED_IN_USER.getIdentityId(), engineName);
-    engineAuth.setGroupIds(Collections.<String> emptyList());
-    engineAuth.setTenantIds(Collections.<String> emptyList());
+    engineAuth.setGroupIds(Collections. emptyList());
+    engineAuth.setTenantIds(Collections. emptyList());
     engineAuth.setAuthorizedApps(authorizedApps);
 
     Authentications authentications = new Authentications();

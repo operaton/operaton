@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.List;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -29,7 +28,6 @@ import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.IncidentQuery;
@@ -57,12 +55,10 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
 
   @BeforeEach
   void setUpRuntimeData() {
-    List<Incident> incidents = MockProvider.createMockIncidents();
-
-    mockedQuery = setupMockIncidentQuery(incidents);
+    mockedQuery = setupMockIncidentQuery();
   }
 
-  private IncidentQuery setupMockIncidentQuery(List<Incident> incidents) {
+  private IncidentQuery setupMockIncidentQuery() {
     IncidentQuery sampleQuery = mock(IncidentQuery.class);
 
     when(sampleQuery.incidentId(anyString())).thenReturn(sampleQuery);

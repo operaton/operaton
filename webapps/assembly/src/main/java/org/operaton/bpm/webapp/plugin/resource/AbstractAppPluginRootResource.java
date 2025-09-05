@@ -46,7 +46,7 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
  * <p>
  *
  * Subresources must properly initialize the subresources via
- * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource, String) }.
+ * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource) }.
  *
  * <pre>
  * @Path("myplugin")
@@ -106,10 +106,9 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
    *
    * @param <T>
    * @param subResource
-   * @param engineName
    * @return
    */
-  protected <S extends AbstractAppPluginResource<T>> S subResource(S subResource, String engineName) {
+  protected <S extends AbstractAppPluginResource<T>> S subResource(S subResource) {
     return subResource;
   }
 
@@ -132,7 +131,7 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
 
     if (plugin != null) {
       InputStream assetStream = getPluginAssetAsStream(plugin, file);
-      final InputStream filteredStream = applyResourceOverrides(file, assetStream);
+      final InputStream filteredStream = applyResourceOverrides(assetStream);
 
       if (assetStream != null) {
         String contentType = getContentType(file);
@@ -159,10 +158,9 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
   }
 
   /**
-   * @param file
    * @param assetStream
    */
-  protected InputStream applyResourceOverrides(String file, InputStream assetStream) {
+  protected InputStream applyResourceOverrides(InputStream assetStream) {
     // use a copy of the list cause it could be modified during iteration
     List<PluginResourceOverride> resourceOverrides = new ArrayList<>(runtimeDelegate.getResourceOverrides());
     for (PluginResourceOverride pluginResourceOverride : resourceOverrides) {

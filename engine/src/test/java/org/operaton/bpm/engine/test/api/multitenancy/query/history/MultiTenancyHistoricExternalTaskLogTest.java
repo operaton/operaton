@@ -285,9 +285,10 @@ class MultiTenancyHistoricExternalTaskLogTest {
     } catch (ProcessEngineException e) {
       // then
       String errorMessage = e.getMessage();
-      assertThat(errorMessage).contains("Cannot get the historic external task log ");
-      assertThat(errorMessage).contains(failedHistoricExternalTaskLogId);
-      assertThat(errorMessage).contains("because it belongs to no authenticated tenant.");
+      assertThat(errorMessage)
+              .contains("Cannot get the historic external task log ")
+              .contains(failedHistoricExternalTaskLogId)
+              .contains("because it belongs to no authenticated tenant.");
     }
   }
 

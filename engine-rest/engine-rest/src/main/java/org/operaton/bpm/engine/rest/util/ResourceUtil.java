@@ -43,8 +43,7 @@ public class ResourceUtil implements Resource {
     final int prime = 31;
     int result = 1;
     result = prime * result + (resourceName == null ? 0 : resourceName.hashCode());
-    result = prime * result + resourceType;
-    return result;
+    return prime * result + resourceType;
   }
 
   @Override

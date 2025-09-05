@@ -59,13 +59,13 @@ class LinkEventTest {
 
     List<String> activeActivities = runtimeService.getActiveActivityIds(pi.getId());
     // assert that now the first receive task is active
-    assertThat(activeActivities).isEqualTo(Arrays.asList(new String []{"waitAfterLink1"}));
+    assertThat(activeActivities).isEqualTo(List.of("waitAfterLink1"));
 
     runtimeService.signal(pi.getId());
 
     activeActivities = runtimeService.getActiveActivityIds(pi.getId());
     // assert that now the second receive task is active
-    assertThat(activeActivities).isEqualTo(Arrays.asList(new String []{"waitAfterLink2"}));
+    assertThat(activeActivities).isEqualTo(List.of("waitAfterLink2"));
 
     runtimeService.signal(pi.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -89,7 +89,7 @@ class LinkEventTest {
     List<String> activeActivities = runtimeService.getActiveActivityIds(pi.getId());
 
     // assert that the link event was triggered and that we are
-    assertThat(activeActivities).isEqualTo(Arrays.asList(new String []{"WaitAfterLink", "WaitAfterLink"}));
+    assertThat(activeActivities).isEqualTo(Arrays.asList("WaitAfterLink", "WaitAfterLink"));
 
     runtimeService.deleteProcessInstance(pi.getId(), "test done");
 

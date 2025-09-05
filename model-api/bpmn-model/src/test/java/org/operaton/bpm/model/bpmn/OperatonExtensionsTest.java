@@ -66,7 +66,7 @@ public class OperatonExtensionsTest {
     });
   }
 
-  public void initOperatonExtensionsTest(String namespace, BpmnModelInstance modelInstance) {
+  public void initOperatonExtensionsTest(BpmnModelInstance modelInstance) {
     this.originalModelInstance = modelInstance;
     initModelElements();
   }
@@ -91,7 +91,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testAssignee(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonAssignee()).isEqualTo(TEST_STRING_XML);
     userTask.setOperatonAssignee(TEST_STRING_API);
     assertThat(userTask.getOperatonAssignee()).isEqualTo(TEST_STRING_API);
@@ -100,7 +100,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testAsync(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(startEvent.isOperatonAsyncBefore()).isTrue();
     assertThat(userTask.isOperatonAsyncBefore()).isTrue();
     assertThat(parallelGateway.isOperatonAsyncBefore()).isTrue();
@@ -117,7 +117,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testAsyncBefore(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(startEvent.isOperatonAsyncBefore()).isTrue();
     assertThat(endEvent.isOperatonAsyncBefore()).isTrue();
     assertThat(userTask.isOperatonAsyncBefore()).isTrue();
@@ -137,7 +137,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testAsyncAfter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(startEvent.isOperatonAsyncAfter()).isTrue();
     assertThat(endEvent.isOperatonAsyncAfter()).isTrue();
     assertThat(userTask.isOperatonAsyncAfter()).isTrue();
@@ -157,7 +157,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testFlowNodeJobPriority(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(startEvent.getOperatonJobPriority()).isEqualTo(TEST_FLOW_NODE_JOB_PRIORITY);
     assertThat(endEvent.getOperatonJobPriority()).isEqualTo(TEST_FLOW_NODE_JOB_PRIORITY);
     assertThat(userTask.getOperatonJobPriority()).isEqualTo(TEST_FLOW_NODE_JOB_PRIORITY);
@@ -167,49 +167,49 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testProcessJobPriority(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(process.getOperatonJobPriority()).isEqualTo(TEST_PROCESS_JOB_PRIORITY);
   }
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testProcessTaskPriority(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(process.getOperatonTaskPriority()).isEqualTo(TEST_PROCESS_TASK_PRIORITY);
   }
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testHistoryTimeToLive(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(process.getOperatonHistoryTimeToLive()).isEqualTo(TEST_HISTORY_TIME_TO_LIVE);
   }
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testIsStartableInTasklist(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(process.isOperatonStartableInTasklist()).isFalse();
   }
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testVersionTag(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(process.getOperatonVersionTag()).isEqualTo("v1.0.0");
   }
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testServiceTaskPriority(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(serviceTask.getOperatonTaskPriority()).isEqualTo(TEST_SERVICE_TASK_PRIORITY);
   }
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCalledElementBinding(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonCalledElementBinding()).isEqualTo(TEST_STRING_XML);
     callActivity.setOperatonCalledElementBinding(TEST_STRING_API);
     assertThat(callActivity.getOperatonCalledElementBinding()).isEqualTo(TEST_STRING_API);
@@ -218,7 +218,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCalledElementVersion(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonCalledElementVersion()).isEqualTo(TEST_STRING_XML);
     callActivity.setOperatonCalledElementVersion(TEST_STRING_API);
     assertThat(callActivity.getOperatonCalledElementVersion()).isEqualTo(TEST_STRING_API);
@@ -227,7 +227,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCalledElementVersionTag(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonCalledElementVersionTag()).isEqualTo(TEST_STRING_XML);
     callActivity.setOperatonCalledElementVersionTag(TEST_STRING_API);
     assertThat(callActivity.getOperatonCalledElementVersionTag()).isEqualTo(TEST_STRING_API);
@@ -236,7 +236,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCalledElementTenantId(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonCalledElementTenantId()).isEqualTo(TEST_STRING_XML);
     callActivity.setOperatonCalledElementTenantId(TEST_STRING_API);
     assertThat(callActivity.getOperatonCalledElementTenantId()).isEqualTo(TEST_STRING_API);
@@ -245,7 +245,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCaseRef(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonCaseRef()).isEqualTo(TEST_STRING_XML);
     callActivity.setOperatonCaseRef(TEST_STRING_API);
     assertThat(callActivity.getOperatonCaseRef()).isEqualTo(TEST_STRING_API);
@@ -254,7 +254,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCaseBinding(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonCaseBinding()).isEqualTo(TEST_STRING_XML);
     callActivity.setOperatonCaseBinding(TEST_STRING_API);
     assertThat(callActivity.getOperatonCaseBinding()).isEqualTo(TEST_STRING_API);
@@ -263,7 +263,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCaseVersion(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonCaseVersion()).isEqualTo(TEST_STRING_XML);
     callActivity.setOperatonCaseVersion(TEST_STRING_API);
     assertThat(callActivity.getOperatonCaseVersion()).isEqualTo(TEST_STRING_API);
@@ -272,7 +272,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCaseTenantId(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonCaseTenantId()).isEqualTo(TEST_STRING_XML);
     callActivity.setOperatonCaseTenantId(TEST_STRING_API);
     assertThat(callActivity.getOperatonCaseTenantId()).isEqualTo(TEST_STRING_API);
@@ -281,7 +281,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testDecisionRef(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(businessRuleTask.getOperatonDecisionRef()).isEqualTo(TEST_STRING_XML);
     businessRuleTask.setOperatonDecisionRef(TEST_STRING_API);
     assertThat(businessRuleTask.getOperatonDecisionRef()).isEqualTo(TEST_STRING_API);
@@ -290,7 +290,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testDecisionRefBinding(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(businessRuleTask.getOperatonDecisionRefBinding()).isEqualTo(TEST_STRING_XML);
     businessRuleTask.setOperatonDecisionRefBinding(TEST_STRING_API);
     assertThat(businessRuleTask.getOperatonDecisionRefBinding()).isEqualTo(TEST_STRING_API);
@@ -299,7 +299,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testDecisionRefVersion(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(businessRuleTask.getOperatonDecisionRefVersion()).isEqualTo(TEST_STRING_XML);
     businessRuleTask.setOperatonDecisionRefVersion(TEST_STRING_API);
     assertThat(businessRuleTask.getOperatonDecisionRefVersion()).isEqualTo(TEST_STRING_API);
@@ -308,7 +308,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testDecisionRefVersionTag(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(businessRuleTask.getOperatonDecisionRefVersionTag()).isEqualTo(TEST_STRING_XML);
     businessRuleTask.setOperatonDecisionRefVersionTag(TEST_STRING_API);
     assertThat(businessRuleTask.getOperatonDecisionRefVersionTag()).isEqualTo(TEST_STRING_API);
@@ -317,7 +317,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testDecisionRefTenantId(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(businessRuleTask.getOperatonDecisionRefTenantId()).isEqualTo(TEST_STRING_XML);
     businessRuleTask.setOperatonDecisionRefTenantId(TEST_STRING_API);
     assertThat(businessRuleTask.getOperatonDecisionRefTenantId()).isEqualTo(TEST_STRING_API);
@@ -326,7 +326,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testMapDecisionResult(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(businessRuleTask.getOperatonMapDecisionResult()).isEqualTo(TEST_STRING_XML);
     businessRuleTask.setOperatonMapDecisionResult(TEST_STRING_API);
     assertThat(businessRuleTask.getOperatonMapDecisionResult()).isEqualTo(TEST_STRING_API);
@@ -335,7 +335,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testTaskPriority(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(businessRuleTask.getOperatonTaskPriority()).isEqualTo(TEST_STRING_XML);
     businessRuleTask.setOperatonTaskPriority(TEST_SERVICE_TASK_PRIORITY);
     assertThat(businessRuleTask.getOperatonTaskPriority()).isEqualTo(TEST_SERVICE_TASK_PRIORITY);
@@ -344,7 +344,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCandidateGroups(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonCandidateGroups()).isEqualTo(TEST_GROUPS_XML);
     assertThat(userTask.getOperatonCandidateGroupsList()).containsAll(TEST_GROUPS_LIST_XML);
     userTask.setOperatonCandidateGroups(TEST_GROUPS_API);
@@ -358,7 +358,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCandidateStarterGroups(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(process.getOperatonCandidateStarterGroups()).isEqualTo(TEST_GROUPS_XML);
     assertThat(process.getOperatonCandidateStarterGroupsList()).containsAll(TEST_GROUPS_LIST_XML);
     process.setOperatonCandidateStarterGroups(TEST_GROUPS_API);
@@ -372,7 +372,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCandidateStarterUsers(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(process.getOperatonCandidateStarterUsers()).isEqualTo(TEST_USERS_XML);
     assertThat(process.getOperatonCandidateStarterUsersList()).containsAll(TEST_USERS_LIST_XML);
     process.setOperatonCandidateStarterUsers(TEST_USERS_API);
@@ -386,7 +386,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testCandidateUsers(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonCandidateUsers()).isEqualTo(TEST_USERS_XML);
     assertThat(userTask.getOperatonCandidateUsersList()).containsAll(TEST_USERS_LIST_XML);
     userTask.setOperatonCandidateUsers(TEST_USERS_API);
@@ -400,7 +400,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testClass(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(serviceTask.getOperatonClass()).isEqualTo(TEST_CLASS_XML);
     assertThat(messageEventDefinition.getOperatonClass()).isEqualTo(TEST_CLASS_XML);
 
@@ -414,7 +414,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testDelegateExpression(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(serviceTask.getOperatonDelegateExpression()).isEqualTo(TEST_DELEGATE_EXPRESSION_XML);
     assertThat(messageEventDefinition.getOperatonDelegateExpression()).isEqualTo(TEST_DELEGATE_EXPRESSION_XML);
 
@@ -428,7 +428,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testDueDate(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonDueDate()).isEqualTo(TEST_DUE_DATE_XML);
     userTask.setOperatonDueDate(TEST_DUE_DATE_API);
     assertThat(userTask.getOperatonDueDate()).isEqualTo(TEST_DUE_DATE_API);
@@ -437,7 +437,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testErrorCodeVariable(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     ErrorEventDefinition errorEventDefinition = startEvent.getChildElementsByType(ErrorEventDefinition.class).iterator().next();
     assertThat(errorEventDefinition.getAttributeValueNs(namespace, OPERATON_ATTRIBUTE_ERROR_CODE_VARIABLE)).isEqualTo("errorVariable");
   }
@@ -445,7 +445,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testErrorMessageVariable(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     ErrorEventDefinition errorEventDefinition = startEvent.getChildElementsByType(ErrorEventDefinition.class).iterator().next();
     assertThat(errorEventDefinition.getAttributeValueNs(namespace, OPERATON_ATTRIBUTE_ERROR_MESSAGE_VARIABLE)).isEqualTo("errorMessageVariable");
   }
@@ -453,7 +453,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testErrorMessage(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(error.getOperatonErrorMessage()).isEqualTo(TEST_STRING_XML);
     error.setOperatonErrorMessage(TEST_STRING_API);
     assertThat(error.getOperatonErrorMessage()).isEqualTo(TEST_STRING_API);
@@ -462,7 +462,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testExclusive(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(startEvent.isOperatonExclusive()).isTrue();
     assertThat(userTask.isOperatonExclusive()).isFalse();
     userTask.setOperatonExclusive(true);
@@ -479,7 +479,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testExpression(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(serviceTask.getOperatonExpression()).isEqualTo(TEST_EXPRESSION_XML);
     assertThat(messageEventDefinition.getOperatonExpression()).isEqualTo(TEST_EXPRESSION_XML);
     serviceTask.setOperatonExpression(TEST_EXPRESSION_API);
@@ -491,7 +491,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testFormHandlerClass(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(startEvent.getOperatonFormHandlerClass()).isEqualTo(TEST_CLASS_XML);
     assertThat(userTask.getOperatonFormHandlerClass()).isEqualTo(TEST_CLASS_XML);
     startEvent.setOperatonFormHandlerClass(TEST_CLASS_API);
@@ -503,7 +503,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testFormKey(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(startEvent.getOperatonFormKey()).isEqualTo(TEST_STRING_XML);
     assertThat(userTask.getOperatonFormKey()).isEqualTo(TEST_STRING_XML);
     startEvent.setOperatonFormKey(TEST_STRING_API);
@@ -515,7 +515,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testInitiator(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(startEvent.getOperatonInitiator()).isEqualTo(TEST_STRING_XML);
     startEvent.setOperatonInitiator(TEST_STRING_API);
     assertThat(startEvent.getOperatonInitiator()).isEqualTo(TEST_STRING_API);
@@ -524,7 +524,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testPriority(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonPriority()).isEqualTo(TEST_PRIORITY_XML);
     userTask.setOperatonPriority(TEST_PRIORITY_API);
     assertThat(userTask.getOperatonPriority()).isEqualTo(TEST_PRIORITY_API);
@@ -533,7 +533,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testResultVariable(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(serviceTask.getOperatonResultVariable()).isEqualTo(TEST_STRING_XML);
     assertThat(messageEventDefinition.getOperatonResultVariable()).isEqualTo(TEST_STRING_XML);
     serviceTask.setOperatonResultVariable(TEST_STRING_API);
@@ -545,7 +545,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testType(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(serviceTask.getOperatonType()).isEqualTo(TEST_TYPE_XML);
     assertThat(messageEventDefinition.getOperatonType()).isEqualTo(TEST_STRING_XML);
     serviceTask.setOperatonType(TEST_TYPE_API);
@@ -558,7 +558,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testTopic(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(serviceTask.getOperatonTopic()).isEqualTo(TEST_STRING_XML);
     assertThat(messageEventDefinition.getOperatonTopic()).isEqualTo(TEST_STRING_XML);
     serviceTask.setOperatonTopic(TEST_TYPE_API);
@@ -570,7 +570,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testVariableMappingClass(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonVariableMappingClass()).isEqualTo(TEST_CLASS_XML);
     callActivity.setOperatonVariableMappingClass(TEST_CLASS_API);
     assertThat(callActivity.getOperatonVariableMappingClass()).isEqualTo(TEST_CLASS_API);
@@ -579,7 +579,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testVariableMappingDelegateExpression(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(callActivity.getOperatonVariableMappingDelegateExpression()).isEqualTo(TEST_DELEGATE_EXPRESSION_XML);
     callActivity.setOperatonVariableMappingDelegateExpression(TEST_DELEGATE_EXPRESSION_API);
     assertThat(callActivity.getOperatonVariableMappingDelegateExpression()).isEqualTo(TEST_DELEGATE_EXPRESSION_API);
@@ -588,7 +588,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testExecutionListenerExtension(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonExecutionListener processListener = process.getExtensionElements().getElementsQuery().filterByType(OperatonExecutionListener.class).singleResult();
     OperatonExecutionListener startEventListener = startEvent.getExtensionElements().getElementsQuery().filterByType(OperatonExecutionListener.class).singleResult();
     OperatonExecutionListener serviceTaskListener = serviceTask.getExtensionElements().getElementsQuery().filterByType(OperatonExecutionListener.class).singleResult();
@@ -615,7 +615,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonScriptExecutionListener(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonExecutionListener sequenceFlowListener = sequenceFlow.getExtensionElements().getElementsQuery().filterByType(OperatonExecutionListener.class).singleResult();
 
     OperatonScript script = sequenceFlowListener.getOperatonScript();
@@ -637,7 +637,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testFailedJobRetryTimeCycleExtension(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonFailedJobRetryTimeCycle timeCycle = sendTask.getExtensionElements().getElementsQuery().filterByType(OperatonFailedJobRetryTimeCycle.class).singleResult();
     assertThat(timeCycle.getTextContent()).isEqualTo(TEST_STRING_XML);
     timeCycle.setTextContent(TEST_STRING_API);
@@ -647,7 +647,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testFieldExtension(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonField field = sendTask.getExtensionElements().getElementsQuery().filterByType(OperatonField.class).singleResult();
     assertThat(field.getOperatonName()).isEqualTo(TEST_STRING_XML);
     assertThat(field.getOperatonExpression()).isEqualTo(TEST_EXPRESSION_XML);
@@ -669,7 +669,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testFormData(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonFormData formData = userTask.getExtensionElements().getElementsQuery().filterByType(OperatonFormData.class).singleResult();
     OperatonFormField formField = formData.getOperatonFormFields().iterator().next();
     assertThat(formField.getOperatonId()).isEqualTo(TEST_STRING_XML);
@@ -716,7 +716,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testFormProperty(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonFormProperty formProperty = startEvent.getExtensionElements().getElementsQuery().filterByType(OperatonFormProperty.class).singleResult();
     assertThat(formProperty.getOperatonId()).isEqualTo(TEST_STRING_XML);
     assertThat(formProperty.getOperatonName()).isEqualTo(TEST_STRING_XML);
@@ -753,7 +753,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testInExtension(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonIn in = callActivity.getExtensionElements().getElementsQuery().filterByType(OperatonIn.class).singleResult();
     assertThat(in.getOperatonSource()).isEqualTo(TEST_STRING_XML);
     assertThat(in.getOperatonSourceExpression()).isEqualTo(TEST_EXPRESSION_XML);
@@ -778,7 +778,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOutExtension(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonOut out = callActivity.getExtensionElements().getElementsQuery().filterByType(OperatonOut.class).singleResult();
     assertThat(out.getOperatonSource()).isEqualTo(TEST_STRING_XML);
     assertThat(out.getOperatonSourceExpression()).isEqualTo(TEST_EXPRESSION_XML);
@@ -800,7 +800,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testPotentialStarter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonPotentialStarter potentialStarter = startEvent.getExtensionElements().getElementsQuery().filterByType(OperatonPotentialStarter.class).singleResult();
     Expression expression = potentialStarter.getResourceAssignmentExpression().getExpression();
     assertThat(expression.getTextContent()).isEqualTo(TEST_GROUPS_XML);
@@ -811,7 +811,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testTaskListener(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonTaskListener taskListener = userTask.getExtensionElements().getElementsQuery().filterByType(OperatonTaskListener.class).list().get(0);
     assertThat(taskListener.getOperatonEvent()).isEqualTo(TEST_TASK_EVENT_XML);
     assertThat(taskListener.getOperatonClass()).isEqualTo(TEST_CLASS_XML);
@@ -843,7 +843,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonScriptTaskListener(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonTaskListener taskListener = userTask.getExtensionElements().getElementsQuery().filterByType(OperatonTaskListener.class).list().get(1);
 
     OperatonScript script = taskListener.getOperatonScript();
@@ -865,7 +865,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonModelerProperties(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonProperties operatonProperties = endEvent.getExtensionElements().getElementsQuery()
         .filterByType(OperatonProperties.class).singleResult();
     assertThat(operatonProperties).isNotNull();
@@ -881,7 +881,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testGetNonExistingOperatonCandidateUsers(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     userTask.removeAttributeNs(namespace, "candidateUsers");
     assertThat(userTask.getOperatonCandidateUsers()).isNull();
     assertThat(userTask.getOperatonCandidateUsersList()).isEmpty();
@@ -890,7 +890,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testSetNullOperatonCandidateUsers(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonCandidateUsers()).isNotEmpty();
     assertThat(userTask.getOperatonCandidateUsersList()).isNotEmpty();
     userTask.setOperatonCandidateUsers(null);
@@ -901,7 +901,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testEmptyOperatonCandidateUsers(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonCandidateUsers()).isNotEmpty();
     assertThat(userTask.getOperatonCandidateUsersList()).isNotEmpty();
     userTask.setOperatonCandidateUsers("");
@@ -912,7 +912,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testSetNullOperatonCandidateUsersList(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonCandidateUsers()).isNotEmpty();
     assertThat(userTask.getOperatonCandidateUsersList()).isNotEmpty();
     userTask.setOperatonCandidateUsersList(null);
@@ -923,10 +923,10 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testEmptyOperatonCandidateUsersList(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(userTask.getOperatonCandidateUsers()).isNotEmpty();
     assertThat(userTask.getOperatonCandidateUsersList()).isNotEmpty();
-    userTask.setOperatonCandidateUsersList(Collections.<String>emptyList());
+    userTask.setOperatonCandidateUsersList(Collections.emptyList());
     assertThat(userTask.getOperatonCandidateUsers()).isNull();
     assertThat(userTask.getOperatonCandidateUsersList()).isEmpty();
   }
@@ -934,7 +934,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testScriptResource(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     assertThat(scriptTask.getScriptFormat()).isEqualTo("groovy");
     assertThat(scriptTask.getOperatonResource()).isEqualTo("test.groovy");
   }
@@ -942,7 +942,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonConnector(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonConnector operatonConnector = serviceTask.getExtensionElements().getElementsQuery()
         .filterByType(OperatonConnector.class).singleResult();
     assertThat(operatonConnector).isNotNull();
@@ -971,7 +971,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonInputOutput(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonInputOutput operatonInputOutput = serviceTask.getExtensionElements().getElementsQuery().filterByType(OperatonInputOutput.class).singleResult();
     assertThat(operatonInputOutput).isNotNull();
     assertThat(operatonInputOutput.getOperatonInputParameters()).hasSize(6);
@@ -981,7 +981,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonInputParameter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     // find existing
     OperatonInputParameter inputParameter = findInputParameterByName(serviceTask, "shouldBeConstant");
 
@@ -1007,7 +1007,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonNullInputParameter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonInputParameter inputParameter = findInputParameterByName(serviceTask, "shouldBeNull");
     assertThat(inputParameter.getOperatonName()).isEqualTo("shouldBeNull");
     assertThat(inputParameter.getTextContent()).isEmpty();
@@ -1016,7 +1016,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonConstantInputParameter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonInputParameter inputParameter = findInputParameterByName(serviceTask, "shouldBeConstant");
     assertThat(inputParameter.getOperatonName()).isEqualTo("shouldBeConstant");
     assertThat(inputParameter.getTextContent()).isEqualTo("foo");
@@ -1025,7 +1025,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonExpressionInputParameter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonInputParameter inputParameter = findInputParameterByName(serviceTask, "shouldBeExpression");
     assertThat(inputParameter.getOperatonName()).isEqualTo("shouldBeExpression");
     assertThat(inputParameter.getTextContent()).isEqualTo("${1 + 1}");
@@ -1034,7 +1034,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonListInputParameter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonInputParameter inputParameter = findInputParameterByName(serviceTask, "shouldBeList");
     assertThat(inputParameter.getOperatonName()).isEqualTo("shouldBeList");
     assertThat(inputParameter.getTextContent()).isNotEmpty();
@@ -1111,7 +1111,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonMapInputParameter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonInputParameter inputParameter = findInputParameterByName(serviceTask, "shouldBeMap");
     assertThat(inputParameter.getOperatonName()).isEqualTo("shouldBeMap");
     assertThat(inputParameter.getTextContent()).isNotEmpty();
@@ -1152,7 +1152,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonScriptInputParameter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonInputParameter inputParameter = findInputParameterByName(serviceTask, "shouldBeScript");
     assertThat(inputParameter.getOperatonName()).isEqualTo("shouldBeScript");
     assertThat(inputParameter.getTextContent()).isNotEmpty();
@@ -1182,7 +1182,7 @@ public class OperatonExtensionsTest {
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonNestedOutputParameter(String namespace, BpmnModelInstance modelInstance) {
-    initOperatonExtensionsTest(namespace, modelInstance);
+    initOperatonExtensionsTest(modelInstance);
     OperatonOutputParameter operatonOutputParameter = serviceTask.getExtensionElements().getElementsQuery().filterByType(OperatonInputOutput.class).singleResult().getOperatonOutputParameters().iterator().next();
 
     assertThat(operatonOutputParameter).isNotNull();

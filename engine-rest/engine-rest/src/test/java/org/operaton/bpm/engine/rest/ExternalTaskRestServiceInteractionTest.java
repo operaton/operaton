@@ -144,13 +144,13 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
     when(fetchTopicBuilder.topic(any(), anyLong())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.businessKey(any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processDefinitionId(any())).thenReturn(fetchTopicBuilder);
-    when(fetchTopicBuilder.processDefinitionIdIn(Mockito.<String>any())).thenReturn(fetchTopicBuilder);
+    when(fetchTopicBuilder.processDefinitionIdIn(Mockito.any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processDefinitionKey(any())).thenReturn(fetchTopicBuilder);
-    when(fetchTopicBuilder.processDefinitionKeyIn(Mockito.<String>any())).thenReturn(fetchTopicBuilder);
+    when(fetchTopicBuilder.processDefinitionKeyIn(Mockito.any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processInstanceVariableEquals(any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processDefinitionVersionTag(any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.withoutTenantId()).thenReturn(fetchTopicBuilder);
-    when(fetchTopicBuilder.tenantIdIn(Mockito.<String>any())).thenReturn(fetchTopicBuilder);
+    when(fetchTopicBuilder.tenantIdIn(Mockito.any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.includeExtensionProperties()).thenReturn(fetchTopicBuilder);
 
     fetchAndLockBuilder = mock(FetchAndLockBuilderImpl.class);
@@ -1582,6 +1582,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
       .body("executionId", equalTo(MockProvider.EXAMPLE_EXECUTION_ID))
       .body("id", equalTo(MockProvider.EXTERNAL_TASK_ID))
       .body("lockExpirationTime", equalTo(MockProvider.EXTERNAL_TASK_LOCK_EXPIRATION_TIME))
+      .body("createTime", equalTo(MockProvider.EXTERNAL_TASK_CREATE_TIME))
       .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
       .body("processDefinitionKey", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY))
       .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
@@ -2198,6 +2199,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
         .body("[0].topicName", equalTo(MockProvider.EXTERNAL_TASK_TOPIC_NAME))
         .body("[0].workerId", equalTo(MockProvider.EXTERNAL_TASK_WORKER_ID))
         .body("[0].lockExpirationTime", equalTo(MockProvider.EXTERNAL_TASK_LOCK_EXPIRATION_TIME))
+        .body("[0].createTime", equalTo(MockProvider.EXTERNAL_TASK_CREATE_TIME))
         .body("[0].processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
         .body("[0].executionId", equalTo(MockProvider.EXAMPLE_EXECUTION_ID))
         .body("[0].activityId", equalTo(MockProvider.EXAMPLE_ACTIVITY_ID))

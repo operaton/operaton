@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.producer;
 
+import java.util.Optional;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
@@ -179,7 +180,9 @@ public class DefaultCmmnHistoryEventProducer implements CmmnHistoryEventProducer
   }
 
   protected HistoricCaseActivityInstanceEventEntity newCaseActivityInstanceEventEntity(CaseExecutionEntity caseExecutionEntity) {
-    return new HistoricCaseActivityInstanceEventEntity();
+    var entity = new HistoricCaseActivityInstanceEventEntity();
+    initCaseActivityInstanceEvent(entity, caseExecutionEntity, null);
+    return entity;
   }
 
   protected HistoricCaseActivityInstanceEventEntity loadCaseActivityInstanceEventEntity(CaseExecutionEntity caseExecutionEntity) {
@@ -189,7 +192,7 @@ public class DefaultCmmnHistoryEventProducer implements CmmnHistoryEventProducer
   protected void initCaseActivityInstanceEvent(HistoricCaseActivityInstanceEventEntity evt, CaseExecutionEntity caseExecutionEntity, HistoryEventTypes eventType) {
     evt.setId(caseExecutionEntity.getId());
     evt.setParentCaseActivityInstanceId(caseExecutionEntity.getParentId());
-    evt.setEventType(eventType.getEventName());
+    evt.setEventType(Optional.ofNullable(eventType).map(HistoryEventTypes::getEventName).orElse(null));
     evt.setCaseDefinitionId(caseExecutionEntity.getCaseDefinitionId());
     evt.setCaseInstanceId(caseExecutionEntity.getCaseInstanceId());
     evt.setCaseExecutionId(caseExecutionEntity.getId());

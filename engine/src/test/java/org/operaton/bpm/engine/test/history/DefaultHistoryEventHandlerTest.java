@@ -40,9 +40,7 @@ public class DefaultHistoryEventHandlerTest {
 
   @Parameters
   public static Iterable<Object> parameters() {
-    return Arrays.asList(new Object[]{
-        true, false
-    });
+    return Arrays.asList(true, false);
   }
 
   @Parameter

@@ -179,7 +179,7 @@ class PasswordHashingTest {
   @Test
   void plugInCustomPasswordEncryptor() {
     // given
-    setEncryptors(new MyCustomPasswordEncryptor(PASSWORD, ALGORITHM_NAME), Collections.<PasswordEncryptor>emptyList());
+    setEncryptors(new MyCustomPasswordEncryptor(PASSWORD, ALGORITHM_NAME), Collections.emptyList());
     User user = identityService.newUser(USER_NAME);
     user.setPassword(PASSWORD);
     identityService.saveUser(user);
@@ -225,14 +225,14 @@ class PasswordHashingTest {
   }
 
   protected void createUserWithEncryptor(String userName, PasswordEncryptor encryptor) {
-    setEncryptors(encryptor, Collections.<PasswordEncryptor>emptyList());
+    setEncryptors(encryptor, Collections.emptyList());
     User user = identityService.newUser(userName);
     user.setPassword(PASSWORD);
     identityService.saveUser(user);
   }
 
   protected void setDefaultEncryptor(PasswordEncryptor defaultEncryptor) {
-    setEncryptors(defaultEncryptor, Collections.<PasswordEncryptor>emptyList());
+    setEncryptors(defaultEncryptor, Collections.emptyList());
   }
 
   protected void setEncryptors(PasswordEncryptor defaultEncryptor, List<PasswordEncryptor> additionalEncryptorsForPasswordChecking) {

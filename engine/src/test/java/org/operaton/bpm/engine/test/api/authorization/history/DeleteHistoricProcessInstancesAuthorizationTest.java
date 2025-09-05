@@ -110,8 +110,7 @@ public class DeleteHistoricProcessInstancesAuthorizationTest {
     processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
     processInstance2 = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
 
-    List<String> processInstanceIds = Arrays.asList(
-        new String[]{processInstance.getId(), processInstance2.getId()});
+    List<String> processInstanceIds = Arrays.asList(processInstance.getId(), processInstance2.getId());
     runtimeService.deleteProcessInstances(processInstanceIds, null, false, false);
 
     historicProcessInstance = historyService.createHistoricProcessInstanceQuery()

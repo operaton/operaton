@@ -34,7 +34,7 @@ public class AdminPluginsRootResource extends AbstractAdminPluginRootResource {
 
   @Path("{engine}" + MetricsRestService.PATH)
   public MetricsRestService getProcessDefinitionResource(@PathParam("engine") String engineName) {
-    return subResource(new MetricsRestService(engineName), engineName);
+    return subResource(new MetricsRestService(engineName));
   }
 
 }

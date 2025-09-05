@@ -112,7 +112,6 @@ class ExpressionManagerTest {
 
       // Check if the variable that has been set in service-task is the authenticated user
       String value = (String) runtimeService.getVariable(processInstance.getId(), "theUser");
-      assertThat(value).isNotNull();
       assertThat(value).isEqualTo("frederik");
     } finally {
       // Cleanup

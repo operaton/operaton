@@ -16,7 +16,6 @@
  */
 package org.operaton.spin.plugin.impl;
 
-import java.net.URL;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
@@ -43,7 +42,7 @@ class SpinProcessEnginePluginTest {
   @Test
   void pluginDoesNotRegisterXmlSerializerIfNotPresentInClasspath() throws Exception {
     ClassLoader mockClassloader = Mockito.mock(ClassLoader.class);
-    Mockito.when(mockClassloader.getResources(Mockito.anyString())).thenReturn(Collections.enumeration(Collections.<URL>emptyList()));
+    Mockito.when(mockClassloader.getResources(Mockito.anyString())).thenReturn(Collections.enumeration(Collections.emptyList()));
     DataFormats.loadDataFormats(mockClassloader);
     ProcessEngineConfigurationImpl mockConfig = Mockito.mock(ProcessEngineConfigurationImpl.class);
     DefaultVariableSerializers serializers = new DefaultVariableSerializers();
@@ -56,7 +55,7 @@ class SpinProcessEnginePluginTest {
   @Test
   void pluginDoesNotRegisterJsonSerializerIfNotPresentInClasspath() throws Exception {
     ClassLoader mockClassloader = Mockito.mock(ClassLoader.class);
-    Mockito.when(mockClassloader.getResources(Mockito.anyString())).thenReturn(Collections.enumeration(Collections.<URL>emptyList()));
+    Mockito.when(mockClassloader.getResources(Mockito.anyString())).thenReturn(Collections.enumeration(Collections.emptyList()));
     DataFormats.loadDataFormats(mockClassloader);
     ProcessEngineConfigurationImpl mockConfig = Mockito.mock(ProcessEngineConfigurationImpl.class);
     DefaultVariableSerializers serializers = new DefaultVariableSerializers();

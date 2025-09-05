@@ -79,7 +79,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
       taskQuery.list();
 
       verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(TEST_GROUP_IDS);
-      verify(authCheck).setAuthGroupIds(Collections.<String>emptyList());
+      verify(authCheck).setAuthGroupIds(Collections.emptyList());
 
       return null;
     });
@@ -140,7 +140,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
       taskQuery.list();
 
       verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds((List<String>) null);
-      verify(authCheck).setAuthGroupIds(Collections.<String>emptyList());
+      verify(authCheck).setAuthGroupIds(Collections.emptyList());
 
       return null;
     });

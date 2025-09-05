@@ -87,12 +87,12 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.SubProcessBuilder;
 import org.operaton.commons.utils.CollectionUtil;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_PROCESS;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

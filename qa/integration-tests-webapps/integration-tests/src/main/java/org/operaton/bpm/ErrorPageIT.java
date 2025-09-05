@@ -43,8 +43,9 @@ class ErrorPageIT extends AbstractWebIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(Status.NOT_FOUND.getStatusCode());
     assertThat(response.getMediaType().toString()).startsWith(MediaType.TEXT_HTML);
     String responseEntity = response.getEntity().toString();
-    assertThat(responseEntity).contains("Operaton");
-    assertThat(responseEntity).contains("Not Found");
+    assertThat(responseEntity)
+            .contains("Operaton")
+            .contains("Not Found");
   }
 
 }

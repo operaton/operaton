@@ -58,7 +58,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
         this.processEngine = processEngine;
     }
 
-    boolean shouldReturnProcessInstance(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
+    boolean shouldReturnProcessInstance(MethodInvocation methodInvocation, Object result) {
         return result instanceof ProcessInstance || methodInvocation.getMethod().getReturnType().isAssignableFrom(ProcessInstance.class);
     }
 
@@ -106,7 +106,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
             return null;
           }
 
-          if (shouldReturnProcessInstance(startProcess, invocation, result)) {
+          if (shouldReturnProcessInstance(invocation, result)) {
             return pi;
           }
 

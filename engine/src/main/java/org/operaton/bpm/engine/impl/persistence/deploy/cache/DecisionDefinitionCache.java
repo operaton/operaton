@@ -41,8 +41,7 @@ public class DecisionDefinitionCache extends ResourceDefinitionCache<DecisionDef
         .findDecisionDefinitionByKeyAndVersion(definitionKey, definitionVersion);
 
     checkInvalidDefinitionByKeyAndVersion(definitionKey, definitionVersion, definition);
-    definition = resolveDefinition(definition);
-    return definition;
+    return resolveDefinition(definition);
   }
 
   @Override

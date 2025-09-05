@@ -2291,7 +2291,7 @@ public class ProcessInstanceQueryTest {
                 .count())
                 .isEqualTo(3);
         assertThat(processInstanceQuery.count()).isEqualTo(3);
-        assertThat(processInstanceQuery.list().size()).isEqualTo(3);
+      assertThat(processInstanceQuery.list()).hasSize(3);
     }
 
   @Test

@@ -17,27 +17,21 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala;
 
-import camundajar.impl.scala.runtime.BoxesRunTime;
-import org.camunda.feel.api.FeelEngineApi;
-import org.camunda.feel.api.FeelEngineBuilder;
 import java.util.Arrays;
 
 import camundajar.impl.scala.collection.immutable.List;
-import camundajar.impl.scala.collection.immutable.Map;
 import camundajar.impl.scala.runtime.BoxesRunTime;
 import camundajar.impl.scala.util.Either;
 import camundajar.impl.scala.util.Left;
 import camundajar.impl.scala.util.Right;
 import org.camunda.feel.FeelEngine.Failure;
+import org.camunda.feel.api.FeelEngineApi;
+import org.camunda.feel.api.FeelEngineBuilder;
 import org.camunda.feel.context.CustomContext;
 import org.camunda.feel.context.VariableProvider;
 import org.camunda.feel.impl.JavaValueMapper;
 import org.camunda.feel.valuemapper.CustomValueMapper;
 import org.camunda.feel.valuemapper.ValueMapper.CompositeValueMapper;
-import camundajar.impl.scala.collection.immutable.List;
-import camundajar.impl.scala.util.Either;
-import camundajar.impl.scala.util.Left;
-import camundajar.impl.scala.util.Right;
 
 import org.operaton.bpm.dmn.feel.impl.FeelEngine;
 import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunctionTransformer;

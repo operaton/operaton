@@ -17,14 +17,16 @@
 package org.operaton.bpm.spring.boot.starter.rest.config.fetchandlock;
 
 import jakarta.servlet.ServletContext;
-import org.operaton.bpm.spring.boot.starter.rest.test.TestRestApplication;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.operaton.bpm.spring.boot.starter.rest.test.TestRestApplication;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { TestRestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {TestRestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class FetchAndLockHandlerDefaultConfigIT {
 
     @Autowired

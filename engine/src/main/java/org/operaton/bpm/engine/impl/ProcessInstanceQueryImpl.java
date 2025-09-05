@@ -95,6 +95,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQueryImpl rootProcessInstanceId(String rootProcessInstanceId) {
       ensureNotNull("Root process instance id", rootProcessInstanceId);
       this.rootProcessInstanceId = rootProcessInstanceId;

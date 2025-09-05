@@ -24,7 +24,7 @@ import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmPropertie
 
 public class FetchAndLockProperties {
 
-  protected boolean uniqueWorkerRequest = false;
+  protected boolean uniqueWorkerRequest;
   protected Integer queueCapacity = 200;
 
   public Map<String, String> getInitParams() {

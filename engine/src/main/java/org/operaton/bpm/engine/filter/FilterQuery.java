@@ -54,6 +54,15 @@ public interface FilterQuery extends Query<FilterQuery, Filter> {
    */
   FilterQuery filterOwner(String owner);
 
+  /**
+   * Only select filters after the given filter id (for cursor-based pagination).
+   * The id acts as a cursor for pagination to improve performance on large datasets.
+   * 
+   * @param afterId the filter id to use as a cursor
+   * @return this query
+   */
+  FilterQuery afterId(String afterId);
+
   // ordering ////////////////////////////////////////////////////////////
 
   /** Order by filter id (needs to be followed by {@link #asc()} or {@link #desc()}). */

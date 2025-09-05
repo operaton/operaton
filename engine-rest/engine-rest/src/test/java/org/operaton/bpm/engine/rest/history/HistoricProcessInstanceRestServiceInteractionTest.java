@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import jakarta.ws.rs.core.Response.Status;
@@ -553,9 +554,18 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
     HistoricProcessInstanceQueryImpl mockedQuery = mock(HistoricProcessInstanceQueryImpl.class);
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(mockedQuery);
 
-    String payload = "{ \"orQueries\": [{" +
-        "\"processDefinitionKey\": \"aKey\", " +
-        "\"processInstanceBusinessKey\": \"aBusinessKey\"}] }";
+    String payload = """
+    {
+      "orQueries": [
+        {
+          "processDefinitionKey": "aKey",
+          "processInstanceBusinessKey": "aBusinessKey",
+          "completed": true,
+          "active": true
+        }
+      ]
+    }
+    """;
 
     // when
     given()
@@ -575,6 +585,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
     // then
     assertThat(argument.getValue().getProcessDefinitionKey()).isEqualTo("aKey");
     assertThat(argument.getValue().getBusinessKey()).isEqualTo("aBusinessKey");
+    assertThat(argument.getValue().getState()).isEqualTo(new HashSet<>(Arrays.asList("COMPLETED", "ACTIVE")));
   }
 
   protected void verifyBatchJson(String batchJson) {

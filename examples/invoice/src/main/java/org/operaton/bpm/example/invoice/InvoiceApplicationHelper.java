@@ -67,7 +67,7 @@ public final class InvoiceApplicationHelper {
     processEngineConfiguration.setDbMetricsReporterActivate(false);
   }
 
-  public static void createDeployment(String processArchiveName, ProcessEngine processEngine, ClassLoader classLoader, ProcessApplicationReference applicationReference) {
+  public static void createDeployment(ProcessEngine processEngine, ClassLoader classLoader, ProcessApplicationReference applicationReference) {
     // Hack: deploy the first version of the invoice process once before the process application
     //   is deployed the first time
     if (processEngine != null) {
@@ -85,7 +85,7 @@ public final class InvoiceApplicationHelper {
   }
 
   protected static boolean isProcessDeployed(RepositoryService repositoryService, String key) {
-    return repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCDEFKEY_INVOICE).count() > 0;
+    return repositoryService.createProcessDefinitionQuery().processDefinitionKey(key).count() > 0;
   }
 
   protected static void startProcessInstances(ProcessEngine processEngine, String processDefinitionKey, Integer version) {

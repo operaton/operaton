@@ -57,7 +57,7 @@ public class CustomParameterResolver implements BeforeEachMethodAdapter, Paramet
   public boolean supportsParameter(ParameterContext parameterContext,
       ExtensionContext extensionContext) throws ParameterResolutionException {
     if (isExecutedOnAfterOrBeforeMethod(parameterContext)) {
-      return getMappedContext(parameterContext, extensionContext).isPresent();
+      return getMappedContext(parameterContext).isPresent();
       /*
       return getMappedContext(parameterContext, extensionContext).map(pContext -> {
         return parameterisedTestParameterResolver.supportsParameter(pContext, extensionContext);
@@ -73,11 +73,10 @@ public class CustomParameterResolver implements BeforeEachMethodAdapter, Paramet
       ExtensionContext extensionContext) throws ParameterResolutionException {
 
     return parameterisedTestParameterResolver.resolveParameter(
-        getMappedContext(parameterContext, extensionContext).orElseThrow(), extensionContext);
+        getMappedContext(parameterContext).orElseThrow(), extensionContext);
   }
 
-  private Optional<MappedParameterContext> getMappedContext(ParameterContext parameterContext,
-      ExtensionContext extensionContext) {
+  private Optional<MappedParameterContext> getMappedContext(ParameterContext parameterContext) {
     if (isExecutedOnAfterOrBeforeMethod(parameterContext)) {
       return Stream.of(parameterContext.getDeclaringExecutable().getParameters())
               .filter(p -> Objects.equals(p.getType(), parameterContext.getParameter().getType()))

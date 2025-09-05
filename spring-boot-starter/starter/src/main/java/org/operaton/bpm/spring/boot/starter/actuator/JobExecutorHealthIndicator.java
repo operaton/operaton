@@ -138,7 +138,7 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
 
       public DetailsBuilder clearProcessEngineNames(Set<String> processEngineNames) {
         if (this.processEngineNames != null) {
-          this.processEngineNames.clear();
+          this.processEngineNames.removeAll(processEngineNames);
         }
         return this;
       }

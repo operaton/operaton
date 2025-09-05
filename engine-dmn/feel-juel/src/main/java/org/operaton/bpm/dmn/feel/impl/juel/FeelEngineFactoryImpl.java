@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.dmn.feel.impl.juel;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import jakarta.el.ELException;

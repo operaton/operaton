@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.history.producer;
 
 import java.util.Optional;
+
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;

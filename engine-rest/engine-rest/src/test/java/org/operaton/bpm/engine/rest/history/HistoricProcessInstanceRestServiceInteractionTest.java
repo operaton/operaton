@@ -554,18 +554,18 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
     HistoricProcessInstanceQueryImpl mockedQuery = mock(HistoricProcessInstanceQueryImpl.class);
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(mockedQuery);
 
-    final String payload = """
+    String payload = """
+    {
+      "orQueries": [
         {
-          "orQueries": [
-            {
-              "processDefinitionKey": "aKey",
-              "processInstanceBusinessKey": "aBusinessKey",
-              "completed": true,
-              "active": true
-            }
-          ]
+          "processDefinitionKey": "aKey",
+          "processInstanceBusinessKey": "aBusinessKey",
+          "completed": true,
+          "active": true
         }
-        """;
+      ]
+    }
+    """;
 
     // when
     given()

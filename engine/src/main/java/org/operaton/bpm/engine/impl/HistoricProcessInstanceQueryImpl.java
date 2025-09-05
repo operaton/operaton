@@ -887,7 +887,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   public HistoricProcessInstanceQuery active() {
     if (!isOrQueryActive) {
       ensureEmpty(BadUserRequestException.class,
-          "Already querying for historic process instance with another state", state);
+          MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_ACTIVE);
     return this;
@@ -897,7 +897,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   public HistoricProcessInstanceQuery suspended() {
     if (!isOrQueryActive) {
       ensureEmpty(BadUserRequestException.class,
-          "Already querying for historic process instance with another state", state);
+          MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_SUSPENDED);
     return this;
@@ -907,7 +907,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   public HistoricProcessInstanceQuery completed() {
     if (!isOrQueryActive) {
       ensureEmpty(BadUserRequestException.class,
-          "Already querying for historic process instance with another state", state);
+          MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_COMPLETED);
     return this;
@@ -917,7 +917,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   public HistoricProcessInstanceQuery externallyTerminated() {
     if (!isOrQueryActive) {
       ensureEmpty(BadUserRequestException.class,
-          "Already querying for historic process instance with another state", state);
+          MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED);
     return this;
@@ -927,7 +927,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   public HistoricProcessInstanceQuery internallyTerminated() {
     if (!isOrQueryActive) {
       ensureEmpty(BadUserRequestException.class,
-          "Already querying for historic process instance with another state", state);
+          MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_INTERNALLY_TERMINATED);
     return this;

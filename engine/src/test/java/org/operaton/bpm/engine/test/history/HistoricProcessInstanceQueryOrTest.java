@@ -773,7 +773,6 @@ class HistoricProcessInstanceQueryOrTest {
   }
 
   @Test
-  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   void shouldReturnByProcessDefinitionIdOrIncidentType() {
     // given
@@ -813,9 +812,8 @@ class HistoricProcessInstanceQueryOrTest {
   }
 
   @Test
-  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnHistoricProcInstWithMultipleStates() {
+  void shouldReturnHistoricProcInstWithMultipleStates() {
     // given
     setupMultipleProcessInstances();
 
@@ -832,9 +830,8 @@ class HistoricProcessInstanceQueryOrTest {
   }
 
   @Test
-  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnHistoricProcInstWithMatchingState() {
+  void shouldReturnHistoricProcInstWithMatchingState() {
     // given
     setupMultipleProcessInstances();
 
@@ -848,6 +845,73 @@ class HistoricProcessInstanceQueryOrTest {
     // then
     assertThat(processInstances).hasSize(1);
     assertThat(processInstances.get(0).getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
+  }
+
+  @Test
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnHistoricProcInstWithVarValue1OrVarValue21() {
+    // given
+    Map<String, Object> vars = new HashMap<>();
+    vars.put("stringVar", "abcdef");
+    runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
+
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+
+    String processKey = "process";
+    deployFailingProcess(processKey);
+
+    vars = new HashMap<>();
+    vars.put("stringVar", "ghijkl");
+    runtimeService.startProcessInstanceByKey(processKey, vars);
+
+    String jobId = managementService.createJobQuery().singleResult().getId();
+
+    managementService.setJobRetries(jobId, 0);
+
+    // when
+    List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
+        .withIncidents()
+        .or()
+        .variableValueEquals("stringVar", "abcdef")
+        .variableValueEquals("stringVar", "ghijkl")
+        .endOr()
+        .list();
+
+    // then
+    assertThat(processInstances).hasSize(1);
+  }
+
+  @Test
+  @Deployment(resources={"org/camunda/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnHistoricProcInstWithVarValue1OrVarValue23() {
+    // given
+    Map<String, Object> vars = new HashMap<>();
+    vars.put("stringVar", "abcdef");
+    runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
+
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+
+    String processKey = "process";
+    deployFailingProcess(processKey);
+
+    vars = new HashMap<>();
+    vars.put("stringVar", "ghijkl");
+    runtimeService.startProcessInstanceByKey(processKey, vars);
+
+    String jobId = managementService.createJobQuery().singleResult().getId();
+
+    managementService.setJobRetries(jobId, 0);
+
+    // when
+    List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
+        .or()
+        .withIncidents()
+        .variableValueEquals("stringVar", "abcdef")
+        .endOr()
+        .list();
+
+    // then
+    assertThat(processInstances).hasSize(1);
   }
 
   protected void setupMultipleProcessInstances() {
@@ -887,5 +951,21 @@ class HistoricProcessInstanceQueryOrTest {
         .byProcessInstanceId(processInstance1.getId()).suspend();
   }
 
+  protected void deployFailingProcess(String processKey) {
+    BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess(processKey)
+        .startEvent()
+        .serviceTask()
+        .operatonClass("org.operaton.bpm.engine.test.jobexecutor.FailingDelegate")
+        .operatonAsyncBefore()
+        .endEvent()
+        .done();
 
+    String deploymentId = repositoryService
+        .createDeployment()
+        .addModelInstance("foo.bpmn", aProcessDefinition)
+        .deploy()
+        .getId();
+
+    deploymentIds.add(deploymentId);
+  }
 }

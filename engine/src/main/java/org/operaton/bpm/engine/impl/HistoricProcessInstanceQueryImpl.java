@@ -886,8 +886,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Override
   public HistoricProcessInstanceQuery active() {
     if (!isOrQueryActive) {
-      ensureEmpty(BadUserRequestException.class,
-          MSG_ALREADY_QUERYING, state);
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_ACTIVE);
     return this;
@@ -896,8 +895,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Override
   public HistoricProcessInstanceQuery suspended() {
     if (!isOrQueryActive) {
-      ensureEmpty(BadUserRequestException.class,
-          MSG_ALREADY_QUERYING, state);
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_SUSPENDED);
     return this;
@@ -906,8 +904,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Override
   public HistoricProcessInstanceQuery completed() {
     if (!isOrQueryActive) {
-      ensureEmpty(BadUserRequestException.class,
-          MSG_ALREADY_QUERYING, state);
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_COMPLETED);
     return this;
@@ -916,8 +913,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Override
   public HistoricProcessInstanceQuery externallyTerminated() {
     if (!isOrQueryActive) {
-      ensureEmpty(BadUserRequestException.class,
-          MSG_ALREADY_QUERYING, state);
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED);
     return this;
@@ -926,8 +922,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Override
   public HistoricProcessInstanceQuery internallyTerminated() {
     if (!isOrQueryActive) {
-      ensureEmpty(BadUserRequestException.class,
-          MSG_ALREADY_QUERYING, state);
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
     }
     state.add(HistoricProcessInstance.STATE_INTERNALLY_TERMINATED);
     return this;

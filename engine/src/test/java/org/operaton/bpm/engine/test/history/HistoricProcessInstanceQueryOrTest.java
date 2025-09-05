@@ -773,6 +773,7 @@ class HistoricProcessInstanceQueryOrTest {
   }
 
   @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   void shouldReturnByProcessDefinitionIdOrIncidentType() {
     // given
@@ -812,6 +813,7 @@ class HistoricProcessInstanceQueryOrTest {
   }
 
   @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   void shouldReturnHistoricProcInstWithMultipleStates() {
     // given
@@ -830,6 +832,7 @@ class HistoricProcessInstanceQueryOrTest {
   }
 
   @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   void shouldReturnHistoricProcInstWithMatchingState() {
     // given
@@ -885,6 +888,7 @@ class HistoricProcessInstanceQueryOrTest {
   }
 
   @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   void shouldReturnHistoricProcInstWithVarValue1OrVarValue21() {
     // given
@@ -937,6 +941,7 @@ class HistoricProcessInstanceQueryOrTest {
   }
 
   @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   void shouldReturnHistoricProcInstWithVarValue1OrVarValue23() {
     // given
@@ -968,4 +973,5 @@ class HistoricProcessInstanceQueryOrTest {
     // then
     assertThat(processInstances).hasSize(1);
   }
+
 }

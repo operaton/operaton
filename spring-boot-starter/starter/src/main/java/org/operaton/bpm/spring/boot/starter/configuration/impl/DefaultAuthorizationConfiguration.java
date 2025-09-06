@@ -17,10 +17,15 @@
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.configuration.OperatonAuthorizationConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.AuthorizationProperty;
+import org.operaton.bpm.spring.boot.starter.configuration.OperatonAuthorizationConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 public class DefaultAuthorizationConfiguration extends AbstractOperatonConfiguration implements OperatonAuthorizationConfiguration {
+
+  public DefaultAuthorizationConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    super(operatonBpmProperties);
+  }
 
   @Override
   public void preInit(final SpringProcessEngineConfiguration configuration) {

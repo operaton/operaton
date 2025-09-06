@@ -24,6 +24,7 @@ import org.springframework.util.CollectionUtils;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.Ordering;
 import org.operaton.bpm.spring.boot.starter.property.GenericProperties;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterPropertyHelper;
 
@@ -31,6 +32,10 @@ import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterPropertyHelper
 public class GenericPropertiesConfiguration extends AbstractOperatonConfiguration {
 
   protected static final SpringBootProcessEngineLogger LOG = SpringBootProcessEngineLogger.LOG;
+
+  public GenericPropertiesConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    super(operatonBpmProperties);
+  }
 
   @Override
   public void preInit(SpringProcessEngineConfiguration springProcessEngineConfiguration) {

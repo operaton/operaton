@@ -16,15 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import jakarta.annotation.PostConstruct;
-
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonMetricsConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.MetricsProperty;
 
+import jakarta.annotation.PostConstruct;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 public class DefaultMetricsConfiguration extends AbstractOperatonConfiguration implements OperatonMetricsConfiguration {
 
   private MetricsProperty metrics;
+
+  public DefaultMetricsConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    super(operatonBpmProperties);
+  }
 
   @PostConstruct
   void init() {

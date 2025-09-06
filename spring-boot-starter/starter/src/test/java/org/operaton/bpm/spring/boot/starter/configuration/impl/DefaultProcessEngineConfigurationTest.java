@@ -31,14 +31,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultProcessEngineConfigurationTest {
 
-  private final DefaultProcessEngineConfiguration instance = new DefaultProcessEngineConfiguration();
+  private DefaultProcessEngineConfiguration instance;
   private final SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
   private final OperatonBpmProperties properties = new OperatonBpmProperties();
 
   @BeforeEach
   void setUp() {
-    ReflectionTestUtils.setField(instance, "operatonBpmProperties", properties);
-    initIdGenerator(null);
+    instance = new DefaultProcessEngineConfiguration(properties, Optional.empty());
   }
 
   @Test

@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import org.mockito.InjectMocks;
+import org.operaton.bpm.engine.impl.history.HistoryLevel;
+import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,11 +30,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import static org.mockito.Mockito.*;
 
@@ -45,8 +46,7 @@ class DefaultHistoryConfigurationTest {
   @BeforeEach
   void before() {
     operatonBpmProperties = new OperatonBpmProperties();
-    defaultHistoryConfiguration = new DefaultHistoryConfiguration();
-    defaultHistoryConfiguration.operatonBpmProperties = operatonBpmProperties;
+    defaultHistoryConfiguration = new DefaultHistoryConfiguration(operatonBpmProperties);
   }
 
   @Test

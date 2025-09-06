@@ -16,12 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.configuration.OperatonDeploymentConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -29,14 +26,22 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceArrayPropertyEditor;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.configuration.OperatonDeploymentConfiguration;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.emptySet;
 
-public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguration implements OperatonDeploymentConfiguration {
-  @SuppressWarnings({"java:S1845", "java:S116"})
+public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguration
+    implements OperatonDeploymentConfiguration {
+  @SuppressWarnings({ "java:S1845", "java:S116" })
   private final Logger LOGGER = LoggerFactory.getLogger(DefaultDeploymentConfiguration.class);
+
+  public DefaultDeploymentConfiguration(OperatonBpmProperties operatonBpmProperties) {
+    super(operatonBpmProperties);
+  }
 
   @Override
   public void preInit(SpringProcessEngineConfiguration configuration) {
@@ -57,19 +62,17 @@ public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguratio
       LOGGER.debug("resolving deployment resources for pattern {}", (Object[]) resourcePattern);
       resolver.setValue(resourcePattern);
 
-      return Arrays.stream((Resource[])resolver.getValue())
-        .peek(resource -> LOGGER.debug("processing deployment resource {}", resource))
-        .filter(this::isFile)
-        .peek(resource -> LOGGER.debug("added deployment resource {}", resource))
-        .collect(Collectors.toSet());
+      return Arrays.stream((Resource[]) resolver.getValue())
+          .peek(resource -> LOGGER.debug("processing deployment resource {}", resource))
+          .filter(this::isFile)
+          .peek(resource -> LOGGER.debug("added deployment resource {}", resource))
+          .collect(Collectors.toSet());
 
     } catch (final RuntimeException e) {
       LOGGER.error("unable to resolve resources", e);
     }
     return emptySet();
   }
-
-
 
   private boolean isFile(Resource resource) {
 
@@ -92,6 +95,5 @@ public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguratio
     LOGGER.warn("unable to determine if resource {} is a deployable resource", resource);
     return false;
   }
-
 
 }

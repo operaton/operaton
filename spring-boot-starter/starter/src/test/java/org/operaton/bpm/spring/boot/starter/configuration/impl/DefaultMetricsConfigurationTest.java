@@ -27,13 +27,13 @@ import static org.springframework.test.util.ReflectionTestUtils.invokeMethod;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 class DefaultMetricsConfigurationTest {
-  private final DefaultMetricsConfiguration defaultMetricsConfiguration = new DefaultMetricsConfiguration();
+  private DefaultMetricsConfiguration defaultMetricsConfiguration;
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
   private final SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
 
   @BeforeEach
   void setUp() {
-    setField(defaultMetricsConfiguration, "operatonBpmProperties", operatonBpmProperties);
+    defaultMetricsConfiguration = new DefaultMetricsConfiguration(operatonBpmProperties);
     defaultMetricsConfiguration.init();
 
     invokeMethod(configuration, "initMetrics");

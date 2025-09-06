@@ -24,12 +24,22 @@ import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonHistoryLevelAutoHandlingConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.Ordering;
 import org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminator;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import org.springframework.util.StringUtils;
 
 @Order(Ordering.DEFAULT_ORDER + 1)
-public class DefaultHistoryLevelAutoHandlingConfiguration extends AbstractOperatonConfiguration implements OperatonHistoryLevelAutoHandlingConfiguration {
+public class DefaultHistoryLevelAutoHandlingConfiguration extends AbstractOperatonConfiguration
+    implements OperatonHistoryLevelAutoHandlingConfiguration {
 
-  @Autowired
   protected HistoryLevelDeterminator historyLevelDeterminator;
+
+  public DefaultHistoryLevelAutoHandlingConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                                      HistoryLevelDeterminator historyLevelDeterminator) {
+    super(operatonBpmProperties);
+    this.historyLevelDeterminator = historyLevelDeterminator;
+  }
 
   @Override
   public void preInit(SpringProcessEngineConfiguration configuration) {

@@ -758,7 +758,7 @@ class HistoricExternalTaskLogQueryTest {
     // then
     assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
-      assertThat(log.getPriority() <= 2).isTrue();
+      assertThat(log.getPriority()).isLessThanOrEqualTo(2);
     }
 
   }
@@ -778,7 +778,7 @@ class HistoricExternalTaskLogQueryTest {
     // then
     assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
-      assertThat(log.getPriority() >= 2).isTrue();
+      assertThat(log.getPriority()).isGreaterThanOrEqualTo(2);
     }
 
   }

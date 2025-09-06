@@ -198,8 +198,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500);
 		topicSubscriptionManager.stop();
 
-		assertThat(t0Handler.getExecuteCount()).isEqualTo(0);
-		assertThat(t1Handler.getExecuteCount()).isEqualTo(0);
+		assertThat(t0Handler.getExecuteCount()).isZero();
+		assertThat(t1Handler.getExecuteCount()).isZero();
 	}
 
 	@Test

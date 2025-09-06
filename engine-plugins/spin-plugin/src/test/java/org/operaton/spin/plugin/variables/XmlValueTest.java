@@ -217,7 +217,7 @@ class XmlValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances).hasSize(0);
+    assertThat(variableInstances).isEmpty();
   }
 
   /**

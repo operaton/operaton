@@ -47,7 +47,7 @@ class BitMaskUtilTest {
   @Test
   void testSetBit() {
     int setBitFalse = BitMaskUtil.setBit(1, 1, false);
-    assertThat(setBitFalse).isEqualTo(0);
+    assertThat(setBitFalse).isZero();
 
     int setBitTrue = BitMaskUtil.setBit(0, 1, true);
     assertThat(setBitTrue).isEqualTo(1);

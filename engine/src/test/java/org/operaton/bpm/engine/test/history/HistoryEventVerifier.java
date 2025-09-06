@@ -16,15 +16,17 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+
 import org.assertj.core.api.Condition;
 import org.jetbrains.annotations.NotNull;
 import org.junit.rules.Verifier;
+
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Edoardo Patti

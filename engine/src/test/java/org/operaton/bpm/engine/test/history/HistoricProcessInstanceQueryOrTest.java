@@ -892,7 +892,7 @@ class HistoricProcessInstanceQueryOrTest {
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   void shouldReturnHistoricProcInstWithVarValue1OrVarValue21() {
     // given
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
 
@@ -901,7 +901,7 @@ class HistoricProcessInstanceQueryOrTest {
     String processKey = "process";
     deployFailingProcess(processKey);
 
-    vars = new HashMap<String, Object>();
+    vars = new HashMap<>();
     vars.put("stringVar", "ghijkl");
     runtimeService.startProcessInstanceByKey(processKey, vars);
 
@@ -945,7 +945,7 @@ class HistoricProcessInstanceQueryOrTest {
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   void shouldReturnHistoricProcInstWithVarValue1OrVarValue23() {
     // given
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
 
@@ -954,7 +954,7 @@ class HistoricProcessInstanceQueryOrTest {
     String processKey = "process";
     deployFailingProcess(processKey);
 
-    vars = new HashMap<String, Object>();
+    vars = new HashMap<>();
     vars.put("stringVar", "ghijkl");
     runtimeService.startProcessInstanceByKey(processKey, vars);
 

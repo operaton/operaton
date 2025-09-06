@@ -16,19 +16,21 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
-
 import java.util.Objects;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
 
 /**
  * @author Edoardo Patti
@@ -55,10 +57,10 @@ public class HistoryEventDataTest {
     runtimeService = engineRule.getRuntimeService();
 
     verifier.historyEventIs("!= null", Objects::nonNull);
-    verifier.historyEventHas("processDefinitionId != null", (evt) -> hasText(evt.getProcessDefinitionId()));
-    verifier.historyEventHas("processDefinitionKey != null", (evt) -> hasText(evt.getProcessDefinitionKey()));
-    verifier.historyEventHas("processDefinitionName != null", (evt) -> hasText(evt.getProcessDefinitionName()));
-    verifier.historyEventHas("processDefinitionVersion != null", (evt) -> evt.getProcessDefinitionVersion() != null);
+    verifier.historyEventHas("processDefinitionId != null", evt -> hasText(evt.getProcessDefinitionId()));
+    verifier.historyEventHas("processDefinitionKey != null", evt -> hasText(evt.getProcessDefinitionKey()));
+    verifier.historyEventHas("processDefinitionName != null", evt -> hasText(evt.getProcessDefinitionName()));
+    verifier.historyEventHas("processDefinitionVersion != null", evt -> evt.getProcessDefinitionVersion() != null);
   }
 
   @Test

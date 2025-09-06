@@ -1238,8 +1238,6 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     event.setExecutionId(entity.getExecutionId());
 
     event.setProcessInstanceId(entity.getProcessInstanceId());
-    event.setProcessDefinitionId(entity.getProcessDefinitionId());
-    event.setProcessDefinitionKey(entity.getProcessDefinitionKey());
     event.setTenantId(entity.getTenantId());
     event.setState(state.getStateCode());
 

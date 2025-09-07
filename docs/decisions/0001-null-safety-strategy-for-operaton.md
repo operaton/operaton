@@ -63,110 +63,54 @@ Compliance will be confirmed via code review and CI checks:
 
 ### General JSpecify considerations (applies to options 2–4)
 
-#### Pros
-
-- Public API contracts become explicit; IDEs/analyzers can detect violations earlier.
-- Alignment with tooling and documentation; annotations surface in Javadoc and IDE tooltips.
-- Can reduce redundant runtime null checks on hot paths once confidence is established.
-
-#### Cons
-
-- Requires migration effort and contributor familiarity with annotations and tool configuration.
-- Potential annotation noise without sensible defaults (e.g., package-level `@NullMarked`).
-
-#### Neutral
-
+- Good, because public API contracts become explicit; IDEs/analyzers can detect violations earlier.
+- Good, because annotations surface in Javadoc and IDE tooltips, aligning with tooling and documentation.
+- Good, because redundant runtime null checks can be reduced on hot paths once confidence is established.
+- Bad, because adoption requires migration effort and contributor familiarity with annotations and tool configuration.
+- Bad, because annotation noise can occur without sensible defaults (e.g., package-level `@NullMarked`).
 - Neutral, because a compile-only dependency means no runtime/transitive impact.
 - Neutral, because adding annotations is binary-safe; changing contracts (nullable ↔ non-null) is a behavioral change.
 - Neutral, because conventions for collections/Optional element nullability can be established.
 
 ### Status Quo — Runtime checks only, no nullability annotations
 
-#### Pros
-
-- No immediate migration cost; preserves current behavior and CI setup.
-
-#### Cons
-
-- Ambiguity about nullability persists; limited design-time guidance and tool-assisted safety.
-- Runtime overhead from defensive checks remains.
-
-#### Neutral
-
+- Good, because it has no immediate migration cost and preserves current behavior and CI setup.
 - Neutral, because runtime checks can still catch nulls at module boundaries.
+- Bad, because ambiguity about nullability persists; limited design-time guidance and tool-assisted safety.
+- Bad, because runtime overhead from defensive checks remains.
 
 ### JSpecify for New Public APIs Only
 
-#### Pros
-
-- Minimizes churn while adding clarity for newly added surfaces.
-- Allows gradual reduction of runtime checks on hot paths for new code.
-
-#### Cons
-
-- Existing APIs remain ambiguous for a long time; inconsistent experience for users.
-
-#### Neutral
-
-- Neutral, because mixed coverage can be acceptable temporarily during transition.
+- Good, because it minimizes churn while adding clarity for newly added surfaces.
+- Good, because runtime null checks can be reduced on hot paths for new code.
+- Neutral, because mixed annotation coverage can be acceptable temporarily during transition.
+- Bad, because existing APIs remain ambiguous for a long time; inconsistent experience for users.
 
 ### JSpecify for All Public APIs
 
-#### Pros
-
-- Clear, consistent contracts at API boundaries where they matter most.
-- Consistent experience for users across public APIs.
-
-#### Cons
-
-- Requires a focused sweep of public APIs and careful handling where exception semantics must be preserved.
-
-#### Neutral
-
+- Good, because it sets clear, consistent contracts at API boundaries where they matter most.
+- Good, because it provides a consistent experience for users across public APIs.
 - Neutral, because internals can adopt annotations gradually.
+- Bad, because it requires a focused sweep of public APIs and careful handling where exception semantics must be preserved.
 
 ### JSpecify Project-Wide
 
-#### Pros
-
-- Maximizes clarity and static analysis coverage across the codebase.
-
-#### Cons
-
-- Highest migration cost and risk of initial noise/false positives.
-
-#### Neutral
-
+- Good, because it maximizes clarity and static analysis coverage across the codebase.
 - Neutral, because it may be a long-term aspiration after initial adoption on public APIs.
+- Bad, because it has the highest migration cost and risk of initial noise/false positives.
 
 ### Defer Adoption — Revisit after a defined period/criteria
 
-#### Pros
-
-- Avoids immediate migration cost while gathering more ecosystem/tooling data.
-
-#### Cons
-
-- Delays benefits to users; increases future migration burden.
-
-#### Neutral
-
+- Good, because it avoids immediate migration cost while gathering more ecosystem/tooling data.
 - Neutral, because this is distinct from Status Quo: an explicit, time-bound decision to postpone, with revisit triggers (date, tooling maturity, or dependency adoption milestones).
+- Bad, because it delays benefits to users and increases future migration burden.
 
 ### Use Another Annotation Framework — JetBrains, Checker Framework, SpotBugs/FindBugs, JSR 305, Eclipse JDT
 
-#### Pros
-
-- Familiar options with existing tooling in some ecosystems; Checker Framework offers powerful type-checking.
-
-#### Cons
-
-- Potential divergence from emerging ecosystem consensus; mixed semantics across frameworks.
-- JSR 305 is legacy/unmaintained and may cause ambiguity in tooling behavior.
-
-#### Neutral
-
+- Good, because these are familiar options with existing tooling in some ecosystems; Checker Framework offers powerful type-checking.
 - Neutral, because per-module interop may require a particular framework.
+- Bad, because they may diverge from emerging ecosystem consensus and introduce mixed semantics across frameworks.
+- Bad, because JSR 305 is legacy/unmaintained and may cause ambiguity in tooling behavior.
 
 ## More Information
 

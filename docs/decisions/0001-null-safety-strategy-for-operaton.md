@@ -10,7 +10,15 @@ informed: []
 
 ## Context and Problem Statement
 
-Null safety has long been a challenge in Java. Operaton currently enforces non-null assumptions primarily at runtime using `EnsureUtil` and `Objects.requireNonNull`, but lacks a standardized, tool-friendly way to declare nullability intent across APIs, which causes ambiguity for contributors and users of the public API. JSpecify is emerging as the ecosystem's preferred approach to express nullability contracts (standardized `@Nullable`/non-null annotations, good IDE/static analysis support, ecosystem alignment such as Spring Framework 7). JSpecify is developed by consensus of major stakeholders in the Java ecosystem (e.g., Google, JetBrains, Microsoft, Oracle, Meta, Uber, Broadcom/Spring), indicating strong industry backing. Project Valhalla’s future null-related features are out of scope for the current baseline and do not remove the need for annotations in the near term. These capabilities are expected to arrive incrementally across multiple JDK releases. Operaton currently targets Java 17, so it will likely take several years until Operaton runs on a JDK that fully supports Valhalla, keeping annotation-based nullability necessary for the foreseeable future.
+Null safety is a long-standing concern in Java. Operaton currently relies primarily on runtime checks (e.g., `EnsureUtil`, `Objects.requireNonNull`) to enforce non-null assumptions. The project lacks a standardized, tool-friendly way to express nullability intent at API boundaries for design-time guidance.
+
+This ADR evaluates whether to:
+
+- Continue with runtime checks only (status quo),
+- Adopt nullability annotations (e.g., JSpecify or other frameworks such as JetBrains annotations, Checker Framework, SpotBugs/FindBugs annotations, JSR 305, or Eclipse JDT), or
+- Defer a decision and monitor potential language-level advancements (e.g., work in OpenJDK such as Project Valhalla and any future JVM/JDK nullability capabilities).
+
+JSR 305 is included for completeness as a historical option; it is no longer actively maintained and has known interoperability ambiguities. Ecosystem signals (e.g., frameworks adopting nullability annotations) are considered, but this ADR aims to remain neutral in framing the alternatives.
 
 ## Decision Drivers
 
@@ -22,12 +30,16 @@ Null safety has long been a challenge in Java. Operaton currently enforces non-n
 
 ## Considered Options
 
-1. Status Quo — Keep `EnsureUtil` and `Objects.requireNonNull`, no nullability annotations.
-2. JSpecify for New Public APIs Only — Annotate only newly introduced public APIs going forward.
-3. JSpecify for All Public APIs (Selected) — Annotate all public-facing APIs; internals optional/gradual.
-4. JSpecify Project-Wide — Annotate public and internal codebase; highest migration cost.
-5. Defer Adoption — Revisit when JSpecify/Valhalla matures further.
-6. Use Another Annotation Framework (e.g., JetBrains) — Diverges from ecosystem direction; similar migration cost.
+1. Status Quo — Runtime checks only, no nullability annotations
+2. JSpecify for New Public APIs Only — Annotate only newly introduced public APIs going forward
+3. JSpecify for All Public APIs — Annotate all public-facing APIs; internals optional/gradual
+4. JSpecify Project-Wide — Annotate public and internal codebase
+5. Defer Adoption — Revisit after a defined period/criteria
+6. Use Another Annotation Framework — e.g., JetBrains, Checker Framework, SpotBugs/FindBugs, JSR 305, Eclipse JDT
+
+### Scope separation note
+
+The JSpecify variants (new APIs only, all public APIs, project-wide) represent scope choices of the same underlying approach. They are compared here for completeness. If needed, follow-up ADRs can focus on narrowing/expanding scope once the general approach is validated.
 
 ## Decision Outcome
 
@@ -45,52 +57,116 @@ Compliance will be confirmed via code review and CI checks:
 - 100% of public APIs annotated with JSpecify.
 - CI flags nullability violations on public APIs.
 - No externally visible behavior changes (e.g., exception types) in the engine module due to refactors.
+- Public API Javadocs explicitly describe nullability semantics (whether null is accepted/returned and what happens otherwise), leveraging annotations that render in Javadoc; include short examples where behavior could be ambiguous (e.g., empty vs. null returns).
 
 ## Pros and Cons of the Options
 
-### Status Quo — Keep EnsureUtil/Objects.requireNonNull, no annotations
+### General JSpecify considerations (applies to options 2–4)
 
-- Good, because it has no immediate migration cost and preserves current behavior and CI setup.
-- Neutral, because runtime checks can still catch nulls at boundaries but provide no design-time guidance.
-- Bad, because ambiguity about nullability persists; limited tool-assisted safety; diverges from ecosystem direction.
-- Bad, because it adds runtime overhead.
+#### Pros
+
+- Public API contracts become explicit; IDEs/analyzers can detect violations earlier.
+- Alignment with tooling and documentation; annotations surface in Javadoc and IDE tooltips.
+- Can reduce redundant runtime null checks on hot paths once confidence is established.
+
+#### Cons
+
+- Requires migration effort and contributor familiarity with annotations and tool configuration.
+- Potential annotation noise without sensible defaults (e.g., package-level `@NullMarked`).
+
+#### Neutral
+
+- Neutral, because a compile-only dependency means no runtime/transitive impact.
+- Neutral, because adding annotations is binary-safe; changing contracts (nullable ↔ non-null) is a behavioral change.
+- Neutral, because conventions for collections/Optional element nullability can be established.
+
+### Status Quo — Runtime checks only, no nullability annotations
+
+#### Pros
+
+- No immediate migration cost; preserves current behavior and CI setup.
+
+#### Cons
+
+- Ambiguity about nullability persists; limited design-time guidance and tool-assisted safety.
+- Runtime overhead from defensive checks remains.
+
+#### Neutral
+
+- Neutral, because runtime checks can still catch nulls at module boundaries.
 
 ### JSpecify for New Public APIs Only
 
-- Good, because it minimizes churn and adds clarity for newly added surfaces.
-- Good, because runtime null checks can be reduced on hot paths to cut overhead.
-- Good, because null safety is part of the contract/API.
-- Neutral, because mixed annotation coverage can be acceptable temporarily.
-- Bad, because it leaves existing APIs ambiguous for a long time; inconsistent experience for users.
-- Bad, because of inconsistency in null safety across public APIs.
+#### Pros
 
-### JSpecify for All Public APIs (Selected)
+- Minimizes churn while adding clarity for newly added surfaces.
+- Allows gradual reduction of runtime checks on hot paths for new code.
 
-- Good, because it sets clear, consistent contracts at API boundaries where they matter most; strong tool support; ecosystem alignment.
-- Good, because Spring 7 adopts JSpecify, so projects using Spring and Operaton do not have to deal with multiple null-safety approaches.
-- Good, because it provides consistency in null safety across public APIs.
+#### Cons
+
+- Existing APIs remain ambiguous for a long time; inconsistent experience for users.
+
+#### Neutral
+
+- Neutral, because mixed coverage can be acceptable temporarily during transition.
+
+### JSpecify for All Public APIs
+
+#### Pros
+
+- Clear, consistent contracts at API boundaries where they matter most.
+- Consistent experience for users across public APIs.
+
+#### Cons
+
+- Requires a focused sweep of public APIs and careful handling where exception semantics must be preserved.
+
+#### Neutral
+
 - Neutral, because internals can adopt annotations gradually.
-- Bad, because it requires a focused sweep of public APIs and careful handling where exception semantics must be preserved.
 
 ### JSpecify Project-Wide
 
-- Good, because it maximizes clarity and static analysis coverage across the codebase.
-- Neutral, because it may be a long-term aspiration after initial adoption.
-- Bad, because it has the highest migration cost and risk of noise/false positives initially.
+#### Pros
 
-### Defer Adoption
+- Maximizes clarity and static analysis coverage across the codebase.
 
-- Good, because it avoids immediate cost and waits for further maturation.
-- Neutral, because current runtime checks remain in place.
-- Bad, because it delays benefits to users; misses ecosystem alignment; increases future migration burden.
-- Bad, because imitating null safety using `Objects.requireNonNull` creates runtime overhead.
+#### Cons
 
-### Use Another Annotation Framework (e.g., JetBrains)
+- Highest migration cost and risk of initial noise/false positives.
 
-- Good, because it provides similar expressiveness with existing tooling support.
-- Neutral, because many teams are familiar with these annotations.
-- Bad, because it diverges from emerging ecosystem consensus and Spring 7 alignment; offers no clear advantage over JSpecify.
-- Bad, because it risks fragmentation and potentially reduced long-term support as the ecosystem consolidates around JSpecify.
+#### Neutral
+
+- Neutral, because it may be a long-term aspiration after initial adoption on public APIs.
+
+### Defer Adoption — Revisit after a defined period/criteria
+
+#### Pros
+
+- Avoids immediate migration cost while gathering more ecosystem/tooling data.
+
+#### Cons
+
+- Delays benefits to users; increases future migration burden.
+
+#### Neutral
+
+- Neutral, because this is distinct from Status Quo: an explicit, time-bound decision to postpone, with revisit triggers (date, tooling maturity, or dependency adoption milestones).
+
+### Use Another Annotation Framework — JetBrains, Checker Framework, SpotBugs/FindBugs, JSR 305, Eclipse JDT
+
+#### Pros
+
+- Familiar options with existing tooling in some ecosystems; Checker Framework offers powerful type-checking.
+
+#### Cons
+
+- Potential divergence from emerging ecosystem consensus; mixed semantics across frameworks.
+- JSR 305 is legacy/unmaintained and may cause ambiguity in tooling behavior.
+
+#### Neutral
+
+- Neutral, because per-module interop may require a particular framework.
 
 ## More Information
 

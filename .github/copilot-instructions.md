@@ -254,6 +254,42 @@ operaton/
 - ESLint + Stylelint for code quality
 - Development server: `npm start` in `webapps/frontend/`
 
+## Backporting Instructions
+
+For issues labeled with labels starting with 'backport:' the following rules apply:
+
+Use [PR#256](https://github.com/operaton/operaton/pull/256/commits/a31bff0dd829abdbe2b66cf59ceae2f54dd9f9e2) as a reference for a proper backport.
+
+
+### Commits
+The backporting commit needs proper attribution of the original commit, including references to the backported commit, its original author and reference to the original issue.
+
+```
+Related to {REPOSISTORY}issues/{ISSUE}
+
+Backported commit {HASH} from repository {REPOSITORY_URL}.
+Original author: {AUTHOR_NAME} <{AUTHOR_EMAIL}>
+```
+
+### Adhere to the backported commit
+
+Be as close as possible to the original commit, but adapt to the current code base if necessary.
+
+The required adoptions could be:
+
+- namespace changes: `org.camunda.bpm` -> `org.operaton.bpm`
+- JUnit 4 -> JUnit 5 migration
+- JUnit 4 assertions -> AssertJ assertions
+
+### Verify the backport
+
+Verify carefully that the backport works as expected. This includes:
+
+- The code compiles and tests pass. Use `./mvnw clean install` for a verification. The build must complete without errors
+- If any dependency is changed, run the integration build
+  - Execute `.devenv/scripts/build/build-and-run-integration-tests.sh`
+  - The script must complete without errors
+
 ## Trust These Instructions
 
 These instructions are based on comprehensive repository analysis and testing of build commands. **Trust these documented commands and only search for additional information if:**

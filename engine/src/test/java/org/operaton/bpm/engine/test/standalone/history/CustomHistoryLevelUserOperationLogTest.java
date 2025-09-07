@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +39,6 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
@@ -74,7 +72,7 @@ public class CustomHistoryLevelUserOperationLogTest {
     .randomEngineName().closeEngineAfterAllTests()
     .configurator(configuration -> {
       configuration.setJdbcUrl("jdbc:h2:mem:CustomHistoryLevelUserOperationLogTest");
-      configuration.setCustomHistoryLevels(Arrays.asList(customHistoryLevelUOL));
+      configuration.setCustomHistoryLevels(List.of(customHistoryLevelUOL));
       configuration.setHistory("aCustomHistoryLevelUOL");
       configuration.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
     })
@@ -91,10 +89,8 @@ public class CustomHistoryLevelUserOperationLogTest {
   RepositoryService repositoryService;
   TaskService taskService;
   CaseService caseService;
-  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   ProcessInstance process;
-  Task userTask;
   String processTaskId;
 
   @BeforeEach

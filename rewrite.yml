@@ -144,6 +144,8 @@ recipeList:
   - org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic
   - org.openrewrite.java.testing.cleanup.AssertionsArgumentOrder
   - org.openrewrite.java.testing.assertj.CollapseConsecutiveAssertThatStatements
+  - org.openrewrite.java.testing.assertj.AssertJShortRulesRecipes$AbstractShortAssertIsZeroRecipe
+  - org.openrewrite.java.testing.assertj.StaticImports
   # Logging
   - org.openrewrite.java.logging.slf4j.ParameterizedLogging
   - org.operaton.AddLicenseHeader

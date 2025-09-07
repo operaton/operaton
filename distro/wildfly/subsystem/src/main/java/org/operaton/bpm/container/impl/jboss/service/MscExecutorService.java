@@ -24,11 +24,11 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.jboss.as.threads.ManagedQueueExecutorService;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+import org.jboss.threads.EnhancedQueueExecutor;
 
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -37,14 +37,14 @@ import org.operaton.bpm.engine.impl.jobexecutor.ExecuteJobsRunnable;
 
 public class MscExecutorService implements Service<MscExecutorService>, ExecutorService {
 
-  private static final Logger log = Logger.getLogger(MscExecutorService.class.getName());
+  private static Logger log = Logger.getLogger(MscExecutorService.class.getName());
 
-  protected final Supplier<ManagedQueueExecutorService> managedQueueSupplier;
+  protected final Supplier<EnhancedQueueExecutor> managedQueueSupplier;
   protected final Consumer<ExecutorService> provider;
 
-  private final long lastWarningLogged = System.currentTimeMillis();
+  private long lastWarningLogged = System.currentTimeMillis();
 
-  public MscExecutorService(Supplier<ManagedQueueExecutorService> managedQueueSupplier, Consumer<ExecutorService> provider) {
+  public MscExecutorService(Supplier<EnhancedQueueExecutor> managedQueueSupplier, Consumer<ExecutorService> provider) {
     this.managedQueueSupplier = managedQueueSupplier;
     this.provider = provider;
   }
@@ -84,15 +84,13 @@ public class MscExecutorService implements Service<MscExecutorService>, Executor
 
   protected boolean scheduleShortRunningWork(Runnable runnable) {
 
-    ManagedQueueExecutorService managedQueueExecutorService = managedQueueSupplier.get();
+    EnhancedQueueExecutor EnhancedQueueExecutor = managedQueueSupplier.get();
 
     try {
 
-      managedQueueExecutorService.executeBlocking(runnable);
+      EnhancedQueueExecutor.execute(runnable);
       return true;
 
-    } catch (InterruptedException e) {
-      // the the acquisition thread is interrupted, this probably means the app server is turning the lights off -> ignore
     } catch (Exception e) {
       // we must be able to schedule this
       log.log(Level.WARNING,  "Cannot schedule long running work.", e);
@@ -103,16 +101,12 @@ public class MscExecutorService implements Service<MscExecutorService>, Executor
 
   protected boolean scheduleLongRunningWork(Runnable runnable) {
 
-    final ManagedQueueExecutorService managedQueueExecutorService = managedQueueSupplier.get();
+    final EnhancedQueueExecutor EnhancedQueueExecutor = managedQueueSupplier.get();
 
     boolean rejected = false;
     try {
+      EnhancedQueueExecutor.execute(runnable);
 
-      // wait for 2 seconds for the job to be accepted by the pool.
-      managedQueueExecutorService.executeBlocking(runnable, 2, TimeUnit.SECONDS);
-
-    } catch (InterruptedException e) {
-      // the acquisition thread is interrupted, this probably means the app server is turning the lights off -> ignore
     } catch (RejectedExecutionException e) {
       rejected = true;
     } catch (Exception e) {

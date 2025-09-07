@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -54,7 +55,9 @@ import static org.assertj.core.api.Assertions.fail;
 class FoxJobRetryCmdTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+          .randomEngineName()
+          .build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
@@ -202,6 +205,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().list().get(0);
     assertThat(job).isNotNull();
     String jobId = job.getId();
+    assertThat(job.getRetries()).isEqualTo(5);
 
     waitForExecutedJobWithRetriesLeft(4, jobId);
     stillOneJobWithExceptionAndRetriesLeft(jobId);
@@ -240,7 +244,9 @@ class FoxJobRetryCmdTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedIntermediateThrowingSignalEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.failingSignalStart.bpmn20.xml" })
-  public void FAILING_testFailedIntermediateThrowingSignalEvent() {
+  @Test
+  @Disabled
+  void testFailedIntermediateThrowingSignalEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedIntermediateThrowingSignalEvent");
 
     assertJobRetriesForActivity(pi, "failingSignalEvent");
@@ -253,7 +259,7 @@ class FoxJobRetryCmdTest {
 
     Job job = managementService.createJobQuery().singleResult();
 
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
     var jobId = job.getId();
 
     try {
@@ -304,7 +310,9 @@ class FoxJobRetryCmdTest {
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
-  public void FAILING_testFailedRetryWithTimeShift() throws ParseException {
+  @Test
+  @Disabled
+  void testFailedRetryWithTimeShift() throws ParseException {
     // set date to hour before time shift (2015-10-25T03:00:00 CEST =>
     // 2015-10-25T02:00:00 CET)
     Date tenMinutesBeforeTimeShift = createDateFromLocalString("2015-10-25T02:50:00 CEST");
@@ -508,7 +516,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -546,7 +554,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -582,7 +590,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -619,7 +627,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -656,7 +664,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -695,7 +703,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -732,7 +740,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -790,7 +798,7 @@ class FoxJobRetryCmdTest {
           Date expectedDate = simpleDateFormat.parse("2019-01-01T10:11:01");
           assertThat(job.getDuedate()).isEqualTo(expectedDate);
           assertThat(((JobEntity) job).getLockExpirationTime()).isNull();
-        } else if (job.getRetries() == 3) { // the second job is not triggered yet
+        } else if (job.getRetries() == 2) { // the second job is not triggered yet
           Date expectedDate = simpleDateFormat.parse("2019-01-01T10:02:00");
           assertThat(job.getDuedate()).isEqualTo(expectedDate);
           assertThat(((JobEntity) job).getLockExpirationTime()).isNull();

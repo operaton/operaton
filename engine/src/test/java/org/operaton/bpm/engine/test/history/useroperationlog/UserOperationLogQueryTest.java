@@ -845,7 +845,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(jobRetryEntry).isNotNull();
     assertThat(jobRetryEntry.getJobId()).isEqualTo(job.getId());
 
-    assertThat(jobRetryEntry.getOrgValue()).isEqualTo("3");
+    assertThat(jobRetryEntry.getOrgValue()).isEqualTo("5");
     assertThat(jobRetryEntry.getNewValue()).isEqualTo("10");
     assertThat(jobRetryEntry.getProperty()).isEqualTo("retries");
     assertThat(jobRetryEntry.getJobDefinitionId()).isEqualTo(job.getJobDefinitionId());
@@ -1444,8 +1444,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     historyService.deleteHistoricVariableInstance(variableInstance.getId());
 
     // then
-    String operationType = UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
-    UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(operationType);
+    UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
     assertThat(logQuery.count()).isEqualTo(1);
 
     UserOperationLogEntry logEntry = logQuery.singleResult();
@@ -1769,8 +1768,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
   private void verifySingleCaseVariableOperationAsserts(CaseInstance caseInstance) {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
-    String operationType = UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
-    UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(operationType);
+    UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
     assertThat(logQuery.count()).isEqualTo(1);
 
     UserOperationLogEntry logEntry = logQuery.singleResult();

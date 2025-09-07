@@ -35,6 +35,7 @@ class LegacyJobDeclarationRetriesTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .configurator(config -> config.setLegacyJobRetryBehaviorEnabled(true))
+      .randomEngineName()
       .build();
 
   @RegisterExtension

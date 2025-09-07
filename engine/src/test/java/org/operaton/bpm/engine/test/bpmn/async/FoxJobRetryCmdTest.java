@@ -55,7 +55,9 @@ import static org.assertj.core.api.Assertions.fail;
 class FoxJobRetryCmdTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+          .randomEngineName()
+          .build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
@@ -796,7 +798,7 @@ class FoxJobRetryCmdTest {
           Date expectedDate = simpleDateFormat.parse("2019-01-01T10:11:01");
           assertThat(job.getDuedate()).isEqualTo(expectedDate);
           assertThat(((JobEntity) job).getLockExpirationTime()).isNull();
-        } else if (job.getRetries() == 3) { // the second job is not triggered yet
+        } else if (job.getRetries() == 2) { // the second job is not triggered yet
           Date expectedDate = simpleDateFormat.parse("2019-01-01T10:02:00");
           assertThat(job.getDuedate()).isEqualTo(expectedDate);
           assertThat(((JobEntity) job).getLockExpirationTime()).isNull();

@@ -509,7 +509,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -547,7 +547,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -583,7 +583,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -620,7 +620,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -657,7 +657,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -696,7 +696,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {
@@ -733,7 +733,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
     try {

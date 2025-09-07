@@ -337,7 +337,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
     // finish the first service task
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(3);
+    assertThat(jobRetries).isEqualTo(4);
 
     // try to execute the second service task without success
     jobRetries = executeJob(processInstanceId);

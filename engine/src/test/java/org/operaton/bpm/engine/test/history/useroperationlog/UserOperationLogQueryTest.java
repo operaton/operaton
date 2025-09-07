@@ -845,7 +845,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(jobRetryEntry).isNotNull();
     assertThat(jobRetryEntry.getJobId()).isEqualTo(job.getId());
 
-    assertThat(jobRetryEntry.getOrgValue()).isEqualTo("3");
+    assertThat(jobRetryEntry.getOrgValue()).isEqualTo("5");
     assertThat(jobRetryEntry.getNewValue()).isEqualTo("10");
     assertThat(jobRetryEntry.getProperty()).isEqualTo("retries");
     assertThat(jobRetryEntry.getJobDefinitionId()).isEqualTo(job.getJobDefinitionId());

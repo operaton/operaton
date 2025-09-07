@@ -21,6 +21,7 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.jobexecutor.FailingDelegate;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
@@ -29,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LegacyJobDeclarationRetriesTest {
 
@@ -38,16 +40,10 @@ class LegacyJobDeclarationRetriesTest {
       .build();
 
   @RegisterExtension
-  ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  private ManagementService managementService;
-  private RuntimeService runtimeService;
-
-  @BeforeEach
-  void init() {
-    this.managementService = engineRule.getManagementService();
-    this.runtimeService = engineRule.getRuntimeService();
-  }
+  ManagementService managementService;
+  RuntimeService runtimeService;
 
   @Test
   void testRetryTimeCycleWithZeroRetriesAndFailure() {
@@ -60,16 +56,14 @@ class LegacyJobDeclarationRetriesTest {
     // when
     String processInstanceId = runtimeService.startProcessInstanceByKey(processDefinitionName).getId();
     Job job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
+    String jobId = job.getId();
 
     // then
     assertThat(job.getRetries()).isEqualTo(3);
 
     // when
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    assertThatThrownBy(() -> managementService.executeJob(jobId))
+      .isInstanceOf(Exception.class);
     job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
 
     // then
@@ -87,16 +81,14 @@ class LegacyJobDeclarationRetriesTest {
     // when
     String processInstanceId = runtimeService.startProcessInstanceByKey(processDefinitionName).getId();
     Job job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
+    String jobId = job.getId();
 
     //then
     assertThat(job.getRetries()).isEqualTo(3);
 
     // when
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    assertThatThrownBy(() -> managementService.executeJob(jobId))
+      .isInstanceOf(Exception.class);
     job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
 
     // then
@@ -115,16 +107,14 @@ class LegacyJobDeclarationRetriesTest {
     // when
     String processInstanceId = runtimeService.startProcessInstanceByKey(processDefinitionName).getId();
     Job job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
+    String jobId = job.getId();
 
     // then
     assertThat(job.getRetries()).isEqualTo(3);
 
     // when
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    assertThatThrownBy(() -> managementService.executeJob(jobId))
+      .isInstanceOf(Exception.class);
 
     // then
     job = managementService.createJobQuery().singleResult();

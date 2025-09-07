@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.assertions.cmmn;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.MapAssert;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -34,6 +33,8 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.assertions.bpmn.AbstractProcessAssert;
 import org.operaton.bpm.engine.test.assertions.bpmn.TaskAssert;
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A extends CaseExecution> extends AbstractProcessAssert<S, A> {
 
@@ -144,7 +145,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    */
   protected CaseInstanceAssert isCaseInstance() {
     isNotNull();
-    Assertions.assertThat(actual.getCaseInstanceId())
+    assertThat(actual.getCaseInstanceId())
         .overridingErrorMessage("Expected %s to be the case instance, but found it not to be!").isEqualTo(actual.getId());
     return CaseInstanceAssert.assertThat(engine, (CaseInstance) actual);
   }
@@ -235,7 +236,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     CaseExecutionAssert caseExecutionAssert = descendantCaseExecution(query);
     CaseExecution caseExecution = caseExecutionAssert.getActual();
     if (caseExecution != null) {
-      Assertions.assertThat(caseExecution.getParentId()).isEqualTo(actual.getId());
+      assertThat(caseExecution.getParentId()).isEqualTo(actual.getId());
     }
     return new CaseExecutionAssert(engine, caseExecution);
   }
@@ -520,11 +521,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * @return  this {@link TaskAssert}
    */
   private S hasState(CaseExecutionState state) {
-    Assertions.assertThat(actual).isNotNull();
+    assertThat(actual).isNotNull();
     CaseExecution current = getCurrent();
     int actualState = current != null ? ((CaseExecutionEntity) current).getState() : getHistoricState();
-    Assertions
-        .assertThat(actualState)
+    assertThat(actualState)
         .overridingErrorMessage(
       "Expected %s to be in state '%s', but found it to be '%s'!".formatted(
         toString(actual),
@@ -542,9 +542,8 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * @return  this {@link TaskAssert}
    */
   private S hasType(String type) {
-    Assertions.assertThat(actual).isNotNull();
-    Assertions
-        .assertThat(actual.getActivityType())
+    assertThat(actual).isNotNull();
+    assertThat(actual.getActivityType())
         .overridingErrorMessage(
           "Expected %s to be a '%s', but found it to be a '%s'!".formatted(toString(actual), type, actual.getActivityType()))
         .isEqualTo(type);
@@ -572,7 +571,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
         .singleResult();
     String message = "Please make sure you have set the history service of the engine to "
         + "at least level 'activity' or a higher level before making use of this assertion!";
-    Assertions.assertThat(historicCaseActivityInstance).overridingErrorMessage(message).isNotNull();
+    assertThat(historicCaseActivityInstance).overridingErrorMessage(message).isNotNull();
     return ((HistoricCaseActivityInstanceEntity) historicCaseActivityInstance).getCaseActivityInstanceState();
   }
 
@@ -619,7 +618,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    *         are available.
    */
   protected MapAssert<String, Object> variables() {
-    return Assertions.assertThat(vars());
+    return assertThat(vars());
   }
 
   /* Return variables map - independent of running/historic instance status */

@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.Assertions;
 
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ExternalTaskService;
@@ -44,6 +43,8 @@ import org.operaton.bpm.engine.runtime.ExecutionQuery;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.TaskQuery;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A>, A> extends AbstractAssert<S, A> {
 
@@ -70,11 +71,11 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
    * the actual object under test and expecting that such a current state actually exists.
    */
   protected A getExistingCurrent() {
-    Assertions.assertThat(actual)
+    assertThat(actual)
       .overridingErrorMessage("Expecting assertion to be called on non-null object, but found it to be null!")
       .isNotNull();
     A current =getCurrent();
-    Assertions.assertThat(current)
+    assertThat(current)
       .overridingErrorMessage(
         "Expecting %s to be unfinished, but found that it already finished!",
         toString(actual))

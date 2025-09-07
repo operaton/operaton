@@ -20,8 +20,8 @@ import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.jobexecutor.FailingDelegate;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JobDeclarationRetriesTest {
 
   @RegisterExtension
-  static ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
   @RegisterExtension
   ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
@@ -43,7 +43,7 @@ class JobDeclarationRetriesTest {
 
   @BeforeEach
   void init() {
-    this.managementService = engineRule.getProcessEngine().getManagementService();
+    this.managementService = engineRule.getManagementService();
     this.runtimeService = engineRule.getRuntimeService();
   }
 

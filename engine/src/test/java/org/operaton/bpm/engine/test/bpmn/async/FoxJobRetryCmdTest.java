@@ -202,6 +202,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().list().get(0);
     assertThat(job).isNotNull();
     String jobId = job.getId();
+    assertThat(job.getRetries()).isEqualTo(5);
 
     waitForExecutedJobWithRetriesLeft(4, jobId);
     stillOneJobWithExceptionAndRetriesLeft(jobId);
@@ -253,7 +254,7 @@ class FoxJobRetryCmdTest {
 
     Job job = managementService.createJobQuery().singleResult();
 
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
     var jobId = job.getId();
 
     try {

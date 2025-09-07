@@ -341,7 +341,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
     // try to execute the second service task without success
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(3);
+    assertThat(jobRetries).isEqualTo(4);
     currentTime = DateUtils.addMinutes(currentTime, 3);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);

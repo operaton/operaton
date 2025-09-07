@@ -155,7 +155,7 @@ class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithDuplicateFilteringForDifferentTenantsRepeated() {
+  void deploymentWithDuplicateFilteringForDifferentTenantsRepeated() {
     // given: a deployment with tenant ID
     createDeploymentBuilder()
         .enableDuplicateFiltering(false)

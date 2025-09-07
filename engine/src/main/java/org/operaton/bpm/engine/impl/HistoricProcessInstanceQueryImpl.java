@@ -45,7 +45,6 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmpt
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
 /**
  * @author Tom Baeyens

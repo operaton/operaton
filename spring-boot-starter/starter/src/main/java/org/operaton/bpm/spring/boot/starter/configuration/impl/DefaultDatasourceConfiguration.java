@@ -16,21 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import jakarta.annotation.Nullable;
 import java.util.Optional;
+
 import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.util.StringUtils;
 
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonDatasourceConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.DatabaseProperty;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.util.StringUtils;
 
 public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguration
-    implements OperatonDatasourceConfiguration {
+  implements OperatonDatasourceConfiguration {
 
   protected PlatformTransactionManager transactionManager;
 

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonHistoryConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class DefaultHistoryConfiguration extends AbstractOperatonConfiguration implements OperatonHistoryConfiguration {
 

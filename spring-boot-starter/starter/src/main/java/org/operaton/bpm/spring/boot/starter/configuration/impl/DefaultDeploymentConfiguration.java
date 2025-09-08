@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.configuration.OperatonDeploymentConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -26,16 +29,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceArrayPropertyEditor;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.configuration.OperatonDeploymentConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import static java.util.Collections.emptySet;
 
 public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguration
-    implements OperatonDeploymentConfiguration {
+  implements OperatonDeploymentConfiguration {
   @SuppressWarnings({ "java:S1845", "java:S116" })
   private final Logger LOGGER = LoggerFactory.getLogger(DefaultDeploymentConfiguration.class);
 

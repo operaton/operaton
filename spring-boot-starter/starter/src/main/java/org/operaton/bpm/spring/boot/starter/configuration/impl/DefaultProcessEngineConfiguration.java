@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import org.operaton.bpm.engine.ProcessEngines;
@@ -30,7 +29,7 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 public class DefaultProcessEngineConfiguration extends AbstractOperatonConfiguration
     implements OperatonProcessEngineConfiguration {
 
-  private Optional<IdGenerator> idGenerator;
+  private final Optional<IdGenerator> idGenerator;
 
   public DefaultProcessEngineConfiguration(OperatonBpmProperties operatonBpmProperties,
                                            Optional<IdGenerator> idGenerator) {

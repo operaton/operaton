@@ -16,12 +16,21 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminatorJdbcTemplateImpl.createHistoryLevelDeterminator;
-
 import java.util.List;
-
 import java.util.Optional;
+
 import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Import;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.PlatformTransactionManager;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
@@ -40,8 +49,6 @@ import org.operaton.bpm.spring.boot.starter.configuration.OperatonMetricsConfigu
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.condition.NeedsHistoryAutoConfigurationCondition;
 import org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration;
-import org.operaton.bpm.spring.boot.starter.configuration.impl.custom.CreateAdminUserConfiguration;
-import org.operaton.bpm.spring.boot.starter.configuration.impl.custom.CreateFilterConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultAuthorizationConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultDatasourceConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultDeploymentConfiguration;
@@ -53,23 +60,17 @@ import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultJobConfigu
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultMetricsConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.GenericPropertiesConfiguration;
+import org.operaton.bpm.spring.boot.starter.configuration.impl.custom.CreateAdminUserConfiguration;
+import org.operaton.bpm.spring.boot.starter.configuration.impl.custom.CreateFilterConfiguration;
 import org.operaton.bpm.spring.boot.starter.event.EventPublisherPlugin;
 import org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminator;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.telemetry.OperatonIntegrationDeterminator;
 import org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.context.annotation.Import;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.PlatformTransactionManager;
 
-@Import({ JobConfiguration.class, IdGeneratorConfiguration.class })
+import static org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminatorJdbcTemplateImpl.createHistoryLevelDeterminator;
+
+@Import({JobConfiguration.class, IdGeneratorConfiguration.class})
 public class OperatonBpmConfiguration {
 
   @Bean

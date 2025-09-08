@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.StringUtils;
 
@@ -25,13 +24,10 @@ import org.operaton.bpm.spring.boot.starter.configuration.OperatonHistoryLevelAu
 import org.operaton.bpm.spring.boot.starter.configuration.Ordering;
 import org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminator;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.util.StringUtils;
 
 @Order(Ordering.DEFAULT_ORDER + 1)
 public class DefaultHistoryLevelAutoHandlingConfiguration extends AbstractOperatonConfiguration
-    implements OperatonHistoryLevelAutoHandlingConfiguration {
+  implements OperatonHistoryLevelAutoHandlingConfiguration {
 
   protected HistoryLevelDeterminator historyLevelDeterminator;
 

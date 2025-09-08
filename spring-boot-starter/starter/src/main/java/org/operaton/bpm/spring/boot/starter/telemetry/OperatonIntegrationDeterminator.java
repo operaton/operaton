@@ -19,7 +19,6 @@ package org.operaton.bpm.spring.boot.starter.telemetry;
 import java.util.Set;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 
 import org.operaton.bpm.engine.ProcessEngine;

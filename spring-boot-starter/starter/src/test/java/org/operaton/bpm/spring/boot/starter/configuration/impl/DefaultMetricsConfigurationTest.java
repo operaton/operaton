@@ -24,7 +24,6 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.util.ReflectionTestUtils.invokeMethod;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 class DefaultMetricsConfigurationTest {
   private DefaultMetricsConfiguration defaultMetricsConfiguration;

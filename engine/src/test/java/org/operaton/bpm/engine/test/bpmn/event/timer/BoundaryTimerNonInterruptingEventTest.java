@@ -53,6 +53,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Joram Barrez
@@ -610,11 +611,7 @@ class BoundaryTimerNonInterruptingEventTest {
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
     // when (2)
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobIgnoringException(managementService, jobId);
 
     // then (2)
     failedJob = failedJobQuery.singleResult();

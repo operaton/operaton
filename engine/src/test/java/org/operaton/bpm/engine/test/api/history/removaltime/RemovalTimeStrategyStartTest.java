@@ -75,6 +75,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Tassilo Weidner
@@ -909,12 +910,8 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) {
-      // expected
-    }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
@@ -943,12 +940,8 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) {
-      // expected
-    }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
 
@@ -1010,12 +1003,8 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) {
-      // expected
-    }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricJobLog> jobLog = historyService.createHistoricJobLogQuery().list();
 
@@ -1638,12 +1627,8 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) {
-      // expected
-    }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity) historyService.createHistoricJobLogQuery()
       .jobExceptionMessage("I'm supposed to fail!")

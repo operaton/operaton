@@ -36,6 +36,7 @@ import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCle
 import static org.apache.commons.lang3.time.DateUtils.addDays;
 import static org.apache.commons.lang3.time.DateUtils.addSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Tassilo Weidner
@@ -85,9 +86,7 @@ class HistoryCleanupSchedulerJobLogTest extends AbstractHistoryCleanupSchedulerT
     ClockUtil.setCurrentTime(END_DATE);
 
     for (int i = 0; i < 5; i++) {
-      try {
-        managementService.executeJob(jobId);
-      } catch (Exception ignored) { }
+      executeJobIgnoringException(managementService, jobId);
     }
 
     managementService.executeJob(jobId);
@@ -126,9 +125,7 @@ class HistoryCleanupSchedulerJobLogTest extends AbstractHistoryCleanupSchedulerT
     ClockUtil.setCurrentTime(END_DATE);
 
     for (int i = 0; i < 5; i++) {
-      try {
-        managementService.executeJob(jobId);
-      } catch (Exception ignored) { }
+      executeJobIgnoringException(managementService, jobId);
     }
 
     managementService.executeJob(jobId);

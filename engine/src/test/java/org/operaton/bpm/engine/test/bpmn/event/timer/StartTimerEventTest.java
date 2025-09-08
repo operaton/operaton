@@ -64,6 +64,7 @@ import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.within;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Joram Barrez
@@ -1389,11 +1390,7 @@ class StartTimerEventTest {
     moveByMinutes(5);
 
     // when (1)
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobIgnoringException(managementService, jobId);
 
     // then (1)
     Job failedJob = failedJobQuery.singleResult();

@@ -79,6 +79,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeRule.addDays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -1292,10 +1293,7 @@ class BatchSetRemovalTimeInChunksTest {
 
     String jobId = managementService.createJobQuery().singleResult().getId();
 
-    try {
-      managementService.executeJob(jobId);
-
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricJobLog historicJobLog = historyService.createHistoricJobLogQuery()
       .failureLog()
@@ -2381,10 +2379,7 @@ class BatchSetRemovalTimeInChunksTest {
 
     String jobId = managementService.createJobQuery().singleResult().getId();
 
-    try {
-      managementService.executeJob(jobId);
-
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricJobLog historicJobLog = historyService.createHistoricJobLogQuery()
       .failureLog()

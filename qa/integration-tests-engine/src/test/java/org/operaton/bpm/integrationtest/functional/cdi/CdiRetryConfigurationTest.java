@@ -35,6 +35,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+
 @ExtendWith(ArquillianExtension.class)
 public class CdiRetryConfigurationTest extends AbstractFoxPlatformIntegrationTest {
 
@@ -72,11 +74,7 @@ public class CdiRetryConfigurationTest extends AbstractFoxPlatformIntegrationTes
     Job job = query.singleResult();
 
     // when job fails
-     try {
-       managementService.executeJob(job.getId());
-     } catch (Exception e) {
-       // ignore
-     }
+    executeJobIgnoringException(managementService, job.getId());
 
      // then
      job = query.singleResult();

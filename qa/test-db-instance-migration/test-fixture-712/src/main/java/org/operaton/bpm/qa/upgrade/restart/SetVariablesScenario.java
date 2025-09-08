@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+
 public final class SetVariablesScenario {
 
   private SetVariablesScenario() {
@@ -48,11 +50,7 @@ public final class SetVariablesScenario {
         .processDefinitionKey("asyncBeforeStartProcess_712")
         .processInstanceId(processInstanceWithInitialVariables.getId())
         .singleResult();
-      try {
-        managementService.executeJob(firstJob.getId());
-      } catch (Exception e) {
-        // ignore
-      }
+      executeJobIgnoringException(managementService, firstJob.getId());
 
       ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey("asyncBeforeStartProcess_712")

@@ -61,6 +61,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Tassilo Weidner
@@ -404,10 +405,8 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
@@ -432,10 +431,8 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
 
@@ -490,10 +487,8 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricJobLog> jobLog = historyService.createHistoricJobLogQuery().list();
 
@@ -1048,10 +1043,8 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity) historyService.createHistoricJobLogQuery()
       .jobExceptionMessage("I'm supposed to fail!")

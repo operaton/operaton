@@ -34,6 +34,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+
 /**
  * <p>Integration test that makes sure the shared container managed process engine is able to resolve
  * Spring beans form a process application</p>
@@ -101,11 +103,7 @@ public class SpringRetryConfigurationTest extends AbstractFoxPlatformIntegration
     Job job = query.singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = query.singleResult();

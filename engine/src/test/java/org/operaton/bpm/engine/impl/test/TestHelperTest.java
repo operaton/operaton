@@ -17,8 +17,13 @@
 package org.operaton.bpm.engine.impl.test;
 
 import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 
 class TestHelperTest {
 
@@ -82,6 +87,13 @@ class TestHelperTest {
   }
 
   static class SomeOtherTestClass extends SomeTestClass {
+  }
+
+  @Test
+  void shouldIgnoreExceptionsDuringJobExecution() {
+    ManagementService managementService = mock(ManagementService.class);
+    doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
+    assertDoesNotThrow(() -> TestHelper.executeJobIgnoringException(managementService, "aJobId"));
   }
 
 }

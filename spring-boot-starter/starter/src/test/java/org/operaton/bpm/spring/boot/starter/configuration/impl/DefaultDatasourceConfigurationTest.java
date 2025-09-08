@@ -29,6 +29,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -36,12 +38,15 @@ import static org.mockito.Mockito.mock;
 class DefaultDatasourceConfigurationTest {
 
   @Mock
-  private PlatformTransactionManager platformTransactionManager;
+  PlatformTransactionManager platformTransactionManager;
+
+  @Mock
+  Optional<PlatformTransactionManager> operatonTransactionManager;
 
   @InjectMocks
-  private DefaultDatasourceConfiguration defaultDatasourceConfiguration;
+  DefaultDatasourceConfiguration defaultDatasourceConfiguration;
 
-  private SpringProcessEngineConfiguration configuration;
+  SpringProcessEngineConfiguration configuration;
 
   @BeforeEach
   void before() {

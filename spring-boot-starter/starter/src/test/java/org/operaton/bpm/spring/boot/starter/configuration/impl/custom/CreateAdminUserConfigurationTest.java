@@ -22,7 +22,6 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -43,8 +42,7 @@ class CreateAdminUserConfigurationTest {
     properties.getAdminUser().setId("admin");
     properties.getAdminUser().setPassword("password");
 
-    var adminUserConfiguration = new CreateAdminUserConfiguration();
-    ReflectionTestUtils.setField(adminUserConfiguration, "operatonBpmProperties", properties);
+    var adminUserConfiguration = new CreateAdminUserConfiguration(properties);
     adminUserConfiguration.init();
     return adminUserConfiguration;
   }

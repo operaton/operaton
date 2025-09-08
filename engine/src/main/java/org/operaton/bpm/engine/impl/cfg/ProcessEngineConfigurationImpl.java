@@ -996,7 +996,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * This legacy behavior sets the retry counter to 3 in the context when running a job for the first time.
    * This has been patched up to fetch the correct counter value.
    */
-  protected boolean legacyJobRetryBehaviorEnabled = false;
+  protected boolean legacyJobRetryBehaviorEnabled;
 
   /**
    * @return {@code true} if the exception code feature is disabled and vice-versa.

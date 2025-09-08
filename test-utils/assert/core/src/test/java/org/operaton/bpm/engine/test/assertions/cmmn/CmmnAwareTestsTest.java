@@ -38,8 +38,8 @@ import org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions;
 import org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 import org.operaton.bpm.engine.test.assertions.helpers.CaseExecutionQueryFluentAnswer;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;

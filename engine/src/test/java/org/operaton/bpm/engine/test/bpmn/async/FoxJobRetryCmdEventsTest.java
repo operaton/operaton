@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.deployment;
 import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareCompensationEventProcess;
 import static org.operaton.bpm.engine.test.bpmn.async.RetryCmdDeployment.prepareEscalationEventProcess;
@@ -90,10 +91,7 @@ public class FoxJobRetryCmdEventsTest {
 
     Job job = fetchJob(pi.getProcessInstanceId());
 
-    try {
-      engineRule.getManagementService().executeJob(job.getId());
-    } catch (Exception e) {
-    }
+    executeJobIgnoringException(engineRule.getManagementService(), job.getId());
 
     // update job
     job = fetchJob(pi.getProcessInstanceId());

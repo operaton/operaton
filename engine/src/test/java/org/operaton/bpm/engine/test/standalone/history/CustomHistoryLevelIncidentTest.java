@@ -61,6 +61,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 @Parameterized
 public class CustomHistoryLevelIncidentTest {
@@ -251,9 +252,7 @@ public class CustomHistoryLevelIncidentTest {
     }
 
     for (Job job : jobs) {
-      try {
-        managementService.executeJob(job.getId());
-      } catch (Exception e) {}
+      executeJobIgnoringException(managementService, job.getId());
     }
 
     executeAvailableJobs();

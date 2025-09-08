@@ -42,6 +42,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Thorben Lindhauer
@@ -385,12 +386,7 @@ class ProcessInstanceModificationHistoryTest {
 
   protected void executeJob(Job job) {
     while (job != null && job.getRetries() > 0) {
-      try {
-        managementService.executeJob(job.getId());
-      }
-      catch (Exception e) {
-        // ignore
-      }
+      executeJobIgnoringException(managementService, job.getId());
 
       job = managementService.createJobQuery().jobId(job.getId()).singleResult();
     }

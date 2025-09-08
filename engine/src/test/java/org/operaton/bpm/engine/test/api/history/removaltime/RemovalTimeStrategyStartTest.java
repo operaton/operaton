@@ -2003,11 +2003,7 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     List<Job> jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
-      try {
-        managementService.executeJob(job.getId());
-      } catch (RuntimeException ignored) {
-        // expected
-      }
+      executeJobIgnoringException(managementService, job.getId());
     }
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity)historyService.createHistoricJobLogQuery()

@@ -46,6 +46,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Daniel Meyer
@@ -760,11 +761,7 @@ class AsyncAfterTest {
     Job job = managementService.createJobQuery().singleResult();
 
    // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();

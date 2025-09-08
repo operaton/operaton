@@ -1404,11 +1404,7 @@ class StartTimerEventTest {
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
     // when (2)
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobIgnoringException(managementService, jobId);
 
     // then (2)
     failedJob = failedJobQuery.singleResult();
@@ -1658,11 +1654,7 @@ class StartTimerEventTest {
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
     // when (2)
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobIgnoringException(managementService, jobId);
 
     // then (2)
     failedJob = failedJobQuery.singleResult();
@@ -1931,10 +1923,7 @@ class StartTimerEventTest {
     String nextJobId = getNextExecutableJobId();
 
     while (nextJobId != null) {
-      try {
-        managementService.executeJob(nextJobId);
-      } catch (Throwable t) { /* ignore */
-      }
+      executeJobIgnoringException(managementService, nextJobId);
       nextJobId = getNextExecutableJobId();
     }
 

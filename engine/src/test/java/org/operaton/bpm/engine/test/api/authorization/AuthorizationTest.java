@@ -67,6 +67,7 @@ import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVO
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Roman Smirnov
@@ -574,10 +575,7 @@ public abstract class AuthorizationTest {
       }
 
       for (Job job : jobs) {
-        try {
-          managementService.executeJob(job.getId());
-        } catch (Exception e) {
-        }
+        executeJobIgnoringException(managementService, job.getId());
       }
 
       executeAvailableJobs(key);

@@ -28,6 +28,8 @@ import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 import org.operaton.bpm.qa.upgrade.Times;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+
 /**
  * @author Nikola Koevski
  */
@@ -74,11 +76,7 @@ public class IncidentTimestampScenario extends AbstractTimestampMigrationScenari
       return;
     }
 
-    try {
-      processEngine.getManagementService().executeJob(job.getId());
-    } catch (Exception ex) {
-      // noop
-    }
+    executeJobIgnoringException(processEngine.getManagementService(), job.getId());
 
     causeIncident(processEngine, processInstanceId);
   }

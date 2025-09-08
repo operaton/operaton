@@ -38,6 +38,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
@@ -236,11 +237,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -408,11 +405,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   private int executeJob(String processInstanceId) {
     Job job = fetchJob(processInstanceId);
 
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     job = fetchJob(processInstanceId);
 

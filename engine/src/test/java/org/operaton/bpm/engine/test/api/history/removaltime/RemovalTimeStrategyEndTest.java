@@ -2212,9 +2212,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
     List<Job> jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
-      try {
-        managementService.executeJob(job.getId());
-      } catch (RuntimeException ignored) { }
+      executeJobIgnoringException(managementService, job.getId());
     }
 
     jobs = managementService.createJobQuery().list();

@@ -515,6 +515,7 @@ public abstract class MockProvider {
   public static final Boolean EXAMPLE_WITH_EXCEPTION = true;
   public static final Boolean EXAMPLE_NO_RETRIES_LEFT = true;
   public static final Boolean EXAMPLE_JOB_IS_SUSPENDED = true;
+  public static final Boolean EXAMPLE_ACQUIRED = true;
   public static final long EXAMPLE_JOB_PRIORITY = Integer.MAX_VALUE + 42l;
 
   public static final String EXAMPLE_RESOURCE_TYPE_NAME = "exampleResource";

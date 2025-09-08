@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Locale;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,12 +30,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.operaton.bpm.util.SeleniumScreenshotExtension;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Locale;
+import org.operaton.bpm.util.SeleniumScreenshotExtension;
 
 public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest {
 

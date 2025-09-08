@@ -34,6 +34,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
+import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -71,7 +74,7 @@ class RestIT extends AbstractWebIntegrationTest {
     // get process definitions for default engine
     log.info("Checking " + appBasePath + PROCESS_DEFINITION_PATH);
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + PROCESS_DEFINITION_PATH)
-            .header("Accept", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
     assertThat(response.getStatus()).isEqualTo(200);
@@ -86,7 +89,7 @@ class RestIT extends AbstractWebIntegrationTest {
       JSONObject definitionJson = definitionsJson.getJSONObject(i);
       assertTrue(definitionJson.isNull("description"));
       assertFalse(definitionJson.getBoolean("suspended"));
-      if (definitionJson.getString("key").equals("ReviewInvoice")) {
+      if ("ReviewInvoice".equals(definitionJson.getString("key"))) {
         assertEquals("http://bpmn.io/schema/bpmn", definitionJson.getString("category"));
         assertEquals("Review Invoice", definitionJson.getString("name"));
         assertEquals("reviewInvoice.bpmn", definitionJson.getString("resource"));
@@ -101,12 +104,12 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  void assertJodaTimePresent() throws Exception {
+  void assertJodaTimePresent() {
     log.info("Checking " + appBasePath + TASK_PATH);
 
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + TASK_PATH)
             .queryString("dueAfter", "2000-01-01T00:00:00.000+0200")
-            .header("Accept", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
     assertThat(response.getStatus()).isEqualTo(200);
@@ -127,8 +130,8 @@ class RestIT extends AbstractWebIntegrationTest {
     requestBody.put("executionDate", "2014-08-25T13:55:45");
 
     HttpResponse<String> response = Unirest.put(appBasePath + JOB_DEFINITION_PATH + "/suspended")
-            .header("Accept", "application/json")
-            .header("Content-Type", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
             .body(requestBody)
             .asString();
 
@@ -148,7 +151,7 @@ class RestIT extends AbstractWebIntegrationTest {
     String taskId = getFirstTask().getString("id");
 
     String resourcePath = appBasePath + TASK_PATH + "/" + taskId;
-    log.info("Checking " + resourcePath);
+    log.info(() -> "Checking {}" + resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
 
@@ -166,8 +169,8 @@ class RestIT extends AbstractWebIntegrationTest {
     filter.put("query", query);
 
     HttpResponse<JsonNode> response = Unirest.post(appBasePath + FILTER_PATH + "/create")
-            .header("Accept", "application/json")
-            .header("Content-Type", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
             .body(filter)
             .asJson();
 
@@ -175,7 +178,7 @@ class RestIT extends AbstractWebIntegrationTest {
     String filterId = response.getBody().getObject().getString("id");
 
     String resourcePath = appBasePath + FILTER_PATH + "/" + filterId + "/list";
-    log.info("Checking " + resourcePath);
+    log.info(() -> "Checking " + resourcePath);
 
     assertMediaTypesOfResource(resourcePath, true);
 
@@ -189,7 +192,7 @@ class RestIT extends AbstractWebIntegrationTest {
   void shouldSerializeDateWithDefinedFormat() throws Exception {
     // when
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + SCHEMA_LOG_PATH)
-            .header("Accept", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
     // Then
@@ -220,11 +223,11 @@ class RestIT extends AbstractWebIntegrationTest {
    * Uses Jackson's object mapper directly
    */
   @Test
-  void testProcessInstanceQuery() throws Exception {
+  void testProcessInstanceQuery() {
     // Send GET request with query parameter and accept header
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + PROCESS_INSTANCE_PATH)
             .queryString("variables", "invoiceNumber_eq_GPFE-23232323")
-            .header("Accept", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
     JSONArray instancesJson = response.getBody().getArray();
@@ -240,7 +243,7 @@ class RestIT extends AbstractWebIntegrationTest {
   void testComplexObjectJacksonSerialization() throws Exception {
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + PROCESS_DEFINITION_PATH + "/statistics")
             .queryString("incidents", "true")
-            .header("Accept", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
     JSONArray definitionStatistics = response.getBody().getArray();
@@ -272,7 +275,7 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  void testOptionsRequest() throws Exception {
+  void testOptionsRequest() {
     // Given
     String resourcePath = appBasePath + FILTER_PATH;
     log.info("Send OPTIONS request to " + resourcePath);
@@ -291,8 +294,8 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void testEmptyBodyFilterIsActive() {
     HttpResponse<String> response = Unirest.post(appBasePath + FILTER_PATH + "/create")
-            .header("Accept", "application/json")
-            .header("Content-Type", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
             .body("")
             .asString();
 
@@ -301,7 +304,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   protected JSONObject getFirstTask() throws Exception {
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + TASK_PATH)
-            .header("Accept", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
     JSONArray tasks = response.getBody().getArray();
@@ -311,7 +314,7 @@ class RestIT extends AbstractWebIntegrationTest {
   protected JSONObject getFirstHistoricVariableUpdates() throws Exception {
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + HISTORIC_DETAIL_PATH)
             .queryString("variableUpdates", "true")
-            .header("Accept", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
     JSONArray updates = response.getBody().getArray();
@@ -319,13 +322,13 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   protected void assertMediaTypesOfResource(String resourcePath, boolean postSupported) {
-    assertMediaTypes(resourcePath, postSupported, "application/json");
-    assertMediaTypes(resourcePath, postSupported, "application/json", "*/*");
-    assertMediaTypes(resourcePath, postSupported, "application/json", "application/json");
+    assertMediaTypes(resourcePath, postSupported, APPLICATION_JSON);
+    assertMediaTypes(resourcePath, postSupported, APPLICATION_JSON, "*/*");
+    assertMediaTypes(resourcePath, postSupported, APPLICATION_JSON, APPLICATION_JSON);
     assertMediaTypes(resourcePath, postSupported, Hal.APPLICATION_HAL_JSON, Hal.APPLICATION_HAL_JSON);
     assertMediaTypes(resourcePath, postSupported, Hal.APPLICATION_HAL_JSON, Hal.APPLICATION_HAL_JSON, "application/json; q=0.5");
-    assertMediaTypes(resourcePath, postSupported, "application/json", Hal.APPLICATION_HAL_JSON + "; q=0.5", "application/json");
-    assertMediaTypes(resourcePath, postSupported, "application/json", Hal.APPLICATION_HAL_JSON + "; q=0.5 ",
+    assertMediaTypes(resourcePath, postSupported, APPLICATION_JSON, Hal.APPLICATION_HAL_JSON + "; q=0.5", APPLICATION_JSON);
+    assertMediaTypes(resourcePath, postSupported, APPLICATION_JSON, Hal.APPLICATION_HAL_JSON + "; q=0.5 ",
             "application/json; q=0.6");
     assertMediaTypes(resourcePath, postSupported, Hal.APPLICATION_HAL_JSON, Hal.APPLICATION_HAL_JSON + "; q=0.6",
             "application/json; q=0.5");
@@ -336,16 +339,16 @@ class RestIT extends AbstractWebIntegrationTest {
           String... acceptMediaTypes) {
     // Test GET request
     HttpResponse<String> response = Unirest.get(resourcePath)
-            .header("Accept", String.join(",", acceptMediaTypes))
+            .header(ACCEPT, String.join(",", acceptMediaTypes))
             .asString();
     assertMediaType(response, expectedMediaType);
 
     if (postSupported) {
       // Test POST request
       response = Unirest.post(resourcePath)
-              .header("Accept", String.join(",", acceptMediaTypes))
-              .header("Content-Type", "application/json")
-              .body(Collections.EMPTY_MAP)
+              .header(ACCEPT, String.join(",", acceptMediaTypes))
+              .header(CONTENT_TYPE, APPLICATION_JSON)
+              .body(Collections.emptyMap())
               .asString();
       assertMediaType(response, expectedMediaType);
     }

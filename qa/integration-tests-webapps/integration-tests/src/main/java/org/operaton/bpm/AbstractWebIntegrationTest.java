@@ -17,9 +17,8 @@
 package org.operaton.bpm;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
@@ -29,6 +28,8 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 
 import java.util.List;
 import java.util.logging.Logger;
+
+import static jakarta.ws.rs.core.HttpHeaders.SET_COOKIE;
 
 /**
  * @author Daniel Meyer
@@ -55,16 +56,12 @@ public abstract class AbstractWebIntegrationTest {
   protected String csrfToken;
   protected String sessionId;
 
-  // current target under test
-  protected WebTarget target;
-  // current response under test
-  protected Response response;
-
   @BeforeAll
   public static void setUpClass() {
     Unirest.config().reset().enableCookieManagement(false).setObjectMapper(new ObjectMapper() {
       final com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
 
+      @Override
       public String writeValue(Object value) {
         try {
           return mapper.writeValueAsString(value);
@@ -73,6 +70,7 @@ public abstract class AbstractWebIntegrationTest {
         }
       }
 
+      @Override
       public <T> T readValue(String value, Class<T> valueType) {
         try {
           return mapper.readValue(value, valueType);
@@ -98,7 +96,7 @@ public abstract class AbstractWebIntegrationTest {
   protected void getTokens() {
     // First request, first set of cookies
     HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
-    List<String> cookieValues = response.getHeaders().get("Set-Cookie");
+    List<String> cookieValues = response.getHeaders().get(SET_COOKIE);
 
     String startCsrfCookie = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
     String startSessionCookie = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
@@ -111,7 +109,7 @@ public abstract class AbstractWebIntegrationTest {
             .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
             .header("Accept", MediaType.APPLICATION_JSON)
             .asString();
-    cookieValues = response.getHeaders().get("Set-Cookie");
+    cookieValues = response.getHeaders().get(SET_COOKIE);
 
     sessionId = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
 
@@ -121,13 +119,13 @@ public abstract class AbstractWebIntegrationTest {
             .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
             .asString();
 
-    cookieValues = response.getHeaders().get("Set-Cookie");
+    cookieValues = response.getHeaders().get(SET_COOKIE);
 
     csrfToken = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
   }
 
   protected List<String> getCookieHeaders(HttpResponse<?> response) {
-    return response.getHeaders().get("Set-Cookie");
+    return response.getHeaders().get(SET_COOKIE);
   }
 
   protected String getCookie(List<String> cookieValues, String cookieName) {
@@ -148,7 +146,7 @@ public abstract class AbstractWebIntegrationTest {
   }
 
   protected String getXsrfTokenHeader(HttpResponse<?> response) {
-    return response.getHeaders().getFirst(X_XSRF_TOKEN_HEADER).toString();
+    return response.getHeaders().getFirst(X_XSRF_TOKEN_HEADER);
   }
 
   protected String getXsrfCookieValue(HttpResponse<?> response) {

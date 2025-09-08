@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("java:S5960")
 class ExceptionLoggerIT extends AbstractWebIntegrationTest {
 
   @BeforeEach

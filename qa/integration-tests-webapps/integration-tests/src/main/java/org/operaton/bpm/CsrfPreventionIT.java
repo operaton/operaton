@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm;
 
+import java.util.concurrent.TimeUnit;
 import jakarta.ws.rs.core.MediaType;
+
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

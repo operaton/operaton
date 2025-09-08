@@ -34,8 +34,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
+import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SuppressWarnings("java:S5960")
 class RestJaxRs2IT extends AbstractWebIntegrationTest {
 
   private static final String ENGINE_DEFAULT_PATH = "engine/default";
@@ -55,8 +59,8 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
 
     HttpResponse<JsonNode> response = Unirest.post(appBasePath + FETCH_AND_LOCK_PATH)
-            .header("Accept", "application/json")
-            .header("Content-Type", "application/json")
+            .header(ACCEPT, APPLICATION_JSON)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
             .body(payload)
             .asJson();
 
@@ -73,7 +77,7 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
       requestBody.put("asyncResponseTimeout", 1000);
 
       HttpResponse<String> response = Unirest.post(appBasePath + FETCH_AND_LOCK_PATH)
-              .header("Content-Type", "application/json")
+              .header(CONTENT_TYPE, APPLICATION_JSON)
               .body(requestBody)
               .asString();
 

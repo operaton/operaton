@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
@@ -23,10 +26,8 @@ import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -43,7 +44,7 @@ class DateSerializationIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void shouldSerializeDateWithDefinedFormat() {
+  void shouldSerializeDateWithDefinedFormat() {
     // when
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + SCHEMA_LOG_PATH)
             .header("Accept", "application/json")

@@ -18,15 +18,16 @@ package org.operaton.bpm;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
 
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("java:S5960")
 class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
@@ -38,26 +39,22 @@ class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
   @Test
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
   void shouldCheckPresenceOfSameSiteProperties() {
-    // given
-
     // when
-    target = client.target(appBasePath + TASKLIST_PATH);
-
-    // Send GET request and return the Response
-    response = target.request().get(Response.class);
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(200);
     assertThat(isCookieHeaderValuePresent("SameSite=Lax", response)).isTrue();
   }
 
-  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {
-    MultivaluedMap<String, Object> headers = response.getHeaders();
+  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, HttpResponse<String> response) {
+    List<String> values = response.getHeaders().get("Set-Cookie");
 
-    List<Object> values = headers.get("Set-Cookie");
-    for (Object value : values) {
-      if (value.toString().startsWith("JSESSIONID=")) {
-        return value.toString().contains(expectedHeaderValue);
+    if (values != null) {
+      for (String value : values) {
+        if (value.startsWith("JSESSIONID=")) {
+          return value.contains(expectedHeaderValue);
+        }
       }
     }
 

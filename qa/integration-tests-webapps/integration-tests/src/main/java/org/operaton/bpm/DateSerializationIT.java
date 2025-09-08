@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
+import kong.unirest.json.JSONArray;
+import kong.unirest.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -43,28 +43,19 @@ class DateSerializationIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  void shouldSerializeDateWithDefinedFormat() throws Exception {
-    // given
-    target = client.target(appBasePath + SCHEMA_LOG_PATH);
-
+  public void shouldSerializeDateWithDefinedFormat() {
     // when
-    response = target.request()
-            .accept(MediaType.APPLICATION_JSON)
-            .header("X-XSRF-TOKEN", csrfToken)  // Replace with your actual CSRF token header name
-            .header("Cookie", createCookieHeader())  // Replace with actual cookie header method
-            .get(Response.class);
+    HttpResponse<JsonNode> response = Unirest.get(appBasePath + SCHEMA_LOG_PATH)
+            .header("Accept", "application/json")
+            .header(X_XSRF_TOKEN_HEADER, csrfToken)
+            .header(COOKIE_HEADER, createCookieHeader())
+            .asJson();
 
     // then
     assertEquals(200, response.getStatus());
-
-    // Read the response body and parse it into JsonNode
-    String responseBody = response.readEntity(String.class);
-
-    ObjectMapper objectMapper = new ObjectMapper();
-    JsonNode logElement = objectMapper.readTree(responseBody).get(0); // Get the first element in the array
-
-    // Extract the "timestamp" field from the JsonNode
-    String timestamp = logElement.get("timestamp").asText();
+    JSONArray logArray = response.getBody().getArray();
+    JSONObject logElement = logArray.getJSONObject(0);
+    String timestamp = logElement.getString("timestamp");
 
     // Try parsing the timestamp using the predefined format
     try {

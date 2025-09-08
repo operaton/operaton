@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm;
 
-import java.util.concurrent.TimeUnit;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,16 +39,15 @@ class CsrfPreventionIT extends AbstractWebIntegrationTest {
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
   void shouldCheckPresenceOfCsrfPreventionCookie() {
     // given
-    target = client.target(appBasePath + TASKLIST_PATH);
 
     // when
-    response = target.request().get(Response.class);
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH)
+            .asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(200);
     String xsrfTokenHeader = getXsrfTokenHeader(response);
     String xsrfCookieValue = getXsrfCookieValue(response);
-    response.close();
 
     assertThat(xsrfTokenHeader).hasSize(32);
     assertThat(xsrfCookieValue).contains(";SameSite=Lax");
@@ -59,12 +59,11 @@ class CsrfPreventionIT extends AbstractWebIntegrationTest {
     // given
     String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
     String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
-    target = client.target(baseUrl + modifyingRequestPath);
 
     // when
-    response = target.request()
+    HttpResponse<String> response = Unirest.post(baseUrl + modifyingRequestPath)
             .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
-            .post(null, Response.class);
+            .asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(403);

@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm;
 
-import jakarta.ws.rs.core.Response;
-
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static jakarta.ws.rs.core.Response.Status.OK;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ExceptionLoggerIT extends AbstractWebIntegrationTest {
 
@@ -32,13 +33,10 @@ class ExceptionLoggerIT extends AbstractWebIntegrationTest {
 
   @Test
   void shouldNotFailForUndefinedUser() {
-    // given
-    target = client.target(appBasePath + "app/admin/default/#/users/undefined?tab=profile");
-
     // when
-    response = target.request().get();
+    HttpResponse<String> response = Unirest.get(appBasePath + "app/admin/default/#/users/undefined?tab=profile").asString();
 
     // then
-    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
   }
 }

@@ -270,6 +270,14 @@
           <exclude>**/*.properties</exclude>
         </excludes>
       </testResource>
+      <testResource>
+        <directory>src/test/resources-wildfly</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.xml</include>
+          <include>**/*.properties</include>
+        </includes>
+      </testResource>
     </testResources>
     <plugins>
       <plugin>

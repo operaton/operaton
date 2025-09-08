@@ -31,12 +31,12 @@ import org.jboss.as.controller.descriptions.ModelDescriptionConstants;
 import org.jboss.as.naming.deployment.ContextNames;
 import org.jboss.as.subsystem.test.AbstractSubsystemTest;
 import org.jboss.as.subsystem.test.KernelServices;
-import org.jboss.as.threads.ManagedQueueExecutorService;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.jboss.msc.service.ServiceContainer;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceName;
+import org.jboss.threads.EnhancedQueueExecutor;
 import org.junit.Test;
 
 import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
@@ -468,21 +468,19 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     assertThat(defaultJobExecutor.getMaxJobsPerAcquisition()).isEqualTo(3);
 
     // ServiceName: 'org.operaton.bpm.platform.job-executor.job-executor-tp'
-    ServiceController<?> managedQueueExecutorServiceController = container.getService(ServiceNames.forManagedThreadPool(SubsystemAttributeDefinitons.DEFAULT_JOB_EXECUTOR_THREADPOOL_NAME));
-    assertThat(managedQueueExecutorServiceController).isNotNull();
-    Object managedQueueExecutorServiceObject = managedQueueExecutorServiceController.getValue();
-    assertThat(managedQueueExecutorServiceObject).isNotNull();
-    assertThat(managedQueueExecutorServiceObject instanceof ManagedQueueExecutorService).isTrue();
-    ManagedQueueExecutorService managedQueueExecutorService = (ManagedQueueExecutorService) managedQueueExecutorServiceObject;
-    assertThat(managedQueueExecutorService.getCoreThreads())
+    ServiceController<?> EnhancedQueueExecutorController = container.getService(ServiceNames.forManagedThreadPool(SubsystemAttributeDefinitons.DEFAULT_JOB_EXECUTOR_THREADPOOL_NAME));
+    assertThat(EnhancedQueueExecutorController).isNotNull();
+    Object EnhancedQueueExecutorObject = EnhancedQueueExecutorController.getValue();
+    assertThat(EnhancedQueueExecutorObject).isNotNull();
+    assertThat(EnhancedQueueExecutorObject instanceof EnhancedQueueExecutor).isTrue();
+    EnhancedQueueExecutor enhancedQueueExecutor = (EnhancedQueueExecutor) EnhancedQueueExecutorObject;
+    assertThat(enhancedQueueExecutor.getCorePoolSize())
             .as("Number of core threads is wrong")
             .isEqualTo(SubsystemAttributeDefinitons.DEFAULT_CORE_THREADS);
-    assertThat(managedQueueExecutorService.getMaxThreads())
+    assertThat(enhancedQueueExecutor.getMaximumPoolSize())
             .as("Number of max threads is wrong")
             .isEqualTo(SubsystemAttributeDefinitons.DEFAULT_MAX_THREADS);
-    assertThat(TimeUnit.NANOSECONDS.toSeconds(managedQueueExecutorService.getKeepAlive())).isEqualTo(SubsystemAttributeDefinitons.DEFAULT_KEEPALIVE_TIME);
-    assertThat(managedQueueExecutorService.isBlocking()).isEqualTo(false);
-    assertThat(managedQueueExecutorService.isAllowCoreTimeout()).isEqualTo(SubsystemAttributeDefinitons.DEFAULT_ALLOW_CORE_TIMEOUT);
+    assertThat(enhancedQueueExecutor.getKeepAliveTime().toSeconds()).isEqualTo(SubsystemAttributeDefinitons.DEFAULT_KEEPALIVE_TIME);
 
     ServiceController<?> threadFactoryService = container.getService(ServiceNames.forThreadFactoryService(SubsystemAttributeDefinitons.DEFAULT_JOB_EXECUTOR_THREADPOOL_NAME));
     assertThat(threadFactoryService).isNotNull();

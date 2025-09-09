@@ -51,6 +51,7 @@ import org.operaton.bpm.model.bpmn.instance.MessageEventDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 class FoxJobRetryCmdTest {
 
@@ -298,11 +299,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -379,11 +376,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -408,11 +401,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -443,11 +432,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     job = managementService.createJobQuery().singleResult();
     assertThat(job.getRetries()).isEqualTo(9);
@@ -457,11 +442,7 @@ class FoxJobRetryCmdTest {
 
     runtimeService.setVariable(pi.getProcessInstanceId(), "var", "R10/PT10M");
 
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     //then
     Date expectedDate = simpleDateFormat.parse("2017-01-01T10:15:00");
@@ -485,11 +466,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -519,11 +496,7 @@ class FoxJobRetryCmdTest {
     assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -557,11 +530,7 @@ class FoxJobRetryCmdTest {
     assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -593,11 +562,7 @@ class FoxJobRetryCmdTest {
     assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -630,11 +595,7 @@ class FoxJobRetryCmdTest {
     assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -667,11 +628,7 @@ class FoxJobRetryCmdTest {
     assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -706,11 +663,7 @@ class FoxJobRetryCmdTest {
     assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -743,11 +696,7 @@ class FoxJobRetryCmdTest {
     assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -784,11 +733,7 @@ class FoxJobRetryCmdTest {
 
       // when the first timer is triggered
       Job firstJob = managementService.createJobQuery().singleResult();
-      try {
-        managementService.executeJob(firstJob.getId());
-      } catch (Exception e) {
-        // ignore
-      }
+      executeJobIgnoringException(managementService, firstJob.getId());
 
       // then a second job will be created for the second timer
       List<Job> jobs = managementService.createJobQuery().list();
@@ -834,11 +779,7 @@ class FoxJobRetryCmdTest {
     runtimeService.startProcessInstanceByKey("process");
 
     Job job = managementService.createJobQuery().singleResult();
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     Task task = taskService.createTaskQuery().taskDefinitionKey("beforePassing").singleResult();
     taskService.complete(task.getId());
@@ -919,11 +860,7 @@ class FoxJobRetryCmdTest {
 
     Job job = jobQuery.singleResult();
 
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // update job
     job = jobQuery.singleResult();

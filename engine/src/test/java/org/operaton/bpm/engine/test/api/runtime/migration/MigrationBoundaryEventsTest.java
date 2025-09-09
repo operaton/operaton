@@ -42,6 +42,7 @@ import org.operaton.bpm.engine.test.util.ClockTestUtil;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.impl.migration.validation.instruction.ConditionalEventUpdateEventTriggerValidator.MIGRATION_CONDITIONAL_VALIDATION_ERROR_MSG;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -333,12 +334,7 @@ public class MigrationBoundaryEventsTest {
     ManagementService managementService = rule.getManagementService();
 
     while (job != null && job.getRetries() > 0) {
-      try {
-        managementService.executeJob(job.getId());
-      }
-      catch (Exception e) {
-        // ignore
-      }
+      executeJobIgnoringException(managementService, job.getId());
 
       job = managementService.createJobQuery().jobId(job.getId()).singleResult();
     }

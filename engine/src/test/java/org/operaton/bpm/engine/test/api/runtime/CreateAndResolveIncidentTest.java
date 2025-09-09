@@ -44,6 +44,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 public class CreateAndResolveIncidentTest {
 
@@ -187,9 +188,7 @@ public class CreateAndResolveIncidentTest {
 
     for (Job job : jobs) {
       engineRule.getManagementService().setJobRetries(job.getId(), 1);
-      try {
-        engineRule.getManagementService().executeJob(job.getId());
-      } catch (Exception e) {}
+      executeJobIgnoringException(engineRule.getManagementService(), job.getId());
     }
 
     // then

@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.List;
+import java.util.logging.Logger;
 import jakarta.ws.rs.core.MediaType;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
-
-import java.util.List;
-import java.util.logging.Logger;
 
 import static jakarta.ws.rs.core.HttpHeaders.SET_COOKIE;
 

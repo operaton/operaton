@@ -177,10 +177,16 @@ class RestIT extends AbstractWebIntegrationTest {
     assertEquals(200, response.getStatus());
     String filterId = response.getBody().getObject().getString("id");
 
-    String resourcePath = appBasePath + FILTER_PATH + "/" + filterId + "/list";
-    log.info(() -> "Checking " + resourcePath);
+    // Check the filter resource (list)
+    String resourcePathList = appBasePath + FILTER_PATH + "/" + filterId + "/list";
+    log.info(() -> "Checking " + resourcePathList);
+    assertMediaTypesOfResource(resourcePathList, true);
 
-    assertMediaTypesOfResource(resourcePath, true);
+
+    // Check the filter resource (singleResult)
+    String resourcePathSingleResult = appBasePath + FILTER_PATH + "/" + filterId + "/singleResult";
+    log.info(() -> "Checking " + resourcePathSingleResult);
+    assertMediaTypesOfResource(resourcePathSingleResult, true);
 
     // delete test filter
     HttpResponse<String> deleteResponse = Unirest.delete(appBasePath + FILTER_PATH + "/" + filterId).asString();

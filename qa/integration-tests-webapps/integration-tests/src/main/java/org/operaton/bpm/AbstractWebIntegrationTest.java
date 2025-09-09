@@ -17,7 +17,6 @@
 package org.operaton.bpm;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;

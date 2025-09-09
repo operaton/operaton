@@ -903,7 +903,7 @@ public class JobQueryTest {
     assertThat(job).isNotNull();
 
     List<Job> list = managementService.createJobQuery().acquired().list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     deleteJobInDatabase();
 
     //given - lock expiration date in the past
@@ -911,7 +911,7 @@ public class JobQueryTest {
     createJobWithLockExpiration(lockExpDate.getTime());
 
     list = managementService.createJobQuery().acquired().list();
-    assertThat(list.size()).isEqualTo(0);
+    assertThat(list).hasSize(0);
 
     deleteJobInDatabase();
   }

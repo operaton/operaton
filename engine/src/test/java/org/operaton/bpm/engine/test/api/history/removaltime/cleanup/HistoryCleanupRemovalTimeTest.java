@@ -101,10 +101,10 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
 import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.apache.commons.lang3.time.DateUtils.addDays;
 import static org.apache.commons.lang3.time.DateUtils.addMinutes;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Tassilo Weidner

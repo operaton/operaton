@@ -28,8 +28,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-import static org.junit.Assert.fail;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.junit.Assert.fail;
 
 public final class FailingIntermediateBoundaryTimerJobScenario {
 

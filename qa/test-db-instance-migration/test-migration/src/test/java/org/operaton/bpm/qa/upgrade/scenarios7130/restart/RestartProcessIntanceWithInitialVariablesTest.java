@@ -33,11 +33,11 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 public class RestartProcessIntanceWithInitialVariablesTest {
 

@@ -287,6 +287,7 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
     return this;
   }
 
+  @Override
   public JobQuery acquired() {
     acquired = true;
     return this;

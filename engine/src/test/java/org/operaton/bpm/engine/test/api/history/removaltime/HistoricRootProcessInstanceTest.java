@@ -60,8 +60,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner

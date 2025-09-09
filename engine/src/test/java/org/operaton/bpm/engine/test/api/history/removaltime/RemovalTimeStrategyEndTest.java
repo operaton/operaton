@@ -74,10 +74,10 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  * @author Tassilo Weidner

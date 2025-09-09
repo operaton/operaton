@@ -16,28 +16,25 @@
  */
 package org.operaton.bpm.container.impl.jboss.service;
 
-import java.util.List;
-import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
 import org.jboss.threads.EnhancedQueueExecutor;
-
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.ExecuteJobsRunnable;
 
+import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MscExecutorService implements Service<MscExecutorService>, ExecutorService {
 
-  private static Logger log = Logger.getLogger(MscExecutorService.class.getName());
+  private static final Logger log = Logger.getLogger(MscExecutorService.class.getName());
 
   protected final Supplier<EnhancedQueueExecutor> managedQueueSupplier;
   protected final Consumer<ExecutorService> provider;
@@ -72,7 +69,7 @@ public class MscExecutorService implements Service<MscExecutorService>, Executor
   @Override
   public boolean schedule(Runnable runnable, boolean isLongRunning) {
 
-    if(isLongRunning) {
+    if (isLongRunning) {
       return scheduleLongRunningWork(runnable);
 
     } else {
@@ -83,29 +80,25 @@ public class MscExecutorService implements Service<MscExecutorService>, Executor
   }
 
   protected boolean scheduleShortRunningWork(Runnable runnable) {
-
-    EnhancedQueueExecutor EnhancedQueueExecutor = managedQueueSupplier.get();
+    var enhancedQueueExecutor = managedQueueSupplier.get();
 
     try {
-
-      EnhancedQueueExecutor.execute(runnable);
+      enhancedQueueExecutor.execute(runnable);
       return true;
-
     } catch (Exception e) {
       // we must be able to schedule this
-      log.log(Level.WARNING,  "Cannot schedule long running work.", e);
+      log.log(Level.WARNING, "Cannot schedule long running work.", e);
     }
 
     return false;
   }
 
   protected boolean scheduleLongRunningWork(Runnable runnable) {
-
-    final EnhancedQueueExecutor EnhancedQueueExecutor = managedQueueSupplier.get();
+    var enhancedQueueExecutor = managedQueueSupplier.get();
 
     boolean rejected = false;
     try {
-      EnhancedQueueExecutor.execute(runnable);
+      enhancedQueueExecutor.execute(runnable);
 
     } catch (RejectedExecutionException e) {
       rejected = true;
@@ -113,8 +106,9 @@ public class MscExecutorService implements Service<MscExecutorService>, Executor
       // if it fails for some other reason, log a warning message
       long now = System.currentTimeMillis();
       // only log every 60 seconds to prevent log flooding
-      if((now-lastWarningLogged) >= (60*1000)) {
+      if ((now - lastWarningLogged) >= (60 * 1000)) {
         log.log(Level.WARNING, "Unexpected Exception while submitting job to executor pool.", e);
+        lastWarningLogged = now;
       } else {
         log.log(Level.FINE, "Unexpected Exception while submitting job to executor pool.", e);
       }

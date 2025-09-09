@@ -18,10 +18,9 @@ package org.operaton.bpm;
 
 import java.util.Arrays;
 import java.util.Collection;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
 
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,9 +28,13 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
+import static jakarta.ws.rs.core.Response.Status.FORBIDDEN;
+import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Parameterized
+@SuppressWarnings("java:S5960")
 public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
 
   @Parameter(0)
@@ -47,39 +50,32 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
 
   @Parameters(name = "Asset: {0}, Allowed: {1}")
   public static Collection<Object[]> getAssets() {
-    return Arrays.asList(new Object[][]{
-        {"app/plugin.js", true},
-        {"app/plugin.css", true},
-        {"app/asset.js", false},
-        {"../..", false},
-        {"../../annotations-api.jar", false},
+    return Arrays.asList(new Object[][] {
+            { "app/plugin.js", true },
+            { "app/plugin.css", true },
+            { "app/asset.js", false },
+            { "../..", false },
+            { "../../annotations-api.jar", false },
     });
   }
 
   @Test
   void shouldGetAssetIfAllowed() {
     // when
-    response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
+    HttpResponse<String> response = Unirest.get(appBasePath + "api/admin/plugin/adminPlugins/static/" + assetName).asString();
 
     // then
     assertResponse(assetName, response);
   }
 
-  protected Response getAsset(String path) {
-    target = client.target(appBasePath + path);
-
-    // Send GET request and return the Response
-    return target.request().get(Response.class);
-  }
-
-  protected void assertResponse(String asset, Response response) {
+  protected void assertResponse(String asset, HttpResponse<String> response) {
     if (assetAllowed) {
-      assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
+      assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
     } else {
-      assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
-      assertThat(response.getMediaType().toString()).startsWith(MediaType.APPLICATION_JSON);
-      String responseEntity = response.getEntity().toString();
-       assertThat(responseEntity)
+      assertThat(response.getStatus()).isEqualTo(FORBIDDEN.getStatusCode());
+      assertTrue(response.getHeaders().getFirst("Content-Type").startsWith("application/json"));
+      String responseEntity = response.getBody();
+      assertThat(responseEntity)
               .contains("\"type\":\"RestException\"")
               .contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
     }

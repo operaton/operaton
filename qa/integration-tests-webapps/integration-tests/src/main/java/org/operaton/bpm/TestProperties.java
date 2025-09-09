@@ -46,10 +46,6 @@ public class TestProperties {
     properties = getTestProperties();
   }
 
-  public Properties getProps() {
-    return properties;
-  }
-
   public String getApplicationPath(String contextPath) {
     return "http://" + getHttpHost() + ":" + getHttpPort() + contextPath;
   }
@@ -74,6 +70,14 @@ public class TestProperties {
 
   public String getHttpHost() {
     return getStringProperty("http.host", "localhost");
+  }
+
+  public String getWebappCtxPath() {
+    return getStringProperty("webapp.ctx.path", "camunda/");
+  }
+
+  public String getRestCtxPath() {
+    return getStringProperty("rest.ctx.path", "engine-rest/");
   }
 
   public static Properties getTestProperties() throws IOException {

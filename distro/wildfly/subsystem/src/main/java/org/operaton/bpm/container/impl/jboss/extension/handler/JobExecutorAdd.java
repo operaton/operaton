@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension.handler;
 
-import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.ALLOW_CORE_TIMEOUT;
-import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.CORE_THREADS;
-import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.JOB_EXECUTOR_ATTRIBUTES;
-import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.KEEPALIVE_TIME;
-import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.MAX_THREADS;
-import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.QUEUE_LENGTH;
-import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.THREAD_POOL_NAME;
-
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -45,6 +37,14 @@ import org.jboss.threads.EnhancedQueueExecutor.Builder;
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.jboss.service.MscExecutorService;
 import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
+
+import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.ALLOW_CORE_TIMEOUT;
+import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.CORE_THREADS;
+import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.JOB_EXECUTOR_ATTRIBUTES;
+import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.KEEPALIVE_TIME;
+import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.MAX_THREADS;
+import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.QUEUE_LENGTH;
+import static org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons.THREAD_POOL_NAME;
 
 
 /**

@@ -116,6 +116,11 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
+      <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>${version.selenium}</version>
+      </dependency>
       <!-- Other dependencies -->
       <dependency>
         <groupId>org.camunda.feel</groupId>
@@ -424,6 +429,13 @@
         <groupId>org.glassfish.jersey.core</groupId>
         <artifactId>jersey-client</artifactId>
         <version>${version.jersey3}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.konghq</groupId>
+        <artifactId>unirest-java</artifactId>
+        <version>${version.unirest-java}</version>
+        <classifier>standalone</classifier>
       </dependency>
 
       <dependency>

@@ -55,6 +55,8 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 
 /**
  * @author Tom Baeyens
@@ -564,4 +566,14 @@ public abstract class TestHelper {
       // do nothing
     }
   }
+
+  public static void executeJobExpectingException(ManagementService managementService, String jobId) {
+    executeJobExpectingException(managementService, jobId, Exception.class);
+  }
+
+  public static void executeJobExpectingException(ManagementService managementService, String jobId, Class<? extends Exception> clazz) {
+    assertThatCode(() -> managementService.executeJob(jobId))
+        .isInstanceOf(clazz);
+  }
+
 }

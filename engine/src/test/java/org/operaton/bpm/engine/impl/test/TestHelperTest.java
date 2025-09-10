@@ -18,13 +18,14 @@ package org.operaton.bpm.engine.impl.test;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class TestHelperTest {
 
@@ -91,10 +92,25 @@ class TestHelperTest {
   }
 
   @Test
-  void shouldIgnoreExceptionsDuringJobExecution() {
+  void shouldIgnoreExceptionDuringJobExecution() {
     ManagementService managementService = mock(ManagementService.class);
     doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
     assertDoesNotThrow(() -> TestHelper.executeJobIgnoringException(managementService, "aJobId"));
+  }
+
+  @Test
+  void shouldExpectExceptionDuringJobExecutionWhenExceptionIsThrown() {
+    ManagementService managementService = mock(ManagementService.class);
+    doThrow(AuthorizationException.class).doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
+    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", AuthorizationException.class));
+    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", ProcessEngineException.class));
+  }
+
+  @Test
+  void shouldExpectExceptionDuringJobExecutionWhenExceptionIsNotThrown() {
+    ManagementService managementService = mock(ManagementService.class);
+    doNothing().when(managementService).executeJob("aJobId");
+    assertThrows(AssertionError.class, () -> TestHelper.executeJobExpectingException(managementService, "aJobId"));
   }
 
 }

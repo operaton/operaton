@@ -57,7 +57,6 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-
 /**
  * @author Tom Baeyens
  */

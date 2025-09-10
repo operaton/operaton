@@ -17,13 +17,18 @@
 package org.operaton.bpm.run.qa.webapps;
 
 import java.util.logging.Logger;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 
+import kong.unirest.ObjectMapper;
+import kong.unirest.Unirest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
@@ -44,24 +49,38 @@ public abstract class AbstractWebIT {
   protected String appBasePath;
 
   protected String appUrl;
-  protected TestUtil testUtil;
   protected TestProperties testProperties;
 
   protected static ChromeDriverService service;
 
-  public Client client;
-  public DefaultHttpClient defaultHttpClient;
   public String httpPort;
+
+  @BeforeAll
+  public static void setUpClass() {
+    Unirest.config().reset().enableCookieManagement(false).setObjectMapper(new ObjectMapper() {
+      final com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+
+      public String writeValue(Object value) {
+        try {
+          return mapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+          throw new RuntimeException(e);
+        }
+      }
+
+      public <T> T readValue(String value, Class<T> valueType) {
+        try {
+          return mapper.readValue(value, valueType);
+        } catch (JsonProcessingException e) {
+          throw new RuntimeException(e);
+        }
+      }
+    });
+  }
 
   @BeforeEach
   public void before() throws Exception {
     testProperties = new TestProperties(48080);
-    testUtil = new TestUtil(testProperties);
-  }
-
-  @AfterEach
-  public void destroyClient() {
-    client.close();
   }
 
   public void createClient(String ctxPath) throws Exception {
@@ -71,25 +90,11 @@ public abstract class AbstractWebIT {
     // Get the application base path
     appBasePath = testProperties.getApplicationPath("/" + ctxPath);
     LOGGER.info("Connecting to application " + appBasePath);
-
-    // Create ClientConfig and register JacksonFeature for POJO mapping
-    ClientConfig clientConfig = new ClientConfig();
-    clientConfig.register(JacksonFeature.class);
-
-    // Use JerseyClientBuilder to create the client and configure it with HttpClient
-    client =  ClientBuilder.newBuilder()
-            .withConfig(clientConfig)
-            .build();
-
-    // Set connection timeout and socket timeout
-    // These can be set directly in the HttpClient or via properties in JerseyClient
-    client.property("jersey.config.client.connectTimeout", 3 * 60 * 1000);  // 3 minutes
-    client.property("jersey.config.client.readTimeout", 10 * 60 * 1000);
   }
 
   public void preventRaceConditions() throws InterruptedException {
     // just wait some seconds before starting because of Wildfly / Cargo race conditions
-    Thread.sleep(5 * 1000);
+    Thread.sleep(6 * 1000);
   }
 
   protected String getWebappCtxPath() {

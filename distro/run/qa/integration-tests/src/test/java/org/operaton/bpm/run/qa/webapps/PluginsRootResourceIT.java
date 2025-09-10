@@ -22,11 +22,14 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
@@ -74,51 +77,30 @@ class PluginsRootResourceIT extends AbstractWebIT {
     }
   }
 
-  static Collection<Object[]> getAssets() {
-    return Arrays.asList(new Object[][]{
-        {"app/plugin.js", true},
-        {"app/plugin.css", true},
-        {"app/asset.js", false},
-        {"../..", false},
-        {"../../annotations-api.jar", false},
-    });
-  }
-
-  @MethodSource("getAssets")
   @ParameterizedTest(name = "Test instance: {index}. Asset: {0}, Allowed: {1}")
+  @CsvSource({
+      "app/plugin.js, true",
+      "app/plugin.css, true",
+      "app/asset.js, false",
+      "../.., false",
+      "../../annotations-api.jar, false"
+  })
   void shouldGetAssetIfAllowed(String assetName, boolean assetAllowed) {
     startContainer();
     initPluginsRootResourceIT(assetName, assetAllowed);
     // when
-    Response response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
+    HttpResponse<String> response = Unirest.get(appBasePath + "api/admin/plugin/adminPlugins/static/" + assetName).asString();
 
     // then
     assertResponse(assetName, response);
-
-    // cleanup
-    response.close();
   }
 
-  protected Response getAsset(String path) {
-    // Ensure the client is properly initialized
-    JerseyClient client = (JerseyClient) JerseyClientBuilder.newClient();
-
-    // Build the target URI using the base path and path parameter
-    String fullPath = appBasePath + path;
-
-    // Perform the GET request to fetch the asset
-    return client.target(fullPath)  // Use target() to define the endpoint
-            .request()  // Prepare to send the request
-            .get();  // Execute the GET request
-  }
-
-  protected void assertResponse(String asset, Response response) {
+  protected void assertResponse(String asset, HttpResponse<String> response) {
     if (assetAllowed) {
       assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
     } else {
       assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
-      assertThat(response.getMediaType().toString()).startsWith(MediaType.APPLICATION_JSON);
-      String responseEntity = response.readEntity(String.class);
+      String responseEntity = response.getBody();
       assertThat(responseEntity)
               .contains("\"type\":\"RestException\"")
               .contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");

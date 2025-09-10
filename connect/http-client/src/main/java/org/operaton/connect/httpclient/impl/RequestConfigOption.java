@@ -16,6 +16,8 @@
  */
 package org.operaton.connect.httpclient.impl;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.function.BiConsumer;
 
@@ -46,7 +48,7 @@ public enum RequestConfigOption {
   MAX_REDIRECTS("max-redirects",
           (builder, value) -> builder.setMaxRedirects((int) value)),
   PROXY("proxy",
-          (builder, value) -> builder.setProxy((HttpHost) value)),
+          (builder, value) -> builder.setProxy(toHttpHost(value))),
   PROXY_PREFERRED_AUTH_SCHEMES("proxy-preferred-auth-scheme",
           (builder, value) -> builder.setProxyPreferredAuthSchemes((Collection<String>) value)),
   REDIRECTS_ENABLED("redirects-enabled",
@@ -82,8 +84,26 @@ public enum RequestConfigOption {
           } else {
               return Timeout.DISABLED;
           }
+      } else if (value instanceof String str) {
+        return toTimeout(Integer.parseInt(str));
       } else {
-          throw new ClassCastException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
+          throw new IllegalArgumentException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
+      }
+  }
+
+  private static HttpHost toHttpHost(Object value) {
+      if (value instanceof HttpHost host) {
+          return host;
+      } else if (value instanceof String str) {
+        try {
+          return HttpHost.create(str);
+        } catch (URISyntaxException e) {
+          throw new IllegalArgumentException(str, e);
+        }
+      } else if (value instanceof URI uri) {
+        return HttpHost.create(uri);
+      } else {
+          throw new IllegalArgumentException("Expected HttpHost or String, got " + value.getClass().getSimpleName());
       }
   }
 

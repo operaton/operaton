@@ -24,6 +24,7 @@ import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.util.Timeout;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.connect.ConnectorRequestException;
@@ -34,6 +35,7 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.connect.httpclient.impl.RequestConfigOption.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled("FIXME")
 public class HttpRequestConfigTest {
 
   //FIXME

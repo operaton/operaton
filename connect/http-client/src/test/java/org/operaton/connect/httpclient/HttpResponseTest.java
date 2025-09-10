@@ -16,6 +16,7 @@
  */
 package org.operaton.connect.httpclient;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,7 +44,7 @@ class HttpResponseTest {
   @ParameterizedTest
   @ValueSource(ints = {123, 200, 400, 500})
   void testResponseCodes(int code) {
-    testResponse.statusCode(code);
+    testResponse.code(code);
     HttpResponse response = getResponse();
     assertThat(response.getStatusCode()).isEqualTo(code);
   }
@@ -96,48 +97,80 @@ class HttpResponseTest {
   }
 
   @Test
-  void testServerErrorResponseWithConfigOptionSet() {
+  public void testSuccessfulResponseCode() {
     // given
-    testResponse.statusCode(500);
-    HttpRequest request = connector.createRequest().configOption("throw-http-error", "TRUE").url("https://operaton.org").get();
-
+    testResponse.code(200);
     // when
-    assertThatThrownBy(request::execute)
-      // then
-      .isInstanceOf(ConnectorRequestException.class)
-      .hasMessageContaining("HTTP request failed with Status Code: 500");
+    HttpResponse response = getResponse();
+    // then
+    assertThat(response.getStatusCode()).isEqualTo(200);
   }
 
   @Test
-  void testMalformedRequestWithConfigOptionSet() {
+  public void testResponseErrorCodeForMalformedRequest() {
     // given
-    testResponse.statusCode(400);
-    HttpRequest request = connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get();
-
+    testResponse.code(400);
     // when
-    assertThatThrownBy(request::execute)
-      // then
-      .isInstanceOf(ConnectorRequestException.class)
-      .hasMessageContaining("HTTP request failed with Status Code: 400");
+    HttpResponse response = getResponse();
+    // then
+    assertThat(response.getStatusCode()).isEqualTo(400);
   }
 
   @Test
-  void testSuccessResponseWithConfigOptionSet() {
+  public void testResponseErrorCodeForServerError() {
     // given
-    testResponse.statusCode(200);
+    testResponse.code(500);
     // when
-    connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get().execute();
+    HttpResponse response = getResponse();
+    // then
+    assertThat(response.getStatusCode()).isEqualTo(500);
+  }
+
+  @Test
+  public void testServerErrorResponseWithConfigOptionSet() {
+    // given
+    testResponse.code(500);
+    try {
+      // when
+      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
+      Assertions.fail("ConnectorRequestException should be thrown");
+    } catch (ConnectorRequestException e) {
+      // then
+      assertThat(e).hasMessageContaining("HTTP request failed with Status Code: 500");
+    }
+  }
+
+  @Test
+  public void testMalformedRequestWithConfigOptionSet() {
+    // given
+    testResponse.code(400);
+    try {
+      // when
+      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
+      Assertions.fail("ConnectorRequestException should be thrown");
+    } catch (ConnectorRequestException e) {
+      // then
+      assertThat(e).hasMessageContaining("HTTP request failed with Status Code: 400");
+    }
+  }
+
+  @Test
+  public void testSuccessResponseWithConfigOptionSet() {
+    // given
+    testResponse.code(200);
+    // when
+    connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
     // then
     HttpResponse response = getResponse();
     assertThat(response.getStatusCode()).isEqualTo(200);
   }
 
   @Test
-  void testMalformedRequestWithConfigOptionSetToFalse() {
+  public void testMalformedRequestWithConfigOptionSetToFalse() {
     // given
-    testResponse.statusCode(400);
+    testResponse.code(400);
     // when
-    connector.createRequest().configOption("throw-http-error", "FALSE").url("http://operaton.org").get().execute();
+    connector.createRequest().configOption("throw-http-error", "FALSE").url("http://camunda.com").get().execute();
     // then
     HttpResponse response = getResponse();
     assertThat(response.getStatusCode()).isEqualTo(400);

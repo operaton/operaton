@@ -16,12 +16,10 @@
  */
 package org.operaton.connect.httpclient;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.hc.client5.http.ConnectTimeoutException;
-import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.util.Timeout;
@@ -32,8 +30,7 @@ import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.httpclient.impl.RequestConfigOption;
 import org.operaton.connect.httpclient.impl.util.ParseUtil;
-
-import static org.assertj.core.api.Fail.fail;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.connect.httpclient.impl.RequestConfigOption.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -240,7 +237,7 @@ public class HttpRequestConfigTest {
   }
 
   @Test
-  public void shouldParseConnectionKeepAlive() {
+  void shouldParseConnectionKeepAlive() {
     // given
     HttpRequest request = connector.createRequest()
             .configOption(CONNECTION_KEEP_ALIVE.getName(), Timeout.ofSeconds(10));
@@ -347,7 +344,7 @@ public class HttpRequestConfigTest {
   }
 
   @Test
-  public void shouldThrowClassCastExceptionStringToTimeout() {
+  void shouldThrowClassCastExceptionStringToTimeout() {
     try {
       // when
       connector.createRequest().url(EXAMPLE_URL).get()
@@ -355,9 +352,10 @@ public class HttpRequestConfigTest {
               .execute();
       fail("No exception thrown");
     } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e).hasMessageContaining("Invalid value for request configuration option: " + RequestConfigOption.CONNECTION_TIMEOUT.getName());
-      assertThat(e).hasCauseInstanceOf(ClassCastException.class);
+      assertThat(e)
+              // then
+              .hasMessageContaining("Invalid value for request configuration option: " + RequestConfigOption.CONNECTION_TIMEOUT.getName())
+              .hasCauseInstanceOf(ClassCastException.class);
       assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class org.apache.hc.core5.util.Timeout");
     }
   }

@@ -16,21 +16,14 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import java.util.Arrays;
-import java.util.Collection;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
-import org.glassfish.jersey.client.JerseyClient;
-import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 

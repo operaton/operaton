@@ -19,21 +19,13 @@ package org.operaton.bpm.run.qa.webapps;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.jackson.JacksonFeature;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
 import org.operaton.bpm.TestProperties;
-import org.operaton.bpm.util.TestUtil;
 
 /**
  * NOTE: copied from
@@ -44,8 +36,6 @@ public abstract class AbstractWebIT {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractWebIT.class.getName());
 
-  protected static final String TASKLIST_PATH = "app/tasklist/default/";
-  protected static final String HOST_NAME = "localhost";
   protected String appBasePath;
 
   protected String appUrl;
@@ -53,13 +43,12 @@ public abstract class AbstractWebIT {
 
   protected static ChromeDriverService service;
 
-  public String httpPort;
-
   @BeforeAll
   public static void setUpClass() {
     Unirest.config().reset().enableCookieManagement(false).setObjectMapper(new ObjectMapper() {
       final com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
 
+      @Override
       public String writeValue(Object value) {
         try {
           return mapper.writeValueAsString(value);
@@ -68,6 +57,7 @@ public abstract class AbstractWebIT {
         }
       }
 
+      @Override
       public <T> T readValue(String value, Class<T> valueType) {
         try {
           return mapper.readValue(value, valueType);

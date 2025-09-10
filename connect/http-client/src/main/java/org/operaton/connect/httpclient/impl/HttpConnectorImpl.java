@@ -17,6 +17,7 @@
 package org.operaton.connect.httpclient.impl;
 
 import org.apache.hc.core5.http.ClassicHttpResponse;
+
 import org.operaton.connect.httpclient.HttpConnector;
 import org.operaton.connect.httpclient.HttpRequest;
 import org.operaton.connect.httpclient.HttpResponse;
@@ -36,6 +37,7 @@ public class HttpConnectorImpl extends AbstractHttpConnector<HttpRequest, HttpRe
     return new HttpRequestImpl(this);
   }
 
+  @Override
   protected HttpResponse createResponse(ClassicHttpResponse response) {
     return new HttpResponseImpl(response);
   }

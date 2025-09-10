@@ -16,7 +16,6 @@
  */
 package org.operaton.connect.httpclient;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +26,7 @@ import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 class HttpResponseTest {
 
@@ -97,7 +96,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testSuccessfulResponseCode() {
+  void testSuccessfulResponseCode() {
     // given
     testResponse.code(200);
     // when
@@ -107,7 +106,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testResponseErrorCodeForMalformedRequest() {
+  void testResponseErrorCodeForMalformedRequest() {
     // given
     testResponse.code(400);
     // when
@@ -117,7 +116,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testResponseErrorCodeForServerError() {
+  void testResponseErrorCodeForServerError() {
     // given
     testResponse.code(500);
     // when
@@ -127,13 +126,13 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testServerErrorResponseWithConfigOptionSet() {
+  void testServerErrorResponseWithConfigOptionSet() {
     // given
     testResponse.code(500);
     try {
       // when
       connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
-      Assertions.fail("ConnectorRequestException should be thrown");
+      fail("ConnectorRequestException should be thrown");
     } catch (ConnectorRequestException e) {
       // then
       assertThat(e).hasMessageContaining("HTTP request failed with Status Code: 500");
@@ -141,13 +140,13 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testMalformedRequestWithConfigOptionSet() {
+  void testMalformedRequestWithConfigOptionSet() {
     // given
     testResponse.code(400);
     try {
       // when
       connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
-      Assertions.fail("ConnectorRequestException should be thrown");
+      fail("ConnectorRequestException should be thrown");
     } catch (ConnectorRequestException e) {
       // then
       assertThat(e).hasMessageContaining("HTTP request failed with Status Code: 400");
@@ -155,7 +154,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testSuccessResponseWithConfigOptionSet() {
+  void testSuccessResponseWithConfigOptionSet() {
     // given
     testResponse.code(200);
     // when
@@ -166,7 +165,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testMalformedRequestWithConfigOptionSetToFalse() {
+  void testMalformedRequestWithConfigOptionSetToFalse() {
     // given
     testResponse.code(400);
     // when

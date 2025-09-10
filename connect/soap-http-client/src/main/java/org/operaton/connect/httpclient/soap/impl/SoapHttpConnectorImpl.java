@@ -16,7 +16,6 @@
  */
 package org.operaton.connect.httpclient.soap.impl;
 
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.message.BasicClassicHttpRequest;
 

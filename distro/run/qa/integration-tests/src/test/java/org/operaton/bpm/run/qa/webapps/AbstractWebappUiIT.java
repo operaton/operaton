@@ -22,7 +22,6 @@ import java.net.URISyntaxException;
 import java.util.Locale;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -44,7 +43,8 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
   protected static WebDriver driver;
 
   @RegisterExtension
-  private SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
+  @SuppressWarnings("unused")
+  private final SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
 
   @BeforeAll
   static void createDriver() {

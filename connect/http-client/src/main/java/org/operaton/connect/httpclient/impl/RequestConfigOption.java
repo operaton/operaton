@@ -16,7 +16,6 @@
  */
 package org.operaton.connect.httpclient.impl;
 
-import java.net.InetAddress;
 import java.util.Collection;
 import java.util.function.BiConsumer;
 

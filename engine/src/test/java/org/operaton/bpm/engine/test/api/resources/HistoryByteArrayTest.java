@@ -63,9 +63,9 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.repository.ResourceTypes.HISTORY;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class HistoryByteArrayTest {
@@ -240,12 +240,7 @@ class HistoryByteArrayTest {
     String jobId = managementService.createJobQuery().singleResult().getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     HistoricJobLogEventEntity entity = (HistoricJobLogEventEntity) historyService
         .createHistoricJobLogQuery()

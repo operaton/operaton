@@ -66,6 +66,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 
 /**
  * @author Roman Smirnov
@@ -154,12 +155,7 @@ class HistoricJobLogTest {
         .singleResult();
     var jobId = job.getId();
 
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     job = (JobEntity) managementService.createJobQuery().jobId(job.getId()).singleResult();
 
@@ -602,12 +598,7 @@ class HistoricJobLogTest {
     assertThat(historicJob.getActivityId()).isEqualTo("signalEvent");
 
     // when (2)
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (2)
     historicJob = historyService
@@ -653,12 +644,7 @@ class HistoricJobLogTest {
     assertThat(failedQuery.count()).isZero();
 
     // when (1)
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (1)
     assertThat(query.count()).isEqualTo(2);
@@ -672,12 +658,7 @@ class HistoricJobLogTest {
     assertThat(failedJobLogEntry.getJobRetries()).isEqualTo(3);
 
     // when (2)
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (2)
     assertThat(query.count()).isEqualTo(3);
@@ -694,12 +675,7 @@ class HistoricJobLogTest {
     assertThat(failedJobLogEntry.getJobRetries()).isEqualTo(2);
 
     // when (3)
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (3)
     assertThat(query.count()).isEqualTo(4);
@@ -719,12 +695,7 @@ class HistoricJobLogTest {
     assertThat(failedJobLogEntry.getJobRetries()).isEqualTo(1);
 
     // when (4)
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (4)
     assertThat(query.count()).isEqualTo(5);
@@ -785,12 +756,7 @@ class HistoricJobLogTest {
     assertThat(failedJobLogEntry.getJobRetries()).isEqualTo(1);
 
     // when (2)
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (2)
     assertThat(query.count()).isEqualTo(5);
@@ -897,12 +863,7 @@ class HistoricJobLogTest {
     assertThat(succeededQuery.count()).isZero();
 
     // when (1)
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (1)
     assertThat(query.count()).isEqualTo(2);
@@ -917,12 +878,7 @@ class HistoricJobLogTest {
     assertThat(failedJobLogEntry.getJobRetries()).isEqualTo(3);
 
     // when (2)
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (2)
     assertThat(query.count()).isEqualTo(3);
@@ -1173,12 +1129,7 @@ class HistoricJobLogTest {
     String jobId = managementService.createJobQuery().singleResult().getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then
     String failedHistoricJobLogId = historyService
@@ -1222,12 +1173,7 @@ class HistoricJobLogTest {
     String jobId = managementService.createJobQuery().singleResult().getId();
 
     // when (1)
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (1)
     HistoricJobLog serviceTask1FailedHistoricJobLog = historyService
@@ -1247,12 +1193,7 @@ class HistoricJobLogTest {
 
     // when (2)
     runtimeService.setVariable(processInstanceId, "firstFail", false);
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (2)
     HistoricJobLog serviceTask2FailedHistoricJobLog = historyService
@@ -1285,12 +1226,7 @@ class HistoricJobLogTest {
     String jobId = managementService.createJobQuery().singleResult().getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then
     HistoricJobLog failedHistoricJobLog = historyService
@@ -1322,12 +1258,7 @@ class HistoricJobLogTest {
     var jobId = job.getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then
     HistoricJobLog failedHistoricJobLog = historyService

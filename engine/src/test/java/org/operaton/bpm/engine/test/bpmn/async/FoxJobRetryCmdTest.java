@@ -49,6 +49,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.MessageEventDefinition;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -263,12 +264,7 @@ class FoxJobRetryCmdTest {
     assertThat(job.getRetries()).isEqualTo(5);
     var jobId = job.getId();
 
-    try {
-      managementService.executeJob(jobId);
-      fail("");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     job = managementService.createJobQuery().singleResult();
 

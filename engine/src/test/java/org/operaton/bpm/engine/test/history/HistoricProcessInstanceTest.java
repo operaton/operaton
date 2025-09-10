@@ -67,6 +67,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
@@ -2072,12 +2073,7 @@ class HistoricProcessInstanceTest {
     // when: incident is raised
     for(int i = 0; i<3; i++) {
       var jobId = job.getId();
-      try {
-        managementService.executeJob(jobId);
-        fail("Exception expected");
-      } catch (Exception e) {
-        // exception expected
-      }
+      executeJobExpectingException(managementService, jobId);
     }
 
     // then

@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 
 /**
  * @author Tom Baeyens
@@ -141,12 +141,7 @@ class JobExecutorCmdExceptionTest {
 
     assertThat(job.getRetries()).isEqualTo(3);
 
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     job = managementService.createJobQuery().singleResult();
     assertThat(job.getRetries()).isEqualTo(2);

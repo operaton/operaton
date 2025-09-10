@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import org.junit.jupiter.api.Test;
 
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
@@ -36,7 +35,7 @@ class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
       "JobAssert-hasExceptionMessage"
     );
     // When
-    executeJobExpectingException(managementService(), jobQuery().singleResult().getId(), ProcessEngineException.class);
+    executeJobExpectingException(managementService(), jobQuery().singleResult().getId());
     // Then
     assertThat(jobQuery().singleResult()).isNotNull();
     // And

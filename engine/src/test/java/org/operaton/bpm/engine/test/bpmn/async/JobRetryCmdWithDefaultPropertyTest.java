@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 
 /**
  * @author Stefan Hentschel.
@@ -72,12 +72,7 @@ class JobRetryCmdWithDefaultPropertyTest {
     var jobId = job.getId();
     assertThat(job.getProcessInstanceId()).isEqualTo(pi.getProcessInstanceId());
 
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected!");
-    } catch(Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     job = managementService.createJobQuery().jobId(job.getId()).singleResult();
     assertThat(job.getRetries()).isEqualTo(4);

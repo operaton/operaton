@@ -51,9 +51,9 @@ import org.operaton.bpm.engine.test.util.ClockTestUtil;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Joram Barrez
@@ -592,12 +592,7 @@ class BoundaryTimerNonInterruptingEventTest {
     failedJobQuery.jobId(jobId);
 
     // when (1)
-    try {
-      managementService.executeJob(jobId);
-      fail("");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then (1)
     Job failedJob = failedJobQuery.singleResult();

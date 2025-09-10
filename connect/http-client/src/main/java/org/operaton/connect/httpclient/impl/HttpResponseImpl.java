@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.Header;
 
 import org.operaton.commons.utils.IoUtil;
@@ -32,9 +32,9 @@ public class HttpResponseImpl extends AbstractCloseableConnectorResponse impleme
 
   private static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 
-  protected CloseableHttpResponse httpResponse;
+  protected ClassicHttpResponse httpResponse;
 
-  public HttpResponseImpl(CloseableHttpResponse httpResponse) {
+  public HttpResponseImpl(ClassicHttpResponse httpResponse) {
     this.httpResponse = httpResponse;
   }
 

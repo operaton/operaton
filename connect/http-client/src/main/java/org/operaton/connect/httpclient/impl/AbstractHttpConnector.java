@@ -22,13 +22,24 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.hc.client5.http.classic.methods.HttpDelete;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpHead;
+import org.apache.hc.client5.http.classic.methods.HttpOptions;
+import org.apache.hc.client5.http.classic.methods.HttpPatch;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.client5.http.classic.methods.HttpTrace;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.config.RequestConfig.Builder;
-import org.apache.hc.client5.http.classic.methods.*;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.InputStreamEntity;
+import org.apache.hc.core5.http.message.BasicClassicHttpRequest;
 
 import org.operaton.connect.httpclient.HttpBaseRequest;
 import org.operaton.connect.httpclient.HttpResponse;
@@ -63,10 +74,10 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
   @Override
   public R execute(Q request) {
     R invocationResult;
-    HttpUriRequestBase httpRequest = createHttpRequest(request);
+    BasicClassicHttpRequest httpRequest = createHttpRequest(request);
     HttpRequestInvocation invocation = new HttpRequestInvocation(httpRequest, request, requestInterceptors, httpClient);
     try {
-      invocationResult = createResponse((CloseableHttpResponse) invocation.proceed());
+      invocationResult = createResponse((ClassicHttpResponse) invocation.proceed());
     } catch (Exception e) {
       throw LOG.unableToExecuteRequest(e);
     }
@@ -86,15 +97,15 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
     }
   }
 
-  protected abstract R createResponse(CloseableHttpResponse response);
+  protected abstract R createResponse(ClassicHttpResponse response);
 
   /**
-   * creates a apache Http* representation of the request.
+   * creates a apache Http representation of the request.
    *
    * @param request the given request
-   * @return {@link HttpUriRequestBase} an apache representation of the request
+   * @return {@link BasicClassicHttpRequest} an apache representation of the request
    */
-  protected <T extends HttpUriRequestBase> T createHttpRequest(Q request) {
+  protected <T extends BasicClassicHttpRequest> T createHttpRequest(Q request) {
     T httpRequest = createHttpRequestBase(request);
 
     applyConfig(httpRequest, request.getConfigOptions());
@@ -107,7 +118,7 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
   }
 
   @SuppressWarnings("unchecked")
-  protected <T extends HttpUriRequestBase> T createHttpRequestBase(Q request) {
+  protected <T extends BasicClassicHttpRequest> T createHttpRequestBase(Q request) {
     String url = request.getUrl();
     if (url != null && !url.trim().isEmpty()) {
       String method = request.getMethod();
@@ -136,7 +147,7 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
     }
   }
 
-  protected <T extends HttpUriRequestBase> void applyHeaders(T httpRequest, Map<String, String> headers) {
+  protected <T extends BasicClassicHttpRequest> void applyHeaders(T httpRequest, Map<String, String> headers) {
     if (headers != null) {
       for (Map.Entry<String, String> entry : headers.entrySet()) {
         httpRequest.setHeader(entry.getKey(), entry.getValue());
@@ -145,31 +156,32 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
     }
   }
 
-  protected <T extends HttpUriRequestBase> void applyPayload(T httpRequest, Q request) {
+  protected <T extends BasicClassicHttpRequest> void applyPayload(T httpRequest, Q request) {
     if (httpMethodSupportsPayload(httpRequest)) {
       if (request.getPayload() != null) {
         byte[] bytes = request.getPayload().getBytes(charset);
         ByteArrayInputStream payload = new ByteArrayInputStream(bytes);
-        InputStreamEntity entity = new InputStreamEntity(payload, bytes.length);
-        ((HttpEntityEnclosingRequestBase) httpRequest).setEntity(entity);
+        InputStreamEntity entity = new InputStreamEntity(payload, bytes.length, ContentType.parse(request.getContentType()));
+        httpRequest.setEntity(entity);
       }
-    }
-    else if (request.getPayload() != null) {
+    } else if (request.getPayload() != null) {
       LOG.payloadIgnoredForHttpMethod(request.getMethod());
     }
   }
 
-  protected <T extends HttpUriRequestBase> boolean httpMethodSupportsPayload(T httpRequest) {
-    return httpRequest instanceof HttpEntityEnclosingRequestBase;
+  protected <T extends BasicClassicHttpRequest> boolean httpMethodSupportsPayload(T httpRequest) {
+    return httpRequest instanceof HttpUriRequestBase;
   }
 
-  protected <T extends HttpUriRequestBase> void applyConfig(T httpRequest, Map<String, Object> configOptions) {
-    Builder configBuilder = RequestConfig.custom();
-    if (configOptions != null && !configOptions.isEmpty()) {
-      ParseUtil.parseConfigOptions(configOptions, configBuilder);
+  protected <T extends BasicClassicHttpRequest> void applyConfig(T httpRequest, Map<String, Object> configOptions) {
+    if (httpMethodSupportsPayload(httpRequest)) {
+      Builder configBuilder = RequestConfig.custom();
+      if (configOptions != null && !configOptions.isEmpty()) {
+        ParseUtil.parseConfigOptions(configOptions, configBuilder);
+      }
+      RequestConfig requestConfig = configBuilder.build();
+      ((HttpUriRequestBase) httpRequest).setConfig(requestConfig);
     }
-    RequestConfig requestConfig = configBuilder.build();
-    httpRequest.setConfig(requestConfig);
   }
 
 

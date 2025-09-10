@@ -27,83 +27,35 @@ import org.apache.hc.core5.util.Timeout;
 public enum RequestConfigOption {
 
   AUTHENTICATION_ENABLED("authentication-enabled",
-      (builder, value) -> builder.setAuthenticationEnabled((boolean) value)),
+          (builder, value) -> builder.setAuthenticationEnabled((boolean) value)),
   CIRCULAR_REDIRECTS_ALLOWED("circular-redirects-allowed",
-      (builder, value) -> builder.setCircularRedirectsAllowed((boolean) value)),
+          (builder, value) -> builder.setCircularRedirectsAllowed((boolean) value)),
   CONNECTION_TIMEOUT("connection-timeout",
-      (builder, value) -> {
-        if (value instanceof Timeout) {
-          builder.setConnectTimeout((Timeout) value);
-        } else if (value instanceof Integer) {
-          // Backward compatibility: convert integer milliseconds to Timeout
-          int millis = (Integer) value;
-          if (millis > 0) {
-            builder.setConnectTimeout(Timeout.ofMilliseconds(millis));
-          } else {
-            builder.setConnectTimeout(Timeout.DISABLED);
-          }
-        } else {
-          throw new ClassCastException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
-        }
-      }),
+          (builder, value) -> builder.setConnectTimeout(toTimeout(value))),
+  CONNECTION_KEEP_ALIVE("connection-keep-alive",
+          (builder, value) -> builder.setConnectionKeepAlive(toTimeout(value))),
   CONNECTION_REQUEST_TIMEOUT("connection-request-timeout",
-      (builder, value) -> {
-        if (value instanceof Timeout) {
-          builder.setConnectionRequestTimeout((Timeout) value);
-        } else if (value instanceof Integer) {
-          // Backward compatibility: convert integer milliseconds to Timeout
-          int millis = (Integer) value;
-          if (millis > 0) {
-            builder.setConnectionRequestTimeout(Timeout.ofMilliseconds(millis));
-          } else {
-            builder.setConnectionRequestTimeout(Timeout.DISABLED);
-          }
-        } else {
-          throw new ClassCastException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
-        }
-      }),
+          (builder, value) -> builder.setConnectionRequestTimeout(toTimeout(value))),
   CONTENT_COMPRESSION_ENABLED("content-compression-enabled",
-      (builder, value) -> builder.setContentCompressionEnabled((boolean) value)),
+          (builder, value) -> builder.setContentCompressionEnabled((boolean) value)),
   COOKIE_SPEC("cookie-spec",
-      (builder, value) -> builder.setCookieSpec((String) value)),
-  DECOMPRESSION_ENABLED("decompression-enabled",
-      (builder, value) -> builder.setDecompressionEnabled((boolean) value)),
+          (builder, value) -> builder.setCookieSpec((String) value)),
   EXPECT_CONTINUE_ENABLED("expect-continue-enabled",
-      (builder, value) -> builder.setExpectContinueEnabled((boolean) value)),
-  LOCAL_ADDRESS("local-address",
-      (builder, value) -> builder.setLocalAddress((InetAddress) value)),
+          (builder, value) -> builder.setExpectContinueEnabled((boolean) value)),
+  HARD_CANCELLATION_ENABLED("hard-cancellation-enabled",
+          (builder, value) -> builder.setHardCancellationEnabled((boolean) value)),
   MAX_REDIRECTS("max-redirects",
-      (builder, value) -> builder.setMaxRedirects((int) value)),
-  NORMALIZE_URI("normalize-uri",
-      (builder, value) -> builder.setNormalizeUri((boolean) value)),
+          (builder, value) -> builder.setMaxRedirects((int) value)),
   PROXY("proxy",
-      (builder, value) -> builder.setProxy((HttpHost) value)),
+          (builder, value) -> builder.setProxy((HttpHost) value)),
   PROXY_PREFERRED_AUTH_SCHEMES("proxy-preferred-auth-scheme",
-      (builder, value) -> builder.setProxyPreferredAuthSchemes((Collection<String>) value)),
-  REDIRECTS_ENABLED("relative-redirects-allowed",
-      (builder, value) -> builder.setRedirectsEnabled((boolean) value)),
-  RELATIVE_REDIRECTS_ALLOWED("relative-redirects-allowed",
-      (builder, value) -> builder.setRelativeRedirectsAllowed((boolean) value)),
-  SOCKET_TIMEOUT("socket-timeout",
-      (builder, value) -> {
-        if (value instanceof Timeout) {
-          builder.setResponseTimeout((Timeout) value);
-        } else if (value instanceof Integer) {
-          // Backward compatibility: convert integer milliseconds to Timeout
-          int millis = (Integer) value;
-          if (millis > 0) {
-            builder.setResponseTimeout(Timeout.ofMilliseconds(millis));
-          } else {
-            builder.setResponseTimeout(Timeout.DISABLED);
-          }
-        } else {
-          throw new ClassCastException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
-        }
-      }),
-  STALE_CONNECTION_CHECK_ENABLED("stale-connection-check-enabled",
-      (builder, value) -> builder.setStaleConnectionCheckEnabled((boolean) value)),
+          (builder, value) -> builder.setProxyPreferredAuthSchemes((Collection<String>) value)),
+  REDIRECTS_ENABLED("redirects-enabled",
+          (builder, value) -> builder.setRedirectsEnabled((boolean) value)),
+  RESPONSE_TIMEOUT("response-timeout",
+          (builder, value) -> builder.setResponseTimeout(toTimeout(value))),
   TARGET_PREFERRED_AUTH_SCHEMES("target-preferred-auth-schemes",
-      (builder, value) -> builder.setTargetPreferredAuthSchemes((Collection<String>) value));
+          (builder, value) -> builder.setTargetPreferredAuthSchemes((Collection<String>) value));
 
   private final String name;
   private final BiConsumer<Builder, Object> consumer;
@@ -119,6 +71,21 @@ public enum RequestConfigOption {
 
   public void apply(Builder configBuilder, Object value) {
     this.consumer.accept(configBuilder, value);
+  }
+
+  private static Timeout toTimeout(Object value) {
+      if (value instanceof Timeout timeout) {
+          return timeout;
+      } else if (value instanceof Integer millis) {
+          // Backward compatibility: convert integer milliseconds to Timeout
+          if (millis > 0) {
+              return Timeout.ofMilliseconds(millis);
+          } else {
+              return Timeout.DISABLED;
+          }
+      } else {
+          throw new ClassCastException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
+      }
   }
 
 }

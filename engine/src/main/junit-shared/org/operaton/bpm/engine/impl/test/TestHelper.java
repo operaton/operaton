@@ -567,14 +567,17 @@ public abstract class TestHelper {
   }
 
   public static void executeJobExpectingException(ManagementService managementService, String jobId) {
-    assertThatCode(() -> managementService.executeJob(jobId))
-        .isInstanceOf(ProcessEngineException.class);
+    assertThatCode(() -> managementService.executeJob(jobId)).isInstanceOf(ProcessEngineException.class);
   }
 
   public static void executeJobExpectingException(ManagementService managementService, String jobId, String exceptionMessage) {
     assertThatCode(() -> managementService.executeJob(jobId))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining(exceptionMessage);
+  }
+
+  public static void executeJobNotExpectingException(ManagementService managementService, String jobId) {
+    assertThatCode(() -> managementService.executeJob(jobId)).doesNotThrowAnyException();
   }
 
 }

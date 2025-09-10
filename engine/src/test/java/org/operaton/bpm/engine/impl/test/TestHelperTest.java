@@ -113,4 +113,18 @@ class TestHelperTest {
     assertThrows(AssertionError.class, () -> TestHelper.executeJobExpectingException(managementService, "aJobId"));
   }
 
+  @Test
+  void shouldNotExpectExceptionDuringJobExecutionWhenExceptionIsThrown() {
+    ManagementService managementService = mock(ManagementService.class);
+    doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
+    assertThrows(AssertionError.class, () -> TestHelper.executeJobNotExpectingException(managementService, "aJobId"));
+  }
+
+  @Test
+  void shouldNotExpectExceptionDuringJobExecutionWhenExceptionIsNotThrown() {
+    ManagementService managementService = mock(ManagementService.class);
+    doNothing().when(managementService).executeJob("aJobId");
+    assertDoesNotThrow(() -> TestHelper.executeJobNotExpectingException(managementService, "aJobId"));
+  }
+
 }

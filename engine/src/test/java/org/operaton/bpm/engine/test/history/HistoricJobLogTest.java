@@ -65,6 +65,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 
@@ -1258,7 +1259,7 @@ class HistoricJobLogTest {
     var jobId = job.getId();
 
     // when
-    executeJobExpectingException(managementService, jobId);
+    assertThatCode(() -> managementService.executeJob(jobId)).isInstanceOf(RuntimeException.class);
 
     // then
     HistoricJobLog failedHistoricJobLog = historyService

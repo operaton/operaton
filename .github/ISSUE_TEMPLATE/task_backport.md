@@ -1,6 +1,6 @@
 ---
-name:  📋 Backport a commit
-about: A simple task suitable for new contributors
+name:  🔙 Backport a commit
+about: Backport a commit from camunda-bpm-platform to operaton
 title: 'Backport "<ORIGINAL_TITLE>"'
 type: task
 labels: ["backport:c7"]
@@ -12,7 +12,7 @@ projects: ["operaton/operaton"]
 
 ### What needs to be done?
 
-Backport commit [<COMMIT>](https://github.com/camunda/camunda-bpm-platform/commit/<COMMIT>) from repository [camunda-bpm-platform](https://github.com/camunda/camunda-bpm-platform).
+Backport commit [<COMMIT>](https://github.com/camunda/camunda-bpm-platform/commit/{COMMIT}) from repository [camunda-bpm-platform](https://github.com/camunda/camunda-bpm-platform).
 
 ### Adhere to the backported commit
 
@@ -20,7 +20,7 @@ Be as close as possible to the original commit to ease the code review, but adap
 
 The required adoptions could be:
 
-- namespace changes: `org.camunda.bpm` -> `org.operaton.bpm`
+- Namespace changes: `org.camunda.bpm` -> `org.operaton.bpm`
 - JUnit 4 -> JUnit 5 migration
 - JUnit 4 assertions -> AssertJ assertions
 
@@ -37,9 +37,8 @@ Verify carefully that the backport works as expected. This includes:
 The backporting commit needs proper attribution of the original commit, including references to the backported commit, its original author and reference to the original issue.
 
 ```
-Related to {REPOSISTORY}issues/{ISSUE}
-
-Backported commit {HASH} from repository {REPOSITORY_URL}.
+Related to: https://github.com/camunda/camunda-bpm-platform/issues/{ISSUE_NR}
+Backported commit: https://github.com/camunda/camunda-bpm-platform/commit/{COMMIT}
 Original author: {AUTHOR_NAME} <{AUTHOR_EMAIL}>
 ```
 

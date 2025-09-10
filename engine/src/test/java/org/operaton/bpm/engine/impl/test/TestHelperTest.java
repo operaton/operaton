@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.test;
 
 import org.junit.jupiter.api.Test;
 
-import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 
@@ -101,9 +100,8 @@ class TestHelperTest {
   @Test
   void shouldExpectExceptionDuringJobExecutionWhenExceptionIsThrown() {
     ManagementService managementService = mock(ManagementService.class);
-    doThrow(AuthorizationException.class).doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
-    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", AuthorizationException.class));
-    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", ProcessEngineException.class));
+    doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
+    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId"));
   }
 
   @Test

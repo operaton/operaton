@@ -150,7 +150,7 @@ class IncidentTest {
     var jobId = job.getId();
 
     // set job retries to 1 -> should fail again and a second incident should be created
-    executeJobExpectingException(managementService, jobId, ProcessEngineException.class);
+    executeJobExpectingException(managementService, jobId);
 
     incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
@@ -546,7 +546,7 @@ class IncidentTest {
     var jobDefinitionId = job.getJobDefinitionId();
 
     // retries should still be 0 after execution this job again
-    executeJobExpectingException(managementService, jobId, ProcessEngineException.class);
+    executeJobExpectingException(managementService, jobId);
 
     job = managementService.createJobQuery().singleResult();
     assertThat(job.getRetries()).isZero();
@@ -555,7 +555,7 @@ class IncidentTest {
     assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
 
     // it should not be possible to set the retries to a negative number with the management service
-    executeJobExpectingException(managementService, jobId, ProcessEngineException.class);
+    executeJobExpectingException(managementService, jobId);
 
     try {
       managementService.setJobRetriesByJobDefinitionId(jobDefinitionId, -300);

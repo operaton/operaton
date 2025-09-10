@@ -567,12 +567,8 @@ public abstract class TestHelper {
   }
 
   public static void executeJobExpectingException(ManagementService managementService, String jobId) {
-    executeJobExpectingException(managementService, jobId, Exception.class);
-  }
-
-  public static void executeJobExpectingException(ManagementService managementService, String jobId, Class<? extends Exception> clazz) {
     assertThatCode(() -> managementService.executeJob(jobId))
-        .isInstanceOf(clazz);
+        .isInstanceOf(ProcessEngineException.class);
   }
 
 }

@@ -100,8 +100,10 @@ class TestHelperTest {
   @Test
   void shouldExpectExceptionDuringJobExecutionWhenExceptionIsThrown() {
     ManagementService managementService = mock(ManagementService.class);
-    doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
+    doThrow(new ProcessEngineException("some exception message")).when(managementService).executeJob("aJobId");
     assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId"));
+    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", "some exception message"));
+    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", "exception message"));
   }
 
   @Test

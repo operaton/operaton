@@ -571,4 +571,10 @@ public abstract class TestHelper {
         .isInstanceOf(ProcessEngineException.class);
   }
 
+  public static void executeJobExpectingException(ManagementService managementService, String jobId, String exceptionMessage) {
+    assertThatCode(() -> managementService.executeJob(jobId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining(exceptionMessage);
+  }
+
 }

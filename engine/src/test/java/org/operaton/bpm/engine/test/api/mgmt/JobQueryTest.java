@@ -61,6 +61,7 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -959,12 +960,7 @@ public class JobQueryTest {
     assertThat(timerJob).as("No job found for process instance").isNotNull();
     String timerJobId = timerJob.getId();
 
-    try {
-      managementService.executeJob(timerJobId);
-      fail("RuntimeException from within the script task expected");
-    } catch(RuntimeException re) {
-      assertThat(re.getMessage()).contains(EXCEPTION_MESSAGE);
-    }
+    executeJobExpectingException(managementService, timerJobId, EXCEPTION_MESSAGE);
     return processInstance;
   }
 

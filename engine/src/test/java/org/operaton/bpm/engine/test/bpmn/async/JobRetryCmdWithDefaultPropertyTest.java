@@ -58,7 +58,7 @@ class JobRetryCmdWithDefaultPropertyTest {
     Job job = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).singleResult();
     assertThat(job).isNotNull();
     assertThat(job.getProcessInstanceId()).isEqualTo(pi.getProcessInstanceId());
-    assertThat(job.getRetries()).isEqualTo(2);
+    assertThat(job.getRetries()).isEqualTo(5);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml"})

@@ -33,6 +33,7 @@ import org.operaton.bpm.run.property.OperatonBpmRunAdministratorAuthorizationPro
 import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 @EnableConfigurationProperties(OperatonBpmRunProperties.class)
 @Configuration
@@ -64,8 +65,9 @@ public class OperatonBpmRunConfiguration {
   }
 
   @Bean
-  public OperatonBpmRunDeploymentConfiguration operatonDeploymentConfiguration(@Value("${operaton.deploymentDir:#{null}}") String deploymentDir) {
-    return new OperatonBpmRunDeploymentConfiguration(deploymentDir);
+  public OperatonBpmRunDeploymentConfiguration operatonDeploymentConfiguration(@Value(
+      "${operaton" + ".deploymentDir:#{null}}") String deploymentDir, OperatonBpmProperties operatonBpmProperties) {
+    return new OperatonBpmRunDeploymentConfiguration(deploymentDir, operatonBpmProperties);
   }
 
 }

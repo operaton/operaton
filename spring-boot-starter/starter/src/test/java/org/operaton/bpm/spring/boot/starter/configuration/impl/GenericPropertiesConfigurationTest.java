@@ -35,9 +35,8 @@ class GenericPropertiesConfigurationTest {
   @BeforeEach
   void init() {
     processEngineConfiguration = new SpringProcessEngineConfiguration();
-    genericPropertiesConfiguration = new GenericPropertiesConfiguration();
     operatonBpmProperties = new OperatonBpmProperties();
-    genericPropertiesConfiguration.operatonBpmProperties = operatonBpmProperties;
+    genericPropertiesConfiguration = new GenericPropertiesConfiguration(operatonBpmProperties);
   }
 
   @Test

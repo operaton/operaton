@@ -17,7 +17,7 @@
     <version.joda-time>2.12.5</version.joda-time>
     <version.uuid-generator>5.1.0</version.uuid-generator>
     <version.feel-scala>1.19.3</version.feel-scala>
-    <version.quarkus>3.26.1</version.quarkus>
+    <version.quarkus>3.26.3</version.quarkus>
     <version.java>17</version.java>
     <version.spring-boot>3.5.5</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
@@ -92,8 +92,6 @@
             <!-- org.openrewrite.staticanalysis.FinalizePrivateFields -->
             <exclusion>**/FeelIntegrationTest.java</exclusion>
             <exclusion>**/RegisterNewProcessEngineTest.java</exclusion>
-            <!-- org.openrewrite.staticanalysis.UseDiamondOperator -->
-            <exclusion>**/OperatonListImpl.java</exclusion>
             <!-- org.openrewrite.staticanalysis.SimplifyBooleanExpression -->
             <exclusion>**/DmnEvaluated*putImpl.java</exclusion>
             <!-- org.openrewrite.staticanalysis.UseLambdaForFunctionalInterface: IndexOutOfBoundsException -->
@@ -143,6 +141,8 @@
             <exclusion>**/TriggerConditionalEventFromDelegationCodeTest.java</exclusion>
             <exclusion>**/ExecutionListenerTest.java</exclusion>
             <exclusion>**/MigrationPlanGenerationTest.java</exclusion>
+            <!-- org.openrewrite.java.UseStaticImport -->
+            <exclusion>**/CaseInstanceAssertTest.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>

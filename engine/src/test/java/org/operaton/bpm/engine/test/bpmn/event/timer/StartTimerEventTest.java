@@ -61,6 +61,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.within;
@@ -1389,11 +1390,7 @@ class StartTimerEventTest {
     moveByMinutes(5);
 
     // when (1)
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobIgnoringException(managementService, jobId);
 
     // then (1)
     Job failedJob = failedJobQuery.singleResult();
@@ -1407,11 +1404,7 @@ class StartTimerEventTest {
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
     // when (2)
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobIgnoringException(managementService, jobId);
 
     // then (2)
     failedJob = failedJobQuery.singleResult();
@@ -1661,11 +1654,7 @@ class StartTimerEventTest {
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
     // when (2)
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobIgnoringException(managementService, jobId);
 
     // then (2)
     failedJob = failedJobQuery.singleResult();
@@ -1934,10 +1923,7 @@ class StartTimerEventTest {
     String nextJobId = getNextExecutableJobId();
 
     while (nextJobId != null) {
-      try {
-        managementService.executeJob(nextJobId);
-      } catch (Throwable t) { /* ignore */
-      }
+      executeJobIgnoringException(managementService, nextJobId);
       nextJobId = getNextExecutableJobId();
     }
 

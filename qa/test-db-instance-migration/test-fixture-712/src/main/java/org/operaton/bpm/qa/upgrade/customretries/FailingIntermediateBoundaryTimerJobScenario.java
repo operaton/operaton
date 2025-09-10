@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.junit.Assert.fail;
 
 public final class FailingIntermediateBoundaryTimerJobScenario {
@@ -55,11 +56,7 @@ public final class FailingIntermediateBoundaryTimerJobScenario {
         ClockUtil.setCurrentTime(simpleDateFormat.parse("2019-01-01T11:00:01"));
 
         Job firstJob = managementService.createJobQuery().processDefinitionKey("failingTimer").singleResult();
-        try {
-          managementService.executeJob(firstJob.getId());
-        } catch (Exception e) {
-          // ignore
-        }
+        executeJobIgnoringException(managementService, firstJob.getId());
       } catch (ParseException e) {
         fail("Unexpected Exception: " + e.getMessage());
       } finally {

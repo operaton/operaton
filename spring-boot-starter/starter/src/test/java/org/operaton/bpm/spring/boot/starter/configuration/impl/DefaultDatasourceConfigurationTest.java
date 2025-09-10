@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import java.util.Optional;
+
 import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,12 +38,15 @@ import static org.mockito.Mockito.mock;
 class DefaultDatasourceConfigurationTest {
 
   @Mock
-  private PlatformTransactionManager platformTransactionManager;
+  PlatformTransactionManager platformTransactionManager;
+
+  @Mock
+  Optional<PlatformTransactionManager> operatonTransactionManager;
 
   @InjectMocks
-  private DefaultDatasourceConfiguration defaultDatasourceConfiguration;
+  DefaultDatasourceConfiguration defaultDatasourceConfiguration;
 
-  private SpringProcessEngineConfiguration configuration;
+  SpringProcessEngineConfiguration configuration;
 
   @BeforeEach
   void before() {

@@ -45,16 +45,25 @@ import static org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil.j
  */
 public class DefaultJobConfiguration extends AbstractOperatonConfiguration implements OperatonJobConfiguration {
 
-  @Autowired
   protected JobExecutor jobExecutor;
 
-  @Autowired(required = false)
   protected List<JobHandler<?>> customJobHandlers;
+
+  public DefaultJobConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                 JobExecutor jobExecutor) {
+    super(operatonBpmProperties);
+    this.jobExecutor = jobExecutor;
+  }
 
   @Override
   public void preInit(final SpringProcessEngineConfiguration configuration) {
     configureJobExecutor(configuration);
     registerCustomJobHandlers(configuration);
+  }
+
+  @Autowired(required = false)
+  public void setCustomJobHandlers(List<JobHandler<?>> customJobHandlers) {
+    this.customJobHandlers = customJobHandlers;
   }
 
   protected void registerCustomJobHandlers(SpringProcessEngineConfiguration configuration) {
@@ -92,7 +101,7 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
       threadPoolTaskExecutor.setQueueCapacity(queueCapacity);
 
       Optional.ofNullable(properties.getJobExecution().getKeepAliveSeconds())
-        .ifPresent(threadPoolTaskExecutor::setKeepAliveSeconds);
+          .ifPresent(threadPoolTaskExecutor::setKeepAliveSeconds);
 
       LOG.configureJobExecutorPool(corePoolSize, maxPoolSize);
       return threadPoolTaskExecutor;
@@ -101,19 +110,22 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
     @Bean
     @ConditionalOnMissingBean(JobExecutor.class)
     @ConditionalOnProperty(prefix = "operaton.bpm.job-execution", name = "enabled", havingValue = "true", matchIfMissing = true)
-    public static JobExecutor jobExecutor(@Qualifier(CAMUNDA_TASK_EXECUTOR_QUALIFIER) final TaskExecutor taskExecutor, OperatonBpmProperties properties) {
+    public static JobExecutor jobExecutor(@Qualifier(CAMUNDA_TASK_EXECUTOR_QUALIFIER) final TaskExecutor taskExecutor,
+                                          OperatonBpmProperties properties) {
       final SpringJobExecutor springJobExecutor = new SpringJobExecutor();
       springJobExecutor.setTaskExecutor(taskExecutor);
       springJobExecutor.setRejectedJobsHandler(new NotifyAcquisitionRejectedJobsHandler());
 
       JobExecutionProperty jobExecution = properties.getJobExecution();
       Optional.ofNullable(jobExecution.getLockTimeInMillis()).ifPresent(springJobExecutor::setLockTimeInMillis);
-      Optional.ofNullable(jobExecution.getMaxJobsPerAcquisition()).ifPresent(springJobExecutor::setMaxJobsPerAcquisition);
+      Optional.ofNullable(jobExecution.getMaxJobsPerAcquisition())
+          .ifPresent(springJobExecutor::setMaxJobsPerAcquisition);
       Optional.ofNullable(jobExecution.getWaitTimeInMillis()).ifPresent(springJobExecutor::setWaitTimeInMillis);
       Optional.ofNullable(jobExecution.getMaxWait()).ifPresent(springJobExecutor::setMaxWait);
       Optional.ofNullable(jobExecution.getBackoffTimeInMillis()).ifPresent(springJobExecutor::setBackoffTimeInMillis);
       Optional.ofNullable(jobExecution.getMaxBackoff()).ifPresent(springJobExecutor::setMaxBackoff);
-      Optional.ofNullable(jobExecution.getBackoffDecreaseThreshold()).ifPresent(springJobExecutor::setBackoffDecreaseThreshold);
+      Optional.ofNullable(jobExecution.getBackoffDecreaseThreshold())
+          .ifPresent(springJobExecutor::setBackoffDecreaseThreshold);
       Optional.ofNullable(jobExecution.getWaitIncreaseFactor()).ifPresent(springJobExecutor::setWaitIncreaseFactor);
 
       return springJobExecutor;
@@ -122,8 +134,8 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
     @Bean
     @ConditionalOnProperty(prefix = "operaton.bpm.job-execution", name = "enabled", havingValue = "true", matchIfMissing = true)
     @ConditionalOnBean(JobExecutor.class)
-    public static JobExecutorStartingEventListener jobExecutorStartingEventListener() {
-      return new JobExecutorStartingEventListener();
+    public static JobExecutorStartingEventListener jobExecutorStartingEventListener(JobExecutor jobExecutor) {
+      return new JobExecutorStartingEventListener(jobExecutor);
     }
 
     private JobConfiguration() {

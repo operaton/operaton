@@ -45,6 +45,8 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+
 /**
  *
  * @author nico.rehwaldt
@@ -114,11 +116,7 @@ public abstract class AbstractCockpitPluginTest {
     }
 
     for (Job job : jobs) {
-      try {
-        managementService.executeJob(job.getId());
-      } catch (Exception ignored) {
-        // ignore
-      }
+      executeJobIgnoringException(managementService, job.getId());
     }
 
     executeAvailableJobs();

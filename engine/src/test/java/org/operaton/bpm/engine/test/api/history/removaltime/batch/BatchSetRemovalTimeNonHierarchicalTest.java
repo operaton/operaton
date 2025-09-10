@@ -76,6 +76,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
@@ -1149,10 +1150,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
 
     String jobId = managementService.createJobQuery().singleResult().getId();
 
-    try {
-      managementService.executeJob(jobId);
-
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricJobLog historicJobLog = historyService.createHistoricJobLogQuery()
       .failureLog()

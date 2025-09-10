@@ -33,6 +33,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupJobHandlerConfiguration.START_DELAY;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.apache.commons.lang3.time.DateUtils.addDays;
 import static org.apache.commons.lang3.time.DateUtils.addSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -93,9 +94,7 @@ class HistoryCleanupSchedulerIncidentsTest  extends AbstractHistoryCleanupSchedu
 
       managementService.setJobRetries(jobId, 0);
 
-      try {
-        managementService.executeJob(jobId);
-      } catch (Exception ignored) { }
+      executeJobIgnoringException(managementService, jobId);
     }
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -132,9 +131,7 @@ class HistoryCleanupSchedulerIncidentsTest  extends AbstractHistoryCleanupSchedu
 
       managementService.setJobRetries(jobId, 0);
 
-      try {
-        managementService.executeJob(jobId);
-      } catch (Exception ignored) { }
+      executeJobIgnoringException(managementService, jobId);
     }
 
     String taskId = taskService.createTaskQuery().singleResult().getId();

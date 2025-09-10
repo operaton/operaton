@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm;
 
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;
-
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("java:S5960")
 class ErrorPageIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
@@ -33,16 +33,13 @@ class ErrorPageIT extends AbstractWebIntegrationTest {
 
   @Test
   void shouldCheckNonFoundResponse() {
-    // given
-    target = client.target(appBasePath + "nonexisting");
-
     // when
-    response = target.request().get();
+    HttpResponse<String> response = Unirest.get(appBasePath + "nonexisting").asString();
 
     // then
-    assertThat(response.getStatus()).isEqualTo(Status.NOT_FOUND.getStatusCode());
-    assertThat(response.getMediaType().toString()).startsWith(MediaType.TEXT_HTML);
-    String responseEntity = response.getEntity().toString();
+    assertThat(response.getStatus()).isEqualTo(404);
+    assertThat(response.getHeaders().get("Content-Type").get(0)).startsWith("text/html");
+    String responseEntity = response.getBody();
     assertThat(responseEntity)
             .contains("Operaton")
             .contains("Not Found");

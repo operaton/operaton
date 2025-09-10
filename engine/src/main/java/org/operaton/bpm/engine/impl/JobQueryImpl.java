@@ -72,6 +72,7 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
   protected String failedActivityId;
   protected boolean noRetriesLeft;
   protected SuspensionState suspensionState;
+  protected boolean acquired;
 
   protected boolean isTenantIdSet;
   protected String[] tenantIds;
@@ -287,6 +288,12 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
   }
 
   @Override
+  public JobQuery acquired() {
+    acquired = true;
+    return this;
+  }
+
+  @Override
   protected boolean hasExcludingConditions() {
     return super.hasExcludingConditions()
       || CompareUtil.areNotInAscendingOrder(priorityHigherThanOrEqual, priorityLowerThanOrEqual)
@@ -442,6 +449,9 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
   }
   public String getExceptionMessage() {
     return exceptionMessage;
+  }
+  public boolean getAcquired() {
+    return acquired;
   }
 
 }

@@ -32,6 +32,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultDeploymentConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 public class OperatonBpmRunDeploymentConfiguration extends DefaultDeploymentConfiguration {
 
@@ -39,7 +40,8 @@ public class OperatonBpmRunDeploymentConfiguration extends DefaultDeploymentConf
 
   private static final Logger log = LoggerFactory.getLogger(OperatonBpmRunDeploymentConfiguration.class);
 
-  public OperatonBpmRunDeploymentConfiguration(String deploymentDir) {
+  public OperatonBpmRunDeploymentConfiguration(String deploymentDir, OperatonBpmProperties operatonBpmProperties) {
+    super(operatonBpmProperties);
     this.deploymentDir = deploymentDir;
   }
 
@@ -60,7 +62,7 @@ public class OperatonBpmRunDeploymentConfiguration extends DefaultDeploymentConf
   protected String getNormalizedDeploymentDir() {
     String result = deploymentDir;
 
-    if(result != null && "\\".equals(File.separator)) {
+    if (result != null && "\\".equals(File.separator)) {
       result = result.replace("\\", "/");
     }
     return result;

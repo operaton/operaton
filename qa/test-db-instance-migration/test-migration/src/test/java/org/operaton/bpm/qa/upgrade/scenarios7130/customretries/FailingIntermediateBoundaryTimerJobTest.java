@@ -58,11 +58,7 @@ public class FailingIntermediateBoundaryTimerJobTest {
         if (job.getRetries() == 1) {
           assertNotNull(((JobEntity) job).getLockExpirationTime());
         }
-        try {
-          managementService.executeJob(job.getId());
-        } catch (Exception e) {
-          // ignore
-        }
+        executeJobIgnoringException(managementService, job.getId());
       }
 
       List<Job> jobs = managementService.createJobQuery().processDefinitionKey("failingTimer").list();

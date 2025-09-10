@@ -67,6 +67,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionName;
@@ -2773,12 +2774,7 @@ class HistoricProcessInstanceTest {
 
   protected void executeJob(Job job) {
     while (job != null && job.getRetries() > 0) {
-      try {
-        managementService.executeJob(job.getId());
-      }
-      catch (Exception e) {
-        // ignore
-      }
+      executeJobIgnoringException(managementService, job.getId());
 
       job = managementService.createJobQuery().jobId(job.getId()).singleResult();
     }
@@ -2790,10 +2786,6 @@ class HistoricProcessInstanceTest {
   }
 
   private void executeFailingJob(Job job) {
-    try {
-      managementService.executeJob(job.getId());
-    } catch (RuntimeException re) {
-      // Exception expected. Do nothing
-    }
+    executeJobIgnoringException(managementService, job.getId());
   }
 }

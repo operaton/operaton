@@ -33,6 +33,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -116,11 +117,7 @@ public class RestartProcessIntanceWithInitialVariablesTest {
         .processDefinitionKey("asyncBeforeStartProcess_712")
         .processInstanceId(processInstanceWithInitialVariables.getId())
         .singleResult();
-    try {
-      managementService.executeJob(asyncJob.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, asyncJob.getId());
 
     runtimeService.deleteProcessInstance(processInstanceWithInitialVariables.getId(), "test");
     // when
@@ -182,12 +179,7 @@ public class RestartProcessIntanceWithInitialVariablesTest {
         .processDefinitionKey("asyncBeforeStartProcess_712")
         .processInstanceId(processInstanceWithInitialVariables.getId())
         .singleResult();
-    try {
-      managementService.executeJob(asyncJob.getId());
-    } catch (Exception e) {
-      // ignore
-    }
-
+    executeJobIgnoringException(managementService, asyncJob.getId());
     // assume
     HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historyService
         .createHistoricDetailQuery()

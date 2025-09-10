@@ -101,6 +101,7 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
 import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.apache.commons.lang3.time.DateUtils.addDays;
 import static org.apache.commons.lang3.time.DateUtils.addMinutes;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -761,9 +762,7 @@ class HistoryCleanupRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
@@ -1078,9 +1077,7 @@ class HistoryCleanupRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity) historyService.createHistoricJobLogQuery()
       .failureLog()
@@ -1543,9 +1540,7 @@ class HistoryCleanupRemovalTimeTest {
 
         managementService.setJobRetries(jobId, 0);
 
-        try {
-          managementService.executeJob(jobId);
-        } catch (Exception ignored) { }
+        executeJobIgnoringException(managementService, jobId);
 
         ClockUtil.setCurrentTime(addMinutes(END_DATE, i));
 
@@ -1840,9 +1835,7 @@ class HistoryCleanupRemovalTimeTest {
 
         ClockUtil.setCurrentTime(addMinutes(END_DATE, i));
 
-        try {
-          managementService.executeJob(jobId);
-        } catch (Exception ignored) { }
+        executeJobIgnoringException(managementService, jobId);
 
         managementService.setJobRetries(jobId, 0);
 

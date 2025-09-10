@@ -37,14 +37,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
-@SpringBootTest(
-  classes = {TestApplication.class},
-  webEnvironment = WebEnvironment.NONE
-)
+@SpringBootTest(classes = {TestApplication.class}, webEnvironment = WebEnvironment.NONE)
 class DefaultJobConfigurationTest {
 
   private final SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
-  private final DefaultJobConfiguration jobConfiguration = new DefaultJobConfiguration();
+  private DefaultJobConfiguration jobConfiguration;
   private final OperatonBpmProperties properties = new OperatonBpmProperties();
 
   @Autowired
@@ -52,7 +49,7 @@ class DefaultJobConfigurationTest {
 
   @BeforeEach
   void setUp() {
-    setField(jobConfiguration, "operatonBpmProperties", properties);
+    jobConfiguration = new DefaultJobConfiguration(properties, jobExecutor);
   }
 
   @Test

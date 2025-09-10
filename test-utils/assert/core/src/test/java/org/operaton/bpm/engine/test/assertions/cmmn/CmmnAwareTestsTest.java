@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,6 +39,7 @@ import org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 import org.operaton.bpm.engine.test.assertions.helpers.CaseExecutionQueryFluentAnswer;
 
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -108,7 +108,7 @@ public class CmmnAwareTestsTest {
     //then the delegate is called with that CaseDefinition object
     caseDefinitionAssertMockedStatic.verify(() -> CaseDefinitionAssert.assertThat(Mockito.any(), any()));
     //and whatever the delegate returns, is returned by the tested method, too
-    Assertions.assertThat(actualCaseDefinitionAssert).isSameAs(caseDefinitionAssert);
+    assertThat(actualCaseDefinitionAssert).isSameAs(caseDefinitionAssert);
 
     caseDefinitionAssertMockedStatic.close();
   }
@@ -128,7 +128,7 @@ public class CmmnAwareTestsTest {
     //then the delegate is called with that CaseExecution object
     caseExecutionAssertMockedStatic.verify(() -> CaseExecutionAssert.assertThat(Mockito.any(), any()));
     //and whatever the delegate returns, is returned by the tested method, too
-    Assertions.assertThat(actualCaseExecutionAssert).isSameAs(caseExecutionAssert);
+    assertThat(actualCaseExecutionAssert).isSameAs(caseExecutionAssert);
 
     caseExecutionAssertMockedStatic.close();
   }
@@ -148,7 +148,7 @@ public class CmmnAwareTestsTest {
     //then the delegate is called with that CaseInstance object
     caseInstanceAssertMockedStatic.verify(() -> CaseInstanceAssert.assertThat(any(), any()));
     //and whatever the delegate returns, is returned by the tested method, too
-    Assertions.assertThat(actualCaseInstanceAssert).isSameAs(caseInstanceAssert);
+    assertThat(actualCaseInstanceAssert).isSameAs(caseInstanceAssert);
 
     caseInstanceAssertMockedStatic.close();
   }
@@ -171,7 +171,7 @@ public class CmmnAwareTestsTest {
     //then the RepositoryService is used for creating a new one
     verify(repositoryService).createCaseDefinitionQuery();
     //and the new CaseDefinitionQuery is returned from the tested method
-    Assertions.assertThat(actualCaseDefinitionQuery).isSameAs(caseDefinitionQuery);
+    assertThat(actualCaseDefinitionQuery).isSameAs(caseDefinitionQuery);
     //and the returned CaseDefinitionQuery is a vanilla one
     verifyNoMoreInteractions(caseDefinitionQuery);
 
@@ -213,7 +213,7 @@ public class CmmnAwareTestsTest {
     //then the CaseService is used for creating a new one
     verify(caseService).createCaseExecutionQuery();
     //and the new CaseExecutionQuery is returned from the tested method
-    Assertions.assertThat(actualCaseExecutionQuery).isSameAs(caseExecutionQuery);
+    assertThat(actualCaseExecutionQuery).isSameAs(caseExecutionQuery);
     //and the returned CaseExecutionQuery is a vanilla one
     verifyNoMoreInteractions(caseExecutionQuery);
   }
@@ -252,7 +252,7 @@ public class CmmnAwareTestsTest {
     //then the CaseService is used for creating a new one
     verify(caseService).createCaseInstanceQuery();
     //and the new CaseInstanceQuery is returned from the tested method
-    Assertions.assertThat(actualCaseInstanceQuery).isSameAs(caseInstanceQuery);
+    assertThat(actualCaseInstanceQuery).isSameAs(caseInstanceQuery);
     //and the returned CaseInstanceQuery is a vanilla one
     verifyNoMoreInteractions(caseInstanceQuery);
   }
@@ -263,7 +263,7 @@ public class CmmnAwareTestsTest {
     CaseService actualCaseService = CmmnAwareTests.caseService();
 
     //then the returned CaseService is the same as
-    Assertions.assertThat(actualCaseService).isSameAs(caseService);
+    assertThat(actualCaseService).isSameAs(caseService);
   }
 
   @Test

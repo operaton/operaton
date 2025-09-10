@@ -22,7 +22,6 @@ import java.net.URISyntaxException;
 import java.util.Locale;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -54,18 +53,18 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
     }
 
     ChromeDriverService chromeDriverService = new ChromeDriverService.Builder()
-        .withVerbose(true)
-        .usingAnyFreePort()
-        .usingDriverExecutable(chromeDriver)
-        .build();
+            .withVerbose(true)
+            .usingAnyFreePort()
+            .usingDriverExecutable(chromeDriver)
+            .build();
 
     ChromeOptions chromeOptions = new ChromeOptions()
-        .addArguments("--headless=new")
-        .addArguments("--window-size=1920,1200")
-        .addArguments("--disable-gpu")
-        .addArguments("--no-sandbox")
-        .addArguments("--disable-dev-shm-usage")
-        .addArguments("--remote-allow-origins=*");
+            .addArguments("--headless=new")
+            .addArguments("--window-size=1920,1200")
+            .addArguments("--disable-gpu")
+            .addArguments("--no-sandbox")
+            .addArguments("--disable-dev-shm-usage")
+            .addArguments("--remote-allow-origins=*");
 
     driver = new ChromeDriver(chromeDriverService, chromeOptions);
   }
@@ -93,11 +92,6 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
-  }
-
-  @AfterEach
-  void after() {
-    testUtil.destroy();
   }
 
   @AfterAll

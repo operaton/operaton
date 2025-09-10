@@ -22,7 +22,6 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -49,9 +48,9 @@ class CreateFilterConfigurationTest {
     operatonBpmProperties.getFilter().setCreate("All");
   }
 
-  private static final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
+  private static CreateFilterConfiguration configuration ;
   {
-    ReflectionTestUtils.setField(configuration, "operatonBpmProperties", operatonBpmProperties);
+    configuration = new CreateFilterConfiguration(operatonBpmProperties);
     configuration.init();
   }
 
@@ -69,8 +68,7 @@ class CreateFilterConfigurationTest {
   @Test
   void fail_if_not_configured_onInit() {
     OperatonBpmProperties bpmProperties = new OperatonBpmProperties();
-    final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration();
-    ReflectionTestUtils.setField(filterConfiguration, "operatonBpmProperties", bpmProperties);
+    final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration(bpmProperties);
 
     assertThatIllegalStateException().isThrownBy(filterConfiguration::init);
   }
@@ -79,8 +77,7 @@ class CreateFilterConfigurationTest {
   void fail_if_not_configured_onExecution() {
     OperatonBpmProperties bpmProperties = new OperatonBpmProperties();
     bpmProperties.getFilter().setCreate("All");
-    final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration();
-    ReflectionTestUtils.setField(filterConfiguration, "operatonBpmProperties", bpmProperties);
+    final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration(bpmProperties);
     filterConfiguration.init();
     filterConfiguration.filterName = null;
 
@@ -92,8 +89,7 @@ class CreateFilterConfigurationTest {
   void do_not_create_when_already_exist() {
     OperatonBpmProperties bpmProperties = new OperatonBpmProperties();
     bpmProperties.getFilter().setCreate("All");
-    final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration();
-    ReflectionTestUtils.setField(filterConfiguration, "operatonBpmProperties", bpmProperties);
+    final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration(bpmProperties);
     filterConfiguration.init();
 
     ProcessEngine engine = mock(ProcessEngine.class);

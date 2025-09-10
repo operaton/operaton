@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -31,14 +30,19 @@ import org.operaton.spin.spi.DataFormatConfigurator;
 
 public class SpringBootSpinProcessEnginePlugin extends SpinProcessEnginePlugin {
 
-  @Autowired
   protected Optional<OperatonJacksonFormatConfiguratorJSR310> dataFormatConfiguratorJsr310;
 
-  @Autowired
   protected Optional<OperatonJacksonFormatConfiguratorParameterNames> dataFormatConfiguratorParameterNames;
 
-  @Autowired
   protected Optional<OperatonJacksonFormatConfiguratorJdk8> dataFormatConfiguratorJdk8;
+
+  public SpringBootSpinProcessEnginePlugin(Optional<OperatonJacksonFormatConfiguratorJSR310> dataFormatConfiguratorJsr310,
+                                           Optional<OperatonJacksonFormatConfiguratorParameterNames> dataFormatConfiguratorParameterNames,
+                                           Optional<OperatonJacksonFormatConfiguratorJdk8> dataFormatConfiguratorJdk8) {
+    this.dataFormatConfiguratorJsr310 = dataFormatConfiguratorJsr310;
+    this.dataFormatConfiguratorParameterNames = dataFormatConfiguratorParameterNames;
+    this.dataFormatConfiguratorJdk8 = dataFormatConfiguratorJdk8;
+  }
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {

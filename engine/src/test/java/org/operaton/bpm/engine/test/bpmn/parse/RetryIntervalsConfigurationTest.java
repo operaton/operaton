@@ -17,8 +17,8 @@
 package org.operaton.bpm.engine.test.bpmn.parse;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +37,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
@@ -236,11 +237,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -270,7 +267,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     ClockUtil.setCurrentTime(currentTime);
 
     Job job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
-    managementService.setJobRetries(Arrays.asList(job.getId()), 5);
+    managementService.setJobRetries(List.of(job.getId()), 5);
 
     jobRetries = executeJob(processInstanceId);
     assertThat(jobRetries).isEqualTo(4);
@@ -337,7 +334,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
     // finish the first service task
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(3);
+    assertThat(jobRetries).isEqualTo(4);
 
     // try to execute the second service task without success
     jobRetries = executeJob(processInstanceId);
@@ -408,11 +405,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   private int executeJob(String processInstanceId) {
     Job job = fetchJob(processInstanceId);
 
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     job = fetchJob(processInstanceId);
 

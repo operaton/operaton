@@ -21,13 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.assertj.core.api.Assertions;
-
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -100,23 +99,23 @@ public class ActivityInstanceVerification implements ExecutionListener {
       return;
     }
 
-    Assertions.assertThat(startInstancesForThisAct)
+    assertThat(startInstancesForThisAct)
             .isNotNull()
             .hasSize(count);
 
     List<ActivityInstance> endInstancesForThisAct = endedActivityInstances.get(actId);
-    Assertions.assertThat(endInstancesForThisAct).isNotNull();
+    assertThat(endInstancesForThisAct).isNotNull();
 
     for (ActivityInstance startedActInstance : startInstancesForThisAct) {
 
-      Assertions.assertThat(startedActInstance.id).as("activityInstanceId cannot be null for " + startedActInstance).isNotNull();
-      Assertions.assertThat(startedActInstance.executionId).as("executionId cannot be null for " + startedActInstance).isNotNull();
-      Assertions.assertThat(startedActInstance.parentId).as("parentId cannot be null for " + startedActInstance).isNotNull();
+      assertThat(startedActInstance.id).as("activityInstanceId cannot be null for " + startedActInstance).isNotNull();
+      assertThat(startedActInstance.executionId).as("executionId cannot be null for " + startedActInstance).isNotNull();
+      assertThat(startedActInstance.parentId).as("parentId cannot be null for " + startedActInstance).isNotNull();
 
       boolean foundMatchingEnd = false;
       for (ActivityInstance endedActInstance : endInstancesForThisAct) {
         if(startedActInstance.id.equals(endedActInstance.id)) {
-          Assertions.assertThat(endedActInstance.parentId).isEqualTo(startedActInstance.parentId);
+          assertThat(endedActInstance.parentId).isEqualTo(startedActInstance.parentId);
           foundMatchingEnd = true;
         }
       }
@@ -134,12 +133,12 @@ public class ActivityInstanceVerification implements ExecutionListener {
     List<ActivityInstance> actInstanceList = startedActivityInstances.get(actId);
 
     for (ActivityInstance activityInstance : actInstanceList) {
-      Assertions.assertThat(activityInstance.parentId).isEqualTo(actInstId);
+      assertThat(activityInstance.parentId).isEqualTo(actInstId);
     }
 
     actInstanceList = endedActivityInstances.get(actId);
     for (ActivityInstance activityInstance : actInstanceList) {
-      Assertions.assertThat(activityInstance.parentId).isEqualTo(actInstId);
+      assertThat(activityInstance.parentId).isEqualTo(actInstId);
     }
 
   }
@@ -179,14 +178,14 @@ public class ActivityInstanceVerification implements ExecutionListener {
 
   private void assertCorrectCompletingState(String activityId, int expectedCount, boolean completing) {
     List<ActivityInstance> endActivityInstances = endedActivityInstances.get(activityId);
-    Assertions.assertThat(endActivityInstances).isNotNull();
+    assertThat(endActivityInstances).isNotNull();
 
     for (ActivityInstance instance : endActivityInstances) {
-      Assertions.assertThat(instance.isCompleteScope).isEqualTo(completing);
+      assertThat(instance.isCompleteScope).isEqualTo(completing);
     }
 
     if (expectedCount != -1) {
-      Assertions.assertThat(endActivityInstances).hasSize(expectedCount);
+      assertThat(endActivityInstances).hasSize(expectedCount);
     }
   }
 

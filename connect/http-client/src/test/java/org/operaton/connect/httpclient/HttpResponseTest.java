@@ -19,6 +19,7 @@ package org.operaton.connect.httpclient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.connect.ConnectorRequestException;
@@ -26,12 +27,12 @@ import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class HttpResponseTest {
-
-  protected HttpConnector connector;
-  protected TestResponse testResponse;
+  private static final String EXAMPLE_URL = "https://operaton.org";
+  HttpConnector connector;
+  TestResponse testResponse;
 
   @BeforeEach
   void getConnector() {
@@ -92,65 +93,46 @@ class HttpResponseTest {
   }
 
   protected HttpResponse getResponse() {
-    return connector.createRequest().url("http://operaton.org").get().execute();
+    return connector.createRequest().url(EXAMPLE_URL).get().execute();
   }
 
-  @Test
-  void testSuccessfulResponseCode() {
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "successful request, 200",
+      "malformed request, 400",
+      "server error, 500",
+  })
+  void executeRequest_shouldRespondWithExpectedStatusCode(String testName, int statusCode) {
     // given
-    testResponse.code(200);
+    testResponse.code(statusCode);
     // when
     HttpResponse response = getResponse();
     // then
-    assertThat(response.getStatusCode()).isEqualTo(200);
-  }
-
-  @Test
-  void testResponseErrorCodeForMalformedRequest() {
-    // given
-    testResponse.code(400);
-    // when
-    HttpResponse response = getResponse();
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(400);
-  }
-
-  @Test
-  void testResponseErrorCodeForServerError() {
-    // given
-    testResponse.code(500);
-    // when
-    HttpResponse response = getResponse();
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(500);
+    assertThat(response.getStatusCode()).isEqualTo(statusCode);
   }
 
   @Test
   void testServerErrorResponseWithConfigOptionSet() {
     // given
     testResponse.code(500);
-    try {
-      // when
-      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get().execute();
-      fail("ConnectorRequestException should be thrown");
-    } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e).hasMessageContaining("HTTP request failed with Status Code: 500");
-    }
+
+    HttpRequest httpRequest = connector.createRequest().configOption("throw-http-error", "TRUE").url(EXAMPLE_URL).get();
+
+    // when & then
+    assertThatThrownBy(httpRequest::execute)
+        .isInstanceOf(ConnectorRequestException.class)
+        .hasMessageContaining("HTTP request failed with Status Code: 500");
   }
 
   @Test
   void testMalformedRequestWithConfigOptionSet() {
     // given
     testResponse.code(400);
-    try {
-      // when
-      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get().execute();
-      fail("ConnectorRequestException should be thrown");
-    } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e).hasMessageContaining("HTTP request failed with Status Code: 400");
-    }
+    HttpRequest httpRequest = connector.createRequest().configOption("throw-http-error", "TRUE").url(EXAMPLE_URL).get();
+
+    assertThatThrownBy(httpRequest::execute)
+        .isInstanceOf(ConnectorRequestException.class)
+        .hasMessageContaining("HTTP request failed with Status Code: 400");
   }
 
   @Test

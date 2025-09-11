@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.script.Bindings;
+import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
@@ -156,6 +157,29 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
         LOG.executeScriptWithScriptEngine(scriptPath, scriptEngine.getFactory().getEngineName());
         scriptEngine.eval(environment, bindings);
         scriptEngine.eval(script, bindings);
+        // map Ruby global variables like $foo -> foo into variables map for test expectations
+        try {
+          String languageName = scriptEngine.getFactory().getLanguageName();
+          if ("ruby".equalsIgnoreCase(languageName) || "jruby".equalsIgnoreCase(languageName)) {
+            Bindings engineScope = scriptEngine.getBindings(ScriptContext.ENGINE_SCOPE);
+            if (engineScope != null) {
+              for (String key : engineScope.keySet()) {
+                if (key != null && key.startsWith("$") && key.length() > 1) {
+                  String plain = key.substring(1);
+                  // only add if not already present
+                  if (!variables.containsKey(plain)) {
+                    Object val = engineScope.get(key);
+                    if (val != null) {
+                      variables.put(plain, val);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        } catch (Exception ignored) {
+          // best effort
+        }
       } catch (ScriptException e) {
         if ("graal.js".equalsIgnoreCase(scriptEngine.getFactory().getEngineName())) {
           if (e.getCause() instanceof Exception ex) {

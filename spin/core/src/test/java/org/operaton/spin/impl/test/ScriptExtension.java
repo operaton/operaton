@@ -55,6 +55,8 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
+    // ensure no variables leak from a previous test method (JUnit creates a single test instance by default)
+    variables.clear();
     loadScript(context);
   }
 
@@ -65,6 +67,8 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
         SpinIoUtil.closeSilently(reader);
       }
     }
+    // clear after use to help GC and avoid accidental reuse if extension reused unexpectedly
+    variables.clear();
   }
 
   /**

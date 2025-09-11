@@ -14,7 +14,7 @@
     <cargo.timeout>120000</cargo.timeout>
     <cargo.deploy.timeout>60000</cargo.deploy.timeout>
     <!-- Needs to be adjusted with every WildFly update -->
-    <cargo.wildfly.container.id>wildfly36x</cargo.wildfly.container.id>
+    <cargo.wildfly.container.id>wildfly37x</cargo.wildfly.container.id>
     <redirect.test.output>true</redirect.test.output>
     <http.ctx-path.webapp>operaton/</http.ctx-path.webapp>
     <http.ctx-path.rest>engine-rest/</http.ctx-path.rest>

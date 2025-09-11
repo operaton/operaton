@@ -4,6 +4,7 @@
   </resources>
 
   <dependencies>
+    <module name="java.base" />
     <module name="jakarta.el.api" />
   </dependencies>
 

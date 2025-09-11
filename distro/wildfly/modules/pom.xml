@@ -257,6 +257,12 @@
                 <replace dir="target/modules" token="@version.httpclient@" value="${version.httpclient}">
                   <include name="**/module.xml"/>
                 </replace>
+                <replace dir="target/modules" token="@version.httpclient5@" value="${version.httpclient5}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.httpcore5@" value="${version.httpcore5}">
+                  <include name="**/module.xml"/>
+                </replace>
                 <replace dir="target/modules" token="@version.jackson@" value="${version.jackson}">
                   <include name="**/module.xml"/>
                 </replace>

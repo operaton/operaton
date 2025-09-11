@@ -21,7 +21,6 @@ import java.util.Set;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
-import org.apache.http.protocol.HTTP;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +34,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static org.apache.hc.core5.http.HttpHeaders.USER_AGENT;
 
 /**
  * Since Apache HTTP client makes it extremely hard to test the proper configuration
@@ -65,8 +65,7 @@ class HttpConnectorSystemPropertiesTest {
     if (!System.getProperties().containsKey(property)) {
       updatedSystemProperties.add(property);
       System.setProperty(property, value);
-    }
-    else {
+    } else {
       throw new RuntimeException("Cannot perform test: System property "
           + property + " is already set. Will not attempt to overwrite this property.");
     }
@@ -83,7 +82,7 @@ class HttpConnectorSystemPropertiesTest {
     customConnector.createRequest().url("http://localhost:" + wmRuntimeInfo.getHttpPort()).get().execute();
 
     // then
-    verify(getRequestedFor(urlEqualTo("/")).withHeader(HTTP.USER_AGENT, equalTo("foo")));
+    verify(getRequestedFor(urlEqualTo("/")).withHeader(USER_AGENT, equalTo("foo")));
 
   }
 }

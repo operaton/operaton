@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.http.Header;
-import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.Header;
 
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.connect.httpclient.HttpResponse;
@@ -32,9 +32,9 @@ public class HttpResponseImpl extends AbstractCloseableConnectorResponse impleme
 
   private static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 
-  protected CloseableHttpResponse httpResponse;
+  protected ClassicHttpResponse httpResponse;
 
-  public HttpResponseImpl(CloseableHttpResponse httpResponse) {
+  public HttpResponseImpl(ClassicHttpResponse httpResponse) {
     this.httpResponse = httpResponse;
   }
 
@@ -65,9 +65,7 @@ public class HttpResponseImpl extends AbstractCloseableConnectorResponse impleme
   }
 
   protected void collectResponseParameters(Map<String, Object> responseParameters) {
-    if (httpResponse.getStatusLine() != null) {
-      responseParameters.put(PARAM_NAME_STATUS_CODE, httpResponse.getStatusLine().getStatusCode());
-    }
+    responseParameters.put(PARAM_NAME_STATUS_CODE, httpResponse.getCode());
     collectResponseHeaders();
 
     if (httpResponse.getEntity() != null) {
@@ -84,7 +82,7 @@ public class HttpResponseImpl extends AbstractCloseableConnectorResponse impleme
 
   protected void collectResponseHeaders() {
     Map<String, String> headers = new HashMap<>();
-    for (Header header : httpResponse.getAllHeaders()) {
+    for (Header header : httpResponse.getHeaders()) {
       headers.put(header.getName(), header.getValue());
     }
     responseParameters.put(PARAM_NAME_RESPONSE_HEADERS, headers);

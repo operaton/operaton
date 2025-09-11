@@ -21,7 +21,7 @@ import java.util.Set;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
-import org.apache.http.protocol.HTTP;
+import org.apache.hc.core5.http.HttpHeaders;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,7 +84,7 @@ class SoapHttpConnectorSystemPropertiesTest {
     customConnector.createRequest().url("http://localhost:" + wmRuntimeInfo.getHttpPort()).payload("test").execute();
 
     // then
-    verify(postRequestedFor(urlEqualTo("/")).withHeader(HTTP.USER_AGENT, equalTo("foo")));
+    verify(postRequestedFor(urlEqualTo("/")).withHeader(HttpHeaders.USER_AGENT, equalTo("foo")));
 
   }
 }

@@ -19,6 +19,7 @@ package org.operaton.connect.httpclient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.connect.ConnectorRequestException;
@@ -29,9 +30,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class HttpResponseTest {
-
-  protected HttpConnector connector;
-  protected TestResponse testResponse;
+  private static final String EXAMPLE_URL = "https://operaton.org";
+  HttpConnector connector;
+  TestResponse testResponse;
 
   @BeforeEach
   void getConnector() {
@@ -43,7 +44,7 @@ class HttpResponseTest {
   @ParameterizedTest
   @ValueSource(ints = {123, 200, 400, 500})
   void testResponseCodes(int code) {
-    testResponse.statusCode(code);
+    testResponse.code(code);
     HttpResponse response = getResponse();
     assertThat(response.getStatusCode()).isEqualTo(code);
   }
@@ -92,41 +93,54 @@ class HttpResponseTest {
   }
 
   protected HttpResponse getResponse() {
-    return connector.createRequest().url("http://operaton.org").get().execute();
+    return connector.createRequest().url(EXAMPLE_URL).get().execute();
+  }
+
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "successful request, 200",
+      "malformed request, 400",
+      "server error, 500",
+  })
+  void executeRequest_shouldRespondWithExpectedStatusCode(String testName, int statusCode) {
+    // given
+    testResponse.code(statusCode);
+    // when
+    HttpResponse response = getResponse();
+    // then
+    assertThat(response.getStatusCode()).isEqualTo(statusCode);
   }
 
   @Test
   void testServerErrorResponseWithConfigOptionSet() {
     // given
-    testResponse.statusCode(500);
-    HttpRequest request = connector.createRequest().configOption("throw-http-error", "TRUE").url("https://operaton.org").get();
+    testResponse.code(500);
 
-    // when
-    assertThatThrownBy(request::execute)
-      // then
-      .isInstanceOf(ConnectorRequestException.class)
-      .hasMessageContaining("HTTP request failed with Status Code: 500");
+    HttpRequest httpRequest = connector.createRequest().configOption("throw-http-error", "TRUE").url(EXAMPLE_URL).get();
+
+    // when & then
+    assertThatThrownBy(httpRequest::execute)
+        .isInstanceOf(ConnectorRequestException.class)
+        .hasMessageContaining("HTTP request failed with Status Code: 500");
   }
 
   @Test
   void testMalformedRequestWithConfigOptionSet() {
     // given
-    testResponse.statusCode(400);
-    HttpRequest request = connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get();
+    testResponse.code(400);
+    HttpRequest httpRequest = connector.createRequest().configOption("throw-http-error", "TRUE").url(EXAMPLE_URL).get();
 
-    // when
-    assertThatThrownBy(request::execute)
-      // then
-      .isInstanceOf(ConnectorRequestException.class)
-      .hasMessageContaining("HTTP request failed with Status Code: 400");
+    assertThatThrownBy(httpRequest::execute)
+        .isInstanceOf(ConnectorRequestException.class)
+        .hasMessageContaining("HTTP request failed with Status Code: 400");
   }
 
   @Test
   void testSuccessResponseWithConfigOptionSet() {
     // given
-    testResponse.statusCode(200);
+    testResponse.code(200);
     // when
-    connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get().execute();
+    connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
     // then
     HttpResponse response = getResponse();
     assertThat(response.getStatusCode()).isEqualTo(200);
@@ -135,9 +149,9 @@ class HttpResponseTest {
   @Test
   void testMalformedRequestWithConfigOptionSetToFalse() {
     // given
-    testResponse.statusCode(400);
+    testResponse.code(400);
     // when
-    connector.createRequest().configOption("throw-http-error", "FALSE").url("http://operaton.org").get().execute();
+    connector.createRequest().configOption("throw-http-error", "FALSE").url("http://camunda.com").get().execute();
     // then
     HttpResponse response = getResponse();
     assertThat(response.getStatusCode()).isEqualTo(400);

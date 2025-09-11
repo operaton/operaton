@@ -16,30 +16,40 @@
  */
 package org.operaton.connect.httpclient;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Stream;
 
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.config.RequestConfig.Builder;
-import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.hc.client5.http.ConnectTimeoutException;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.config.RequestConfig.Builder;
+import org.apache.hc.core5.http.HttpHost;
+import org.apache.hc.core5.util.Timeout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.httpclient.impl.util.ParseUtil;
 
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.operaton.connect.httpclient.impl.RequestConfigOption.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HttpRequestConfigTest {
 
-  //FIXME
-  public static final String EXAMPLE_URL = "http://camunda.org/example";
-  public static final String EXAMPLE_CONTENT_TYPE = "application/json";
-  public static final String EXAMPLE_PAYLOAD = "operaton";
+  public static final String EXAMPLE_URL = "http://operaton.org/example";
+
+  static Stream<Arguments> timeout_args () {
+    return Stream.of(
+        arguments(Timeout.ofSeconds(10), 10000),
+        arguments(Timeout.ofMinutes(1), 60000),
+        arguments(Timeout.ofMilliseconds(500), 500)
+    );
+  }
 
   protected HttpConnector connector;
 
@@ -82,11 +92,12 @@ public class HttpRequestConfigTest {
     assertThat(config.isCircularRedirectsAllowed()).isTrue();
   }
 
-  @Test
-  void shouldParseConnectionTimeout() {
+  @ParameterizedTest
+  @MethodSource("timeout_args")
+  void shouldParseConnectionTimeout(Object timeoutValue, int expectedTimeout) {
     // given
     HttpRequest request = connector.createRequest()
-        .configOption(CONNECTION_TIMEOUT.getName(), -2);
+        .configOption(CONNECTION_TIMEOUT.getName(), timeoutValue);
     Map<String, Object> configOptions = request.getConfigOptions();
 
     Builder configBuilder = RequestConfig.custom();
@@ -96,14 +107,15 @@ public class HttpRequestConfigTest {
     RequestConfig config = configBuilder.build();
 
     // then
-    assertThat(config.getConnectTimeout()).isEqualTo(-2);
+    assertThat(config.getConnectTimeout().toMilliseconds()).isEqualTo(expectedTimeout);
   }
 
-  @Test
-  void shouldParseConnectionRequestTimeout() {
+  @ParameterizedTest
+  @MethodSource("timeout_args")
+  void shouldParseConnectionRequestTimeout(Object timeoutValue, int expectedTimeout) {
     // given
     HttpRequest request = connector.createRequest()
-        .configOption(CONNECTION_REQUEST_TIMEOUT.getName(), -2);
+        .configOption(CONNECTION_REQUEST_TIMEOUT.getName(), timeoutValue);
     Map<String, Object> configOptions = request.getConfigOptions();
 
     Builder configBuilder = RequestConfig.custom();
@@ -113,7 +125,7 @@ public class HttpRequestConfigTest {
     RequestConfig config = configBuilder.build();
 
     // then
-    assertThat(config.getConnectionRequestTimeout()).isEqualTo(-2);
+    assertThat(config.getConnectionRequestTimeout().toMilliseconds()).isEqualTo(expectedTimeout);
   }
 
   @Test
@@ -151,62 +163,10 @@ public class HttpRequestConfigTest {
   }
 
   @Test
-  void shouldParseDecompressionEnabled() {
-    // given
-    HttpRequest request = connector.createRequest()
-        .configOption(DECOMPRESSION_ENABLED.getName(), false);
-    Map<String, Object> configOptions = request.getConfigOptions();
-
-    Builder configBuilder = RequestConfig.custom();
-    ParseUtil.parseConfigOptions(configOptions, configBuilder);
-
-    // when
-    RequestConfig config = configBuilder.build();
-
-    // then
-    assertThat(config.isContentCompressionEnabled()).isFalse();
-  }
-
-  @Test
-  void shouldParseExpectContinueEnabled() {
-    // given
-    HttpRequest request = connector.createRequest()
-        .configOption(EXPECT_CONTINUE_ENABLED.getName(), true);
-    Map<String, Object> configOptions = request.getConfigOptions();
-
-    Builder configBuilder = RequestConfig.custom();
-    ParseUtil.parseConfigOptions(configOptions, configBuilder);
-
-    // when
-    RequestConfig config = configBuilder.build();
-
-    // then
-    assertThat(config.isExpectContinueEnabled()).isTrue();
-  }
-
-  @Test
-  void shouldParseLocalAddress() throws Exception {
-    // given
-    InetAddress testAddress = InetAddress.getByName("127.0.0.1");
-    HttpRequest request = connector.createRequest()
-        .configOption(LOCAL_ADDRESS.getName(), testAddress);
-    Map<String, Object> configOptions = request.getConfigOptions();
-
-    Builder configBuilder = RequestConfig.custom();
-    ParseUtil.parseConfigOptions(configOptions, configBuilder);
-
-    // when
-    RequestConfig config = configBuilder.build();
-
-    // then
-    assertThat(config.getLocalAddress()).isEqualTo(testAddress);
-  }
-
-  @Test
   void shouldParseMaxRedirects() {
     // given
     HttpRequest request = connector.createRequest()
-        .configOption(MAX_REDIRECTS.getName(), -2);
+            .configOption(MAX_REDIRECTS.getName(), -2);
     Map<String, Object> configOptions = request.getConfigOptions();
 
     Builder configBuilder = RequestConfig.custom();
@@ -220,28 +180,11 @@ public class HttpRequestConfigTest {
   }
 
   @Test
-  void shouldParseNormalizeUri() {
-    // given
-    HttpRequest request = connector.createRequest()
-        .configOption(NORMALIZE_URI.getName(), false);
-    Map<String, Object> configOptions = request.getConfigOptions();
-
-    Builder configBuilder = RequestConfig.custom();
-    ParseUtil.parseConfigOptions(configOptions, configBuilder);
-
-    // when
-    RequestConfig config = configBuilder.build();
-
-    // then
-    assertThat(config.isNormalizeUri()).isFalse();
-  }
-
-  @Test
   void shouldParseProxy() {
     // given
     HttpHost testHost = new HttpHost("test");
     HttpRequest request = connector.createRequest()
-        .configOption(PROXY.getName(), testHost);
+            .configOption(PROXY.getName(), testHost);
     Map<String, Object> configOptions = request.getConfigOptions();
 
     Builder configBuilder = RequestConfig.custom();
@@ -259,7 +202,7 @@ public class HttpRequestConfigTest {
     // given
     ArrayList<String> testArray = new ArrayList<>();
     HttpRequest request = connector.createRequest()
-        .configOption(PROXY_PREFERRED_AUTH_SCHEMES.getName(), testArray);
+            .configOption(PROXY_PREFERRED_AUTH_SCHEMES.getName(), testArray);
     Map<String, Object> configOptions = request.getConfigOptions();
 
     Builder configBuilder = RequestConfig.custom();
@@ -276,7 +219,7 @@ public class HttpRequestConfigTest {
   void shouldParseRedirectsEnabled() {
     // given
     HttpRequest request = connector.createRequest()
-        .configOption(REDIRECTS_ENABLED.getName(), false);
+            .configOption(REDIRECTS_ENABLED.getName(), false);
     Map<String, Object> configOptions = request.getConfigOptions();
 
     Builder configBuilder = RequestConfig.custom();
@@ -290,65 +233,11 @@ public class HttpRequestConfigTest {
   }
 
   @Test
-  void shouldParseRelativeRedirectsAllowed() {
-    // given
-    HttpRequest request = connector.createRequest()
-        .configOption(RELATIVE_REDIRECTS_ALLOWED.getName(), false);
-    Map<String, Object> configOptions = request.getConfigOptions();
-
-    Builder configBuilder = RequestConfig.custom();
-    ParseUtil.parseConfigOptions(configOptions, configBuilder);
-
-    // when
-    RequestConfig config = configBuilder.build();
-
-    // then
-    assertThat(config.isRelativeRedirectsAllowed()).isFalse();
-  }
-
-
-  @Test
-  void shouldParseSocketTimeout() {
-    // given
-    HttpRequest request = connector.createRequest()
-        .configOption(SOCKET_TIMEOUT.getName(), -2);
-    Map<String, Object> configOptions = request.getConfigOptions();
-
-    Builder configBuilder = RequestConfig.custom();
-    ParseUtil.parseConfigOptions(configOptions, configBuilder);
-
-    // when
-    RequestConfig config = configBuilder.build();
-
-    // then
-    assertThat(config.getSocketTimeout()).isEqualTo(-2);
-  }
-
-
-  @Test
-  void shouldParseStaleConnectionCheckEnabled() {
-    // given
-    HttpRequest request = connector.createRequest()
-        .configOption(STALE_CONNECTION_CHECK_ENABLED.getName(), true);
-    Map<String, Object> configOptions = request.getConfigOptions();
-
-    Builder configBuilder = RequestConfig.custom();
-    ParseUtil.parseConfigOptions(configOptions, configBuilder);
-
-    // when
-    RequestConfig config = configBuilder.build();
-
-    // then
-    assertThat(config.isStaleConnectionCheckEnabled()).isTrue();
-  }
-
-
-  @Test
   void shouldParseTargetPreferredAuthSchemes() {
     // given
     ArrayList<String> testArray = new ArrayList<>();
     HttpRequest request = connector.createRequest()
-        .configOption(TARGET_PREFERRED_AUTH_SCHEMES.getName(), testArray);
+            .configOption(TARGET_PREFERRED_AUTH_SCHEMES.getName(), testArray);
     Map<String, Object> configOptions = request.getConfigOptions();
 
     Builder configBuilder = RequestConfig.custom();
@@ -359,6 +248,74 @@ public class HttpRequestConfigTest {
 
     // then
     assertThat(config.getTargetPreferredAuthSchemes()).isEqualTo(testArray);
+  }
+
+  @Test
+  void shouldParseConnectionKeepAlive() {
+    // given
+    HttpRequest request = connector.createRequest()
+            .configOption(CONNECTION_KEEP_ALIVE.getName(), Timeout.ofSeconds(10));
+    Map<String, Object> configOptions = request.getConfigOptions();
+
+    Builder configBuilder = RequestConfig.custom();
+    ParseUtil.parseConfigOptions(configOptions, configBuilder);
+
+    // when
+    RequestConfig config = configBuilder.build();
+
+    // then
+    assertThat(config.getConnectionKeepAlive()).isEqualTo(Timeout.ofSeconds(10));
+  }
+
+  @Test
+  void shouldParseExpectContinueEnabled() {
+    // given
+    HttpRequest request = connector.createRequest()
+            .configOption(EXPECT_CONTINUE_ENABLED.getName(), true);
+    Map<String, Object> configOptions = request.getConfigOptions();
+
+    Builder configBuilder = RequestConfig.custom();
+    ParseUtil.parseConfigOptions(configOptions, configBuilder);
+
+    // when
+    RequestConfig config = configBuilder.build();
+
+    // then
+    assertThat(config.isExpectContinueEnabled()).isTrue();
+  }
+
+  @Test
+  void shouldParseHardCancellationEnabled() {
+    // given
+    HttpRequest request = connector.createRequest()
+            .configOption(HARD_CANCELLATION_ENABLED.getName(), true);
+    Map<String, Object> configOptions = request.getConfigOptions();
+
+    Builder configBuilder = RequestConfig.custom();
+    ParseUtil.parseConfigOptions(configOptions, configBuilder);
+
+    // when
+    RequestConfig config = configBuilder.build();
+
+    // then
+    assertThat(config.isHardCancellationEnabled()).isTrue();
+  }
+
+  @Test
+  void shouldParseResponseTimeout() {
+    // given
+    HttpRequest request = connector.createRequest()
+            .configOption(RESPONSE_TIMEOUT.getName(), Timeout.ofSeconds(10));
+    Map<String, Object> configOptions = request.getConfigOptions();
+
+    Builder configBuilder = RequestConfig.custom();
+    ParseUtil.parseConfigOptions(configOptions, configBuilder);
+
+    // when
+    RequestConfig config = configBuilder.build();
+
+    // then
+    assertThat(config.getResponseTimeout()).isEqualTo(Timeout.ofSeconds(10));
   }
 
   // FIXME: Class org.mockito.internal.util.reflection.Whitebox no longer exists
@@ -390,8 +347,8 @@ public class HttpRequestConfigTest {
     try {
       // when
       connector.createRequest().url(EXAMPLE_URL).get()
-          .configOption(CONNECTION_TIMEOUT.getName(), 1)
-          .execute();
+              .configOption(CONNECTION_TIMEOUT.getName(), Timeout.ofNanoseconds(1))
+              .execute();
     } catch (ConnectorRequestException e) {
       // then
       assertThat(e)
@@ -401,28 +358,12 @@ public class HttpRequestConfigTest {
   }
 
   @Test
-  void shouldThrowClassCastExceptionStringToInt() {
-    try {
-      // when
-      connector.createRequest().url(EXAMPLE_URL).get()
-          .configOption(CONNECTION_TIMEOUT.getName(), "-1")
-          .execute();
-    } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e)
-              .hasMessageContaining("Invalid value for request configuration option: " + CONNECTION_TIMEOUT.getName())
-              .hasCauseInstanceOf(ClassCastException.class);
-      assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class java.lang.Integer");
-    }
-  }
-
-  @Test
   void shouldThrowClassCastExceptionStringToBoolean() {
     try {
       // when
       connector.createRequest().url(EXAMPLE_URL).get()
-          .configOption(AUTHENTICATION_ENABLED.getName(), "true")
-          .execute();
+              .configOption(AUTHENTICATION_ENABLED.getName(), "true")
+              .execute();
     } catch (ConnectorRequestException e) {
       // then
       assertThat(e)
@@ -433,28 +374,12 @@ public class HttpRequestConfigTest {
   }
 
   @Test
-  void shouldThrowClassCastExceptionStringToHttpHost() {
-    try {
-      // when
-      connector.createRequest().url(EXAMPLE_URL).get()
-      .configOption(PROXY.getName(), "proxy")
-      .execute();
-    } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e)
-              .hasMessageContaining("Invalid value for request configuration option: " + PROXY.getName())
-              .hasCauseInstanceOf(ClassCastException.class);
-      assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class org.apache.http.HttpHost");
-    }
-  }
-
-  @Test
   void shouldThrowClassCastExceptionIntToHttpHost() {
     try {
       // when
       connector.createRequest().url(EXAMPLE_URL).get()
-      .configOption(PROXY_PREFERRED_AUTH_SCHEMES.getName(), 0)
-      .execute();
+              .configOption(PROXY_PREFERRED_AUTH_SCHEMES.getName(), 0)
+              .execute();
     } catch (ConnectorRequestException e) {
       // then
       assertThat(e)

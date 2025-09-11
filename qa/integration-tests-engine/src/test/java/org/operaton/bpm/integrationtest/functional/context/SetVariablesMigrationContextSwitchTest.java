@@ -42,7 +42,7 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobNotExpectingException;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
@@ -121,7 +121,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
     // when: execute remaining batch jobs
     jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
-      executeJobNotExpectingException(managementService, job.getId());
+      assertThatCode(() -> managementService.executeJob(job.getId())).doesNotThrowAnyException();
     }
 
     // then

@@ -18,28 +18,38 @@ package org.operaton.connect.httpclient;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.apache.hc.client5.http.ConnectTimeoutException;
 import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.config.RequestConfig.Builder;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.util.Timeout;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
-import org.operaton.connect.httpclient.impl.RequestConfigOption;
 import org.operaton.connect.httpclient.impl.util.ParseUtil;
-import static org.assertj.core.api.Assertions.fail;
+
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.operaton.connect.httpclient.impl.RequestConfigOption.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("FIXME")
 public class HttpRequestConfigTest {
 
-  //FIXME
   public static final String EXAMPLE_URL = "http://operaton.org/example";
+
+  static Stream<Arguments> timeout_args () {
+    return Stream.of(
+        arguments(Timeout.ofSeconds(10), 10000),
+        arguments(Timeout.ofMinutes(1), 60000),
+        arguments(Timeout.ofMilliseconds(500), 500)
+    );
+  }
 
   protected HttpConnector connector;
 
@@ -55,7 +65,7 @@ public class HttpRequestConfigTest {
         .configOption(AUTHENTICATION_ENABLED.getName(), false);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -72,7 +82,7 @@ public class HttpRequestConfigTest {
         .configOption(CIRCULAR_REDIRECTS_ALLOWED.getName(), true);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -82,38 +92,40 @@ public class HttpRequestConfigTest {
     assertThat(config.isCircularRedirectsAllowed()).isTrue();
   }
 
-  @Test
-  void shouldParseConnectionTimeout() {
+  @ParameterizedTest
+  @MethodSource("timeout_args")
+  void shouldParseConnectionTimeout(Object timeoutValue, int expectedTimeout) {
     // given
     HttpRequest request = connector.createRequest()
-        .configOption(CONNECTION_TIMEOUT.getName(), -2);
+        .configOption(CONNECTION_TIMEOUT.getName(), timeoutValue);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
     RequestConfig config = configBuilder.build();
 
     // then
-    assertThat(config.getConnectTimeout()).isEqualTo(-2);
+    assertThat(config.getConnectTimeout().toMilliseconds()).isEqualTo(expectedTimeout);
   }
 
-  @Test
-  void shouldParseConnectionRequestTimeout() {
+  @ParameterizedTest
+  @MethodSource("timeout_args")
+  void shouldParseConnectionRequestTimeout(Object timeoutValue, int expectedTimeout) {
     // given
     HttpRequest request = connector.createRequest()
-        .configOption(CONNECTION_REQUEST_TIMEOUT.getName(), -2);
+        .configOption(CONNECTION_REQUEST_TIMEOUT.getName(), timeoutValue);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
     RequestConfig config = configBuilder.build();
 
     // then
-    assertThat(config.getConnectionRequestTimeout()).isEqualTo(-2);
+    assertThat(config.getConnectionRequestTimeout().toMilliseconds()).isEqualTo(expectedTimeout);
   }
 
   @Test
@@ -123,7 +135,7 @@ public class HttpRequestConfigTest {
         .configOption(CONTENT_COMPRESSION_ENABLED.getName(), false);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -140,7 +152,7 @@ public class HttpRequestConfigTest {
         .configOption(COOKIE_SPEC.getName(), "test");
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -157,7 +169,7 @@ public class HttpRequestConfigTest {
             .configOption(MAX_REDIRECTS.getName(), -2);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -175,7 +187,7 @@ public class HttpRequestConfigTest {
             .configOption(PROXY.getName(), testHost);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -193,7 +205,7 @@ public class HttpRequestConfigTest {
             .configOption(PROXY_PREFERRED_AUTH_SCHEMES.getName(), testArray);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -210,7 +222,7 @@ public class HttpRequestConfigTest {
             .configOption(REDIRECTS_ENABLED.getName(), false);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -228,7 +240,7 @@ public class HttpRequestConfigTest {
             .configOption(TARGET_PREFERRED_AUTH_SCHEMES.getName(), testArray);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -245,7 +257,7 @@ public class HttpRequestConfigTest {
             .configOption(CONNECTION_KEEP_ALIVE.getName(), Timeout.ofSeconds(10));
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -262,7 +274,7 @@ public class HttpRequestConfigTest {
             .configOption(EXPECT_CONTINUE_ENABLED.getName(), true);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -279,7 +291,7 @@ public class HttpRequestConfigTest {
             .configOption(HARD_CANCELLATION_ENABLED.getName(), true);
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -296,7 +308,7 @@ public class HttpRequestConfigTest {
             .configOption(RESPONSE_TIMEOUT.getName(), Timeout.ofSeconds(10));
     Map<String, Object> configOptions = request.getConfigOptions();
 
-    RequestConfig.Builder configBuilder = RequestConfig.custom();
+    Builder configBuilder = RequestConfig.custom();
     ParseUtil.parseConfigOptions(configOptions, configBuilder);
 
     // when
@@ -335,30 +347,13 @@ public class HttpRequestConfigTest {
     try {
       // when
       connector.createRequest().url(EXAMPLE_URL).get()
-              .configOption(CONNECTION_TIMEOUT.getName(), 1)
+              .configOption(CONNECTION_TIMEOUT.getName(), Timeout.ofNanoseconds(1))
               .execute();
     } catch (ConnectorRequestException e) {
       // then
       assertThat(e)
               .hasMessageContaining("Unable to execute HTTP request")
               .hasCauseExactlyInstanceOf(ConnectTimeoutException.class);
-    }
-  }
-
-  @Test
-  void shouldThrowClassCastExceptionStringToTimeout() {
-    try {
-      // when
-      connector.createRequest().url(EXAMPLE_URL).get()
-              .configOption(RequestConfigOption.CONNECTION_TIMEOUT.getName(), "0")
-              .execute();
-      fail("No exception thrown");
-    } catch (ConnectorRequestException e) {
-      assertThat(e)
-              // then
-              .hasMessageContaining("Invalid value for request configuration option: " + RequestConfigOption.CONNECTION_TIMEOUT.getName())
-              .hasCauseInstanceOf(ClassCastException.class);
-      assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class org.apache.hc.core5.util.Timeout");
     }
   }
 
@@ -375,22 +370,6 @@ public class HttpRequestConfigTest {
               .hasMessageContaining("Invalid value for request configuration option: " + AUTHENTICATION_ENABLED.getName())
               .hasCauseInstanceOf(ClassCastException.class);
       assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class java.lang.Boolean");
-    }
-  }
-
-  @Test
-  void shouldThrowClassCastExceptionStringToHttpHost() {
-    try {
-      // when
-      connector.createRequest().url(EXAMPLE_URL).get()
-              .configOption(PROXY.getName(), "proxy")
-              .execute();
-    } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e)
-              .hasMessageContaining("Invalid value for request configuration option: " + PROXY.getName())
-              .hasCauseInstanceOf(ClassCastException.class);
-      assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class org.apache.http.HttpHost");
     }
   }
 

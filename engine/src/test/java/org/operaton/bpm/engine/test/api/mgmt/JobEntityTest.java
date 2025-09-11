@@ -37,8 +37,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Tassilo Weidner
@@ -169,12 +169,7 @@ class JobEntityTest {
     var jobId = job.getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // exception expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then
     job = (JobEntity) managementService.createJobQuery().jobId(job.getId()).singleResult();
@@ -200,12 +195,7 @@ class JobEntityTest {
     var jobId = job.getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // exception expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then
     job = (JobEntity) managementService.createJobQuery().jobId(job.getId()).singleResult();
@@ -233,12 +223,7 @@ class JobEntityTest {
     var jobId = job.getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // exception expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then
     job = (JobEntity) managementService.createJobQuery().jobId(job.getId()).singleResult();

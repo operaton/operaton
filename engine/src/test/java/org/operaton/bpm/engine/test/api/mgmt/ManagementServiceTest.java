@@ -60,6 +60,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -115,22 +116,12 @@ class ManagementServiceTest {
 
   @Test
   void testExecuteJobNullJobId() {
-    try {
-      managementService.executeJob(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("jobId is null", re.getMessage());
-    }
+    executeJobExpectingException(managementService, null, "jobId is null");
   }
 
   @Test
   void testExecuteJobUnexistingJob() {
-    try {
-      managementService.executeJob("unexistingjob");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("No job found with id", ae.getMessage());
-    }
+    executeJobExpectingException(managementService, "unexistingjob", "No job found with id");
   }
 
 
@@ -148,12 +139,7 @@ class ManagementServiceTest {
     assertThat(timerJob).as("No job found for process instance").isNotNull();
     var timerJobId = timerJob.getId();
 
-    try {
-      managementService.executeJob(timerJobId);
-      fail("RuntimeException from within the script task expected");
-    } catch (RuntimeException re) {
-      testRule.assertTextPresent("This is an exception thrown from scriptTask", re.getMessage());
-    }
+    executeJobExpectingException(managementService, timerJobId, "This is an exception thrown from scriptTask");
 
     // Fetch the task to see that the exception that occurred is persisted
     timerJob = managementService.createJobQuery()

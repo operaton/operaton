@@ -51,6 +51,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
@@ -149,12 +150,7 @@ class IncidentTest {
     var jobId = job.getId();
 
     // set job retries to 1 -> should fail again and a second incident should be created
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception was expected.");
-    } catch (ProcessEngineException e) {
-      // exception expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
@@ -454,12 +450,7 @@ class IncidentTest {
     String jobId = job.getId();
 
     while(0 != job.getRetries()) {
-      try {
-        managementService.executeJob(jobId);
-        fail("Exception expected");
-      } catch (Exception e) {
-        // expected
-      }
+      executeJobExpectingException(managementService, jobId);
       job = jobQuery.jobId(jobId).singleResult();
 
     }
@@ -555,13 +546,7 @@ class IncidentTest {
     var jobDefinitionId = job.getJobDefinitionId();
 
     // retries should still be 0 after execution this job again
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     job = managementService.createJobQuery().singleResult();
     assertThat(job.getRetries()).isZero();
@@ -570,13 +555,7 @@ class IncidentTest {
     assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
 
     // it should not be possible to set the retries to a negative number with the management service
-    try {
-      managementService.setJobRetries(jobId, -200);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     try {
       managementService.setJobRetriesByJobDefinitionId(jobDefinitionId, -300);

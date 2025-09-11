@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Tom Baeyens
@@ -62,7 +62,8 @@ class JobExecutorCmdExceptionTest {
   @BeforeEach
   void setUp() {
     processEngineConfiguration.getJobHandlers().put(tweetExceptionHandler.getType(), tweetExceptionHandler);
-    processEngineConfiguration.getJobHandlers().put(nestedCommandExceptionHandler.getType(), nestedCommandExceptionHandler);
+    processEngineConfiguration.getJobHandlers()
+      .put(nestedCommandExceptionHandler.getType(), nestedCommandExceptionHandler);
   }
 
   @AfterEach
@@ -113,7 +114,7 @@ class JobExecutorCmdExceptionTest {
     tweetExceptionHandler.setExceptionsRemaining(600);
 
     // create 40 jobs
-    for(int i = 0; i < 40; i++) {
+    for (int i = 0; i < 40; i++) {
       createJob(TweetExceptionHandler.TYPE);
     }
 
@@ -141,12 +142,7 @@ class JobExecutorCmdExceptionTest {
 
     assertThat(job.getRetries()).isEqualTo(3);
 
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected
-    }
+    assertThatCode(() -> managementService.executeJob(jobId)).isInstanceOf(RuntimeException.class);
 
     job = managementService.createJobQuery().singleResult();
     assertThat(job.getRetries()).isEqualTo(2);
@@ -184,13 +180,13 @@ class JobExecutorCmdExceptionTest {
   @Test
   void testFailingTransactionListener() {
 
-   testRule.deploy(Bpmn.createExecutableProcess("testProcess")
-        .startEvent()
-        .serviceTask()
-          .operatonClass(FailingTransactionListenerDelegate.class.getName())
-          .operatonAsyncBefore()
-        .endEvent()
-        .done());
+    testRule.deploy(Bpmn.createExecutableProcess("testProcess")
+      .startEvent()
+      .serviceTask()
+      .operatonClass(FailingTransactionListenerDelegate.class.getName())
+      .operatonAsyncBefore()
+      .endEvent()
+      .done());
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -231,36 +227,27 @@ class JobExecutorCmdExceptionTest {
   protected void clearDatabase() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-      List<Job> jobs = processEngineConfiguration
-          .getManagementService()
-          .createJobQuery()
-          .list();
+      List<Job> jobs = processEngineConfiguration.getManagementService().createJobQuery().list();
 
       for (Job job : jobs) {
         new DeleteJobCmd(job.getId()).execute(commandContext);
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
       }
 
-      List<HistoricIncident> historicIncidents = processEngineConfiguration
-          .getHistoryService()
-          .createHistoricIncidentQuery()
-          .list();
+      List<HistoricIncident> historicIncidents = processEngineConfiguration.getHistoryService()
+        .createHistoricIncidentQuery()
+        .list();
 
       for (HistoricIncident historicIncident : historicIncidents) {
-        commandContext
-            .getDbEntityManager()
-            .delete((DbEntity) historicIncident);
+        commandContext.getDbEntityManager().delete((DbEntity) historicIncident);
       }
 
-      List<HistoricJobLog> historicJobLogs = processEngineConfiguration
-          .getHistoryService()
-          .createHistoricJobLogQuery()
-          .list();
+      List<HistoricJobLog> historicJobLogs = processEngineConfiguration.getHistoryService()
+        .createHistoricJobLogQuery()
+        .list();
 
       for (HistoricJobLog historicJobLog : historicJobLogs) {
-        commandContext
-            .getHistoricJobLogManager()
-            .deleteHistoricJobLogById(historicJobLog.getId());
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogById(historicJobLog.getId());
       }
 
       return null;

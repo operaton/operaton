@@ -51,9 +51,9 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.repository.ResourceTypes.RUNTIME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 class RuntimeByteArrayTest {
   protected static final String WORKER_ID = "aWorkerId";
@@ -153,12 +153,7 @@ class RuntimeByteArrayTest {
     String jobId = managementService.createJobQuery().singleResult().getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
     assertThat(job).isNotNull();

@@ -157,22 +157,18 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
         LOG.executeScriptWithScriptEngine(scriptPath, scriptEngine.getFactory().getEngineName());
         scriptEngine.eval(environment, bindings);
         scriptEngine.eval(script, bindings);
-        // map Ruby global variables like $foo -> foo into variables map for test expectations
+        // map Ruby globals ($foo -> foo) mittels global_variables Hash Ansatz
         try {
           String languageName = scriptEngine.getFactory().getLanguageName();
           if ("ruby".equalsIgnoreCase(languageName) || "jruby".equalsIgnoreCase(languageName)) {
-            Bindings engineScope = scriptEngine.getBindings(ScriptContext.ENGINE_SCOPE);
-            if (engineScope != null) {
-              for (String key : engineScope.keySet()) {
-                if (key != null && key.startsWith("$") && key.length() > 1) {
-                  String plain = key.substring(1);
-                  // only add if not already present
-                  if (!variables.containsKey(plain)) {
-                    Object val = engineScope.get(key);
-                    if (val != null) {
-                      variables.put(plain, val);
-                    }
-                  }
+            String rubyCollector = "Hash[ global_variables.map { |s| n=s.to_s.sub(/^\\$/,''); begin [n, eval(s.to_s)] rescue [n, nil] end } ]";
+            Object result = scriptEngine.eval(rubyCollector);
+            if (result instanceof Map<?,?> map) {
+              for (Map.Entry<?,?> e : map.entrySet()) {
+                String k = String.valueOf(e.getKey());
+                Object val = e.getValue();
+                if (val != null && !k.isEmpty() && !variables.containsKey(k)) {
+                  variables.put(k, val);
                 }
               }
             }

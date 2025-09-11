@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
@@ -70,11 +71,19 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
   protected boolean isByteArrayFetchingEnabled = true;
   protected boolean isCustomObjectDeserializationEnabled = true;
 
+  protected Date createdAfter;
+
   public HistoricVariableInstanceQueryImpl() {
   }
 
   public HistoricVariableInstanceQueryImpl(CommandExecutor commandExecutor) {
     super(commandExecutor);
+  }
+  
+  @Override
+  public HistoricVariableInstanceQuery createdAfter(Date date) {
+    createdAfter = date;
+    return this;
   }
 
   @Override
@@ -312,6 +321,12 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
     return this;
   }
 
+  @Override
+  public HistoricVariableInstanceQuery orderByCreationTime() {
+    orderBy(HistoricVariableInstanceQueryProperty.CREATE_TIME);
+    return this;
+  }
+
   // getters and setters //////////////////////////////////////////////////////
 
   public String getProcessInstanceId() {
@@ -386,6 +401,10 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
 
   public List<String> getVariableNameIn() {
     return variableNameIn;
+  }
+
+  public Date getCreatedAfter() {
+    return createdAfter;
   }
 
 }

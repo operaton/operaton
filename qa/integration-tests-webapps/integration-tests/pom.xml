@@ -9,7 +9,6 @@
   <artifactId>operaton-qa-integration-tests-webapps</artifactId>
   <name>Operaton - QA Integration Tests - Webapps ITs</name>
   <description>${project.name}</description>
-
   <!--
     Maven modules running these tests with the failsafe plugin should declare the following system property:
 
@@ -17,8 +16,6 @@
         (e.g. set to "${project.build.directory}/selenium-screenshots");
         no screenshots created if not set
    -->
-
-
   <dependencies>
     <!-- set shrinkwrap artifacts -->
     <dependency>
@@ -101,5 +98,4 @@
       <artifactId>jakarta.ws.rs-api</artifactId>
     </dependency>
   </dependencies>
-
 </project>

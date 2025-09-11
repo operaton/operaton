@@ -13,7 +13,6 @@
   <properties>
     <!-- default os -->
     <os.type>linux64</os.type>
-    <version.jersey-apache-client>1.15</version.jersey-apache-client>
     <version.httpcomponents>4.5.10</version.httpcomponents>
     <version.chromedriver>112.0.5615.49</version.chromedriver>
   </properties>

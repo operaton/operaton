@@ -52,11 +52,6 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-      <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpcore</artifactId>
-        <version>${version.apache.httpcore}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 

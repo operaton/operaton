@@ -92,7 +92,7 @@ class HttpResponseTest {
   }
 
   protected HttpResponse getResponse() {
-    return connector.createRequest().url("http://operaton.com").get().execute();
+    return connector.createRequest().url("http://operaton.org").get().execute();
   }
 
   @Test

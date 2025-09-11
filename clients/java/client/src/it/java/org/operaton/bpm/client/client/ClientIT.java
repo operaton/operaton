@@ -68,6 +68,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ClientIT {
 
   protected static final String BASE_URL;
+  public static final String URL_ENGINE_REST = "http://operaton.org/engine-rest";
 
   static {
     Properties properties = loadProperties(DEFAULT_PROPERTIES_PATH);
@@ -233,7 +234,7 @@ class ClientIT {
     try {
       // given
       ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
-          .baseUrl("http://operaton.com/engine-rest")
+          .baseUrl(URL_ENGINE_REST)
           .maxTasks(0);
 
       // when + then
@@ -329,7 +330,7 @@ class ClientIT {
     try {
       // given
       ExternalTaskClientBuilder clientBuilder = ExternalTaskClient.create()
-          .baseUrl("http://operaton.com/engine-rest")
+          .baseUrl(URL_ENGINE_REST)
           .asyncResponseTimeout(0);
 
       // when
@@ -402,7 +403,7 @@ class ClientIT {
     try {
       // given
       ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
-          .baseUrl("http://operaton.com/engine-rest")
+          .baseUrl(URL_ENGINE_REST)
           .lockDuration(0);
 
       // when + then
@@ -423,7 +424,7 @@ class ClientIT {
     try {
       // given
       ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
-        .baseUrl("http://operaton.com/engine-rest")
+        .baseUrl(URL_ENGINE_REST)
         .addInterceptor(null);
 
       // when + then

@@ -66,6 +66,8 @@ on:
         type: boolean
         required: true
         default: false
+  pull_request:             # Runs on pull requests to main
+    branches: ["main"]
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
@@ -94,15 +96,132 @@ jobs:
             echo "commits=true" >> $GITHUB_OUTPUT
           fi
 
+  determine-pr-config:
+    name: Determine PR Configuration
+    runs-on: ubuntu-24.04
+    if: github.event_name == 'pull_request'
+    outputs:
+      needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
+      java_versions: ${{ steps.compute-matrix.outputs.java_versions }}
+      distros: ${{ steps.compute-matrix.outputs.distros }}
+      databases: ${{ steps.compute-matrix.outputs.databases }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Check PR conditions
+        id: check-pr
+        env:
+          PR_LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          echo "PR Labels: $PR_LABELS"
+          echo "PR Author: $PR_AUTHOR"
+          
+          # Define whitelisted authors (core team members who don't need full integration tests)
+          WHITELISTED_AUTHORS="kthoms,javahippie,saig0,tasso94,ingorichtsmeier,camunda-ci"
+          
+          # Check if author is whitelisted
+          if echo "$WHITELISTED_AUTHORS" | grep -q "$PR_AUTHOR"; then
+            echo "ℹ️ PR author $PR_AUTHOR is whitelisted"
+            AUTHOR_WHITELISTED=true
+          else
+            echo "ℹ️ PR author $PR_AUTHOR is NOT whitelisted"
+            AUTHOR_WHITELISTED=false
+          fi
+          
+          # Check if PR is from Dependabot
+          if [[ "$PR_AUTHOR" == "dependabot"* ]]; then
+            echo "🤖 PR is from Dependabot"
+            NEEDS_BUILD=true
+          # Check if PR has dependency label
+          elif echo "$PR_LABELS" | grep -q '"dependencies"'; then
+            echo "📦 PR has dependencies label"
+            NEEDS_BUILD=true
+          # Check if PR has distro: labels
+          elif echo "$PR_LABELS" | grep -q '"distro:'; then
+            echo "🏗️ PR has distro labels"
+            NEEDS_BUILD=true
+          # Check if PR has database: labels
+          elif echo "$PR_LABELS" | grep -q '"database:'; then
+            echo "🗄️ PR has database labels"
+            NEEDS_BUILD=true
+          # Check if author is not whitelisted
+          elif [[ "$AUTHOR_WHITELISTED" == "false" ]]; then
+            echo "👤 PR author is not whitelisted, requiring integration build"
+            NEEDS_BUILD=true
+          else
+            echo "✅ PR doesn't require integration build"
+            NEEDS_BUILD=false
+          fi
+          
+          echo "needs_build=$NEEDS_BUILD" >> $GITHUB_OUTPUT
+      - name: Compute matrix values
+        id: compute-matrix
+        if: steps.check-pr.outputs.needs_build == 'true'
+        env:
+          PR_LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
+        run: |
+          # Java version is always 17 for PR builds
+          JAVA_VERSIONS='["17"]'
+          echo "java_versions=$JAVA_VERSIONS" >> $GITHUB_OUTPUT
+          
+          # Determine distros based on labels
+          DISTRO_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("distro:")) | sub("distro:"; "")')
+          if [[ -n "$DISTRO_LABELS" ]]; then
+            # Convert to JSON array
+            DISTROS=$(echo "$DISTRO_LABELS" | jq -R -s 'split("\n") | map(select(. != ""))')
+            echo "🎯 Using specific distros from labels: $DISTROS"
+          else
+            # Default to all distros
+            DISTROS='["operaton", "tomcat", "wildfly"]'
+            echo "🎯 Using default distros: $DISTROS"
+          fi
+          echo "distros=$DISTROS" >> $GITHUB_OUTPUT
+          
+          # Determine databases based on labels
+          DATABASE_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("database:")) | sub("database:"; "")')
+          if [[ -n "$DATABASE_LABELS" ]]; then
+            # Convert to JSON array
+            DATABASES=$(echo "$DATABASE_LABELS" | jq -R -s 'split("\n") | map(select(. != ""))')
+            echo "🎯 Using specific databases from labels: $DATABASES"
+          else
+            # Default to h2 only
+            DATABASES='["h2"]'
+            echo "🎯 Using default database: $DATABASES"
+          fi
+          echo "databases=$DATABASES" >> $GITHUB_OUTPUT
+
+  early-exit:
+    name: Early Exit Check
+    runs-on: ubuntu-24.04
+    needs: determine-pr-config
+    if: github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'false'
+    steps:
+      - name: Cancel workflow
+        run: |
+          echo "🚫 Integration build not needed for this PR"
+          echo "✅ PR author is whitelisted and no dependency/distro/database labels found"
+          echo "Workflow will be cancelled gracefully"
+          exit 0
+
   build:
     name: Build
     strategy:
       fail-fast: true
       matrix:
-        java: ${{ fromJson(github.event.inputs.java_version || '["17", "21"]') }}
+        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "21"]') }}
     runs-on: ubuntu-24.04
-    needs: detect-recent-changes
-    if: ${{ (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') || github.event.inputs.skip_build == 'false' }}
+    needs: 
+      - detect-recent-changes
+      - determine-pr-config
+    if: |
+      always() && !cancelled() && (
+        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
+        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false') ||
+        (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
+      )
     outputs:
       version: ${{steps.maven-build.outputs.version}}
       project_version: ${{steps.maven-build.outputs.project_version}}
@@ -165,15 +284,22 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-24.04
-    needs: detect-recent-changes
-    if: ${{ (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') || github.event.inputs.integration_tests == 'true' }}
+    needs: 
+      - detect-recent-changes
+      - determine-pr-config
+    if: |
+      always() && !cancelled() && (
+        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
+        (github.event_name == 'workflow_dispatch' && github.event.inputs.integration_tests == 'true') ||
+        (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
+      )
     strategy:
       fail-fast: false
       matrix:
-        java: ${{ fromJson(github.event.inputs.java_version || '["17"]') }}
-        testsuite: ${{ fromJson(github.event.inputs.testsuite || '["engine"]') }}
-        distro: ${{ fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]') }}
-        database: ${{ fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]') }}
+        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17"]') }}
+        testsuite: ${{ github.event_name == 'pull_request' && fromJson('["engine"]') || fromJson(github.event.inputs.testsuite || '["engine"]') }}
+        distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
+        database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v5
@@ -231,9 +357,14 @@ jobs:
     name: Release
     needs:
       - detect-recent-changes
+      - determine-pr-config
       - build
     runs-on: ubuntu-24.04
-    if: ${{ (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') || github.event.inputs.skip_build == 'false' }}
+    if: |
+      always() && !cancelled() && (
+        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
+        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false')
+      )
     steps:
       - name: Check out the code
         uses: actions/checkout@v5
@@ -297,9 +428,14 @@ jobs:
     runs-on: ubuntu-24.04
     needs:
       - detect-recent-changes
+      - determine-pr-config
       - build
       - release
-    if: ${{ (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') || github.event.inputs.dry_run == 'false' }}
+    if: |
+      always() && !cancelled() && (
+        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
+        (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false')
+      )
     steps:
       - name: Notify Docker Repository
         run: |

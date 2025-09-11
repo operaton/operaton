@@ -37,8 +37,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner

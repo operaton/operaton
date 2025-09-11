@@ -35,8 +35,8 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.EndEvent;
 import org.operaton.bpm.model.bpmn.instance.TerminateEventDefinition;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Askar Akhmerov

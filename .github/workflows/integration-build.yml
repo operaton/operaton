@@ -68,6 +68,10 @@ on:
         default: false
   pull_request:             # Runs on pull requests to main
     branches: ["main"]
+  push:
+    branches:
+      # when developing the workflow itself, create this branch and push to it
+      - ci-dev/integration-build
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
@@ -99,7 +103,7 @@ jobs:
   determine-pr-config:
     name: Determine PR Configuration
     runs-on: ubuntu-24.04
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     outputs:
       needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
       java_versions: ${{ steps.compute-matrix.outputs.java_versions }}
@@ -120,7 +124,7 @@ jobs:
           echo "PR Author: $PR_AUTHOR"
           
           # Define whitelisted authors (core team members who don't need full integration tests)
-          WHITELISTED_AUTHORS="kthoms,javahippie,saig0,tasso94,ingorichtsmeier,camunda-ci"
+          WHITELISTED_AUTHORS="kthoms,javahippie"
           
           # Check if author is whitelisted
           if echo "$WHITELISTED_AUTHORS" | grep -q "$PR_AUTHOR"; then

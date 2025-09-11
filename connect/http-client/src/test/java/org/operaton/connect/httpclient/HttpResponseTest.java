@@ -92,7 +92,7 @@ class HttpResponseTest {
   }
 
   protected HttpResponse getResponse() {
-    return connector.createRequest().url("http://operaton.com").get().execute();
+    return connector.createRequest().url("http://operaton.org").get().execute();
   }
 
   @Test
@@ -131,7 +131,7 @@ class HttpResponseTest {
     testResponse.code(500);
     try {
       // when
-      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
+      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get().execute();
       fail("ConnectorRequestException should be thrown");
     } catch (ConnectorRequestException e) {
       // then
@@ -145,7 +145,7 @@ class HttpResponseTest {
     testResponse.code(400);
     try {
       // when
-      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
+      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get().execute();
       fail("ConnectorRequestException should be thrown");
     } catch (ConnectorRequestException e) {
       // then

@@ -2,7 +2,7 @@ operaton-connect
 ===============
 
 <p>
-  <a href="http://operaton.com/">Home</a> |
+  <a href="https://operaton.org/">Home</a> |
   <a href="https://docs.operaton.org/manual/latest/reference/connect/">Documentation</a> |
   <a href="https://forum.operaton.org/">Forum</a> |
   <a href="../LICENSE">License</a> |

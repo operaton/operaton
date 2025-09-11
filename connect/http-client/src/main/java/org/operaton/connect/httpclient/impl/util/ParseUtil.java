@@ -26,7 +26,7 @@ import org.operaton.connect.httpclient.impl.RequestConfigOption;
 
 public final class ParseUtil {
 
-  protected static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
+  private static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 
   private ParseUtil() {
   }

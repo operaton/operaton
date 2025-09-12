@@ -89,7 +89,7 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
       ScriptEngine fresh = new ScriptEngineManager().getEngineByName(lang);
       if (fresh != null) {
         scriptEngine = fresh;
-        LOG.debug("Created new Ruby ScriptEngine instance (forced isolation)");
+        LOG.createdNewRubyScriptEngineInstance();
       }
     }
 

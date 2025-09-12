@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main", "ci-dev/reports-and-docs"]
+    branches: ["main", "ci-dev/reports-and-docs]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,44 +19,11 @@ permissions:
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
-          restore-keys: ${{ runner.os }}-m2
-      - name: Set up Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: 17
-      - name: Maven Build
-        id: maven-build
-        shell: bash
-        run: |
-          PROJECT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
-          RELEASE_VERSION=$(echo $PROJECT_VERSION | sed 's/-SNAPSHOT//')
-          echo "project_version=$PROJECT_VERSION" >> $GITHUB_OUTPUT
-          echo "project_version=$PROJECT_VERSION"
-          echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
-          echo "version=$RELEASE_VERSION"
-          #./mvnw -Psonatype-oss-release install javadoc:javadoc versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=/workspaces/operaton/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list -DskipTests
-          ./mvnw versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report
-
-
   # Single deploy job since we're just deploying
   deploy:
-    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -70,7 +37,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: 'target/reports'
+          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

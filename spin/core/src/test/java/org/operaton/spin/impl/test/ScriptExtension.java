@@ -26,6 +26,7 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
+import javax.script.ScriptEngineManager;
 import org.graalvm.polyglot.Value;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -82,9 +83,19 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
       return;
     }
 
+    // For Ruby always create a fresh ScriptEngine instance per test (forced isolation)
+    if (isRuby(scriptEngine)) {
+      String lang = scriptEngine.getFactory().getLanguageName();
+      ScriptEngine fresh = new ScriptEngineManager().getEngineByName(lang);
+      if (fresh != null) {
+        scriptEngine = fresh;
+        LOG.debug("Created new Ruby ScriptEngine instance (forced isolation)");
+      }
+    }
+
     script = getScript(context);
     collectScriptVariables(context);
-    if ("ruby".equalsIgnoreCase(scriptEngine.getFactory().getLanguageName())) {
+    if (isRuby(scriptEngine)) {
       variables.put("org.jruby.embed.clear.variables", true);
     }
     boolean execute = isExecuteScript(context);
@@ -156,15 +167,13 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
     if (scriptEngine != null) {
       try {
         String environment = SpinScriptEnv.get(scriptEngine.getFactory().getLanguageName());
-
         Bindings bindings = new SimpleBindings(variables);
         LOG.executeScriptWithScriptEngine(scriptPath, scriptEngine.getFactory().getEngineName());
         scriptEngine.eval(environment, bindings);
         scriptEngine.eval(script, bindings);
-        // map Ruby globals ($foo -> foo) mittels global_variables Hash Ansatz
-        try {
-          String languageName = scriptEngine.getFactory().getLanguageName();
-          if ("ruby".equalsIgnoreCase(languageName) || "jruby".equalsIgnoreCase(languageName)) {
+        // Map Ruby globals ($foo -> foo) using global_variables hash approach (legacy compatibility)
+        if (isRuby(scriptEngine)) {
+          try {
             String rubyCollector = "Hash[ global_variables.map { |s| n=s.to_s.sub(/^\\$/,''); begin [n, eval(s.to_s)] rescue [n, nil] end } ]";
             Object result = scriptEngine.eval(rubyCollector);
             if (result instanceof Map<?,?> map) {
@@ -176,9 +185,9 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
                 }
               }
             }
+          } catch (Exception ignored) {
+            // best effort
           }
-        } catch (Exception ignored) {
-          // best effort
         }
       } catch (ScriptException e) {
         if ("graal.js".equalsIgnoreCase(scriptEngine.getFactory().getEngineName())) {
@@ -190,6 +199,15 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
         throw LOG.scriptExecutionError(scriptPath, e);
       }
     }
+  }
+
+  // Helper to detect Ruby engines
+  private static boolean isRuby(ScriptEngine engine) {
+    if (engine == null) {
+      return false;
+    }
+    String ln = engine.getFactory().getLanguageName();
+    return ln != null && ("ruby".equalsIgnoreCase(ln) || "jruby".equalsIgnoreCase(ln));
   }
 
   public ScriptExtension execute(Map<String, Object> scriptVariables) throws Exception {

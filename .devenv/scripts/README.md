@@ -72,7 +72,7 @@ Example:
 ./build/build-and-run-database-update-tests.sh --db=h2
 ```
 
-# Directory `build`
+# Directory `maintenance`
 
 ## `code-cleanup.sh`
 
@@ -84,3 +84,47 @@ Execute this script from the root of the repository:
 ```bash
 .devenv/scripts/maintenance/code-cleanup.sh
 ```
+
+## `init-database-version.py` — Database Version Maintenance
+
+This script automates the process of initializing and updating the database version across all supported databases and related files.
+
+### Usage
+```bash
+.devenv/scripts/maintenance/init-database-version.py [OPTIONS]
+```
+
+#### Options:
+
+- `--new-version <version>`: Specify the new database version (semantic versioning: `major.minor.patch`). If omitted, the script proposes the next minor version.
+- `--database <db1,db2,...>`: Comma-separated list of databases to update. If omitted, all supported databases are selected.
+- `-y, --assume-yes`: Run non-interactively, accepting all default answers.
+
+**Example: Perform interactive update**
+
+```bash
+.devenv/scripts/maintenance/init-database-version.py
+```
+
+**Example: Perform non-interactive update to the next minor version for all databases**
+
+```bash
+.devenv/scripts/maintenance/init-database-version.py -y
+```
+
+**Example: Non-interactive update to a specific version for selected databases**
+
+```bash
+python3 .devenv/scripts/maintenance/init-database-version.py --new-version 7.25.0 --database postgres,mysql -y
+```
+
+### What it does:
+
+- Reads and updates the current and previous database version in database/pom.xml.
+- Updates SQL and Liquibase changelog files for the selected databases.
+- Creates new upgrade scripts and test fixtures for the new version.
+- Updates references in QA and test modules.
+
+### Notes
+- Always run this script from the repository root.
+- Review and commit the changes after running the script.

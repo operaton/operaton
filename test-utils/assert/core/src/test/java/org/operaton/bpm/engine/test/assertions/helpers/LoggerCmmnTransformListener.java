@@ -33,7 +33,7 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  */
 public class LoggerCmmnTransformListener implements CmmnTransformListener {
   public static CaseExecutionListener listener = var1 ->
-    System.out.printf("Execution Event: %s %s\n", var1.getEventName(), var1.getActivityId());
+    System.out.printf("Execution Event: %s %s%n", var1.getEventName(), var1.getActivityId());
 
   protected void addListeners(CmmnActivity activity) {
     if (activity != null) {

@@ -34,6 +34,7 @@ import jakarta.ws.rs.core.Response.Status;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,6 +78,7 @@ import org.operaton.bpm.engine.rest.hal.Hal;
 import org.operaton.bpm.engine.rest.helper.EqualsMap;
 import org.operaton.bpm.engine.rest.helper.EqualsVariableMap;
 import org.operaton.bpm.engine.rest.helper.ErrorMessageHelper;
+import org.operaton.bpm.engine.rest.helper.MockObjectValue;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.helper.VariableTypeHelper;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsObjectValue;
@@ -94,14 +96,17 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.type.SerializableValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
 
 import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
@@ -160,6 +165,9 @@ public class TaskRestServiceInteractionTest extends
   protected static final String HANDLE_BPMN_ERROR_URL = SINGLE_TASK_URL + "/bpmnError";
   protected static final String HANDLE_BPMN_ESCALATION_URL = SINGLE_TASK_URL + "/bpmnEscalation";
 
+  private static final String LOCAL_VARIABLE_KEY = "aLocalVariableId";
+  private static final List<String> LOCAL_VARIABLE_PAYLOAD = Arrays.asList("aLocalValue", "bLocalValue");
+
   private Task mockTask;
   private TaskService taskServiceMock;
   private TaskQuery mockQuery;
@@ -217,6 +225,15 @@ public class TaskRestServiceInteractionTest extends
     when(taskServiceMock.createAttachment(any(), any(), any(), any(), any(), Mockito.<String>any())).thenReturn(mockTaskAttachment);
     when(taskServiceMock.createAttachment(any(), any(), any(), any(), any(), Mockito.<InputStream>any())).thenReturn(mockTaskAttachment);
     when(taskServiceMock.getTaskAttachmentContent(EXAMPLE_TASK_ID, EXAMPLE_TASK_ATTACHMENT_ID)).thenReturn(new ByteArrayInputStream(createMockByteData()));
+
+    ObjectValue localVariableValue = MockObjectValue.fromObjectValue(
+            Variables.objectValue(LOCAL_VARIABLE_PAYLOAD).serializationDataFormat("application/json").create())
+        .objectTypeName(ArrayList.class.getName())
+        .serializedValue("a serialized value");
+
+    when(taskServiceMock.getVariablesLocalTyped(EXAMPLE_TASK_ID, true)).thenReturn(
+        Variables.createVariables().putValueTyped(LOCAL_VARIABLE_KEY, localVariableValue));
+    when(taskServiceMock.getVariablesTyped(EXAMPLE_TASK_ID, true)).thenReturn(EXAMPLE_VARIABLES);
 
     formServiceMock = mock(FormService.class);
     when(processEngine.getFormService()).thenReturn(formServiceMock);
@@ -290,11 +307,14 @@ public class TaskRestServiceInteractionTest extends
       .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
       .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
       .body("taskState", equalTo(MockProvider.EXAMPLE_HISTORIC_TASK_STATE))
+      .body("variables", equalTo(null))
+      .body("attachment", equalTo(null))
+      .body("comment", equalTo(null))
       .when().get(SINGLE_TASK_URL);
   }
 
   @Test
-  void testGetSingleTaskWithQueryParam() {
+  void testGetSingleTaskWithCommentAttachment() {
     given().pathParam("id", EXAMPLE_TASK_ID)
       .queryParam("withCommentAttachmentInfo", true)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -321,9 +341,164 @@ public class TaskRestServiceInteractionTest extends
       .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
       .body("attachment", equalTo(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE))
       .body("comment", equalTo(MockProvider.EXAMPLE_TASK_COMMENT_STATE))
+      .body("variables", equalTo(null))
       .when().get(SINGLE_TASK_URL);
   }
 
+  @Test
+  public void testGetSingleTaskWithTaskVariablesInReturn() {
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskVariablesInReturn", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("created", equalTo(MockProvider.EXAMPLE_TASK_CREATE_TIME))
+      .body("due", equalTo(MockProvider.EXAMPLE_TASK_DUE_DATE))
+      .body("delegationState", equalTo(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.toString()))
+      .body("description", equalTo(MockProvider.EXAMPLE_TASK_DESCRIPTION))
+      .body("executionId", equalTo(MockProvider.EXAMPLE_TASK_EXECUTION_ID))
+      .body("owner", equalTo(MockProvider.EXAMPLE_TASK_OWNER))
+      .body("parentTaskId", equalTo(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID))
+      .body("priority", equalTo(MockProvider.EXAMPLE_TASK_PRIORITY))
+      .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
+      .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
+      .body("taskDefinitionKey", equalTo(MockProvider.EXAMPLE_TASK_DEFINITION_KEY))
+      .body("suspended", equalTo(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE))
+      .body("caseExecutionId", equalTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID))
+      .body("caseInstanceId", equalTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID))
+      .body("caseDefinitionId", equalTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
+      .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
+      .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
+      .body("variables", notNullValue())
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY, notNullValue())
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY + ".type",
+        equalTo(VariableTypeHelper.toExpectedValueTypeName(EXAMPLE_VARIABLE_VALUE.getType())))
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY + ".value", equalTo(EXAMPLE_VARIABLE_VALUE.getValue()))
+      .body("attachment", equalTo(null))
+      .body("comment", equalTo(null))
+      .when().get(SINGLE_TASK_URL);
+  }
+
+  @Test
+  public void testGetSingleTaskWithTaskLocalVariablesInReturn() {
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskLocalVariablesInReturn", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("created", equalTo(MockProvider.EXAMPLE_TASK_CREATE_TIME))
+      .body("due", equalTo(MockProvider.EXAMPLE_TASK_DUE_DATE))
+      .body("delegationState", equalTo(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.toString()))
+      .body("description", equalTo(MockProvider.EXAMPLE_TASK_DESCRIPTION))
+      .body("executionId", equalTo(MockProvider.EXAMPLE_TASK_EXECUTION_ID))
+      .body("owner", equalTo(MockProvider.EXAMPLE_TASK_OWNER))
+      .body("parentTaskId", equalTo(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID))
+      .body("priority", equalTo(MockProvider.EXAMPLE_TASK_PRIORITY))
+      .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
+      .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
+      .body("taskDefinitionKey", equalTo(MockProvider.EXAMPLE_TASK_DEFINITION_KEY))
+      .body("suspended", equalTo(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE))
+      .body("caseExecutionId", equalTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID))
+      .body("caseInstanceId", equalTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID))
+      .body("caseDefinitionId", equalTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
+      .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
+      .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
+      .body("variables", notNullValue())
+      .body("variables" + "." + LOCAL_VARIABLE_KEY, notNullValue())
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".type", equalTo("Object"))
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".value", equalTo(LOCAL_VARIABLE_PAYLOAD))
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".valueInfo."
+        + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, CoreMatchers.equalTo("application/json"))
+      .body(
+        "variables" + "." + LOCAL_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_OBJECT_TYPE_NAME,
+        CoreMatchers.equalTo(ArrayList.class.getName()))
+      .body("attachment", equalTo(null))
+      .body("comment", equalTo(null))
+      .when().get(SINGLE_TASK_URL);
+  }
+
+  @Test
+  public void testGetSingleTaskWithTaskVariablesCommentsAndAttachments() {
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskVariablesInReturn", true)
+      .queryParam("withCommentAttachmentInfo", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("created", equalTo(MockProvider.EXAMPLE_TASK_CREATE_TIME))
+      .body("due", equalTo(MockProvider.EXAMPLE_TASK_DUE_DATE))
+      .body("delegationState", equalTo(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.toString()))
+      .body("description", equalTo(MockProvider.EXAMPLE_TASK_DESCRIPTION))
+      .body("executionId", equalTo(MockProvider.EXAMPLE_TASK_EXECUTION_ID))
+      .body("owner", equalTo(MockProvider.EXAMPLE_TASK_OWNER))
+      .body("parentTaskId", equalTo(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID))
+      .body("priority", equalTo(MockProvider.EXAMPLE_TASK_PRIORITY))
+      .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
+      .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
+      .body("taskDefinitionKey", equalTo(MockProvider.EXAMPLE_TASK_DEFINITION_KEY))
+      .body("suspended", equalTo(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE))
+      .body("caseExecutionId", equalTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID))
+      .body("caseInstanceId", equalTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID))
+      .body("caseDefinitionId", equalTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
+      .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
+      .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
+      .body("attachment", equalTo(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE))
+      .body("comment", equalTo(MockProvider.EXAMPLE_TASK_COMMENT_STATE))
+      .body("variables", notNullValue())
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY, notNullValue())
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY + ".type",
+        equalTo(VariableTypeHelper.toExpectedValueTypeName(EXAMPLE_VARIABLE_VALUE.getType())))
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY + ".value", equalTo(EXAMPLE_VARIABLE_VALUE.getValue()))
+      .when().get(SINGLE_TASK_URL);
+  }
+
+  @Test
+  public void testGetSingleTaskWithTaskLocalVariablesCommentsAndAttachments() {
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskLocalVariablesInReturn", true)
+      .queryParam("withCommentAttachmentInfo", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("created", equalTo(MockProvider.EXAMPLE_TASK_CREATE_TIME))
+      .body("due", equalTo(MockProvider.EXAMPLE_TASK_DUE_DATE))
+      .body("delegationState", equalTo(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.toString()))
+      .body("description", equalTo(MockProvider.EXAMPLE_TASK_DESCRIPTION))
+      .body("executionId", equalTo(MockProvider.EXAMPLE_TASK_EXECUTION_ID))
+      .body("owner", equalTo(MockProvider.EXAMPLE_TASK_OWNER))
+      .body("parentTaskId", equalTo(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID))
+      .body("priority", equalTo(MockProvider.EXAMPLE_TASK_PRIORITY))
+      .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
+      .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
+      .body("taskDefinitionKey", equalTo(MockProvider.EXAMPLE_TASK_DEFINITION_KEY))
+      .body("suspended", equalTo(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE))
+      .body("caseExecutionId", equalTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID))
+      .body("caseInstanceId", equalTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID))
+      .body("caseDefinitionId", equalTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
+      .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
+      .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
+      .body("attachment", equalTo(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE))
+      .body("comment", equalTo(MockProvider.EXAMPLE_TASK_COMMENT_STATE))
+      .body("variables", notNullValue())
+      .body("variables" + "." + LOCAL_VARIABLE_KEY, notNullValue())
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".type", equalTo("Object"))
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".value", equalTo(LOCAL_VARIABLE_PAYLOAD))
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".valueInfo."
+        + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, CoreMatchers.equalTo("application/json"))
+      .body(
+        "variables" + "." + LOCAL_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_OBJECT_TYPE_NAME,
+        CoreMatchers.equalTo(ArrayList.class.getName()))
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY, nullValue())
+      .when().get(SINGLE_TASK_URL);
+  }
   @Test
   @SuppressWarnings("unchecked")
   void testGetSingleTaskHal() {
@@ -547,70 +722,7 @@ public class TaskRestServiceInteractionTest extends
   }
 
   @Test
-  void testGetSingleTaskWithTaskVariablesInReturn() {
-    // Setup variables mock
-    VariableMap variablesMock = Variables.createVariables()
-        .putValue("testVariable", "testValue")
-        .putValue("anotherVariable", 42);
-    when(taskServiceMock.getVariablesTyped(EXAMPLE_TASK_ID, true)).thenReturn(variablesMock);
-
-    given().pathParam("id", EXAMPLE_TASK_ID)
-      .queryParam("withTaskVariablesInReturn", true)
-      .header("accept", MediaType.APPLICATION_JSON)
-      .then().expect().statusCode(Status.OK.getStatusCode())
-      .body("id", equalTo(EXAMPLE_TASK_ID))
-      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
-      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
-      .body("variables.testVariable.value", equalTo("testValue"))
-      .body("variables.testVariable.type", equalTo("String"))
-      .body("variables.anotherVariable.value", equalTo(42))
-      .body("variables.anotherVariable.type", equalTo("Integer"))
-      .when().get(SINGLE_TASK_URL);
-  }
-
-  @Test
-  void testGetSingleTaskWithTaskLocalVariablesInReturn() {
-    // Setup local variables mock  
-    VariableMap localVariablesMock = Variables.createVariables()
-        .putValue("localVariable", "localValue");
-    when(taskServiceMock.getVariablesLocalTyped(EXAMPLE_TASK_ID, true)).thenReturn(localVariablesMock);
-
-    given().pathParam("id", EXAMPLE_TASK_ID)
-      .queryParam("withTaskLocalVariablesInReturn", true)
-      .header("accept", MediaType.APPLICATION_JSON)
-      .then().expect().statusCode(Status.OK.getStatusCode())
-      .body("id", equalTo(EXAMPLE_TASK_ID))
-      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
-      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
-      .body("variables.localVariable.value", equalTo("localValue"))
-      .body("variables.localVariable.type", equalTo("String"))
-      .when().get(SINGLE_TASK_URL);
-  }
-
-  @Test
-  void testGetSingleTaskWithTaskVariablesAndCommentAttachment() {
-    // Setup variables mock
-    VariableMap variablesMock = Variables.createVariables()
-        .putValue("testVariable", "testValue");
-    when(taskServiceMock.getVariablesTyped(EXAMPLE_TASK_ID, true)).thenReturn(variablesMock);
-
-    given().pathParam("id", EXAMPLE_TASK_ID)
-      .queryParam("withTaskVariablesInReturn", true)
-      .queryParam("withCommentAttachmentInfo", true)
-      .header("accept", MediaType.APPLICATION_JSON)
-      .then().expect().statusCode(Status.OK.getStatusCode())
-      .body("id", equalTo(EXAMPLE_TASK_ID))
-      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
-      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
-      .body("variables.testVariable.value", equalTo("testValue"))
-      .body("variables.testVariable.type", equalTo("String"))
-      .body("attachment", equalTo(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE))
-      .body("comment", equalTo(MockProvider.EXAMPLE_TASK_COMMENT_STATE))
-      .when().get(SINGLE_TASK_URL);
-  }
-
-  @Test
-  void testGetForm() {
+  public void testGetForm() {
     given().pathParam("id", EXAMPLE_TASK_ID)
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.OK.getStatusCode())

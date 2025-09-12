@@ -5,6 +5,8 @@ EXECUTE_TEST=true
 TEST_SUITE="engine"
 DATABASE="h2"
 DISTRO="tomcat"
+RUNNER="./mvnw"
+DAEMON=false
 VALID_TEST_SUITES=("engine" "webapps" "db-rolling-update")
 VALID_DISTROS=("operaton" "tomcat" "wildfly")
 VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb" "oracle" "db2" "sqlserver")
@@ -43,6 +45,9 @@ parse_args() {
       --no-test)
         EXECUTE_TEST=false
         ;;
+      --daemon)
+        RUNNER="mvnd"
+        ;;
     esac
     shift
   done
@@ -72,8 +77,8 @@ run_build () {
   fi
 
   echo "ℹ️ Building $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
-  echo "./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install"
-  ./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install
+  echo "$RUNNER -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install"
+  $RUNNER -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
     popd > /dev/null
@@ -113,8 +118,8 @@ run_tests () {
   PROFILES+=($DATABASE)
 
   echo "ℹ️ Running $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
-  echo "./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
-  ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")
+  echo "$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
+  $RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
     popd > /dev/null

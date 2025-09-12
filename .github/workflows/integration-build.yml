@@ -30,7 +30,7 @@ on:
         description: 'Integration Tests: Test suite to run'
         type: choice
         required: true
-        default: '["engine"]'
+        default: '["engine", "webapps"]'
         options:
           - '["engine"]'
           - '["webapps"]'

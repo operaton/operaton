@@ -50,7 +50,6 @@ import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
-import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
@@ -78,14 +77,13 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.CollectionUtil;
 
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.propertyComparator;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
-
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.propertyComparator;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 
 /**
  * @author Christian Lipphardt (Camunda)
@@ -2679,12 +2677,12 @@ class HistoricVariableInstanceTest {
         .hasMessage("Variable names is null");
   }
 
- @Deployment(resources = {
+  @Deployment(resources = {
     "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testCallSimpleSubProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/history/simpleSubProcess.bpmn20.xml"
-})
-@Test
-public void shouldBeCorrectlySortedWhenSortingByVariableCreationTime() {
+  })
+  @Test
+  void shouldBeCorrectlySortedWhenSortingByVariableCreationTime() {
   // given
   runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
@@ -2701,12 +2699,12 @@ public void shouldBeCorrectlySortedWhenSortingByVariableCreationTime() {
   verifySorting(historicVariableInstancesDesc, inverted(propertyComparator(HistoricVariableInstance::getCreateTime)));
 }
 
-@Deployment(resources = {
+  @Deployment(resources = {
     "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testCallSimpleSubProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/history/simpleSubProcess.bpmn20.xml"
-})
-@Test
-public void shouldQueryByCreatedAfter() {
+  })
+  @Test
+  void shouldQueryByCreatedAfter() {
   // given
   Calendar creationDate = Calendar.getInstance();
   ClockUtil.setCurrentTime(creationDate.getTime());

@@ -51,6 +51,9 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.propertyComparator;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -195,6 +198,28 @@ class HistoricDecisionInstanceQueryTest {
 
     List<HistoricDecisionInstance> orderDesc = historyService.createHistoricDecisionInstanceQuery().orderByEvaluationTime().desc().list();
     assertThat(orderDesc.get(0).getEvaluationTime().after(orderDesc.get(1).getEvaluationTime())).isTrue();
+  }
+
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
+  @Test
+  void testQuerySortByDecisionInstanceId() {
+    for (int i = 0; i < 5; i++) {
+      startProcessInstanceAndEvaluateDecision();
+    }
+
+    List<HistoricDecisionInstance> orderAsc = historyService.createHistoricDecisionInstanceQuery()
+        .orderByDecisionInstanceId()
+        .asc()
+        .list();
+    assertThat(orderAsc).hasSize(5);
+    verifySorting(orderAsc, propertyComparator(HistoricDecisionInstance::getId));
+
+    List<HistoricDecisionInstance> orderDesc = historyService.createHistoricDecisionInstanceQuery()
+        .orderByDecisionInstanceId()
+        .desc()
+        .list();
+    assertThat(orderDesc).hasSize(5);
+    verifySorting(orderDesc, inverted(propertyComparator(HistoricDecisionInstance::getId)));
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})

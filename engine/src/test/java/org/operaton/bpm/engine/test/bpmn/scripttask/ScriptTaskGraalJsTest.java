@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.oracle.truffle.js.scriptengine.GraalJSEngineFactory;
-import com.oracle.truffle.js.scriptengine.GraalJSScriptEngine;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import org.junit.jupiter.api.AfterEach;

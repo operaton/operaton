@@ -65,6 +65,15 @@ public interface UserQuery extends Query<UserQuery, User> {
   /** Only select {@link User}s that belongs to the given tenant. */
   UserQuery memberOfTenant(String tenantId);
 
+  /**
+   * Only select users after the given user id (for cursor-based pagination).
+   * The id acts as a cursor for pagination to improve performance on large datasets.
+   * 
+   * @param afterId the user id to use as a cursor
+   * @return this query
+   */
+  UserQuery afterId(String afterId);
+
   //sorting ////////////////////////////////////////////////////////
 
   /** Order by user id (needs to be followed by {@link #asc()} or {@link #desc()}). */

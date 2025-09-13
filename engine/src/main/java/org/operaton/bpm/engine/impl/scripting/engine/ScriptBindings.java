@@ -71,6 +71,7 @@ public class ScriptBindings implements Bindings {
       "JSON", // Spin Internal Variable
       ScriptEngine.ARGV, // jRuby is only setting this variable and execution instead of exporting any other variables
       "execution",
+      "$execution", // ruby global execution handle should never become process variable
       "__doc__", // do not export python doc string
       "__builtins__" // python built-in functions
       ));

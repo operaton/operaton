@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
+import java.util.List;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
@@ -148,7 +149,27 @@ public class ScriptingEngines implements DmnScriptEngineResolver {
    * @param engineBindin
    * @param scriptEngine */
   public Bindings createBindings(ScriptEngine scriptEngine, VariableScope variableScope) {
-    return scriptBindingsFactory.createBindings(variableScope, scriptEngine.createBindings());
+    Bindings bindings = scriptBindingsFactory.createBindings(variableScope, scriptEngine.createBindings());
+    // add JRuby global $execution for backwards compatibility if ruby engine detected
+    try {
+      if (scriptEngine != null) {
+        ScriptEngineFactory factory = scriptEngine.getFactory();
+        if (factory != null) {
+          List<String> names = factory.getNames();
+          for (String n : names) {
+            if ("ruby".equalsIgnoreCase(n) || "jruby".equalsIgnoreCase(n)) {
+              if (!bindings.containsKey("$execution")) {
+                bindings.put("$execution", variableScope);
+              }
+              break;
+            }
+          }
+        }
+      }
+    } catch (Exception ignored) {
+      // best effort, ignore
+    }
+    return bindings;
   }
 
   public ScriptBindingsFactory getScriptBindingsFactory() {

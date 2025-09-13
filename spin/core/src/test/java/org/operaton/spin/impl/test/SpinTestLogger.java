@@ -54,6 +54,10 @@ public class SpinTestLogger extends SpinLogger {
     logInfo("006", "Execute script '{}' with script engine '{}'", scriptPath, engineName);
   }
 
+  public void createdNewRubyScriptEngineInstance() {
+    logInfo("009", "Created new Ruby ScriptEngine instance (forced isolation)");
+  }
+
   public SpinScriptException noScriptEngineFoundForLanguage(String scriptLanguage) {
     return new SpinScriptException(exceptionMessage("002", "No script engine found for script language '{}'", scriptLanguage));
   }

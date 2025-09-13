@@ -22,9 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.script.Bindings;
+import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
+import javax.script.ScriptEngineManager;
 import org.graalvm.polyglot.Value;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -54,6 +56,8 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
+    // ensure no variables leak from a previous test method (JUnit creates a single test instance by default)
+    variables.clear();
     loadScript(context);
   }
 
@@ -64,6 +68,8 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
         SpinIoUtil.closeSilently(reader);
       }
     }
+    // clear after use to help GC and avoid accidental reuse if extension reused unexpectedly
+    variables.clear();
   }
 
   /**
@@ -77,9 +83,19 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
       return;
     }
 
+    // For Ruby always create a fresh ScriptEngine instance per test (forced isolation)
+    if (isRuby(scriptEngine)) {
+      String lang = scriptEngine.getFactory().getLanguageName();
+      ScriptEngine fresh = new ScriptEngineManager().getEngineByName(lang);
+      if (fresh != null) {
+        scriptEngine = fresh;
+        LOG.createdNewRubyScriptEngineInstance();
+      }
+    }
+
     script = getScript(context);
     collectScriptVariables(context);
-    if ("ruby".equalsIgnoreCase(scriptEngine.getFactory().getLanguageName())) {
+    if (isRuby(scriptEngine)) {
       variables.put("org.jruby.embed.clear.variables", true);
     }
     boolean execute = isExecuteScript(context);
@@ -151,11 +167,35 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
     if (scriptEngine != null) {
       try {
         String environment = SpinScriptEnv.get(scriptEngine.getFactory().getLanguageName());
-
         Bindings bindings = new SimpleBindings(variables);
+
         LOG.executeScriptWithScriptEngine(scriptPath, scriptEngine.getFactory().getEngineName());
+        // load language environment first
         scriptEngine.eval(environment, bindings);
+        // then bridge globals for Ruby so that environment definitions do not overwrite them
+        if (isRuby(scriptEngine)) {
+          bridgeRubyGlobals(bindings);
+        }
+        // finally execute the test script
         scriptEngine.eval(script, bindings);
+        // Map Ruby globals ($foo -> foo) using global_variables hash approach (legacy compatibility)
+        if (isRuby(scriptEngine)) {
+          try {
+            String rubyCollector = "Hash[ global_variables.map { |s| n=s.to_s.sub(/^\\$/,''); begin [n, eval(s.to_s)] rescue [n, nil] end } ]";
+            Object result = scriptEngine.eval(rubyCollector);
+            if (result instanceof Map<?,?> map) {
+              for (Map.Entry<?,?> e : map.entrySet()) {
+                String k = String.valueOf(e.getKey());
+                Object val = e.getValue();
+                if (val != null && !k.isEmpty() && !variables.containsKey(k)) {
+                  variables.put(k, val);
+                }
+              }
+            }
+          } catch (Exception ignored) {
+            // best effort
+          }
+        }
       } catch (ScriptException e) {
         if ("graal.js".equalsIgnoreCase(scriptEngine.getFactory().getEngineName())) {
           if (e.getCause() instanceof Exception ex) {
@@ -166,6 +206,36 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
         throw LOG.scriptExecutionError(scriptPath, e);
       }
     }
+  }
+
+  // Copy all binding entries into Ruby global variables before executing the script
+  private void bridgeRubyGlobals(Bindings bindings) {
+    StringBuilder assignScript = new StringBuilder();
+    for (String name : bindings.keySet()) {
+      if (name.startsWith("org.jruby")) {
+        continue; // internal
+      }
+      if (!name.matches("[A-Za-z_][A-Za-z0-9_]*")) {
+        continue; // invalid ruby identifier
+      }
+      assignScript.append("$").append(name).append(" = ").append(name).append("\n");
+    }
+    if (assignScript.length() > 0) {
+      try {
+        scriptEngine.eval(assignScript.toString(), bindings);
+      } catch (Exception ignored) {
+        // best effort
+      }
+    }
+  }
+
+  // Helper to detect Ruby engines
+  private static boolean isRuby(ScriptEngine engine) {
+    if (engine == null) {
+      return false;
+    }
+    String ln = engine.getFactory().getLanguageName();
+    return ln != null && ("ruby".equalsIgnoreCase(ln) || "jruby".equalsIgnoreCase(ln));
   }
 
   public ScriptExtension execute(Map<String, Object> scriptVariables) throws Exception {

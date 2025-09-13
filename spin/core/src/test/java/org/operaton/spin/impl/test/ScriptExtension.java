@@ -168,8 +168,15 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
       try {
         String environment = SpinScriptEnv.get(scriptEngine.getFactory().getLanguageName());
         Bindings bindings = new SimpleBindings(variables);
+
         LOG.executeScriptWithScriptEngine(scriptPath, scriptEngine.getFactory().getEngineName());
+        // load language environment first
         scriptEngine.eval(environment, bindings);
+        // then bridge globals for Ruby so that environment definitions do not overwrite them
+        if (isRuby(scriptEngine)) {
+          bridgeRubyGlobals(bindings);
+        }
+        // finally execute the test script
         scriptEngine.eval(script, bindings);
         // Map Ruby globals ($foo -> foo) using global_variables hash approach (legacy compatibility)
         if (isRuby(scriptEngine)) {
@@ -197,6 +204,27 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
           throw new RuntimeException(e.getCause());
         }
         throw LOG.scriptExecutionError(scriptPath, e);
+      }
+    }
+  }
+
+  // Copy all binding entries into Ruby global variables before executing the script
+  private void bridgeRubyGlobals(Bindings bindings) {
+    StringBuilder assignScript = new StringBuilder();
+    for (String name : bindings.keySet()) {
+      if (name.startsWith("org.jruby")) {
+        continue; // internal
+      }
+      if (!name.matches("[A-Za-z_][A-Za-z0-9_]*")) {
+        continue; // invalid ruby identifier
+      }
+      assignScript.append("$").append(name).append(" = ").append(name).append("\n");
+    }
+    if (assignScript.length() > 0) {
+      try {
+        scriptEngine.eval(assignScript.toString(), bindings);
+      } catch (Exception ignored) {
+        // best effort
       }
     }
   }

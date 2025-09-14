@@ -265,6 +265,10 @@ class HistoricVariableInstanceTest {
     assertThat(historyService.createHistoricVariableInstanceQuery().orderByProcessInstanceId().asc().list()).hasSize(5);
     assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableName().asc().count()).isEqualTo(5);
     assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableName().asc().list()).hasSize(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByTenantId().asc().count()).isEqualTo(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByTenantId().asc().list()).hasSize(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableId().asc().count()).isEqualTo(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableId().asc().list()).hasSize(5);
 
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(2);
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(2);

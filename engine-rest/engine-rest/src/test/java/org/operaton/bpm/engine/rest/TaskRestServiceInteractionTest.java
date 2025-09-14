@@ -346,7 +346,7 @@ public class TaskRestServiceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleTaskWithTaskVariablesInReturn() {
+  void testGetSingleTaskWithTaskVariablesInReturn() {
     given().pathParam("id", EXAMPLE_TASK_ID)
       .queryParam("withTaskVariablesInReturn", true)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -382,7 +382,7 @@ public class TaskRestServiceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleTaskWithTaskLocalVariablesInReturn() {
+  void testGetSingleTaskWithTaskLocalVariablesInReturn() {
     given().pathParam("id", EXAMPLE_TASK_ID)
       .queryParam("withTaskLocalVariablesInReturn", true)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -422,7 +422,7 @@ public class TaskRestServiceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleTaskWithTaskVariablesCommentsAndAttachments() {
+  void testGetSingleTaskWithTaskVariablesCommentsAndAttachments() {
     given().pathParam("id", EXAMPLE_TASK_ID)
       .queryParam("withTaskVariablesInReturn", true)
       .queryParam("withCommentAttachmentInfo", true)
@@ -459,7 +459,7 @@ public class TaskRestServiceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleTaskWithTaskLocalVariablesCommentsAndAttachments() {
+  void testGetSingleTaskWithTaskLocalVariablesCommentsAndAttachments() {
     given().pathParam("id", EXAMPLE_TASK_ID)
       .queryParam("withTaskLocalVariablesInReturn", true)
       .queryParam("withCommentAttachmentInfo", true)
@@ -722,7 +722,7 @@ public class TaskRestServiceInteractionTest extends
   }
 
   @Test
-  public void testGetForm() {
+  void testGetForm() {
     given().pathParam("id", EXAMPLE_TASK_ID)
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.OK.getStatusCode())

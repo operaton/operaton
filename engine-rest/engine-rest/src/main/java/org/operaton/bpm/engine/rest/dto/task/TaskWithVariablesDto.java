@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.dto.task;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.task.Task;
 

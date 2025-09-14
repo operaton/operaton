@@ -70,7 +70,7 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
 
   protected boolean isByteArrayFetchingEnabled = true;
   protected boolean isCustomObjectDeserializationEnabled = true;
-
+  protected String variableIdAfter;
   protected Date createdAfter;
 
   public HistoricVariableInstanceQueryImpl() {
@@ -79,7 +79,16 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
   public HistoricVariableInstanceQueryImpl(CommandExecutor commandExecutor) {
     super(commandExecutor);
   }
-  
+
+  public HistoricVariableInstanceQuery idAfter(String id) {
+    variableIdAfter = id;
+    return this;
+  }
+
+  public String getVariableIdAfter() {
+    return variableIdAfter;
+  }
+
   @Override
   public HistoricVariableInstanceQuery createdAfter(Date date) {
     createdAfter = date;
@@ -318,6 +327,12 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
   @Override
   public HistoricVariableInstanceQuery orderByTenantId() {
     orderBy(HistoricVariableInstanceQueryProperty.TENANT_ID);
+    return this;
+  }
+
+  @Override
+  public HistoricVariableInstanceQuery orderByVariableId() {
+    orderBy(HistoricVariableInstanceQueryProperty.VARIABLE_ID);
     return this;
   }
 

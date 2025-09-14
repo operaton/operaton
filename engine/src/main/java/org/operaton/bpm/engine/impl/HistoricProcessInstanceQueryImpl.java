@@ -96,8 +96,8 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected String[] executedActivityIds;
   protected String[] activeActivityIds;
   protected String[] activityIds;
-  protected Set<String> state = new HashSet<>();
   protected String[] incidentIds;
+  protected Set<String> state = new HashSet<>();
 
   protected String caseInstanceId;
 

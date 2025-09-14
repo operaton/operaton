@@ -1,13 +1,10 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Deploy reports & documentation to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main", "ci-dev/reports-and-docs"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+  schedule:
+    - cron: "30 1 * * *"     # Runs at 2:00 AM UTC daily
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -52,18 +49,30 @@ jobs:
           echo "version=$RELEASE_VERSION"
           #./mvnw -Psonatype-oss-release install javadoc:javadoc versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=/workspaces/operaton/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list -DskipTests
           ./mvnw versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report
+      - name: Cache build artifacts
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            **/target/reports/**
+          key: ${{ github.run_id }}-build-artifacts
 
 
-  # Single deploy job since we're just deploying
   deploy:
+    # allowed to deploy only from 'main' to github-pages due to environment protection rules
+    if: github.ref == 'refs/heads/main'
     needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Restore build artifacts cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/target/reports/**
+          key: ${{ github.run_id }}-build-artifacts
+          fail-on-cache-miss: true
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

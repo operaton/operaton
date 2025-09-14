@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.rest.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.Response;
@@ -32,9 +33,11 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.rest.TaskRestService;
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
+import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskWithAttachmentAndCommentDto;
+import org.operaton.bpm.engine.rest.dto.task.TaskWithVariablesDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.hal.Hal;
 import org.operaton.bpm.engine.rest.hal.task.HalTaskList;
@@ -45,6 +48,7 @@ import org.operaton.bpm.engine.rest.sub.task.impl.TaskResourceImpl;
 import org.operaton.bpm.engine.rest.util.QueryUtil;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
+import org.operaton.bpm.engine.variable.VariableMap;
 
 public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implements TaskRestService {
 
@@ -99,7 +103,15 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
     List<Task> matchingTasks = executeTaskQuery(firstResult, maxResults, query);
 
     List<TaskDto> tasks = new ArrayList<>();
-    if (Boolean.TRUE.equals(queryDto.getWithCommentAttachmentInfo())) {
+
+    boolean withTaskVariables = Boolean.TRUE.equals(queryDto.getWithTaskVariablesInReturn());
+    boolean withTaskLocalVariables = Boolean.TRUE.equals(queryDto.getWithTaskLocalVariablesInReturn());
+    boolean withCommentInfo = Boolean.TRUE.equals(queryDto.getWithCommentAttachmentInfo());
+
+    if (withTaskVariables || withTaskLocalVariables) {
+      return getVariablesForTasks(engine, matchingTasks, withTaskVariables, withCommentInfo);
+    }
+    if (withCommentInfo) {
       tasks = matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).toList();
     }
     else {
@@ -135,8 +147,12 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
   }
 
   @Override
-  public TaskResource getTask(String id, boolean withCommentAttachmentInfo) {
-    return new TaskResourceImpl(getProcessEngine(), id, relativeRootResourcePath, getObjectMapper(), withCommentAttachmentInfo);
+  public TaskResource getTask(String id,
+                              boolean withCommentAttachmentInfo,
+                              boolean withTaskVariablesInReturn,
+                              boolean withTaskLocalVariablesInReturn) {
+    return new TaskResourceImpl(getProcessEngine(), id, relativeRootResourcePath, getObjectMapper(),
+        withCommentAttachmentInfo, withTaskVariablesInReturn, withTaskLocalVariablesInReturn);
   }
 
   @Override
@@ -159,5 +175,28 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
   @Override
   public TaskReportResource getTaskReportResource() {
     return new TaskReportResourceImpl(getProcessEngine());
+  }
+
+  private List<TaskDto> getVariablesForTasks(ProcessEngine engine,
+                                             List<Task> matchingTasks,
+                                             boolean withTaskVariablesInReturn,
+                                             boolean withCommentAndAttachments) {
+    TaskService taskService = engine.getTaskService();
+    List<TaskDto> tasks = new ArrayList<>();
+    for (Task task : matchingTasks) {
+      VariableMap taskVariables;
+      if (withTaskVariablesInReturn) {
+        taskVariables = taskService.getVariablesTyped(task.getId(), true);
+      } else {
+        taskVariables = taskService.getVariablesLocalTyped(task.getId(), true);
+      }
+      Map<String, VariableValueDto> taskVariablesDto = VariableValueDto.fromMap(taskVariables);
+      if (withCommentAndAttachments) {
+        tasks.add(TaskWithAttachmentAndCommentDto.fromEntity(task, taskVariablesDto));
+      } else {
+        tasks.add(TaskWithVariablesDto.fromEntity(task, taskVariablesDto));
+      }
+    }
+    return tasks;
   }
 }

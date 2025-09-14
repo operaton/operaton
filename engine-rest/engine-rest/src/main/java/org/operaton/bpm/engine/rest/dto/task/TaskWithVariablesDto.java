@@ -18,48 +18,38 @@ package org.operaton.bpm.engine.rest.dto.task;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.task.Task;
 
-public class TaskWithAttachmentAndCommentDto extends TaskWithVariablesDto {
+public class TaskWithVariablesDto extends TaskDto {
+  @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+  private Map<String, VariableValueDto> variables;
 
-  private boolean hasAttachment;
-  private boolean hasComment;
-
-  public TaskWithAttachmentAndCommentDto() {
+  public TaskWithVariablesDto() {
   }
 
-  public TaskWithAttachmentAndCommentDto(Task task, Map<String, VariableValueDto> variables) {
-    super(task, variables);
+  public TaskWithVariablesDto(Task task, Map<String, VariableValueDto> variables) {
+    super(task);
+    this.variables = variables;
   }
 
-  public TaskWithAttachmentAndCommentDto(Task task) {
+  public TaskWithVariablesDto(Task task) {
     super(task);
   }
-  public boolean getAttachment() {
-    return hasAttachment;
-  }
-  public void setAttachment(boolean hasAttachment) {
-    this.hasAttachment = hasAttachment;
+
+  public Map<String, VariableValueDto> getVariables() {
+    return variables;
   }
 
-  public boolean getComment() {
-    return hasComment;
-  }
-
-  public void setComment(boolean hasComment) {
-    this.hasComment = hasComment;
+  public void setVariables(Map<String, VariableValueDto> variables) {
+    this.variables = variables;
   }
 
   public static TaskDto fromEntity(Task task, Map<String, VariableValueDto> variables) {
-    TaskWithAttachmentAndCommentDto result = new TaskWithAttachmentAndCommentDto(task, variables);
-    result.hasAttachment = task.hasAttachment();
-    result.hasComment = task.hasComment();
+    TaskWithVariablesDto result = new TaskWithVariablesDto(task);
+    result.setVariables(variables);
     return result;
   }
-
-  public static TaskDto fromEntity(Task task) {
-    return fromEntity(task, null);
-  }
-
 }

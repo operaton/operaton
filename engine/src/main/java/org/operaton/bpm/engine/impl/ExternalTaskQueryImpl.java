@@ -32,6 +32,14 @@ import org.operaton.bpm.engine.impl.util.ImmutablePair;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
+
+import java.util.ArrayList;
+
+import static java.lang.Boolean.TRUE;
 
 /**
  * @author Thorben Lindhauer
@@ -52,12 +60,19 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
   protected String executionId;
   protected String processInstanceId;
   protected String[] processInstanceIdIn;
+  protected String processDefinitionKey;
+  protected String[] processDefinitionKeys;
   protected String processDefinitionId;
+  protected String processDefinitionName;
+  protected String processDefinitionNameLike;
   protected String activityId;
   protected String[] activityIdIn;
   protected SuspensionState suspensionState;
   protected Long priorityHigherThanOrEquals;
   protected Long priorityLowerThanOrEquals;
+  protected Boolean variableNamesIgnoreCase;
+  protected Boolean variableValuesIgnoreCase;
+  protected List<QueryVariableValue> variables = new ArrayList<>();
   protected Boolean retriesLeft;
   protected String[] tenantIds;
 
@@ -144,6 +159,17 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
   }
 
   @Override
+  public ExternalTaskQuery processDefinitionKey(String processDefinitionKey) {
+    this.processDefinitionKey = processDefinitionKey;
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery processDefinitionKeyIn(String... processDefinitionKeys) {
+    this.processDefinitionKeys = processDefinitionKeys;
+    return this;
+  }
+
   public ExternalTaskQuery processDefinitionId(String processDefinitionId) {
     ensureNotNull("processDefinitionId", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
@@ -151,6 +177,17 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
   }
 
   @Override
+  public ExternalTaskQuery processDefinitionName(String processDefinitionName) {
+    this.processDefinitionName = processDefinitionName;
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery processDefinitionNameLike(String processDefinitionName) {
+    this.processDefinitionNameLike = processDefinitionName;
+    return this;
+  }
+
   public ExternalTaskQuery activityId(String activityId) {
     ensureNotNull("activityId", activityId);
     this.activityId = activityId;
@@ -175,6 +212,108 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
     return this;
   }
 
+  @Override
+  public ExternalTaskQuery processVariableValueEquals(String variableName, Object variableValue) {
+    addVariable(variableName, variableValue, QueryOperator.EQUALS);
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery processVariableValueNotEquals(String variableName, Object variableValue) {
+    addVariable(variableName, variableValue, QueryOperator.NOT_EQUALS);
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery processVariableValueLike(String variableName, String variableValue) {
+    addVariable(variableName, variableValue, QueryOperator.LIKE);
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery processVariableValueNotLike(String variableName, String variableValue) {
+    addVariable(variableName, variableValue, QueryOperator.NOT_LIKE);
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery processVariableValueGreaterThan(String variableName, Object variableValue) {
+    addVariable(variableName, variableValue, QueryOperator.GREATER_THAN);
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery processVariableValueGreaterThanOrEquals(String variableName, Object variableValue) {
+    addVariable(variableName, variableValue, QueryOperator.GREATER_THAN_OR_EQUAL);
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery processVariableValueLessThan(String variableName, Object variableValue) {
+    addVariable(variableName, variableValue, QueryOperator.LESS_THAN);
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery processVariableValueLessThanOrEquals(String variableName, Object variableValue) {
+    addVariable(variableName, variableValue, QueryOperator.LESS_THAN_OR_EQUAL);
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery matchVariableNamesIgnoreCase() {
+    this.variableNamesIgnoreCase = true;
+    for (QueryVariableValue variable : this.variables) {
+        variable.setVariableNameIgnoreCase(true);
+    }
+    return this;
+  }
+
+  @Override
+  public ExternalTaskQuery matchVariableValuesIgnoreCase() {
+    this.variableValuesIgnoreCase = true;
+    for (QueryVariableValue variable : this.variables) {
+        variable.setVariableValueIgnoreCase(true);
+    }
+    return this;
+  }
+
+  public void addVariable(String name, Object value, QueryOperator operator) {
+    ensureNotNull("name", name);
+
+    if(value == null || isBoolean(value)) {
+        // Null-values and booleans can only be used in EQUALS and NOT_EQUALS
+        switch(operator) {
+            case GREATER_THAN:
+                throw new ProcessEngineException("Booleans and null cannot be used in 'greater than' condition");
+            case LESS_THAN:
+                throw new ProcessEngineException("Booleans and null cannot be used in 'less than' condition");
+            case GREATER_THAN_OR_EQUAL:
+                throw new ProcessEngineException("Booleans and null cannot be used in 'greater than or equal' condition");
+            case LESS_THAN_OR_EQUAL:
+                throw new ProcessEngineException("Booleans and null cannot be used in 'less than or equal' condition");
+            case LIKE:
+                throw new ProcessEngineException("Booleans and null cannot be used in 'like' condition");
+            case NOT_LIKE:
+                throw new ProcessEngineException("Booleans and null cannot be used in 'not like' condition");
+            default:
+                break;
+        }
+    }
+    boolean shouldMatchVariableValuesIgnoreCase = TRUE.equals(variableValuesIgnoreCase) && value != null && String.class.isAssignableFrom(value.getClass());
+    addVariable(new QueryVariableValue(name, value, operator, false, TRUE.equals(variableNamesIgnoreCase), shouldMatchVariableValuesIgnoreCase));
+  }
+
+  protected void addVariable(QueryVariableValue queryVariableValue) {
+    variables.add(queryVariableValue);
+  }
+
+  private boolean isBoolean(Object value) {
+    if (value == null) {
+        return false;
+    }
+    return Boolean.class.isAssignableFrom(value.getClass()) || boolean.class.isAssignableFrom(value.getClass());
+  }
 
   @Override
   public ExternalTaskQuery suspended() {
@@ -255,7 +394,8 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
 
   @Override
   public long executeCount(CommandContext commandContext) {
-    checkQueryOk();
+      ensureVariablesInitialized();
+      checkQueryOk();
     return commandContext
       .getExternalTaskManager()
       .findExternalTaskCountByQueryCriteria(this);
@@ -263,6 +403,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
 
   @Override
   public List<ExternalTask> executeList(CommandContext commandContext, Page page) {
+    ensureVariablesInitialized();
     checkQueryOk();
     return commandContext
       .getExternalTaskManager()
@@ -271,6 +412,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
 
   @Override
   public List<String> executeIdsList(CommandContext commandContext) {
+    ensureVariablesInitialized();
     checkQueryOk();
     return commandContext
       .getExternalTaskManager()
@@ -321,8 +463,24 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
     return processInstanceId;
   }
 
+  public String getProcessDefinitionKey() {
+    return processDefinitionKey;
+  }
+
+  public String[] getProcessDefinitionKeys() {
+    return processDefinitionKeys;
+  }
+
   public String getProcessDefinitionId() {
     return processDefinitionId;
+  }
+
+  public String getProcessDefinitionName() {
+    return processDefinitionName;
+  }
+
+  public String getProcessDefinitionNameLike() {
+    return processDefinitionNameLike;
   }
 
   public String getActivityId() {
@@ -339,6 +497,19 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
 
   public Date getNow() {
     return ClockUtil.getCurrentTime();
+  }
+
+  protected void ensureVariablesInitialized() {
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    VariableSerializers variableSerializers = processEngineConfiguration.getVariableSerializers();
+    String dbType = processEngineConfiguration.getDatabaseType();
+    for(QueryVariableValue var : variables) {
+        var.initialize(variableSerializers, dbType);
+    }
+  }
+
+  public List<QueryVariableValue> getVariables() {
+    return variables;
   }
 
 }

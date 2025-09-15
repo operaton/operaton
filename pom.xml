@@ -71,6 +71,22 @@
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>parse-current-version</id>
+            <goals>
+              <goal>parse-version</goal>
+            </goals>
+            <configuration>
+              <propertyPrefix>operaton.version</propertyPrefix>
+              <versionString>${project.version}</versionString>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
           <acceptPomPackaging>true</acceptPomPackaging>
@@ -273,6 +289,17 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.11.3</version>
+          <configuration>
+            <outputDirectory>${project.build.directory}/javadoc/operaton/${operaton.version.majorVersion}.${operaton.version.minorVersion}</outputDirectory>
+            <failOnError>false</failOnError>
+            <additionalJOptions>
+              <additionalJOption>-Xdoclint:none</additionalJOption>
+              <additionalJOption>--ignore-source-errors</additionalJOption>
+            </additionalJOptions>
+            <doctitle>Operaton XXXJavadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</doctitle>
+            <windowtitle>Operaton XXXJavadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</windowtitle>
+            <excludePackageNames>*.impl:*.impl.*</excludePackageNames>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -637,15 +664,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <configuration>
-              <failOnError>false</failOnError>
-              <additionalJOptions>
-                <additionalJOption>-Xdoclint:none</additionalJOption>
-                <additionalJOption>--ignore-source-errors</additionalJOption>
-              </additionalJOptions>
-              <doctitle>Operaton Javadocs ${project.version}</doctitle>
-              <windowtitle>Operaton Javadocs ${project.version}</windowtitle>
-            </configuration>
             <executions>
               <execution>
                 <id>attach-javadocs</id>

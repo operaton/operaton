@@ -35,7 +35,6 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class QueryByIdAfterTest {
@@ -68,7 +67,7 @@ class QueryByIdAfterTest {
 
     List<HistoricVariableInstance> secondHalf = historicVariableInstanceQuery.idAfter(middleId).list();
     assertThat(secondHalf).hasSize(10);
-    assertTrue(secondHalf.stream().allMatch(variable -> isIdGreaterThan(variable.getId(), middleId)));
+    assertThat(secondHalf.stream().allMatch(variable -> isIdGreaterThan(variable.getId(), middleId))).isTrue();
   }
 
   private void startProcessInstancesByKey(String key, int numberOfInstances) {

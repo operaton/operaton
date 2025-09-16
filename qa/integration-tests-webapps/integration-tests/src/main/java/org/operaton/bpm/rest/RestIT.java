@@ -39,7 +39,6 @@ import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
 import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 class RestIT extends AbstractWebIntegrationTest {
@@ -86,7 +85,7 @@ class RestIT extends AbstractWebIntegrationTest {
     // order of results is not consistent between database types
     for (int i = 0; i < definitionsJson.length(); i++) {
       JSONObject definitionJson = definitionsJson.getJSONObject(i);
-      assertTrue(definitionJson.isNull("description"));
+      assertThat(definitionJson.isNull("description")).isTrue();
       assertThat(definitionJson.getBoolean("suspended")).isFalse();
       if ("ReviewInvoice".equals(definitionJson.getString("key"))) {
         assertThat(definitionJson.getString("category")).isEqualTo("http://bpmn.io/schema/bpmn");
@@ -221,7 +220,7 @@ class RestIT extends AbstractWebIntegrationTest {
     JSONObject historicVariableUpdate = getFirstHistoricVariableUpdates();
 
     // variable update specific property
-    assertTrue(historicVariableUpdate.has("variableName"));
+    assertThat(historicVariableUpdate.has("variableName")).isTrue();
   }
 
   /**
@@ -293,7 +292,7 @@ class RestIT extends AbstractWebIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(200);
 
     JSONObject entity = response.getBody().getObject();
-    assertTrue(entity.has("links"));
+    assertThat(entity.has("links")).isTrue();
   }
 
   @Test

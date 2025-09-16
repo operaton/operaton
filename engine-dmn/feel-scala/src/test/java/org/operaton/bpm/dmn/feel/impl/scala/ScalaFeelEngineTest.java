@@ -310,7 +310,7 @@ class ScalaFeelEngineTest {
     Exception exception = assertThrows(RuntimeException.class, () ->
       engine.evaluateSimpleExpression("1 + )", emptyContext));
 
-    assertThat(exception.getMessage().contains("failed to parse expression")).isTrue();
+    assertThat(exception.getMessage()).contains("failed to parse expression");
   }
 
   @Test
@@ -320,7 +320,7 @@ class ScalaFeelEngineTest {
     Exception exception = assertThrows(RuntimeException.class, () ->
       engine.evaluateSimpleUnaryTests("in [1..]", "cellInput", variableCtx));
 
-    assertThat(exception.getMessage().contains("failed to parse")).isTrue();
+    assertThat(exception.getMessage()).contains("failed to parse");
   }
 
   @Test
@@ -412,8 +412,7 @@ class ScalaFeelEngineTest {
 
     Exception exception = assertThrows(FeelException.class, () -> engine.evaluateSimpleExpression(null, variableCtx));
 
-    assertThat(exception.getMessage()
-      .contains("FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression")).isTrue();
+    assertThat(exception.getMessage()).contains("FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression");
   }
 
   @Test
@@ -421,7 +420,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.emptyVariableContext();
     Exception exception = assertThrows(FeelException.class,
       () -> engine.evaluateSimpleExpression("", variableCtx));
-    assertThat(exception.getMessage().contains("failed to parse expression")).isTrue();
+    assertThat(exception.getMessage()).contains("failed to parse expression");
   }
 
   @Test

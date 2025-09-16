@@ -32,7 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.rest.beans.CustomProcessEngineProvider;
 import org.operaton.bpm.rest.beans.CustomRestApplication;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @ExtendWith(ArquillianExtension.class)
 public class EmbeddedEngineRest_WILDFLY {
@@ -56,12 +56,10 @@ public class EmbeddedEngineRest_WILDFLY {
   @Test
   @RunAsClient
   void testDeploymentWorks() {
-    try {
+    assertDoesNotThrow(() -> {
       deployer.deploy(EMBEDDED_ENGINE_REST);
       deployer.undeploy(EMBEDDED_ENGINE_REST);
-    } catch(Exception e) {
-      fail("Embedded engine-rest deployment failed because of " + e);
-    }
+    }, "Embedded engine-rest deployment failed because of ");
   }
 
   private static JavaArchive[] getEngineRestClasses() {

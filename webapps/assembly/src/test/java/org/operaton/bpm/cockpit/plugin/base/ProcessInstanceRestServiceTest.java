@@ -46,7 +46,7 @@ import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME;
@@ -57,6 +57,7 @@ import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQ
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author roman.smirnov

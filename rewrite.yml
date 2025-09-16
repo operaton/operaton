@@ -91,6 +91,19 @@ recipeList:
   - org.openrewrite.java.testing.junit5.AssertThrowsOnLastStatement
   - org.openrewrite.java.testing.junit5.AssertTrueInstanceofToAssertInstanceOf
   - org.openrewrite.java.testing.junit5.UseAssertSame
+  # Composite: org.openrewrite.java.testing.assertj.JUnitToAssertj
+  - org.openrewrite.java.testing.assertj.JUnitAssertArrayEqualsToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertEqualsToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertFalseToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertNotEqualsToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertNotNullToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertNullToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertSameToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertTrueToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitFailToAssertJFail
+  - org.openrewrite.java.testing.assertj.JUnitAssertThrowsToAssertExceptionType
+  - org.openrewrite.java.testing.assertj.JUnitTryFailToAssertThatThrownBy
+  - org.openrewrite.java.testing.assertj.JUnitAssertInstanceOfToAssertThat
   # Logging
   - org.openrewrite.java.logging.slf4j.ParameterizedLogging
   - org.operaton.AddLicenseHeader

@@ -49,7 +49,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -375,7 +374,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
     String content = response.asString();
     List<Map<String, Object>> variables = from(content).getList("");
-    assertEquals(1, variables.size(), "There should be one process definition returned.");
+    assertThat(variables.size()).as("There should be one process definition returned.").isEqualTo(1);
     assertThat(variables.get(0)).as("There should be one process definition returned").isNotNull();
 
     verify(mockedQuery).disableBinaryFetching();

@@ -37,7 +37,6 @@ import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -3518,11 +3517,11 @@ public class ProcessBuilderTest {
         .done();
 
     String startName = ((FlowElement) instance.getModelElementById("start")).getName();
-    assertEquals("start", startName);
+    assertThat(startName).isEqualTo("start");
     String userName = ((FlowElement) instance.getModelElementById("user")).getName();
-    assertEquals("user", userName);
+    assertThat(userName).isEqualTo("user");
     String endName = ((FlowElement) instance.getModelElementById("end")).getName();
-    assertEquals("name", endName);
+    assertThat(endName).isEqualTo("name");
   }
 
 }

@@ -48,7 +48,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -390,7 +389,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one activity instance returned.");
+    assertThat(instances.size()).as("There should be one activity instance returned.").isEqualTo(1);
     assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedId = from(content).getString("[0].id");
@@ -413,25 +412,25 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
     boolean completeScope = from(content).getBoolean("[0].completeScope");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_ID, returnedId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_PARENT_ACTIVITY_INSTANCE_ID, returnedParentActivityInstanceId);
-    assertEquals(MockProvider.EXAMPLE_ACTIVITY_ID, returnedActivityId);
-    assertEquals(MockProvider.EXAMPLE_ACTIVITY_NAME, returnedActivityName);
-    assertEquals(MockProvider.EXAMPLE_ACTIVITY_TYPE, returnedActivityType);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedProcessDefinitionKey);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
-    assertEquals(MockProvider.EXAMPLE_TASK_ID, returnedTaskId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_CALLED_PROCESS_INSTANCE_ID, returnedCalledProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_CALLED_CASE_INSTANCE_ID, returnedCalledCaseInstanceId);
-    assertEquals(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME, returnedAssignee);
-    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_START_TIME), returnedStartTime);
-    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_END_TIME), returnedEndTime);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_DURATION, returnedDurationInMillis);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_IS_CANCELED, canceled);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_IS_COMPLETE_SCOPE, completeScope);
-    assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+    assertThat(returnedId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_ID);
+    assertThat(returnedParentActivityInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_PARENT_ACTIVITY_INSTANCE_ID);
+    assertThat(returnedActivityId).isEqualTo(MockProvider.EXAMPLE_ACTIVITY_ID);
+    assertThat(returnedActivityName).isEqualTo(MockProvider.EXAMPLE_ACTIVITY_NAME);
+    assertThat(returnedActivityType).isEqualTo(MockProvider.EXAMPLE_ACTIVITY_TYPE);
+    assertThat(returnedProcessDefinitionKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedExecutionId).isEqualTo(MockProvider.EXAMPLE_EXECUTION_ID);
+    assertThat(returnedTaskId).isEqualTo(MockProvider.EXAMPLE_TASK_ID);
+    assertThat(returnedCalledProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_CALLED_PROCESS_INSTANCE_ID);
+    assertThat(returnedCalledCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_CALLED_CASE_INSTANCE_ID);
+    assertThat(returnedAssignee).isEqualTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME);
+    assertThat(returnedStartTime).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_START_TIME));
+    assertThat(returnedEndTime).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_END_TIME));
+    assertThat(returnedDurationInMillis).isEqualTo(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_DURATION);
+    assertThat(canceled).isEqualTo(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_IS_CANCELED);
+    assertThat(completeScope).isEqualTo(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_IS_COMPLETE_SCOPE);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
   }
 
   @Test
@@ -574,9 +573,9 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
     String returnedActivityEndTime = from(content).getString("[0].endTime");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_END_TIME, returnedActivityEndTime);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedActivityEndTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_END_TIME);
   }
 
   @Test
@@ -599,16 +598,16 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one activity instance returned.");
+    assertThat(instances.size()).as("There should be one activity instance returned.").isEqualTo(1);
     assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].processInstanceId");
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
     String returnedActivityEndTime = from(content).getString("[0].endTime");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_END_TIME, returnedActivityEndTime);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedActivityEndTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_END_TIME);
   }
 
   @Test
@@ -632,13 +631,13 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one activity instance returned.");
+    assertThat(instances.size()).as("There should be one activity instance returned.").isEqualTo(1);
     assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
     String returnedActivityEndTime = from(content).getString("[0].endTime");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
     assertThat(returnedActivityEndTime).isNull();
   }
 
@@ -667,13 +666,13 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one activity instance returned.");
+    assertThat(instances.size()).as("There should be one activity instance returned.").isEqualTo(1);
     assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
     String returnedActivityEndTime = from(content).getString("[0].endTime");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
     assertThat(returnedActivityEndTime).isNull();
   }
 

@@ -28,6 +28,8 @@ import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -66,7 +68,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("amount", 300.0).asVariableContext();
 
     Object amountResult = engine.evaluateSimpleExpression("amount", variableCtx);
-    assertEquals(300L, amountResult);  // Note: ScalaFeelEngine returns Long for numeric values
+    assertThat(amountResult).isEqualTo(300L);  // Note: ScalaFeelEngine returns Long for numeric values
   }
 
   @Test
@@ -98,7 +100,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("invoiceCategory", "Travel Expenses").asVariableContext();
 
     Object categoryResult = engine.evaluateSimpleExpression("invoiceCategory", variableCtx);
-    assertEquals("Travel Expenses", categoryResult);
+    assertThat(categoryResult).isEqualTo("Travel Expenses");
   }
 
   @Test
@@ -121,7 +123,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("dummy", "dummy").asVariableContext();
 
     Object dayToDayExpResult = engine.evaluateSimpleExpression("\"day-to-day expense\"", variableCtx);
-    assertEquals("day-to-day expense", dayToDayExpResult);
+    assertThat(dayToDayExpResult).isEqualTo("day-to-day expense");
   }
 
   @Test
@@ -140,10 +142,10 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("dummy", "dummy").asVariableContext();
 
     Object accountingDept = engine.evaluateSimpleExpression("\"accounting\"", variableCtx);
-    assertEquals("accounting", accountingDept);
+    assertThat(accountingDept).isEqualTo("accounting");
 
     Object salesDept = engine.evaluateSimpleExpression("\"sales\"", variableCtx);
-    assertEquals("sales", salesDept);
+    assertThat(salesDept).isEqualTo("sales");
   }
 
   @Test
@@ -164,7 +166,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("\"Email: \" + user + \"@\" + domain", variableCtx);
-    assertEquals("Email: john.doe@example.com", result);
+    assertThat(result).isEqualTo("Email: john.doe@example.com");
   }
 
   @Test
@@ -172,7 +174,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("a", 5).putValue("b", 3).asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("a + b", variableCtx);
-    assertEquals(8L, result);
+    assertThat(result).isEqualTo(8L);
   }
 
   @Test
@@ -197,7 +199,7 @@ class ScalaFeelEngineTest {
 
     Object result = engine.evaluateSimpleExpression("(price - (price * discount / 100)) * (1 + tax / 100)",
       variableCtx);
-    assertEquals(85.6, result);
+    assertThat(result).isEqualTo(85.6);
   }
 
   @Test
@@ -207,13 +209,13 @@ class ScalaFeelEngineTest {
     Object result = engine.evaluateSimpleExpression(
       "if score >= 90 then \"A\" else if score >= 80 then \"B\" else if score >= 70 then \"C\" else \"F\"",
       variableCtx);
-    assertEquals("C", result);
+    assertThat(result).isEqualTo("C");
   }
 
   @Test
   void shouldEvaluateLiteralArithmetic() {
     Object result = engine.evaluateSimpleExpression("1 + 1", null);
-    assertEquals(2L, result);
+    assertThat(result).isEqualTo(2L);
   }
 
   @Test
@@ -247,13 +249,13 @@ class ScalaFeelEngineTest {
     VariableContext dummyVarCtx = Variables.putValue("dummy", "dummy").asVariableContext();
 
     Object accountingResult = engine.evaluateSimpleExpression("\"accounting\"", dummyVarCtx);
-    assertEquals("accounting", accountingResult);
+    assertThat(accountingResult).isEqualTo("accounting");
 
     Object salesResult = engine.evaluateSimpleExpression("\"sales\"", dummyVarCtx);
-    assertEquals("sales", salesResult);
+    assertThat(salesResult).isEqualTo("sales");
 
     Object dayToDayExpenseResult = engine.evaluateSimpleExpression("\"day-to-day expense\"", dummyVarCtx);
-    assertEquals("day-to-day expense", dayToDayExpenseResult);
+    assertThat(dayToDayExpenseResult).isEqualTo("day-to-day expense");
   }
 
   @Test
@@ -278,7 +280,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("count(items)", variableCtx);
-    assertEquals(3L, result);
+    assertThat(result).isEqualTo(3L);
   }
 
   @Test
@@ -287,7 +289,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("level1.level2.value", variableCtx);
-    assertEquals(42L, result);
+    assertThat(result).isEqualTo(42L);
   }
 
   @Test
@@ -328,7 +330,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("(a and not(b)) or (b and c)", variableCtx);
-    assertEquals(true, result);
+    assertThat(result).isEqualTo(true);
   }
 
   @Test
@@ -337,7 +339,7 @@ class ScalaFeelEngineTest {
     VariableContext emptyContext = Variables.emptyVariableContext();
 
     Object result = engine.evaluateSimpleExpression("10 + 32", emptyContext);
-    assertEquals(42L, result);
+    assertThat(result).isEqualTo(42L);
   }
 
   @Test
@@ -346,7 +348,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("nullValue", null).asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("nullValue = null", variableCtx);
-    assertEquals(true, result);
+    assertThat(result).isEqualTo(true);
   }
 
   @Test
@@ -362,7 +364,7 @@ class ScalaFeelEngineTest {
       "if amount > 1000 and category = \"Software License Costs\" and urgent then \"manager-approval\" "
         + "else if amount > 500 then \"team-lead-approval\" " + "else \"auto-approval\"", variableCtx);
 
-    assertEquals("manager-approval", result);
+    assertThat(result).isEqualTo("manager-approval");
   }
 
   @Test
@@ -371,13 +373,13 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("value", "FEEL ENGINE").asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("lower case(value)", variableCtx);
-    assertEquals("feel engine", result);
+    assertThat(result).isEqualTo("feel engine");
 
     result = engine.evaluateSimpleExpression("upper case(value)", variableCtx);
-    assertEquals("FEEL ENGINE", result);
+    assertThat(result).isEqualTo("FEEL ENGINE");
 
     result = engine.evaluateSimpleExpression("substring(value, 6, 6)", variableCtx);
-    assertEquals("ENGINE", result);
+    assertThat(result).isEqualTo("ENGINE");
   }
 
   @Test
@@ -399,7 +401,7 @@ class ScalaFeelEngineTest {
 
     Object result = engine.evaluateSimpleExpression("if possiblyNull != null then possiblyNull else \"default\"",
       variableCtx);
-    assertEquals("default", result);
+    assertThat(result).isEqualTo("default");
   }
 
   @Test
@@ -432,7 +434,7 @@ class ScalaFeelEngineTest {
   void shouldEvaluateTypeConversions() {
     VariableContext variableCtx = Variables.putValue("stringNumber", "42").asVariableContext();
     Object result = engine.evaluateSimpleExpression("number(stringNumber)", variableCtx);
-    assertEquals(42L, result);
+    assertThat(result).isEqualTo(42L);
   }
 
   @Test
@@ -444,15 +446,15 @@ class ScalaFeelEngineTest {
 
     // Tests access to nested properties
     Object city = engine.evaluateSimpleExpression("person.address.city", variableCtx);
-    assertEquals("Berlin", city);
+    assertThat(city).isEqualTo("Berlin");
 
     // Tests access to list elements
     Object firstSkill = engine.evaluateSimpleExpression("person.skills[1]", variableCtx);
-    assertEquals("Java", firstSkill);
+    assertThat(firstSkill).isEqualTo("Java");
 
     // Tests list contains operation
     Object containsJava = engine.evaluateSimpleExpression("list contains(person.skills, \"Java\")", variableCtx);
-    assertEquals(true, containsJava);
+    assertThat(containsJava).isEqualTo(true);
   }
 
   @Test
@@ -468,12 +470,12 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("specialString", "äöü€$@").asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("specialString", variableCtx);
-    assertEquals("äöü€$@", result);
+    assertThat(result).isEqualTo("äöü€$@");
 
     // Unicode evaluation
     // Unicode escape sequences in strings must be tested in future versions of ScalaFeelEngine
     Object unicodeResult = engine.evaluateSimpleExpression("\"unicode: ❤\"", variableCtx);
-    assertEquals("unicode: ❤", unicodeResult);
+    assertThat(unicodeResult).isEqualTo("unicode: ❤");
   }
 
   @Test
@@ -482,7 +484,7 @@ class ScalaFeelEngineTest {
 
     Object result = engine.evaluateSimpleExpression(
       "if value > 0 then \"positive\" else if value < 0 then \"negative\" else \"zero\"", variableCtx);
-    assertEquals("zero", result);
+    assertThat(result).isEqualTo("zero");
   }
 
   @Test
@@ -490,7 +492,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.emptyVariableContext();
 
     Object result = engine.evaluateSimpleExpression("0.1 + 0.2", variableCtx);
-    assertEquals(0.3, (double) result, 0.0000001);
+    assertThat((double) result).isCloseTo(0.3, within(0.0000001));
   }
 
   @Test

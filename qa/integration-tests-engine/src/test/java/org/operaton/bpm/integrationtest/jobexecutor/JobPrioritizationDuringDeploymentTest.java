@@ -33,7 +33,6 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Requires fix for CAM-3163
@@ -83,6 +82,6 @@ public class JobPrioritizationDuringDeploymentTest extends AbstractFoxPlatformIn
     Job job = managementService.createJobQuery().activityId("timerStart").singleResult();
 
     assertThat(job).isNotNull();
-    assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(PriorityBean.PRIORITY);
   }
 }

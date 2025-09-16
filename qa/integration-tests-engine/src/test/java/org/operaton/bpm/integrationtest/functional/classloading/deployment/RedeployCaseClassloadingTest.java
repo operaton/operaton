@@ -31,7 +31,6 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Roman Smirnov
@@ -90,14 +89,14 @@ public class RedeployCaseClassloadingTest extends AbstractFoxPlatformIntegration
         .caseInstanceIdIn(caseInstanceId);
 
     assertThat(query.singleResult()).isNotNull();
-    assertEquals("listener-notified", query.singleResult().getValue());
+    assertThat(query.singleResult().getValue()).isEqualTo("listener-notified");
 
     caseService
       .withCaseExecution(caseInstanceId)
       .removeVariable("listener")
       .execute();
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     // when (2)
     caseService
@@ -106,7 +105,7 @@ public class RedeployCaseClassloadingTest extends AbstractFoxPlatformIntegration
 
     // then (2)
     assertThat(query.singleResult()).isNotNull();
-    assertEquals("listener-notified", query.singleResult().getValue());
+    assertThat(query.singleResult().getValue()).isEqualTo("listener-notified");
 
     repositoryService.deleteDeployment(deployment2.getId(), true, true);
   }

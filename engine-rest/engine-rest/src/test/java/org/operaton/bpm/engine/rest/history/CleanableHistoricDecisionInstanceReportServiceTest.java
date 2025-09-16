@@ -43,7 +43,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -147,7 +146,7 @@ public class CleanableHistoricDecisionInstanceReportServiceTest extends Abstract
 
     String content = response.asString();
     List<Map<String, Object>> reportResults = from(content).getList("");
-    assertEquals(2, reportResults.size(), "There should be two report results returned.");
+    assertThat(reportResults.size()).as("There should be two report results returned.").isEqualTo(2);
     assertThat(reportResults.get(0)).isNotNull();
 
     String returnedDefinitionId = from(content).getString("[0].decisionDefinitionId");
@@ -159,14 +158,14 @@ public class CleanableHistoricDecisionInstanceReportServiceTest extends Abstract
     long returnedCleanableCount = from(content).getLong("[0].cleanableDecisionInstanceCount");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    assertEquals(EXAMPLE_DD_ID, returnedDefinitionId);
-    assertEquals(EXAMPLE_DD_KEY, returnedDefinitionKey);
-    assertEquals(EXAMPLE_DD_NAME, returnedDefinitionName);
-    assertEquals(EXAMPLE_DD_VERSION, returnedDefinitionVersion);
-    assertEquals(EXAMPLE_TTL, returnedTTL);
-    assertEquals(EXAMPLE_FINISHED_DI_COUNT, returnedFinishedCount);
-    assertEquals(EXAMPLE_CLEANABLE_DI_COUNT, returnedCleanableCount);
-    assertEquals(EXAMPLE_TENANT_ID, returnedTenantId);
+    assertThat(returnedDefinitionId).isEqualTo(EXAMPLE_DD_ID);
+    assertThat(returnedDefinitionKey).isEqualTo(EXAMPLE_DD_KEY);
+    assertThat(returnedDefinitionName).isEqualTo(EXAMPLE_DD_NAME);
+    assertThat(returnedDefinitionVersion).isEqualTo(EXAMPLE_DD_VERSION);
+    assertThat(returnedTTL).isEqualTo(EXAMPLE_TTL);
+    assertThat(returnedFinishedCount).isEqualTo(EXAMPLE_FINISHED_DI_COUNT);
+    assertThat(returnedCleanableCount).isEqualTo(EXAMPLE_CLEANABLE_DI_COUNT);
+    assertThat(returnedTenantId).isEqualTo(EXAMPLE_TENANT_ID);
   }
 
   @Test

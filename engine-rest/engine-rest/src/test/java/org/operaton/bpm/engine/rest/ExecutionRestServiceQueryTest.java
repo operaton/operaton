@@ -46,7 +46,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -159,7 +158,7 @@ public class ExecutionRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> executions = from(content).getList("");
-    assertEquals(1, executions.size(), "There should be one execution returned.");
+    assertThat(executions.size()).as("There should be one execution returned.").isEqualTo(1);
     assertThat(executions.get(0)).as("There should be one execution returned").isNotNull();
 
     String returnedExecutionId = from(content).getString("[0].id");
@@ -167,10 +166,10 @@ public class ExecutionRestServiceQueryTest extends
     String returnedProcessInstanceId = from(content).getString("[0].processInstanceId");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
-    assertEquals(MockProvider.EXAMPLE_EXECUTION_IS_ENDED, returnedIsEnded);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+    assertThat(returnedExecutionId).isEqualTo(MockProvider.EXAMPLE_EXECUTION_ID);
+    assertThat(returnedIsEnded).isEqualTo(MockProvider.EXAMPLE_EXECUTION_IS_ENDED);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
   }
 
   @Test

@@ -26,7 +26,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.Resource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -54,7 +54,7 @@ class FaviconResourceResolverTest {
     Resource resource = resolver.getResource(resourcePath, location);
 
     // then
-    assertEquals(expectedFavicon, resource);
+    assertThat(resource).isEqualTo(expectedFavicon);
   }
 
   @Test
@@ -73,7 +73,7 @@ class FaviconResourceResolverTest {
     Resource resource = resolver.getResource(resourcePath, location);
 
     // then
-    assertEquals(expectedFavicon, resource);
+    assertThat(resource).isEqualTo(expectedFavicon);
   }
 
 }

@@ -30,8 +30,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -89,11 +89,11 @@ public class JavaDelegateResolutionTest extends AbstractFoxPlatformIntegrationTe
 
     runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 
-    assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count()).isEqualTo(1);
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count()).isEqualTo(0);
 
   }
 

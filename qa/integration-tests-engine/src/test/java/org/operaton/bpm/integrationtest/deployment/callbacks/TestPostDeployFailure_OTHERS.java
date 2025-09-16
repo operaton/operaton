@@ -26,7 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -56,7 +56,7 @@ public class TestPostDeployFailure_OTHERS extends AbstractFoxPlatformIntegration
       .createDeploymentQuery()
       .count();
 
-    assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
 
   }
 

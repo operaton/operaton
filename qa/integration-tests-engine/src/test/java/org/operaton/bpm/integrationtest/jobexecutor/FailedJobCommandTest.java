@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.FailingSLSB;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @ExtendWith(ArquillianExtension.class)
@@ -47,14 +47,14 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
     runtimeService.startProcessInstanceByKey("theProcess");
     Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
-    assertEquals(1, createQuery.get().withRetriesLeft().count());
+    assertThat(createQuery.get().withRetriesLeft().count()).isEqualTo(1);
 
     waitForJobExecutorToProcessAllJobs();
 
     // now the retries = 0
 
-    assertEquals(0, createQuery.get().withRetriesLeft().count());
-    assertEquals(1, createQuery.get().noRetriesLeft().count());
+    assertThat(createQuery.get().withRetriesLeft().count()).isEqualTo(0);
+    assertThat(createQuery.get().noRetriesLeft().count()).isEqualTo(1);
 
   }
 
@@ -66,14 +66,14 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
     }
     Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
-    assertEquals(50, createQuery.get().withRetriesLeft().count());
+    assertThat(createQuery.get().withRetriesLeft().count()).isEqualTo(50);
 
     waitForJobExecutorToProcessAllJobs(6 * 60 * 1000);
 
     // now the retries = 0
 
-    assertEquals(0, createQuery.get().withRetriesLeft().count());
-    assertEquals(51, createQuery.get().noRetriesLeft().count());
+    assertThat(createQuery.get().withRetriesLeft().count()).isEqualTo(0);
+    assertThat(createQuery.get().noRetriesLeft().count()).isEqualTo(51);
 
   }
 

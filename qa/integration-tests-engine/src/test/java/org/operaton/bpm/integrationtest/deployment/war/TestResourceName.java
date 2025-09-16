@@ -36,7 +36,6 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Roman Smirnov
@@ -159,22 +158,22 @@ public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     ProcessDefinition definition = query.processDefinitionKey("process-0").singleResult();
-    assertEquals("process0.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("process0.bpmn");
 
     definition = query.processDefinitionKey("process-1").singleResult();
-    assertEquals("processes/process1.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("processes/process1.bpmn");
 
     definition = query.processDefinitionKey("process-2").singleResult();
-    assertEquals("process2.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("process2.bpmn");
 
     definition = query.processDefinitionKey("process-3").singleResult();
-    assertEquals("subDirectory/process3.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("subDirectory/process3.bpmn");
 
     definition = query.processDefinitionKey("process-4").singleResult();
-    assertEquals("process4.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("process4.bpmn");
 
     definition = query.processDefinitionKey("process-5").singleResult();
-    assertEquals("subDirectory/process5.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("subDirectory/process5.bpmn");
   }
 
 }

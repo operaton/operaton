@@ -114,7 +114,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -297,7 +296,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         .body("childTransitionInstances[0].incidents[0].activityId", Matchers.equalTo("anActivityId"))
         .when().get(PROCESS_INSTANCE_ACTIVIY_INSTANCES_URL);
 
-    assertEquals(13, response.jsonPath().getMap("").size(), "Should return right number of properties");
+    assertThat(response.jsonPath().getMap("").size()).as("Should return right number of properties").isEqualTo(13);
   }
 
   @Test
@@ -347,7 +346,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_VARIABLE_KEY + ".type", Matchers.equalTo(String.class.getSimpleName()))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
   }
 
   @Test
@@ -800,7 +799,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_ANOTHER_VARIABLE_KEY + ".type", Matchers.equalTo("Null"))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
   }
 
   @Test
@@ -1311,7 +1310,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, Matchers.equalTo("application/json"))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
   }
 
   @Test
@@ -4849,21 +4848,21 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
   protected void verifyBatchJson(String batchJson) {
     BatchDto batch = JsonPathUtil.from(batchJson).getObject("", BatchDto.class);
     assertThat(batch).as("The returned batch should not be null.").isNotNull();
-    assertEquals(MockProvider.EXAMPLE_BATCH_ID, batch.getId());
-    assertEquals(MockProvider.EXAMPLE_BATCH_TYPE, batch.getType());
-    assertEquals(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS, batch.getTotalJobs());
-    assertEquals(MockProvider.EXAMPLE_BATCH_JOBS_PER_SEED, batch.getBatchJobsPerSeed());
-    assertEquals(MockProvider.EXAMPLE_INVOCATIONS_PER_BATCH_JOB, batch.getInvocationsPerBatchJob());
-    assertEquals(MockProvider.EXAMPLE_SEED_JOB_DEFINITION_ID, batch.getSeedJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_MONITOR_JOB_DEFINITION_ID, batch.getMonitorJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_BATCH_JOB_DEFINITION_ID, batch.getBatchJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_TENANT_ID, batch.getTenantId());
+    assertThat(batch.getId()).isEqualTo(MockProvider.EXAMPLE_BATCH_ID);
+    assertThat(batch.getType()).isEqualTo(MockProvider.EXAMPLE_BATCH_TYPE);
+    assertThat(batch.getTotalJobs()).isEqualTo(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS);
+    assertThat(batch.getBatchJobsPerSeed()).isEqualTo(MockProvider.EXAMPLE_BATCH_JOBS_PER_SEED);
+    assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(MockProvider.EXAMPLE_INVOCATIONS_PER_BATCH_JOB);
+    assertThat(batch.getSeedJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_SEED_JOB_DEFINITION_ID);
+    assertThat(batch.getMonitorJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_MONITOR_JOB_DEFINITION_ID);
+    assertThat(batch.getBatchJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_BATCH_JOB_DEFINITION_ID);
+    assertThat(batch.getTenantId()).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
   private void verifyTaskComments(List<Comment> mockTaskComments, Response response) {
     List list = response.as(List.class);
-    assertEquals(1, list.size());
+    assertThat(list.size()).isEqualTo(1);
 
     LinkedHashMap<String, String> resourceHashMap = (LinkedHashMap<String, String>) list.get(0);
 
@@ -4875,10 +4874,10 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     Comment mockComment = mockTaskComments.get(0);
 
-    assertEquals(mockComment.getId(), returnedId);
-    assertEquals(mockComment.getTaskId(), returnedTaskId);
-    assertEquals(mockComment.getUserId(), returnedUserId);
-    assertEquals(mockComment.getTime(), returnedTime);
-    assertEquals(mockComment.getFullMessage(), returnedFullMessage);
+    assertThat(returnedId).isEqualTo(mockComment.getId());
+    assertThat(returnedTaskId).isEqualTo(mockComment.getTaskId());
+    assertThat(returnedUserId).isEqualTo(mockComment.getUserId());
+    assertThat(returnedTime).isEqualTo(mockComment.getTime());
+    assertThat(returnedFullMessage).isEqualTo(mockComment.getFullMessage());
   }
 }

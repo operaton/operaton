@@ -34,7 +34,6 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Thorben Lindhauer
@@ -93,6 +92,6 @@ public class CdiBeanCaseTaskResolutionTest extends AbstractFoxPlatformIntegratio
 
     // then
     String variable = (String) caseService.getVariable(caseInstance.getId(), "var");
-    assertEquals("valuevalue", variable);
+    assertThat(variable).isEqualTo("valuevalue");
   }
 }

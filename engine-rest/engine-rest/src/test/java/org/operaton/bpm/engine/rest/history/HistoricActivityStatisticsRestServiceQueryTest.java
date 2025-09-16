@@ -44,7 +44,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -319,7 +318,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
 
     String content = response.asString();
     List<Map<String, Object>> result = from(content).getList("");
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     assertThat(result.get(0)).isNotNull();
     assertThat(result.get(1)).isNotNull();
@@ -333,14 +332,14 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
     long resolvedIncidents = from(content).getLong("[0].resolvedIncidents");
     long deletedIncidents = from(content).getLong("[0].deletedIncidents");
 
-    assertEquals(MockProvider.EXAMPLE_ACTIVITY_ID, id);
-    assertEquals(MockProvider.EXAMPLE_INSTANCES_LONG, instances);
-    assertEquals(MockProvider.EXAMPLE_CANCELED_LONG, canceled);
-    assertEquals(MockProvider.EXAMPLE_FINISHED_LONG, finished);
-    assertEquals(MockProvider.EXAMPLE_COMPLETE_SCOPE_LONG, completeScope);
-    assertEquals(MockProvider.EXAMPLE_OPEN_INCIDENTS_LONG, openIncidents);
-    assertEquals(MockProvider.EXAMPLE_RESOLVED_INCIDENTS_LONG, resolvedIncidents);
-    assertEquals(MockProvider.EXAMPLE_DELETED_INCIDENTS_LONG, deletedIncidents);
+    assertThat(id).isEqualTo(MockProvider.EXAMPLE_ACTIVITY_ID);
+    assertThat(instances).isEqualTo(MockProvider.EXAMPLE_INSTANCES_LONG);
+    assertThat(canceled).isEqualTo(MockProvider.EXAMPLE_CANCELED_LONG);
+    assertThat(finished).isEqualTo(MockProvider.EXAMPLE_FINISHED_LONG);
+    assertThat(completeScope).isEqualTo(MockProvider.EXAMPLE_COMPLETE_SCOPE_LONG);
+    assertThat(openIncidents).isEqualTo(MockProvider.EXAMPLE_OPEN_INCIDENTS_LONG);
+    assertThat(resolvedIncidents).isEqualTo(MockProvider.EXAMPLE_RESOLVED_INCIDENTS_LONG);
+    assertThat(deletedIncidents).isEqualTo(MockProvider.EXAMPLE_DELETED_INCIDENTS_LONG);
 
     id = from(content).getString("[1].id");
     instances = from(content).getLong("[1].instances");
@@ -351,14 +350,14 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
     resolvedIncidents = from(content).getLong("[1].resolvedIncidents");
     deletedIncidents = from(content).getLong("[1].deletedIncidents");
 
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_ACTIVITY_ID, id);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_INSTANCES_LONG, instances);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_CANCELED_LONG, canceled);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_FINISHED_LONG, finished);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_COMPLETE_SCOPE_LONG, completeScope);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_OPEN_INCIDENTS_LONG, openIncidents);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_RESOLVED_INCIDENTS_LONG, resolvedIncidents);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_DELETED_INCIDENTS_LONG, deletedIncidents);
+    assertThat(id).isEqualTo(MockProvider.ANOTHER_EXAMPLE_ACTIVITY_ID);
+    assertThat(instances).isEqualTo(MockProvider.ANOTHER_EXAMPLE_INSTANCES_LONG);
+    assertThat(canceled).isEqualTo(MockProvider.ANOTHER_EXAMPLE_CANCELED_LONG);
+    assertThat(finished).isEqualTo(MockProvider.ANOTHER_EXAMPLE_FINISHED_LONG);
+    assertThat(completeScope).isEqualTo(MockProvider.ANOTHER_EXAMPLE_COMPLETE_SCOPE_LONG);
+    assertThat(openIncidents).isEqualTo(MockProvider.ANOTHER_EXAMPLE_OPEN_INCIDENTS_LONG);
+    assertThat(resolvedIncidents).isEqualTo(MockProvider.ANOTHER_EXAMPLE_RESOLVED_INCIDENTS_LONG);
+    assertThat(deletedIncidents).isEqualTo(MockProvider.ANOTHER_EXAMPLE_DELETED_INCIDENTS_LONG);
 
   }
 

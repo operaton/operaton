@@ -28,7 +28,6 @@ import org.operaton.connect.Connectors;
 import org.operaton.connect.spi.Connector;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>Smoke-test Make sure operaton connect can be used in a process application </p>
@@ -67,7 +66,7 @@ public class PaConnectSupportTest extends AbstractFoxPlatformIntegrationTest {
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();
     String payload = (String) taskService.getVariable(task.getId(), "payload");
-    assertEquals("Hello world!", payload);
+    assertThat(payload).isEqualTo("Hello world!");
 
     TestConnectors.unregisterConnector(connector.getId());
   }

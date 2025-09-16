@@ -38,8 +38,8 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Thorben Lindhauer
@@ -96,7 +96,7 @@ public class PaContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
     JsonNode actualJsonTree = objectMapper.readTree(actualJsonString);
     JsonNode expectedJsonTree = objectMapper.readTree(expectedJsonString);
     // JsonNode#equals makes a deep comparison
-    assertEquals(expectedJsonTree, actualJsonTree);
+    assertThat(actualJsonTree).isEqualTo(expectedJsonTree);
 
   }
 }

@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -46,7 +45,7 @@ public class TestWarDeploymentWithoutProcessDefinitions extends AbstractFoxPlatf
     assertThat(ProgrammaticBeanLookup.lookup(ProcessEngine.class)).isNotNull();
 
     // no deployment has been constructed
-    assertEquals(0, repositoryService.createDeploymentQuery().deploymentName("pa").count());
+    assertThat(repositoryService.createDeploymentQuery().deploymentName("pa").count()).isEqualTo(0);
   }
 
 }

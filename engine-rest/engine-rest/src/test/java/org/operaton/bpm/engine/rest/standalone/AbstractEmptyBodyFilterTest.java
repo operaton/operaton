@@ -45,7 +45,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.mock;
@@ -139,7 +138,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
     CloseableHttpResponse response = client.execute(post);
 
-    assertEquals(expectedStatusCode, response.getStatusLine().getStatusCode());
+    assertThat(response.getStatusLine().getStatusCode()).isEqualTo(expectedStatusCode);
 
     if(assertResponseBody) {
       assertThat(EntityUtils.toString(response.getEntity(), UTF_8)).contains(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);

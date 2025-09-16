@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.functional.ejb.request.beans.RequestScopedSFSBDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test verifies that if the same @RequestScoped SFSB Bean is invoked multiple times
@@ -65,7 +65,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
 
     Object variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // -> the same bean instance was invoked 2 times!
-    assertEquals(2, variable);
+    assertThat(variable).isEqualTo(2);
 
     Task task = taskService.createTaskQuery()
       .processInstanceId(pi.getProcessInstanceId())
@@ -76,7 +76,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
 
     variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // now it's '1' again! -> new instance of the bean
-    assertEquals(1, variable);
+    assertThat(variable).isEqualTo(1);
 
   }
 
@@ -96,7 +96,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
     for(int i=0; i<instances; i++) {
       Object variable = runtimeService.getVariable(ids[i], "invocationCounter");
       // -> the same bean instance was invoked 2 times!
-      assertEquals(2, variable);
+      assertThat(variable).isEqualTo(2);
 
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -105,7 +105,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
 
     for(int i=0; i<instances; i++) {
       // now it's '1' again! -> new instance of the bean
-      assertEquals(1, runtimeService.getVariable(ids[i], "invocationCounter"));
+      assertThat(runtimeService.getVariable(ids[i], "invocationCounter")).isEqualTo(1);
     }
 
 

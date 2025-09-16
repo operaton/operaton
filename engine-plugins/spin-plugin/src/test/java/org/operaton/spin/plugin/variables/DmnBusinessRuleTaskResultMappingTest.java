@@ -27,8 +27,11 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.StringValue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * The test is copied from the engine to check how JSON serialization will behave with DMN result object.
@@ -63,11 +66,11 @@ class DmnBusinessRuleTaskResultMappingTest {
   void customOutputMapping() {
     ProcessInstance processInstance = startTestProcess("multiple entries");
 
-    assertEquals("foo", runtimeService.getVariable(processInstance.getId(), "result1"));
-    assertEquals(Variables.stringValue("foo"), runtimeService.getVariableTyped(processInstance.getId(), "result1"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result1")).isEqualTo("foo");
+    assertThat(runtimeService.<StringValue>getVariableTyped(processInstance.getId(), "result1")).isEqualTo(Variables.stringValue("foo"));
 
-    assertEquals("bar", runtimeService.getVariable(processInstance.getId(), "result2"));
-    assertEquals(Variables.stringValue("bar"), runtimeService.getVariableTyped(processInstance.getId(), "result2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result2")).isEqualTo("bar");
+    assertThat(runtimeService.<StringValue>getVariableTyped(processInstance.getId(), "result2")).isEqualTo(Variables.stringValue("bar"));
   }
 
   @Deployment(resources = {SINGLE_ENTRY_BPMN, TEST_DECISION})
@@ -75,8 +78,8 @@ class DmnBusinessRuleTaskResultMappingTest {
   void singleEntryMapping() {
     ProcessInstance processInstance = startTestProcess("single entry");
 
-    assertEquals("foo", runtimeService.getVariable(processInstance.getId(), "result"));
-    assertEquals(Variables.stringValue("foo"), runtimeService.getVariableTyped(processInstance.getId(), "result"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result")).isEqualTo("foo");
+    assertThat(runtimeService.<StringValue>getVariableTyped(processInstance.getId(), "result")).isEqualTo(Variables.stringValue("foo"));
   }
 
   @Deployment(resources = {DEFAULT_MAPPING_BPMN, TEST_DECISION})

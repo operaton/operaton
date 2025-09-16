@@ -43,7 +43,6 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -125,14 +124,14 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one group returned.");
+    assertThat(instances.size()).as("There should be one group returned.").isEqualTo(1);
     assertThat(instances.get(0)).as("The returned group should not be null.").isNotNull();
 
     String returendName = from(content).getString("[0].name");
     String returendType = from(content).getString("[0].type");
 
-    assertEquals(MockProvider.EXAMPLE_GROUP_NAME, returendName);
-    assertEquals(MockProvider.EXAMPLE_GROUP_TYPE, returendType);
+    assertThat(returendName).isEqualTo(MockProvider.EXAMPLE_GROUP_NAME);
+    assertThat(returendType).isEqualTo(MockProvider.EXAMPLE_GROUP_TYPE);
 
   }
 

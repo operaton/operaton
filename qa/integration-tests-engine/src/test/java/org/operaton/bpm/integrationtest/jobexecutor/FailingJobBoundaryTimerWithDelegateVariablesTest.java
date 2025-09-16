@@ -30,7 +30,7 @@ import org.operaton.bpm.integrationtest.jobexecutor.beans.DemoDelegate;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.DemoVariableClass;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -56,26 +56,26 @@ public class FailingJobBoundaryTimerWithDelegateVariablesTest extends AbstractFo
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("ImmediatelyFailing");
 
     List<Job> jobs = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertEquals(1, jobs.size());
-    assertEquals(3, jobs.get(0).getRetries());
+    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs.get(0).getRetries()).isEqualTo(3);
 
-    assertEquals(1, runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count());
-    assertEquals(2, runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count()).isEqualTo(2);
 
-    assertEquals(1, managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).executable().count());
+    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).executable().count()).isEqualTo(1);
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertEquals(0, managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).executable().count()); // should be 0, because it has failed 3 times
-    assertEquals(1, managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).withException().count()); // should be 1, because job failed!
+    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).executable().count()).isEqualTo(0); // should be 0, because it has failed 3 times
+    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).withException().count()).isEqualTo(1); // should be 1, because job failed!
 
-    assertEquals(1, runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count());
-    assertEquals(2, runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count()).isEqualTo(2);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId()); // complete task with failed job => complete process
 
-    assertEquals(0, runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count());
-    assertEquals(0, managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).count()); // should be 0, because process is finished.
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).count()).isEqualTo(0); // should be 0, because process is finished.
   }
 
 }

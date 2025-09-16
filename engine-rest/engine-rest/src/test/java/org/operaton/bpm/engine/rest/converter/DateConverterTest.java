@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -65,6 +65,6 @@ class DateConverterTest {
     Date date = converter.convertQueryParameterToType(value);
 
     //then
-    assertEquals(date, DateTimeUtil.parseDate(value));
+    assertThat(DateTimeUtil.parseDate(value)).isEqualTo(date);
   }
 }

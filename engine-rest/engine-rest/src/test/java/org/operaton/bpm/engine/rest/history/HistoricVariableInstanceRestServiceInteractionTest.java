@@ -46,7 +46,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -270,7 +269,7 @@ public class HistoricVariableInstanceRestServiceInteractionTest extends Abstract
     .when().get(VARIABLE_INSTANCE_BINARY_DATA_URL);
 
     byte[] responseBytes = response.getBody().asByteArray();
-    assertEquals(new String(byteContent), new String(responseBytes));
+    assertThat(new String(responseBytes)).isEqualTo(new String(byteContent));
     verify(variableInstanceQueryMock, never()).disableBinaryFetching();
 
   }

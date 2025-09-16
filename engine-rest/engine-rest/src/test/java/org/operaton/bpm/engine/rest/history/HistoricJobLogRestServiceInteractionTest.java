@@ -37,8 +37,8 @@ import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -154,7 +154,7 @@ public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServic
       .get(HISTORIC_JOB_LOG_RESOURCE_GET_STACKTRACE_URL);
 
     String content = response.asString();
-    assertEquals(stacktrace, content);
+    assertThat(content).isEqualTo(stacktrace);
   }
 
   @Test

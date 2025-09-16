@@ -29,7 +29,6 @@ import org.operaton.bpm.integrationtest.functional.el.beans.ResolveFormDataBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Stefan Hentschel.
@@ -53,7 +52,7 @@ public class ElResolveTaskFormDataTest extends AbstractFoxPlatformIntegrationTes
     Object defaultValue = formData.getFormFields().get(0).getValue().getValue();
 
     assertThat(defaultValue).isNotNull();
-    assertEquals("testString123", defaultValue);
+    assertThat(defaultValue).isEqualTo("testString123");
   }
 
   @Test
@@ -65,7 +64,7 @@ public class ElResolveTaskFormDataTest extends AbstractFoxPlatformIntegrationTes
 
     String label = formData.getFormFields().get(0).getLabel();
     assertThat(label).isNotNull();
-    assertEquals("testString123", label);
+    assertThat(label).isEqualTo("testString123");
   }
 
 }

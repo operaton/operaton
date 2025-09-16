@@ -32,7 +32,7 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestHelper;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -116,7 +116,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment3 extends AbstractFo
         .processDefinitionKey(processKey)
         .count();
 
-    assertEquals(0, count, "Process with key "+processKey+ " should not be deployed");
+   assertThat(count).as("Process with key " + processKey + " should not be deployed").isEqualTo(0);
   }
 
   protected void assertProcessDeployed(String processKey, String expectedDeploymentName) {
@@ -131,7 +131,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment3 extends AbstractFo
         .createDeploymentQuery()
         .deploymentId(processDefinition.getDeploymentId());
 
-    assertEquals(expectedDeploymentName, deploymentQuery.singleResult().getName());
+    assertThat(deploymentQuery.singleResult().getName()).isEqualTo(expectedDeploymentName);
 
   }
 

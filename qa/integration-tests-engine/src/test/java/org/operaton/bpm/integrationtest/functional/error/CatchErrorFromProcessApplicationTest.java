@@ -34,7 +34,6 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(ArquillianExtension.class)
 public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformIntegrationTest {
@@ -75,7 +74,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -90,7 +89,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -114,7 +113,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -138,7 +137,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -153,7 +152,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -168,7 +167,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -197,7 +196,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -227,7 +226,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -242,7 +241,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -257,7 +256,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -281,7 +280,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -305,7 +304,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -320,7 +319,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -335,7 +334,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -359,7 +358,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -383,7 +382,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -398,7 +397,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -413,7 +412,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -442,7 +441,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -472,7 +471,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -487,7 +486,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -502,7 +501,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }
@@ -526,7 +525,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskException", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
   }
@@ -550,7 +549,7 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
     assertThat(userTask).isNotNull();
-    assertEquals("userTaskError", userTask.getTaskDefinitionKey());
+    assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
   }

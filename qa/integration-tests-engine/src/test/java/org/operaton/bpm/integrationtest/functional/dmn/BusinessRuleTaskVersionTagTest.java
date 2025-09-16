@@ -30,7 +30,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 public class BusinessRuleTaskVersionTagTest extends AbstractFoxPlatformIntegrationTest {
@@ -60,6 +60,6 @@ public class BusinessRuleTaskVersionTagTest extends AbstractFoxPlatformIntegrati
   void testStartInstanceWithBeanCondition() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
-    assertEquals("okay", runtimeService.getVariable(processInstance.getId(), "result"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result")).isEqualTo("okay");
   }
 }

@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -56,7 +55,7 @@ public class TestWarDeploymentEmptyProcessesXml extends AbstractFoxPlatformInteg
       .processDefinitionKey("testDeployProcessArchive")
       .list();
 
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions.size()).isEqualTo(1);
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery()
       .deploymentId(processDefinitions.get(0).getDeploymentId())
       .singleResult();

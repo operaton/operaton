@@ -58,7 +58,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -620,14 +619,14 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   @Test
   void testProcessDiagramMediaType() {
-    assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.png"));
-    assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.PNG"));
-    assertEquals("image/svg+xml", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.svg"));
-    assertEquals("image/jpeg", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpeg"));
-    assertEquals("image/jpeg", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpg"));
-    assertEquals("image/gif", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.gif"));
-    assertEquals("image/bmp", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.bmp"));
-    assertEquals("application/octet-stream", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.UNKNOWN"));
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.png")).isEqualTo("image/png");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.PNG")).isEqualTo("image/png");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.svg")).isEqualTo("image/svg+xml");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpeg")).isEqualTo("image/jpeg");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpg")).isEqualTo("image/jpeg");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.gif")).isEqualTo("image/gif");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.bmp")).isEqualTo("image/bmp");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.UNKNOWN")).isEqualTo("application/octet-stream");
   }
 
   @Test

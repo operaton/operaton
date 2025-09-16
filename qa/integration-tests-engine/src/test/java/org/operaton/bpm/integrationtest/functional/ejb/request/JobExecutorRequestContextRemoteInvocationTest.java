@@ -33,7 +33,7 @@ import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationC
 import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterServiceLocal;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -82,7 +82,7 @@ public class JobExecutorRequestContextRemoteInvocationTest extends AbstractFoxPl
     waitForJobExecutorToProcessAllJobs();
 
     Object variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
-    assertEquals(1, variable);
+    assertThat(variable).isEqualTo(1);
 
     // set the variable back to 0
     runtimeService.setVariable(pi.getId(), "invocationCounter", 0);
@@ -96,6 +96,6 @@ public class JobExecutorRequestContextRemoteInvocationTest extends AbstractFoxPl
 
     variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // now it's '1' again! -> new instance of the bean
-    assertEquals(1, variable);
+    assertThat(variable).isEqualTo(1);
   }
 }

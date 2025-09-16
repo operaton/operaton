@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(ProcessEngineExtension.class)
@@ -57,16 +57,16 @@ class HistoricDecisionInstanceSerializationTest {
     assertNotNull(testDecision);
 
     List<HistoricDecisionInputInstance> inputs = testDecision.getInputs();
-    assertEquals(1, inputs.size());
+    assertThat(inputs.size()).isEqualTo(1);
 
     HistoricDecisionInputInstance inputInstance = inputs.get(0);
-    assertEquals(list.getListProperty(), inputInstance.getValue());
+    assertThat(inputInstance.getValue()).isEqualTo(list.getListProperty());
 
     List<HistoricDecisionOutputInstance> outputs = testDecision.getOutputs();
-    assertEquals(1, outputs.size());
+    assertThat(outputs.size()).isEqualTo(1);
 
     HistoricDecisionOutputInstance outputInstance = outputs.get(0);
-    assertEquals(list.getListProperty(), outputInstance.getValue());
+    assertThat(outputInstance.getValue()).isEqualTo(list.getListProperty());
 
   }
 

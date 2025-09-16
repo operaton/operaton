@@ -30,7 +30,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Daniel Meyer
@@ -64,6 +63,6 @@ public class DelegationCodeBpmnModelRetrievalTest extends AbstractFoxPlatformInt
 
     assertThat(delegate.getBpmnModelElementInstance()).isNotNull();
     assertThat(delegate.getBpmnModelInstance()).isNotNull();
-    assertEquals(TEST_PROCESS, delegate.getBpmnModelInstance().getDefinitions().getRootElements().iterator().next().getId());
+    assertThat(delegate.getBpmnModelInstance().getDefinitions().getRootElements().iterator().next().getId()).isEqualTo(TEST_PROCESS);
   }
 }

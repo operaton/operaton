@@ -41,7 +41,6 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -242,16 +241,16 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   protected void verifyExampleUserResponse(Response response) {
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one user returned.");
+    assertThat(instances.size()).as("There should be one user returned.").isEqualTo(1);
     assertThat(instances.get(0)).as("The returned user should not be null.").isNotNull();
 
     String returendLastName = from(content).getString("[0].lastName");
     String returnedFirstName = from(content).getString("[0].firstName");
     String returnedEmail = from(content).getString("[0].email");
 
-    assertEquals(MockProvider.EXAMPLE_USER_FIRST_NAME, returnedFirstName);
-    assertEquals(MockProvider.EXAMPLE_USER_LAST_NAME, returendLastName);
-    assertEquals(MockProvider.EXAMPLE_USER_EMAIL, returnedEmail);
+    assertThat(returnedFirstName).isEqualTo(MockProvider.EXAMPLE_USER_FIRST_NAME);
+    assertThat(returendLastName).isEqualTo(MockProvider.EXAMPLE_USER_LAST_NAME);
+    assertThat(returnedEmail).isEqualTo(MockProvider.EXAMPLE_USER_EMAIL);
   }
 
 

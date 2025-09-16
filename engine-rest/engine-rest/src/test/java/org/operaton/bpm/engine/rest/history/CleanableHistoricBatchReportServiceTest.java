@@ -42,7 +42,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -122,7 +121,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
 
     String content = response.asString();
     List<Map<String, Object>> reportResults = from(content).getList("");
-    assertEquals(2, reportResults.size(), "There should be two report results returned.");
+    assertThat(reportResults.size()).as("There should be two report results returned.").isEqualTo(2);
     assertThat(reportResults.get(0)).isNotNull();
 
     String returnedBatchType = from(content).getString("[0].batchType");
@@ -130,10 +129,10 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
     long returnedFinishedCount= from(content).getLong("[0].finishedBatchesCount");
     long returnedCleanableCount = from(content).getLong("[0].cleanableBatchesCount");
 
-    assertEquals(EXAMPLE_TYPE, returnedBatchType);
-    assertEquals(EXAMPLE_TTL, returnedTTL);
-    assertEquals(EXAMPLE_FINISHED_COUNT, returnedFinishedCount);
-    assertEquals(EXAMPLE_CLEANABLE_COUNT, returnedCleanableCount);
+    assertThat(returnedBatchType).isEqualTo(EXAMPLE_TYPE);
+    assertThat(returnedTTL).isEqualTo(EXAMPLE_TTL);
+    assertThat(returnedFinishedCount).isEqualTo(EXAMPLE_FINISHED_COUNT);
+    assertThat(returnedCleanableCount).isEqualTo(EXAMPLE_CLEANABLE_COUNT);
   }
 
   @Test

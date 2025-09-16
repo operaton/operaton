@@ -39,7 +39,6 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -117,14 +116,14 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> reports = from(content).getList("");
-    assertEquals(1, reports.size(), "There should be one report returned.");
+    assertThat(reports.size()).as("There should be one report returned.").isEqualTo(1);
     assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     String returnedGroup = from(content).getString("[0].groupName");
     int returnedCount = from(content).getInt("[0].taskCount");
 
-    assertEquals(EXAMPLE_GROUP_ID, returnedGroup);
-    assertEquals(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP, returnedCount);
+    assertThat(returnedGroup).isEqualTo(EXAMPLE_GROUP_ID);
+    assertThat(returnedCount).isEqualTo(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP);
   }
 
 

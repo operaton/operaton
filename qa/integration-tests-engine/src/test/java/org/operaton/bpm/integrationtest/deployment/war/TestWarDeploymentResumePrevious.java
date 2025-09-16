@@ -34,7 +34,6 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(ArquillianExtension.class)
@@ -65,7 +64,7 @@ public class TestWarDeploymentResumePrevious extends AbstractFoxPlatformIntegrat
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
 
     // validate registrations:
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();

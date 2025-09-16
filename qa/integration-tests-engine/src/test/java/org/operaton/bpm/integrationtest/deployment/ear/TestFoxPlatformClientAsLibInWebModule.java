@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -79,7 +78,7 @@ public class TestFoxPlatformClientAsLibInWebModule extends AbstractFoxPlatformIn
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
   }
 
 }

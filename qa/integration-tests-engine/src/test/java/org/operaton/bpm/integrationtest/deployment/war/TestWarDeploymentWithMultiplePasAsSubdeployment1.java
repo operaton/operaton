@@ -32,7 +32,7 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestHelper;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -158,7 +158,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment1 extends AbstractFo
         .createDeploymentQuery()
         .deploymentId(processDefinition.getDeploymentId());
 
-    assertEquals(expectedDeploymentName, deploymentQuery.singleResult().getName());
+    assertThat(deploymentQuery.singleResult().getName()).isEqualTo(expectedDeploymentName);
 
   }
 

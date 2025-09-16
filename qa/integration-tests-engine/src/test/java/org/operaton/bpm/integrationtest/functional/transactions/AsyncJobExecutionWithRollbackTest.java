@@ -32,7 +32,6 @@ import org.operaton.bpm.integrationtest.functional.transactions.beans.Transactio
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * This test class ensures that when a UserTransaction is explicitly marked as ROLLBACK_ONLY,
@@ -75,7 +74,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
     Job job = managementService.createJobQuery().processDefinitionKey("txRollbackServiceTask").singleResult();
 
     assertThat(job).isNotNull();
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(0);
     assertThat(job.getExceptionMessage()).isNotNull();
     assertThat(managementService.getJobExceptionStacktrace(job.getId())).isNotNull();
   }
@@ -93,7 +92,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
     Job job = managementService.createJobQuery().processDefinitionKey("txRollbackServiceTaskWithCustomRetryCycle").singleResult();
 
     assertThat(job).isNotNull();
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(0);
     assertThat(job.getExceptionMessage()).isNotNull();
     assertThat(managementService.getJobExceptionStacktrace(job.getId())).isNotNull();
   }

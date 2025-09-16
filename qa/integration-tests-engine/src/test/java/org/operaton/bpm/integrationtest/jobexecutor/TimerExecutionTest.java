@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.SampleServiceBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -52,7 +52,7 @@ public class TimerExecutionTest extends AbstractFoxPlatformIntegrationTest {
     waitForJobExecutorToProcessAllJobs();
 
     List<ProcessInstance> finallyRunningInstances = runtimeService.createProcessInstanceQuery().processInstanceId(instance.getId()).list();
-    assertEquals(0, finallyRunningInstances.size());
+    assertThat(finallyRunningInstances.size()).isEqualTo(0);
 
   }
 }

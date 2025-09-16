@@ -74,6 +74,7 @@ recipeList:
   - org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic
   - org.openrewrite.java.testing.mockito.SimplifyMockitoVerifyWhenGiven
   - org.openrewrite.java.testing.assertj.StaticImports
+  - org.openrewrite.java.testing.junit5.CsvSourceToValueSource
   # Logging
   - org.openrewrite.java.logging.slf4j.ParameterizedLogging
   - org.operaton.AddLicenseHeader

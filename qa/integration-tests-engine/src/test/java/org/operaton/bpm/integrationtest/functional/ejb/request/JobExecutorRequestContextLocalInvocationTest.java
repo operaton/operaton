@@ -21,7 +21,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -37,6 +36,8 @@ import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationC
 import org.operaton.bpm.integrationtest.functional.ejb.request.beans.RequestScopedSFSBDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -99,7 +100,7 @@ public class JobExecutorRequestContextLocalInvocationTest extends AbstractFoxPla
 
     Object variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // -> the same bean instance was invoked 2 times!
-    Assertions.assertEquals(2, variable);
+    assertEquals(2, variable);
 
     Task task = taskService.createTaskQuery()
       .processInstanceId(pi.getProcessInstanceId())
@@ -110,7 +111,7 @@ public class JobExecutorRequestContextLocalInvocationTest extends AbstractFoxPla
 
     variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // now it's '1' again! -> new instance of the bean
-    Assertions.assertEquals(1, variable);
+    assertEquals(1, variable);
   }
 
 }

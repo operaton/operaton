@@ -24,7 +24,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -44,6 +43,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -147,7 +147,7 @@ public class CleanableHistoricDecisionInstanceReportServiceTest extends Abstract
 
     String content = response.asString();
     List<Map<String, Object>> reportResults = from(content).getList("");
-    Assertions.assertEquals(2, reportResults.size(), "There should be two report results returned.");
+    assertEquals(2, reportResults.size(), "There should be two report results returned.");
     assertThat(reportResults.get(0)).isNotNull();
 
     String returnedDefinitionId = from(content).getString("[0].decisionDefinitionId");
@@ -159,14 +159,14 @@ public class CleanableHistoricDecisionInstanceReportServiceTest extends Abstract
     long returnedCleanableCount = from(content).getLong("[0].cleanableDecisionInstanceCount");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    Assertions.assertEquals(EXAMPLE_DD_ID, returnedDefinitionId);
-    Assertions.assertEquals(EXAMPLE_DD_KEY, returnedDefinitionKey);
-    Assertions.assertEquals(EXAMPLE_DD_NAME, returnedDefinitionName);
-    Assertions.assertEquals(EXAMPLE_DD_VERSION, returnedDefinitionVersion);
-    Assertions.assertEquals(EXAMPLE_TTL, returnedTTL);
-    Assertions.assertEquals(EXAMPLE_FINISHED_DI_COUNT, returnedFinishedCount);
-    Assertions.assertEquals(EXAMPLE_CLEANABLE_DI_COUNT, returnedCleanableCount);
-    Assertions.assertEquals(EXAMPLE_TENANT_ID, returnedTenantId);
+    assertEquals(EXAMPLE_DD_ID, returnedDefinitionId);
+    assertEquals(EXAMPLE_DD_KEY, returnedDefinitionKey);
+    assertEquals(EXAMPLE_DD_NAME, returnedDefinitionName);
+    assertEquals(EXAMPLE_DD_VERSION, returnedDefinitionVersion);
+    assertEquals(EXAMPLE_TTL, returnedTTL);
+    assertEquals(EXAMPLE_FINISHED_DI_COUNT, returnedFinishedCount);
+    assertEquals(EXAMPLE_CLEANABLE_DI_COUNT, returnedCleanableCount);
+    assertEquals(EXAMPLE_TENANT_ID, returnedTenantId);
   }
 
   @Test

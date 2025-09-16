@@ -26,12 +26,13 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.rest.beans.CustomProcessEngineProvider;
 import org.operaton.bpm.rest.beans.CustomRestApplication;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(ArquillianExtension.class)
 public class EmbeddedEngineRest_WILDFLY {
@@ -59,7 +60,7 @@ public class EmbeddedEngineRest_WILDFLY {
       deployer.deploy(EMBEDDED_ENGINE_REST);
       deployer.undeploy(EMBEDDED_ENGINE_REST);
     } catch(Exception e) {
-      Assertions.fail("Embedded engine-rest deployment failed because of " + e);
+      fail("Embedded engine-rest deployment failed because of " + e);
     }
   }
 

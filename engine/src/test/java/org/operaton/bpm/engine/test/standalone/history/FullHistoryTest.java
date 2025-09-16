@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -67,6 +66,7 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 /**
  * @author Tom Baeyens
@@ -945,7 +945,7 @@ class FullHistoryTest {
             .hasSize(2);
 
     // Should have 2 different historic activity instance ID's, with the same activityId
-    Assertions.assertNotSame(details.get(0).getActivityInstanceId(), details.get(1).getActivityInstanceId());
+    assertNotSame(details.get(0).getActivityInstanceId(), details.get(1).getActivityInstanceId());
 
     HistoricActivityInstance historicActInst1 = historyService.createHistoricActivityInstanceQuery()
       .activityInstanceId(details.get(0).getActivityInstanceId())

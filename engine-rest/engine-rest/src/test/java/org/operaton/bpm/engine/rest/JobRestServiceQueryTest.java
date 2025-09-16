@@ -30,7 +30,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -51,6 +50,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -146,7 +146,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    Assertions.assertEquals(1, instances.size(), "There should be one job returned.");
+    assertEquals(1, instances.size(), "There should be one job returned.");
     assertThat(instances.get(0)).as("The returned job should not be null.").isNotNull();
 
     String returnedJobId = from(content).getString("[0].id");
@@ -165,21 +165,21 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     String returnedCreateTime = from(content).getString("[0].createTime");
     String returnedBatchId = from(content).getString("[0].batchId");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_ID, returnedJobId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedProcessDefinitionKey);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_NO_EXCEPTION_MESSAGE, returnedExceptionMessage);
-    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_FAILED_ACTIVITY_ID, returnedFailedActivityId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_RETRIES, returnedRetries);
-    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_DUE_DATE), returnedDueDate);
-    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_IS_SUSPENDED, returnedSuspended);
-    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_PRIORITY, returnedPriority);
-    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_DEFINITION_ID, returnedJobDefinitionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_CREATE_TIME, returnedCreateTime);
-    Assertions.assertEquals(MockProvider.EXAMPLE_BATCH_ID, returnedBatchId);
+    assertEquals(MockProvider.EXAMPLE_JOB_ID, returnedJobId);
+    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedProcessDefinitionKey);
+    assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
+    assertEquals(MockProvider.EXAMPLE_JOB_NO_EXCEPTION_MESSAGE, returnedExceptionMessage);
+    assertEquals(MockProvider.EXAMPLE_JOB_FAILED_ACTIVITY_ID, returnedFailedActivityId);
+    assertEquals(MockProvider.EXAMPLE_JOB_RETRIES, returnedRetries);
+    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_DUE_DATE), returnedDueDate);
+    assertEquals(MockProvider.EXAMPLE_JOB_IS_SUSPENDED, returnedSuspended);
+    assertEquals(MockProvider.EXAMPLE_JOB_PRIORITY, returnedPriority);
+    assertEquals(MockProvider.EXAMPLE_JOB_DEFINITION_ID, returnedJobDefinitionId);
+    assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+    assertEquals(MockProvider.EXAMPLE_JOB_CREATE_TIME, returnedCreateTime);
+    assertEquals(MockProvider.EXAMPLE_BATCH_ID, returnedBatchId);
   }
 
   private interface DateParameters {

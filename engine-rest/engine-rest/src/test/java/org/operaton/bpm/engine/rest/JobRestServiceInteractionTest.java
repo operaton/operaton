@@ -25,7 +25,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -388,7 +387,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
     .when().get(JOB_RESOURCE_GET_STACKTRACE_URL);
 
     String content = response.asString();
-    Assertions.assertEquals(stacktrace, content);
+    assertEquals(stacktrace, content);
   }
 
   @Test

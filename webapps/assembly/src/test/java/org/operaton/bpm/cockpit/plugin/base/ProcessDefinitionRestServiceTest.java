@@ -23,7 +23,6 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -42,6 +41,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
   private ProcessDefinitionRestService resource;
@@ -147,7 +147,7 @@ class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
     // when + then
-    Assertions.assertDoesNotThrow(() -> resource.queryStatistics(uriInfo, null, null), "No exception expected");
+    assertDoesNotThrow(() -> resource.queryStatistics(uriInfo, null, null), "No exception expected");
   }
 
   protected void assertProcessDefinitionStatisticsDto(ProcessDefinitionStatisticsDto actual,

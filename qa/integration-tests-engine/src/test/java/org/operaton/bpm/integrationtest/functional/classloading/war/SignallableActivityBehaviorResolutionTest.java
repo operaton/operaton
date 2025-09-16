@@ -21,7 +21,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -33,6 +32,7 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
@@ -89,15 +89,15 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 
-    Assertions.assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assertions.assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
 
     runtimeService.signal(processInstance.getId());
 
-    Assertions.assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
 
   }
 

@@ -25,7 +25,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -39,6 +38,7 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
 
 /**
@@ -96,7 +96,7 @@ public class PaContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
     JsonNode actualJsonTree = objectMapper.readTree(actualJsonString);
     JsonNode expectedJsonTree = objectMapper.readTree(expectedJsonString);
     // JsonNode#equals makes a deep comparison
-    Assertions.assertEquals(expectedJsonTree, actualJsonTree);
+    assertEquals(expectedJsonTree, actualJsonTree);
 
   }
 }

@@ -32,7 +32,6 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -298,7 +297,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         .body("childTransitionInstances[0].incidents[0].activityId", Matchers.equalTo("anActivityId"))
         .when().get(PROCESS_INSTANCE_ACTIVIY_INSTANCES_URL);
 
-    Assertions.assertEquals(13, response.jsonPath().getMap("").size(), "Should return right number of properties");
+    assertEquals(13, response.jsonPath().getMap("").size(), "Should return right number of properties");
   }
 
   @Test
@@ -348,7 +347,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_VARIABLE_KEY + ".type", Matchers.equalTo(String.class.getSimpleName()))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    Assertions.assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
   }
 
   @Test
@@ -801,7 +800,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_ANOTHER_VARIABLE_KEY + ".type", Matchers.equalTo("Null"))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    Assertions.assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
   }
 
   @Test
@@ -1312,7 +1311,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, Matchers.equalTo("application/json"))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    Assertions.assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
   }
 
   @Test

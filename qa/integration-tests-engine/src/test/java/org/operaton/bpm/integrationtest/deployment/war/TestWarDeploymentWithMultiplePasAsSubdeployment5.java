@@ -22,7 +22,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -32,6 +31,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestHelper;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -140,7 +141,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment5 extends AbstractFo
         .createDeploymentQuery()
         .deploymentId(processDefinition.getDeploymentId());
 
-    Assertions.assertEquals(expectedDeploymentName, deploymentQuery.singleResult().getName());
+    assertEquals(expectedDeploymentName, deploymentQuery.singleResult().getName());
 
   }
 
@@ -152,7 +153,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment5 extends AbstractFo
         .processDefinitionKey(processKey)
         .count();
 
-    Assertions.assertEquals(0, count, "Process with key "+processKey+ " should not be deployed");
+    assertEquals(0, count, "Process with key "+processKey+ " should not be deployed");
   }
 
 }

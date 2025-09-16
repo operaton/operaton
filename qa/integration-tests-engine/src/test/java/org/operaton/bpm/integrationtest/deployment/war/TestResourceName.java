@@ -22,7 +22,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -37,6 +36,7 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Roman Smirnov
@@ -159,22 +159,22 @@ public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     ProcessDefinition definition = query.processDefinitionKey("process-0").singleResult();
-    Assertions.assertEquals("process0.bpmn", definition.getResourceName());
+    assertEquals("process0.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-1").singleResult();
-    Assertions.assertEquals("processes/process1.bpmn", definition.getResourceName());
+    assertEquals("processes/process1.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-2").singleResult();
-    Assertions.assertEquals("process2.bpmn", definition.getResourceName());
+    assertEquals("process2.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-3").singleResult();
-    Assertions.assertEquals("subDirectory/process3.bpmn", definition.getResourceName());
+    assertEquals("subDirectory/process3.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-4").singleResult();
-    Assertions.assertEquals("process4.bpmn", definition.getResourceName());
+    assertEquals("process4.bpmn", definition.getResourceName());
 
     definition = query.processDefinitionKey("process-5").singleResult();
-    Assertions.assertEquals("subDirectory/process5.bpmn", definition.getResourceName());
+    assertEquals("subDirectory/process5.bpmn", definition.getResourceName());
   }
 
 }

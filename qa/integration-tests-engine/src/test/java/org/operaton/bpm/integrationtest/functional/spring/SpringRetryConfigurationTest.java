@@ -21,7 +21,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -34,6 +33,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
@@ -107,7 +107,7 @@ public class SpringRetryConfigurationTest extends AbstractFoxPlatformIntegration
 
     // then
     job = query.singleResult();
-    Assertions.assertEquals(6, job.getRetries());
+    assertEquals(6, job.getRetries());
   }
 
 }

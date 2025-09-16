@@ -21,7 +21,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -33,6 +32,8 @@ import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationC
 import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterServiceBean;
 import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterServiceLocal;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -81,7 +82,7 @@ public class JobExecutorRequestContextRemoteInvocationTest extends AbstractFoxPl
     waitForJobExecutorToProcessAllJobs();
 
     Object variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
-    Assertions.assertEquals(1, variable);
+    assertEquals(1, variable);
 
     // set the variable back to 0
     runtimeService.setVariable(pi.getId(), "invocationCounter", 0);
@@ -95,6 +96,6 @@ public class JobExecutorRequestContextRemoteInvocationTest extends AbstractFoxPl
 
     variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // now it's '1' again! -> new instance of the bean
-    Assertions.assertEquals(1, variable);
+    assertEquals(1, variable);
   }
 }

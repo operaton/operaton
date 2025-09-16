@@ -23,7 +23,6 @@ import java.util.List;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -58,7 +57,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   void spinShouldBeAvailable() {
-    Assertions.assertEquals("someXml", XML("<someXml />").xPath("/someXml").element().name());
+    assertEquals("someXml", XML("<someXml />").xPath("/someXml").element().name());
   }
 
   @Test
@@ -71,7 +70,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
     HashMap<String, String> expected = new HashMap<>();
     expected.put("foo", "bar");
 
-    Assertions.assertEquals(expected, objectValue.getValue());
+    assertEquals(expected, objectValue.getValue());
   }
 
   @Test

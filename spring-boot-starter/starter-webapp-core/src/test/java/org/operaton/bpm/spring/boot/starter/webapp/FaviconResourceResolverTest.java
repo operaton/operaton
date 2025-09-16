@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.webapp;
 
 import java.net.URL;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,6 +26,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.Resource;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -54,7 +54,7 @@ class FaviconResourceResolverTest {
     Resource resource = resolver.getResource(resourcePath, location);
 
     // then
-    Assertions.assertEquals(expectedFavicon, resource);
+    assertEquals(expectedFavicon, resource);
   }
 
   @Test
@@ -73,7 +73,7 @@ class FaviconResourceResolverTest {
     Resource resource = resolver.getResource(resourcePath, location);
 
     // then
-    Assertions.assertEquals(expectedFavicon, resource);
+    assertEquals(expectedFavicon, resource);
   }
 
 }

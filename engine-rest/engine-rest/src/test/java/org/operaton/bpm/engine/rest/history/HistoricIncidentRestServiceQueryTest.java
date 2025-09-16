@@ -25,7 +25,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -48,6 +47,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -365,7 +365,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
 
     String content = response.asString();
     List<Map<String, Object>> incidents = from(content).getList("");
-    Assertions.assertEquals(1, incidents.size(), "There should be one incident returned.");
+    assertEquals(1, incidents.size(), "There should be one incident returned.");
     assertThat(incidents.get(0)).as("The returned incident should not be null.").isNotNull();
 
     String returnedId = from(content).getString("[0].id");
@@ -391,28 +391,28 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
     String returnedRootProcessInstanceId = from(content).getString("[0].rootProcessInstanceId");
     String returnedAnnotation = from(content).getString("[0].annotation");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_ID, returnedId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_PROC_INST_ID, returnedProcessInstanceId);
-    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_INCIDENT_CREATE_TIME), returnedCreateTime);
-    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_INCIDENT_END_TIME), returnedEndTime);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_EXECUTION_ID, returnedExecutionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_PROC_DEF_ID, returnedProcessDefinitionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_PROC_DEF_KEY, returnedProcessDefinitionKey);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_TYPE, returnedIncidentType);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_ACTIVITY_ID, returnedActivityId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_FAILED_ACTIVITY_ID, returnedFailedActivityId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_CAUSE_INCIDENT_ID, returnedCauseIncidentId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_ROOT_CAUSE_INCIDENT_ID, returnedRootCauseIncidentId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_CONFIGURATION, returnedConfiguration);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_MESSAGE, returnedIncidentMessage);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_STATE_OPEN, returnedIncidentOpen);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_STATE_DELETED, returnedIncidentDeleted);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_STATE_RESOLVED, returnedIncidentResolved);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
-    Assertions.assertEquals(EXAMPLE_JOB_DEFINITION_ID, returnedJobDefinitionId);
-    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_INCIDENT_REMOVAL_TIME), returnedRemovalTime);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_ROOT_PROC_INST_ID, returnedRootProcessInstanceId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION, returnedAnnotation);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_ID, returnedId);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_PROC_INST_ID, returnedProcessInstanceId);
+    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_INCIDENT_CREATE_TIME), returnedCreateTime);
+    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_INCIDENT_END_TIME), returnedEndTime);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_EXECUTION_ID, returnedExecutionId);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_PROC_DEF_ID, returnedProcessDefinitionId);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_PROC_DEF_KEY, returnedProcessDefinitionKey);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_TYPE, returnedIncidentType);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_ACTIVITY_ID, returnedActivityId);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_FAILED_ACTIVITY_ID, returnedFailedActivityId);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_CAUSE_INCIDENT_ID, returnedCauseIncidentId);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_ROOT_CAUSE_INCIDENT_ID, returnedRootCauseIncidentId);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_CONFIGURATION, returnedConfiguration);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_MESSAGE, returnedIncidentMessage);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_STATE_OPEN, returnedIncidentOpen);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_STATE_DELETED, returnedIncidentDeleted);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_STATE_RESOLVED, returnedIncidentResolved);
+    assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+    assertEquals(EXAMPLE_JOB_DEFINITION_ID, returnedJobDefinitionId);
+    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_INCIDENT_REMOVAL_TIME), returnedRemovalTime);
+    assertEquals(MockProvider.EXAMPLE_HIST_INCIDENT_ROOT_PROC_INST_ID, returnedRootProcessInstanceId);
+    assertEquals(MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION, returnedAnnotation);
 
   }
 

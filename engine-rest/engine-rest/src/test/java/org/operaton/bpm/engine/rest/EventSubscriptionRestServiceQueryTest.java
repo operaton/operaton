@@ -24,7 +24,6 @@ import java.util.Map;
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -41,6 +40,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -98,7 +98,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    Assertions.assertEquals(1, instances.size(), "There should be one event subscription returned.");
+    assertEquals(1, instances.size(), "There should be one event subscription returned.");
     assertThat(instances.get(0)).as("There should be one event subscription returned").isNotNull();
 
     String returnedEventSubscriptionId = from(content).getString("[0].id");
@@ -110,14 +110,14 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
     String returnedCreatedDate = from(content).getString("[0].createdDate");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_ID, returnedEventSubscriptionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_TYPE, returnedEventType);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_NAME, returnedEventName);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_ACTIVITY_ID, returnedActivityId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_CREATION_DATE, returnedCreatedDate);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+    assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_ID, returnedEventSubscriptionId);
+    assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_TYPE, returnedEventType);
+    assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_NAME, returnedEventName);
+    assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
+    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
+    assertEquals(MockProvider.EXAMPLE_ACTIVITY_ID, returnedActivityId);
+    assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_CREATION_DATE, returnedCreatedDate);
+    assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
   }
 
   @Test

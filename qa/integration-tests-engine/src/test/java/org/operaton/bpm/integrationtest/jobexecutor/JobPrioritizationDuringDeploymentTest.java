@@ -22,7 +22,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -34,6 +33,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Requires fix for CAM-3163
@@ -83,6 +83,6 @@ public class JobPrioritizationDuringDeploymentTest extends AbstractFoxPlatformIn
     Job job = managementService.createJobQuery().activityId("timerStart").singleResult();
 
     assertThat(job).isNotNull();
-    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    assertEquals(PriorityBean.PRIORITY, job.getPriority());
   }
 }

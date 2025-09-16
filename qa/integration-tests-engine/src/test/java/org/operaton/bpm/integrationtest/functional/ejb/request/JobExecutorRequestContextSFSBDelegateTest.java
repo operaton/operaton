@@ -20,7 +20,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -28,6 +27,8 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.functional.ejb.request.beans.RequestScopedSFSBDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * This test verifies that if the same @RequestScoped SFSB Bean is invoked multiple times
@@ -64,7 +65,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
 
     Object variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // -> the same bean instance was invoked 2 times!
-    Assertions.assertEquals(2, variable);
+    assertEquals(2, variable);
 
     Task task = taskService.createTaskQuery()
       .processInstanceId(pi.getProcessInstanceId())
@@ -75,7 +76,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
 
     variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // now it's '1' again! -> new instance of the bean
-    Assertions.assertEquals(1, variable);
+    assertEquals(1, variable);
 
   }
 
@@ -95,7 +96,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
     for(int i=0; i<instances; i++) {
       Object variable = runtimeService.getVariable(ids[i], "invocationCounter");
       // -> the same bean instance was invoked 2 times!
-      Assertions.assertEquals(2, variable);
+      assertEquals(2, variable);
 
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -104,7 +105,7 @@ public class JobExecutorRequestContextSFSBDelegateTest extends AbstractFoxPlatfo
 
     for(int i=0; i<instances; i++) {
       // now it's '1' again! -> new instance of the bean
-      Assertions.assertEquals(1, runtimeService.getVariable(ids[i], "invocationCounter"));
+      assertEquals(1, runtimeService.getVariable(ids[i], "invocationCounter"));
     }
 
 

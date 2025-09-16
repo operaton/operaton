@@ -30,7 +30,8 @@ import org.operaton.bpm.engine.variable.context.VariableContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for the {@code ScalaFeelEngine} implementation.
@@ -84,7 +85,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
     boolean inRangeResult = engine.evaluateSimpleUnaryTests("[250..1000]", "cellInput", variableCtx);
-    assertTrue(inRangeResult);
+    assertThat(inRangeResult).isTrue();
   }
 
   @Test
@@ -111,7 +112,7 @@ class ScalaFeelEngineTest {
     assertThat(isMiscResult).isFalse();
 
     boolean isTravelExpensesResult = engine.evaluateSimpleUnaryTests("\"Travel Expenses\"", "cellInput", variableCtx);
-    assertTrue(isTravelExpensesResult);
+    assertThat(isTravelExpensesResult).isTrue();
 
     boolean isSoftwareLicenseResult = engine.evaluateSimpleUnaryTests("\"Software License Costs\"", "cellInput",
       variableCtx);
@@ -156,7 +157,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("x between minValue and maxValue", "x", variableCtx);
-    assertTrue(result);
+    assertThat(result).isTrue();
   }
 
   @Test
@@ -234,7 +235,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("[250..1000]", "cellInput", variableCtx);
-    assertTrue(result);
+    assertThat(result).isTrue();
 
     result = engine.evaluateSimpleUnaryTests("< 250", "cellInput", variableCtx);
     assertThat(result).isFalse();
@@ -267,7 +268,7 @@ class ScalaFeelEngineTest {
     assertThat(isMiscResult).isFalse();
 
     boolean isTravelExpensesResult = engine.evaluateSimpleUnaryTests("\"Travel Expenses\"", "cellInput", variableCtx);
-    assertTrue(isTravelExpensesResult);
+    assertThat(isTravelExpensesResult).isTrue();
 
     boolean isSoftwareLicenseCostsResult = engine.evaluateSimpleUnaryTests("\"Software License Costs\"", "cellInput",
       variableCtx);
@@ -309,7 +310,7 @@ class ScalaFeelEngineTest {
     Exception exception = assertThrows(RuntimeException.class, () ->
       engine.evaluateSimpleExpression("1 + )", emptyContext));
 
-    assertTrue(exception.getMessage().contains("failed to parse expression"));
+    assertThat(exception.getMessage().contains("failed to parse expression")).isTrue();
   }
 
   @Test
@@ -319,7 +320,7 @@ class ScalaFeelEngineTest {
     Exception exception = assertThrows(RuntimeException.class, () ->
       engine.evaluateSimpleUnaryTests("in [1..]", "cellInput", variableCtx));
 
-    assertTrue(exception.getMessage().contains("failed to parse"));
+    assertThat(exception.getMessage().contains("failed to parse")).isTrue();
   }
 
   @Test
@@ -388,7 +389,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 75).asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("[50..100], >200", "cellInput", variableCtx);
-    assertTrue(result);
+    assertThat(result).isTrue();
 
     result = engine.evaluateSimpleUnaryTests("<50, >100", "cellInput", variableCtx);
     assertThat(result).isFalse();
@@ -411,8 +412,8 @@ class ScalaFeelEngineTest {
 
     Exception exception = assertThrows(FeelException.class, () -> engine.evaluateSimpleExpression(null, variableCtx));
 
-    assertTrue(exception.getMessage()
-      .contains("FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression"));
+    assertThat(exception.getMessage()
+      .contains("FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression")).isTrue();
   }
 
   @Test
@@ -420,7 +421,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.emptyVariableContext();
     Exception exception = assertThrows(FeelException.class,
       () -> engine.evaluateSimpleExpression("", variableCtx));
-    assertTrue(exception.getMessage().contains("failed to parse expression"));
+    assertThat(exception.getMessage().contains("failed to parse expression")).isTrue();
   }
 
   @Test
@@ -503,7 +504,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("[min..max]", "cellInput", variableCtx);
-    assertTrue(result);
+    assertThat(result).isTrue();
   }
 
   @Test

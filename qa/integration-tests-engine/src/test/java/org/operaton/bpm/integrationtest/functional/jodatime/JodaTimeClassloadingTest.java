@@ -52,7 +52,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
     assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(1);
 
     List<Job> jobs = managementService.createJobQuery().processDefinitionKey("intermediateTimerEventExample").executable().list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     runtimeService.deleteProcessInstance(pi1.getId(), "test");
 
     return jobs.get(0).getDuedate();

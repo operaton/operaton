@@ -28,9 +28,9 @@ import org.operaton.bpm.engine.variable.impl.value.NullValueImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.variable.Variables.*;
 import static org.operaton.bpm.engine.variable.type.ValueType.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
@@ -69,7 +69,7 @@ public class PrimitiveValueTest {
     initPrimitiveValueTest(initValueType, initValue, initTypedValue, initNullValue);
     VariableMap variables = createVariables().putValue(variableName, initValue);
 
-    assertThat(variables.get(variableName)).isEqualTo(initValue);
+    assertThat(variables).containsEntry(variableName, initValue);
     assertThat(variables.getValueTyped(variableName).getValue()).isEqualTo(initValue);
 
     // no type information present
@@ -89,7 +89,7 @@ public class PrimitiveValueTest {
     VariableMap variables = createVariables().putValue(variableName, typedValue);
 
     // get return value
-    assertThat(variables.get(variableName)).isEqualTo(value);
+    assertThat(variables).containsEntry(variableName, value);
 
     // type is not lost
     assertThat(variables.getValueTyped(variableName).getType()).isEqualTo(valueType);

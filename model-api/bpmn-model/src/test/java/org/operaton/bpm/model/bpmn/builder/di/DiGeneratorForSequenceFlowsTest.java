@@ -26,11 +26,11 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.END_EVENT_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEQUENCE_FLOW_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class DiGeneratorForSequenceFlowsTest {
@@ -56,7 +56,7 @@ class DiGeneratorForSequenceFlowsTest {
                   .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertThat(allEdges.size()).isEqualTo(1);
+    assertThat(allEdges).hasSize(1);
 
     assertBpmnEdgeExists(SEQUENCE_FLOW_ID);
   }
@@ -78,7 +78,7 @@ class DiGeneratorForSequenceFlowsTest {
         .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertThat(allEdges.size()).isEqualTo(3);
+    assertThat(allEdges).hasSize(3);
 
     assertBpmnEdgeExists("s1");
     assertBpmnEdgeExists("s2");
@@ -104,7 +104,7 @@ class DiGeneratorForSequenceFlowsTest {
         .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertThat(allEdges.size()).isEqualTo(4);
+    assertThat(allEdges).hasSize(4);
 
     assertBpmnEdgeExists("s1");
     assertBpmnEdgeExists("s2");
@@ -131,7 +131,7 @@ class DiGeneratorForSequenceFlowsTest {
         .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertThat(allEdges.size()).isEqualTo(4);
+    assertThat(allEdges).hasSize(4);
 
     assertBpmnEdgeExists("s1");
     assertBpmnEdgeExists("s2");
@@ -158,7 +158,7 @@ class DiGeneratorForSequenceFlowsTest {
         .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertThat(allEdges.size()).isEqualTo(4);
+    assertThat(allEdges).hasSize(4);
 
     assertBpmnEdgeExists("s1");
     assertBpmnEdgeExists("s2");

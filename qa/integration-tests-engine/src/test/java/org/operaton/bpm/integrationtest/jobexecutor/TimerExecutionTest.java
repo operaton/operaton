@@ -52,7 +52,7 @@ public class TimerExecutionTest extends AbstractFoxPlatformIntegrationTest {
     waitForJobExecutorToProcessAllJobs();
 
     List<ProcessInstance> finallyRunningInstances = runtimeService.createProcessInstanceQuery().processInstanceId(instance.getId()).list();
-    assertThat(finallyRunningInstances.size()).isEqualTo(0);
+    assertThat(finallyRunningInstances).hasSize(0);
 
   }
 }

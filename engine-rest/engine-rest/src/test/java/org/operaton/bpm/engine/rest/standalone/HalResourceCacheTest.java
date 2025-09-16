@@ -201,7 +201,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
     // mocked user was resolved
     assertThat(halUsers).isNotNull();
-    assertThat(halUsers.size()).isEqualTo(1);
+    assertThat(halUsers).hasSize(1);
     HalUser halUser = (HalUser) halUsers.get(0);
     assertThat(halUser.getFirstName()).isEqualTo("kermit");
 
@@ -216,7 +216,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
     // cached mocked user was resolved with old name
     assertThat(halUsers).isNotNull();
-    assertThat(halUsers.size()).isEqualTo(1);
+    assertThat(halUsers).hasSize(1);
     halUser = (HalUser) halUsers.get(0);
     assertThat(halUser.getFirstName()).isEqualTo("kermit");
 
@@ -227,7 +227,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
     // new mocked user was resolved with old name
     assertThat(halUsers).isNotNull();
-    assertThat(halUsers.size()).isEqualTo(1);
+    assertThat(halUsers).hasSize(1);
     halUser = (HalUser) halUsers.get(0);
     assertThat(halUser.getFirstName()).isEqualTo("fritz");
   }
@@ -261,7 +261,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
     HalLinkResolver linkResolver = Hal.getInstance().getLinkResolver(IdentityRestService.class);
     List<HalResource<?>> halIdentityLinks = linkResolver.resolveLinks(taskIds, processEngine);
 
-    assertThat(halIdentityLinks.size()).isEqualTo(2);
+    assertThat(halIdentityLinks).hasSize(2);
     assertThat(identityLinkCache.size()).isEqualTo(1);
 
     assertThat(identityLinkCache.get(taskIds[0])).isEqualTo(halIdentityLinks);

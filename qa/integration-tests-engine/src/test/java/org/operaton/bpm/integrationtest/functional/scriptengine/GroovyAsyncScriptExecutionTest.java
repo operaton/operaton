@@ -79,8 +79,9 @@ public class GroovyAsyncScriptExecutionTest extends AbstractFoxPlatformIntegrati
     waitForJobExecutorToProcessAllJobs(30000);
 
     Object foo = runtimeService.getVariable(processInstanceId, "foo");
-    assertThat(foo).isNotNull();
-    assertThat(foo).isEqualTo("bar");
+    assertThat(foo)
+            .isNotNull()
+            .isEqualTo("bar");
 
     repositoryService.deleteDeployment(deploymentId, true);
   }

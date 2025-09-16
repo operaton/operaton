@@ -38,8 +38,8 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformIntegrationTest {

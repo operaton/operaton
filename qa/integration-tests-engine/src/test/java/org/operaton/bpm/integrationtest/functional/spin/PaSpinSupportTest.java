@@ -99,7 +99,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
 
     // file has 4000 characters in length a
     // 20 characters per repeated JSON object
-    assertThat(node.prop("abcdef").elements().size()).isEqualTo(200);
+    assertThat(node.prop("abcdef").elements()).hasSize(200);
   }
 
   @Test
@@ -115,7 +115,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
     ObjectValue objectValue = runtimeService.getVariableTyped(pi.getId(), "jackson146", true);
     HashMap<String, List<Object>> map = (HashMap<String, List<Object>>) objectValue.getValue();
 
-    assertThat(map.get("abcdef").size()).isEqualTo(200);
+    assertThat(map.get("abcdef")).hasSize(200);
   }
 
 }

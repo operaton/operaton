@@ -318,7 +318,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
 
     String content = response.asString();
     List<Map<String, Object>> result = from(content).getList("");
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(result.get(0)).isNotNull();
     assertThat(result.get(1)).isNotNull();

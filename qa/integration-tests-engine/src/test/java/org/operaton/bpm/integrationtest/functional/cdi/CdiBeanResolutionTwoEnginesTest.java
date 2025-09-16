@@ -65,14 +65,14 @@ public class CdiBeanResolutionTwoEnginesTest extends AbstractFoxPlatformIntegrat
 
     processEngine1.getRuntimeService().startProcessInstanceByKey("testProcess");
     final List<Task> tasks = processEngine1.getTaskService().createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     processEngine1.getTaskService().complete(tasks.get(0).getId());
 
     //then
     //identityService resolution respects the engine, on which the process is being executed
     final List<VariableInstance> variableInstances = processEngine1.getRuntimeService().createVariableInstanceQuery().variableName("changeInitiatorUsername")
       .list();
-    assertThat(variableInstances.size()).isEqualTo(1);
+    assertThat(variableInstances).hasSize(1);
     assertThat(variableInstances.get(0).getValue()).isEqualTo("user1");
   }
 

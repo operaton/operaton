@@ -330,7 +330,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseInstanceId = from(content).getString("[0].id");
@@ -631,7 +631,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseInstanceId = from(content).getString("[0].id");
@@ -665,7 +665,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseInstanceId = from(content).getString("[0].id");

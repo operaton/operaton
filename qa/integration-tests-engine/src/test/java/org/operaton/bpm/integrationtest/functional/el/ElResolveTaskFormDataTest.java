@@ -51,8 +51,9 @@ public class ElResolveTaskFormDataTest extends AbstractFoxPlatformIntegrationTes
     TaskFormData formData = formService.getTaskFormData(task.getId());
     Object defaultValue = formData.getFormFields().get(0).getValue().getValue();
 
-    assertThat(defaultValue).isNotNull();
-    assertThat(defaultValue).isEqualTo("testString123");
+    assertThat(defaultValue)
+            .isNotNull()
+            .isEqualTo("testString123");
   }
 
   @Test
@@ -63,8 +64,9 @@ public class ElResolveTaskFormDataTest extends AbstractFoxPlatformIntegrationTes
     TaskFormData formData = formService.getTaskFormData(task.getId());
 
     String label = formData.getFormFields().get(0).getLabel();
-    assertThat(label).isNotNull();
-    assertThat(label).isEqualTo("testString123");
+    assertThat(label)
+            .isNotNull()
+            .isEqualTo("testString123");
   }
 
 }

@@ -64,14 +64,14 @@ public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegratio
     // check if the new applications are deployed with allowed names
     processApplicationNames.retainAll(Arrays.asList("test1", "test2", "/test1", "/test2"));
 
-    assertThat(processApplicationNames.size()).isEqualTo(2);
+    assertThat(processApplicationNames).hasSize(2);
 
     for (String appName : processApplicationNames) {
       ProcessApplicationInfo processApplicationInfo = processApplicationService.getProcessApplicationInfo(appName);
 
       assertThat(processApplicationInfo).isNotNull();
       assertThat(processApplicationInfo.getName()).isNotNull();
-      assertThat(processApplicationInfo.getDeploymentInfo().size()).isEqualTo(1);
+      assertThat(processApplicationInfo.getDeploymentInfo()).hasSize(1);
     }
 
   }

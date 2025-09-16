@@ -89,7 +89,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
       .processInstanceIdIn(pi.getId())
       .variableName("result").singleResult();
     List<Map<String, Object>> result = (List<Map<String, Object>>) decisionResult.getValue();
-    assertThat(result.get(0).get("result")).isEqualTo("ok");
+    assertThat(result.get(0)).containsEntry("result", "ok");
   }
 
   @Test
@@ -167,7 +167,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
         .variableName("result")
         .singleResult();
       List<Map<String, Object>> result = (List<Map<String, Object>>) decisionResult.getValue();
-      assertThat(result.get(0).get("result")).isEqualTo("ok");
+      assertThat(result.get(0)).containsEntry("result", "ok");
     }
     finally {
       repositoryService.deleteDeployment(deployment2.getId(), true);

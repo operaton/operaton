@@ -31,8 +31,8 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPaWithoutWeld;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @ExtendWith(ArquillianExtension.class)

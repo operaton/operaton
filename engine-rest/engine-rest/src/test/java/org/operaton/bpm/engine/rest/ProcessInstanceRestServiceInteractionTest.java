@@ -4862,7 +4862,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
   @SuppressWarnings({ "rawtypes", "unchecked" })
   private void verifyTaskComments(List<Comment> mockTaskComments, Response response) {
     List list = response.as(List.class);
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     LinkedHashMap<String, String> resourceHashMap = (LinkedHashMap<String, String>) list.get(0);
 

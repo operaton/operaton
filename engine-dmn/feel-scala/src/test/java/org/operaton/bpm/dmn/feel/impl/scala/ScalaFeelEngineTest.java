@@ -297,7 +297,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.emptyVariableContext();
 
     Object result = engine.evaluateSimpleExpression("date(\"2023-01-15\")", variableCtx);
-    assertNotNull(result);
+    assertThat(result).isNotNull();
     assertInstanceOf(LocalDate.class, result);
   }
 

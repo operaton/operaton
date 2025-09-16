@@ -41,7 +41,6 @@ import org.operaton.connect.spi.Connector;
 import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProcessEnded;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ConnectProcessEnginePluginTest {
 
@@ -68,11 +67,11 @@ class ConnectProcessEnginePluginTest {
   @Test
   void connectorsRegistered() {
     Connector<?> http = Connectors.getConnector(HttpConnector.ID);
-    assertNotNull(http);
+    assertThat(http).isNotNull();
     Connector<?> soap = Connectors.getConnector(SoapHttpConnector.ID);
-    assertNotNull(soap);
+    assertThat(soap).isNotNull();
     Connector<?> test = Connectors.getConnector(TestConnector.ID);
-    assertNotNull(test);
+    assertThat(test).isNotNull();
   }
 
   @Test
@@ -104,12 +103,12 @@ class ConnectProcessEnginePluginTest {
     runtimeService.startProcessInstanceByKey("testProcess", vars);
 
     // validate input parameter
-    assertNotNull(TestConnector.requestParameters.get("reqParam1"));
+    assertThat(TestConnector.requestParameters.get("reqParam1")).isNotNull();
     assertThat(TestConnector.requestParameters).containsEntry("reqParam1", inputVariableValue);
 
     // validate connector output
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("out1").singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getValue()).isEqualTo(outputParamValue);
   }
 
@@ -123,12 +122,12 @@ class ConnectProcessEnginePluginTest {
 
     // validate input parameter
     Object in = TestConnector.requestParameters.get("in");
-    assertNotNull(in);
+    assertThat(in).isNotNull();
     assertThat(in).isEqualTo(2 * x);
 
     // validate output parameter
     VariableInstance out = runtimeService.createVariableInstanceQuery().variableName("out").singleResult();
-    assertNotNull(out);
+    assertThat(out).isNotNull();
     assertThat(out.getValue()).isEqualTo(3 * x);
   }
 
@@ -287,12 +286,12 @@ class ConnectProcessEnginePluginTest {
     runtimeService.startProcessInstanceByKey("process_sending_with_connector", vars);
 
     // validate input parameter
-    assertNotNull(TestConnector.requestParameters.get("reqParam1"));
+    assertThat(TestConnector.requestParameters.get("reqParam1")).isNotNull();
     assertThat(TestConnector.requestParameters).containsEntry("reqParam1", inputVariableValue);
 
     // validate connector output
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("out1").singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getValue()).isEqualTo(outputParamValue);
   }
 
@@ -309,12 +308,12 @@ class ConnectProcessEnginePluginTest {
     runtimeService.startProcessInstanceByKey("process_sending_with_connector", vars);
 
     // validate input parameter
-    assertNotNull(TestConnector.requestParameters.get("reqParam1"));
+    assertThat(TestConnector.requestParameters.get("reqParam1")).isNotNull();
     assertThat(TestConnector.requestParameters).containsEntry("reqParam1", inputVariableValue);
 
     // validate connector output
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("out1").singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getValue()).isEqualTo(outputParamValue);
   }
 
@@ -333,12 +332,12 @@ class ConnectProcessEnginePluginTest {
     assertProcessEnded(engineExtension.getProcessEngine(), processInstance.getId());
 
     // validate input parameter
-    assertNotNull(TestConnector.requestParameters.get("reqParam1"));
+    assertThat(TestConnector.requestParameters.get("reqParam1")).isNotNull();
     assertThat(TestConnector.requestParameters).containsEntry("reqParam1", inputVariableValue);
 
     // validate connector output
     HistoricVariableInstance variable = historyService.createHistoricVariableInstanceQuery().variableName("out1").singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getValue()).isEqualTo(outputParamValue);
   }
 

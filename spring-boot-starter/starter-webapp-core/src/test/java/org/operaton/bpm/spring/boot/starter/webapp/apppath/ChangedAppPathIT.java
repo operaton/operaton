@@ -22,7 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -148,7 +148,7 @@ class ChangedAppPathIT {
   }
 
   @ParameterizedTest(name = "{index} => path={0}")
-  @CsvSource({
+  @ValueSource(strings = {
       "/lib/deps.js",
       "/app/admin/styles/user-styles.css",
       "/api/admin/plugin/adminPlugins/static/app/plugin.css"

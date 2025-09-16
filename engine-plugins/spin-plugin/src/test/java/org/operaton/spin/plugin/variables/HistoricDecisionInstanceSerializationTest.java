@@ -34,7 +34,6 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(ProcessEngineExtension.class)
 class HistoricDecisionInstanceSerializationTest {
@@ -54,7 +53,7 @@ class HistoricDecisionInstanceSerializationTest {
     decisionService.evaluateDecisionTableByKey("testDecision", variables);
 
     HistoricDecisionInstance testDecision = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey("testDecision").includeInputs().includeOutputs().singleResult();
-    assertNotNull(testDecision);
+    assertThat(testDecision).isNotNull();
 
     List<HistoricDecisionInputInstance> inputs = testDecision.getInputs();
     assertThat(inputs).hasSize(1);

@@ -31,7 +31,6 @@ import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEQUENCE_FLOW_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class DiGeneratorForSequenceFlowsTest {
 
@@ -181,6 +180,6 @@ class DiGeneratorForSequenceFlowsTest {
 
   protected void assertBpmnEdgeExists(String id) {
     BpmnEdge edge = findBpmnEdge(id);
-    assertNotNull(edge);
+    assertThat(edge).isNotNull();
   }
 }

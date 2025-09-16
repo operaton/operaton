@@ -27,10 +27,10 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
@@ -58,7 +58,8 @@ class DmnBusinessRuleTaskResultMappingTest {
     ProcessInstance processInstance = startTestProcess("multiple entries");
 
     //deserialization is not working for this type of object -> deserializeValue parameter is false
-    assertNotNull(runtimeService.getVariableTyped(processInstance.getId(), "result", false));
+    ObjectValue result = runtimeService.getVariableTyped(processInstance.getId(), "result", false);
+    assertThat(result).isNotNull();
   }
 
   @Deployment(resources = {CUSTOM_MAPPING_BPMN, TEST_DECISION})

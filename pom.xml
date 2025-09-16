@@ -88,6 +88,7 @@
           <failOnDryRunResults>true</failOnDryRunResults>
           <exclusions>
             <exclusion>**/node/**</exclusion>
+            <exclusion>**/example_jackson.json</exclusion>
             <!-- undesired changes, e.g. recipes that break compilation -->
             <!-- org.openrewrite.staticanalysis.FinalizePrivateFields -->
             <exclusion>**/FeelIntegrationTest.java</exclusion>

@@ -38,8 +38,8 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Thorben Lindhauer

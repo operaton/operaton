@@ -33,8 +33,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>Integration test that makes sure the shared container managed process engine is able to resolve

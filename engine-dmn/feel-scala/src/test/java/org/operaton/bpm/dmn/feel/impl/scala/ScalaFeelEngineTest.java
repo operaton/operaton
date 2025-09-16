@@ -427,7 +427,7 @@ class ScalaFeelEngineTest {
   void shouldEvaluateNonExistingVariable() {
     VariableContext variableCtx = Variables.emptyVariableContext();
     Object result = engine.evaluateSimpleExpression("nonExistingVar", variableCtx);
-    assertNull(result);
+    assertThat(result).isNull();
   }
 
   @Test

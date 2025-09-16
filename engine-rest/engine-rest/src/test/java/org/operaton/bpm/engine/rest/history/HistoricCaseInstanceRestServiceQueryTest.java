@@ -51,7 +51,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -638,7 +637,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     String returnedCloseTime = from(content).getString("[0].closeTime");
 
     assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
-    assertNull(returnedCloseTime);
+    assertThat(returnedCloseTime).isNull();
   }
 
   @Test
@@ -672,7 +671,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     String returnedCloseTime = from(content).getString("[0].closeTime");
 
     assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
-    assertNull(returnedCloseTime);
+    assertThat(returnedCloseTime).isNull();
   }
 
   @Test

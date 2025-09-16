@@ -30,8 +30,8 @@ import org.operaton.bpm.engine.variable.context.VariableContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for the {@code ScalaFeelEngine} implementation.
@@ -307,8 +307,8 @@ class ScalaFeelEngineTest {
     // Test for invalid expression syntax
     VariableContext emptyContext = Variables.emptyVariableContext();
 
-    Exception exception = assertThrows(RuntimeException.class, () ->
-      engine.evaluateSimpleExpression("1 + )", emptyContext));
+    Exception exception = assertThatExceptionOfType(RuntimeException.class).isThrownBy(() ->
+      engine.evaluateSimpleExpression("1 + )", emptyContext)).actual();
 
     assertThat(exception.getMessage()).contains("failed to parse expression");
   }
@@ -317,8 +317,8 @@ class ScalaFeelEngineTest {
   void throwsExceptionForInvalidUnaryTestExpression() {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
-    Exception exception = assertThrows(RuntimeException.class, () ->
-      engine.evaluateSimpleUnaryTests("in [1..]", "cellInput", variableCtx));
+    Exception exception = assertThatExceptionOfType(RuntimeException.class).isThrownBy(() ->
+      engine.evaluateSimpleUnaryTests("in [1..]", "cellInput", variableCtx)).actual();
 
     assertThat(exception.getMessage()).contains("failed to parse");
   }
@@ -410,7 +410,7 @@ class ScalaFeelEngineTest {
     // Tests the behavior when a null expression is passed
     VariableContext variableCtx = Variables.emptyVariableContext();
 
-    Exception exception = assertThrows(FeelException.class, () -> engine.evaluateSimpleExpression(null, variableCtx));
+    Exception exception = assertThatExceptionOfType(FeelException.class).isThrownBy(() -> engine.evaluateSimpleExpression(null, variableCtx)).actual();
 
     assertThat(exception.getMessage()).contains("FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression");
   }
@@ -418,8 +418,7 @@ class ScalaFeelEngineTest {
   @Test
   void shouldEvaluateEmptyExpression() {
     VariableContext variableCtx = Variables.emptyVariableContext();
-    Exception exception = assertThrows(FeelException.class,
-      () -> engine.evaluateSimpleExpression("", variableCtx));
+    Exception exception = assertThatExceptionOfType(FeelException.class).isThrownBy(() -> engine.evaluateSimpleExpression("", variableCtx)).actual();
     assertThat(exception.getMessage()).contains("failed to parse expression");
   }
 

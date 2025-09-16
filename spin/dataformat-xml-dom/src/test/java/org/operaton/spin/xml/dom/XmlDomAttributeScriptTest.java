@@ -26,7 +26,7 @@ import org.operaton.spin.xml.SpinXmlElement;
 
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML_FILE_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Sebastian Menski
@@ -61,7 +61,7 @@ public abstract class XmlDomAttributeScriptTest extends ScriptTest {
     execute = false
   )
   public void setNullValue() {
-    assertThrows(SpinXmlAttributeException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinXmlAttributeException.class).isThrownBy(this::failingWithException);
   }
 
   @Test

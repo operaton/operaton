@@ -22,8 +22,8 @@ import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class TestHelperTest {
@@ -110,14 +110,14 @@ class TestHelperTest {
   void shouldExpectExceptionDuringJobExecutionWhenExceptionIsNotThrown() {
     ManagementService managementService = mock(ManagementService.class);
     doNothing().when(managementService).executeJob("aJobId");
-    assertThrows(AssertionError.class, () -> TestHelper.executeJobExpectingException(managementService, "aJobId"));
+    assertThatExceptionOfType(AssertionError.class).isThrownBy(() -> TestHelper.executeJobExpectingException(managementService, "aJobId"));
   }
 
   @Test
   void shouldNotExpectExceptionDuringJobExecutionWhenExceptionIsThrown() {
     ManagementService managementService = mock(ManagementService.class);
     doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
-    assertThrows(AssertionError.class, () -> TestHelper.executeJobNotExpectingException(managementService, "aJobId"));
+    assertThatExceptionOfType(AssertionError.class).isThrownBy(() -> TestHelper.executeJobNotExpectingException(managementService, "aJobId"));
   }
 
   @Test

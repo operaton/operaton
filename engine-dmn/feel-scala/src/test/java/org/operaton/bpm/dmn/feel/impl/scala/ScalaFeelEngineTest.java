@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.variable.context.VariableContext;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 /**
  * Unit tests for the {@code ScalaFeelEngine} implementation.
@@ -299,7 +298,7 @@ class ScalaFeelEngineTest {
 
     Object result = engine.evaluateSimpleExpression("date(\"2023-01-15\")", variableCtx);
     assertThat(result).isNotNull();
-    assertInstanceOf(LocalDate.class, result);
+    assertThat(result).isInstanceOf(LocalDate.class);
   }
 
   @Test

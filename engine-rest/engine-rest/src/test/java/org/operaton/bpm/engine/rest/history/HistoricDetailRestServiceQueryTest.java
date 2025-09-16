@@ -555,7 +555,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   private void verifySimpleHistoricActivityQueryResponse(Response response) {
     String content = response.asString();
     List<Map<String, Object>> details = from(content).getList("");
-    assertThat(details.size()).as("There should be two activity instance returned.").isEqualTo(2);
+    assertThat(details).as("There should be two activity instance returned.").hasSize(2);
     assertThat(details.get(0)).as("The returned details should not be null.").isNotNull();
     assertThat(details.get(1)).as("The returned details should not be null.").isNotNull();
 

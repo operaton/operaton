@@ -236,7 +236,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> reports = from(content).getList("");
-    assertThat(reports.size()).as("There should be one report returned.").isEqualTo(1);
+    assertThat(reports).as("There should be one report returned.").hasSize(1);
     assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     long returnedAvg = from(content).getLong("[0].average");

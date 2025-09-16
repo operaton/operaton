@@ -83,6 +83,6 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(instancesQuery.count()).isEqualTo(0);
+    assertThat(instancesQuery.count()).isZero();
   }
 }

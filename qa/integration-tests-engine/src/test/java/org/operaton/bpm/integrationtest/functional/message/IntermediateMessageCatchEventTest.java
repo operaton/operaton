@@ -50,9 +50,9 @@ public class IntermediateMessageCatchEventTest extends AbstractFoxPlatformIntegr
     runtimeService.createMessageCorrelation("Test Message").correlate();
 
     eventSubscriptionCount = runtimeService.createEventSubscriptionQuery().count();
-    assertThat(eventSubscriptionCount).isEqualTo(0);
+    assertThat(eventSubscriptionCount).isZero();
 
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
 }

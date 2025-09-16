@@ -65,7 +65,7 @@ public class CdiBeanDependentScopedAsyncTest extends AbstractFoxPlatformIntegrat
   void setup() {
     DependentScopedBean.reset();
 
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isZero();
 
     runtimeService.startProcessInstanceByKey("testResolveBeanFromJobExecutor");
 
@@ -73,7 +73,7 @@ public class CdiBeanDependentScopedAsyncTest extends AbstractFoxPlatformIntegrat
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isZero();
   }
 
   @Test

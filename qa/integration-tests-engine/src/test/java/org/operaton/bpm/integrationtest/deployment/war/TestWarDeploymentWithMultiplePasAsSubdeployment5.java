@@ -153,7 +153,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment5 extends AbstractFo
         .processDefinitionKey(processKey)
         .count();
 
-    assertThat(count).as("Process with key " + processKey + " should not be deployed").isEqualTo(0);
+    assertThat(count).as("Process with key " + processKey + " should not be deployed").isZero();
   }
 
 }

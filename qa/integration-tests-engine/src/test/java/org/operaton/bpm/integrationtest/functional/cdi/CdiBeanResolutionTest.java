@@ -76,7 +76,7 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
     // assert that we cannot resolve the bean here:
     assertThat(ProgrammaticBeanLookup.lookup("exampleBean")).isNull();
 
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isZero();
     // but the process engine can:
     runtimeService.startProcessInstanceByKey("testResolveBean");
 
@@ -87,13 +87,13 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
   @OperateOnDeployment("clientDeployment")
   void testResolveBeanFromJobExecutor() {
 
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isZero();
     runtimeService.startProcessInstanceByKey("testResolveBeanFromJobExecutor");
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(1);
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isZero();
 
   }
 

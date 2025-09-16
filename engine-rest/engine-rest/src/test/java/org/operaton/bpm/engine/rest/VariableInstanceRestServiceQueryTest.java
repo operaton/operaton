@@ -374,7 +374,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
     String content = response.asString();
     List<Map<String, Object>> variables = from(content).getList("");
-    assertThat(variables.size()).as("There should be one process definition returned.").isEqualTo(1);
+    assertThat(variables).as("There should be one process definition returned.").hasSize(1);
     assertThat(variables.get(0)).as("There should be one process definition returned").isNotNull();
 
     verify(mockedQuery).disableBinaryFetching();

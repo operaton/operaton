@@ -93,7 +93,7 @@ public class JavaDelegateResolutionTest extends AbstractFoxPlatformIntegrationTe
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count()).isZero();
 
   }
 

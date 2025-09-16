@@ -364,7 +364,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
 
     String content = response.asString();
     List<Map<String, Object>> incidents = from(content).getList("");
-    assertThat(incidents.size()).as("There should be one incident returned.").isEqualTo(1);
+    assertThat(incidents).as("There should be one incident returned.").hasSize(1);
     assertThat(incidents.get(0)).as("The returned incident should not be null.").isNotNull();
 
     String returnedId = from(content).getString("[0].id");

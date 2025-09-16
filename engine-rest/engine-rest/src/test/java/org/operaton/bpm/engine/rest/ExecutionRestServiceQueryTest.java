@@ -158,7 +158,7 @@ public class ExecutionRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> executions = from(content).getList("");
-    assertThat(executions.size()).as("There should be one execution returned.").isEqualTo(1);
+    assertThat(executions).as("There should be one execution returned.").hasSize(1);
     assertThat(executions.get(0)).as("There should be one execution returned").isNotNull();
 
     String returnedExecutionId = from(content).getString("[0].id");

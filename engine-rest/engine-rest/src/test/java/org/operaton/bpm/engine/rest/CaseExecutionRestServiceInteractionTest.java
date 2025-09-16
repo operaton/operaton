@@ -1369,7 +1369,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
       .when()
         .get(CASE_EXECUTION_LOCAL_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
 
     verify(caseServiceMock).getVariablesLocalTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID, true);
   }
@@ -1388,7 +1388,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
       .when()
         .get(CASE_EXECUTION_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
 
     verify(caseServiceMock).getVariablesTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID, true);
   }

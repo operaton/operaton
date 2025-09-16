@@ -96,7 +96,7 @@ public class RedeployCaseClassloadingTest extends AbstractFoxPlatformIntegration
       .removeVariable("listener")
       .execute();
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when (2)
     caseService

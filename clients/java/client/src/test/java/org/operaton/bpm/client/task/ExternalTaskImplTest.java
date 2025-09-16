@@ -43,7 +43,7 @@ class ExternalTaskImplTest {
   void shouldDisplayAttributesEmptyInToString() {
     // no attributes set, only priority initialized as 0
     ExternalTaskImpl task = new ExternalTaskImpl();
-    assertThat(task.toString()).isEqualTo("ExternalTaskImpl [activityId=null, "
+    assertThat(task).hasToString("ExternalTaskImpl [activityId=null, "
       + "activityInstanceId=null, "
       + "businessKey=null, "
       + "errorDetails=null, "
@@ -90,7 +90,7 @@ class ExternalTaskImplTest {
     task.setTopicName("tn");
     task.setWorkerId("wi");
 
-    assertThat(task.toString()).isEqualTo("ExternalTaskImpl [activityId=ai, "
+    assertThat(task).hasToString("ExternalTaskImpl [activityId=ai, "
       + "activityInstanceId=aii, "
       + "businessKey=bk, "
       + "errorDetails=ed, "
@@ -148,7 +148,7 @@ class ExternalTaskImplTest {
     variables.put("v2", generateTypedValueField(ValueType.INTEGER.getName(), 999, 43, "vi3", 88L));
     task.setVariables(variables);
 
-    assertThat(task.toString()).isEqualTo("ExternalTaskImpl [activityId=ai, "
+    assertThat(task).hasToString("ExternalTaskImpl [activityId=ai, "
       + "activityInstanceId=aii, "
       + "businessKey=bk, "
       + "errorDetails=ed, "

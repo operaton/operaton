@@ -409,7 +409,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> logs = from(content).getList("");
-    assertThat(logs.size()).as("There should be one historic externalTask log returned.").isEqualTo(1);
+    assertThat(logs).as("There should be one historic externalTask log returned.").hasSize(1);
     assertNotNull("The returned historic externalTask log should not be null.", logs.get(0));
 
     String returnedId = from(content).getString("[0].id");
@@ -474,7 +474,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> logs = from(content).getList("");
-    assertThat(logs.size()).as("There should be one historic externalTask log returned.").isEqualTo(1);
+    assertThat(logs).as("There should be one historic externalTask log returned.").hasSize(1);
     assertNotNull("The returned historic externalTask log should not be null.", logs.get(0));
 
     String returnedId = from(content).getString("[0].id");

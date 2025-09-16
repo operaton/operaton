@@ -307,7 +307,7 @@ public class BatchRestServiceStatisticsTest extends AbstractRestServiceTest {
 
   protected void verifyBatchStatisticsListJson(String batchStatisticsListJson) {
     List<Object> batches = from(batchStatisticsListJson).get();
-    assertThat(batches.size()).as("There should be one batch statistics returned.").isEqualTo(1);
+    assertThat(batches).as("There should be one batch statistics returned.").hasSize(1);
 
     BatchStatisticsDto batchStatistics = from(batchStatisticsListJson).getObject("[0]", BatchStatisticsDto.class);
     String returnedStartTime = from(batchStatisticsListJson).getString("[0].startTime");

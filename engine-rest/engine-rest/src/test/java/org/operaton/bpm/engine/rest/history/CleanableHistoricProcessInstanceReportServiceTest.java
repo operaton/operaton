@@ -143,7 +143,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
 
     String content = response.asString();
     List<Map<String, Object>> reportResults = from(content).getList("");
-    assertThat(reportResults.size()).as("There should be two report results returned.").isEqualTo(2);
+    assertThat(reportResults).as("There should be two report results returned.").hasSize(2);
     assertThat(reportResults.get(0)).isNotNull();
 
     String returnedDefinitionId = from(content).getString("[0].processDefinitionId");

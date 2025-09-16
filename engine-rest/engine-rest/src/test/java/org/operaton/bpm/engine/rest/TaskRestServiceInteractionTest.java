@@ -584,11 +584,11 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded users:
     List<Map<String,Object>> embeddedUsers = from(content).getList("_embedded.user");
-    assertThat(embeddedUsers.size()).as("There should be two users returned.").isEqualTo(2);
+    assertThat(embeddedUsers).as("There should be two users returned.").hasSize(2);
 
     Map<String, Object> embeddedUser = embeddedUsers.get(0);
-    assertThat(embeddedUser).as("The returned user should not be null.").isNotNull();
     assertThat(embeddedUser)
+            .isNotNull()
             .containsEntry("id", MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME)
             .containsEntry("firstName", MockProvider.EXAMPLE_USER_FIRST_NAME)
             .containsEntry("lastName", MockProvider.EXAMPLE_USER_LAST_NAME)
@@ -599,8 +599,8 @@ public class TaskRestServiceInteractionTest extends
     assertHalLink(links, "self", UserRestService.PATH + "/" + MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME);
 
     embeddedUser = embeddedUsers.get(1);
-    assertThat(embeddedUser).as("The returned user should not be null.").isNotNull();
     assertThat(embeddedUser)
+            .isNotNull()
             .containsEntry("id", MockProvider.EXAMPLE_TASK_OWNER)
             .containsEntry("firstName", MockProvider.EXAMPLE_USER_FIRST_NAME)
             .containsEntry("lastName", MockProvider.EXAMPLE_USER_LAST_NAME)
@@ -612,11 +612,11 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded groups:
     List<Map<String, Object>> embeddedGroups = from(content).getList("_embedded.group");
-    assertThat(embeddedGroups.size()).as("There should be two groups returned.").isEqualTo(2);
+    assertThat(embeddedGroups).as("There should be two groups returned.").hasSize(2);
 
     Map<String, Object> embeddedGroup = embeddedGroups.get(0);
-    assertThat(embeddedGroup).as("The returned group should not be null.").isNotNull();
     assertThat(embeddedGroup)
+            .isNotNull()
             .containsEntry("id", MockProvider.EXAMPLE_GROUP_ID)
             .containsEntry("name", MockProvider.EXAMPLE_GROUP_NAME)
             .containsEntry("type", MockProvider.EXAMPLE_GROUP_TYPE);
@@ -626,8 +626,8 @@ public class TaskRestServiceInteractionTest extends
     assertHalLink(links, "self", GroupRestService.PATH + "/" + MockProvider.EXAMPLE_GROUP_ID);
 
     embeddedGroup = embeddedGroups.get(1);
-    assertThat(embeddedGroup).as("The returned group should not be null.").isNotNull();
     assertThat(embeddedGroup)
+            .isNotNull()
             .containsEntry("id", MockProvider.EXAMPLE_GROUP_ID2)
             .containsEntry("name", MockProvider.EXAMPLE_GROUP_NAME)
             .containsEntry("type", MockProvider.EXAMPLE_GROUP_TYPE);
@@ -638,10 +638,10 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded processDefinitions:
     List<Map<String,Object>> embeddedDefinitions = from(content).getList("_embedded.processDefinition");
-    assertThat(embeddedDefinitions.size()).as("There should be one processDefinition returned.").isEqualTo(1);
+    assertThat(embeddedDefinitions).as("There should be one processDefinition returned.").hasSize(1);
     Map<String, Object> embeddedProcessDefinition = embeddedDefinitions.get(0);
-    assertThat(embeddedProcessDefinition).as("The returned processDefinition should not be null.").isNotNull();
     assertThat(embeddedProcessDefinition)
+            .isNotNull()
             .containsEntry("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
             .containsEntry("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
             .containsEntry("category", MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY)
@@ -665,10 +665,10 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded caseDefinitions:
     List<Map<String,Object>> embeddedCaseDefinitions = from(content).getList("_embedded.caseDefinition");
-    assertThat(embeddedCaseDefinitions.size()).as("There should be one caseDefinition returned.").isEqualTo(1);
+    assertThat(embeddedCaseDefinitions).as("There should be one caseDefinition returned.").hasSize(1);
     Map<String, Object> embeddedCaseDefinition = embeddedCaseDefinitions.get(0);
-    assertThat(embeddedCaseDefinition).as("The returned caseDefinition should not be null.").isNotNull();
     assertThat(embeddedCaseDefinition)
+            .isNotNull()
             .containsEntry("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
             .containsEntry("key", MockProvider.EXAMPLE_CASE_DEFINITION_KEY)
             .containsEntry("category", MockProvider.EXAMPLE_CASE_DEFINITION_CATEGORY)
@@ -687,7 +687,7 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded identity links
     List<Map<String, Object>> embeddedIdentityLinks = from(content).getList("_embedded.identityLink");
-    assertThat(embeddedIdentityLinks.size()).as("There should be three identityLink returned").isEqualTo(4);
+    assertThat(embeddedIdentityLinks).as("There should be three identityLink returned").hasSize(4);
     assertEmbeddedIdentityLink(mockAssigneeIdentityLink, embeddedIdentityLinks.get(0));
     assertEmbeddedIdentityLink(mockOwnerIdentityLink, embeddedIdentityLinks.get(1));
     assertEmbeddedIdentityLink(mockCandidateGroupIdentityLink, embeddedIdentityLinks.get(2));

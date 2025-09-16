@@ -407,7 +407,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one process instance returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one process instance returned.").hasSize(1);
     assertThat(instances)
       .first()
       .as("The returned process instance should not be null.")
@@ -847,7 +847,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one process instance returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one process instance returned.").hasSize(1);
     assertThat(instances).first().as("The returned process instance should not be null.").isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].id");

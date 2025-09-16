@@ -94,7 +94,7 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
       .removeVariable("listener")
       .execute();
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // the delegate expression listener should execute successfully
     caseService

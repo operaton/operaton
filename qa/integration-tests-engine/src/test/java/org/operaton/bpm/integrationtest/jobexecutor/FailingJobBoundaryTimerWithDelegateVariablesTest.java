@@ -66,7 +66,7 @@ public class FailingJobBoundaryTimerWithDelegateVariablesTest extends AbstractFo
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).executable().count()).isEqualTo(0); // should be 0, because it has failed 3 times
+    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).executable().count()).isZero(); // should be 0, because it has failed 3 times
     assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).withException().count()).isEqualTo(1); // should be 1, because job failed!
 
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count()).isEqualTo(1);
@@ -74,8 +74,8 @@ public class FailingJobBoundaryTimerWithDelegateVariablesTest extends AbstractFo
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId()); // complete task with failed job => complete process
 
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count()).isEqualTo(0);
-    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).count()).isEqualTo(0); // should be 0, because process is finished.
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count()).isZero();
+    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).count()).isZero(); // should be 0, because process is finished.
   }
 
 }

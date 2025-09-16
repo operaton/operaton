@@ -83,7 +83,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
   @Test
   void testCacheCapacity() {
-    assertThat(cache.size()).isEqualTo(0);
+    assertThat(cache.size()).isZero();
 
     cache.put("a", "a");
     cache.put("b", "b");
@@ -113,7 +113,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
     forwardTime(cache.getSecondsToLive() + 1);
 
     assertThat(cache.get("hello")).isNull();
-    assertThat(cache.size()).isEqualTo(0);
+    assertThat(cache.size()).isZero();
   }
 
   @Test
@@ -193,7 +193,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
     // cache exists and is empty
     DefaultHalResourceCache userCache = (DefaultHalResourceCache) Hal.getInstance().getHalRelationCache(HalUser.class);
     assertThat(userCache).isNotNull();
-    assertThat(userCache.size()).isEqualTo(0);
+    assertThat(userCache.size()).isZero();
 
     // get link resolver and resolve user
     HalLinkResolver linkResolver = Hal.getInstance().getLinkResolver(UserRestService.class);
@@ -258,7 +258,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
     // cache exists and is empty
     DefaultHalResourceCache identityLinkCache = (DefaultHalResourceCache) Hal.getInstance().getHalRelationCache(HalIdentityLink.class);
     assertThat(identityLinkCache).isNotNull();
-    assertThat(identityLinkCache.size()).isEqualTo(0);
+    assertThat(identityLinkCache.size()).isZero();
 
     // get link resolver and resolve identity link
     HalLinkResolver linkResolver = Hal.getInstance().getLinkResolver(IdentityRestService.class);

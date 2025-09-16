@@ -314,7 +314,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
       .body(EXAMPLE_VARIABLE_KEY + ".type", equalTo(String.class.getSimpleName()))
       .when().get(EXECUTION_LOCAL_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
   }
 
   @Test

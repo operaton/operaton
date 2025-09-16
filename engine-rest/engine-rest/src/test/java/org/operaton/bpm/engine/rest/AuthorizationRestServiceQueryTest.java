@@ -150,7 +150,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one authorization returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one authorization returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned authorization should not be null.").isNotNull();
 
     Authorization mockAuthorization = mockAuthorizations.get(0);

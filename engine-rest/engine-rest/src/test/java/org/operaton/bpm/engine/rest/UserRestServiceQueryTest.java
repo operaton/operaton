@@ -241,7 +241,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   protected void verifyExampleUserResponse(Response response) {
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one user returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one user returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned user should not be null.").isNotNull();
 
     String returendLastName = from(content).getString("[0].lastName");

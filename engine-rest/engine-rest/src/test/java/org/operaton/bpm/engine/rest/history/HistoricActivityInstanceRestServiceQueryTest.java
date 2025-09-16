@@ -389,7 +389,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one activity instance returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one activity instance returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedId = from(content).getString("[0].id");
@@ -598,7 +598,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one activity instance returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one activity instance returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].processInstanceId");
@@ -631,7 +631,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one activity instance returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one activity instance returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
@@ -666,7 +666,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one activity instance returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one activity instance returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");

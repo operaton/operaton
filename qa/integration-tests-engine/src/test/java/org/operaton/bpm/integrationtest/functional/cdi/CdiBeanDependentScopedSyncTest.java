@@ -65,11 +65,11 @@ public class CdiBeanDependentScopedSyncTest extends AbstractFoxPlatformIntegrati
   void setup() {
     DependentScopedBean.reset();
 
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isZero();
 
     runtimeService.startProcessInstanceByKey("testResolveBean");
 
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isZero();
   }
 
   @Test

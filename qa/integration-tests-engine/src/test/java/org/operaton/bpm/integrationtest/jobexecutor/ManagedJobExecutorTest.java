@@ -87,7 +87,7 @@ public class ManagedJobExecutorTest {
 
       executeJobs(pid);
 
-      assertThat(managementService.createJobQuery().processInstanceId(pid).count()).isEqualTo(0L);
+      assertThat(managementService.createJobQuery().processInstanceId(pid).count()).isZero();
 
       assertThat(runtimeService.createVariableInstanceQuery().processInstanceIdIn(pid).variableName("foo").singleResult().getValue()).isEqualTo("bar");
     } finally {

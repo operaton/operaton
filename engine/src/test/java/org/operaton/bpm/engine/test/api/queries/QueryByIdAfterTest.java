@@ -63,7 +63,7 @@ class QueryByIdAfterTest {
     String lastId = historicVariableInstances.get(historicVariableInstances.size() - 1).getId();
     assertThat(historicVariableInstances).hasSize(20);
     assertThat(historicVariableInstanceQuery.idAfter(firstId).list()).hasSize(19);
-    assertThat(historicVariableInstanceQuery.idAfter(lastId).list()).hasSize(0);
+    assertThat(historicVariableInstanceQuery.idAfter(lastId).list()).isEmpty();
 
     List<HistoricVariableInstance> secondHalf = historicVariableInstanceQuery.idAfter(middleId).list();
     assertThat(secondHalf).hasSize(10);

@@ -111,7 +111,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .body(EXAMPLE_VARIABLE_KEY + ".type", equalTo(VariableTypeHelper.toExpectedValueTypeName(EXAMPLE_VARIABLE_VALUE.getType())))
       .when().get(SINGLE_TASK_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
   }
 
   @Test

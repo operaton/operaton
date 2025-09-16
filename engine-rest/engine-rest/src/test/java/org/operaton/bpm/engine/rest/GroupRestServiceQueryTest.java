@@ -124,7 +124,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one group returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one group returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned group should not be null.").isNotNull();
 
     String returendName = from(content).getString("[0].name");

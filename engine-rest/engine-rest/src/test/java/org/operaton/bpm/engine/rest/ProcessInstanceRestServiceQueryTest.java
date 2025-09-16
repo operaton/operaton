@@ -165,7 +165,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one process definition returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one process definition returned.").hasSize(1);
     assertThat(instances.get(0)).as("There should be one process definition returned").isNotNull();
 
     String returnedInstanceId = from(content).getString("[0].id");
@@ -1223,7 +1223,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be two process definitions returned.").isEqualTo(2);
+    assertThat(instances).as("There should be two process definitions returned.").hasSize(2);
 
     String returnedInstanceId1 = from(content).getString("[0].id");
     String returnedInstanceId2 = from(content).getString("[1].id");
@@ -1265,7 +1265,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be two process definitions returned.").isEqualTo(2);
+    assertThat(instances).as("There should be two process definitions returned.").hasSize(2);
 
     String returnedInstanceId1 = from(content).getString("[0].id");
     String returnedInstanceId2 = from(content).getString("[1].id");
@@ -1303,7 +1303,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be two process definitions returned.").isEqualTo(2);
+    assertThat(instances).as("There should be two process definitions returned.").hasSize(2);
 
     String returnedInstanceId1 = from(content).getString("[0].id");
     String returnedInstanceId2 = from(content).getString("[1].id");
@@ -1344,7 +1344,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be two process definitions returned.").isEqualTo(2);
+    assertThat(instances).as("There should be two process definitions returned.").hasSize(2);
 
     String returnedInstanceId1 = from(content).getString("[0].id");
     String returnedInstanceId2 = from(content).getString("[1].id");

@@ -160,7 +160,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
 
     String content = response.asString();
     List<Map<String, Object>> definitions = from(content).getList("");
-    assertThat(definitions.size()).as("There should be one process definition returned.").isEqualTo(1);
+    assertThat(definitions).as("There should be one process definition returned.").hasSize(1);
     assertThat(definitions.get(0)).as("There should be one process definition returned").isNotNull();
 
     String returnedDefinitionKey = from(content).getString("[0].key");

@@ -97,7 +97,7 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
 
     runtimeService.signal(processInstance.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
 
   }
 

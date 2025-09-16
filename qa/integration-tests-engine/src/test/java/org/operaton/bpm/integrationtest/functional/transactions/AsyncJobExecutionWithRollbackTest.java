@@ -74,7 +74,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
     Job job = managementService.createJobQuery().processDefinitionKey("txRollbackServiceTask").singleResult();
 
     assertThat(job).isNotNull();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isNotNull();
     assertThat(managementService.getJobExceptionStacktrace(job.getId())).isNotNull();
   }
@@ -92,7 +92,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
     Job job = managementService.createJobQuery().processDefinitionKey("txRollbackServiceTaskWithCustomRetryCycle").singleResult();
 
     assertThat(job).isNotNull();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isNotNull();
     assertThat(managementService.getJobExceptionStacktrace(job.getId())).isNotNull();
   }

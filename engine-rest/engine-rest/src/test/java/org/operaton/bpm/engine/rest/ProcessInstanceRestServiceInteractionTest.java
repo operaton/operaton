@@ -296,7 +296,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         .body("childTransitionInstances[0].incidents[0].activityId", Matchers.equalTo("anActivityId"))
         .when().get(PROCESS_INSTANCE_ACTIVIY_INSTANCES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return right number of properties").isEqualTo(13);
+    assertThat(response.jsonPath().getMap("")).as("Should return right number of properties").hasSize(13);
   }
 
   @Test
@@ -346,7 +346,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_VARIABLE_KEY + ".type", Matchers.equalTo(String.class.getSimpleName()))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
   }
 
   @Test
@@ -799,7 +799,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_ANOTHER_VARIABLE_KEY + ".type", Matchers.equalTo("Null"))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
   }
 
   @Test
@@ -1310,7 +1310,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, Matchers.equalTo("application/json"))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
   }
 
   @Test

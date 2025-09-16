@@ -58,7 +58,7 @@ public final class LdapTestUtilities {
     groupNames.add(groups.get(0).getId());
 
     groups = identityService.createGroupQuery().listPage(6, 2);
-    assertThat(groups).hasSize(0);
+    assertThat(groups).isEmpty();
   }
 
   public static void testUserPaging(IdentityService identityService, LdapTestContext ldapTestContext) {
@@ -81,7 +81,7 @@ public final class LdapTestUtilities {
 
     // over the page.
     users = identityService.createUserQuery().listPage(ldapTestContext.numberOfGeneratedUsers() + 1, 2);
-    assertThat(users).hasSize(0);
+    assertThat(users).isEmpty();
   }
 
   public static void testUserPagingWithMemberOfGroup(IdentityService identityService) {
@@ -103,7 +103,7 @@ public final class LdapTestUtilities {
     assertThat(userNames).doesNotContain(users.get(0).getId());
 
     users = identityService.createUserQuery().memberOfGroup("all").listPage(12, 2);
-    assertThat(users).hasSize(0);
+    assertThat(users).isEmpty();
   }
 
   private LdapTestUtilities() {

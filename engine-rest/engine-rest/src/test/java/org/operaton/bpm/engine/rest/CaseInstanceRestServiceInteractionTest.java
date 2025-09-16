@@ -183,7 +183,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
       .body(EXAMPLE_VARIABLE_KEY + ".type", equalTo(String.class.getSimpleName()))
       .when().get(CASE_INSTANCE_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
 
     verify(caseServiceMock).getVariablesTyped(MockProvider.EXAMPLE_CASE_INSTANCE_ID, true);
   }
@@ -199,7 +199,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
       .body(EXAMPLE_ANOTHER_VARIABLE_KEY + ".type", equalTo("Null"))
       .when().get(CASE_INSTANCE_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
 
     verify(caseServiceMock).getVariablesTyped(MockProvider.EXAMPLE_CASE_INSTANCE_ID, true);
   }
@@ -219,7 +219,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
       .body(EXAMPLE_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, equalTo("application/json"))
       .when().get(CASE_INSTANCE_VARIABLES_URL);
 
-    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
 
     verify(caseServiceMock).getVariablesTyped(MockProvider.EXAMPLE_CASE_INSTANCE_ID, true);
   }

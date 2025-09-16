@@ -67,8 +67,8 @@ public class SignalEventCatchBoundaryWithVariablesTest extends AbstractFoxPlatfo
     runtimeService.signal(piCatchSignal.getId());
     runtimeService.signal(piThrowSignal.getId());
 
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(piCatchSignal.getProcessInstanceId()).count()).isEqualTo(0);
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(piThrowSignal.getProcessInstanceId()).count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(piCatchSignal.getProcessInstanceId()).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(piThrowSignal.getProcessInstanceId()).count()).isZero();
   }
 
 }

@@ -133,7 +133,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> deployments = from(content).getList("");
-    assertThat(deployments.size()).as("There should be one deployment returned.").isEqualTo(1);
+    assertThat(deployments).as("There should be one deployment returned.").hasSize(1);
     assertThat(deployments.get(0)).as("There should be one deployment returned").isNotNull();
 
     String returnedId = from(content).getString("[0].id");

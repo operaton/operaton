@@ -261,7 +261,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
 
   protected void verifyBatchListJson(String batchListJson) {
     List<Object> batches = from(batchListJson).get();
-    assertThat(batches.size()).as("There should be one batch returned.").isEqualTo(1);
+    assertThat(batches).as("There should be one batch returned.").hasSize(1);
 
     BatchDto batch = from(batchListJson).getObject("[0]", BatchDto.class);
     String returnedStartTime = from(batchListJson).getString("[0].startTime");

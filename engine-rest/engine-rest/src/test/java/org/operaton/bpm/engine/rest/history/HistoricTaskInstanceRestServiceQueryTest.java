@@ -458,7 +458,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one historic task instance returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one historic task instance returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned historic task instance should not be null.").isNotNull();
 
     verifyHistoricTaskInstanceEntries(content);
@@ -480,7 +480,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).as("There should be one historic task instance returned.").isEqualTo(1);
+    assertThat(instances).as("There should be one historic task instance returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned historic task instance should not be null.").isNotNull();
 
     verifyHistoricTaskInstanceEntries(content);

@@ -45,7 +45,7 @@ public class TestWarDeploymentWithoutProcessDefinitions extends AbstractFoxPlatf
     assertThat(ProgrammaticBeanLookup.lookup(ProcessEngine.class)).isNotNull();
 
     // no deployment has been constructed
-    assertThat(repositoryService.createDeploymentQuery().deploymentName("pa").count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().deploymentName("pa").count()).isZero();
   }
 
 }

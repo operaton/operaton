@@ -298,7 +298,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
 
   protected void verifyHistoricBatchListJson(String historicBatchListJson) {
     List<Object> batches = from(historicBatchListJson).get();
-    assertThat(batches.size()).as("There should be one historic batch returned.").isEqualTo(1);
+    assertThat(batches).as("There should be one historic batch returned.").hasSize(1);
 
     HistoricBatchDto historicBatch = from(historicBatchListJson).getObject("[0]", HistoricBatchDto.class);
     assertThat(historicBatch).as("The returned historic batch should not be null.").isNotNull();

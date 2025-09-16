@@ -459,7 +459,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
 
     String content = response.asString();
     List<Map<String, Object>> logs = from(content).getList("");
-    assertThat(logs.size()).as("There should be one historic job log returned.").isEqualTo(1);
+    assertThat(logs).as("There should be one historic job log returned.").hasSize(1);
     assertThat(logs.get(0)).as("The returned historic job log should not be null.").isNotNull();
 
     verifyHistoricJobLogEntries(content);

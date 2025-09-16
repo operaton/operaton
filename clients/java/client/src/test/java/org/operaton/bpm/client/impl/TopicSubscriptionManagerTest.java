@@ -39,7 +39,6 @@ import org.operaton.bpm.engine.variable.value.PrimitiveValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -221,11 +220,9 @@ class TopicSubscriptionManagerTest {
 	}
 
 	private void waitForTopicSubscriptionManagerToFinish() {
-		try {
-			topicSubscriptionManager.getThread().join();
-		} catch (InterruptedException e) {
-			fail(e);
-		}
+    assertDoesNotThrow(() -> {
+      topicSubscriptionManager.getThread().join();
+    });
 	}
 
 	private void subscribeTopicT0() {

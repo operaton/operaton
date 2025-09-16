@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * @author Sebastian Menski
@@ -52,7 +52,7 @@ class OperatonInputParameterTest extends BpmnModelElementInstanceTest {
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
   void testIntputParameterScriptChildAssignment() {
-    try {
+    assertDoesNotThrow(() -> {
       OperatonInputParameter inputParamElement = modelInstance.newInstance(OperatonInputParameter.class);
       inputParamElement.setOperatonName("aVariable");
 
@@ -61,38 +61,32 @@ class OperatonInputParameterTest extends BpmnModelElementInstanceTest {
       scriptElement.setTextContent("${'a script'}");
 
       inputParamElement.addChildElement(scriptElement);
-    } catch (Exception e) {
-      fail("OperatonScript should be accepted as a child element of OperatonInputParameter. Error: " + e.getMessage());
-    }
+    }, "OperatonScript should be accepted as a child element of OperatonInputParameter. Error: ");
   }
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
   void testInputParameterListChildAssignment() {
-    try {
+    assertDoesNotThrow(() -> {
       OperatonInputParameter inputParamElement = modelInstance.newInstance(OperatonInputParameter.class);
       inputParamElement.setOperatonName("aVariable");
 
       OperatonList listElement = modelInstance.newInstance(OperatonList.class);
 
       inputParamElement.addChildElement(listElement);
-    } catch (Exception e) {
-      fail("OperatonList should be accepted as a child element of OperatonInputParameter. Error: " + e.getMessage());
-    }
+    }, "OperatonList should be accepted as a child element of OperatonInputParameter. Error: ");
   }
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
   void testInputParameterMapChildAssignment() {
-    try {
+    assertDoesNotThrow(() -> {
       OperatonInputParameter inputParamElement = modelInstance.newInstance(OperatonInputParameter.class);
       inputParamElement.setOperatonName("aVariable");
 
       OperatonMap listElement = modelInstance.newInstance(OperatonMap.class);
 
       inputParamElement.addChildElement(listElement);
-    } catch (Exception e) {
-      fail("OperatonMap should be accepted as a child element of OperatonInputParameter. Error: " + e.getMessage());
-    }
+    }, "OperatonMap should be accepted as a child element of OperatonInputParameter. Error: ");
   }
 }

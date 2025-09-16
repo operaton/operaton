@@ -70,11 +70,27 @@ recipeList:
   - org.openrewrite.java.testing.assertj.SimplifyChainedAssertJAssertions
   - org.openrewrite.java.testing.assertj.SimplifyAssertJAssertion
   - org.openrewrite.java.testing.cleanup.AssertionsArgumentOrder
-  - org.openrewrite.java.testing.cleanup.SimplifyTestThrows
-  - org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic
   - org.openrewrite.java.testing.mockito.SimplifyMockitoVerifyWhenGiven
   - org.openrewrite.java.testing.assertj.StaticImports
+  # JUnit Jupiter best practices - org.openrewrite.java.testing.junit5.JUnit5BestPractices
+  #- org.openrewrite.java.testing.junit5.JUnit4to5Migration
+  #- org.openrewrite.java.testing.hamcrest.MigrateHamcrestToJUnit5
+  - org.openrewrite.java.testing.junit5.StaticImports
+  - org.openrewrite.java.testing.junit5.CleanupAssertions
   - org.openrewrite.java.testing.junit5.CsvSourceToValueSource
+  - org.openrewrite.java.testing.cleanup.AssertLiteralBooleanToFailRecipes
+  - org.openrewrite.java.testing.cleanup.AssertLiteralBooleanRemovedRecipe
+  #- org.openrewrite.java.testing.cleanup.RemoveTestPrefix
+  - org.openrewrite.java.testing.cleanup.SimplifyTestThrows
+  - org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic
+  - org.openrewrite.java.testing.cleanup.TestMethodsShouldBeVoid
+  - org.openrewrite.java.testing.junit5.AddParameterizedTestAnnotation
+  - org.openrewrite.java.testing.junit5.RemoveDuplicateTestTemplates
+  - org.openrewrite.java.testing.junit5.RemoveTryCatchFailBlocks
+  - org.openrewrite.java.testing.junit5.LifecycleNonPrivate
+  - org.openrewrite.java.testing.junit5.AssertThrowsOnLastStatement
+  - org.openrewrite.java.testing.junit5.AssertTrueInstanceofToAssertInstanceOf
+  - org.openrewrite.java.testing.junit5.UseAssertSame
   # Logging
   - org.openrewrite.java.logging.slf4j.ParameterizedLogging
   - org.operaton.AddLicenseHeader

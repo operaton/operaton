@@ -23,7 +23,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -43,6 +42,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -122,7 +122,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
 
     String content = response.asString();
     List<Map<String, Object>> reportResults = from(content).getList("");
-    Assertions.assertEquals(2, reportResults.size(), "There should be two report results returned.");
+    assertEquals(2, reportResults.size(), "There should be two report results returned.");
     assertThat(reportResults.get(0)).isNotNull();
 
     String returnedBatchType = from(content).getString("[0].batchType");
@@ -130,10 +130,10 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
     long returnedFinishedCount= from(content).getLong("[0].finishedBatchesCount");
     long returnedCleanableCount = from(content).getLong("[0].cleanableBatchesCount");
 
-    Assertions.assertEquals(EXAMPLE_TYPE, returnedBatchType);
-    Assertions.assertEquals(EXAMPLE_TTL, returnedTTL);
-    Assertions.assertEquals(EXAMPLE_FINISHED_COUNT, returnedFinishedCount);
-    Assertions.assertEquals(EXAMPLE_CLEANABLE_COUNT, returnedCleanableCount);
+    assertEquals(EXAMPLE_TYPE, returnedBatchType);
+    assertEquals(EXAMPLE_TTL, returnedTTL);
+    assertEquals(EXAMPLE_FINISHED_COUNT, returnedFinishedCount);
+    assertEquals(EXAMPLE_CLEANABLE_COUNT, returnedCleanableCount);
   }
 
   @Test

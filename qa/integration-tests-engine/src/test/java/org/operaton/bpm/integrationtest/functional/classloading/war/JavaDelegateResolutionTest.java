@@ -21,7 +21,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -32,6 +31,7 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -89,11 +89,11 @@ public class JavaDelegateResolutionTest extends AbstractFoxPlatformIntegrationTe
 
     runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 
-    Assertions.assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
+    assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assertions.assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
+    assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveClassFromJobExecutor").count());
 
   }
 

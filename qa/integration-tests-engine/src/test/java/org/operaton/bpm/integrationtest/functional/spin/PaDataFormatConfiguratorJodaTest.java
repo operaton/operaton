@@ -25,7 +25,6 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -39,6 +38,8 @@ import org.operaton.bpm.integrationtest.functional.spin.dataformat.JodaJsonSeria
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Thorben Lindhauer
@@ -93,7 +94,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);
     JsonNode expectedJsonTree = objectMapper.readTree(expectedSerializedValue);
     // JsonNode#equals makes a deep comparison
-    Assertions.assertEquals(expectedJsonTree, actualJsonTree);
+    assertEquals(expectedJsonTree, actualJsonTree);
   }
 
 }

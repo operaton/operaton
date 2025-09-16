@@ -23,7 +23,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -33,6 +32,7 @@ import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -65,14 +65,14 @@ public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegratio
     // check if the new applications are deployed with allowed names
     processApplicationNames.retainAll(Arrays.asList("test1", "test2", "/test1", "/test2"));
 
-    Assertions.assertEquals(2, processApplicationNames.size());
+    assertEquals(2, processApplicationNames.size());
 
     for (String appName : processApplicationNames) {
       ProcessApplicationInfo processApplicationInfo = processApplicationService.getProcessApplicationInfo(appName);
 
       assertThat(processApplicationInfo).isNotNull();
       assertThat(processApplicationInfo.getName()).isNotNull();
-      Assertions.assertEquals(1, processApplicationInfo.getDeploymentInfo().size());
+      assertEquals(1, processApplicationInfo.getDeploymentInfo().size());
     }
 
   }

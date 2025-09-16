@@ -35,7 +35,6 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -586,7 +585,7 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded users:
     List<Map<String,Object>> embeddedUsers = from(content).getList("_embedded.user");
-    Assertions.assertEquals(2, embeddedUsers.size(), "There should be two users returned.");
+    assertEquals(2, embeddedUsers.size(), "There should be two users returned.");
 
     Map<String, Object> embeddedUser = embeddedUsers.get(0);
     assertThat(embeddedUser).as("The returned user should not be null.").isNotNull();
@@ -612,7 +611,7 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded groups:
     List<Map<String, Object>> embeddedGroups = from(content).getList("_embedded.group");
-    Assertions.assertEquals(2, embeddedGroups.size(), "There should be two groups returned.");
+    assertEquals(2, embeddedGroups.size(), "There should be two groups returned.");
 
     Map<String, Object> embeddedGroup = embeddedGroups.get(0);
     assertThat(embeddedGroup).as("The returned group should not be null.").isNotNull();
@@ -636,24 +635,24 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded processDefinitions:
     List<Map<String,Object>> embeddedDefinitions = from(content).getList("_embedded.processDefinition");
-    Assertions.assertEquals(1, embeddedDefinitions.size(), "There should be one processDefinition returned.");
+    assertEquals(1, embeddedDefinitions.size(), "There should be one processDefinition returned.");
     Map<String, Object> embeddedProcessDefinition = embeddedDefinitions.get(0);
     assertThat(embeddedProcessDefinition).as("The returned processDefinition should not be null.").isNotNull();
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, embeddedProcessDefinition.get("id"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, embeddedProcessDefinition.get("key"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY, embeddedProcessDefinition.get("category"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME, embeddedProcessDefinition.get("name"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION, embeddedProcessDefinition.get("description"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION, embeddedProcessDefinition.get("version"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_VERSION_TAG, embeddedProcessDefinition.get("versionTag"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME, embeddedProcessDefinition.get("resource"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, embeddedProcessDefinition.get("deploymentId"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME, embeddedProcessDefinition.get("diagram"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED, embeddedProcessDefinition.get("suspended"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH, embeddedProcessDefinition.get("contextPath"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, embeddedProcessDefinition.get("id"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, embeddedProcessDefinition.get("key"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY, embeddedProcessDefinition.get("category"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME, embeddedProcessDefinition.get("name"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION, embeddedProcessDefinition.get("description"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION, embeddedProcessDefinition.get("version"));
+    assertEquals(MockProvider.EXAMPLE_VERSION_TAG, embeddedProcessDefinition.get("versionTag"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME, embeddedProcessDefinition.get("resource"));
+    assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, embeddedProcessDefinition.get("deploymentId"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME, embeddedProcessDefinition.get("diagram"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED, embeddedProcessDefinition.get("suspended"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH, embeddedProcessDefinition.get("contextPath"));
 
     links = (Map<String, Object>) embeddedProcessDefinition.get("_links");
-    Assertions.assertEquals(3, links.size());
+    assertEquals(3, links.size());
     assertHalLink(links, "self", "/process-definition/" +  MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
     assertHalLink(links, "deployment", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID);
     assertHalLink(links, "resource", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID + "/resources/"
@@ -662,20 +661,20 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded caseDefinitions:
     List<Map<String,Object>> embeddedCaseDefinitions = from(content).getList("_embedded.caseDefinition");
-    Assertions.assertEquals(1, embeddedCaseDefinitions.size(), "There should be one caseDefinition returned.");
+    assertEquals(1, embeddedCaseDefinitions.size(), "There should be one caseDefinition returned.");
     Map<String, Object> embeddedCaseDefinition = embeddedCaseDefinitions.get(0);
     assertThat(embeddedCaseDefinition).as("The returned caseDefinition should not be null.").isNotNull();
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_ID, embeddedCaseDefinition.get("id"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_KEY, embeddedCaseDefinition.get("key"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_CATEGORY, embeddedCaseDefinition.get("category"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_NAME, embeddedCaseDefinition.get("name"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_VERSION, embeddedCaseDefinition.get("version"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_RESOURCE_NAME, embeddedCaseDefinition.get("resource"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, embeddedCaseDefinition.get("deploymentId"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH, embeddedCaseDefinition.get("contextPath"));
+    assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_ID, embeddedCaseDefinition.get("id"));
+    assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_KEY, embeddedCaseDefinition.get("key"));
+    assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_CATEGORY, embeddedCaseDefinition.get("category"));
+    assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_NAME, embeddedCaseDefinition.get("name"));
+    assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_VERSION, embeddedCaseDefinition.get("version"));
+    assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_RESOURCE_NAME, embeddedCaseDefinition.get("resource"));
+    assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, embeddedCaseDefinition.get("deploymentId"));
+    assertEquals(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH, embeddedCaseDefinition.get("contextPath"));
 
     links = (Map<String, Object>) embeddedCaseDefinition.get("_links");
-    Assertions.assertEquals(3, links.size());
+    assertEquals(3, links.size());
     assertHalLink(links, "self", "/case-definition/" +  MockProvider.EXAMPLE_CASE_DEFINITION_ID);
     assertHalLink(links, "deployment", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID);
     assertHalLink(links, "resource", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID + "/resources/"
@@ -697,7 +696,7 @@ public class TaskRestServiceInteractionTest extends
     assertThat(linkObject).isNotNull();
 
     String actualLink = (String) linkObject.get("href");
-    Assertions.assertEquals(expectedLink, actualLink);
+    assertEquals(expectedLink, actualLink);
   }
 
   @SuppressWarnings("unchecked")

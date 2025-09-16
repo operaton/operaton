@@ -21,7 +21,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -32,6 +31,7 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Roman Smirnov
@@ -90,14 +90,14 @@ public class RedeployCaseClassloadingTest extends AbstractFoxPlatformIntegration
         .caseInstanceIdIn(caseInstanceId);
 
     assertThat(query.singleResult()).isNotNull();
-    Assertions.assertEquals("listener-notified", query.singleResult().getValue());
+    assertEquals("listener-notified", query.singleResult().getValue());
 
     caseService
       .withCaseExecution(caseInstanceId)
       .removeVariable("listener")
       .execute();
 
-    Assertions.assertEquals(0, query.count());
+    assertEquals(0, query.count());
 
     // when (2)
     caseService
@@ -106,7 +106,7 @@ public class RedeployCaseClassloadingTest extends AbstractFoxPlatformIntegration
 
     // then (2)
     assertThat(query.singleResult()).isNotNull();
-    Assertions.assertEquals("listener-notified", query.singleResult().getValue());
+    assertEquals("listener-notified", query.singleResult().getValue());
 
     repositoryService.deleteDeployment(deployment2.getId(), true, true);
   }

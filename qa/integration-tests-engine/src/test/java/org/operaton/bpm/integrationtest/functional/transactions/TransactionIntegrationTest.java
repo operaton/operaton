@@ -22,7 +22,6 @@ import jakarta.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -33,6 +32,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -83,7 +83,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       }
 
       // assert that now our transaction is marked rollback-only:
-      Assertions.assertEquals(Status.STATUS_MARKED_ROLLBACK, utx.getStatus());
+      assertEquals(Status.STATUS_MARKED_ROLLBACK, utx.getStatus());
 
     } finally {
       // make sure we always rollback
@@ -105,7 +105,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       String id = runtimeService.startProcessInstanceByKey("testApplicationFailure").getId();
 
       // assert that the transaction is in good shape:
-      Assertions.assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
+      assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
 
       // now rollback the transaction (simmulating an application failure after the process engine is done).
       utx.rollback();
@@ -136,7 +136,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       String id = runtimeService.startProcessInstanceByKey("testTxSuccess").getId();
 
       // assert that the transaction is in good shape:
-      Assertions.assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
+      assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
 
       // the process instance is visible form our tx:
       ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()

@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -47,7 +46,7 @@ import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME;
@@ -3226,7 +3225,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     identityService.setAuthenticatedUserId("foo");
 
-    Assertions.assertDoesNotThrow(() -> {
+    assertDoesNotThrow(() -> {
       // when
       resource.queryProcessInstances(new ProcessInstanceQueryDto(), 0, 10);
       // then: no exception expected
@@ -3238,7 +3237,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
-    Assertions.assertDoesNotThrow(() -> {
+    assertDoesNotThrow(() -> {
       // when
       resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
       // then: no exception expected
@@ -3250,7 +3249,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     // given
     identityService.setAuthenticatedUserId("foo");
 
-    Assertions.assertDoesNotThrow(() -> {
+    assertDoesNotThrow(() -> {
       // when
       resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
       // then: no exception expected

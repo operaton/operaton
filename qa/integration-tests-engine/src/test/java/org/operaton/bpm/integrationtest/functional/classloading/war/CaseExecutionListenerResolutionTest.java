@@ -21,7 +21,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -33,6 +32,7 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Roman Smirnov
@@ -88,14 +88,14 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
         .caseInstanceIdIn(caseInstanceId);
 
     assertThat(query.singleResult()).isNotNull();
-    Assertions.assertEquals("listener-notified", query.singleResult().getValue());
+    assertEquals("listener-notified", query.singleResult().getValue());
 
     caseService
       .withCaseExecution(caseInstanceId)
       .removeVariable("listener")
       .execute();
 
-    Assertions.assertEquals(0, query.count());
+    assertEquals(0, query.count());
 
     // the delegate expression listener should execute successfully
     caseService
@@ -103,7 +103,7 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
       .complete();
 
     assertThat(query.singleResult()).isNotNull();
-    Assertions.assertEquals("listener-notified", query.singleResult().getValue());
+    assertEquals("listener-notified", query.singleResult().getValue());
 
   }
 

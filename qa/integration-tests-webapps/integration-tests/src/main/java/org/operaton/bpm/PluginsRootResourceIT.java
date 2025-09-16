@@ -72,7 +72,7 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
       assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
     } else {
       assertThat(response.getStatus()).isEqualTo(FORBIDDEN.getStatusCode());
-      assertThat(response.getHeaders().getFirst("Content-Type").startsWith("application/json")).isTrue();
+      assertThat(response.getHeaders().getFirst("Content-Type")).startsWith("application/json");
       String responseEntity = response.getBody();
       assertThat(responseEntity)
               .contains("\"type\":\"RestException\"")

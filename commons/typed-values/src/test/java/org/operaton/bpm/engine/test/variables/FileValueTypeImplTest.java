@@ -39,7 +39,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Ronny Bräunlich
@@ -118,7 +118,7 @@ class FileValueTypeImplTest {
   void createValueFromObject() {
     Object value = new Object();
     Map<String, Object> valueInfo = Collections.singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt");
-    assertThrows(IllegalArgumentException.class, () -> type.createValue(value, valueInfo));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> type.createValue(value, valueInfo));
   }
 
   @Test

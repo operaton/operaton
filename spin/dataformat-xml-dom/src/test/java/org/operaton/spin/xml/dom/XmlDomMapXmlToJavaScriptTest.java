@@ -26,7 +26,7 @@ import org.operaton.spin.xml.mapping.Order;
 
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML_FILE_NAME;
 import static org.operaton.spin.xml.XmlTestConstants.assertIsExampleOrder;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Stefan Hentschel.
@@ -45,7 +45,7 @@ public abstract class XmlDomMapXmlToJavaScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_VALIDATION_XML_FILE_NAME)
   public void shouldFailMappingMalformedTypeString() {
-    assertThrows(SpinXmlDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinXmlDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
 }

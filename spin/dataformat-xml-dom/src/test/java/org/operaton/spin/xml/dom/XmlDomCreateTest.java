@@ -31,7 +31,7 @@ import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.impl.util.SpinIoUtil.stringAsReader;
 import static org.operaton.spin.xml.XmlTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Daniel Meyer
@@ -84,38 +84,38 @@ class XmlDomCreateTest {
   void shouldFailForNull() {
     SpinXmlElement xmlTreeElement = null;
 
-    assertThrows(IllegalArgumentException.class, () -> XML(xmlTreeElement));
-    assertThrows(IllegalArgumentException.class, () -> S(xmlTreeElement, xmlDataFormat));
-    assertThrows(IllegalArgumentException.class, () -> S(xmlTreeElement));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> XML(xmlTreeElement));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> S(xmlTreeElement, xmlDataFormat));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> S(xmlTreeElement));
 
     Reader reader = null;
 
-    assertThrows(IllegalArgumentException.class, () -> XML(reader));
-    assertThrows(IllegalArgumentException.class, () -> S(reader, xmlDataFormat));
-    assertThrows(IllegalArgumentException.class, () -> S(reader));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> XML(reader));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> S(reader, xmlDataFormat));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> S(reader));
 
     String inputString = null;
 
-    assertThrows(IllegalArgumentException.class, () -> XML(inputString));
-    assertThrows(IllegalArgumentException.class, () -> S(inputString, xmlDataFormat));
-    assertThrows(IllegalArgumentException.class, () -> S(inputString, DataFormats.XML_DATAFORMAT_NAME));
-    assertThrows(IllegalArgumentException.class, () -> S(inputString));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> XML(inputString));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> S(inputString, xmlDataFormat));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> S(inputString, DataFormats.XML_DATAFORMAT_NAME));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> S(inputString));
   }
 
   @Test
   void shouldFailForInvalidxmlDataFormat () {
-    assertThrows(SpinDataFormatException.class, () -> XML(EXAMPLE_INVALID_XML));
-    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML, xmlDataFormat));
-    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML, DataFormats.XML_DATAFORMAT_NAME));
-    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> XML(EXAMPLE_INVALID_XML));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> S(EXAMPLE_INVALID_XML, xmlDataFormat));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> S(EXAMPLE_INVALID_XML, DataFormats.XML_DATAFORMAT_NAME));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> S(EXAMPLE_INVALID_XML));
   }
 
   @Test
   void shouldFailForEmptyString() {
-    assertThrows(SpinDataFormatException.class, () -> XML(EXAMPLE_EMPTY_STRING));
-    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING, xmlDataFormat));
-    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING, DataFormats.XML_DATAFORMAT_NAME));
-    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> XML(EXAMPLE_EMPTY_STRING));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> S(EXAMPLE_EMPTY_STRING, xmlDataFormat));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> S(EXAMPLE_EMPTY_STRING, DataFormats.XML_DATAFORMAT_NAME));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> S(EXAMPLE_EMPTY_STRING));
   }
 
   @Test
@@ -123,8 +123,8 @@ class XmlDomCreateTest {
     var reader1 = stringAsReader(EXAMPLE_EMPTY_STRING);
     var reader2 = stringAsReader(EXAMPLE_EMPTY_STRING);
     var reader3 = stringAsReader(EXAMPLE_EMPTY_STRING);
-    assertThrows(SpinDataFormatException.class, () -> XML(reader1));
-    assertThrows(SpinDataFormatException.class, () -> S(reader2, xmlDataFormat));
-    assertThrows(SpinDataFormatException.class, () -> S(reader3));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> XML(reader1));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> S(reader2, xmlDataFormat));
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> S(reader3));
   }
 }

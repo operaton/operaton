@@ -30,7 +30,7 @@ import org.operaton.spin.json.SpinJsonPathQuery;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * Author: Stefan Hentschel
@@ -131,47 +131,47 @@ class JsonTreeJsonPathTest {
   @ParameterizedTest
   @ValueSource(strings = { "$.....", ""})
   void failReadingJsonPath(String path) {
-    assertThrows(SpinJsonPathException.class, () -> jsonNode.jsonPath(path));
+    assertThatExceptionOfType(SpinJsonPathException.class).isThrownBy(() -> jsonNode.jsonPath(path));
   }
 
   @Test
   void failAccessNonExistentProperty() {
     SpinJsonPathQuery pathQuery = jsonNode.jsonPath("$.order.test");
-    assertThrows(SpinJsonPathException.class, pathQuery::element);
+    assertThatExceptionOfType(SpinJsonPathException.class).isThrownBy(pathQuery::element);
   }
 
   @ParameterizedTest
   @ValueSource(strings = { "$.order" , "$.id", "$.active", "$" })
   void failReadingElementList(String path) {
     var pathQuery = jsonNode.jsonPath(path);
-    assertThrows(SpinJsonDataFormatException.class, pathQuery::elementList);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(pathQuery::elementList);
   }
 
   @ParameterizedTest
   @ValueSource(strings = { "$.customers", "$.active", "$.id", "$" })
   void failReadingStringProperty(String path) {
     var pathQuery = jsonNode.jsonPath(path);
-    assertThrows(SpinJsonDataFormatException.class, pathQuery::stringValue);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(pathQuery::stringValue);
   }
 
   @ParameterizedTest
   @ValueSource(strings = { "$.customers", "$.active", "$.order", "$" })
   void failReadingNumberProperty(String path) {
     var pathQuery = jsonNode.jsonPath(path);
-    assertThrows(SpinJsonDataFormatException.class, pathQuery::numberValue);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(pathQuery::numberValue);
   }
 
   @ParameterizedTest
   @ValueSource(strings = { "$.customers", "$.id", "$.order", "$" })
   void failReadingBooleanProperty(String path) {
     var pathQuery = jsonNode.jsonPath(path);
-    assertThrows(SpinJsonDataFormatException.class, pathQuery::boolValue);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(pathQuery::boolValue);
   }
 
   @Test
   void failOnNonExistingJsonPath() {
     SpinJsonNode json = JSON("{\"a\": {\"id\": \"a\"}, \"b\": {\"id\": \"b\"}}");
     SpinJsonPathQuery pathQuery = json.jsonPath("$.c?(@.id)");
-    assertThrows(SpinJsonPathException.class, pathQuery::element);
+    assertThatExceptionOfType(SpinJsonPathException.class).isThrownBy(pathQuery::element);
   }
 }

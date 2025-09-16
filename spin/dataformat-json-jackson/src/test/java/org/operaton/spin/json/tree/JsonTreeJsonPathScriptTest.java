@@ -28,7 +28,7 @@ import org.operaton.spin.json.SpinJsonPathException;
 
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Thorben Lindhauer
@@ -136,42 +136,42 @@ public abstract class JsonTreeJsonPathScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailReadingJsonPath(){
-    assertThrows(SpinJsonPathException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonPathException.class).isThrownBy(this::failingWithException);
   }
 
   @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailAccessNonExistentProperty(){
-    assertThrows(SpinJsonPathException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonPathException.class).isThrownBy(this::failingWithException);
   }
 
   @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailReadingElementList(){
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailReadingString(){
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailReadingNumber(){
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailReadingBoolean(){
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 }
 

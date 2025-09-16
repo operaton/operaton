@@ -33,7 +33,7 @@ import org.operaton.spin.json.mapping.RegularCustomer;
 
 import static org.operaton.spin.json.JsonTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
 
@@ -57,7 +57,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
   @ScriptVariable(name = "input", file=EXAMPLE_JSON_FILE_NAME)
   public void shouldFailMappingToMismatchingClass() {
     Map<String, Object> variables = newMap("mapToType", RegularCustomer.class);
-    assertThrows(SpinJsonException.class, () ->
+    assertThatExceptionOfType(SpinJsonException.class).isThrownBy(() ->
       failingWithException(variables));
   }
 
@@ -100,7 +100,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     execute = false
   )
   public void shouldFailForMalformedTypeString() {
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   protected Map<String, Object> newMap(String key, Object value) {

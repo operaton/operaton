@@ -30,7 +30,7 @@ import org.operaton.spin.json.SpinJsonPropertyException;
 
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Thorben Lindhauer
@@ -245,7 +245,7 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
   public void shouldFailWhileSettingObject() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("date", new Date());
-    assertThrows(SpinJsonPropertyException.class, () -> failingWithException(variables));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> failingWithException(variables));
   }
 
   @Test
@@ -254,7 +254,7 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
   public void shouldFailWhileSettingArray() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("date", new String[] { "a", "b", "c" });
-    assertThrows(SpinJsonPropertyException.class, () -> failingWithException(variables));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> failingWithException(variables));
   }
 
 }

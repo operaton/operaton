@@ -102,6 +102,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(idAttribute).hasValue(tweety, identifier);
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testSetDefaultValue(TestModelArgs args) {
     init(args);
@@ -122,6 +123,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(nameAttribute).hasNoDefaultValue();
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testRequired(TestModelArgs args) {
     init(args);
@@ -134,6 +136,7 @@ public class AttributeTest extends TestModelTest {
     ((AttributeImpl<String>) nameAttribute).setRequired(false);
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testSetNamespaceUri(TestModelArgs args) {
     init(args);
@@ -146,6 +149,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(idAttribute).hasNoNamespaceUri();
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testIdAttribute(TestModelArgs args) {
     init(args);
@@ -154,6 +158,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(fatherAttribute).isNotIdAttribute();
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testAttributeName(TestModelArgs args) {
     init(args);
@@ -162,6 +167,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(fatherAttribute).hasAttributeName("father");
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testRemoveAttribute(TestModelArgs args) {
     init(args);
@@ -174,6 +180,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(nameAttribute).hasNoValue(tweety);
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testIncomingReferences(TestModelArgs args) {
     init(args);
@@ -182,6 +189,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(fatherAttribute).hasNoIncomingReferences();
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testOutgoingReferences(TestModelArgs args) {
     init(args);

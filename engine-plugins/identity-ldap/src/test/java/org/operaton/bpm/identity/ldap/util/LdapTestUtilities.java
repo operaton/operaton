@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 /**
@@ -37,9 +36,9 @@ public final class LdapTestUtilities {
 
   public static void checkPagingResults(Set<String> results, String result1, String result2) {
     assertNotSame(result1, result2);
-    assertFalse(results.contains(result1));
+    assertThat(results).doesNotContain(result1);
     results.add(result1);
-    assertFalse(results.contains(result2));
+    assertThat(results).doesNotContain(result2);
     results.add(result2);
   }
 
@@ -55,7 +54,7 @@ public final class LdapTestUtilities {
 
     groups = identityService.createGroupQuery().listPage(4, 2);
     assertThat(groups).hasSize(2);
-    assertFalse(groupNames.contains(groups.get(0).getId()));
+    assertThat(groupNames).doesNotContain(groups.get(0).getId());
     groupNames.add(groups.get(0).getId());
 
     groups = identityService.createGroupQuery().listPage(6, 2);
@@ -101,7 +100,7 @@ public final class LdapTestUtilities {
 
     users = identityService.createUserQuery().memberOfGroup("all").listPage(11, 2);
     assertThat(users).hasSize(1);
-    assertFalse(userNames.contains(users.get(0).getId()));
+    assertThat(userNames).doesNotContain(users.get(0).getId());
 
     users = identityService.createUserQuery().memberOfGroup("all").listPage(12, 2);
     assertThat(users).hasSize(0);

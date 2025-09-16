@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * @author Thorben Lindhauer
@@ -61,7 +60,7 @@ class FallbackSerializationTest {
             .hasMessageContaining("Fallback serializer cannot handle deserialized objects");
 
     ObjectValue returnedValue = runtimeService.getVariableTyped(processInstanceId, "var", false);
-    assertFalse(returnedValue.isDeserialized());
+    assertThat(returnedValue.isDeserialized()).isFalse();
     assertThat(returnedValue.getSerializationDataFormat()).isEqualTo("application/foo");
     assertThat(returnedValue.getValueSerialized()).isEqualTo("foo");
     assertThat(returnedValue.getObjectTypeName()).isEqualTo("org.operaton.Foo");

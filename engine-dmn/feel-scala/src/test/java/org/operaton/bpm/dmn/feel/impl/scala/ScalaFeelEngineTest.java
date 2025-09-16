@@ -76,7 +76,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
     boolean lessThan250Result = engine.evaluateSimpleUnaryTests("< 250", "cellInput", variableCtx);
-    assertFalse(lessThan250Result);
+    assertThat(lessThan250Result).isFalse();
   }
 
   @Test
@@ -92,7 +92,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
     boolean moreThan1000Result = engine.evaluateSimpleUnaryTests("> 1000", "cellInput", variableCtx);
-    assertFalse(moreThan1000Result);
+    assertThat(moreThan1000Result).isFalse();
   }
 
   @Test
@@ -108,14 +108,14 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", "Travel Expenses").asVariableContext();
 
     boolean isMiscResult = engine.evaluateSimpleUnaryTests("\"Misc\"", "cellInput", variableCtx);
-    assertFalse(isMiscResult);
+    assertThat(isMiscResult).isFalse();
 
     boolean isTravelExpensesResult = engine.evaluateSimpleUnaryTests("\"Travel Expenses\"", "cellInput", variableCtx);
     assertTrue(isTravelExpensesResult);
 
     boolean isSoftwareLicenseResult = engine.evaluateSimpleUnaryTests("\"Software License Costs\"", "cellInput",
       variableCtx);
-    assertFalse(isSoftwareLicenseResult);
+    assertThat(isSoftwareLicenseResult).isFalse();
   }
 
   @Test
@@ -134,7 +134,7 @@ class ScalaFeelEngineTest {
 
     boolean multiCategoryResult = engine.evaluateSimpleUnaryTests("\"budget\", \"exceptional\"", "cellInput",
       variableCtx);
-    assertFalse(multiCategoryResult);
+    assertThat(multiCategoryResult).isFalse();
   }
 
   @Test
@@ -181,13 +181,13 @@ class ScalaFeelEngineTest {
   void shouldEvaluateComparisonWithInputName() {
     boolean result = engine.evaluateSimpleUnaryTests("< 5", "number",
       Variables.putValue("number", 6).asVariableContext());
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
   void shouldEvaluateComparisonWithInputNameAndEmptyContext() {
     boolean result = engine.evaluateSimpleUnaryTests("8 < 5", null, Variables.emptyVariableContext());
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -225,7 +225,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("\"budget\", \"exceptional\"", "cellInput", variableCtx);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -237,10 +237,10 @@ class ScalaFeelEngineTest {
     assertTrue(result);
 
     result = engine.evaluateSimpleUnaryTests("< 250", "cellInput", variableCtx);
-    assertFalse(result);
+    assertThat(result).isFalse();
 
     result = engine.evaluateSimpleUnaryTests("> 1000", "cellInput", variableCtx);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -264,14 +264,14 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", "Travel Expenses").asVariableContext();
 
     boolean isMiscResult = engine.evaluateSimpleUnaryTests("\"Misc\"", "cellInput", variableCtx);
-    assertFalse(isMiscResult);
+    assertThat(isMiscResult).isFalse();
 
     boolean isTravelExpensesResult = engine.evaluateSimpleUnaryTests("\"Travel Expenses\"", "cellInput", variableCtx);
     assertTrue(isTravelExpensesResult);
 
     boolean isSoftwareLicenseCostsResult = engine.evaluateSimpleUnaryTests("\"Software License Costs\"", "cellInput",
       variableCtx);
-    assertFalse(isSoftwareLicenseCostsResult);
+    assertThat(isSoftwareLicenseCostsResult).isFalse();
   }
 
   @Test
@@ -391,7 +391,7 @@ class ScalaFeelEngineTest {
     assertTrue(result);
 
     result = engine.evaluateSimpleUnaryTests("<50, >100", "cellInput", variableCtx);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -462,7 +462,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", "notANumber").asVariableContext();
 
     // Tests non-numeric input for numeric unary tests
-    assertFalse(engine.evaluateSimpleUnaryTests("[1..100]", "cellInput", variableCtx));
+    assertThat(engine.evaluateSimpleUnaryTests("[1..100]", "cellInput", variableCtx)).isFalse();
   }
 
   @Test
@@ -513,7 +513,7 @@ class ScalaFeelEngineTest {
 
     boolean result = engine.evaluateSimpleUnaryTests("<= date and time(\"2019-09-12T13:00:00@Europe/Berlin\")",
       "dateInput", emptyContext);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -525,7 +525,7 @@ class ScalaFeelEngineTest {
 
     boolean result = engine.evaluateSimpleUnaryTests("<= date and time(\"2019-09-12T13:00:00@Europe/Berlin\")",
       "dateInput", emptyContext);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
 }

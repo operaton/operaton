@@ -3,8 +3,6 @@ name: First-time Contributor Check
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
-  issue_comment:
-    types: [created, edited]
 
 permissions:
   pull-requests: write
@@ -20,6 +18,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const fs = require('fs');
+            const path = require('path');
+            
             const author = context.actor;
             const { owner, repo } = context.repo;
             
@@ -46,19 +47,12 @@ jobs:
                 console.log('This is the first PR. Posting a welcome comment.');
               }
             
-              const prMessage = `
-              ### Hey @${author}! 🎉
-            
-              Thanks for opening your first pull request. We really appreciate it.
-            
-              👉 Please confirm by writing this comment that your contribution and following ones comply with the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) and the [Code of Conduct](https://github.com/operaton/operaton/blob/main/CODE_OF_CONDUCT.md):
-              \`\`\`
-              I confirm that my contribution and following ones comply with the Apache License 2.0 and the Code of Conduct.
-              \`\`\`
-              Consider adding a star ⭐️ to the [repository](https://github.com/operaton/operaton) if you like it, we appreciate that.
-            
-              Contributors will be added to the release notes of the next release.
-              `;
+            let prMessage = fs.readFileSync(
+                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/pr_welcome.md'),
+                'utf8'
+              );
+                
+            prMessage = prMessage.replace(/\{\{author\}\}/g, author);
 
               await github.rest.issues.createComment({
                 owner: owner,

@@ -52,6 +52,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -638,7 +639,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     String returnedCloseTime = from(content).getString("[0].closeTime");
 
     assertEquals(MockProvider.EXAMPLE_CASE_INSTANCE_ID, returnedCaseInstanceId);
-    assertEquals(null, returnedCloseTime);
+    assertNull(returnedCloseTime);
   }
 
   @Test
@@ -672,7 +673,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     String returnedCloseTime = from(content).getString("[0].closeTime");
 
     assertEquals(MockProvider.EXAMPLE_CASE_INSTANCE_ID, returnedCaseInstanceId);
-    assertEquals(null, returnedCloseTime);
+    assertNull(returnedCloseTime);
   }
 
   @Test

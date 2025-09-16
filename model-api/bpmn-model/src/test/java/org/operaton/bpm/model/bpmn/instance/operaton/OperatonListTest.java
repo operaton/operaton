@@ -23,8 +23,8 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class OperatonListTest extends BpmnModelElementInstanceTest {
 

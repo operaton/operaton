@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * The test is copied from the engine to check how JSON serialization will behave with DMN result object.
@@ -90,9 +89,9 @@ class DmnBusinessRuleTaskResultMappingTest {
     ProcessInstance processInstance = startTestProcess("single entry");
 
     // then the variable should not be available outside the business rule task
-    assertNull(runtimeService.getVariable(processInstance.getId(), "decisionResult"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "decisionResult")).isNull();
     // and should not create an entry in history since it is not persistent
-    assertNull(historyService.createHistoricVariableInstanceQuery().variableName("decisionResult").singleResult());
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("decisionResult").singleResult()).isNull();
   }
 
   protected ProcessInstance startTestProcess(String input) {

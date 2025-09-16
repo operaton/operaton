@@ -122,8 +122,9 @@ class ConnectProcessEnginePluginTest {
 
     // validate input parameter
     Object in = TestConnector.requestParameters.get("in");
-    assertThat(in).isNotNull();
-    assertThat(in).isEqualTo(2 * x);
+    assertThat(in)
+            .isNotNull()
+            .isEqualTo(2 * x);
 
     // validate output parameter
     VariableInstance out = runtimeService.createVariableInstanceQuery().variableName("out").singleResult();

@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 import static org.operaton.bpm.engine.variable.Variables.*;
 import static org.operaton.bpm.engine.variable.type.ValueType.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * @author Philipp Ossler *
@@ -75,7 +74,7 @@ public class PrimitiveValueTest {
     // no type information present
     TypedValue typed = variables.getValueTyped(variableName);
     if (!(typed instanceof NullValueImpl)) {
-      assertNull(typed.getType());
+      assertThat(typed.getType()).isNull();
       assertThat(typed.getValue()).isEqualTo(variables.get(variableName));
     } else {
       assertThat(typed.getType()).isEqualTo(NULL);
@@ -106,14 +105,14 @@ public class PrimitiveValueTest {
     VariableMap variables = createVariables().putValue(variableName, nullValue);
 
     // get return value
-    assertNull(variables.get(variableName));
+    assertThat(variables.get(variableName)).isNull();
 
     // type is not lost
     assertThat(variables.getValueTyped(variableName).getType()).isEqualTo(valueType);
 
     // get wrapper
     Object stringValue = variables.getValueTyped(variableName).getValue();
-    assertNull(stringValue);
+    assertThat(stringValue).isNull();
   }
 
   public void initPrimitiveValueTest(ValueType valueType, Object value, TypedValue typedValue, TypedValue nullValue) {

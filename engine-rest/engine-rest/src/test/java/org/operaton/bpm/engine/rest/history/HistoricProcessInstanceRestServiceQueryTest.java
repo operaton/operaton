@@ -53,7 +53,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.inOrder;
@@ -820,7 +819,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     String returnedEndTime = from(content).getString("[0].endTime");
 
     assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
-    assertNull(returnedEndTime);
+    assertThat(returnedEndTime).isNull();
   }
 
   @Test
@@ -855,7 +854,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     String returnedEndTime = from(content).getString("[0].endTime");
 
     assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
-    assertNull(returnedEndTime);
+    assertThat(returnedEndTime).isNull();
   }
 
   @Test

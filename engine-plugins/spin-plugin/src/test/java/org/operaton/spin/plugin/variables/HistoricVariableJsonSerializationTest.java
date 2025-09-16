@@ -39,7 +39,6 @@ import org.operaton.spin.DataFormats;
 
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ExtendWith(ProcessEngineExtension.class)
 class HistoricVariableJsonSerializationTest {
@@ -72,7 +71,7 @@ class HistoricVariableJsonSerializationTest {
 
       HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
       assertThat(historicVariable.getValue()).isNotNull();
-      assertNull(historicVariable.getErrorMessage());
+      assertThat(historicVariable.getErrorMessage()).isNull();
 
       assertThat(historicVariable.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
       assertThat(historicVariable.getVariableTypeName()).isEqualTo(ValueType.OBJECT.getName());
@@ -98,7 +97,7 @@ class HistoricVariableJsonSerializationTest {
 
       HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
       assertThat(historicVariable.getValue()).isNotNull();
-      assertNull(historicVariable.getErrorMessage());
+      assertThat(historicVariable.getErrorMessage()).isNull();
 
       ObjectValue typedValue = (ObjectValue) historicVariable.getTypedValue();
       assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
@@ -121,7 +120,7 @@ class HistoricVariableJsonSerializationTest {
           historyService.createHistoricDetailQuery().variableUpdates().singleResult();
 
       assertThat(historicUpdate.getValue()).isNotNull();
-      assertNull(historicUpdate.getErrorMessage());
+      assertThat(historicUpdate.getErrorMessage()).isNull();
 
       assertThat(historicUpdate.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
       assertThat(historicUpdate.getVariableTypeName()).isEqualTo(ValueType.OBJECT.getName());

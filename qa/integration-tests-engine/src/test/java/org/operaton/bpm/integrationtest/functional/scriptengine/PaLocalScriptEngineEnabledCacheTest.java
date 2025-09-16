@@ -25,7 +25,7 @@ import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.AbstractScriptEngineFactory;
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.DummyScriptEngineFactory;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -46,7 +46,7 @@ public class PaLocalScriptEngineEnabledCacheTest extends AbstractPaLocalScriptEn
   @Test
   void shouldCacheScriptEngine() {
     AbstractProcessApplication processApplication = (AbstractProcessApplication) getProcessApplication();
-    assertEquals(processApplication.getScriptEngineForName(SCRIPT_FORMAT, true), processApplication.getScriptEngineForName(SCRIPT_FORMAT, true));
+    assertThat(processApplication.getScriptEngineForName(SCRIPT_FORMAT, true)).isEqualTo(processApplication.getScriptEngineForName(SCRIPT_FORMAT, true));
   }
 
 }

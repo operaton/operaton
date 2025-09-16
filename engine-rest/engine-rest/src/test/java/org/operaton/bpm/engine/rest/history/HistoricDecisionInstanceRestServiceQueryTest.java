@@ -53,7 +53,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -235,7 +234,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size());
+    assertThat(instances.size()).isEqualTo(1);
     assertThat(instances.get(0)).isNotNull();
 
     String returnedHistoricDecisionInstanceId = from(content).getString("[0].id");
@@ -321,7 +320,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size());
+    assertThat(instances.size()).isEqualTo(1);
     assertThat(instances.get(0)).isNotNull();
 
     List<Map<String, Object>> returnedInputs = from(content).getList("[0].inputs");
@@ -355,7 +354,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size());
+    assertThat(instances.size()).isEqualTo(1);
     assertThat(instances.get(0)).isNotNull();
 
     List<Map<String, Object>> returnedInputs = from(content).getList("[0].inputs");
@@ -390,7 +389,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size());
+    assertThat(instances.size()).isEqualTo(1);
     assertThat(instances.get(0)).isNotNull();
 
     List<Map<String, Object>> returnedInputs = from(content).getList("[0].inputs");

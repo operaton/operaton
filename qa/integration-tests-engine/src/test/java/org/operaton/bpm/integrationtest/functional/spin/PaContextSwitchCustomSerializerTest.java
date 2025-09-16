@@ -38,8 +38,8 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(ArquillianExtension.class)
 public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformIntegrationTest {
@@ -94,7 +94,7 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
       return null;
     }, "pa4");
 
-    assertEquals(1, historyService.createHistoricActivityInstanceQuery().activityId("exclusiveGateway").finished().count());
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("exclusiveGateway").finished().count()).isEqualTo(1);
 
   }
 

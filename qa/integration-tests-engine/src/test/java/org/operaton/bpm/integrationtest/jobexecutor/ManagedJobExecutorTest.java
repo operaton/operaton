@@ -35,7 +35,7 @@ import org.operaton.bpm.integrationtest.jobexecutor.beans.ManagedJobExecutorBean
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 public class ManagedJobExecutorTest {
@@ -83,13 +83,13 @@ public class ManagedJobExecutorTest {
     try {
       String pid = runtimeService.startProcessInstanceByKey("testBusinessProcessScopedWithJobExecutor").getId();
 
-      assertEquals(1L, managementService.createJobQuery().processInstanceId(pid).count());
+      assertThat(managementService.createJobQuery().processInstanceId(pid).count()).isEqualTo(1L);
 
       executeJobs(pid);
 
-      assertEquals(0L, managementService.createJobQuery().processInstanceId(pid).count());
+      assertThat(managementService.createJobQuery().processInstanceId(pid).count()).isEqualTo(0L);
 
-      assertEquals("bar", runtimeService.createVariableInstanceQuery().processInstanceIdIn(pid).variableName("foo").singleResult().getValue());
+      assertThat(runtimeService.createVariableInstanceQuery().processInstanceIdIn(pid).variableName("foo").singleResult().getValue()).isEqualTo("bar");
     } finally {
       processEngine.getRepositoryService().deleteDeployment(deployment.getId(), true);
     }

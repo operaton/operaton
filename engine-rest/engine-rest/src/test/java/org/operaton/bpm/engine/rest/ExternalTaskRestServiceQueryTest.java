@@ -47,7 +47,6 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -124,7 +123,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one external task returned.");
+    assertThat(instances.size()).as("There should be one external task returned.").isEqualTo(1);
     assertThat(instances.get(0)).as("The returned external task should not be null.").isNotNull();
 
     String activityId = from(content).getString("[0].activityId");
@@ -146,24 +145,24 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     long priority = from(content).getLong("[0].priority");
     String businessKey = from(content).getString("[0].businessKey");
 
-    assertEquals(MockProvider.EXAMPLE_ACTIVITY_ID, activityId);
-    assertEquals(MockProvider.EXAMPLE_ACTIVITY_INSTANCE_ID, activityInstanceId);
-    assertEquals(MockProvider.EXTERNAL_TASK_ERROR_MESSAGE, errorMessage);
-    assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, executionId);
-    assertEquals(MockProvider.EXTERNAL_TASK_ID, id);
-    assertEquals(MockProvider.EXTERNAL_TASK_LOCK_EXPIRATION_TIME, lockExpirationTime);
-    assertEquals(MockProvider.EXTERNAL_TASK_CREATE_TIME, createTime);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, processDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, processDefinitionKey);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION_TAG, processDefinitionVersionTag);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, processInstanceId);
-    assertEquals(MockProvider.EXTERNAL_TASK_RETRIES, retries);
-    assertEquals(MockProvider.EXTERNAL_TASK_SUSPENDED, suspended);
-    assertEquals(MockProvider.EXTERNAL_TASK_TOPIC_NAME, topicName);
-    assertEquals(MockProvider.EXTERNAL_TASK_WORKER_ID, workerId);
-    assertEquals(MockProvider.EXAMPLE_TENANT_ID, tenantId);
-    assertEquals(MockProvider.EXTERNAL_TASK_PRIORITY, priority);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY, businessKey);
+    assertThat(activityId).isEqualTo(MockProvider.EXAMPLE_ACTIVITY_ID);
+    assertThat(activityInstanceId).isEqualTo(MockProvider.EXAMPLE_ACTIVITY_INSTANCE_ID);
+    assertThat(errorMessage).isEqualTo(MockProvider.EXTERNAL_TASK_ERROR_MESSAGE);
+    assertThat(executionId).isEqualTo(MockProvider.EXAMPLE_EXECUTION_ID);
+    assertThat(id).isEqualTo(MockProvider.EXTERNAL_TASK_ID);
+    assertThat(lockExpirationTime).isEqualTo(MockProvider.EXTERNAL_TASK_LOCK_EXPIRATION_TIME);
+    assertThat(createTime).isEqualTo(MockProvider.EXTERNAL_TASK_CREATE_TIME);
+    assertThat(processDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(processDefinitionKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+    assertThat(processDefinitionVersionTag).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION_TAG);
+    assertThat(processInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(retries).isEqualTo(MockProvider.EXTERNAL_TASK_RETRIES);
+    assertThat(suspended).isEqualTo(MockProvider.EXTERNAL_TASK_SUSPENDED);
+    assertThat(topicName).isEqualTo(MockProvider.EXTERNAL_TASK_TOPIC_NAME);
+    assertThat(workerId).isEqualTo(MockProvider.EXTERNAL_TASK_WORKER_ID);
+    assertThat(tenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(priority).isEqualTo(MockProvider.EXTERNAL_TASK_PRIORITY);
+    assertThat(businessKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY);
   }
 
   @Test

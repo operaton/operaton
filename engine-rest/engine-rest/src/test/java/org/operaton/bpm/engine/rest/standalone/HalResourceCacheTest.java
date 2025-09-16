@@ -51,7 +51,6 @@ import static org.operaton.bpm.engine.rest.hal.cache.HalRelationCacheConfigurati
 import static org.operaton.bpm.engine.rest.hal.cache.HalRelationCacheConfiguration.CONFIG_CACHE_IMPLEMENTATION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -79,17 +78,17 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
     assertThat(cache.get(null)).isNull();
     assertThat(cache.get("unknown")).isNull();
-    assertEquals("world", cache.get("hello"));
+    assertThat(cache.get("hello")).isEqualTo("world");
   }
 
   @Test
   void testCacheCapacity() {
-    assertEquals(0, cache.size());
+    assertThat(cache.size()).isEqualTo(0);
 
     cache.put("a", "a");
     cache.put("b", "b");
     cache.put("c", "c");
-    assertEquals(3, cache.size());
+    assertThat(cache.size()).isEqualTo(3);
 
     forwardTime(100);
 
@@ -108,13 +107,13 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
   void testEntryExpiration() {
     cache.put("hello", "world");
 
-    assertEquals("world", cache.get("hello"));
-    assertEquals(1, cache.size());
+    assertThat(cache.get("hello")).isEqualTo("world");
+    assertThat(cache.size()).isEqualTo(1);
 
     forwardTime(cache.getSecondsToLive() + 1);
 
     assertThat(cache.get("hello")).isNull();
-    assertEquals(0, cache.size());
+    assertThat(cache.size()).isEqualTo(0);
   }
 
   @Test
@@ -154,8 +153,8 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
     Cache userCache = Hal.getInstance().getHalRelationCache(HalUser.class);
     assertThat(userCache).isNotNull();
-    assertEquals(123, ((DefaultHalResourceCache) userCache).getCapacity());
-    assertEquals(123, ((DefaultHalResourceCache) userCache).getSecondsToLive());
+    assertThat(((DefaultHalResourceCache) userCache).getCapacity()).isEqualTo(123);
+    assertThat(((DefaultHalResourceCache) userCache).getSecondsToLive()).isEqualTo(123);
   }
 
   @Test
@@ -194,7 +193,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
     // cache exists and is empty
     DefaultHalResourceCache userCache = (DefaultHalResourceCache) Hal.getInstance().getHalRelationCache(HalUser.class);
     assertThat(userCache).isNotNull();
-    assertEquals(0, userCache.size());
+    assertThat(userCache.size()).isEqualTo(0);
 
     // get link resolver and resolve user
     HalLinkResolver linkResolver = Hal.getInstance().getLinkResolver(UserRestService.class);
@@ -202,12 +201,12 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
     // mocked user was resolved
     assertThat(halUsers).isNotNull();
-    assertEquals(1, halUsers.size());
+    assertThat(halUsers.size()).isEqualTo(1);
     HalUser halUser = (HalUser) halUsers.get(0);
-    assertEquals("kermit", halUser.getFirstName());
+    assertThat(halUser.getFirstName()).isEqualTo("kermit");
 
     // cache contains user
-    assertEquals(1, userCache.size());
+    assertThat(userCache.size()).isEqualTo(1);
 
     // change user mock
     when(user.getFirstName()).thenReturn("fritz");
@@ -217,9 +216,9 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
     // cached mocked user was resolved with old name
     assertThat(halUsers).isNotNull();
-    assertEquals(1, halUsers.size());
+    assertThat(halUsers.size()).isEqualTo(1);
     halUser = (HalUser) halUsers.get(0);
-    assertEquals("kermit", halUser.getFirstName());
+    assertThat(halUser.getFirstName()).isEqualTo("kermit");
 
     forwardTime(userCache.getSecondsToLive() * 3);
 
@@ -228,9 +227,9 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
     // new mocked user was resolved with old name
     assertThat(halUsers).isNotNull();
-    assertEquals(1, halUsers.size());
+    assertThat(halUsers.size()).isEqualTo(1);
     halUser = (HalUser) halUsers.get(0);
-    assertEquals("fritz", halUser.getFirstName());
+    assertThat(halUser.getFirstName()).isEqualTo("fritz");
   }
 
   @Test
@@ -256,16 +255,16 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
     // cache exists and is empty
     DefaultHalResourceCache identityLinkCache = (DefaultHalResourceCache) Hal.getInstance().getHalRelationCache(HalIdentityLink.class);
     assertThat(identityLinkCache).isNotNull();
-    assertEquals(0, identityLinkCache.size());
+    assertThat(identityLinkCache.size()).isEqualTo(0);
 
     // get link resolver and resolve identity link
     HalLinkResolver linkResolver = Hal.getInstance().getLinkResolver(IdentityRestService.class);
     List<HalResource<?>> halIdentityLinks = linkResolver.resolveLinks(taskIds, processEngine);
 
-    assertEquals(2, halIdentityLinks.size());
-    assertEquals(1, identityLinkCache.size());
+    assertThat(halIdentityLinks.size()).isEqualTo(2);
+    assertThat(identityLinkCache.size()).isEqualTo(1);
 
-    assertEquals(halIdentityLinks, identityLinkCache.get(taskIds[0]));
+    assertThat(identityLinkCache.get(taskIds[0])).isEqualTo(halIdentityLinks);
   }
 
   protected void forwardTime(long seconds) {

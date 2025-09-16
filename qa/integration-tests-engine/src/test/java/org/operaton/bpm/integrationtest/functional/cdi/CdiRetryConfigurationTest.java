@@ -34,8 +34,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(ArquillianExtension.class)
 public class CdiRetryConfigurationTest extends AbstractFoxPlatformIntegrationTest {
@@ -78,6 +78,6 @@ public class CdiRetryConfigurationTest extends AbstractFoxPlatformIntegrationTes
 
      // then
      job = query.singleResult();
-     assertEquals(6, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(6);
   }
 }

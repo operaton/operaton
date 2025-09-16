@@ -37,8 +37,10 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(ProcessEngineExtension.class)
 class HistoricVariableJsonSerializationTest {
@@ -73,13 +75,13 @@ class HistoricVariableJsonSerializationTest {
       assertNotNull(historicVariable.getValue());
       assertNull(historicVariable.getErrorMessage());
 
-      assertEquals(ValueType.OBJECT.getName(), historicVariable.getTypeName());
-      assertEquals(ValueType.OBJECT.getName(), historicVariable.getVariableTypeName());
+      assertThat(historicVariable.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
+      assertThat(historicVariable.getVariableTypeName()).isEqualTo(ValueType.OBJECT.getName());
 
       JsonSerializable historyValue = (JsonSerializable) historicVariable.getValue();
-      assertEquals(bean.getStringProperty(), historyValue.getStringProperty());
-      assertEquals(bean.getIntProperty(), historyValue.getIntProperty());
-      assertEquals(bean.getBooleanProperty(), historyValue.getBooleanProperty());
+      assertThat(historyValue.getStringProperty()).isEqualTo(bean.getStringProperty());
+      assertThat(historyValue.getIntProperty()).isEqualTo(bean.getIntProperty());
+      assertThat(historyValue.getBooleanProperty()).isEqualTo(bean.getBooleanProperty());
     }
   }
 
@@ -100,9 +102,9 @@ class HistoricVariableJsonSerializationTest {
       assertNull(historicVariable.getErrorMessage());
 
       ObjectValue typedValue = (ObjectValue) historicVariable.getTypedValue();
-      assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
+      assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
       JSONAssert.assertEquals(bean.toExpectedJsonString(),new String(typedValue.getValueSerialized()), true);
-      assertEquals(JsonSerializable.class.getName(), typedValue.getObjectTypeName());
+      assertThat(typedValue.getObjectTypeName()).isEqualTo(JsonSerializable.class.getName());
     }
   }
 
@@ -122,18 +124,18 @@ class HistoricVariableJsonSerializationTest {
       assertNotNull(historicUpdate.getValue());
       assertNull(historicUpdate.getErrorMessage());
 
-      assertEquals(ValueType.OBJECT.getName(), historicUpdate.getTypeName());
-      assertEquals(ValueType.OBJECT.getName(), historicUpdate.getVariableTypeName());
+      assertThat(historicUpdate.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
+      assertThat(historicUpdate.getVariableTypeName()).isEqualTo(ValueType.OBJECT.getName());
 
       JsonSerializable historyValue = (JsonSerializable) historicUpdate.getValue();
-      assertEquals(bean.getStringProperty(), historyValue.getStringProperty());
-      assertEquals(bean.getIntProperty(), historyValue.getIntProperty());
-      assertEquals(bean.getBooleanProperty(), historyValue.getBooleanProperty());
+      assertThat(historyValue.getStringProperty()).isEqualTo(bean.getStringProperty());
+      assertThat(historyValue.getIntProperty()).isEqualTo(bean.getIntProperty());
+      assertThat(historyValue.getBooleanProperty()).isEqualTo(bean.getBooleanProperty());
 
       ObjectValue typedValue = (ObjectValue) historicUpdate.getTypedValue();
-      assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
+      assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
       JSONAssert.assertEquals(bean.toExpectedJsonString(),new String(typedValue.getValueSerialized()), true);
-      assertEquals(JsonSerializable.class.getName(), typedValue.getObjectTypeName());
+      assertThat(typedValue.getObjectTypeName()).isEqualTo(JsonSerializable.class.getName());
 
     }
   }

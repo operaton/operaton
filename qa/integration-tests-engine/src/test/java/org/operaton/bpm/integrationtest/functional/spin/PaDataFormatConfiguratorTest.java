@@ -41,7 +41,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -103,7 +103,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);
     JsonNode expectedJsonTree = objectMapper.readTree(expectedSerializedValue);
     // JsonNode#equals makes a deep comparison
-    assertEquals(expectedJsonTree, actualJsonTree);
+    assertThat(actualJsonTree).isEqualTo(expectedJsonTree);
   }
 
   /**
@@ -134,7 +134,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);
     JsonNode expectedJsonTree = objectMapper.readTree(expectedSerializedValue);
     // JsonNode#equals makes a deep comparison
-    assertEquals(expectedJsonTree, actualJsonTree);
+    assertThat(actualJsonTree).isEqualTo(expectedJsonTree);
   }
 
   /**
@@ -177,7 +177,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);
     JsonNode expectedJsonTree = objectMapper.readTree(expectedSerializedValue);
     // JsonNode#equals makes a deep comparison
-    assertEquals(expectedJsonTree, actualJsonTree);
+    assertThat(actualJsonTree).isEqualTo(expectedJsonTree);
 
     // and it is also correct in the history
     HistoricVariableInstance historicObjectValue = historyService
@@ -189,7 +189,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
 
     serializedValue = ((ObjectValue) historicObjectValue.getTypedValue()).getValueSerialized();
     actualJsonTree = objectMapper.readTree(serializedValue);
-    assertEquals(expectedJsonTree, actualJsonTree);
+    assertThat(actualJsonTree).isEqualTo(expectedJsonTree);
   }
 
   @Test
@@ -227,7 +227,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);
     JsonNode expectedJsonTree = objectMapper.readTree(expectedSerializedValue);
     // JsonNode#equals makes a deep comparison
-    assertEquals(expectedJsonTree, actualJsonTree);
+    assertThat(actualJsonTree).isEqualTo(expectedJsonTree);
 
     // and it is also correct in the history
     HistoricVariableInstance historicObjectValue = historyService
@@ -239,6 +239,6 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
 
     serializedValue = ((ObjectValue) historicObjectValue.getTypedValue()).getValueSerialized();
     actualJsonTree = objectMapper.readTree(serializedValue);
-    assertEquals(expectedJsonTree, actualJsonTree);
+    assertThat(actualJsonTree).isEqualTo(expectedJsonTree);
   }
 }

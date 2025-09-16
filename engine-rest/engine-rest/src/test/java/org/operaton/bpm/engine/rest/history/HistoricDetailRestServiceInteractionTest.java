@@ -43,7 +43,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -287,7 +286,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
     .when().get(VARIABLE_INSTANCE_BINARY_DATA_URL);
 
     byte[] responseBytes = response.getBody().asByteArray();
-    assertEquals(new String(byteContent), new String(responseBytes));
+    assertThat(new String(responseBytes)).isEqualTo(new String(byteContent));
     verify(historicDetailQueryMock, never()).disableBinaryFetching();
 
   }

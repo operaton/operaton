@@ -61,7 +61,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
@@ -112,7 +111,7 @@ public class TaskVariableRestResourceInteractionTest extends
       .body(EXAMPLE_VARIABLE_KEY + ".type", equalTo(VariableTypeHelper.toExpectedValueTypeName(EXAMPLE_VARIABLE_VALUE.getType())))
       .when().get(SINGLE_TASK_VARIABLES_URL);
 
-    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
   }
 
   @Test

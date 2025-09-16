@@ -38,7 +38,6 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -92,7 +91,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     // our bean manager does not know this bean
     Set<Bean< ? >> beans = beanManager.getBeans("calledProcessDelegate");
-    assertEquals(0, beans.size());
+    assertThat(beans.size()).isEqualTo(0);
 
     // but when we execute the process, we perform the context switch to the corresponding deployment
     // and there the class can be resolved and the bean is known.
@@ -112,16 +111,16 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("mainProcessSync", processVariables);
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName())).isEqualTo(true);
 
     ProcessInstance calledPi = runtimeService.createProcessInstanceQuery()
       .processDefinitionKey("calledProcessSync")
       .singleResult();
-    assertEquals(true, runtimeService.getVariable(calledPi.getId(), "calledDelegate"));
+    assertThat(runtimeService.getVariable(calledPi.getId(), "calledDelegate")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(calledPi.getId()).singleResult().getId());
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName())).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -138,18 +137,18 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("mainProcessASync", processVariables);
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName())).isEqualTo(true);
 
     waitForJobExecutorToProcessAllJobs();
 
     ProcessInstance calledPi = runtimeService.createProcessInstanceQuery()
       .processDefinitionKey("calledProcessSync")
       .singleResult();
-    assertEquals(true, runtimeService.getVariable(calledPi.getId(), "calledDelegate"));
+    assertThat(runtimeService.getVariable(calledPi.getId(), "calledDelegate")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(calledPi.getId()).singleResult().getId());
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName())).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -168,16 +167,16 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName())).isEqualTo(true);
 
     ProcessInstance calledPi = runtimeService.createProcessInstanceQuery()
       .processDefinitionKey("calledProcessSync")
       .singleResult();
-    assertEquals(true, runtimeService.getVariable(calledPi.getId(), "calledDelegate"));
+    assertThat(runtimeService.getVariable(calledPi.getId(), "calledDelegate")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(calledPi.getId()).singleResult().getId());
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName())).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -194,18 +193,18 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("mainProcessASyncAfter", processVariables);
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName())).isEqualTo(true);
 
     ProcessInstance calledPi = runtimeService.createProcessInstanceQuery()
       .processDefinitionKey("calledProcessSync")
       .singleResult();
-    assertEquals(true, runtimeService.getVariable(calledPi.getId(), "calledDelegate"));
+    assertThat(runtimeService.getVariable(calledPi.getId(), "calledDelegate")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(calledPi.getId()).singleResult().getId());
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName())).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -224,7 +223,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("mainProcessSync", processVariables);
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName())).isEqualTo(true);
 
     ProcessInstance calledPi = runtimeService.createProcessInstanceQuery()
       .processDefinitionKey("calledProcessASync")
@@ -235,11 +234,11 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertEquals(true, runtimeService.getVariable(calledPi.getId(), "calledDelegate"));
+    assertThat(runtimeService.getVariable(calledPi.getId(), "calledDelegate")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(calledPi.getId()).singleResult().getId());
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName())).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -256,18 +255,18 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("mainProcessASync", processVariables);
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName())).isEqualTo(true);
 
     waitForJobExecutorToProcessAllJobs();
 
     ProcessInstance calledPi = runtimeService.createProcessInstanceQuery()
       .processDefinitionKey("calledProcessASync")
       .singleResult();
-    assertEquals(true, runtimeService.getVariable(calledPi.getId(), "calledDelegate"));
+    assertThat(runtimeService.getVariable(calledPi.getId(), "calledDelegate")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(calledPi.getId()).singleResult().getId());
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName())).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -286,16 +285,16 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName())).isEqualTo(true);
 
     ProcessInstance calledPi = runtimeService.createProcessInstanceQuery()
       .processDefinitionKey("calledProcessASync")
       .singleResult();
-    assertEquals(true, runtimeService.getVariable(calledPi.getId(), "calledDelegate"));
+    assertThat(runtimeService.getVariable(calledPi.getId(), "calledDelegate")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(calledPi.getId()).singleResult().getId());
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName())).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -312,20 +311,20 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("mainProcessASyncAfter", processVariables);
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateBefore.class.getName())).isEqualTo(true);
 
     waitForJobExecutorToProcessAllJobs();
 
     ProcessInstance calledPi = runtimeService.createProcessInstanceQuery()
       .processDefinitionKey("calledProcessASync")
       .singleResult();
-    assertEquals(true, runtimeService.getVariable(calledPi.getId(), "calledDelegate"));
+    assertThat(runtimeService.getVariable(calledPi.getId(), "calledDelegate")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(calledPi.getId()).singleResult().getId());
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName()));
+    assertThat(runtimeService.getVariable(pi.getId(), DelegateAfter.class.getName())).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 

@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Roman Smirnov
@@ -50,7 +49,7 @@ public class TestDeploymentSource extends AbstractFoxPlatformIntegrationTest {
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 
     assertThat(deployment).isNotNull();
-    assertEquals(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE, deployment.getSource());
+    assertThat(deployment.getSource()).isEqualTo(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
   }
 
 }

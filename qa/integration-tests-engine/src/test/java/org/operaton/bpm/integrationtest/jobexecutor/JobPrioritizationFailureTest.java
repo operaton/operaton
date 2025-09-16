@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.PriorityBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -96,7 +96,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
 
     // then the job was created successfully and has the default priority on bean evaluation failure
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertEquals(DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE);
   }
 
   @Test
@@ -116,7 +116,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
     // then the job was created successfully and has the default priority although
     // the bean could not be resolved due to a missing class
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertEquals(DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE);
   }
 
   @Test
@@ -136,7 +136,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
     // then the job was created successfully and has the default priority although
     // the bean could not be resolved due to a missing class
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertEquals(DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE);
   }
 
   protected static byte[] serializeJavaObjectValue(Serializable object) {

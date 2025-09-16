@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.functional.cdi.beans.RequestScopedDelegateBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -60,7 +60,7 @@ public class JobExecutorRequestContextTest extends AbstractFoxPlatformIntegratio
     waitForJobExecutorToProcessAllJobs();
 
     Object variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
-    assertEquals(1, variable);
+    assertThat(variable).isEqualTo(1);
   }
 
   @Test
@@ -75,7 +75,7 @@ public class JobExecutorRequestContextTest extends AbstractFoxPlatformIntegratio
 
     Object variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // -> the same bean instance was invoked 2 times!
-    assertEquals(2, variable);
+    assertThat(variable).isEqualTo(2);
 
     Task task = taskService.createTaskQuery()
       .processInstanceId(pi.getProcessInstanceId())
@@ -86,7 +86,7 @@ public class JobExecutorRequestContextTest extends AbstractFoxPlatformIntegratio
 
     variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // now it's '1' again! -> new instance of the bean
-    assertEquals(1, variable);
+    assertThat(variable).isEqualTo(1);
 
   }
 
@@ -104,7 +104,7 @@ public class JobExecutorRequestContextTest extends AbstractFoxPlatformIntegratio
 
     Object variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
     // -> seperate requests
-    assertEquals(1, variable);
+    assertThat(variable).isEqualTo(1);
 
     Task task = taskService.createTaskQuery()
       .processInstanceId(pi.getProcessInstanceId())
@@ -114,7 +114,7 @@ public class JobExecutorRequestContextTest extends AbstractFoxPlatformIntegratio
     waitForJobExecutorToProcessAllJobs();
 
     variable = runtimeService.getVariable(pi.getId(), "invocationCounter");
-    assertEquals(1, variable);
+    assertThat(variable).isEqualTo(1);
 
   }
 

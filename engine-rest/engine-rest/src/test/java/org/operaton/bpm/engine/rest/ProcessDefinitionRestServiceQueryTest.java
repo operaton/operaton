@@ -46,7 +46,6 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -161,7 +160,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
 
     String content = response.asString();
     List<Map<String, Object>> definitions = from(content).getList("");
-    assertEquals(1, definitions.size(), "There should be one process definition returned.");
+    assertThat(definitions.size()).as("There should be one process definition returned.").isEqualTo(1);
     assertThat(definitions.get(0)).as("There should be one process definition returned").isNotNull();
 
     String returnedDefinitionKey = from(content).getString("[0].key");
@@ -176,17 +175,17 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     Boolean returnedIsSuspended = from(content).getBoolean("[0].suspended");
     Boolean returnedIsStartedInTasklist = from(content).getBoolean("[0].startableInTasklist");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedDefinitionKey);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY, returnedCategory);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME, returnedDefinitionName);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION, returnedDescription);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION, returnedVersion);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME, returnedResourceName);
-    assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, returnedDeploymentId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME, returnedDiagramResourceName);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED, returnedIsSuspended);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_STARTABLE, returnedIsStartedInTasklist);
+    assertThat(returnedDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedDefinitionKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+    assertThat(returnedCategory).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY);
+    assertThat(returnedDefinitionName).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME);
+    assertThat(returnedDescription).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION);
+    assertThat(returnedVersion).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION);
+    assertThat(returnedResourceName).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME);
+    assertThat(returnedDeploymentId).isEqualTo(MockProvider.EXAMPLE_DEPLOYMENT_ID);
+    assertThat(returnedDiagramResourceName).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME);
+    assertThat(returnedIsSuspended).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED);
+    assertThat(returnedIsStartedInTasklist).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_STARTABLE);
   }
 
   @Test

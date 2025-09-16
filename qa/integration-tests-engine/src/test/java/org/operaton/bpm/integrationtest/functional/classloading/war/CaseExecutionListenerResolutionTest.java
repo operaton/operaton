@@ -32,7 +32,6 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Roman Smirnov
@@ -88,14 +87,14 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
         .caseInstanceIdIn(caseInstanceId);
 
     assertThat(query.singleResult()).isNotNull();
-    assertEquals("listener-notified", query.singleResult().getValue());
+    assertThat(query.singleResult().getValue()).isEqualTo("listener-notified");
 
     caseService
       .withCaseExecution(caseInstanceId)
       .removeVariable("listener")
       .execute();
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     // the delegate expression listener should execute successfully
     caseService
@@ -103,7 +102,7 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
       .complete();
 
     assertThat(query.singleResult()).isNotNull();
-    assertEquals("listener-notified", query.singleResult().getValue());
+    assertThat(query.singleResult().getValue()).isEqualTo("listener-notified");
 
   }
 

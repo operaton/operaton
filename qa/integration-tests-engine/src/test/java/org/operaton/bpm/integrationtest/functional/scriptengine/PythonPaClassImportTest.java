@@ -30,7 +30,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Daniel Meyer
@@ -92,7 +91,7 @@ public class PythonPaClassImportTest extends AbstractFoxPlatformIntegrationTest 
     String processInstanceId = runtimeService.startProcessInstanceByKey("process2").getId();
     Object foo = runtimeService.getVariable(processInstanceId, "greeting");
     assertThat(foo).isNotNull();
-    assertEquals("Hi Ho", foo);
+    assertThat(foo).isEqualTo("Hi Ho");
   }
 
 }

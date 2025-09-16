@@ -74,7 +74,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -184,7 +183,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
       .body(EXAMPLE_VARIABLE_KEY + ".type", equalTo(String.class.getSimpleName()))
       .when().get(CASE_INSTANCE_VARIABLES_URL);
 
-    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
 
     verify(caseServiceMock).getVariablesTyped(MockProvider.EXAMPLE_CASE_INSTANCE_ID, true);
   }
@@ -200,7 +199,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
       .body(EXAMPLE_ANOTHER_VARIABLE_KEY + ".type", equalTo("Null"))
       .when().get(CASE_INSTANCE_VARIABLES_URL);
 
-    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
 
     verify(caseServiceMock).getVariablesTyped(MockProvider.EXAMPLE_CASE_INSTANCE_ID, true);
   }
@@ -220,7 +219,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
       .body(EXAMPLE_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, equalTo("application/json"))
       .when().get(CASE_INSTANCE_VARIABLES_URL);
 
-    assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertThat(response.jsonPath().getMap("").size()).as("Should return exactly one variable").isEqualTo(1);
 
     verify(caseServiceMock).getVariablesTyped(MockProvider.EXAMPLE_CASE_INSTANCE_ID, true);
   }

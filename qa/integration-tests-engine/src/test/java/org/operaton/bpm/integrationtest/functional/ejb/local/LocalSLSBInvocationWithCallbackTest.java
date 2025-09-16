@@ -33,7 +33,7 @@ import org.operaton.bpm.integrationtest.functional.ejb.local.bean.StartProcessSL
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -104,7 +104,7 @@ public class LocalSLSBInvocationWithCallbackTest extends AbstractFoxPlatformInte
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInvokeBean");
 
-    assertEquals(true, runtimeService.getVariable(pi.getId(), "result"));
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }

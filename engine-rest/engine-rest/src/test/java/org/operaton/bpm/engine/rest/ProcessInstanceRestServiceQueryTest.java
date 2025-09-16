@@ -56,7 +56,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
@@ -166,7 +165,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one process definition returned.");
+    assertThat(instances.size()).as("There should be one process definition returned.").isEqualTo(1);
     assertThat(instances.get(0)).as("There should be one process definition returned").isNotNull();
 
     String returnedInstanceId = from(content).getString("[0].id");
@@ -177,13 +176,13 @@ public class ProcessInstanceRestServiceQueryTest extends
     String returnedCaseInstanceId = from(content).getString("[0].caseInstanceId");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedInstanceId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_ENDED, returnedIsEnded);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY, returnedBusinessKey);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED, returnedIsSuspended);
-    assertEquals(MockProvider.EXAMPLE_CASE_INSTANCE_ID, returnedCaseInstanceId);
-    assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+    assertThat(returnedInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedIsEnded).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_ENDED);
+    assertThat(returnedDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedBusinessKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY);
+    assertThat(returnedIsSuspended).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED);
+    assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
   }
 
   @Test
@@ -1224,13 +1223,13 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(2, instances.size(), "There should be two process definitions returned.");
+    assertThat(instances.size()).as("There should be two process definitions returned.").isEqualTo(2);
 
     String returnedInstanceId1 = from(content).getString("[0].id");
     String returnedInstanceId2 = from(content).getString("[1].id");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedInstanceId1);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID, returnedInstanceId2);
+    assertThat(returnedInstanceId1).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedInstanceId2).isEqualTo(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID);
   }
 
   @Test
@@ -1266,13 +1265,13 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(2, instances.size(), "There should be two process definitions returned.");
+    assertThat(instances.size()).as("There should be two process definitions returned.").isEqualTo(2);
 
     String returnedInstanceId1 = from(content).getString("[0].id");
     String returnedInstanceId2 = from(content).getString("[1].id");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedInstanceId1);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID, returnedInstanceId2);
+    assertThat(returnedInstanceId1).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedInstanceId2).isEqualTo(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID);
   }
 
   @Test
@@ -1304,13 +1303,13 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(2, instances.size(), "There should be two process definitions returned.");
+    assertThat(instances.size()).as("There should be two process definitions returned.").isEqualTo(2);
 
     String returnedInstanceId1 = from(content).getString("[0].id");
     String returnedInstanceId2 = from(content).getString("[1].id");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedInstanceId1);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID, returnedInstanceId2);
+    assertThat(returnedInstanceId1).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedInstanceId2).isEqualTo(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID);
   }
 
   @Test
@@ -1345,13 +1344,13 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(2, instances.size(), "There should be two process definitions returned.");
+    assertThat(instances.size()).as("There should be two process definitions returned.").isEqualTo(2);
 
     String returnedInstanceId1 = from(content).getString("[0].id");
     String returnedInstanceId2 = from(content).getString("[1].id");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedInstanceId1);
-    assertEquals(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID, returnedInstanceId2);
+    assertThat(returnedInstanceId1).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedInstanceId2).isEqualTo(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID);
   }
 
   @Test

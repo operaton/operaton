@@ -38,7 +38,6 @@ import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.Spin.XML;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>Smoke-test Make sure operaton spin can be used in a process application </p>
@@ -57,7 +56,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   void spinShouldBeAvailable() {
-    assertEquals("someXml", XML("<someXml />").xPath("/someXml").element().name());
+    assertThat(XML("<someXml />").xPath("/someXml").element().name()).isEqualTo("someXml");
   }
 
   @Test
@@ -70,7 +69,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
     HashMap<String, String> expected = new HashMap<>();
     expected.put("foo", "bar");
 
-    assertEquals(expected, objectValue.getValue());
+    assertThat(objectValue.getValue()).isEqualTo(expected);
   }
 
   @Test
@@ -100,7 +99,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
 
     // file has 4000 characters in length a
     // 20 characters per repeated JSON object
-    assertEquals(200, node.prop("abcdef").elements().size());
+    assertThat(node.prop("abcdef").elements().size()).isEqualTo(200);
   }
 
   @Test
@@ -116,7 +115,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
     ObjectValue objectValue = runtimeService.getVariableTyped(pi.getId(), "jackson146", true);
     HashMap<String, List<Object>> map = (HashMap<String, List<Object>>) objectValue.getValue();
 
-    assertEquals(200, map.get("abcdef").size());
+    assertThat(map.get("abcdef").size()).isEqualTo(200);
   }
 
 }

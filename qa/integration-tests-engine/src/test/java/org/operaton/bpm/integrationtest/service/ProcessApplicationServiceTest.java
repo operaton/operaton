@@ -32,7 +32,6 @@ import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -65,14 +64,14 @@ public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegratio
     // check if the new applications are deployed with allowed names
     processApplicationNames.retainAll(Arrays.asList("test1", "test2", "/test1", "/test2"));
 
-    assertEquals(2, processApplicationNames.size());
+    assertThat(processApplicationNames.size()).isEqualTo(2);
 
     for (String appName : processApplicationNames) {
       ProcessApplicationInfo processApplicationInfo = processApplicationService.getProcessApplicationInfo(appName);
 
       assertThat(processApplicationInfo).isNotNull();
       assertThat(processApplicationInfo.getName()).isNotNull();
-      assertEquals(1, processApplicationInfo.getDeploymentInfo().size());
+      assertThat(processApplicationInfo.getDeploymentInfo().size()).isEqualTo(1);
     }
 
   }

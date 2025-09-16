@@ -35,8 +35,8 @@ import org.operaton.bpm.integrationtest.functional.el.beans.GreeterBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Daniel Meyer
@@ -75,7 +75,8 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
   @OperateOnDeployment("clientDeployment")
   void shouldSwitchContextWhenUsingDecisionService() {
     DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableByKey("decision", Variables.createVariables());
-    assertEquals("ok", decisionResult.getFirstResult().getFirstEntry());
+    String firstResult = decisionResult.getFirstResult().getFirstEntry();
+    assertThat(firstResult).isEqualTo("ok");
   }
 
   @Test
@@ -88,7 +89,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
       .processInstanceIdIn(pi.getId())
       .variableName("result").singleResult();
     List<Map<String, Object>> result = (List<Map<String, Object>>) decisionResult.getValue();
-    assertEquals("ok", result.get(0).get("result"));
+    assertThat(result.get(0).get("result")).isEqualTo("ok");
   }
 
   @Test
@@ -121,7 +122,8 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
     try {
       // when then
       DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableByKey("decision", Variables.createVariables());
-      assertEquals("ok", decisionResult.getFirstResult().getFirstEntry());
+      String firstResult = decisionResult.getFirstResult().getFirstEntry();
+      assertThat(firstResult).isEqualTo("ok");
     }
     finally {
       repositoryService.deleteDeployment(deployment2.getId(), true);
@@ -165,7 +167,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
         .variableName("result")
         .singleResult();
       List<Map<String, Object>> result = (List<Map<String, Object>>) decisionResult.getValue();
-      assertEquals("ok", result.get(0).get("result"));
+      assertThat(result.get(0).get("result")).isEqualTo("ok");
     }
     finally {
       repositoryService.deleteDeployment(deployment2.getId(), true);

@@ -30,7 +30,6 @@ import org.operaton.bpm.integrationtest.jobexecutor.beans.SampleTaskListenerBean
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(ArquillianExtension.class)
 public class TimeoutTaskListenerExecutionTest extends AbstractFoxPlatformIntegrationTest {
@@ -50,7 +49,7 @@ public class TimeoutTaskListenerExecutionTest extends AbstractFoxPlatformIntegra
     waitForJobExecutorToProcessAllJobs();
 
     List<ProcessInstance> finallyRunningInstances = runtimeService.createProcessInstanceQuery().processInstanceId(instance.getId()).list();
-    assertEquals(1, finallyRunningInstances.size());
+    assertThat(finallyRunningInstances.size()).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(instance.getId()).singleResult();
     assertThat(task).isNotNull();

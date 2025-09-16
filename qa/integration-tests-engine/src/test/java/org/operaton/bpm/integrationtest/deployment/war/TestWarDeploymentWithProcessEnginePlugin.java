@@ -31,7 +31,6 @@ import org.operaton.bpm.integrationtest.deployment.war.beans.GroovyProcessEngine
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -66,7 +65,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
     ProcessInstance pi = groovyEngine.getRuntimeService().startProcessInstanceByKey("groovy");
     HistoricProcessInstance hpi = groovyEngine.getHistoryService()
         .createHistoricProcessInstanceQuery().processDefinitionKey("groovy").finished().singleResult();
-    assertEquals(pi.getId(), hpi.getId());
+    assertThat(hpi.getId()).isEqualTo(pi.getId());
   }
 
   @Test
@@ -80,7 +79,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
 
     HistoricProcessInstance hpi = groovyEngine.getHistoryService()
         .createHistoricProcessInstanceQuery().processDefinitionKey("groovyAsync").finished().singleResult();
-    assertEquals(pi.getId(), hpi.getId());
+    assertThat(hpi.getId()).isEqualTo(pi.getId());
   }
 
 }

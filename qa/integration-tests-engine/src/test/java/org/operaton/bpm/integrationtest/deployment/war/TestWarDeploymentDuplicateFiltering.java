@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(ArquillianExtension.class)
@@ -57,7 +56,7 @@ public class TestWarDeploymentDuplicateFiltering extends AbstractFoxPlatformInte
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
   }
 
 }

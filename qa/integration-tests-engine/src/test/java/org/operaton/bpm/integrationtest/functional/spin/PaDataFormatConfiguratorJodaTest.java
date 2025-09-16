@@ -39,7 +39,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -94,7 +94,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);
     JsonNode expectedJsonTree = objectMapper.readTree(expectedSerializedValue);
     // JsonNode#equals makes a deep comparison
-    assertEquals(expectedJsonTree, actualJsonTree);
+    assertThat(actualJsonTree).isEqualTo(expectedJsonTree);
   }
 
 }

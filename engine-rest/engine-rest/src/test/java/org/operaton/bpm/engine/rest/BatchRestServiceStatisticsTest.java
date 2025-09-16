@@ -41,7 +41,6 @@ import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -308,27 +307,27 @@ public class BatchRestServiceStatisticsTest extends AbstractRestServiceTest {
 
   protected void verifyBatchStatisticsListJson(String batchStatisticsListJson) {
     List<Object> batches = from(batchStatisticsListJson).get();
-    assertEquals(1, batches.size(), "There should be one batch statistics returned.");
+    assertThat(batches.size()).as("There should be one batch statistics returned.").isEqualTo(1);
 
     BatchStatisticsDto batchStatistics = from(batchStatisticsListJson).getObject("[0]", BatchStatisticsDto.class);
     String returnedStartTime = from(batchStatisticsListJson).getString("[0].startTime");
 
     assertThat(batchStatistics).as("The returned batch statistics should not be null.").isNotNull();
-    assertEquals(MockProvider.EXAMPLE_BATCH_ID, batchStatistics.getId());
-    assertEquals(MockProvider.EXAMPLE_BATCH_TYPE, batchStatistics.getType());
-    assertEquals(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS, batchStatistics.getTotalJobs());
-    assertEquals(MockProvider.EXAMPLE_BATCH_JOBS_CREATED, batchStatistics.getJobsCreated());
-    assertEquals(MockProvider.EXAMPLE_BATCH_JOBS_PER_SEED, batchStatistics.getBatchJobsPerSeed());
-    assertEquals(MockProvider.EXAMPLE_INVOCATIONS_PER_BATCH_JOB, batchStatistics.getInvocationsPerBatchJob());
-    assertEquals(MockProvider.EXAMPLE_SEED_JOB_DEFINITION_ID, batchStatistics.getSeedJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_MONITOR_JOB_DEFINITION_ID, batchStatistics.getMonitorJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_BATCH_JOB_DEFINITION_ID, batchStatistics.getBatchJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_TENANT_ID, batchStatistics.getTenantId());
-    assertEquals(MockProvider.EXAMPLE_USER_ID, batchStatistics.getCreateUserId());
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_BATCH_START_TIME, returnedStartTime);
-    assertEquals(MockProvider.EXAMPLE_BATCH_REMAINING_JOBS, batchStatistics.getRemainingJobs());
-    assertEquals(MockProvider.EXAMPLE_BATCH_COMPLETED_JOBS, batchStatistics.getCompletedJobs());
-    assertEquals(MockProvider.EXAMPLE_BATCH_FAILED_JOBS, batchStatistics.getFailedJobs());
+    assertThat(batchStatistics.getId()).isEqualTo(MockProvider.EXAMPLE_BATCH_ID);
+    assertThat(batchStatistics.getType()).isEqualTo(MockProvider.EXAMPLE_BATCH_TYPE);
+    assertThat(batchStatistics.getTotalJobs()).isEqualTo(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS);
+    assertThat(batchStatistics.getJobsCreated()).isEqualTo(MockProvider.EXAMPLE_BATCH_JOBS_CREATED);
+    assertThat(batchStatistics.getBatchJobsPerSeed()).isEqualTo(MockProvider.EXAMPLE_BATCH_JOBS_PER_SEED);
+    assertThat(batchStatistics.getInvocationsPerBatchJob()).isEqualTo(MockProvider.EXAMPLE_INVOCATIONS_PER_BATCH_JOB);
+    assertThat(batchStatistics.getSeedJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_SEED_JOB_DEFINITION_ID);
+    assertThat(batchStatistics.getMonitorJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_MONITOR_JOB_DEFINITION_ID);
+    assertThat(batchStatistics.getBatchJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_BATCH_JOB_DEFINITION_ID);
+    assertThat(batchStatistics.getTenantId()).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(batchStatistics.getCreateUserId()).isEqualTo(MockProvider.EXAMPLE_USER_ID);
+    assertThat(returnedStartTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_BATCH_START_TIME);
+    assertThat(batchStatistics.getRemainingJobs()).isEqualTo(MockProvider.EXAMPLE_BATCH_REMAINING_JOBS);
+    assertThat(batchStatistics.getCompletedJobs()).isEqualTo(MockProvider.EXAMPLE_BATCH_COMPLETED_JOBS);
+    assertThat(batchStatistics.getFailedJobs()).isEqualTo(MockProvider.EXAMPLE_BATCH_FAILED_JOBS);
     assertThat(batchStatistics.isSuspended()).isTrue();
   }
 

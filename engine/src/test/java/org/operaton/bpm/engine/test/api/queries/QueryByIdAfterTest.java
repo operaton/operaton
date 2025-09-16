@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -62,12 +62,12 @@ class QueryByIdAfterTest {
     String firstId = historicVariableInstances.get(0).getId();
     String middleId = historicVariableInstances.get(9).getId();
     String lastId = historicVariableInstances.get(historicVariableInstances.size() - 1).getId();
-    assertEquals(20, historicVariableInstances.size());
-    assertEquals(19, historicVariableInstanceQuery.idAfter(firstId).list().size());
-    assertEquals(0, historicVariableInstanceQuery.idAfter(lastId).list().size());
+    assertThat(historicVariableInstances.size()).isEqualTo(20);
+    assertThat(historicVariableInstanceQuery.idAfter(firstId).list().size()).isEqualTo(19);
+    assertThat(historicVariableInstanceQuery.idAfter(lastId).list().size()).isEqualTo(0);
 
     List<HistoricVariableInstance> secondHalf = historicVariableInstanceQuery.idAfter(middleId).list();
-    assertEquals(10, secondHalf.size());
+    assertThat(secondHalf.size()).isEqualTo(10);
     assertTrue(secondHalf.stream().allMatch(variable -> isIdGreaterThan(variable.getId(), middleId)));
   }
 

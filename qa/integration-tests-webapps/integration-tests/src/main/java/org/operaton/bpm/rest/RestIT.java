@@ -39,7 +39,6 @@ import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
 import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -91,9 +90,9 @@ class RestIT extends AbstractWebIntegrationTest {
       assertTrue(definitionJson.isNull("description"));
       assertFalse(definitionJson.getBoolean("suspended"));
       if ("ReviewInvoice".equals(definitionJson.getString("key"))) {
-        assertEquals("http://bpmn.io/schema/bpmn", definitionJson.getString("category"));
-        assertEquals("Review Invoice", definitionJson.getString("name"));
-        assertEquals("reviewInvoice.bpmn", definitionJson.getString("resource"));
+        assertThat(definitionJson.getString("category")).isEqualTo("http://bpmn.io/schema/bpmn");
+        assertThat(definitionJson.getString("name")).isEqualTo("Review Invoice");
+        assertThat(definitionJson.getString("resource")).isEqualTo("reviewInvoice.bpmn");
       } else if ("invoice".equals(definitionJson.getString("key"))) {
         assertThat(definitionJson.getString("category")).isEqualTo("http://www.omg.org/spec/BPMN/20100524/MODEL");
         assertThat(definitionJson.getString("name")).isEqualTo("Invoice Receipt");
@@ -116,7 +115,7 @@ class RestIT extends AbstractWebIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(200);
 
     JSONArray definitionsJson = response.getBody().getArray();
-    assertEquals(4, definitionsJson.length());
+    assertThat(definitionsJson.length()).isEqualTo(4);
   }
 
   @Test
@@ -175,7 +174,7 @@ class RestIT extends AbstractWebIntegrationTest {
             .body(filter)
             .asJson();
 
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     String filterId = response.getBody().getObject().getString("id");
 
     // Check the filter resource (list)
@@ -191,7 +190,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
     // delete test filter
     HttpResponse<String> deleteResponse = Unirest.delete(appBasePath + FILTER_PATH + "/" + filterId).asString();
-    assertEquals(204, deleteResponse.getStatus());
+    assertThat(deleteResponse.getStatus()).isEqualTo(204);
 
   }
 
@@ -203,7 +202,7 @@ class RestIT extends AbstractWebIntegrationTest {
             .asJson();
 
     // Then
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     JSONObject logElement = response.getBody().getArray().getJSONObject(0);
 
     String timestamp = logElement.getString("timestamp");
@@ -363,7 +362,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   protected void assertMediaType(HttpResponse<String> response, String expected) {
     String actual = response.getHeaders().getFirst("Content-Type");
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     // use startsWith cause sometimes server also returns quality parameters
     assertThat(actual)
             .as("Expected: " + expected + " Actual: " + actual)

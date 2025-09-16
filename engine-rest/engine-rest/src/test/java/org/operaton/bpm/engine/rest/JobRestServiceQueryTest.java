@@ -50,7 +50,6 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -146,7 +145,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one job returned.");
+    assertThat(instances.size()).as("There should be one job returned.").isEqualTo(1);
     assertThat(instances.get(0)).as("The returned job should not be null.").isNotNull();
 
     String returnedJobId = from(content).getString("[0].id");
@@ -165,21 +164,21 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     String returnedCreateTime = from(content).getString("[0].createTime");
     String returnedBatchId = from(content).getString("[0].batchId");
 
-    assertEquals(MockProvider.EXAMPLE_JOB_ID, returnedJobId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedProcessDefinitionKey);
-    assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
-    assertEquals(MockProvider.EXAMPLE_JOB_NO_EXCEPTION_MESSAGE, returnedExceptionMessage);
-    assertEquals(MockProvider.EXAMPLE_JOB_FAILED_ACTIVITY_ID, returnedFailedActivityId);
-    assertEquals(MockProvider.EXAMPLE_JOB_RETRIES, returnedRetries);
-    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_DUE_DATE), returnedDueDate);
-    assertEquals(MockProvider.EXAMPLE_JOB_IS_SUSPENDED, returnedSuspended);
-    assertEquals(MockProvider.EXAMPLE_JOB_PRIORITY, returnedPriority);
-    assertEquals(MockProvider.EXAMPLE_JOB_DEFINITION_ID, returnedJobDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
-    assertEquals(MockProvider.EXAMPLE_JOB_CREATE_TIME, returnedCreateTime);
-    assertEquals(MockProvider.EXAMPLE_BATCH_ID, returnedBatchId);
+    assertThat(returnedJobId).isEqualTo(MockProvider.EXAMPLE_JOB_ID);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedProcessDefinitionKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+    assertThat(returnedExecutionId).isEqualTo(MockProvider.EXAMPLE_EXECUTION_ID);
+    assertThat(returnedExceptionMessage).isEqualTo(MockProvider.EXAMPLE_JOB_NO_EXCEPTION_MESSAGE);
+    assertThat(returnedFailedActivityId).isEqualTo(MockProvider.EXAMPLE_JOB_FAILED_ACTIVITY_ID);
+    assertThat(returnedRetries).isEqualTo(MockProvider.EXAMPLE_JOB_RETRIES);
+    assertThat(returnedDueDate).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_DUE_DATE));
+    assertThat(returnedSuspended).isEqualTo(MockProvider.EXAMPLE_JOB_IS_SUSPENDED);
+    assertThat(returnedPriority).isEqualTo(MockProvider.EXAMPLE_JOB_PRIORITY);
+    assertThat(returnedJobDefinitionId).isEqualTo(MockProvider.EXAMPLE_JOB_DEFINITION_ID);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(returnedCreateTime).isEqualTo(MockProvider.EXAMPLE_JOB_CREATE_TIME);
+    assertThat(returnedBatchId).isEqualTo(MockProvider.EXAMPLE_BATCH_ID);
   }
 
   private interface DateParameters {

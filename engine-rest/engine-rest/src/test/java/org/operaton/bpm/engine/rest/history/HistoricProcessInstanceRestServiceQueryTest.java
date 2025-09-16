@@ -53,7 +53,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.eq;
@@ -409,7 +408,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one process instance returned.");
+    assertThat(instances.size()).as("There should be one process instance returned.").isEqualTo(1);
     assertThat(instances)
       .first()
       .as("The returned process instance should not be null.")
@@ -436,26 +435,26 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     String returnedState = from(content).getString("[0].state");
     String restartedProcessInstanceId = from(content).getString("[0].restartedProcessInstanceId");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY, returnedProcessInstanceBusinessKey);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedProcessDefinitionKey);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME, returnedProcessDefinitionName);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION, returnedProcessDefinitionVersion);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_TIME, returnedStartTime);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_END_TIME, returnedEndTime);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_REMOVAL_TIME, returnedRemovalTime);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DURATION_MILLIS, returnedDurationInMillis);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_USER_ID, returnedStartUserId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_ACTIVITY_ID, returnedStartActivityId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DELETE_REASON, returnedDeleteReason);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_ROOT_PROCESS_INSTANCE_ID, returnedRootProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_PROCESS_INSTANCE_ID, returnedSuperProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_CASE_INSTANCE_ID, returnedSuperCaseInstanceId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_CASE_INSTANCE_ID, returnedCaseInstanceId);
-    assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STATE, returnedState);
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, restartedProcessInstanceId);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedProcessInstanceBusinessKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedProcessDefinitionKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+    assertThat(returnedProcessDefinitionName).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME);
+    assertThat(returnedProcessDefinitionVersion).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION);
+    assertThat(returnedStartTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_TIME);
+    assertThat(returnedEndTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_END_TIME);
+    assertThat(returnedRemovalTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_REMOVAL_TIME);
+    assertThat(returnedDurationInMillis).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DURATION_MILLIS);
+    assertThat(returnedStartUserId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_USER_ID);
+    assertThat(returnedStartActivityId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_ACTIVITY_ID);
+    assertThat(returnedDeleteReason).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DELETE_REASON);
+    assertThat(returnedRootProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_ROOT_PROCESS_INSTANCE_ID);
+    assertThat(returnedSuperProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_PROCESS_INSTANCE_ID);
+    assertThat(returnedSuperCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_CASE_INSTANCE_ID);
+    assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_CASE_INSTANCE_ID);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(returnedState).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STATE);
+    assertThat(restartedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
   }
 
     @Test
@@ -497,29 +496,26 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
         String returnedState = from(content).getString("[0].state");
         String restartedProcessInstanceId = from(content).getString("[0].restartedProcessInstanceId");
 
-        assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-        assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY, returnedProcessInstanceBusinessKey);
-        assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-        assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, returnedProcessDefinitionKey);
-        assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME, returnedProcessDefinitionName);
-        assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION, returnedProcessDefinitionVersion);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_TIME, returnedStartTime);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_END_TIME, returnedEndTime);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_REMOVAL_TIME, returnedRemovalTime);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DURATION_MILLIS, returnedDurationInMillis);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_USER_ID, returnedStartUserId);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_ACTIVITY_ID, returnedStartActivityId);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DELETE_REASON, returnedDeleteReason);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_ROOT_PROCESS_INSTANCE_ID,
-                returnedRootProcessInstanceId);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_PROCESS_INSTANCE_ID,
-                returnedSuperProcessInstanceId);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_CASE_INSTANCE_ID,
-                returnedSuperCaseInstanceId);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_CASE_INSTANCE_ID, returnedCaseInstanceId);
-        assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
-        assertEquals(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STATE, returnedState);
-        assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, restartedProcessInstanceId);
+      assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+      assertThat(returnedProcessInstanceBusinessKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY);
+      assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+      assertThat(returnedProcessDefinitionKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+      assertThat(returnedProcessDefinitionName).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME);
+      assertThat(returnedProcessDefinitionVersion).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION);
+      assertThat(returnedStartTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_TIME);
+      assertThat(returnedEndTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_END_TIME);
+      assertThat(returnedRemovalTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_REMOVAL_TIME);
+      assertThat(returnedDurationInMillis).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DURATION_MILLIS);
+      assertThat(returnedStartUserId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_USER_ID);
+      assertThat(returnedStartActivityId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_ACTIVITY_ID);
+      assertThat(returnedDeleteReason).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_DELETE_REASON);
+      assertThat(returnedRootProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_ROOT_PROCESS_INSTANCE_ID);
+      assertThat(returnedSuperProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_PROCESS_INSTANCE_ID);
+      assertThat(returnedSuperCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_SUPER_CASE_INSTANCE_ID);
+      assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_CASE_INSTANCE_ID);
+      assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+      assertThat(returnedState).isEqualTo(MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STATE);
+      assertThat(restartedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     }
 
   @Test
@@ -823,7 +819,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     String returnedProcessInstanceId = from(content).getString("[0].id");
     String returnedEndTime = from(content).getString("[0].endTime");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     assertNull(returnedEndTime);
   }
 
@@ -852,13 +848,13 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertEquals(1, instances.size(), "There should be one process instance returned.");
+    assertThat(instances.size()).as("There should be one process instance returned.").isEqualTo(1);
     assertThat(instances).first().as("The returned process instance should not be null.").isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].id");
     String returnedEndTime = from(content).getString("[0].endTime");
 
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     assertNull(returnedEndTime);
   }
 

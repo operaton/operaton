@@ -30,7 +30,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Integration test that makes sure the shared container managed process engine is able to resolve
@@ -91,24 +91,24 @@ public class SpringExpressionResolvingTest extends AbstractFoxPlatformIntegratio
   @Test
   @OperateOnDeployment("clientDeployment")
   void testResolveBean() {
-    assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isEqualTo(0);
     // but the process engine can:
     runtimeService.startProcessInstanceByKey("testResolveBean");
 
-    assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isEqualTo(0);
   }
 
   @Test
   @OperateOnDeployment("clientDeployment")
   void testResolveBeanFromJobExecutor() {
 
-    assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(0);
     runtimeService.startProcessInstanceByKey("testResolveBeanFromJobExecutor");
-    assertEquals(1,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(1);
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(0);
 
   }
 

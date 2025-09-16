@@ -27,7 +27,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Sebastian Menski
@@ -68,8 +67,8 @@ public abstract class AbstractScriptEngineSupportTest extends AbstractFoxPlatfor
     Object bar = runtimeService.getVariable(processInstanceId, "bar");
     assertThat(foo).isNotNull();
     assertThat(bar).isNotNull();
-    assertEquals("bar", foo);
-    assertEquals("baz", bar);
+    assertThat(foo).isEqualTo("bar");
+    assertThat(bar).isEqualTo("baz");
   }
 
 }

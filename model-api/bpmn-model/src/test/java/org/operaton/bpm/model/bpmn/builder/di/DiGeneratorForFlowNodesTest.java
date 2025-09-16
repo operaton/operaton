@@ -30,7 +30,6 @@ import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiGeneratorForFlowNodesTest {
 
@@ -57,7 +56,8 @@ class DiGeneratorForFlowNodesTest {
     assertThat(diagram.getId()).isNotNull();
 
     assertThat(diagram.getBpmnPlane()).isNotNull();
-    assertEquals(diagram.getBpmnPlane().getBpmnElement(), instance.getModelElementById("process"));
+    Object process = instance.getModelElementById("process");
+    assertThat(process).isEqualTo(diagram.getBpmnPlane().getBpmnElement());
   }
 
   @Test

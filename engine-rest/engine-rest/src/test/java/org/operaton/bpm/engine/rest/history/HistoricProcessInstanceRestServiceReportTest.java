@@ -46,7 +46,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
@@ -216,11 +215,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
     int returnedPeriod = from(content).getInt("[0].period");
     String returnedPeriodUnit = from(content).getString("[0].periodUnit");
 
-    assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG, returnedAvg);
-    assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX, returnedMax);
-    assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN, returnedMin);
-    assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD, returnedPeriod);
-    assertEquals(MONTH.toString(), returnedPeriodUnit);
+    assertThat(returnedAvg).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG);
+    assertThat(returnedMax).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX);
+    assertThat(returnedMin).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN);
+    assertThat(returnedPeriod).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD);
+    assertThat(returnedPeriodUnit).isEqualTo(MONTH.toString());
   }
 
   @Test
@@ -237,7 +236,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> reports = from(content).getList("");
-    assertEquals(1, reports.size(), "There should be one report returned.");
+    assertThat(reports.size()).as("There should be one report returned.").isEqualTo(1);
     assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     long returnedAvg = from(content).getLong("[0].average");
@@ -246,11 +245,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
     int returnedPeriod = from(content).getInt("[0].period");
     String returnedPeriodUnit = from(content).getString("[0].periodUnit");
 
-    assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG, returnedAvg);
-    assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX, returnedMax);
-    assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN, returnedMin);
-    assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD, returnedPeriod);
-    assertEquals(QUARTER.toString(), returnedPeriodUnit);
+    assertThat(returnedAvg).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG);
+    assertThat(returnedMax).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX);
+    assertThat(returnedMin).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN);
+    assertThat(returnedPeriod).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD);
+    assertThat(returnedPeriodUnit).isEqualTo(QUARTER.toString());
   }
 
   @Test

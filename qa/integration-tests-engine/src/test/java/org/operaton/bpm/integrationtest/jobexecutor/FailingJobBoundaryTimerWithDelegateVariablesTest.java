@@ -56,7 +56,7 @@ public class FailingJobBoundaryTimerWithDelegateVariablesTest extends AbstractFo
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("ImmediatelyFailing");
 
     List<Job> jobs = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     assertThat(jobs.get(0).getRetries()).isEqualTo(3);
 
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count()).isEqualTo(1);

@@ -355,7 +355,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap> results = from(content).getList("");
-    assertThat(results.size()).isEqualTo(2);
+    assertThat(results).hasSize(2);
     for (int i = 0; i < 2; i++) {
       checkExecutionResult(content, i);
     }
@@ -389,7 +389,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
    assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap> results = from(content).getList("");
-    assertThat(results.size()).isEqualTo(2);
+    assertThat(results).hasSize(2);
     for (int i = 0; i < 2; i++) {
       checkProcessInstanceResult(content, i);
     }
@@ -423,7 +423,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap> results = from(content).getList("");
-    assertThat(results.size()).isEqualTo(4);
+    assertThat(results).hasSize(4);
     for (int i = 0; i < 2; i++) {
       String resultType = from(content).get("[" + i + "].resultType");
       assertThat(resultType).isNotNull();
@@ -1287,7 +1287,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap<Object, Object>> results = from(content).getList("");
-    assertThat(results.size()).isEqualTo(1);
+    assertThat(results).hasSize(1);
     checkVariablesInResult(content, 0);
 
     verify(runtimeServiceMock).createMessageCorrelation(messageName);
@@ -1341,13 +1341,13 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
 
     for (String variableName : variableNames) {
       String variablePath = "[" + idx + "].variables." + variableName;
-      assertThat(from(content).getMap(variablePath + ".valueInfo").get("serializationDataFormat")).isEqualTo(MockProvider.FORMAT_APPLICATION_JSON);
+      assertThat(from(content).getMap(variablePath + ".valueInfo")).containsEntry("serializationDataFormat", MockProvider.FORMAT_APPLICATION_JSON);
       assertThat(from(content).<String>get(variablePath + ".value")).isEqualTo(MockProvider.EXAMPLE_VARIABLE_INSTANCE_SERIALIZED_VALUE);
       assertThat(from(content).<String>get(variablePath + ".type")).isEqualTo(VariableTypeHelper.toExpectedValueTypeName(ValueType.OBJECT));
     }
 
-    assertThat(from(content).getMap("[" + idx + "].variables." + MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME + ".valueInfo").get("objectTypeName")).isEqualTo(ArrayList.class.getName());
-    assertThat(from(content).getMap("[" + idx + "].variables." + MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME + ".valueInfo").get("objectTypeName")).isEqualTo(Object.class.getName());
+    assertThat(from(content).getMap("[" + idx + "].variables." + MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME + ".valueInfo")).containsEntry("objectTypeName", ArrayList.class.getName());
+    assertThat(from(content).getMap("[" + idx + "].variables." + MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME + ".valueInfo")).containsEntry("objectTypeName", Object.class.getName());
   }
 
 }

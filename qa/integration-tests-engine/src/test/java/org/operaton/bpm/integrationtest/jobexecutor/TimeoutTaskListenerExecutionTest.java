@@ -49,7 +49,7 @@ public class TimeoutTaskListenerExecutionTest extends AbstractFoxPlatformIntegra
     waitForJobExecutorToProcessAllJobs();
 
     List<ProcessInstance> finallyRunningInstances = runtimeService.createProcessInstanceQuery().processInstanceId(instance.getId()).list();
-    assertThat(finallyRunningInstances.size()).isEqualTo(1);
+    assertThat(finallyRunningInstances).hasSize(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(instance.getId()).singleResult();
     assertThat(task).isNotNull();

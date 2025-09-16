@@ -91,7 +91,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
     // our bean manager does not know this bean
     Set<Bean< ? >> beans = beanManager.getBeans("calledProcessDelegate");
-    assertThat(beans.size()).isEqualTo(0);
+    assertThat(beans).hasSize(0);
 
     // but when we execute the process, we perform the context switch to the corresponding deployment
     // and there the class can be resolved and the bean is known.

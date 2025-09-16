@@ -28,8 +28,8 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.json.SpinJsonException;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;

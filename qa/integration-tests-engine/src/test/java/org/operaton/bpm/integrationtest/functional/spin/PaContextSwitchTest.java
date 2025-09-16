@@ -38,8 +38,8 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

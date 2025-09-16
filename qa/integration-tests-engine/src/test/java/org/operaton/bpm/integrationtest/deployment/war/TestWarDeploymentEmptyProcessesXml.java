@@ -55,7 +55,7 @@ public class TestWarDeploymentEmptyProcessesXml extends AbstractFoxPlatformInteg
       .processDefinitionKey("testDeployProcessArchive")
       .list();
 
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery()
       .deploymentId(processDefinitions.get(0).getDeploymentId())
       .singleResult();

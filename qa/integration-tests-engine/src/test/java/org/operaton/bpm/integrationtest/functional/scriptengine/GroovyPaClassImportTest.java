@@ -90,8 +90,9 @@ public class GroovyPaClassImportTest extends AbstractFoxPlatformIntegrationTest 
     // then start process 2
     String processInstanceId = runtimeService.startProcessInstanceByKey("process2").getId();
     Object foo = runtimeService.getVariable(processInstanceId, "greeting");
-    assertThat(foo).isNotNull();
-    assertThat(foo).isEqualTo("Hi Ho");
+    assertThat(foo)
+            .isNotNull()
+            .isEqualTo("Hi Ho");
   }
 
 }

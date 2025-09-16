@@ -64,8 +64,9 @@ public abstract class AbstractTemplateScriptEngineSupportTest extends AbstractFo
     processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_ID, variables).getId();
 
     Object result = runtimeService.getVariable(processInstanceId, RESULT_VARIABLE);
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(EXPECTED_RESULT);
+    assertThat(result)
+            .isNotNull()
+            .isEqualTo(EXPECTED_RESULT);
   }
 
 }

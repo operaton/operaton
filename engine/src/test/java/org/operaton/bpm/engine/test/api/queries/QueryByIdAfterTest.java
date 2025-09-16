@@ -62,12 +62,12 @@ class QueryByIdAfterTest {
     String firstId = historicVariableInstances.get(0).getId();
     String middleId = historicVariableInstances.get(9).getId();
     String lastId = historicVariableInstances.get(historicVariableInstances.size() - 1).getId();
-    assertThat(historicVariableInstances.size()).isEqualTo(20);
-    assertThat(historicVariableInstanceQuery.idAfter(firstId).list().size()).isEqualTo(19);
-    assertThat(historicVariableInstanceQuery.idAfter(lastId).list().size()).isEqualTo(0);
+    assertThat(historicVariableInstances).hasSize(20);
+    assertThat(historicVariableInstanceQuery.idAfter(firstId).list()).hasSize(19);
+    assertThat(historicVariableInstanceQuery.idAfter(lastId).list()).hasSize(0);
 
     List<HistoricVariableInstance> secondHalf = historicVariableInstanceQuery.idAfter(middleId).list();
-    assertThat(secondHalf.size()).isEqualTo(10);
+    assertThat(secondHalf).hasSize(10);
     assertTrue(secondHalf.stream().allMatch(variable -> isIdGreaterThan(variable.getId(), middleId)));
   }
 

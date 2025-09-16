@@ -57,13 +57,13 @@ class HistoricDecisionInstanceSerializationTest {
     assertNotNull(testDecision);
 
     List<HistoricDecisionInputInstance> inputs = testDecision.getInputs();
-    assertThat(inputs.size()).isEqualTo(1);
+    assertThat(inputs).hasSize(1);
 
     HistoricDecisionInputInstance inputInstance = inputs.get(0);
     assertThat(inputInstance.getValue()).isEqualTo(list.getListProperty());
 
     List<HistoricDecisionOutputInstance> outputs = testDecision.getOutputs();
-    assertThat(outputs.size()).isEqualTo(1);
+    assertThat(outputs).hasSize(1);
 
     HistoricDecisionOutputInstance outputInstance = outputs.get(0);
     assertThat(outputInstance.getValue()).isEqualTo(list.getListProperty());

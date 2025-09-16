@@ -48,8 +48,9 @@ public class ElResolveStartFormDataTest extends AbstractFoxPlatformIntegrationTe
     StartFormData formData = formService.getStartFormData(processDefinitionId);
     Object defaultValue = formData.getFormFields().get(0).getValue().getValue();
 
-    assertThat(defaultValue).isNotNull();
-    assertThat(defaultValue).isEqualTo("testString123");
+    assertThat(defaultValue)
+            .isNotNull()
+            .isEqualTo("testString123");
   }
 
   @Test
@@ -59,8 +60,9 @@ public class ElResolveStartFormDataTest extends AbstractFoxPlatformIntegrationTe
     StartFormData formData = formService.getStartFormData(processDefinitionId);
 
     String label = formData.getFormFields().get(0).getLabel();
-    assertThat(label).isNotNull();
-    assertThat(label).isEqualTo("testString123");
+    assertThat(label)
+            .isNotNull()
+            .isEqualTo("testString123");
   }
 
 }

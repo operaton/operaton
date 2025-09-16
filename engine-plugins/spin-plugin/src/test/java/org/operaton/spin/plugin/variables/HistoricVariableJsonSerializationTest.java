@@ -37,10 +37,10 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ExtendWith(ProcessEngineExtension.class)
 class HistoricVariableJsonSerializationTest {

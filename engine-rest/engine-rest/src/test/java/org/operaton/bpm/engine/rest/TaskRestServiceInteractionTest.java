@@ -588,24 +588,24 @@ public class TaskRestServiceInteractionTest extends
 
     Map<String, Object> embeddedUser = embeddedUsers.get(0);
     assertThat(embeddedUser).as("The returned user should not be null.").isNotNull();
-    assertThat(embeddedUser.get("id")).isEqualTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME);
-    assertThat(embeddedUser.get("firstName")).isEqualTo(MockProvider.EXAMPLE_USER_FIRST_NAME);
-    assertThat(embeddedUser.get("lastName")).isEqualTo(MockProvider.EXAMPLE_USER_LAST_NAME);
-    assertThat(embeddedUser.get("email")).isEqualTo(MockProvider.EXAMPLE_USER_EMAIL);
+    assertThat(embeddedUser).containsEntry("id", MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME);
+    assertThat(embeddedUser).containsEntry("firstName", MockProvider.EXAMPLE_USER_FIRST_NAME);
+    assertThat(embeddedUser).containsEntry("lastName", MockProvider.EXAMPLE_USER_LAST_NAME);
+    assertThat(embeddedUser).containsEntry("email", MockProvider.EXAMPLE_USER_EMAIL);
     assertThat(embeddedUser.get("_embedded")).isNull();
     Map<String, Object> links = (Map<String, Object>) embeddedUser.get("_links");
-    assertThat(links.size()).isEqualTo(1);
+    assertThat(links).hasSize(1);
     assertHalLink(links, "self", UserRestService.PATH + "/" + MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME);
 
     embeddedUser = embeddedUsers.get(1);
     assertThat(embeddedUser).as("The returned user should not be null.").isNotNull();
-    assertThat(embeddedUser.get("id")).isEqualTo(MockProvider.EXAMPLE_TASK_OWNER);
-    assertThat(embeddedUser.get("firstName")).isEqualTo(MockProvider.EXAMPLE_USER_FIRST_NAME);
-    assertThat(embeddedUser.get("lastName")).isEqualTo(MockProvider.EXAMPLE_USER_LAST_NAME);
-    assertThat(embeddedUser.get("email")).isEqualTo(MockProvider.EXAMPLE_USER_EMAIL);
+    assertThat(embeddedUser).containsEntry("id", MockProvider.EXAMPLE_TASK_OWNER);
+    assertThat(embeddedUser).containsEntry("firstName", MockProvider.EXAMPLE_USER_FIRST_NAME);
+    assertThat(embeddedUser).containsEntry("lastName", MockProvider.EXAMPLE_USER_LAST_NAME);
+    assertThat(embeddedUser).containsEntry("email", MockProvider.EXAMPLE_USER_EMAIL);
     assertThat(embeddedUser.get("_embedded")).isNull();
     links = (Map<String, Object>) embeddedUser.get("_links");
-    assertThat(links.size()).isEqualTo(1);
+    assertThat(links).hasSize(1);
     assertHalLink(links, "self", UserRestService.PATH + "/" + MockProvider.EXAMPLE_TASK_OWNER);
 
     // validate embedded groups:
@@ -614,22 +614,22 @@ public class TaskRestServiceInteractionTest extends
 
     Map<String, Object> embeddedGroup = embeddedGroups.get(0);
     assertThat(embeddedGroup).as("The returned group should not be null.").isNotNull();
-    assertThat(embeddedGroup.get("id")).isEqualTo(MockProvider.EXAMPLE_GROUP_ID);
-    assertThat(embeddedGroup.get("name")).isEqualTo(MockProvider.EXAMPLE_GROUP_NAME);
-    assertThat(embeddedGroup.get("type")).isEqualTo(MockProvider.EXAMPLE_GROUP_TYPE);
+    assertThat(embeddedGroup).containsEntry("id", MockProvider.EXAMPLE_GROUP_ID);
+    assertThat(embeddedGroup).containsEntry("name", MockProvider.EXAMPLE_GROUP_NAME);
+    assertThat(embeddedGroup).containsEntry("type", MockProvider.EXAMPLE_GROUP_TYPE);
     assertThat(embeddedGroup.get("_embedded")).isNull();
     links = (Map<String, Object>) embeddedGroup.get("_links");
-    assertThat(links.size()).isEqualTo(1);
+    assertThat(links).hasSize(1);
     assertHalLink(links, "self", GroupRestService.PATH + "/" + MockProvider.EXAMPLE_GROUP_ID);
 
     embeddedGroup = embeddedGroups.get(1);
     assertThat(embeddedGroup).as("The returned group should not be null.").isNotNull();
-    assertThat(embeddedGroup.get("id")).isEqualTo(MockProvider.EXAMPLE_GROUP_ID2);
-    assertThat(embeddedGroup.get("name")).isEqualTo(MockProvider.EXAMPLE_GROUP_NAME);
-    assertThat(embeddedGroup.get("type")).isEqualTo(MockProvider.EXAMPLE_GROUP_TYPE);
+    assertThat(embeddedGroup).containsEntry("id", MockProvider.EXAMPLE_GROUP_ID2);
+    assertThat(embeddedGroup).containsEntry("name", MockProvider.EXAMPLE_GROUP_NAME);
+    assertThat(embeddedGroup).containsEntry("type", MockProvider.EXAMPLE_GROUP_TYPE);
     assertThat(embeddedGroup.get("_embedded")).isNull();
     links = (Map<String, Object>) embeddedGroup.get("_links");
-    assertThat(links.size()).isEqualTo(1);
+    assertThat(links).hasSize(1);
     assertHalLink(links, "self", GroupRestService.PATH + "/" + MockProvider.EXAMPLE_GROUP_ID2);
 
     // validate embedded processDefinitions:
@@ -637,21 +637,21 @@ public class TaskRestServiceInteractionTest extends
     assertThat(embeddedDefinitions.size()).as("There should be one processDefinition returned.").isEqualTo(1);
     Map<String, Object> embeddedProcessDefinition = embeddedDefinitions.get(0);
     assertThat(embeddedProcessDefinition).as("The returned processDefinition should not be null.").isNotNull();
-    assertThat(embeddedProcessDefinition.get("id")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
-    assertThat(embeddedProcessDefinition.get("key")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
-    assertThat(embeddedProcessDefinition.get("category")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY);
-    assertThat(embeddedProcessDefinition.get("name")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME);
-    assertThat(embeddedProcessDefinition.get("description")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION);
-    assertThat(embeddedProcessDefinition.get("version")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION);
-    assertThat(embeddedProcessDefinition.get("versionTag")).isEqualTo(MockProvider.EXAMPLE_VERSION_TAG);
-    assertThat(embeddedProcessDefinition.get("resource")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME);
-    assertThat(embeddedProcessDefinition.get("deploymentId")).isEqualTo(MockProvider.EXAMPLE_DEPLOYMENT_ID);
-    assertThat(embeddedProcessDefinition.get("diagram")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME);
-    assertThat(embeddedProcessDefinition.get("suspended")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED);
-    assertThat(embeddedProcessDefinition.get("contextPath")).isEqualTo(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH);
+    assertThat(embeddedProcessDefinition).containsEntry("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(embeddedProcessDefinition).containsEntry("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+    assertThat(embeddedProcessDefinition).containsEntry("category", MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY);
+    assertThat(embeddedProcessDefinition).containsEntry("name", MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME);
+    assertThat(embeddedProcessDefinition).containsEntry("description", MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION);
+    assertThat(embeddedProcessDefinition).containsEntry("version", MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION);
+    assertThat(embeddedProcessDefinition).containsEntry("versionTag", MockProvider.EXAMPLE_VERSION_TAG);
+    assertThat(embeddedProcessDefinition).containsEntry("resource", MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME);
+    assertThat(embeddedProcessDefinition).containsEntry("deploymentId", MockProvider.EXAMPLE_DEPLOYMENT_ID);
+    assertThat(embeddedProcessDefinition).containsEntry("diagram", MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME);
+    assertThat(embeddedProcessDefinition).containsEntry("suspended", MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED);
+    assertThat(embeddedProcessDefinition).containsEntry("contextPath", MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH);
 
     links = (Map<String, Object>) embeddedProcessDefinition.get("_links");
-    assertThat(links.size()).isEqualTo(3);
+    assertThat(links).hasSize(3);
     assertHalLink(links, "self", "/process-definition/" +  MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
     assertHalLink(links, "deployment", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID);
     assertHalLink(links, "resource", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID + "/resources/"
@@ -663,17 +663,17 @@ public class TaskRestServiceInteractionTest extends
     assertThat(embeddedCaseDefinitions.size()).as("There should be one caseDefinition returned.").isEqualTo(1);
     Map<String, Object> embeddedCaseDefinition = embeddedCaseDefinitions.get(0);
     assertThat(embeddedCaseDefinition).as("The returned caseDefinition should not be null.").isNotNull();
-    assertThat(embeddedCaseDefinition.get("id")).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
-    assertThat(embeddedCaseDefinition.get("key")).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_KEY);
-    assertThat(embeddedCaseDefinition.get("category")).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_CATEGORY);
-    assertThat(embeddedCaseDefinition.get("name")).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_NAME);
-    assertThat(embeddedCaseDefinition.get("version")).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_VERSION);
-    assertThat(embeddedCaseDefinition.get("resource")).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_RESOURCE_NAME);
-    assertThat(embeddedCaseDefinition.get("deploymentId")).isEqualTo(MockProvider.EXAMPLE_DEPLOYMENT_ID);
-    assertThat(embeddedCaseDefinition.get("contextPath")).isEqualTo(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH);
+    assertThat(embeddedCaseDefinition).containsEntry("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID);
+    assertThat(embeddedCaseDefinition).containsEntry("key", MockProvider.EXAMPLE_CASE_DEFINITION_KEY);
+    assertThat(embeddedCaseDefinition).containsEntry("category", MockProvider.EXAMPLE_CASE_DEFINITION_CATEGORY);
+    assertThat(embeddedCaseDefinition).containsEntry("name", MockProvider.EXAMPLE_CASE_DEFINITION_NAME);
+    assertThat(embeddedCaseDefinition).containsEntry("version", MockProvider.EXAMPLE_CASE_DEFINITION_VERSION);
+    assertThat(embeddedCaseDefinition).containsEntry("resource", MockProvider.EXAMPLE_CASE_DEFINITION_RESOURCE_NAME);
+    assertThat(embeddedCaseDefinition).containsEntry("deploymentId", MockProvider.EXAMPLE_DEPLOYMENT_ID);
+    assertThat(embeddedCaseDefinition).containsEntry("contextPath", MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH);
 
     links = (Map<String, Object>) embeddedCaseDefinition.get("_links");
-    assertThat(links.size()).isEqualTo(3);
+    assertThat(links).hasSize(3);
     assertHalLink(links, "self", "/case-definition/" +  MockProvider.EXAMPLE_CASE_DEFINITION_ID);
     assertHalLink(links, "deployment", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID);
     assertHalLink(links, "resource", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID + "/resources/"
@@ -701,10 +701,10 @@ public class TaskRestServiceInteractionTest extends
   @SuppressWarnings("unchecked")
   protected void assertEmbeddedIdentityLink(IdentityLink expected, Map<String, Object> actual) {
     assertThat(actual).as("Embedded indentity link should not be null").isNotNull();
-    assertThat(actual.get("type")).isEqualTo(expected.getType());
-    assertThat(actual.get("userId")).isEqualTo(expected.getUserId());
-    assertThat(actual.get("groupId")).isEqualTo(expected.getGroupId());
-    assertThat(actual.get("taskId")).isEqualTo(expected.getTaskId());
+    assertThat(actual).containsEntry("type", expected.getType());
+    assertThat(actual).containsEntry("userId", expected.getUserId());
+    assertThat(actual).containsEntry("groupId", expected.getGroupId());
+    assertThat(actual).containsEntry("taskId", expected.getTaskId());
     assertThat(actual.get("_embedded")).isNull();
 
     Map<String, Object> links = (Map<String, Object>) actual.get("_links");
@@ -4219,7 +4219,7 @@ public class TaskRestServiceInteractionTest extends
   @SuppressWarnings({ "rawtypes", "unchecked" })
   private void verifyTaskComments(List<Comment> mockTaskComments, Response response) {
     List list = response.as(List.class);
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     LinkedHashMap<String, String> resourceHashMap = (LinkedHashMap<String, String>) list.get(0);
 
@@ -4263,18 +4263,18 @@ public class TaskRestServiceInteractionTest extends
 
   private void verifyTaskCommentLink(Comment mockTaskComment, String responseContent) {
     List<Map<String, String>> returnedLinks = from(responseContent).getList("links");
-    assertThat(returnedLinks.size()).isEqualTo(1);
+    assertThat(returnedLinks).hasSize(1);
 
     Map<String, String> returnedLink = returnedLinks.get(0);
-    assertThat(returnedLink.get("method")).isEqualTo(HttpMethod.GET);
+    assertThat(returnedLink).containsEntry("method", HttpMethod.GET);
     assertThat(returnedLink.get("href")).endsWith(SINGLE_TASK_COMMENTS_URL.replace("{id}", mockTaskComment.getTaskId()) + "/" + mockTaskComment.getId());
-    assertThat(returnedLink.get("rel")).isEqualTo("self");
+    assertThat(returnedLink).containsEntry("rel", "self");
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
   private void verifyTaskAttachments(List<Attachment> mockTaskAttachments, Response response) {
     List list = response.as(List.class);
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     LinkedHashMap<String, String> resourceHashMap = (LinkedHashMap<String, String>) list.get(0);
 
@@ -4324,12 +4324,12 @@ public class TaskRestServiceInteractionTest extends
 
   private void verifyTaskAttachmentLink(Attachment mockTaskAttachment, String responseContent) {
     List<Map<String, String>> returnedLinks = from(responseContent).getList("links");
-    assertThat(returnedLinks.size()).isEqualTo(1);
+    assertThat(returnedLinks).hasSize(1);
 
     Map<String, String> returnedLink = returnedLinks.get(0);
-    assertThat(returnedLink.get("method")).isEqualTo(HttpMethod.GET);
+    assertThat(returnedLink).containsEntry("method", HttpMethod.GET);
     assertThat(returnedLink.get("href")).endsWith(SINGLE_TASK_ATTACHMENTS_URL.replace("{id}", mockTaskAttachment.getTaskId()) + "/" + mockTaskAttachment.getId());
-    assertThat(returnedLink.get("rel")).isEqualTo("self");
+    assertThat(returnedLink).containsEntry("rel", "self");
   }
 
 }

@@ -70,7 +70,7 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
       .singleResult()
       .getId();
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deploymentId);
-    assertThat(deploymentResources.size()).isEqualTo(3);
+    assertThat(deploymentResources).hasSize(3);
   }
 
 }

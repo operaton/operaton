@@ -105,7 +105,7 @@ class ConnectProcessEnginePluginTest {
 
     // validate input parameter
     assertNotNull(TestConnector.requestParameters.get("reqParam1"));
-    assertThat(TestConnector.requestParameters.get("reqParam1")).isEqualTo(inputVariableValue);
+    assertThat(TestConnector.requestParameters).containsEntry("reqParam1", inputVariableValue);
 
     // validate connector output
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("out1").singleResult();
@@ -288,7 +288,7 @@ class ConnectProcessEnginePluginTest {
 
     // validate input parameter
     assertNotNull(TestConnector.requestParameters.get("reqParam1"));
-    assertThat(TestConnector.requestParameters.get("reqParam1")).isEqualTo(inputVariableValue);
+    assertThat(TestConnector.requestParameters).containsEntry("reqParam1", inputVariableValue);
 
     // validate connector output
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("out1").singleResult();
@@ -310,7 +310,7 @@ class ConnectProcessEnginePluginTest {
 
     // validate input parameter
     assertNotNull(TestConnector.requestParameters.get("reqParam1"));
-    assertThat(TestConnector.requestParameters.get("reqParam1")).isEqualTo(inputVariableValue);
+    assertThat(TestConnector.requestParameters).containsEntry("reqParam1", inputVariableValue);
 
     // validate connector output
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("out1").singleResult();
@@ -334,7 +334,7 @@ class ConnectProcessEnginePluginTest {
 
     // validate input parameter
     assertNotNull(TestConnector.requestParameters.get("reqParam1"));
-    assertThat(TestConnector.requestParameters.get("reqParam1")).isEqualTo(inputVariableValue);
+    assertThat(TestConnector.requestParameters).containsEntry("reqParam1", inputVariableValue);
 
     // validate connector output
     HistoricVariableInstance variable = historyService.createHistoricVariableInstanceQuery().variableName("out1").singleResult();

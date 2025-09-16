@@ -234,7 +234,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     String returnedHistoricDecisionInstanceId = from(content).getString("[0].id");
@@ -320,7 +320,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     List<Map<String, Object>> returnedInputs = from(content).getList("[0].inputs");
@@ -354,7 +354,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     List<Map<String, Object>> returnedInputs = from(content).getList("[0].inputs");
@@ -389,7 +389,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     List<Map<String, Object>> returnedInputs = from(content).getList("[0].inputs");

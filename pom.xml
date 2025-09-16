@@ -296,8 +296,8 @@
               <additionalJOption>-Xdoclint:none</additionalJOption>
               <additionalJOption>--ignore-source-errors</additionalJOption>
             </additionalJOptions>
-            <doctitle>Operaton XXXJavadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</doctitle>
-            <windowtitle>Operaton XXXJavadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</windowtitle>
+            <doctitle>Operaton Javadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</doctitle>
+            <windowtitle>Operaton Javadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</windowtitle>
             <excludePackageNames>*.impl:*.impl.*</excludePackageNames>
           </configuration>
         </plugin>

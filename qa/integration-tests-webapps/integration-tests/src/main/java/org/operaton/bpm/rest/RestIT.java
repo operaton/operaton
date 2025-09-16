@@ -39,7 +39,6 @@ import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
 import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -88,7 +87,7 @@ class RestIT extends AbstractWebIntegrationTest {
     for (int i = 0; i < definitionsJson.length(); i++) {
       JSONObject definitionJson = definitionsJson.getJSONObject(i);
       assertTrue(definitionJson.isNull("description"));
-      assertFalse(definitionJson.getBoolean("suspended"));
+      assertThat(definitionJson.getBoolean("suspended")).isFalse();
       if ("ReviewInvoice".equals(definitionJson.getString("key"))) {
         assertThat(definitionJson.getString("category")).isEqualTo("http://bpmn.io/schema/bpmn");
         assertThat(definitionJson.getString("name")).isEqualTo("Review Invoice");

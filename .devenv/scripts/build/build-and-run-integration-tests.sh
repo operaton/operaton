@@ -6,11 +6,10 @@ TEST_SUITE="engine"
 DATABASE="h2"
 DISTRO="tomcat"
 RUNNER="./mvnw"
-DAEMON=false
 VALID_TEST_SUITES=("engine" "webapps" "db-rolling-update")
 VALID_DISTROS=("operaton" "tomcat" "wildfly")
 VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb" "oracle" "db2" "sqlserver")
-
+VALID_RUNNERS=("mvn" "./mvnw" "mvnd")
 ##########################################################################
 check_valid_values() {
   local param_name=$1
@@ -45,16 +44,24 @@ parse_args() {
       --no-test)
         EXECUTE_TEST=false
         ;;
-      --daemon)
-        RUNNER="mvnd"
+      --runner=*)
+        runner_param="${1#*=}"
+        case "$runner_param" in
+          mvn|mvnd)
+            RUNNER="$runner_param"
+            ;;
+          mvnw)
+            RUNNER="./mvnw"
+            ;;
+        esac
         ;;
     esac
     shift
   done
-
   check_valid_values "testsuite" "$TEST_SUITE" "${VALID_TEST_SUITES[@]}"
   check_valid_values "distro" "$DISTRO" "${VALID_DISTROS[@]}"
   check_valid_values "db" "$DATABASE" "${VALID_DATABASES[@]}"
+  check_valid_values "runner" "$RUNNER" "${VALID_RUNNERS[@]}"
 }
 
 run_build () {

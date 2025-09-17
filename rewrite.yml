@@ -104,6 +104,11 @@ recipeList:
   - org.openrewrite.java.testing.assertj.JUnitAssertThrowsToAssertExceptionType
   - org.openrewrite.java.testing.assertj.JUnitTryFailToAssertThatThrownBy
   - org.openrewrite.java.testing.assertj.JUnitAssertInstanceOfToAssertThat
+  # More AssertJ
+  - org.openrewrite.java.testing.assertj.AssertJBestPracticesTest
+  - org.openrewrite.java.testing.assertj.AssertJShortRulesRecipes
+  # Very slow:
+  #- tech.picnic.errorprone.refasterrules.AssertJObjectRulesRecipes
   # Logging
   - org.openrewrite.java.logging.slf4j.ParameterizedLogging
   - org.operaton.AddLicenseHeader

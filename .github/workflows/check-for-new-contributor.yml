@@ -1,0 +1,148 @@
+name: First-time Contributor Check
+
+on:
+  pull_request_target:
+    types: [opened]
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  greet-first-time-pr:
+    name: Greet First-Time PR Contributors
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.event.pull_request.head.repo.fork
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for first-time PR contributor
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            const author = context.actor;
+            const { owner, repo } = context.repo;
+            const prTitle = context.payload.pull_request.title;
+
+            console.log(`Checking for past PRs from ${author}...`);
+            const allIssues = await github.paginate(github.rest.issues.listForRepo, {
+              owner,
+              repo,
+              creator: author,
+              state: 'all'
+            });
+
+            const prs = allIssues.filter(issue => issue.pull_request);
+            const prCount = prs.length;
+
+            console.log(`Found ${prCount} PR(s) from ${author}.`);
+
+            if (prCount === 1 || prTitle.includes('[FORCE GREETING]')) {
+              let prMessage = fs.readFileSync(
+                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/pr_welcome.md'),
+                'utf8'
+              );
+              prMessage = prMessage.replace(/\$\{author\}/g, author);
+
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: context.issue.number,
+                body: prMessage
+              });
+            }
+
+  greet-first-time-issue:
+    name: Greet First-Time Issue Creators
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues' && github.event.action == 'opened'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for first-time Issue creator
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            const author = context.actor;
+            const { owner, repo } = context.repo;
+            const issueTitle = context.payload.issue.title;
+
+            console.log(`Checking for past Issues from ${author}...`);
+            const allIssues = await github.paginate(github.rest.issues.listForRepo, {
+              owner,
+              repo,
+              creator: author,
+              state: 'all'
+            });
+
+            const issues = allIssues.filter(issue => !issue.pull_request);
+            const issueCount = issues.length;
+
+            console.log(`Found ${issueCount} Issue(s) from ${author}.`);
+
+            if (issueCount === 1 || issueTitle.includes('[FORCE GREETING]')) {
+              let issueMessage = fs.readFileSync(
+                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/issue_welcome.md'),
+                'utf8'
+              );
+              issueMessage = issueMessage.replace(/\$\{author\}/g, author);
+
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: context.issue.number,
+                body: issueMessage
+              });
+            }
+
+  greet-first-time-comment:
+    name: Greet First-Time Issue Commenters
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issue_comment' && github.event.action == 'created'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const author = context.actor;
+            const { owner, repo } = context.repo;
+            const commentBody = context.payload.comment.body;
+            
+            console.log(`Checking for past comments from ${author}...`);
+            const allComments = await github.paginate(github.rest.issues.listCommentsForRepo, {
+              owner,
+              repo
+            });
+            
+            const userComments = allComments.filter(c => c.user.login === author);
+            const commentCount = userComments.length;
+            
+            console.log(`Found ${commentCount} comment(s) from ${author}.`);
+            
+            if (commentCount === 1 || commentBody.includes('[FORCE GREETING]')) {
+              let commentMessage = fs.readFileSync(
+                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/first_comment_on_issue.md'),
+                'utf8'
+              ).replace(/\$\{author\}/g, author);
+            
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: context.issue.number,
+                body: commentMessage
+              });
+            }

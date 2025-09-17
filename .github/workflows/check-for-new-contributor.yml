@@ -135,7 +135,7 @@ jobs:
             
             if (commentCount === 1 || commentBody.includes('[FORCE GREETING]')) {
               let commentMessage = fs.readFileSync(
-                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/comment_welcome.md'),
+                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/first_comment_on_issue.md'),
                 'utf8'
               ).replace(/\$\{author\}/g, author);
             

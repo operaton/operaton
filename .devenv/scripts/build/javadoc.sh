@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
+set -e
 
 CMD="./mvnw package javadoc:javadoc javadoc:aggregate -Pdistro,distro-wildfly,distro-webjar,javadocs \
- -pl '!distro/wildfly/modules,!engine-rest/engine-rest-openapi' \
+ -pl '!distro/wildfly/modules,!distro/wildfly/assembly,!distro/wildfly/webapp,!distro/wildfly/distro,!engine-rest/engine-rest-openapi,!engine-rest/docs' \
  -DskipTests=true -Dskip.frontend.build=true"
 
-# -pl '!distro/wildfly/modules,!engine-rest/engine-rest-openapi' \
 echo $CMD
 
 

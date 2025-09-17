@@ -124,8 +124,9 @@ Operaton uses and includes third-party dependencies published under various lice
 
 ## Project reports
 
-- [Dependency Update Candidates](https://operaton.github.io/operaton/dependency-updates-aggregate-report.html)
-- [Maven Plugin Update Candidates](https://operaton.github.io/operaton/plugin-updates-aggregate-report.html)
+- [Dependency Update Candidates](https://operaton.github.io/operaton/reports/dependency-updates-aggregate-report.html)
+- [Maven Plugin Update Candidates](https://operaton.github.io/operaton/reports/plugin-updates-aggregate-report.html)
+- [Javadoc API](https://operaton.github.io/operaton/javadoc/operaton/1.0/index.html)
 
 ## Contributors
 

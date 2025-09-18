@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm;
 
-import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Locale;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

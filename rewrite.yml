@@ -27,7 +27,7 @@ name: org.operaton.AddLicenseHeader
 displayName: Add Operaton ASL2 header
 recipeList:
   - org.openrewrite.java.AddLicenseHeader:
-      licenseText: |        
+      licenseText: |
         Copyright ${CURRENT_YEAR} the Operaton contributors.
         
         Licensed under the Apache License, Version 2.0 (the "License");
@@ -64,6 +64,16 @@ recipeList:
   - org.openrewrite.java.migrate.lang.StringFormatted
   - org.openrewrite.java.migrate.UpgradeToJava17
   - org.openrewrite.java.migrate.DeprecatedLogRecordThreadID
+  # Logging
+  - org.openrewrite.java.logging.slf4j.ParameterizedLogging
+  - org.operaton.AddLicenseHeader
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: org.operaton.recipe.TestsCleanup
+displayName: Tests cleanup
+description: Automatically cleanup test code, use best practices for JUnit 5, AssertJ, and Mockito.
+recipeList:
+  - org.openrewrite.java.RemoveUnusedImports
   # Testing
   - org.openrewrite.java.testing.assertj.AssertJShortRulesRecipes$AbstractShortAssertIsZeroRecipe
   - org.openrewrite.java.testing.assertj.CollapseConsecutiveAssertThatStatements
@@ -109,6 +119,3 @@ recipeList:
   - org.openrewrite.java.testing.assertj.AssertJShortRulesRecipes
   # Very slow:
   #- tech.picnic.errorprone.refasterrules.AssertJObjectRulesRecipes
-  # Logging
-  - org.openrewrite.java.logging.slf4j.ParameterizedLogging
-  - org.operaton.AddLicenseHeader

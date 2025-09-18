@@ -326,6 +326,12 @@ jobs:
         run: |
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-test
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-test
+      - name: Install Chromedriver
+        id: install-chromedriver
+        if: ${{ matrix.testsuite == 'webapps' }}
+        shell: bash
+        run: |
+          .github/scripts/install-chrome-and-driver.sh
       - name: Execute Integration Tests
         id: maven-integration-tests
         shell: bash

@@ -19,7 +19,7 @@ package org.operaton.bpm.example.invoice;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -32,13 +32,14 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.slf4j.LoggerFactory;
 
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.fileValue;
 
 public final class InvoiceApplicationHelper {
 
-  private static final Logger LOGGER = Logger.getLogger(InvoiceApplicationHelper.class.getName());
+  private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceApplicationHelper.class);
 
   private static final String PROCDEFKEY_INVOICE = "invoice";
   private static final String RESOURCE_INVOICE_PDF = "invoice.pdf";
@@ -112,7 +113,7 @@ public final class InvoiceApplicationHelper {
 
     if (numberOfRunningProcessInstances == 0) { // start three process instances
 
-      LOGGER.info("Start 3 instances of " + processDefinition.getName() + ", version " + processDefinition.getVersion());
+      LOGGER.info("Start 3 instances of {}, version {}", processDefinition.getName(), processDefinition.getVersion());
       // process instance 1
       processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
           .putValue(VAR_CREDITOR, "Great Pizza for Everyone Inc.")
@@ -193,9 +194,8 @@ public final class InvoiceApplicationHelper {
         processEngine.getIdentityService().clearAuthentication();
       }
     } else {
-      LOGGER.info("No new instances of " + processDefinition.getName()
-          + " version " + processDefinition.getVersion()
-          + " started, there are " + numberOfRunningProcessInstances + " instances running");
+      LOGGER.info("No new instances of {} version {} started, there are {} instances running",
+          processDefinition.getName(), processDefinition.getVersion(), numberOfRunningProcessInstances);
     }
   }
 

@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.pa.service;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -27,11 +28,11 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class ArchiveInvoiceService implements JavaDelegate {
 
-    private final Logger LOGGER = Logger.getLogger(ArchiveInvoiceService.class.getName());
+    private final Logger LOGGER = LoggerFactory.getLogger(ArchiveInvoiceService.class);
 
     public void execute(DelegateExecution execution) {
 
-        LOGGER.info("\n\n  ... Now archiving invoice "+execution.getVariable("invoiceNumber")+" \n\n");
+        LOGGER.info("\n\n  ... Now archiving invoice {} \n\n", execution.getVariable("invoiceNumber"));
 
     }
 

@@ -47,6 +47,7 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "mainDeployment.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(TestConstants.class)

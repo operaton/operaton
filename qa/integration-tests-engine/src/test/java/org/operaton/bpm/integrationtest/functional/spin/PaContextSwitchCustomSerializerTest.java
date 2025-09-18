@@ -49,6 +49,7 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "pa3.war")
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(ProcessApplication3.class)
         .addClass(XmlSerializable.class)
         .addClass(XmlSerializableJsonDeserializer.class)

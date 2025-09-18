@@ -32,8 +32,7 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 
 /**
@@ -160,13 +159,7 @@ class TaskVariablesTest {
     ObjectValue serializedValueLocal = taskService.getVariableLocalTyped(taskId, "objectVariableLocal", false);
     assertThat(serializedValueLocal.isDeserialized()).isFalse();
 
-    try {
-      StringValue val = taskService.getVariableTyped(taskId, "objectVariable");
-      fail("expected exception");
-    }
-    catch(ClassCastException e) {
-      //happy path
-    }
+    assertThatThrownBy(() -> taskService.getVariableTyped(taskId, "objectVariable")).isInstanceOf(ClassCastException.class);
 
   }
 }

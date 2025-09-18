@@ -85,6 +85,36 @@ Execute this script from the root of the repository:
 .devenv/scripts/maintenance/code-cleanup.sh
 ```
 
+### Options
+
+- `--cleanups=LIST`  
+  Comma-separated list of cleanups to run. Valid values: `imports`, `code`, `tests`.  
+  If not specified, all cleanups are run.
+- `--help`  
+  Show usage and exit.
+
+### Examples
+
+Run all cleanups (imports, code, tests):
+
+```bash
+.devenv/scripts/maintenance/code-cleanup.sh
+```
+
+Run only imports and code cleanups:
+
+```bash
+.devenv/scripts/maintenance/code-cleanup.sh --cleanups=imports,code
+```
+
+Show help:
+
+```bash
+.devenv/scripts/maintenance/code-cleanup.sh --help
+```
+
+If an invalid cleanup value is specified, the script prints an error and exits.
+
 ## `init-database-version.py` — Database Version Maintenance
 
 This script automates the process of initializing and updating the database version across all supported databases and related files.

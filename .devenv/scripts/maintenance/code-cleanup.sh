@@ -56,7 +56,8 @@ for arg in "$@"; do
   esac
 done
 
-PROFILES=distro,distro-run,distro-wildfly,distro-starter,distro-serverless
+#PROFILES=distro,distro-run,distro-wildfly,distro-starter,distro-serverless
+PROFILES=distro
 
 RECIPES=()
 RUN_IMPORTS=0

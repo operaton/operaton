@@ -465,7 +465,7 @@
         <bind name="varTypeField" value="'TYPE_'"/>
         <if test="queryVariableValue.valueConditions != null">
             and
-            <include refid="org.camunda.bpm.engine.impl.persistence.entity.Commons.variableValueConditions"/>
+            <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.variableValueConditions"/>
         </if>
         )
       </foreach>

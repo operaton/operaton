@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
 
 import javax.xml.stream.XMLStreamException;
 import org.jboss.as.controller.PathAddress;
@@ -98,7 +97,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     .append("ProcessEngineService!org.operaton.bpm.ProcessEngineService");
 
   public JBossSubsystemXMLTest() {
-    super(ModelConstants.SUBSYSTEM_NAME, new BpmPlatformExtension(), getSubsystemRemoveOrderComparator());
+    super(ModelConstants.SUBSYSTEM_NAME, new BpmPlatformExtension(), new SubsystemRemoveOrderComparator());
   }
 
   private static final Map<String, String> EXPRESSION_PROPERTIES = new HashMap<>();
@@ -123,6 +122,42 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     EXPRESSION_PROPERTIES.put("org.operaton.bpm.jboss.job-executor.job-acquisition.default.property.lockTimeInMillis", "300000");
     EXPRESSION_PROPERTIES.put("org.operaton.bpm.jboss.job-executor.job-acquisition.default.property.waitTimeInMillis", "5000");
     EXPRESSION_PROPERTIES.put("org.operaton.bpm.jboss.job-executor.job-acquisition.default.property.maxJobsPerAcquisition", "3");
+  }
+
+  private static class SubsystemRemoveOrderComparator implements Comparator<PathAddress> {
+    private static final List<PathAddress> REMOVE_ORDER_OF_SUBSYSTEM = List.of(
+            PathAddress.pathAddress(BpmPlatformExtension.SUBSYSTEM_PATH),
+            PathAddress.pathAddress(BpmPlatformExtension.JOB_EXECUTOR_PATH),
+            PathAddress.pathAddress(BpmPlatformExtension.JOB_ACQUISTIONS_PATH),
+            PathAddress.pathAddress(BpmPlatformExtension.PROCESS_ENGINES_PATH)
+    );
+
+    @Override
+    public int compare(PathAddress o1, PathAddress o2) {
+      int orderO1 = getOrder(normalizePathAddress(o1));
+      int orderO2 = getOrder(normalizePathAddress(o2));
+
+      return Integer.compare(orderO1, orderO2);
+    }
+
+    private PathAddress normalizePathAddress(PathAddress pathAddress) {
+      if (pathAddress.size() == 1 && pathAddress.equals(REMOVE_ORDER_OF_SUBSYSTEM.get(0))) {
+        return pathAddress;
+      } else {
+        // strip subsystem parentAddress
+        return pathAddress.subAddress(1, pathAddress.size());
+      }
+    }
+
+    private int getOrder(PathAddress pathAddress) {
+      for (PathAddress orderedAddress : REMOVE_ORDER_OF_SUBSYSTEM) {
+        if (orderedAddress.getLastElement().getKey().equals(pathAddress.getLastElement().getKey())) {
+          return REMOVE_ORDER_OF_SUBSYSTEM.indexOf(orderedAddress);
+        }
+      }
+      throw new IllegalArgumentException("Unable to find a match for path address: " + pathAddress);
+    }
+
   }
 
   @Test
@@ -673,48 +708,6 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     assertThat(container.getService(PLATFORM_BPM_PLATFORM_PLUGINS_SERVICE_NAME)).withFailMessage("bpm platform plugins service should be installed").isNotNull();
   }
 
-  protected static Comparator<PathAddress> getSubsystemRemoveOrderComparator() {
-    final List<PathAddress> REMOVE_ORDER_OF_SUBSYSTEM = Arrays.asList(
-        PathAddress.pathAddress(BpmPlatformExtension.SUBSYSTEM_PATH),
-        PathAddress.pathAddress(BpmPlatformExtension.JOB_EXECUTOR_PATH),
-        PathAddress.pathAddress(BpmPlatformExtension.JOB_ACQUISTIONS_PATH),
-        PathAddress.pathAddress(BpmPlatformExtension.PROCESS_ENGINES_PATH)
-    );
-
-    return new Comparator<PathAddress>() {
-      protected PathAddress normalizePathAddress(PathAddress pathAddress) {
-        if (pathAddress.size() == 1 && pathAddress.equals(REMOVE_ORDER_OF_SUBSYSTEM.get(0))) {
-          return pathAddress;
-        } else {
-          // strip subsystem parentAddress
-          return pathAddress.subAddress(1, pathAddress.size());
-        }
-      }
-
-      protected int getOrder(PathAddress pathAddress) {
-        for (PathAddress orderedAddress : REMOVE_ORDER_OF_SUBSYSTEM) {
-          if (orderedAddress.getLastElement().getKey().equals(pathAddress.getLastElement().getKey())) {
-            return REMOVE_ORDER_OF_SUBSYSTEM.indexOf(orderedAddress);
-          }
-        }
-        throw new IllegalArgumentException("Unable to find a match for path address: " + pathAddress);
-      }
-
-      @Override
-      public int compare(PathAddress o1, PathAddress o2) {
-        int orderO1 = getOrder(normalizePathAddress(o1));
-        int orderO2 = getOrder(normalizePathAddress(o2));
-
-        if (orderO1 < orderO2) {
-          return -1;
-        } else if (orderO1 > orderO2) {
-          return 1;
-        } else {
-          return 0;
-        }
-      }
-    };
-  }
 
   private void assertExpressionType(ModelNode operation, String... elements) {
     assertModelType(ModelType.EXPRESSION, operation, elements);

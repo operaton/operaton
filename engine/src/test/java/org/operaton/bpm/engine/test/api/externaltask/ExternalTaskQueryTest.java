@@ -674,39 +674,42 @@ public class ExternalTaskQueryTest{
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessDefinitionKey() throws Exception {
-    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKey("oneExternalTaskProcess").count()).isEqualTo(0);
+  void testProcessDefinitionKey() {
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKey("oneExternalTaskProcess").count()).isZero();
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKey("oneExternalTaskProcess").count()).isEqualTo(1);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessDefinitionKeyIn() throws Exception {
-      assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKeyIn("oneExternalTaskProcess").count()).isEqualTo(0);
-    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
-      assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKeyIn("oneExternalTaskProcess").count()).isEqualTo(1);
+  void testProcessDefinitionKeyIn() {
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKeyIn("oneExternalTaskProcess").count()).isZero();
+    var processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
+    assertThat(processInstance).isNotNull();
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKeyIn("oneExternalTaskProcess").count()).isEqualTo(1);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessDefinitionName() throws Exception {
-      assertThat(externalTaskService.createExternalTaskQuery().processDefinitionName("One external task process").count()).isEqualTo(0);
-    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
-      assertThat(externalTaskService.createExternalTaskQuery().processDefinitionName("One external task process").count()).isEqualTo(1);
+  void testProcessDefinitionName() {
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionName("One external task process").count()).isZero();
+    var processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
+    assertThat(processInstance).isNotNull();
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionName("One external task process").count()).isEqualTo(1);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void processDefinitionNameLike() throws Exception {
-      assertThat(externalTaskService.createExternalTaskQuery().processDefinitionNameLike("One external task proc%").count()).isEqualTo(0);
-    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
-      assertThat(externalTaskService.createExternalTaskQuery().processDefinitionNameLike("One external task proc%").count()).isEqualTo(1);
+  void processDefinitionNameLike() {
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionNameLike("One external task proc%").count()).isZero();
+    var processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
+    assertThat(processInstance).isNotNull();
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionNameLike("One external task proc%").count()).isEqualTo(1);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEquals() throws Exception {
+  void testProcessVariableValueEquals() throws Exception {
     Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 928374L);
     variables.put("shortVar", (short) 123);
@@ -942,7 +945,7 @@ public class ExternalTaskQueryTest{
     assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", before).count()).isEqualTo(0);
 
     assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", after).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", date).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", date).count()).isEqualTo(1);
     assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", before).count()).isEqualTo(0);
 
     //test with string values

@@ -127,13 +127,13 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
 
   @Override
   public ExternalTaskQuery locked() {
-    this.locked = Boolean.TRUE;
+    this.locked = TRUE;
     return this;
   }
 
   @Override
   public ExternalTaskQuery notLocked() {
-    this.notLocked = Boolean.TRUE;
+    this.notLocked = TRUE;
     return this;
   }
 
@@ -329,7 +329,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
 
   @Override
   public ExternalTaskQuery withRetriesLeft() {
-    this.retriesLeft = Boolean.TRUE;
+    this.retriesLeft = TRUE;
     return this;
   }
 
@@ -394,8 +394,8 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
 
   @Override
   public long executeCount(CommandContext commandContext) {
-      ensureVariablesInitialized();
-      checkQueryOk();
+    ensureVariablesInitialized();
+    checkQueryOk();
     return commandContext
       .getExternalTaskManager()
       .findExternalTaskCountByQueryCriteria(this);

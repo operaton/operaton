@@ -13,7 +13,11 @@ on:
         options:
           - '["17"]'
           - '["21"]'
+          - '["25"]'
           - '["17", "21"]'
+          - '["17", "25"]'
+          - '["21", "25"]'
+          - '["17", "21", "25"]'
       skip_build:
         description: 'Build: By default skipped. Deactivate to perform the regular project build'
         type: boolean
@@ -215,7 +219,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "21"]') }}
+        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "21", "25"]') }}
     runs-on: ubuntu-24.04
     needs: 
       - detect-recent-changes
@@ -300,7 +304,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17"]') }}
+        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "25"]') }}
         testsuite: ${{ github.event_name == 'pull_request' && fromJson('["engine"]') || fromJson(github.event.inputs.testsuite || '["engine"]') }}
         distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
         database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}

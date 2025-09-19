@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jboss.as.controller.AttributeDefinition;
-import org.jboss.as.controller.PersistentResourceDefinition;
+import org.jboss.as.controller.SimpleResourceDefinition;
 
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
@@ -30,7 +30,7 @@ import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinit
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobExecutorAdd;
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobExecutorRemove;
 
-public final class JobExecutorDefinition extends PersistentResourceDefinition {
+public final class JobExecutorDefinition extends SimpleResourceDefinition {
 
   public static final JobExecutorDefinition INSTANCE = new JobExecutorDefinition();
 
@@ -47,7 +47,7 @@ public final class JobExecutorDefinition extends PersistentResourceDefinition {
   }
 
   @Override
-  protected List<? extends PersistentResourceDefinition> getChildren() {
+  protected List<? extends SimpleResourceDefinition> getChildren() {
     return Collections.singletonList(JobAcquisitionDefinition.INSTANCE);
   }
 

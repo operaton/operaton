@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.jboss.as.controller.AttributeDefinition;
-import org.jboss.as.controller.PersistentResourceDefinition;
+import org.jboss.as.controller.SimpleResourceDefinition;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
@@ -29,7 +29,8 @@ import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinit
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobAcquisitionAdd;
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobAcquisitionRemove;
 
-public final class JobAcquisitionDefinition extends PersistentResourceDefinition {
+
+public final class JobAcquisitionDefinition extends SimpleResourceDefinitin {
 
   public static final JobAcquisitionDefinition INSTANCE = new JobAcquisitionDefinition();
 

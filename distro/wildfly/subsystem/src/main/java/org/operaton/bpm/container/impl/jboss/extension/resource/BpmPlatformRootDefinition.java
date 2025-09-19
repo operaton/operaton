@@ -30,7 +30,9 @@ import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.handler.BpmPlatformSubsystemAdd;
 import org.operaton.bpm.container.impl.jboss.extension.handler.BpmPlatformSubsystemRemove;
 
-public final class BpmPlatformRootDefinition extends PersistentResourceDefinition {
+import org.jboss.as.controller.SimpleResourceDefinition;
+
+public final class BpmPlatformRootDefinition extends SimpleResourceDefinition {
 
   public static final BpmPlatformRootDefinition INSTANCE = new BpmPlatformRootDefinition();
 
@@ -47,8 +49,8 @@ public final class BpmPlatformRootDefinition extends PersistentResourceDefinitio
   }
 
   @Override
-  protected List<? extends PersistentResourceDefinition> getChildren() {
-    List<PersistentResourceDefinition> children = new ArrayList<>();
+  protected List<? extends SimpleResourceDefinition> getChildren() {
+    List<SimpleResourceDefinition> children = new ArrayList<>();
 
     children.add(JobExecutorDefinition.INSTANCE);
     children.add(ProcessEngineDefinition.INSTANCE);

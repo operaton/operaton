@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.operaton.bpm.engine.variable.value.StringValue;
 
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.assertj.core.api.Assertions.*;

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +76,7 @@ public enum Element {
 
   Element(final List<AttributeDefinition> definitions) {
     this.definition = null;
-    this.definitions = new HashMap<String, AttributeDefinition>();
+    this.definitions = new HashMap<>();
     String ourName = null;
     for (AttributeDefinition def : definitions) {
       if (ourName == null) {
@@ -97,7 +96,7 @@ public enum Element {
 
   Element(final Map<String, AttributeDefinition> definitions) {
     this.definition = null;
-    this.definitions = new HashMap<String, AttributeDefinition>();
+    this.definitions = new HashMap<>();
     String ourName = null;
     for (Map.Entry<String, AttributeDefinition> def : definitions.entrySet()) {
       String xmlName = def.getValue().getXmlName();

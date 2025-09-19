@@ -35,12 +35,15 @@ public class PlatformServiceReferenceFactory implements ManagedReferenceFactory 
     this.service = service;
   }
 
+  @Override
   public ManagedReference getReference() {
     return new ManagedReference() {
 
+      @Override
       public void release() {
       }
 
+      @Override
       public Object getInstance() {
         return service;
       }

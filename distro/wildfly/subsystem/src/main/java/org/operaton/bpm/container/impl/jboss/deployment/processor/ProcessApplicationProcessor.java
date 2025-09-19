@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import org.jboss.as.ee.component.Attachments;
 import org.jboss.as.ee.component.ComponentDescription;
@@ -147,7 +146,7 @@ public class ProcessApplicationProcessor implements DeploymentUnitProcessor {
         JBossWebMetaData mergedJBossWebMetaData = warMetaData.getMergedJBossWebMetaData();
         List<ListenerMetaData> listeners = mergedJBossWebMetaData.getListeners();
         if(listeners == null) {
-          listeners = new ArrayList<ListenerMetaData>();
+          listeners = new ArrayList<>();
           mergedJBossWebMetaData.setListeners(listeners);
         }
 

@@ -30,7 +30,7 @@ import org.operaton.bpm.container.impl.jboss.extension.handler.JobAcquisitionAdd
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobAcquisitionRemove;
 
 
-public final class JobAcquisitionDefinition extends SimpleResourceDefinitin {
+public final class JobAcquisitionDefinition extends SimpleResourceDefinition {
 
   public static final JobAcquisitionDefinition INSTANCE = new JobAcquisitionDefinition();
 

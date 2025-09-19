@@ -17,28 +17,26 @@
 package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
+import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
-
-import java.util.ArrayList;
-
 import static java.lang.Boolean.TRUE;
 
 /**

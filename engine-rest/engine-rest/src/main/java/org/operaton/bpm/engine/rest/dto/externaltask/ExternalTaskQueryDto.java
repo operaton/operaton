@@ -26,16 +26,10 @@ import jakarta.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
-import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
-import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
-import org.operaton.bpm.engine.rest.dto.converter.LongConverter;
-import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
-import org.operaton.bpm.engine.rest.dto.converter.StringSetConverter;
 import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
 import org.operaton.bpm.engine.rest.dto.converter.*;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;

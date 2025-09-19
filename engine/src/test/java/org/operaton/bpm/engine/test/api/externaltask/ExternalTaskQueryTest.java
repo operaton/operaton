@@ -17,6 +17,13 @@
  */
 package org.operaton.bpm.engine.test.api.externaltask;
 
+import java.util.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -29,9 +36,13 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskById;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByLockExpirationTime;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessDefinitionId;
@@ -39,25 +50,15 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.external
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessInstanceId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
-
-import java.util.*;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ExternalTaskQueryTest{
+public class ExternalTaskQueryTest {
 
   protected static final String WORKER_ID = "aWorkerId";
   protected static final String TOPIC_NAME = "externalTaskTopic";

@@ -458,7 +458,7 @@
         ${prefix}ACT_RU_VARIABLE
         WHERE
         <bind name="varPrefix" value="''"/>
-        <include refid="org.camunda.bpm.engine.impl.persistence.entity.Commons.variableNameEqualsCaseInsensitive" />
+        <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.variableNameEqualsCaseInsensitive" />
         <!-- When process instance or case instance variable is queried for, taskId should be null -->
         and TASK_ID_ is null
         and RES.PROC_INST_ID_ = PROC_INST_ID_

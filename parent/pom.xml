@@ -22,7 +22,7 @@
     <version.groovy>5.0.1</version.groovy>
     <version.jython>2.7.4</version.jython>
     <version.graal.js>22.3.5</version.graal.js>
-    <version.nashorn>15.6</version.nashorn>
+    <version.nashorn>15.7</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
     <version.json-path>2.9.0</version.json-path>

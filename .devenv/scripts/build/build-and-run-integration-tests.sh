@@ -140,6 +140,12 @@ run_tests () {
 # main script
 parse_args "$@"
 
+# Check if RUNNER exists, fallback if not
+if ! command -v ${RUNNER} &> /dev/null; then
+  echo "⚠️  Warning: Runner '${RUNNER}' not found. Falling back to './mvnw'."
+  RUNNER="./mvnw"
+fi
+
 pushd $(pwd) > /dev/null
 cd $(git rev-parse --show-toplevel) || exit 1
 

@@ -48,7 +48,7 @@
     <!-- application servers -->
     <version.wildfly>37.0.1.Final</version.wildfly>
     <version.wildfly.core>29.0.0.Final</version.wildfly.core>
-    <version.tomcat>11.0.10</version.tomcat>
+    <version.tomcat>11.0.11</version.tomcat>
     <version.arquillian>1.10.0.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.4</version.shrinkwrap.resolvers>
     <version.selenium>4.35.0</version.selenium>

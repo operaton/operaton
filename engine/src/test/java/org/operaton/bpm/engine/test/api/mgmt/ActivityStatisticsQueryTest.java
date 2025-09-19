@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ActivityStatisticsQueryTest {
 
@@ -401,12 +401,7 @@ class ActivityStatisticsQueryTest {
   @Test
   void testNullProcessDefinitionParameter() {
     var activityStatisticsQuery = managementService.createActivityStatisticsQuery(null);
-    try {
-      activityStatisticsQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> activityStatisticsQuery.list()).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

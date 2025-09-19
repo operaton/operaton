@@ -125,6 +125,8 @@
             <exclusion>**/DomXmlDataFormatWriterTest.java</exclusion>
             <exclusion>**/JerseyServerBootstrap.java</exclusion>
             <exclusion>**/ProcessApplicationStartService.java</exclusion>
+            <exclusion>**/AbstractWebIT.java</exclusion>
+            <exclusion>**/AbstractWebappUiIT.java</exclusion>
             <!-- org.openrewrite.java.RemoveUnusedImports -->
             <exclusion>**/TestConstants.java</exclusion>
             <!-- org.openrewrite.java.testing.cleanup.SimplifyTestThrows -->

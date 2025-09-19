@@ -27,7 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -60,12 +60,7 @@ public class TestWarDeploymentWithBrokenBpmnXml {
 
   @Test
   void testXmlInvalid() {
-    try {
-      deployer.deploy(DEPLOYMENT);
-      fail("exception expected");
-    }catch (Exception e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deployer.deploy(DEPLOYMENT)).isInstanceOf(Exception.class);
   }
 
 }

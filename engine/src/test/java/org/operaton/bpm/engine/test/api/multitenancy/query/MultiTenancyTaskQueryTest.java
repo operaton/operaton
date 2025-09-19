@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -131,14 +131,7 @@ class MultiTenancyTaskQueryTest {
   @Test
   void testQueryByTenantIdNullFails() {
     var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.tenantIdIn((String)null);
-
-      fail("Exception expected");
-    }
-    catch(NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.tenantIdIn((String) null)).isInstanceOf(NullValueException.class);
   }
 
   @Test

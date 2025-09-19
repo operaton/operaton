@@ -51,7 +51,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
 import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
@@ -276,12 +275,7 @@ class HistoricProcessInstanceDurationReportTest {
   void testReportByInvalidPeriodUnit() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
-    try {
-      report.duration(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> report.duration(null)).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -348,12 +342,7 @@ class HistoricProcessInstanceDurationReportTest {
   void testReportByInvalidStartedBefore() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
-    try {
-      report.startedBefore(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> report.startedBefore(null)).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -414,12 +403,7 @@ class HistoricProcessInstanceDurationReportTest {
   void testReportByInvalidStartedAfter() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
-    try {
-      report.startedAfter(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> report.startedAfter(null)).isInstanceOf(NotValidException.class);
   }
 
   @Test

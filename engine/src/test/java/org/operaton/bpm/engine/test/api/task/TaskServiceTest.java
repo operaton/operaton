@@ -237,12 +237,7 @@ class TaskServiceTest {
     task.setParentTaskId("non-existing");
 
     // then
-    try {
-      taskService.saveTask(task);
-      fail("It should not be possible to save a task with a non existing parent task.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.saveTask(task)).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -813,13 +808,7 @@ class TaskServiceTest {
   void testAddTaskNullComment() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      try {
-        taskService.createComment(null, null, "test");
-        fail("Expected process engine exception");
-      }
-      catch (ProcessEngineException e){
-        // expected
-      }
+      assertThatThrownBy(() -> taskService.createComment(null, null, "test")).isInstanceOf(ProcessEngineException.class);
     }
   }
 
@@ -1037,12 +1026,7 @@ class TaskServiceTest {
 
   @Test
   void testDeleteTaskNullTaskId() {
-    try {
-      taskService.deleteTask(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // Expected exception
-    }
+    assertThatThrownBy(() -> taskService.deleteTask(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1054,12 +1038,7 @@ class TaskServiceTest {
 
   @Test
   void testDeleteTasksNullTaskIds() {
-    try {
-      taskService.deleteTasks(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // Expected exception
-    }
+    assertThatThrownBy(() -> taskService.deleteTasks(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -2394,13 +2373,7 @@ class TaskServiceTest {
     taskService.saveTask(task1);
     task2.setDescription("test description two");
 
-    try {
-      taskService.saveTask(task2);
-
-      fail("Expecting exception");
-    } catch(OptimisticLockingException e) {
-      // Expected exception
-    }
+    assertThatThrownBy(() -> taskService.saveTask(task2)).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Test
@@ -2656,12 +2629,7 @@ class TaskServiceTest {
   @Test
   void testCreateTaskAttachmentWithNullTaskAndProcessInstance() {
     var content = new ByteArrayInputStream("someContent".getBytes());
-    try {
-      taskService.createAttachment("web page", null, null, "weatherforcast", "temperatures and more", content);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.createAttachment("web page", null, null, "weatherforcast", "temperatures and more", content)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {
@@ -2685,12 +2653,7 @@ class TaskServiceTest {
   void testDeleteTaskAttachmentWithNullParameter() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      try {
-        taskService.deleteAttachment(null);
-        fail("expected process engine exception");
-      } catch (ProcessEngineException e) {
-        // expected
-      }
+      assertThatThrownBy(() -> taskService.deleteAttachment(null)).isInstanceOf(ProcessEngineException.class);
     }
   }
 
@@ -2717,12 +2680,7 @@ class TaskServiceTest {
   void testDeleteTaskAttachmentWithNullParameters() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      try {
-        taskService.deleteTaskAttachment(null, null);
-        fail("expected process engine exception");
-      } catch (ProcessEngineException e) {
-        // expected
-      }
+      assertThatThrownBy(() -> taskService.deleteTaskAttachment(null, null)).isInstanceOf(ProcessEngineException.class);
     }
   }
 
@@ -2730,12 +2688,7 @@ class TaskServiceTest {
   void testDeleteTaskAttachmentWithTaskIdNull() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      try {
-        taskService.deleteTaskAttachment(null, "myAttachmentId");
-        fail("expected process engine exception");
-      } catch(ProcessEngineException e) {
-        // expected
-      }
+      assertThatThrownBy(() -> taskService.deleteTaskAttachment(null, "myAttachmentId")).isInstanceOf(ProcessEngineException.class);
     }
   }
 
@@ -2790,12 +2743,7 @@ class TaskServiceTest {
     deletions.add("variable3");
     deletions.add("variable4");
 
-    try {
-      ((TaskServiceImpl) taskService).updateVariablesLocal("nonExistingId", modifications, deletions);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> ((TaskServiceImpl) taskService).updateVariablesLocal("nonExistingId", modifications, deletions)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -2809,12 +2757,7 @@ class TaskServiceTest {
     deletions.add("variable3");
     deletions.add("variable4");
 
-    try {
-      ((TaskServiceImpl) taskService).updateVariablesLocal(null, modifications, deletions);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> ((TaskServiceImpl) taskService).updateVariablesLocal(null, modifications, deletions)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {
@@ -2860,12 +2803,7 @@ class TaskServiceTest {
     deletions.add("variable3");
     deletions.add("variable4");
 
-    try {
-      ((TaskServiceImpl) taskService).updateVariables("nonExistingId", modifications, deletions);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> ((TaskServiceImpl) taskService).updateVariables("nonExistingId", modifications, deletions)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -2879,12 +2817,7 @@ class TaskServiceTest {
     deletions.add("variable3");
     deletions.add("variable4");
 
-    try {
-      ((TaskServiceImpl) taskService).updateVariables(null, modifications, deletions);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> ((TaskServiceImpl) taskService).updateVariables(null, modifications, deletions)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

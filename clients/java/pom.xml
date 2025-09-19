@@ -40,7 +40,7 @@
     </dependency>
   </dependencies>
   <scm>
-    <url>http://github.com/operaton/operaton-external-task-client-java</url>
+    <url>https://github.com/operaton/operaton-external-task-client-java</url>
     <connection>scm:git:git@github.com:operaton/operaton-external-task-client-java.git</connection>
     <developerConnection>scm:git:git@github.com:operaton/operaton-external-task-client-java.git</developerConnection>
     <tag>HEAD</tag>

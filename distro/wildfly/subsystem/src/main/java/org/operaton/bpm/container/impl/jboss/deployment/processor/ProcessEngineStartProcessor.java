@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.jboss.as.server.deployment.DeploymentPhaseContext;
 import org.jboss.as.server.deployment.DeploymentUnit;
-import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceName;
@@ -47,7 +46,7 @@ public class ProcessEngineStartProcessor implements DeploymentUnitProcessor {
   public static final int PRIORITY = 0x0000;
 
   @Override
-  public void deploy(DeploymentPhaseContext phaseContext) throws DeploymentUnitProcessingException {
+  public void deploy(DeploymentPhaseContext phaseContext) {
 
     final DeploymentUnit deploymentUnit = phaseContext.getDeploymentUnit();
 
@@ -99,7 +98,7 @@ public class ProcessEngineStartProcessor implements DeploymentUnitProcessor {
    * into a {@link ManagedProcessEngineMetadata} */
   protected ManagedProcessEngineMetadata transformConfiguration(ProcessEngineXml processEngineXml) {
     return new ManagedProcessEngineMetadata(
-        processEngineXml.getName().equals("default"),
+        "default".equals(processEngineXml.getName()),
         processEngineXml.getName(),
         processEngineXml.getDatasource(),
         processEngineXml.getProperties().get("history"),

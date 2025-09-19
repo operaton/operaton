@@ -159,7 +159,9 @@ class TaskVariablesTest {
     ObjectValue serializedValueLocal = taskService.getVariableLocalTyped(taskId, "objectVariableLocal", false);
     assertThat(serializedValueLocal.isDeserialized()).isFalse();
 
-    assertThatThrownBy(() -> taskService.getVariableTyped(taskId, "objectVariable")).isInstanceOf(ClassCastException.class);
+    assertThatThrownBy(() -> {
+      @SuppressWarnings("unused") StringValue val = taskService.getVariableTyped(taskId, "objectVariable");
+    }).isInstanceOf(ClassCastException.class);
 
   }
 }

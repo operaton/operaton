@@ -33,12 +33,15 @@ public class ProcessEngineManagedReferenceFactory implements ManagedReferenceFac
     this.processEngine = processEngine;
   }
 
+  @Override
   public ManagedReference getReference() {
     return new ManagedReference() {
 
+      @Override
       public void release() {
       }
 
+      @Override
       public Object getInstance() {
         return processEngine;
       }

@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
 import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -135,12 +135,7 @@ class EnginesFilterTest {
       }
     });
 
-    try {
-      defaultEngineName = processEnginesFilter.getDefaultEngineName();
-      fail("");
-    } catch(IllegalWebAppConfigurationException e) {
-      // expected
-    }
+    assertThatThrownBy(processEnginesFilter::getDefaultEngineName).isInstanceOf(IllegalWebAppConfigurationException.class);
 
   }
 

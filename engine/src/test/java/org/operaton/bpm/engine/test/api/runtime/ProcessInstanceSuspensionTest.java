@@ -50,8 +50,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static java.util.Collections.emptyMap;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Daniel Meyer
@@ -757,12 +756,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
-    try {
-      formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail("Exception expected");
-    } catch(SuspendedEntityInteractionException e) {
-      // This is expected
-    }
+    assertThatThrownBy(() -> formService.submitTaskFormData(taskQuery, emptyProperties)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -773,12 +767,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
-    try {
-      formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail("");
-    } catch(SuspendedEntityInteractionException e) {
-      // This is expected
-    }
+    assertThatThrownBy(() -> formService.submitTaskFormData(taskQuery, emptyProperties)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -789,12 +778,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
-    try {
-      formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail("");
-    } catch(SuspendedEntityInteractionException e) {
-      // This is expected
-    }
+    assertThatThrownBy(() -> formService.submitTaskFormData(taskQuery, emptyProperties)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1108,103 +1092,42 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
     // Completing the task should fail
-    try {
-      taskService.complete(taskId);
-      fail("It is not allowed to complete a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Claiming the task should fail
-    try {
-      taskService.claim(taskId, "jos");
-      fail("It is not allowed to claim a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
-
+    assertThatThrownBy(() -> taskService.claim(taskId, "jos")).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Adding candidate groups on the task should fail
-    try {
-      taskService.addCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to add a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding candidate users on the task should fail
-    try {
-      taskService.addCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding group identity links on the task should fail
-    try {
-      taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding an identity link on the task should fail
-    try {
-      taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to add an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Set an assignee on the task should fail
-    try {
-      taskService.setAssignee(taskId, "mispiggy");
-      fail("It is not allowed to set an assignee on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setAssignee(taskId, "mispiggy")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Set an owner on the task should fail
-    try {
-      taskService.setOwner(taskId, "kermit");
-      fail("It is not allowed to set an owner on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setOwner(taskId, "kermit")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate groups on the task should fail
-    try {
-      taskService.deleteCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to remove a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate users on the task should fail
-    try {
-      taskService.deleteCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing group identity links on the task should fail
-    try {
-      taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing an identity link on the task should fail
-    try {
-      taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to remove an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
   }
 
@@ -1223,103 +1146,42 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
 
     // Completing the task should fail
-    try {
-      taskService.complete(taskId);
-      fail("It is not allowed to complete a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Claiming the task should fail
-    try {
-      taskService.claim(taskId, "jos");
-      fail("It is not allowed to claim a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
-
+    assertThatThrownBy(() -> taskService.claim(taskId, "jos")).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Adding candidate groups on the task should fail
-    try {
-      taskService.addCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to add a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding candidate users on the task should fail
-    try {
-      taskService.addCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding group identity links on the task should fail
-    try {
-      taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding an identity link on the task should fail
-    try {
-      taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to add an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Set an assignee on the task should fail
-    try {
-      taskService.setAssignee(taskId, "mispiggy");
-      fail("It is not allowed to set an assignee on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setAssignee(taskId, "mispiggy")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Set an owner on the task should fail
-    try {
-      taskService.setOwner(taskId, "kermit");
-      fail("It is not allowed to set an owner on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setOwner(taskId, "kermit")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate groups on the task should fail
-    try {
-      taskService.deleteCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to remove a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate users on the task should fail
-    try {
-      taskService.deleteCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing group identity links on the task should fail
-    try {
-      taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing an identity link on the task should fail
-    try {
-      taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to remove an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
   }
 
@@ -1338,103 +1200,42 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
 
     // Completing the task should fail
-    try {
-      taskService.complete(taskId);
-      fail("It is not allowed to complete a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Claiming the task should fail
-    try {
-      taskService.claim(taskId, "jos");
-      fail("It is not allowed to claim a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
-
+    assertThatThrownBy(() -> taskService.claim(taskId, "jos")).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Adding candidate groups on the task should fail
-    try {
-      taskService.addCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to add a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding candidate users on the task should fail
-    try {
-      taskService.addCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding group identity links on the task should fail
-    try {
-      taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding an identity link on the task should fail
-    try {
-      taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to add an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Set an assignee on the task should fail
-    try {
-      taskService.setAssignee(taskId, "mispiggy");
-      fail("It is not allowed to set an assignee on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setAssignee(taskId, "mispiggy")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Set an owner on the task should fail
-    try {
-      taskService.setOwner(taskId, "kermit");
-      fail("It is not allowed to set an owner on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setOwner(taskId, "kermit")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate groups on the task should fail
-    try {
-      taskService.deleteCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to remove a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate users on the task should fail
-    try {
-      taskService.deleteCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing group identity links on the task should fail
-    try {
-      taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing an identity link on the task should fail
-    try {
-      taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to remove an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1448,12 +1249,7 @@ class ProcessInstanceSuspensionTest {
     Task subTask = taskService.newTask("someTaskId");
     subTask.setParentTaskId(task.getId());
 
-    try {
-      taskService.saveTask(subTask);
-      fail("Creating sub tasks for suspended task should not be possible");
-    } catch (SuspendedEntityInteractionException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.saveTask(subTask)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1467,12 +1263,7 @@ class ProcessInstanceSuspensionTest {
     Task subTask = taskService.newTask("someTaskId");
     subTask.setParentTaskId(task.getId());
 
-    try {
-      taskService.saveTask(subTask);
-      fail("Creating sub tasks for suspended task should not be possible");
-    } catch (SuspendedEntityInteractionException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.saveTask(subTask)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1486,12 +1277,7 @@ class ProcessInstanceSuspensionTest {
     Task subTask = taskService.newTask("someTaskId");
     subTask.setParentTaskId(task.getId());
 
-    try {
-      taskService.saveTask(subTask);
-      fail("Creating sub tasks for suspended task should not be possible");
-    } catch (SuspendedEntityInteractionException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.saveTask(subTask)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1849,12 +1635,7 @@ class ProcessInstanceSuspensionTest {
     Task task = taskService.createTaskQuery().singleResult();
     var taskId = task.getId();
 
-    try {
-      taskService.complete(taskId);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceById(instance.getId());
@@ -1873,12 +1654,7 @@ class ProcessInstanceSuspensionTest {
     Task task = taskService.createTaskQuery().singleResult();
     var taskId = task.getId();
 
-    try {
-      taskService.complete(taskId);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceByProcessDefinitionId(instance.getProcessDefinitionId());
@@ -1902,12 +1678,7 @@ class ProcessInstanceSuspensionTest {
     Task task = taskService.createTaskQuery().singleResult();
     var taskId = task.getId();
 
-    try {
-      taskService.complete(taskId);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
@@ -1929,19 +1700,9 @@ class ProcessInstanceSuspensionTest {
     String task1Id = task1.getId();
     String task2Id = task2.getId();
 
-    try {
-      taskService.complete(task1Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task1Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
-    try {
-      taskService.complete(task2Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task2Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceById(instance.getId());
@@ -1964,19 +1725,9 @@ class ProcessInstanceSuspensionTest {
     String task1Id = task1.getId();
     String task2Id = task2.getId();
 
-    try {
-      taskService.complete(task1Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task1Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
-    try {
-      taskService.complete(task2Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task2Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceByProcessDefinitionId(instance.getProcessDefinitionId());
@@ -2003,19 +1754,9 @@ class ProcessInstanceSuspensionTest {
     String task1Id = task1.getId();
     String task2Id = task2.getId();
 
-    try {
-      taskService.complete(task1Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task1Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
-    try {
-      taskService.complete(task2Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task2Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());

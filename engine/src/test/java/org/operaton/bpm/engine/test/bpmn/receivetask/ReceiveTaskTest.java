@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * see https://app.camunda.com/jira/browse/CAM-1612
@@ -356,12 +356,7 @@ class ReceiveTaskTest {
     var eventSubscription = subscriptions.get(0).getEventName();
 
     // then: we can not correlate an event
-    try {
-      runtimeService.correlateMessage(eventSubscription);
-      fail("should throw a mismatch");
-    } catch (MismatchingMessageCorrelationException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> runtimeService.correlateMessage(eventSubscription)).isInstanceOf(MismatchingMessageCorrelationException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTaskCompensate.bpmn20.xml")

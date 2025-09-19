@@ -52,7 +52,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.logging.MdcAccess;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ProcessDataLoggingContextTest {
 
@@ -407,12 +407,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the task listener that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(instance, "failingTask");
   }
@@ -433,12 +428,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the task listener that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(instance, LOG_IDENT_FAILURE, "failingTask", null, B_KEY2, 1);
   }
@@ -457,12 +447,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the task listener that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     assertFailureLogPresent(instance, "failingTask");
   }
 
@@ -479,12 +464,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.setAssignee(taskQuery, "testUser");
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the task listener that is not caught
-    }
+    assertThatThrownBy(() -> taskService.setAssignee(taskQuery, "testUser")).isInstanceOf(Exception.class);
     assertFailureLogPresent(instance, "failingTask");
   }
 
@@ -501,12 +481,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the task listener that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     assertFailureLogPresent(instance, "failingTask");
   }
 
@@ -523,12 +498,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var instanceId = instance.getId();
     // when
-    try {
-      runtimeService.deleteProcessInstance(instanceId, "cancel it");
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the task listener that is not caught
-    }
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstance(instanceId, "cancel it")).isInstanceOf(Exception.class);
     assertFailureLogPresent(instance, "failingTask");
   }
 
@@ -540,12 +510,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the execution listener that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(instance, "failingTask");
   }
@@ -588,12 +553,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the service task that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(instance, "failingTask");
   }
@@ -618,12 +578,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the nested delegate that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(instance, "startProcess");
     assertBpmnStacktraceLogPresent(instance);
@@ -650,12 +605,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the nested delegate that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(instance, "startProcess");
     assertBpmnStacktraceLogPresent(instance);
@@ -674,12 +624,7 @@ class ProcessDataLoggingContextTest {
         .done());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     // when
-    try {
-      runtimeService.correlateMessage("testMessage");
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the task listener that is not caught
-    }
+    assertThatThrownBy(() -> runtimeService.correlateMessage("testMessage")).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(instance, "message");
   }
@@ -691,12 +636,7 @@ class ProcessDataLoggingContextTest {
     testRule.deployForTenant(TENANT_ID, "org/operaton/bpm/engine/test/logging/ProcessDataLoggingContextTest.shouldLogFailureFromEventSubprocessInSubprocessTaskContext.bpmn20.xml");
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS);
     // when
-    try {
-      runtimeService.correlateMessage("testMessage");
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the delegate that is not caught
-    }
+    assertThatThrownBy(() -> runtimeService.correlateMessage("testMessage")).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(instance, "sub_failingTask");
   }
@@ -715,12 +655,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the delegate resolution that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(pi, "failingTask");
   }
@@ -740,12 +675,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the delegate resolution that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     // then
     assertFailureLogPresent(pi, "failingTask");
   }
@@ -765,12 +695,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the task listener that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     application.undeploy();
     assertFailureLogInApplication(instance, "failingTask", application.getName());
   }
@@ -790,12 +715,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
-    try {
-      taskService.complete(taskQuery);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // expected exception in the execution listener that is not caught
-    }
+    assertThatThrownBy(() -> taskService.complete(taskQuery)).isInstanceOf(Exception.class);
     application.undeploy();
     // then
     assertFailureLogInApplication(instance, "failingTask", application.getName());

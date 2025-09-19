@@ -2213,25 +2213,13 @@ class HistoricProcessInstanceTest {
   @Test
   void testQueryByOneInvalidProcessDefinitionKeyIn() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      // when
-      historicProcessInstanceQuery.processDefinitionKeyIn((String) null);
-      fail("Exception expected");
-    } catch(ProcessEngineException expected) {
-      // then Exception is expected
-    }
+    assertThatThrownBy(() -> historicProcessInstanceQuery.processDefinitionKeyIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testQueryByMultipleInvalidProcessDefinitionKeyIn() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      // when
-      historicProcessInstanceQuery.processDefinitionKeyIn(ProcessModels.PROCESS_KEY, null);
-      fail("Exception expected");
-    } catch(ProcessEngineException expected) {
-      // then Exception is expected
-    }
+    assertThatThrownBy(() -> historicProcessInstanceQuery.processDefinitionKeyIn(ProcessModels.PROCESS_KEY, null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

@@ -54,8 +54,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 
 import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 class TransactionIntegrationTest {
 
@@ -129,13 +128,7 @@ class TransactionIntegrationTest {
         }
 
         String taskId = taskService.createTaskQuery().singleResult().getId();
-        try {
-          // when
-          userBean.completeTask(taskId);
-          fail("");
-        } catch (ProcessEngineException ignored) {
-          // expected
-        }
+        assertThatThrownBy(() -> userBean.completeTask(taskId)).isInstanceOf(ProcessEngineException.class);
 
         // then
         assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("My Task");

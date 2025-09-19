@@ -382,14 +382,7 @@ class ManagementServiceTest {
 
     List<String> allJobIds = getAllJobIds();
     allJobIds.add("aFake");
-    try {
-      //when
-      managementService.setJobRetries(allJobIds, 5);
-      fail("exception expected");
-      //then
-    } catch (ProcessEngineException e) {
-      //expected
-    }
+    assertThatThrownBy(() -> managementService.setJobRetries(allJobIds, 5)).isInstanceOf(ProcessEngineException.class);
 
     assertRetries(getAllJobIds(), JobEntity.DEFAULT_RETRIES);
   }
@@ -680,12 +673,7 @@ class ManagementServiceTest {
     commandExecutor.execute(acquireJobsCmd);
 
     // Try to delete the job. This should fail.
-    try {
-      managementService.deleteJob(timerJobId);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // Exception is expected
-    }
+    assertThatThrownBy(() -> managementService.deleteJob(timerJobId)).isInstanceOf(ProcessEngineException.class);
 
     // Clean up
     managementService.executeJob(timerJob.getId());

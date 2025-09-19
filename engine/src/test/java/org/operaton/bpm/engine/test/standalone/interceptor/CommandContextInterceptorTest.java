@@ -33,8 +33,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Tom Baeyens
@@ -53,15 +52,9 @@ class CommandContextInterceptorTest {
   @Test
   void testCommandContextGetCurrentAfterException() {
     var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    try {
-      commandExecutor.execute(commandContext -> {
-        throw new IllegalStateException("here i come!");
-      });
-
-      fail("expected exception");
-    } catch (IllegalStateException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> commandExecutor.execute(commandContext -> {
+      throw new IllegalStateException("here i come!");
+    })).isInstanceOf(IllegalStateException.class);
 
     assertThat(Context.getCommandContext()).isNull();
   }

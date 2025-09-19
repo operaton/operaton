@@ -54,7 +54,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 class IncidentTest {
 
@@ -557,13 +556,7 @@ class IncidentTest {
     // it should not be possible to set the retries to a negative number with the management service
     executeJobExpectingException(managementService, jobId);
 
-    try {
-      managementService.setJobRetriesByJobDefinitionId(jobDefinitionId, -300);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.setJobRetriesByJobDefinitionId(jobDefinitionId, -300)).isInstanceOf(ProcessEngineException.class);
 
   }
 

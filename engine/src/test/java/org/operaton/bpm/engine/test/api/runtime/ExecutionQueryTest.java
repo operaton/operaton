@@ -55,8 +55,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.executio
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.hierarchical;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 
 /**
@@ -161,12 +160,7 @@ class ExecutionQueryTest {
     assertThat(query.list()).hasSize(4);
     assertThat(query.count()).isEqualTo(4);
 
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.singleResult()).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -232,12 +226,7 @@ class ExecutionQueryTest {
   @Test
   void testQueryInvalidSorting() {
     var executionQuery = runtimeService.createExecutionQuery().orderByProcessDefinitionKey();
-    try {
-      executionQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> executionQuery.list()).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1239,12 +1228,7 @@ class ExecutionQueryTest {
 
     assertThat(query.incidentId("invalid").count()).isZero();
 
-    try {
-      query.incidentId(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.incidentId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
@@ -1272,12 +1256,7 @@ class ExecutionQueryTest {
 
     assertThat(query.incidentType("invalid").count()).isZero();
 
-    try {
-      query.incidentType(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.incidentType(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
@@ -1305,12 +1284,7 @@ class ExecutionQueryTest {
 
     assertThat(query.incidentMessage("invalid").count()).isZero();
 
-    try {
-      query.incidentMessage(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.incidentMessage(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
@@ -1336,12 +1310,7 @@ class ExecutionQueryTest {
 
     assertThat(query.incidentMessageLike("invalid").count()).isZero();
 
-    try {
-      query.incidentMessageLike(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.incidentMessageLike(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})

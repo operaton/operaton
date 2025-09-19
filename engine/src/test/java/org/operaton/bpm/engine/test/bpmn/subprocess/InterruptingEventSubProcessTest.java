@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -77,12 +77,7 @@ class InterruptingEventSubProcessTest {
     assertThat(eventSubscriptionQuery.count()).isZero();
     var processInstanceId = pi.getId();
 
-    try {
-      runtimeService.signalEventReceived("newSignal", processInstanceId);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected exception;
-    }
+    assertThatThrownBy(() -> runtimeService.signalEventReceived("newSignal", processInstanceId)).isInstanceOf(ProcessEngineException.class);
 
     taskService.complete(task.getId());
 
@@ -113,12 +108,7 @@ class InterruptingEventSubProcessTest {
     assertThat(eventSubscriptionQuery.count()).isZero();
     var processInstanceId = pi.getId();
 
-    try {
-      runtimeService.messageEventReceived("newMessage", processInstanceId);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected exception;
-    }
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("newMessage", processInstanceId)).isInstanceOf(ProcessEngineException.class);
 
     taskService.complete(task.getId());
 

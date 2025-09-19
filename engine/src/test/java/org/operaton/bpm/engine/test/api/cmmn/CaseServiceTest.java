@@ -1811,19 +1811,9 @@ class CaseServiceTest {
 
   @Test
   void testGetVariableInvalidCaseExecutionId() {
-    try {
-      caseService.getVariable("invalid", "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariable("invalid", "aVariableName")).isInstanceOf(NotFoundException.class);
 
-    try {
-      caseService.getVariable(null, "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariable(null, "aVariableName")).isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

@@ -33,8 +33,7 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Joram Barrez
@@ -118,12 +117,7 @@ class StandaloneTaskTest {
 
     // second modification on the initial instance
     task2.setDescription("second modification");
-    try {
-      taskService.saveTask(task2);
-      fail("should get an exception here as the task was modified by someone else.");
-    } catch (OptimisticLockingException expected) {
-      //  exception was thrown as expected
-    }
+    assertThatThrownBy(() -> taskService.saveTask(task2)).isInstanceOf(OptimisticLockingException.class);
   }
 
   // See http://jira.codehaus.org/browse/ACT-1290

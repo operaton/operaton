@@ -27,7 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployFailureApp;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -54,12 +54,7 @@ public class TestPostDeployFailure_JBOSS {
   @Test
   void test() {
 
-    try {
-      deployer.deploy(DEPLOYMENT);
-      fail("failure expected");
-    } catch (Exception e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deployer.deploy(DEPLOYMENT)).isInstanceOf(Exception.class);
 
   }
 

@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Timeout;
 
 import org.operaton.bpm.engine.impl.util.SingleConsumerCondition;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SingleConsumerConditionTest {
 
@@ -65,24 +65,12 @@ class SingleConsumerConditionTest {
     SingleConsumerCondition condition = new SingleConsumerCondition(new Thread());
 
     // when then
-    try {
-      condition.await(0);
-      fail("expected exception");
-    }
-    catch (RuntimeException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> condition.await(0)).isInstanceOf(RuntimeException.class);
   }
 
   @Test
   void cannotCreateWithNull() {
-    try {
-      new SingleConsumerCondition(null);
-      fail("expected exception");
-    }
-    catch (IllegalArgumentException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> new SingleConsumerCondition(null)).isInstanceOf(IllegalArgumentException.class);
   }
 
 }

@@ -48,9 +48,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 
 /**
@@ -580,26 +578,11 @@ class HistoricTaskInstanceTest {
     assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
-    try {
-      query.activityInstanceIdIn(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.activityInstanceIdIn(null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.activityInstanceIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.activityInstanceIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.activityInstanceIdIn(values);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.activityInstanceIdIn(values)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -1055,26 +1038,11 @@ class HistoricTaskInstanceTest {
     assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
-    try {
-      query.taskDefinitionKeyIn(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.taskDefinitionKeyIn(null)).isInstanceOf(NotValidException.class);
 
-    try {
-      query.taskDefinitionKeyIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.taskDefinitionKeyIn((String) null)).isInstanceOf(NotValidException.class);
 
-    try {
-      query.taskDefinitionKeyIn(values);
-      fail("A ProcessEngineException was expected.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.taskDefinitionKeyIn(values)).isInstanceOf(NotValidException.class);
 
   }
 
@@ -1119,26 +1087,11 @@ class HistoricTaskInstanceTest {
     assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
-    try {
-      query.processInstanceBusinessKeyIn(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.processInstanceBusinessKeyIn(null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.processInstanceBusinessKeyIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.processInstanceBusinessKeyIn((String) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.processInstanceBusinessKeyIn(values);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.processInstanceBusinessKeyIn(values)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})

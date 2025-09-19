@@ -47,17 +47,16 @@ import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.standalone.deploy.SingleVariableListener;
+import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
+import org.operaton.bpm.engine.test.util.ExecutionAssert;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Thorben Lindhauer
@@ -113,11 +112,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree("task2").scope().done());
+    ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree("task2").scope().done());
 
     // complete the process
     completeTasksInOrder("task2");
@@ -171,11 +170,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
+    ExecutionAssert.assertThat(executionTree)
         .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
@@ -199,11 +198,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
+    ExecutionAssert.assertThat(executionTree)
         .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
@@ -224,13 +223,7 @@ class ProcessInstanceModificationTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("innerSubProcessTask");
 
     // when I start the inner subprocess task without explicit ancestor
-    try {
-      processInstanceModificationBuilder.execute();
-      // then the command fails
-      fail("should not succeed because the ancestors are ambiguous");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> processInstanceModificationBuilder.execute()).isInstanceOf(ProcessEngineException.class);
 
     // when I start the inner subprocess task with an explicit ancestor activity
     // instance id
@@ -245,7 +238,7 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree)
+    ActivityInstanceAssert.assertThat(updatedTree)
         .hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("subProcess").activity("subProcessTask").endScope()
             .beginScope("subProcess").activity("subProcessTask").beginScope("innerSubProcess").activity("innerSubProcessTask").done());
 
@@ -254,7 +247,7 @@ class ProcessInstanceModificationTest {
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("subProcessTask").scope().up().up()
+    ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("subProcessTask").scope().up().up()
         .child(null).concurrent().noScope().child(null).scope().child("subProcessTask").concurrent().noScope().up().child(null).concurrent().noScope()
         .child("innerSubProcessTask").scope().done());
 
@@ -339,11 +332,11 @@ class ProcessInstanceModificationTest {
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree("task1").scope().done());
+    ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree("task1").scope().done());
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
 
@@ -364,11 +357,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
+    ExecutionAssert.assertThat(executionTree)
         .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
@@ -392,11 +385,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
+    ExecutionAssert.assertThat(executionTree)
         .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
@@ -417,13 +410,7 @@ class ProcessInstanceModificationTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startTransition("flow5");
 
     // when I start the inner subprocess task without explicit ancestor
-    try {
-      processInstanceModificationBuilder.execute();
-      // then the command fails
-      fail("should not succeed because the ancestors are ambiguous");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> processInstanceModificationBuilder.execute()).isInstanceOf(ProcessEngineException.class);
 
     // when I start the inner subprocess task with an explicit ancestor activity
     // instance id
@@ -438,7 +425,7 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree)
+    ActivityInstanceAssert.assertThat(updatedTree)
         .hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("subProcess").activity("subProcessTask").endScope()
             .beginScope("subProcess").activity("subProcessTask").beginScope("innerSubProcess").activity("innerSubProcessTask").done());
 
@@ -447,7 +434,7 @@ class ProcessInstanceModificationTest {
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("subProcessTask").scope().up().up()
+    ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("subProcessTask").scope().up().up()
         .child(null).concurrent().noScope().child(null).scope().child("subProcessTask").concurrent().noScope().up().child(null).concurrent().noScope()
         .child("innerSubProcessTask").scope().done());
 
@@ -512,11 +499,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task1").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task1").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
+    ExecutionAssert.assertThat(executionTree)
         .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task1").concurrent().noScope().done());
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
@@ -557,11 +544,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task1").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task1").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
+    ExecutionAssert.assertThat(executionTree)
         .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task1").concurrent().noScope().done());
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
@@ -585,11 +572,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task1").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task1").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
+    ExecutionAssert.assertThat(executionTree)
         .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task1").concurrent().noScope().done());
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
@@ -610,13 +597,7 @@ class ProcessInstanceModificationTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("innerSubProcessStart");
 
     // when I start the inner subprocess task without explicit ancestor
-    try {
-      processInstanceModificationBuilder.execute();
-      // then the command fails
-      fail("should not succeed because the ancestors are ambiguous");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> processInstanceModificationBuilder.execute()).isInstanceOf(ProcessEngineException.class);
 
     // when I start the inner subprocess task with an explicit ancestor activity
     // instance id
@@ -631,7 +612,7 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree)
+    ActivityInstanceAssert.assertThat(updatedTree)
         .hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("subProcess").activity("subProcessTask").endScope()
             .beginScope("subProcess").activity("subProcessTask").beginScope("innerSubProcess").activity("innerSubProcessTask").done());
 
@@ -640,7 +621,7 @@ class ProcessInstanceModificationTest {
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("subProcessTask").scope().up().up()
+    ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("subProcessTask").scope().up().up()
         .child(null).concurrent().noScope().child(null).scope().child("subProcessTask").concurrent().noScope().up().child(null).concurrent().noScope()
         .child("innerSubProcessTask").scope().done());
 
@@ -761,11 +742,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").activity("theTask").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").activity("theTask").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("theTask").scope().up().up().child(null)
+    ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("theTask").scope().up().up().child(null)
         .concurrent().noScope().child("theTask").scope().done());
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
@@ -787,11 +768,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree(null).scope().child("theTask").scope().done());
+    ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree(null).scope().child("theTask").scope().done());
 
     // when starting after the start event, regular concurrency happens
     runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("theStart").execute();
@@ -800,11 +781,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").activity("theTask").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").activity("theTask").done());
 
     executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("theTask").scope().up().up().child(null)
+    ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("theTask").scope().up().up().child(null)
         .concurrent().noScope().child("theTask").scope().done());
 
     completeTasksInOrder("theTask", "theTask");
@@ -859,7 +840,7 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(activityInstanceTree).isNotNull();
     assertThat(activityInstanceTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(activityInstanceTree).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstanceTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("outerTask").beginScope("subProcess").activity("innerTask").done());
 
     // assert listener invocations
@@ -1104,11 +1085,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(instance.getId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(instance.getId(), processEngine);
 
-    assertThat(executionTree)
+    ExecutionAssert.assertThat(executionTree)
         .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
 
     completeTasksInOrder("task1", "task2", "task2");
@@ -1138,11 +1119,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(instance.getId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(instance.getId(), processEngine);
 
-    assertThat(executionTree)
+    ExecutionAssert.assertThat(executionTree)
         .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
 
     completeTasksInOrder("task1", "task2", "task2");
@@ -1160,7 +1141,7 @@ class ProcessInstanceModificationTest {
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
     Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ActivityInstance task2Instance = getChildInstanceForActivity(updatedTree, "task2");
     Assertions.assertThat(task2Instance).isNotNull();
@@ -1192,11 +1173,11 @@ class ProcessInstanceModificationTest {
     Assertions.assertThat(activityInstanceTree).isNotNull();
     assertThat(activityInstanceTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(activityInstanceTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
+    ActivityInstanceAssert.assertThat(activityInstanceTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree("task2").scope().done());
+    ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree("task2").scope().done());
 
     completeTasksInOrder("task2");
     testRule.assertProcessEnded(processInstanceId);
@@ -1290,19 +1271,19 @@ class ProcessInstanceModificationTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("undoTask");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree)
+    ActivityInstanceAssert.assertThat(tree)
         .hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask").done());
 
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("userTask").execute();
 
     tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
+    ActivityInstanceAssert.assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
         .activity("userTask").done());
 
     completeTasksInOrder("userTask");
 
     tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree)
+    ActivityInstanceAssert.assertThat(tree)
         .hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask").done());
 
     Task newTask = taskService.createTaskQuery().singleResult();
@@ -1323,7 +1304,7 @@ class ProcessInstanceModificationTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("undoTask");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree)
+    ActivityInstanceAssert.assertThat(tree)
         .hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask").done());
 
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("userTask", processInstance.getId()).execute();
@@ -1331,7 +1312,7 @@ class ProcessInstanceModificationTest {
     completeTasksInOrder("userTask");
 
     tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
+    ActivityInstanceAssert.assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
         .endScope().beginScope("tx").activity("txEnd").activity("undoTask").done());
 
     completeTasksInOrder("undoTask", "undoTask", "afterCancel", "afterCancel");
@@ -1382,7 +1363,7 @@ class ProcessInstanceModificationTest {
         .startBeforeActivity("userTask").execute();
 
     tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("userTask").done());
+    ActivityInstanceAssert.assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("userTask").done());
 
     completeTasksInOrder("userTask", "undoTask", "afterCancel");
 
@@ -1401,7 +1382,7 @@ class ProcessInstanceModificationTest {
         .startBeforeActivity("userTask", processInstance.getId()).execute();
 
     tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("userTask").done());
+    ActivityInstanceAssert.assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("userTask").done());
 
     completeTasksInOrder("userTask", "undoTask", "afterCancel");
 
@@ -1420,7 +1401,7 @@ class ProcessInstanceModificationTest {
         .cancelActivityInstance(getInstanceIdForActivity(tree, "undoTask")).execute();
 
     tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("userTask").done());
+    ActivityInstanceAssert.assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("userTask").done());
 
     completeTasksInOrder("userTask", "undoTask", "afterCancel");
 
@@ -1455,7 +1436,7 @@ class ProcessInstanceModificationTest {
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("undoTask").execute();
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
+    ActivityInstanceAssert.assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
         .activity("undoTask").done());
 
     taskService.complete(firstUndoTask.getId());
@@ -1479,7 +1460,7 @@ class ProcessInstanceModificationTest {
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("undoTask").setVariableLocal("new", true).execute();
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
+    ActivityInstanceAssert.assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
         .activity("undoTask").done());
 
     String taskExecutionId = runtimeService.createExecutionQuery().variableValueEquals("new", true).singleResult().getId();
@@ -1490,7 +1471,7 @@ class ProcessInstanceModificationTest {
     taskService.complete(secondUndoTask.getId());
 
     tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree)
+    ActivityInstanceAssert.assertThat(tree)
         .hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask").done());
 
     completeTasksInOrder("undoTask", "afterCancel");
@@ -1566,7 +1547,7 @@ class ProcessInstanceModificationTest {
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("afterCancel").execute();
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
+    ActivityInstanceAssert.assertThat(tree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).beginScope("tx").activity("txEnd").activity("undoTask")
         .endScope().activity("afterCancel").done());
 
     completeTasksInOrder("afterCancel", "undoTask", "afterCancel");

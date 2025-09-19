@@ -82,7 +82,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.property
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
 
 /**
@@ -480,19 +479,9 @@ class HistoricVariableInstanceTest {
     var processInstanceId = processInstance.getProcessInstanceId();
 
     // check existing variables for task ID
-    try {
-      historicVariableInstanceQuery.processInstanceIdIn(processInstanceId, null);
-      fail("Search by process instance ID was finished");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.processInstanceIdIn(processInstanceId, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicVariableInstanceQuery.processInstanceIdIn(null, processInstanceId);
-      fail("Search by process instance ID was finished");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.processInstanceIdIn(null, processInstanceId)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -527,19 +516,9 @@ class HistoricVariableInstanceTest {
     assertThat(query.count()).isZero();
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
 
-    try {
-      historicVariableInstanceQuery.executionIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.executionIdIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicVariableInstanceQuery.executionIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.executionIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -548,19 +527,9 @@ class HistoricVariableInstanceTest {
     assertThat(query.count()).isZero();
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
 
-    try {
-      historicVariableInstanceQuery.taskIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.taskIdIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicVariableInstanceQuery.taskIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.taskIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -596,19 +565,9 @@ class HistoricVariableInstanceTest {
     query.taskIdIn("invalid");
     assertThat(query.count()).isZero();
 
-    try {
-      query.taskIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.taskIdIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.taskIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.taskIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -680,21 +639,9 @@ class HistoricVariableInstanceTest {
     // then
     assertThat(query.count()).isZero();
 
-    try {
-      // when
-      query.variableTypeIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.variableTypeIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      // when
-      query.variableTypeIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.variableTypeIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1955,26 +1902,11 @@ class HistoricVariableInstanceTest {
     assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
-    try {
-      query.caseActivityIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseActivityIdIn((String[]) null)).isInstanceOf(NullValueException.class);
 
-    try {
-      query.caseActivityIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseActivityIdIn((String) null)).isInstanceOf(NullValueException.class);
 
-    try {
-      query.caseActivityIdIn(values);
-      fail("A ProcessEngineException was expected.");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseActivityIdIn(values)).isInstanceOf(NullValueException.class);
   }
 
   @Test

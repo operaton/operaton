@@ -37,8 +37,7 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Thorben Lindhauer
@@ -459,13 +458,7 @@ class VariableListenerTest extends CmmnTest {
         .withCaseExecution(taskExecution.getId())
         .setVariableLocal("aTaskVariable", "aTaskValue");
 
-    try {
-      caseExecutionCommandBuilder.execute();
-
-      fail("expected exception during variable listener invocation");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> caseExecutionCommandBuilder.execute()).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment
@@ -482,13 +475,7 @@ class VariableListenerTest extends CmmnTest {
         .withCaseExecution(taskExecution.getId())
         .setVariableLocal("aTaskVariable", "aTaskValue");
 
-    try {
-      caseExecutionCommandBuilder.execute();
-
-      fail("expected exception during variable listener invocation");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> caseExecutionCommandBuilder.execute()).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment

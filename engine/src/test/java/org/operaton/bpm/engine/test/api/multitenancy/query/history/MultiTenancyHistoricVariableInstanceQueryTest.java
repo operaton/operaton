@@ -37,12 +37,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicVariableInstanceByTenantId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
 class MultiTenancyHistoricVariableInstanceQueryTest {
@@ -146,16 +145,7 @@ class MultiTenancyHistoricVariableInstanceQueryTest {
   @Test
   void shouldFailQueryByTenantIdNull() {
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
-    try {
-      // when
-      historicVariableInstanceQuery.tenantIdIn((String) null);
-
-      fail("expected exception");
-
-      // then
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.tenantIdIn((String) null)).isInstanceOf(NullValueException.class);
   }
 
   @Test

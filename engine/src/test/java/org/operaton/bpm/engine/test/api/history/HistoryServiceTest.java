@@ -857,13 +857,7 @@ public class HistoryServiceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testDeleteProcessInstancesWithNull() {
-    try {
-      //when
-      historyService.deleteHistoricProcessInstances(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      //expected
-    }
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstances(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)

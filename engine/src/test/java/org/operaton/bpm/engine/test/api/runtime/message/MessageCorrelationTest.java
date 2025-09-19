@@ -1307,12 +1307,7 @@ class MessageCorrelationTest {
   void testCorrelationWithoutMessageDoesNotMatchStartEvent() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null)
         .processInstanceVariableEquals("variable", "value2");
-    try {
-      messageCorrelationBuilder.correlate();
-      fail("exception expected");
-    } catch (MismatchingMessageCorrelationException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> messageCorrelationBuilder.correlate()).isInstanceOf(MismatchingMessageCorrelationException.class);
 
     List<Execution> correlatedExecutions = runtimeService
       .createExecutionQuery()
@@ -1380,12 +1375,7 @@ class MessageCorrelationTest {
     Map<String, Object> correlationKeys = new HashMap<>();
     correlationKeys.put("aKey", "aValue");
 
-    try {
-      runtimeService.correlateMessage(messageName, correlationKeys);
-      fail("It should not be possible to correlate a message to a suspended process instance.");
-    } catch (MismatchingMessageCorrelationException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> runtimeService.correlateMessage(messageName, correlationKeys)).isInstanceOf(MismatchingMessageCorrelationException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1442,12 +1432,7 @@ class MessageCorrelationTest {
     variables.put("aKey", "aValue");
     var processVariables = new HashMap<String, Object>();
 
-    try {
-      runtimeService.correlateMessage("newInvoiceMessage", processVariables, variables);
-      fail("It should not be possible to correlate a message to a suspended process definition.");
-    } catch (MismatchingMessageCorrelationException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> runtimeService.correlateMessage("newInvoiceMessage", processVariables, variables)).isInstanceOf(MismatchingMessageCorrelationException.class);
   }
 
   @Test

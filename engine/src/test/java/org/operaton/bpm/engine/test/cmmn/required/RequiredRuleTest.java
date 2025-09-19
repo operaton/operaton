@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -49,12 +49,7 @@ class RequiredRuleTest extends CmmnTest {
     assertThat(taskExecution).isNotNull();
     assertThat(taskExecution.isRequired()).isTrue();
 
-    try {
-      caseService.completeCaseExecution(caseInstanceId);
-      fail("completing the containing stage should not be allowed");
-    } catch (NotAllowedException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> caseService.completeCaseExecution(caseInstanceId)).isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
@@ -90,12 +85,7 @@ class RequiredRuleTest extends CmmnTest {
     assertThat(taskExecution).isNotNull();
     assertThat(taskExecution.isRequired()).isTrue();
 
-    try {
-      caseService.completeCaseExecution(caseInstanceId);
-      fail("completing the containing stage should not be allowed");
-    } catch (NotAllowedException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> caseService.completeCaseExecution(caseInstanceId)).isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testDefaultVariableBasedRule.cmmn")

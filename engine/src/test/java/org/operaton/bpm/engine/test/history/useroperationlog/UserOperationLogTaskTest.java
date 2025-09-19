@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELEGATION;
@@ -42,7 +42,6 @@ import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELETE;
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PRIORITY;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Danny Gräf
@@ -512,12 +511,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     taskService.resolveTask(task.getId());
 
     // when null is used as deletion parameter
-    try {
-      historyService.deleteUserOperationLogEntry(null);
-      fail("exception expected");
-    } catch (NotValidException e) {
-      // then there should be an exception that signals an illegal input
-    }
+    assertThatThrownBy(() -> historyService.deleteUserOperationLogEntry(null)).isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})

@@ -38,6 +38,7 @@ import org.operaton.bpm.integrationtest.functional.spin.dataformat.ImplicitObjec
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.JsonDataFormatConfigurator;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.JsonSerializable;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
@@ -54,6 +55,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
   public static WebArchive createDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "PaDataFormatTest.war")
         .addAsResource("META-INF/processes.xml")
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ReferenceStoringProcessApplication.class)
         .addAsResource("org/operaton/bpm/integrationtest/oneTaskProcess.bpmn")

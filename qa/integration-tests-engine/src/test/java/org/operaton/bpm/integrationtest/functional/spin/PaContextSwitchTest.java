@@ -53,6 +53,7 @@ public class PaContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "pa1.war")
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(ProcessApplication1.class)
         .addClass(JsonSerializable.class)
         .addClass(RuntimeServiceDelegate.class)

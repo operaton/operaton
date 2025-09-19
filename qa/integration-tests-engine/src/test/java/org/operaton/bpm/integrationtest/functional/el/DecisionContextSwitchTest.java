@@ -33,6 +33,7 @@ import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.functional.el.beans.GreeterBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -64,6 +65,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
+            .addAsLibraries(DeploymentHelper.getTestingLibs())
             .addClass(AbstractFoxPlatformIntegrationTest.class);
 
     TestContainer.addContainerSpecificResources(webArchive);

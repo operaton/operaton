@@ -50,7 +50,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
-
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
@@ -59,7 +59,6 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENA
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Sebastian Menski
@@ -580,30 +579,12 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
   @Test
   void testInvalidSorting() {
     var historicCaseActivityInstanceQuery = historicQuery();
-    try {
-      historicCaseActivityInstanceQuery.asc();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseActivityInstanceQuery.asc()).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicCaseActivityInstanceQuery.desc();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseActivityInstanceQuery.desc()).isInstanceOf(ProcessEngineException.class);
 
     var historicCaseActivityInstanceQuery1 = historicQuery().orderByHistoricCaseActivityInstanceId();
-    try {
-      historicCaseActivityInstanceQuery1.count();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseActivityInstanceQuery1.count()).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -904,19 +885,9 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     assertCount(0, query);
     var historicCaseActivityInstanceQuery = historicQuery();
 
-    try {
-      historicCaseActivityInstanceQuery.caseActivityInstanceIdIn((String[])null);
-      fail("A NotValidException was expected.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseActivityInstanceQuery.caseActivityInstanceIdIn((String[]) null)).isInstanceOf(NotValidException.class);
 
-    try {
-      historicCaseActivityInstanceQuery.caseActivityInstanceIdIn((String)null);
-      fail("A NotValidException was expected.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseActivityInstanceQuery.caseActivityInstanceIdIn((String) null)).isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {
@@ -947,19 +918,9 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     assertCount(0, query);
     var historicCaseActivityInstanceQuery = historicQuery();
 
-    try {
-      historicCaseActivityInstanceQuery.caseActivityIdIn((String[])null);
-      fail("A NotValidException was expected.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseActivityInstanceQuery.caseActivityIdIn((String[]) null)).isInstanceOf(NotValidException.class);
 
-    try {
-      historicCaseActivityInstanceQuery.caseActivityIdIn((String)null);
-      fail("A NotValidException was expected.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseActivityInstanceQuery.caseActivityIdIn((String) null)).isInstanceOf(NotValidException.class);
   }
 
   protected HistoricCaseActivityInstanceQuery historicQuery() {

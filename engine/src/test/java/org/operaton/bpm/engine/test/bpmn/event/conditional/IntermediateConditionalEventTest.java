@@ -31,7 +31,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -494,12 +494,7 @@ class IntermediateConditionalEventTest extends AbstractConditionalEventTestCase 
 
     //when variable which triggers condition is set
     //then exception is expected
-    try {
-      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
-      fail("Should fail!");
-    } catch (SuspendedEntityInteractionException seie) {
-      //expected
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1)).isInstanceOf(SuspendedEntityInteractionException.class);
     runtimeService.activateProcessInstanceById(procInst.getId());
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }

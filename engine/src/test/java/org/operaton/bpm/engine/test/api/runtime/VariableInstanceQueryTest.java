@@ -53,8 +53,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.groups.Tuple.tuple;
 
 /**
@@ -1369,12 +1368,7 @@ class VariableInstanceQueryTest {
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery().variableValueEquals("bytesVar", bytes);
 
     // then
-    try {
-      query.list();
-      fail("A ProcessEngineException was expected: Variables of type ByteArray cannot be used to query.");
-    } catch (ProcessEngineException e) {
-      // expected exception
-    }
+    assertThatThrownBy(() -> query.list()).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

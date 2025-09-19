@@ -44,8 +44,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historic
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static java.util.Collections.singletonList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Thorben Lindhauer
@@ -211,13 +210,7 @@ class MultiTenancyHistoricBatchQueryTest {
 
     String[] tenantIds = null;
     var historicBatchQuery = historyService.createHistoricBatchQuery();
-    try {
-      historicBatchQuery.tenantIdIn(tenantIds);
-      fail("exception expected");
-    }
-    catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> historicBatchQuery.tenantIdIn(tenantIds)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -225,13 +218,7 @@ class MultiTenancyHistoricBatchQueryTest {
 
     String[] tenantIds = new String[]{ null };
     var historicBatchQuery = historyService.createHistoricBatchQuery();
-    try {
-      historicBatchQuery.tenantIdIn(tenantIds);
-      fail("exception expected");
-    }
-    catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> historicBatchQuery.tenantIdIn(tenantIds)).isInstanceOf(NullValueException.class);
   }
 
   @Test

@@ -11,10 +11,7 @@
   <name>Operaton - Run - QA</name>
   <description>${project.name}</description>
   <properties>
-    <!-- default os -->
-    <os.type>linux64</os.type>
     <version.httpcomponents>4.5.10</version.httpcomponents>
-    <version.chromedriver>112.0.5615.49</version.chromedriver>
   </properties>
   <dependencyManagement>
     <dependencies>

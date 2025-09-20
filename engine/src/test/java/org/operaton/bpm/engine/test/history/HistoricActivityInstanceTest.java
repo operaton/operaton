@@ -355,11 +355,11 @@ class HistoricActivityInstanceTest {
   @Test
   void testInvalidSorting() {
     var historicActivityInstanceQuery = historyService.createHistoricActivityInstanceQuery().orderByHistoricActivityInstanceDuration();
-    assertThatThrownBy(() -> historicActivityInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicActivityInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
 
-    assertThatThrownBy(() -> historicActivityInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicActivityInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
 
-    assertThatThrownBy(() -> historicActivityInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicActivityInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
@@ -449,7 +449,7 @@ class HistoricActivityInstanceTest {
     var historicActivityInstanceQuery = historyService
           .createHistoricActivityInstanceQuery()
           .completeScope();
-    assertThatThrownBy(() -> historicActivityInstanceQuery.canceled()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicActivityInstanceQuery::canceled).isInstanceOf(ProcessEngineException.class);
   }
 
   /**

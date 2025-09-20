@@ -160,7 +160,7 @@ class ExecutionQueryTest {
     assertThat(query.list()).hasSize(4);
     assertThat(query.count()).isEqualTo(4);
 
-    assertThatThrownBy(() -> query.singleResult()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -226,7 +226,7 @@ class ExecutionQueryTest {
   @Test
   void testQueryInvalidSorting() {
     var executionQuery = runtimeService.createExecutionQuery().orderByProcessDefinitionKey();
-    assertThatThrownBy(() -> executionQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(executionQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

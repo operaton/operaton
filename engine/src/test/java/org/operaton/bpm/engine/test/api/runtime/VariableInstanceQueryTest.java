@@ -1368,7 +1368,7 @@ class VariableInstanceQueryTest {
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery().variableValueEquals("bytesVar", bytes);
 
     // then
-    assertThatThrownBy(() -> query.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(query::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

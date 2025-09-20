@@ -490,7 +490,7 @@ public class IncidentQueryTest {
             .isNotEmpty()
             .hasSize(3);
 
-    assertThatThrownBy(() -> query.singleResult()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
   }
 

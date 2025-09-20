@@ -128,7 +128,7 @@ class HistoricDecisionInstanceQueryTest {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     var historicDecisionInstance = query.singleResult();
 
-    assertThatThrownBy(() -> historicDecisionInstance.getOutputs()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicDecisionInstance::getOutputs).isInstanceOf(ProcessEngineException.class);
 
     assertThat(query.includeOutputs().singleResult().getOutputs()).hasSize(1);
   }

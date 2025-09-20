@@ -282,7 +282,7 @@ class CaseInstanceCloseTest {
 
     CmmnActivityExecution taskA = caseInstance.findCaseExecution("A");
 
-    assertThatThrownBy(() -> taskA.close()).isInstanceOf(CaseIllegalStateTransitionException.class);
+    assertThatThrownBy(taskA::close).isInstanceOf(CaseIllegalStateTransitionException.class);
 
     // then
     assertThat(stateTransitionCollector.stateTransitions).isEmpty();
@@ -334,7 +334,7 @@ class CaseInstanceCloseTest {
 
     CmmnActivityExecution stageX = caseInstance.findCaseExecution("X");
 
-    assertThatThrownBy(() -> stageX.close()).isInstanceOf(CaseIllegalStateTransitionException.class);
+    assertThatThrownBy(stageX::close).isInstanceOf(CaseIllegalStateTransitionException.class);
 
     // then
     assertThat(stateTransitionCollector.stateTransitions).isEmpty();

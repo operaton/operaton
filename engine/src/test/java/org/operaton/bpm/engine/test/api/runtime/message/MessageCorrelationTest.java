@@ -1307,7 +1307,7 @@ class MessageCorrelationTest {
   void testCorrelationWithoutMessageDoesNotMatchStartEvent() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null)
         .processInstanceVariableEquals("variable", "value2");
-    assertThatThrownBy(() -> messageCorrelationBuilder.correlate()).isInstanceOf(MismatchingMessageCorrelationException.class);
+    assertThatThrownBy(messageCorrelationBuilder::correlate).isInstanceOf(MismatchingMessageCorrelationException.class);
 
     List<Execution> correlatedExecutions = runtimeService
       .createExecutionQuery()

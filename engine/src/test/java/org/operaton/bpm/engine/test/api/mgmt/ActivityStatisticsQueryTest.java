@@ -401,7 +401,7 @@ class ActivityStatisticsQueryTest {
   @Test
   void testNullProcessDefinitionParameter() {
     var activityStatisticsQuery = managementService.createActivityStatisticsQuery(null);
-    assertThatThrownBy(() -> activityStatisticsQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(activityStatisticsQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

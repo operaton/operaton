@@ -56,7 +56,7 @@ class HistoricCaseActivityStatisticsQueryTest {
     // given
 
     // when
-    assertThatThrownBy(() -> historicCaseActivityStatisticsQuery.list()).isInstanceOf(NullValueException.class);
+    assertThatThrownBy(historicCaseActivityStatisticsQuery::list).isInstanceOf(NullValueException.class);
   }
 
   @Test

@@ -716,24 +716,24 @@ class FullHistoryTest {
   @Test
   void testHistoricDetailQueryInvalidSorting() {
     var historicDetailQuery = historyService.createHistoricDetailQuery();
-    assertThatThrownBy(() -> historicDetailQuery.asc()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicDetailQuery::asc).isInstanceOf(ProcessEngineException.class);
 
-    assertThatThrownBy(() -> historicDetailQuery.desc()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicDetailQuery::desc).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByProcessInstanceId = historicDetailQuery.orderByProcessInstanceId();
-    assertThatThrownBy(() -> queryOrderByProcessInstanceId.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(queryOrderByProcessInstanceId::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByTime = historicDetailQuery.orderByTime();
-    assertThatThrownBy(() -> queryOrderByTime.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(queryOrderByTime::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByVariableName = historicDetailQuery.orderByVariableName();
-    assertThatThrownBy(() -> queryOrderByVariableName.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(queryOrderByVariableName::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByVariableRevision = historicDetailQuery.orderByVariableRevision();
-    assertThatThrownBy(() -> queryOrderByVariableRevision.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(queryOrderByVariableRevision::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryByVariableType = historicDetailQuery.orderByVariableType();
-    assertThatThrownBy(() -> queryByVariableType.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(queryByVariableType::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

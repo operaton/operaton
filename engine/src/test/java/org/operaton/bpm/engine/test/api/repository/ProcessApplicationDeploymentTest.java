@@ -100,9 +100,9 @@ class ProcessApplicationDeploymentTest {
   void testEmptyDeployment() {
     var deploymentBuilder = repositoryService.createDeployment(processApplication.getReference());
     var deploymentBuilder2 = repositoryService.createDeployment();
-    assertThatThrownBy(() -> deploymentBuilder.deploy()).isInstanceOf(NotValidException.class);
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotValidException.class);
 
-    assertThatThrownBy(() -> deploymentBuilder2.deploy()).isInstanceOf(NotValidException.class);
+    assertThatThrownBy(deploymentBuilder2::deploy).isInstanceOf(NotValidException.class);
   }
 
   @Test

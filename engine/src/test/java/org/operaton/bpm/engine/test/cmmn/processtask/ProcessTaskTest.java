@@ -904,7 +904,7 @@ class ProcessTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(processTaskId);
 
-    assertThatThrownBy(() -> caseExecutionCommandBuilder.manualStart()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseExecutionCommandBuilder::manualStart).isInstanceOf(ProcessEngineException.class);
 
     // complete //////////////////////////////////////////////////////////
 
@@ -1456,7 +1456,7 @@ class ProcessTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(processTaskId);
 
-    assertThatThrownBy(() -> caseExecutionCommandBuilder.complete()).isInstanceOf(NotAllowedException.class);
+    assertThatThrownBy(caseExecutionCommandBuilder::complete).isInstanceOf(NotAllowedException.class);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1491,7 +1491,7 @@ class ProcessTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(processTaskId);
 
-    assertThatThrownBy(() -> caseExecutionCommandBuilder.complete()).isInstanceOf(Exception.class);
+    assertThatThrownBy(caseExecutionCommandBuilder::complete).isInstanceOf(Exception.class);
 
     // complete ////////////////////////////////////////////////////////
 

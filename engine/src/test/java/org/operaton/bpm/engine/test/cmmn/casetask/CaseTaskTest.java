@@ -845,7 +845,7 @@ class CaseTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(caseTaskId);
 
-    assertThatThrownBy(() -> caseExecutionCommandBuilder.manualStart()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(caseExecutionCommandBuilder::manualStart).isInstanceOf(NotFoundException.class);
 
     // complete //////////////////////////////////////////////////////////
 
@@ -1346,7 +1346,7 @@ class CaseTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(caseTaskId);
 
-    assertThatThrownBy(() -> caseExecutionCommandBuilder.complete()).isInstanceOf(NotAllowedException.class);
+    assertThatThrownBy(caseExecutionCommandBuilder::complete).isInstanceOf(NotAllowedException.class);
 
 
     // complete ////////////////////////////////////////////////////////

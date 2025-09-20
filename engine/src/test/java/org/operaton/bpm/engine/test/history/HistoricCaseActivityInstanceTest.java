@@ -579,12 +579,12 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
   @Test
   void testInvalidSorting() {
     var historicCaseActivityInstanceQuery = historicQuery();
-    assertThatThrownBy(() -> historicCaseActivityInstanceQuery.asc()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicCaseActivityInstanceQuery::asc).isInstanceOf(ProcessEngineException.class);
 
-    assertThatThrownBy(() -> historicCaseActivityInstanceQuery.desc()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicCaseActivityInstanceQuery::desc).isInstanceOf(ProcessEngineException.class);
 
     var historicCaseActivityInstanceQuery1 = historicQuery().orderByHistoricCaseActivityInstanceId();
-    assertThatThrownBy(() -> historicCaseActivityInstanceQuery1.count()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicCaseActivityInstanceQuery1::count).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

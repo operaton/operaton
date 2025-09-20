@@ -185,7 +185,7 @@ class TaskQueryExpressionTest {
 
     setCurrentUser(userWithoutGroups);
     var taskQuery = taskQuery().taskCandidateGroupInExpression("${currentUserGroups()}");
-    assertThatThrownBy(() -> taskQuery.count()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(taskQuery::count).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

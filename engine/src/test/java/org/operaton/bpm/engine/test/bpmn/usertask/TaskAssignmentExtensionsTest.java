@@ -94,7 +94,7 @@ class TaskAssignmentExtensionsTest {
   void testDuplicateAssigneeDeclaration() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testDuplicateAssigneeDeclaration");
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource(resource);
-    assertThatThrownBy(() -> deploymentBuilder.deploy()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment

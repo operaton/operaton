@@ -187,7 +187,7 @@ public class ProcessInstanceQueryTest {
   @Test
   void testQueryNoSpecificsSingleResult() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThatThrownBy(() -> query.singleResult()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -213,7 +213,7 @@ public class ProcessInstanceQueryTest {
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
 
-    assertThatThrownBy(() -> query.singleResult()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -480,7 +480,7 @@ public class ProcessInstanceQueryTest {
   @Test
   void testQueryInvalidSorting() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery().orderByProcessDefinitionId();
-    assertThatThrownBy(() -> processInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(processInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

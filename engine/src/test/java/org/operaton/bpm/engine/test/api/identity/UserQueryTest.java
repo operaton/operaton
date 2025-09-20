@@ -126,7 +126,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery().userFirstName(null);
 
-    assertThatThrownBy(() -> userQuery.singleResult()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(userQuery::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -165,7 +165,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery().userLastName(null);
 
-    assertThatThrownBy(() -> userQuery.singleResult()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(userQuery::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -198,7 +198,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery().userEmail(null);
 
-    assertThatThrownBy(() -> userQuery.singleResult()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(userQuery::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -244,10 +244,10 @@ class UserQueryTest {
   @Test
   void testQueryInvalidSortingUsage() {
     var userQuery1 = identityService.createUserQuery().orderByUserId();
-    assertThatThrownBy(() -> userQuery1.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(userQuery1::list).isInstanceOf(ProcessEngineException.class);
 
     var userQuery2 = identityService.createUserQuery().orderByUserId().orderByUserEmail();
-    assertThatThrownBy(() -> userQuery2.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(userQuery2::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

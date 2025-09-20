@@ -50,7 +50,7 @@ public class SpringBootManagedContainer {
   protected static final long RAMP_UP_SECONDS = 60;
   protected static final long RAMP_DOWN_SECONDS = 20;
 
-  protected static final Logger log = LoggerFactory.getLogger(SpringBootManagedContainer.class.getName());
+  protected static final Logger log = LoggerFactory.getLogger(SpringBootManagedContainer.class);
 
   protected String baseDirectory;
   protected String baseUrl;
@@ -238,7 +238,7 @@ public class SpringBootManagedContainer {
       Files.deleteIfExists(Path.of(baseDirectory, filePath));
       createConfigurationYml(filePath, source);
     } catch (IOException e) {
-      log.error("Could not replace " + filePath, e);
+      log.error("Could not replace {}", filePath, e);
     }
   }
 
@@ -250,7 +250,7 @@ public class SpringBootManagedContainer {
       Files.copy(source, testYmlPath);
       configurationFiles.add(testYmlPath.toFile());
     } catch (IOException e) {
-      log.error("Could not create " + filePath, e);
+      log.error("Could not create {}", filePath, e);
     }
   }
 

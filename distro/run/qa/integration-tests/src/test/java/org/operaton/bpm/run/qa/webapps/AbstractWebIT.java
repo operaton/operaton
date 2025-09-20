@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kong.unirest.ObjectMapper;
@@ -34,7 +35,7 @@ import org.operaton.bpm.TestProperties;
  */
 public abstract class AbstractWebIT {
 
-  private static final Logger LOGGER = Logger.getLogger(AbstractWebIT.class.getName());
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractWebIT.class);
 
   protected String appBasePath;
 
@@ -79,7 +80,7 @@ public abstract class AbstractWebIT {
 
     // Get the application base path
     appBasePath = testProperties.getApplicationPath("/" + ctxPath);
-    LOGGER.info("Connecting to application " + appBasePath);
+    LOGGER.info("Connecting to application {}", appBasePath);
   }
 
   public void preventRaceConditions() throws InterruptedException {

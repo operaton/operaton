@@ -88,31 +88,31 @@ public class RedeploymentTest {
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResources("not-existing");
-    assertThatThrownBy(() -> deploymentBuilder.deploy()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
 
     var deploymentBuilder1 = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResourceById("not-existing", "an-id");
-    assertThatThrownBy(() -> deploymentBuilder1.deploy()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(deploymentBuilder1::deploy).isInstanceOf(NotFoundException.class);
 
     var deploymentBuilder2 = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResourcesById("not-existing", Collections.singletonList("an-id"));
-    assertThatThrownBy(() -> deploymentBuilder2.deploy()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(deploymentBuilder2::deploy).isInstanceOf(NotFoundException.class);
 
     var deploymentBuilder3 = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResourceByName("not-existing", "a-name");
-    assertThatThrownBy(() -> deploymentBuilder3.deploy()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(deploymentBuilder3::deploy).isInstanceOf(NotFoundException.class);
 
     var deploymentBuilder4 = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResourcesByName("not-existing", Collections.singletonList("a-name"));
-    assertThatThrownBy(() -> deploymentBuilder4.deploy()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(deploymentBuilder4::deploy).isInstanceOf(NotFoundException.class);
   }
 
   @Test
@@ -148,13 +148,13 @@ public class RedeploymentTest {
         .addDeploymentResourcesById(deployment.getId(), Collections.singletonList("not-existing" +
                                                                                       "-resource-id"));
 
-    assertThatThrownBy(() -> deploymentBuilder.deploy()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
 
-    assertThatThrownBy(() -> deploymentBuilder.deploy()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
 
-    assertThatThrownBy(() -> deploymentBuilder.deploy()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
 
-    assertThatThrownBy(() -> deploymentBuilder.deploy()).isInstanceOf(NotFoundException.class);
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
   }
 
   @Test
@@ -1151,7 +1151,7 @@ public class RedeploymentTest {
           .addDeploymentResources(deployment2.getId());
 
     // when
-    assertThatThrownBy(() -> deploymentBuilder.deploy()).isInstanceOf(NotValidException.class);
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -1172,7 +1172,7 @@ public class RedeploymentTest {
         .addModelInstance(RESOURCE_1_NAME, model2)
         .addDeploymentResourceByName(deployment1.getId(), RESOURCE_1_NAME);
 
-    assertThatThrownBy(() -> deploymentBuilder.deploy()).isInstanceOf(NotValidException.class);
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotValidException.class);
   }
 
   @Test

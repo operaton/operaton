@@ -458,7 +458,7 @@ class VariableListenerTest extends CmmnTest {
         .withCaseExecution(taskExecution.getId())
         .setVariableLocal("aTaskVariable", "aTaskValue");
 
-    assertThatThrownBy(() -> caseExecutionCommandBuilder.execute()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseExecutionCommandBuilder::execute).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment
@@ -475,7 +475,7 @@ class VariableListenerTest extends CmmnTest {
         .withCaseExecution(taskExecution.getId())
         .setVariableLocal("aTaskVariable", "aTaskValue");
 
-    assertThatThrownBy(() -> caseExecutionCommandBuilder.execute()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseExecutionCommandBuilder::execute).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment

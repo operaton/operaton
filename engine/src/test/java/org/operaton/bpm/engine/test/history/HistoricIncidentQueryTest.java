@@ -514,7 +514,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
     var historicIncidentQuery = query.open();
 
-    assertThatThrownBy(() -> historicIncidentQuery.open()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicIncidentQuery::open).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -537,7 +537,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
     var historicIncidentQuery = query.resolved();
 
-    assertThatThrownBy(() -> historicIncidentQuery.resolved()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicIncidentQuery::resolved).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -560,7 +560,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
     var historicIncidentQuery = query.deleted();
 
-    assertThatThrownBy(() -> historicIncidentQuery.deleted()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(historicIncidentQuery::deleted).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

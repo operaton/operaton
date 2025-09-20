@@ -455,7 +455,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueEquals("aByteArrayValue", bytes);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -473,7 +473,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueEquals("aSerializableValue", serializable);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -590,7 +590,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueNotEquals("aByteArrayValue", bytes);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -608,7 +608,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueNotEquals("aSerializableValue", serializable);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -751,7 +751,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueGreaterThan("aByteArrayValue", bytes);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -769,7 +769,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueGreaterThan("aSerializableValue", serializable);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -948,7 +948,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueGreaterThanOrEqual("aByteArrayValue", bytes);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -966,7 +966,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueGreaterThanOrEqual("aSerializableValue", serializable);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1109,7 +1109,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueLessThan("aByteArrayValue", bytes);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1127,7 +1127,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueLessThan("aSerializableValue", serializable);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1306,7 +1306,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueLessThanOrEqual("aByteArrayValue", bytes);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1324,7 +1324,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueLessThanOrEqual("aSerializableValue", serializable);
 
-    assertThatThrownBy(() -> caseInstanceQuery.list()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

@@ -126,15 +126,14 @@ class LoginIT extends AbstractWebappUiIT {
     }).doesNotThrowAnyException();
   }
 
-  void loginToCockpit() throws URISyntaxException {
+  void loginToCockpit() {
     String appName = "cockpit";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector(".deployed .processes .stats-label"),
         "Process Definitions"));
 
-    wait.until(currentURIIs(new URI(appUrl + "app/"
-        + appName + "/default/#/dashboard")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#/dashboard")));
   }
 
   @MethodSource("commands")
@@ -175,15 +174,14 @@ class LoginIT extends AbstractWebappUiIT {
     }).doesNotThrowAnyException();
   }
 
-  void loginToAdmin() throws URISyntaxException {
+  void loginToAdmin() {
     String appName = "admin";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector("[ng-class=\"activeClass('#/authorization')\"] a"),
         "Authorizations"));
 
-    wait.until(currentURIIs(new URI(appUrl
-        + "app/" + appName + "/default/#/")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#/")));
   }
 
   @MethodSource("commands")
@@ -199,15 +197,14 @@ class LoginIT extends AbstractWebappUiIT {
     }).doesNotThrowAnyException();
   }
 
-  void loginToWelcome() throws URISyntaxException {
+  void loginToWelcome() {
     String appName = "welcome";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector(".webapps .section-title"),
         "Applications"));
 
-    wait.until(currentURIIs(new URI(appUrl
-        + "app/" + appName + "/default/#!/welcome")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#!/welcome")));
   }
 
   @BeforeEach

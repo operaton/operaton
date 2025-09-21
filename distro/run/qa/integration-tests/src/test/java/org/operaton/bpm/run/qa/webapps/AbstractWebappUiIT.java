@@ -66,8 +66,8 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
 
     return webDriver -> {
       try {
-        return new URI(webDriver.getCurrentUrl()).equals(pageURI);
-      } catch (URISyntaxException e) {
+        return URI.create(webDriver.getCurrentUrl()).equals(pageURI);
+      } catch (IllegalArgumentException e) {
         return false;
       }
     };

@@ -222,7 +222,7 @@ class ProcessInstanceModificationTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("innerSubProcessTask");
 
     // when I start the inner subprocess task without explicit ancestor
-    assertThatThrownBy(() -> processInstanceModificationBuilder.execute()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(processInstanceModificationBuilder::execute).isInstanceOf(ProcessEngineException.class);
 
     // when I start the inner subprocess task with an explicit ancestor activity
     // instance id
@@ -409,7 +409,7 @@ class ProcessInstanceModificationTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startTransition("flow5");
 
     // when I start the inner subprocess task without explicit ancestor
-    assertThatThrownBy(() -> processInstanceModificationBuilder.execute()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(processInstanceModificationBuilder::execute).isInstanceOf(ProcessEngineException.class);
 
     // when I start the inner subprocess task with an explicit ancestor activity
     // instance id
@@ -596,7 +596,7 @@ class ProcessInstanceModificationTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("innerSubProcessStart");
 
     // when I start the inner subprocess task without explicit ancestor
-    assertThatThrownBy(() -> processInstanceModificationBuilder.execute()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(processInstanceModificationBuilder::execute).isInstanceOf(ProcessEngineException.class);
 
     // when I start the inner subprocess task with an explicit ancestor activity
     // instance id

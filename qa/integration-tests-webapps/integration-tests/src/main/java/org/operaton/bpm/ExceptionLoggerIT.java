@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ExceptionLoggerIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     createClient(getWebappCtxPath());
   }
 

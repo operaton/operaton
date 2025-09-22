@@ -219,9 +219,10 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
     ManagedProcessEngineMetadata metadata = ((MscManagedProcessEngineController) defaultEngineService.getService()).getProcessEngineMetadata();
     Map<String, String> configurationProperties = metadata.getConfigurationProperties();
-    assertThat(configurationProperties).containsEntry("job-name", "default");
-    assertThat(configurationProperties).containsEntry("job-acquisition", "default");
-    assertThat(configurationProperties).containsEntry("job-acquisition-name", "default");
+    assertThat(configurationProperties)
+            .containsEntry("job-name", "default")
+            .containsEntry("job-acquisition", "default")
+            .containsEntry("job-acquisition-name", "default");
 
     Map<String, String> foxLegacyProperties = metadata.getFoxLegacyProperties();
     assertThat(foxLegacyProperties).isEmpty();
@@ -237,16 +238,18 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     ProcessEnginePluginXml processEnginePluginXml = pluginConfigurations.get(0);
     assertThat(processEnginePluginXml.getPluginClass()).isEqualTo("org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin");
     Map<String, String> processEnginePluginXmlProperties = processEnginePluginXml.getProperties();
-    assertThat(processEnginePluginXmlProperties).containsEntry("test", "abc");
-    assertThat(processEnginePluginXmlProperties).containsEntry("number", "123");
-    assertThat(processEnginePluginXmlProperties).containsEntry("bool", "true");
+    assertThat(processEnginePluginXmlProperties)
+            .containsEntry("test", "abc")
+            .containsEntry("number", "123")
+            .containsEntry("bool", "true");
 
     processEnginePluginXml = pluginConfigurations.get(1);
     assertThat(processEnginePluginXml.getPluginClass()).isEqualTo("org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin");
     processEnginePluginXmlProperties = processEnginePluginXml.getProperties();
-    assertThat(processEnginePluginXmlProperties).containsEntry("test", "cba");
-    assertThat(processEnginePluginXmlProperties).containsEntry("number", "321");
-    assertThat(processEnginePluginXmlProperties).containsEntry("bool", "false");
+    assertThat(processEnginePluginXmlProperties)
+            .containsEntry("test", "cba")
+            .containsEntry("number", "321")
+            .containsEntry("bool", "false");
 
     // test correct subsystem removal
     assertRemoveSubsystemResources(services);
@@ -324,9 +327,10 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
     ManagedProcessEngineMetadata metadata = ((MscManagedProcessEngineController) defaultEngineService.getService()).getProcessEngineMetadata();
     Map<String, String> configurationProperties = metadata.getConfigurationProperties();
-    assertThat(configurationProperties).containsEntry("job-name", "default");
-    assertThat(configurationProperties).containsEntry("job-acquisition", "default");
-    assertThat(configurationProperties).containsEntry("job-acquisition-name", "default");
+    assertThat(configurationProperties)
+            .containsEntry("job-name", "default")
+            .containsEntry("job-acquisition", "default")
+            .containsEntry("job-acquisition-name", "default");
 
     Map<String, String> foxLegacyProperties = metadata.getFoxLegacyProperties();
     assertThat(foxLegacyProperties).isEmpty();
@@ -652,9 +656,10 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
       ProcessEnginePluginXml processEnginePluginXml = pluginConfigurations.get(0);
       assertThat(processEnginePluginXml.getPluginClass()).isEqualTo("org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin");
       Map<String, String> processEnginePluginXmlProperties = processEnginePluginXml.getProperties();
-      assertThat(processEnginePluginXmlProperties).containsEntry("test", "abc");
-      assertThat(processEnginePluginXmlProperties).containsEntry("number", "123");
-      assertThat(processEnginePluginXmlProperties).containsEntry("bool", "true");
+      assertThat(processEnginePluginXmlProperties)
+              .containsEntry("test", "abc")
+              .containsEntry("number", "123")
+              .containsEntry("bool", "true");
     } finally {
       for (String key : EXPRESSION_PROPERTIES.keySet()) {
         System.clearProperty(key);

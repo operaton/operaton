@@ -325,10 +325,10 @@ class ProcessInstantiationAtActivitiesTest {
   @Test
   void testStartNullProcessDefinition() {
     var processInstantiationBuilder1 = runtimeService.createProcessInstanceById(null).startBeforeActivity("start");
-    assertThatThrownBy(() -> processInstantiationBuilder1.execute()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(processInstantiationBuilder1::execute).isInstanceOf(ProcessEngineException.class);
 
     var processInstantiationBuilder2 = runtimeService.createProcessInstanceByKey(null).startBeforeActivity("start");
-    assertThatThrownBy(() -> processInstantiationBuilder2.execute()).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(processInstantiationBuilder2::execute).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = LISTENERS_PROCESS)

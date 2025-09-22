@@ -168,6 +168,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
     return this;
   }
 
+  @Override
   public ExternalTaskQuery processDefinitionId(String processDefinitionId) {
     ensureNotNull("processDefinitionId", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
@@ -186,6 +187,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
     return this;
   }
 
+  @Override
   public ExternalTaskQuery activityId(String activityId) {
     ensureNotNull("activityId", activityId);
     this.activityId = activityId;

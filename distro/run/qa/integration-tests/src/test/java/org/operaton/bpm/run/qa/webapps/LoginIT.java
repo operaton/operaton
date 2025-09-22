@@ -18,7 +18,6 @@ package org.operaton.bpm.run.qa.webapps;
 
 import java.lang.reflect.Method;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;

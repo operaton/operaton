@@ -117,4 +117,21 @@ public final class StringUtil {
     throwable.printStackTrace(new PrintWriter(sw, true));
     return sw.toString();
   }
+
+  /**
+   * Sanitizes a given string for safe logging by escaping carriage return and newline characters.
+   * This method replaces all occurrences of '\r' with '\\r' and '\n' with '\\n' to prevent
+   * multi-line log outputs which can disrupt log readability and parsing.
+   * If the input string is null, it returns the literal string "(null)".
+   *
+   * @param s the input string to sanitize, may be null
+   * @return a sanitized string with escaped line breaks or "(null)" if input was null
+   */
+  public static String sanitize(String s) {
+    if (s == null) {
+      return "(null)";
+    }
+
+    return s.replace("\r", "\\r").replace("\n", "\\n");
+  }
 }

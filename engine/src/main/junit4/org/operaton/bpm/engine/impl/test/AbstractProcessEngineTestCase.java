@@ -108,13 +108,13 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
 
     }
     catch (AssertionFailedError e) {
-      LOG.error("ASSERTION FAILED: " + e, e);
+      LOG.error("ASSERTION FAILED: {}", e.getMessage(), e);
       exception = e;
       throw e;
 
     }
     catch (Throwable e) {
-      LOG.error("EXCEPTION: " + e, e);
+      LOG.error("EXCEPTION: {}", e.getMessage(), e);
       exception = e;
       throw e;
 

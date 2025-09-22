@@ -50,7 +50,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
@@ -59,6 +59,7 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENA
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski

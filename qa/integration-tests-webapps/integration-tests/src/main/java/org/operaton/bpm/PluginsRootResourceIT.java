@@ -43,7 +43,7 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   public boolean assetAllowed;
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     createClient(getWebappCtxPath());
   }
 

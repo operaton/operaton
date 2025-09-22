@@ -79,7 +79,7 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
   }
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());

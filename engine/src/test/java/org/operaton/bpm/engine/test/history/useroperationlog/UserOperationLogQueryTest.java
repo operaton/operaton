@@ -51,7 +51,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import static org.operaton.bpm.engine.EntityTypes.ATTACHMENT;
 import static org.operaton.bpm.engine.EntityTypes.IDENTITY_LINK;
 import static org.operaton.bpm.engine.EntityTypes.JOB;
@@ -66,6 +66,7 @@ import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNE
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Danny Gräf

@@ -47,7 +47,7 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
   private static final String FETCH_AND_LOCK_PATH = ENGINE_DEFAULT_PATH + "/external-task/fetchAndLock";
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getRestCtxPath());
   }

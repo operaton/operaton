@@ -17,7 +17,6 @@
 package org.operaton.bpm;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Arrays;
 

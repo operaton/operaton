@@ -40,11 +40,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicDetailByTenantId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class MultiTenancyHistoricDetailVariableUpdateQueryTest {

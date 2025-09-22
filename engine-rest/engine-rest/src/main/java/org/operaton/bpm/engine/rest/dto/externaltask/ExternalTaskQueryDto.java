@@ -324,21 +324,21 @@ public class ExternalTaskQueryDto extends AbstractQueryDto<ExternalTaskQuery> {
         String variableName = variableQueryParam.getName();
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
-        if (op.equals(VariableQueryParameterDto.EQUALS_OPERATOR_NAME)) {
+        if (VariableQueryParameterDto.EQUALS_OPERATOR_NAME.equals(op)) {
           query.processVariableValueEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (VariableQueryParameterDto.NOT_EQUALS_OPERATOR_NAME.equals(op)) {
           query.processVariableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OPERATOR_NAME)) {
+        } else if (VariableQueryParameterDto.GREATER_THAN_OPERATOR_NAME.equals(op)) {
           query.processVariableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (VariableQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.processVariableValueGreaterThanOrEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OPERATOR_NAME)) {
+        } else if (VariableQueryParameterDto.LESS_THAN_OPERATOR_NAME.equals(op)) {
           query.processVariableValueLessThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (VariableQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
           query.processVariableValueLessThanOrEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LIKE_OPERATOR_NAME)) {
+        } else if (VariableQueryParameterDto.LIKE_OPERATOR_NAME.equals(op)) {
           query.processVariableValueLike(variableName, String.valueOf(variableValue));
-        } else if (op.equals(VariableQueryParameterDto.NOT_LIKE_OPERATOR_NAME)) {
+        } else if (VariableQueryParameterDto.NOT_LIKE_OPERATOR_NAME.equals(op)) {
           query.processVariableValueNotLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Invalid process variable comparator specified: " + op);

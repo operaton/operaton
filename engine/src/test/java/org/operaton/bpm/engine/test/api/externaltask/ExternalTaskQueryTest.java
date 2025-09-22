@@ -58,7 +58,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Thorben Lindhauer
  *
  */
-public class ExternalTaskQueryTest {
+class ExternalTaskQueryTest {
 
   protected static final String WORKER_ID = "aWorkerId";
   protected static final String TOPIC_NAME = "externalTaskTopic";
@@ -710,7 +710,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  void testProcessVariableValueEquals() throws Exception {
+  void testProcessVariableValueEquals() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 928374L);
     variables.put("shortVar", (short) 123);
@@ -755,9 +755,9 @@ public class ExternalTaskQueryTest {
       assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("longVar", 928374L).count()).isEqualTo(0);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableNameEqualsIgnoreCase() throws Exception {
+  void testProcessVariableNameEqualsIgnoreCase() {
     String variableName = "someVariable";
     String variableValue = "someCamelCaseValue";
     Map<String, Object> variables = new HashMap<>();
@@ -773,9 +773,9 @@ public class ExternalTaskQueryTest {
       assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEqualsIgnoreCase() throws Exception {
+  void testProcessVariableValueEqualsIgnoreCase() {
     String variableName = "someVariable";
     String variableValue = "someCamelCaseValue";
     Map<String, Object> variables = new HashMap<>();
@@ -804,9 +804,9 @@ public class ExternalTaskQueryTest {
     assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(0);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLike() throws Exception {
+  void testProcessVariableValueLike() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
@@ -827,9 +827,9 @@ public class ExternalTaskQueryTest {
             externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", null).count());
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLikeIgnoreCase() throws Exception {
+  void testProcessVariableValueLikeIgnoreCase() {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "stringValue");
@@ -852,9 +852,9 @@ public class ExternalTaskQueryTest {
             externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", null).count());
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueNotLike() throws Exception {
+  void testProcessVariableValueNotLike() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
@@ -875,9 +875,9 @@ public class ExternalTaskQueryTest {
             externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", null).count());
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueNotLikeIgnoreCase() throws Exception {
+  void testProcessVariableValueNotLikeIgnoreCase() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
@@ -899,9 +899,9 @@ public class ExternalTaskQueryTest {
             externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", null).count());
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueCompare() throws Exception {
+  void testProcessVariableValueCompare() {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("numericVar", 928374);
@@ -998,7 +998,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEqualsNumber() throws Exception {
+  void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
             Collections.<String, Object>singletonMap("var", 123L));
@@ -1040,7 +1040,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueNumberComparison() throws Exception {
+  void testProcessVariableValueNumberComparison() {
     // long
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
             Collections.<String, Object>singletonMap("var", 123L));
@@ -1081,7 +1081,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testVariableEqualsNumberMax() throws Exception {
+  void testVariableEqualsNumberMax() {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
             Collections.<String, Object>singletonMap("var", MAX_DOUBLE_VALUE));
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
@@ -1093,7 +1093,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testVariableEqualsNumberLongValueOverflow() throws Exception {
+  void testVariableEqualsNumberLongValueOverflow() {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
             Collections.<String, Object>singletonMap("var", MAX_DOUBLE_VALUE));
 
@@ -1107,7 +1107,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testVariableEqualsNumberNonIntegerDoubleShouldNotMatchInteger() throws Exception {
+  void testVariableEqualsNumberNonIntegerDoubleShouldNotMatchInteger() {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
             Variables.createVariables().putValue("var", 42).putValue("var2", 52.4d));
 

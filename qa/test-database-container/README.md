@@ -14,6 +14,7 @@ The script supports the following database types:
 - **PostgreSQL**
 - **Oracle**
 - **SQL Server**
+- **DB2**
 
 ---
 
@@ -59,6 +60,7 @@ Where `<db_type>` is one of:
 - `postgres`
 - `oracle`
 - `sqlserver`
+- `db2`
 
 ### Example
 
@@ -79,13 +81,14 @@ This will:
 
 The script automatically sets and exports connection variables depending on the chosen database:
 
-| Database   | Username   | Password         | Port   | Database   |
-|------------|-----------|------------------|--------|------------|
-| MySQL      | root      | 123456           | 33060  | operaton   |
-| MariaDB    | root      | 123456           | 33070  | operaton   |
-| PostgreSQL | root      | 123456           | 54320  | operaton   |
-| Oracle     | SYSTEM    | 123456           | 15210  | operaton   |
-| SQL Server | sa        | P@ssw0rd123ABC   | 14330  | operaton   |
+| Database   | Username | Password         | Port   | Database   |
+|------------|----------|------------------|--------|------------|
+| MySQL      | root     | 123456           | 33060  | operaton   |
+| MariaDB    | root     | 123456           | 33070  | operaton   |
+| PostgreSQL | root     | 123456           | 54320  | operaton   |
+| Oracle     | SYSTEM   | 123456           | 15210  | operaton   |
+| SQL Server | sa       | P@ssw0rd123ABC   | 14330  | operaton   |
+| DB2        | root     | 123456           | 50000  | operaton   |
 
 These are injected into the running tests automatically.
 

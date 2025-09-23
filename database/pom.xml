@@ -434,6 +434,22 @@
     </profile>
 
     <profile>
+      <id>mt-db2</id>
+      <properties>
+        <database.type>db2</database.type>
+        <database.driver>com.ibm.db2.jcc.DB2Driver</database.driver>
+        <database.datasource.class>com.ibm.db2.jcc.DB2SimpleDataSource</database.datasource.class>
+        <jboss.datasource.filename>db2-ds.xml</jboss.datasource.filename>
+        <database.port>${env.MT_DB2_HOST_PORT}</database.port>
+        <database.name>${env.MT_DB2_DATABASE}</database.name>
+        <database.username>${env.MT_DB2_USERNAME}</database.username>
+        <database.password>${env.MT_DB2_PASSWORD}</database.password>
+        <database.params>/${database.name}</database.params>
+        <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
+      </properties>
+    </profile>
+
+    <profile>
       <id>mt-sqlserver</id>
       <properties>
         <database.type>mssql</database.type>

@@ -50,7 +50,6 @@ import org.operaton.commons.utils.CollectionUtil;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
 /**
@@ -783,7 +782,8 @@ class BoundaryErrorEventTest {
 
     // if the test fails, it produces a constraint violation in db.
 
-    assertDoesNotThrow(() -> runtimeService.startProcessInstanceByKey("process"));
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("process"))
+        .doesNotThrowAnyException();
   }
 
   @Deployment

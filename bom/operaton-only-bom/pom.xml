@@ -145,6 +145,11 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.operaton.bpm.springboot</groupId>
+        <artifactId>operaton-bpm-spring-boot-starter-test-junit5</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.operaton.bpm.quarkus</groupId>
         <artifactId>operaton-bpm-quarkus-engine</artifactId>
         <version>${project.version}</version>

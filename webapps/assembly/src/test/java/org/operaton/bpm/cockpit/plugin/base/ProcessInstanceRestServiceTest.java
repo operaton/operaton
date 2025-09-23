@@ -3228,7 +3228,6 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     //when + then
     assertThatCode(() -> resource.queryProcessInstances(new ProcessInstanceQueryDto(), 0, 10))
-      .as("No exception expected")
       .doesNotThrowAnyException();
   }
 
@@ -3239,7 +3238,6 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     //when + then
     assertThatCode(() -> resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null))
-    .as("No exception expected")
         .doesNotThrowAnyException();
   }
 
@@ -3250,7 +3248,6 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     //when + then
     assertThatCode(() -> resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null))
-      .as("No exception expected")
       .doesNotThrowAnyException();
   }
 

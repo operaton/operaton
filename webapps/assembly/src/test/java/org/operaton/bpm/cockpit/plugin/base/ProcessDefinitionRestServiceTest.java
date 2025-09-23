@@ -148,7 +148,6 @@ class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
 
     // when + then
     assertThatCode(() -> resource.queryStatistics(uriInfo, null, null))
-      .as("No exception expected")
       .doesNotThrowAnyException();
   }
 

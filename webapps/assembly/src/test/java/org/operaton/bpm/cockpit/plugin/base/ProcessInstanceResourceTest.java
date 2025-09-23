@@ -253,7 +253,6 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
 
     // when + then
     assertThatCode(() -> resource.queryCalledProcessInstances(calledProcessInstanceQueryDto))
-      .as("No exception expected")
       .doesNotThrowAnyException();
   }
 

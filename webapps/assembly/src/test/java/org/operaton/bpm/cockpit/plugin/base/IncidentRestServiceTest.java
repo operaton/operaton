@@ -437,7 +437,6 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
     // when + then
     assertThatCode(() -> resource.queryIncidents(new IncidentQueryDto(), 0, 10))
-      .as("No exception expected")
       .doesNotThrowAnyException();
   }
 
@@ -448,7 +447,6 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
     //when + then
     assertThatCode(() -> resource.queryIncidents(new IncidentQueryDto(), null, null))
-      .as("No exception expected")
       .doesNotThrowAnyException();
   }
 
@@ -460,7 +458,6 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
     // when + then
     assertThatCode(() -> resource.queryIncidents(incidentQueryDto, null, null))
-      .as("No exception expected")
       .doesNotThrowAnyException();
   }
 

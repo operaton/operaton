@@ -12,17 +12,21 @@
 		"bpmn-visualization": "^0.46.0",
 		"dmn-js": "^17.3.0",
 		"dompurify": "^3.1.6",
+		"i18next-browser-languagedetector": "^8.2.0",
+		"i18next-http-backend": "^3.0.2",
 		"jsdom": "^25.0.0",
 		"preact": "^10.22.1",
 		"preact-iso": "^2.6.3",
 		"react-bpmn": "^0.2.0",
-		"react-hotkeys-hook": "^4.5.1"
+		"react-hotkeys-hook": "^4.5.1",
+		"react-i18next": "^15.6.1"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.9.0",
 		"eslint": "^8.57.0",
 		"eslint-config-preact": "^1.4.0",
 		"jest": "^29.7.0",
+		"prettier": "3.6.2",
 		"vite": "^7.0.0"
 	},
 	"eslintConfig": {

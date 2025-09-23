@@ -3,7 +3,7 @@ import engine_rest from "../api/engine_rest.jsx";
 import { AppState } from "../state.js";
 
 export const Home = () => (
-  <main class="p-3">
+  <div class="p-3">
     <h2>Welcome to Operaton!</h2>
     <p>
       You can find general information on operaton on <a href="https://operaton.org">operaton.org</a>.
@@ -59,5 +59,5 @@ export const Home = () => (
         <a href="https://github.com/operaton/operaton/issues">Create a feature request on GitHub</a>
       </li>
     </ul>
-  </main>
+  </div>
 );

@@ -1,23 +1,3 @@
-/* release warning */
-
-#app > header div.warning {
-  text-align: center;
-  font-style: italic;
-  font-weight: 600;
-  font-size: var(--small-font-size);
-  padding: .2em;
-  background-color: #fff4f2;
-  color: #bb2511;
-}
-
-
-/* tile */
-
-.tile {
-  border: var(--border);
-  border-radius: var(--border-radius);
-}
-
 /* list */
 
 .list-container {
@@ -81,301 +61,11 @@
   margin-top: 0;
 }
 
-:where(.tile, .list) :where(header, footer) {
+.list :where(header, footer) {
   display: flex;
   justify-content: space-between;
 }
 
-/* tasks page */
-
-
-#tasks {
-  #task-list {
-    display: flex;
-    /*justify-content: space-between;*/
-    gap: var(--spacing-1);
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-    overscroll-behavior: none;
-    max-height: 100%;
-    border-bottom: var(--border);
-    border-width: var(--border-width-2);
-    box-sizing: border-box;
-
-    > div {
-      overflow-y: scroll;
-      height: 100%;
-      box-sizing: content-box;
-      display: flex;
-      flex-direction: column;
-
-      &:nth-child(2) {
-        /*width: 100%;*/
-        flex-grow: 1;
-      }
-    }
-
-    table {
-      margin-top: var(--spacing-1);
-      margin-left: var(--spacing-1);
-      width: calc(100% - var(--spacing-1));
-    }
-
-    #task-actions {
-      padding: var(--spacing-1);
-      height: calc(100% - 2 * var(--spacing-1));
-      /*background-color: var(--background-2);*/
-      border-left: var(--border);
-
-      > *:first-child {
-        margin-top: 0;
-      }
-
-      #filter-list {
-        list-style: none;
-        padding: 0;
-        margin-top: .5lh;
-        display: flex;
-        flex-direction: column;
-        gap: .2em;
-
-        li[aria-selected=true] {
-          font-style: italic;
-          font-weight: bold;
-        }
-      }
-    }
-  }
-
-  #task-details {
-    height: 100%;
-    /*gap: var(--spacing-2);*/
-    display: grid;
-    grid-template-columns: max-content 3fr;
-    width: 100%;
-    overflow-y: auto;
-
-    > header {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-2);
-      align-items: start;
-      background: var(--background-2);
-      padding: var(--spacing-2);
-      overflow-y: auto;
-
-      > button {
-        background: var(--background-3);
-        margin: 0;
-      }
-    }
-
-    .task-tabs {
-      overflow-y: scroll;
-      position: relative;
-      max-height: 100%;
-      z-index: 5;
-
-      h1 {
-        font-size: var(--h2-size);
-        font-weight: normal;
-        margin: 1rem 0;
-      }
-
-      .title {
-        font-size: var(--h5-size);
-        padding-bottom: var(--spacing-1);
-        font-weight: bold;
-      }
-
-      /* tab menu */
-      .task-tabs {
-        display: flex;
-        width: max-content;
-        margin-top: var(--spacing-3);
-        font-size: var(--small-font-size);
-        font-weight: bold;
-        border-radius: var(--border-radius);
-        border: 1px solid var(--border-color);
-        cursor: pointer;
-
-        a {
-          display: block;
-          padding: var(--spacing-1) var(--spacing-2);
-          border-right: 1px solid var(--border-color);
-          color: var(--text);
-          text-decoration: none;
-
-          &:visited {
-            color: var(--text);
-          }
-
-          &:last-child {
-            border-right: none;
-          }
-
-          &.selected {
-            border-radius: var(--border-radius);
-            border: 2px solid var(--border-color-2);
-            background-color: var(--background-2);
-          }
-        }
-      }
-
-      .tab-content {
-        margin-top: var(--spacing-3);
-        overflow-y: auto;
-
-        &.hide {
-          display: none;
-        }
-      }
-
-      /* engine generated form, CSS classes given by the engine */
-      .task-form {
-        form {
-          column-width: auto;
-        }
-
-        .has-error {
-          display: none;
-        }
-
-        .input-group-btn {
-          display: none;
-        }
-
-        .form-fields {
-          display: flex;
-          flex-wrap: wrap;
-
-          .form-group {
-            width: 40%;
-          }
-        }
-
-        label {
-          margin-top: 1em;
-        }
-
-        input[type="checkbox"], input[type="radio"] {
-          margin-left: var(--spacing-2);
-          width: auto;
-        }
-
-        input:not([type='checkbox']) {
-          width: 85%;
-        }
-
-        select {
-          -moz-box-sizing: border-box;
-          -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-          width: 90%;
-        }
-
-        .error {
-          color: var(--color-danger);
-          margin-top: var(--spacing-2);
-
-          &.hidden {
-            display: none;
-          }
-
-          &.show {
-            display: block;
-          }
-
-          .icon {
-            vertical-align: middle;
-            display: inline-block;
-            margin-right: var(--spacing-1);
-            height: 1.5rem;
-
-            svg {
-              width: 1.5rem;
-              height: 1.5rem;
-            }
-          }
-
-          .error-text {
-            vertical-align: middle;
-            display: inline-block;
-          }
-        }
-
-        .form-buttons {
-          width: 100%;
-          margin-top: var(--spacing-3);
-
-          button {
-            display: inline-block;
-            margin-right: var(--spacing-1);
-          }
-        }
-        .task-text {
-          margin-top: var(--spacing-2);
-        }
-        input[type='checkbox'], input[type='radio'] {
-          width: auto;
-        }
-
-        .input-list {
-          display: flex;
-          flex-direction: row;
-          margin: var(--spacing-1) 0;
-
-          label {
-            font-size: var(--base-font-size);
-            font-weight: normal;
-            padding: 0;
-            margin: 0;
-          }
-
-          input {
-            display: inline-block;
-            padding: 0;
-            margin: 0 var(--spacing-1) 0 var(--spacing-2);
-          }
-        }
-      }
-    }
-  }
-
-  .task-empty {
-    /*margin: var(--spacing-4) var(--spacing-3);*/
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-2);
-    font-size: var(--small-font-size);
-    width: 100%;
-    grid-column: 1 / 3;
-
-    text-align: center;
-
-  }
-}
-
-/* action bar */
-
-.action-bar {
-  list-style: none;
-  padding: 0;
-  display: inline-flex;
-  justify-content: start;
-  flex-wrap: wrap;
-  gap: var(--spacing-1);
-}
-
-hr {
-  border: 0;
-  border-bottom: var(--border);
-  margin: 0;
-}
 
 /* logo */
 
@@ -384,6 +74,7 @@ hr {
   font-weight: 500;
   text-transform: uppercase;
   font-size: 1em;
+  margin: 0;
 
   a {
     color: var(--text);
@@ -646,13 +337,9 @@ div.accordion {
   details[open] {
     background: var(--background-2);
 
-    > summary::before {
-      transform: rotate(90deg);
-    }
+    > summary::before {  transform: rotate(90deg); }
 
-    details[open] {
-      background: var(--background-1);
-    }
+    details[open] { background: var(--background-1); }
   }
 
   details:first-child {
@@ -670,48 +357,27 @@ div.accordion {
 
 /* bpmn diagram */
 
-#processes .react-bpmn-diagram-container {
-  height: 100%;
-}
+#processes .react-bpmn-diagram-container { height: 100%; }
 
-.overlay-badge {
-  padding: 2px;
-}
+.overlay-badge { padding: 2px; }
 
-.c-hand {
-  cursor: pointer;
-}
-
-#processes .react-bpmn-diagram-container {
-  height: 100%;
-}
+.c-hand { cursor: pointer; }
 
 .copy-on-click {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
-}
 
-.copy-on-click:hover {
-  cursor: copy;
-  background-color: var(--color-primary-transparent);
-  border-radius: var(--spacing-4);
-}
+  &:hover {
+    cursor: copy;
+    background-color: var(--color-primary-transparent);
+    border-radius: var(--spacing-4);
+  }
 
-.copy-on-click:active {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-/* dialog */
-
-dialog > header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-dialog > header > button {
-  width: unset;
+  &:active {
+    background-color: var(--color-primary);
+    color: white;
+  }
 }
 
 /* global search */
@@ -720,31 +386,13 @@ dialog#global-search {
   height: 80%;
 }
 
-::backdrop {
-  background: #fff4;
-  backdrop-filter: blur(6px);
-}
+
 
 /* TODO: needs to be designed */
 /* info box */
 .info-box {
   padding: var(--spacing-2);
   border: 2px solid var(--color-primary);
-}
-
-/* admin */
-
-#admin-page {
-  display: flex;
-  /*gap: var(--spacing-2);*/
-}
-
-#admin-page > div {
-  padding: var(--spacing-2);
-  overflow-y: auto;
-  width: calc(100% - var(--spacing-3));
-  flex: 1;
-  background-clip: padding-box;
 }
 
 /* breadcrumbs */
@@ -754,31 +402,31 @@ dialog#global-search {
   padding: 0;
   list-style: none;
   margin: 0;
-}
 
-.breadcrumbs > * {
-  line-height: 1;
-  padding: .3em .5em .3em 0;
-  font-size: var(--small-font-size);
-  /*text-decoration: none;*/
-  color: var(--text-2);
-}
+  > * {
+    line-height: 1;
+    padding: .3em .5em .3em 0;
+    font-size: var(--small-font-size);
+    /*text-decoration: none;*/
+    color: var(--text-2);
 
-.breadcrumbs > *:not(:first-child)::before {
-  content: "/";
-  margin-right: .5em;
-  color: var(--text-2);
-  font-weight: normal;
-}
+    &:not(:first-child)::before {
+      content: "/";
+      margin-right: .5em;
+      color: var(--text-2);
+      font-weight: normal;
+    }
 
-.breadcrumbs > *:last-child {
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
-  color: var(--text);
-  /*font-weight: 600;*/
-}
+    *:last-child {
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+      color: var(--text);
+      /*font-weight: 600;*/
+    }
+  }
 
-.breadcrumbs a:visited {
-  color: var(--text-2);
+  a:visited {
+    color: var(--text-2);
+  }
 }
 
 /* deployments page */
@@ -813,10 +461,12 @@ dialog#global-search {
 }
 
 #go-to {
-  font-family: monospace;
-  text-transform: uppercase;
   font-size: .8em;
-  letter-spacing: .1em;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  background: none;
+  padding: 0 .2em;
 }
 
 

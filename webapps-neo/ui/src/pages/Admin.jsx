@@ -27,7 +27,7 @@ const AdminPage = () => {
 
   const is_selected = (page) => (page_id === page) ? 'selected' : ''
 
-  return <main id="admin-page">
+  return <div id="admin-page">
     <nav>
       <ul class="list">
         <li class={is_selected('users')}><a href="/admin/users">Users</a></li>
@@ -47,7 +47,7 @@ const AdminPage = () => {
       system: <SystemPage />,
     })[page_id] ?? <p>Select Page</p>}
 
-  </main>
+  </div>
 }
 
 const TenantsPage = () => {

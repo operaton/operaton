@@ -98,7 +98,7 @@ const ProcessesPage = () => {
   }
 
   return (
-    <main id="processes"
+    <div id="processes"
           class="split-layout">
       <div id="left-side">
         <div id="selection" onMouseUp={store_details_width}>
@@ -120,7 +120,7 @@ const ProcessesPage = () => {
       </div>
       <div id="canvas" />
       <ProcessDiagram />
-    </main>
+    </div>
   )
 }
 
@@ -151,7 +151,7 @@ const ProcessDefinitionSelection = () => {
     <h1>
       Process Definitions
     </h1>
-    <table class="tile p-1">
+    <table>
       <thead>
       <tr>
         <th>Name</th>

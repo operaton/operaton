@@ -22,11 +22,11 @@ const DecisionsPage = () => {
   }
 
   return (
-    <main class="fade-in list-container">
+    <div class="fade-in list-container">
       <h2 class="screen-hidden">Decisions</h2>
       <DecisionsList />
       <DecisionDetails />
-    </main>
+    </div>
   )
 }
 

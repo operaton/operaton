@@ -1,0 +1,15 @@
+{
+  "tasks": {
+    "title": "Task List",
+    "task-list": {
+      "table-headings": {
+        "task-name": "Task Name",
+        "processes-definition": "Processes Definition",
+        "processes-version": "Processes Version",
+        "created-on": "Created on",
+        "assignee": "Assignee",
+        "priority": "Priority"
+      }
+    }
+  }
+}

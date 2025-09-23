@@ -155,15 +155,7 @@ const get_task_process_definitions = (state, ids) =>
   ).then((r) => r.json());
 
 const post_task_form = (state, task_id, data) =>
-  POST(
-    `/task/${task_id}/submit-form`,
-    {
-      variables: data,
-      withVariablesInReturn: true,
-    },
-    state,
-    state.api.task.submit_form,
-  );
+  POST(`/task/${task_id}/submit-form`, { variables: data, withVariablesInReturn: true, }, state, state.api.task.submit_form );
 
 const task = {
   get_tasks,

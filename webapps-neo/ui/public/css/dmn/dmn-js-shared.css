@@ -1,0 +1,221 @@
+/* Color definitions */
+.dmn-js-parent {
+  --color-grey-225-10-15: hsl(225 10% 15%);
+  --color-grey-225-10-35: hsl(225 10% 35%);
+  --color-grey-225-10-55: hsl(225 10% 55%);
+  --color-grey-225-10-75: hsl(225 10% 75%);
+  --color-grey-225-10-80: hsl(225 10% 80%);
+  --color-grey-225-10-85: hsl(225 10% 85%);
+  --color-grey-225-10-90: hsl(225 10% 90%);
+  --color-grey-225-10-95: hsl(225 10% 95%);
+  --color-grey-225-10-97: hsl(225 10% 97%);
+  --color-blue-205-100-35: hsl(205 100% 35%);
+  --color-blue-205-100-45: hsl(205 100% 45%);
+  --color-blue-205-100-45-opacity-30: hsl(205 100% 45% / 30%);
+  --color-blue-205-100-50: hsl(205 100% 50%);
+  --color-blue-205-100-80: hsl(205 100% 80%);
+  --color-blue-205-100-95: hsl(205 100% 95%);
+  --color-green-150-86-44: hsl(150 86% 44%);
+  --color-red-360-100-35: hsl(360 100% 35%);
+  --color-red-360-100-45: hsl(360 100% 45%);
+  --color-red-360-100-92: hsl(360 100% 92%);
+  --color-red-360-100-97: hsl(360 100% 97%);
+  --color-white: hsl(0 0% 100%);
+  --color-black: hsl(0 0% 0%);
+  --color-black-opacity-10: hsl(0 0% 0% / 10%);
+  --color-black-opacity-20: hsl(0 0% 0% / 20%);
+  --hint-button-color: var(--color-blue-205-100-35);
+  --hint-invalid-color: var(--color-red-360-100-35);
+  --separator-color: var(--color-grey-225-10-75);
+  --input-border-color: var(--color-grey-225-10-75);
+  --input-color: var(--color-grey-225-10-15);
+  --input-focus-border-color: var(--color-blue-205-100-50);
+  --input-focus-box-shadow-color: var(--color-blue-205-100-80);
+  --input-focus-box-shadow-inset-color: var(--color-grey-225-10-75);
+  --input-focus-invalid-border-color: var(--color-red-360-100-45);
+  --input-focus-invalid-box-shadow-color: var(--color-red-360-100-92);
+  --input-invalid-border-color: var(--color-red-360-100-45);
+  --input-invalid-color: var(--color-red-360-100-35);
+  --select-option-selected-color: var(--color-blue-205-100-35);
+  --select-option-hover-background-color: var(--color-black-opacity-10);
+  --select-options-background-color: var(--color-white);
+  --select-options-border-color: var(--color-grey-225-10-75);
+  --select-options-box-shadow-color: var(--color-black-opacity-10);
+  --select-options-color: var(--color-grey-225-10-15);
+}
+
+.dms-list-component .items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.7em;
+}
+
+.dms-list-component .items .item .remove {
+  float: right;
+}
+
+.dms-fill-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dms-fill-row > * {
+  flex: 0 0 auto;
+}
+
+.dms-fill-row > :last-child {
+  flex: 1 1 auto;
+}
+
+.dms-label {
+  font-weight: bold;
+  white-space: nowrap;
+  margin-right: 5px;
+}
+
+.dms-hrule {
+  border: 0;
+  border-top: dotted 1px var(--separator-color);
+  margin: 10px auto;
+}
+
+.dms-heading {
+  margin: 12px 0 8px;
+  font-weight: bold;
+}
+
+.dms-hint {
+  font-size: 12px;
+  margin-top: 5px;
+  color: var(--hint-color);
+}
+
+.dms-hint button {
+  color: var(--hint-button-color);
+  text-decoration: none;
+  display: inline;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font: inherit;
+  background: none;
+}
+
+.dms-validation-warning {
+  color: var(--hint-invalid-color);
+}
+
+h3.dms-heading {
+  font-size: 16px;
+}
+
+h4.dms-heading {
+  font-size: 14px;
+}
+
+.dms-input,
+.dms-select {
+  outline: none;
+  padding: 3px 6px;
+  border: 1px solid var(--input-border-color);
+  background: none;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--input-color);
+  min-height: 26px;
+}
+
+.dms-input {
+  min-height: 26px;
+  white-space: pre-wrap;
+}
+
+.dms-select {
+  height: 26px;
+}
+
+.dms-input-select .dms-input {
+  padding-right: 24px;
+}
+
+.dms-input:focus,
+.dms-select:focus {
+  border: solid 1px var(--input-focus-border-color);
+  box-shadow: 0 0 0 2px var(--input-focus-box-shadow-color), 0 0 0 1px var(--input-focus-box-shadow-inset-color) inset;
+}
+
+.dms-input.invalid,
+.dms-select.invalid {
+  border-color: var(--input-invalid-border-color);
+  color: var(--input-invalid-color);
+}
+
+.dms-select.invalid:focus,
+.dms-input.invalid:focus {
+  border: solid 1px var(--input-focus-invalid-border-color);
+  box-shadow: 0 0 0 2px var(--input-focus-invalid-box-shadow-color), 0 0 0 1px var(--input-focus-box-shadow-inset-color) inset;
+}
+
+.dms-validated-input.dms-block .dms-input,
+.dms-block {
+  display: block;
+  width: 100%;
+}
+
+.dms-script-input {
+  height: 150px;
+  white-space: pre-wrap;
+  overflow: auto;
+}
+
+.dms-input-select {
+  display: inline-block;
+  position: relative;
+  min-width: 128px;
+}
+
+.dms-input-select .dms-input-select-icon {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dms-input-select .options {
+  background: var(--select-options-background-color);
+}
+
+.dms-select-options {
+  position: absolute;
+  background-color: var(--select-options-background-color);
+  border: solid 1px var(--select-options-border-color);
+  border-radius: 2px;
+  font-size: 14px;
+  color: var(--select-options-color);
+  box-shadow: 1px 1px 1px 1px var(--select-options-box-shadow-color);
+  z-index: 20;
+  cursor: pointer;
+  overflow: auto;
+}
+
+.dms-select-options .option {
+  padding: 4px 9px;
+}
+
+.dms-select-options .option.active {
+  color: var(--select-option-selected-color);
+}
+
+.dms-select-options .option:focus,
+.dms-select-options .option:hover {
+  background-color: var(--select-option-hover-background-color);
+}
+
+.dmn-js-parent .content-editable.placeholder::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  opacity: 0.5;
+}

@@ -18,7 +18,6 @@ import { createContext } from 'preact'
  */
 const createAppState = () => {
   const server = signal(get_stored_server())
-  // TODO remove 'demo' when we have working authentication
   const auth = {
     logged_in: signal({ data: "unknown" }),
     credentials: signal({username: null, password: null}),

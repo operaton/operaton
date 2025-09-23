@@ -1,6 +1,7 @@
 import { render } from "preact";
 import { LocationProvider, Route, Router } from "preact-iso";
 import { AppState, createAppState } from "./state.js";
+import './helper/i18n';
 
 import { Header } from "./components/Header.jsx";
 import { GoTo } from "./components/GoTo.jsx";
@@ -13,13 +14,8 @@ import { DeploymentsPage } from "./pages/Deployments.jsx";
 import { NotFound } from "./pages/_404.jsx";
 import { AccountPage } from "./pages/Account.jsx";
 
-import "./css/fonts.css";
-import "./css/form.css";
-import "./css/variables.css";
 import "./css/layout.css";
 import "./css/components.css";
-import "./css/normalize.css";
-import "./css/animation.css";
 import { DecisionsPage } from "./pages/Decisions.jsx";
 import { useContext } from "preact/hooks";
 import engine_rest from "./api/engine_rest.jsx";
@@ -34,6 +30,14 @@ export const App = () => {
     </AppState.Provider>
   );
 };
+
+const servers = JSON.parse(import.meta.env.VITE_BACKEND)
+
+const swap_server = (e, state) => {
+  const server = servers.find(s => s.url === e.target.value)
+  state.server.value = server
+  localStorage.setItem('server', JSON.stringify(server))
+}
 
 const get_cookie = (/** @type {string} */ name) => {
   const value = `; ${document.cookie}`;
@@ -72,7 +76,6 @@ const Routing = () => {
     return (
       <LocationProvider>
         <Header />
-        <div id="content">
           <Router>
             <Route path="/" component={Home} />
             <Route path="/decisions" component={DecisionsPage} />
@@ -96,8 +99,7 @@ const Routing = () => {
             <Route path="/account/:page_id" component={AccountPage} />
             <Route path="/account/:page_id/:selection_id" component={AccountPage} />
             <Route default component={NotFound} />
-          </Router>
-        </div>
+          </Router> 
         <GoTo />
       </LocationProvider>
     );
@@ -109,6 +111,19 @@ const Routing = () => {
         <div>
           <p>Operaton Web Apps</p>
           <h1>Login</h1>
+          <label className="row center gap-1 p-1">
+            Server Selection
+            <select
+              onChange={(e) => swap_server(e, state)}>
+              <option disabled>ℹ️ Choose a server to retrieve your processes
+              </option>
+              {servers.map(server =>
+                <option key={server.url} value={server.url}
+                        selected={state.server.value?.url === server.url}>
+                  {server.name} {server.c7_mode ? '(C7)' : ''}
+                </option>)}
+            </select>
+          </label>
           <form onSubmit={login} class=".form-horizontal">
             <label for="username">User name*</label>
             <input

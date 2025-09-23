@@ -15,7 +15,7 @@ const AccountPage = () => {
 
   const is_selected = (page) => (page_id === page) ? 'selected' : ''
 
-  return <main id="account-page">
+  return <div id="account-page">
     <nav>
       <ul class="list">
         <li class={is_selected('profile')}><a href="/account/profile">Profile</a></li>
@@ -31,7 +31,7 @@ const AccountPage = () => {
       groups: <GroupAccountPage />,
       tenants: <TenantsAccountPage />,
     })[page_id] ?? <p>Select Page</p>}
-  </main>
+  </div>
 }
 
 const ProfileAccountPage = () => {

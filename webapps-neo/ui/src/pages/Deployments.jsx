@@ -41,12 +41,12 @@ const DeploymentsPage = () => {
   }
 
   return (
-    <main class="fade-in list-container">
+    <div class="fade-in list-container">
       <h2 class="screen-hidden">Deployments</h2>
       <DeploymentsList />
       <ResourcesList />
       <ResourceDetails />
-    </main>
+    </div>
   )
 }
 

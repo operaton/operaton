@@ -21,6 +21,7 @@ You require the following software to run the app
 
 - `npm run dev` - Starts a dev server at http://127.0.0.1:5173
   - **IMPORTANT:** instead of localhost use http://127.0.0.1:5173 to avoid CORS issues! 
+  - Login with `demo`/`demo` as user/password
 - `npm run build` - Builds for production, emitting to `dist/`
 - `npm run preview` - Starts a server at http://localhost:4173/ (maybe 127.0.0.1 as well to avoid CORS, not tested yet) to test production build locally
 
@@ -38,7 +39,7 @@ As well have a look at [Coding Conventions.md](docs/Coding%20Conventions.md).
 Sometimes the GitHub issues aren't the best place to discuss some topics. Hence we provide a forum and a Slack channel as well:
 
 - [forum.operaton.org](https://forum.operaton.org)
-- [Slack](https://operaton.org/chat)
+- [Slack](https://operaton.org/chat) (#webapps channel)
 
 ## Screenshots
 

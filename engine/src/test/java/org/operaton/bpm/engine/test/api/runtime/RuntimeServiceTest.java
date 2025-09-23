@@ -95,7 +95,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Frederik Heremans
@@ -483,7 +482,8 @@ public class RuntimeServiceTest {
 
   @Test
   void testDeleteProcessInstanceIfExistsWithFake() {
-    assertDoesNotThrow(() -> runtimeService.deleteProcessInstanceIfExists("aFake", null, false, false, false, false));
+    assertThatCode(() -> runtimeService.deleteProcessInstanceIfExists("aFake", null, false, false, false, false))
+      .doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})

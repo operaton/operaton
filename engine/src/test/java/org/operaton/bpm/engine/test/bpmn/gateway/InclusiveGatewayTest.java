@@ -45,7 +45,6 @@ import org.operaton.commons.utils.CollectionUtil;
 
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Joram Barrez
@@ -207,7 +206,9 @@ class InclusiveGatewayTest {
   void testWhitespaceInExpression() {
     // Starting a process instance will lead to an exception if whitespace are
     // incorrectly handled
-    assertDoesNotThrow(() -> runtimeService.startProcessInstanceByKey("inclusiveWhiteSpaceInExpression", CollectionUtil.singletonMap("input", 1)));
+    var variables = CollectionUtil.singletonMap("input", 1);
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("inclusiveWhiteSpaceInExpression", variables))
+      .doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testDivergingInclusiveGateway.bpmn20.xml"})

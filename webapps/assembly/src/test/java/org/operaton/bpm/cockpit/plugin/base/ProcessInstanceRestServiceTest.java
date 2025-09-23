@@ -55,9 +55,9 @@ import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LESS_T
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQUALS_OPERATOR_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author roman.smirnov
@@ -3226,11 +3226,9 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     identityService.setAuthenticatedUserId("foo");
 
-    assertDoesNotThrow(() -> {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), 0, 10);
-      // then: no exception expected
-    }, "No exception expected");
+    //when + then
+    assertThatCode(() -> resource.queryProcessInstances(new ProcessInstanceQueryDto(), 0, 10))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -3238,11 +3236,9 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
-    assertDoesNotThrow(() -> {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
-      // then: no exception expected
-    }, "No exception expected");
+    //when + then
+    assertThatCode(() -> resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null))
+        .doesNotThrowAnyException();
   }
 
   @Test
@@ -3250,11 +3246,9 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     // given
     identityService.setAuthenticatedUserId("foo");
 
-    assertDoesNotThrow(() -> {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
-      // then: no exception expected
-    }, "No exception expected");
+    //when + then
+    assertThatCode(() -> resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null))
+      .doesNotThrowAnyException();
   }
 
   @Test

@@ -47,8 +47,8 @@ import static org.operaton.spin.DataFormats.json;
 import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
 import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Roman Smirnov
@@ -136,10 +136,9 @@ class JsonValueTest {
 
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    assertDoesNotThrow(() -> {
-      // when
-      runtimeService.setVariable(processInstanceId, variableName, value);
-    }, "no exception expected");
+    // when & then
+    assertThatCode(() -> runtimeService.setVariable(processInstanceId, variableName, value))
+      .doesNotThrowAnyException();
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)

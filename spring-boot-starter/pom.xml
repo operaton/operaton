@@ -37,6 +37,7 @@
         <module>starter-rest</module>
         <module>starter-security</module>
         <module>starter-test</module>
+        <module>starter-test-junit5</module>
         <module>starter-client/spring</module>
         <module>starter-client/spring-boot</module>
         <module>starter-webapp-core</module>

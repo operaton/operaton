@@ -46,7 +46,7 @@
       <artifactId>spring-boot-starter-oauth2-client</artifactId>
     </dependency>
     <dependency>
-      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
+      <artifactId>operaton-bpm-spring-boot-starter-test-junit5</artifactId>
       <groupId>${project.groupId}</groupId>
       <version>${project.version}</version>
       <scope>test</scope>

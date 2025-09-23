@@ -18,7 +18,6 @@ package org.operaton.bpm.application;
 
 import java.util.Comparator;
 import java.util.ServiceLoader;
-
 import jakarta.el.ELResolver;
 
 /**
@@ -57,7 +56,7 @@ public interface ProcessApplicationElResolver {
 
     @Override
     public int compare(ProcessApplicationElResolver o1, ProcessApplicationElResolver o2) {
-      return (-1) * o1.getPrecedence().compareTo(o2.getPrecedence());
+      return -1 * o1.getPrecedence().compareTo(o2.getPrecedence());
     }
 
   }

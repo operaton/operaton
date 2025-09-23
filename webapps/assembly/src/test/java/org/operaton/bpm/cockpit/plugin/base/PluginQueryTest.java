@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.cockpit.db.QueryParameters;
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
 import org.operaton.bpm.engine.runtime.Execution;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *

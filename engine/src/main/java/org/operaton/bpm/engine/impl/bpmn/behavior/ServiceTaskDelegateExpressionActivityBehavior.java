@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.applyFieldDeclaration;
-
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -35,6 +33,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
+
+import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.applyFieldDeclaration;
 
 
 /**

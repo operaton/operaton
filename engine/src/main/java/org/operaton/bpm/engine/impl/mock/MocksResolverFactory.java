@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.mock;
 
+import java.util.Set;
+
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.scripting.engine.Resolver;
 import org.operaton.bpm.engine.impl.scripting.engine.ResolverFactory;
-
-import java.util.Set;
 
 /**
  * @author Tassilo Weidner

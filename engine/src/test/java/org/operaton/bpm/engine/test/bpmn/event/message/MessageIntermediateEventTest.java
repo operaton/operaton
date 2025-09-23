@@ -16,12 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Base64;
@@ -30,6 +26,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -46,6 +43,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer
@@ -186,7 +186,7 @@ class MessageIntermediateEventTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testSingleIntermediateMessageEvent.bpmn20.xml")
   @Test
-  void testSetSerializedVariableValues() throws IOException, ClassNotFoundException {
+  void testSetSerializedVariableValues() throws Exception {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");

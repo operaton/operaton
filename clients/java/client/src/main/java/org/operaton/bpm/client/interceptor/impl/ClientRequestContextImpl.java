@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.interceptor.impl;
 
-import org.operaton.bpm.client.interceptor.ClientRequestContext;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.operaton.bpm.client.interceptor.ClientRequestContext;
 
 /**
  * @author Tassilo Weidner

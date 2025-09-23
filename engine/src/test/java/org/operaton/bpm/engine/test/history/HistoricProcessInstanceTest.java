@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionName;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionVersion;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -40,6 +29,7 @@ import java.util.Map;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
@@ -76,6 +66,19 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionName;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionVersion;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Tom Baeyens
@@ -2070,12 +2073,7 @@ class HistoricProcessInstanceTest {
     // when: incident is raised
     for(int i = 0; i<3; i++) {
       var jobId = job.getId();
-      try {
-        managementService.executeJob(jobId);
-        fail("Exception expected");
-      } catch (Exception e) {
-        // exception expected
-      }
+      executeJobExpectingException(managementService, jobId);
     }
 
     // then
@@ -2215,25 +2213,13 @@ class HistoricProcessInstanceTest {
   @Test
   void testQueryByOneInvalidProcessDefinitionKeyIn() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      // when
-      historicProcessInstanceQuery.processDefinitionKeyIn((String) null);
-      fail("Exception expected");
-    } catch(ProcessEngineException expected) {
-      // then Exception is expected
-    }
+    assertThatThrownBy(() -> historicProcessInstanceQuery.processDefinitionKeyIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testQueryByMultipleInvalidProcessDefinitionKeyIn() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      // when
-      historicProcessInstanceQuery.processDefinitionKeyIn(ProcessModels.PROCESS_KEY, null);
-      fail("Exception expected");
-    } catch(ProcessEngineException expected) {
-      // then Exception is expected
-    }
+    assertThatThrownBy(() -> historicProcessInstanceQuery.processDefinitionKeyIn(ProcessModels.PROCESS_KEY, null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -2719,6 +2705,48 @@ class HistoricProcessInstanceTest {
         assertThat(count).isZero();
     }
 
+    @Test
+    void shouldQueryByRootProcessInstanceId() {
+        // given a parent process instance with a couple of subprocesses
+        BpmnModelInstance rootProcess = Bpmn.createExecutableProcess("rootProcess")
+                .startEvent("startRoot")
+                .callActivity()
+                .calledElement("levelOneProcess")
+                .endEvent("endRoot")
+                .done();
+
+        BpmnModelInstance levelOneProcess = Bpmn.createExecutableProcess("levelOneProcess")
+                .startEvent("startLevelOne")
+                .callActivity()
+                .calledElement("levelTwoProcess")
+                .endEvent("endLevelOne")
+                .done();
+
+        BpmnModelInstance levelTwoProcess = Bpmn.createExecutableProcess("levelTwoProcess")
+                .startEvent("startLevelTwo")
+                .userTask("Task1")
+                .endEvent("endLevelTwo")
+                .done();
+
+        deployment(rootProcess, levelOneProcess, levelTwoProcess);
+        String rootProcessId = runtimeService.startProcessInstanceByKey("rootProcess").getId();
+        List<HistoricProcessInstance> allHistoricProcessInstances = historyService.createHistoricProcessInstanceQuery()
+                .list();
+
+        // when
+        HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+                .rootProcessInstanceId(rootProcessId);
+
+      // then
+      assertThat(allHistoricProcessInstances).hasSize(3);
+        assertThat(allHistoricProcessInstances.stream()
+                .filter(process -> process.getRootProcessInstanceId().equals(rootProcessId))
+                .count())
+                .isEqualTo(3);
+        assertThat(historicProcessInstanceQuery.count()).isEqualTo(3);
+      assertThat(historicProcessInstanceQuery.list()).hasSize(3);
+  }
+
 
   protected void deployment(String... resources) {
     testHelper.deploy(resources);
@@ -2730,12 +2758,7 @@ class HistoricProcessInstanceTest {
 
   protected void executeJob(Job job) {
     while (job != null && job.getRetries() > 0) {
-      try {
-        managementService.executeJob(job.getId());
-      }
-      catch (Exception e) {
-        // ignore
-      }
+      executeJobIgnoringException(managementService, job.getId());
 
       job = managementService.createJobQuery().jobId(job.getId()).singleResult();
     }
@@ -2747,10 +2770,6 @@ class HistoricProcessInstanceTest {
   }
 
   private void executeFailingJob(Job job) {
-    try {
-      managementService.executeJob(job.getId());
-    } catch (RuntimeException re) {
-      // Exception expected. Do nothing
-    }
+    executeJobIgnoringException(managementService, job.getId());
   }
 }

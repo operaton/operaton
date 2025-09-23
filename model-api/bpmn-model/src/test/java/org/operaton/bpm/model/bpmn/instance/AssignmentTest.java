@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.operaton.bpm.model.bpmn.impl.instance.From;
-import org.operaton.bpm.model.bpmn.impl.instance.To;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.impl.instance.From;
+import org.operaton.bpm.model.bpmn.impl.instance.To;
 
 /**
  * @author Sebastian Menski

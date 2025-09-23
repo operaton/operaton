@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import java.io.IOException;
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.application.ProcessApplicationContext;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.Variables;
@@ -35,11 +36,11 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.JodaJsonDataFormatConfigurator;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.JodaJsonSerializable;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -54,6 +55,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ReferenceStoringProcessApplication.class)
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("org/operaton/bpm/integrationtest/oneTaskProcess.bpmn")
         .addClass(JodaJsonSerializable.class)
         .addClass(JodaJsonDataFormatConfigurator.class)
@@ -67,7 +69,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
   }
 
   @Test
-  void testPaLocalJodaConfiguration() throws IOException {
+  void testPaLocalJodaConfiguration() throws Exception {
     // given a process instance
     final ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -94,7 +96,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);
     JsonNode expectedJsonTree = objectMapper.readTree(expectedSerializedValue);
     // JsonNode#equals makes a deep comparison
-    Assertions.assertEquals(expectedJsonTree, actualJsonTree);
+    assertThat(actualJsonTree).isEqualTo(expectedJsonTree);
   }
 
 }

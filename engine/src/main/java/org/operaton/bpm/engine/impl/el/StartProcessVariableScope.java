@@ -40,7 +40,7 @@ public class StartProcessVariableScope implements VariableScope {
 
   private static final StartProcessVariableScope INSTANCE = new StartProcessVariableScope();
 
-  private static final VariableMap EMPTY_VARIABLE_MAP = Variables.fromMap(Collections.<String, Object>emptyMap());
+  private static final VariableMap EMPTY_VARIABLE_MAP = Variables.fromMap(Collections.emptyMap());
 
   /**
    * Since a {@link StartProcessVariableScope} has no state, it's safe to use the same

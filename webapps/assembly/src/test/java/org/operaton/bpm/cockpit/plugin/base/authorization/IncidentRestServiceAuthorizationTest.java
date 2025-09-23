@@ -16,21 +16,22 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.authorization;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.IncidentQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.resources.IncidentRestService;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -49,7 +50,7 @@ class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
   public void setUp() {
     super.setUp();
 
-    deploymentId = createDeployment(null, "processes/failing-process.bpmn").getId();
+    deploymentId = createDeployment("processes/failing-process.bpmn").getId();
 
     resource = new IncidentRestService(engineName);
 

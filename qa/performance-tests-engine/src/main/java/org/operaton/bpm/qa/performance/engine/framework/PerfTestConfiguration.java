@@ -16,10 +16,9 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
-import static org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestWatcher.WATCH_ALL_ACTIVITIES;
-
 import java.util.*;
 
+import static org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestWatcher.WATCH_ALL_ACTIVITIES;
 import static java.util.Collections.emptyList;
 
 /**

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn;
 
-import org.operaton.bpm.model.bpmn.instance.Process;
-import org.operaton.bpm.model.bpmn.instance.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.model.bpmn.instance.*;
+import org.operaton.bpm.model.bpmn.instance.Process;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 

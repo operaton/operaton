@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.digest;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**

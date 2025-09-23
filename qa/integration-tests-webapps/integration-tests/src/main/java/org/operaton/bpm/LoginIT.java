@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
-
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Arrays;
 
@@ -30,6 +25,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public class LoginIT extends AbstractWebappUiIntegrationTest {
 
@@ -58,7 +57,7 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   }
 
   @Test
-  public void shouldLoginToCockpit() {
+  void shouldLoginToCockpit() {
     assertThatCode(() -> {
       try {
         loginToCockpit();
@@ -68,19 +67,18 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
     }).doesNotThrowAnyException();
   }
 
-  public void loginToCockpit() throws URISyntaxException {
+  public void loginToCockpit() {
     String appName = "cockpit";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector(".deployed .processes .stats-label"),
         "Process Definitions"));
 
-    wait.until(currentURIIs(new URI(appUrl + "app/"
-        + appName + "/default/#/dashboard")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#/dashboard")));
   }
 
   @Test
-  public void shouldLoginToTasklist() {
+  void shouldLoginToTasklist() {
     assertThatCode(() -> {
       try {
         loginToTasklist();
@@ -102,7 +100,7 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   }
 
   @Test
-  public void shouldLoginToAdmin() {
+  void shouldLoginToAdmin() {
     assertThatCode(() -> {
       try {
         loginToAdmin();
@@ -112,19 +110,18 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
     }).doesNotThrowAnyException();
   }
 
-  public void loginToAdmin() throws URISyntaxException {
+  public void loginToAdmin() {
     String appName = "admin";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector("[ng-class=\"activeClass('#/authorization')\"] a"),
         "Authorizations"));
 
-    wait.until(currentURIIs(new URI(appUrl
-        + "app/" + appName + "/default/#/")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#/")));
   }
 
   @Test
-  public void shouldLoginToWelcome() {
+  void shouldLoginToWelcome() {
     assertThatCode(() -> {
       try {
         loginToWelcome();
@@ -134,15 +131,14 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
     }).doesNotThrowAnyException();
   }
 
-  public void loginToWelcome() throws URISyntaxException {
+  public void loginToWelcome() {
     String appName = "welcome";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector(".webapps .section-title"),
         "Applications"));
 
-    wait.until(currentURIIs(new URI(appUrl
-        + "app/" + appName + "/default/#!/welcome")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#!/welcome")));
   }
 
 }

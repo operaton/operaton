@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.assertj.core.api.Assertions;
 
 import org.operaton.bpm.engine.impl.migration.MigrationInstructionImpl;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.fail;
 
 public class MigrationPlanAssert {
 

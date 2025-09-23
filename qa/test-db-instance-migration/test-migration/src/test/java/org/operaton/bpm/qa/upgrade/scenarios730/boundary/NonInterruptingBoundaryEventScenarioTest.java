@@ -18,11 +18,12 @@ package org.operaton.bpm.qa.upgrade.scenarios730.boundary;
 
 import java.util.List;
 
-import org.operaton.bpm.engine.management.ActivityStatistics;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.management.ActivityStatistics;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 /**
  * @author Thorben Lindhauer

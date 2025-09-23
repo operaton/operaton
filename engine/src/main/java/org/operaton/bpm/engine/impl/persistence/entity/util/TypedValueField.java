@@ -85,8 +85,7 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
     if (Context.getCommandContext() != null) {
       // in some circumstances we must invalidate the cached value instead of returning it
 
-      if ((cachedValue != null
-              && cachedValue instanceof SerializableValue serializableValue)
+      if ((cachedValue instanceof SerializableValue serializableValue)
               && deserializeValue && !serializableValue.isDeserialized()) {
         // clear cached value in case it is not deserialized and user requests deserialized value
         cachedValue = null;

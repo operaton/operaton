@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -38,15 +45,8 @@ import org.operaton.bpm.engine.impl.history.event.UserOperationLogEntryEventEnti
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
-
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * @author Tom Baeyens

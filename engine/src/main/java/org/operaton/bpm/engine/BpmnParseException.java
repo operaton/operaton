@@ -19,7 +19,6 @@ package org.operaton.bpm.engine;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.impl.util.xml.Element;
 
 /**

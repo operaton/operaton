@@ -16,6 +16,19 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.*;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -27,21 +40,8 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
+
 import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
-
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.Response.Status;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.*;
-
-import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -2088,7 +2088,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   private void verifyStandardDeploymentValues(Deployment mockDeployment, JsonPath path) {
     String returnedId = path.get("id");
     String returnedName = path.get("name");
-    Date returnedDeploymentTime = DateTimeUtil.parseDate(path.<String>get("deploymentTime"));
+    Date returnedDeploymentTime = DateTimeUtil.parseDate(path.get("deploymentTime"));
 
     assertThat(returnedId).isEqualTo(mockDeployment.getId());
     assertThat(returnedName).isEqualTo(mockDeployment.getName());

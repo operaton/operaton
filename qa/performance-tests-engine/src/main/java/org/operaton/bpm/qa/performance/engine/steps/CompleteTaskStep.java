@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.qa.performance.engine.steps;
 
+import java.util.Map;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
-
-import java.util.Map;
 
 /**
  * @author Daniel Meyer, Ingo Richtsmeier

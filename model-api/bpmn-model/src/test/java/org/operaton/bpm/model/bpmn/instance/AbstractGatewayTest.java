@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.jupiter.api.BeforeEach;
+
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.GatewayDirection;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

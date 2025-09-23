@@ -4,42 +4,14 @@
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <artifactId>qa-webapp</artifactId>
   <packaging>pom</packaging>
   <name>Operaton - Spring Boot Starter - QA - Webapps</name>
   <description>${project.name}</description>
-  <properties>
-    <!-- default os -->
-    <os.type>linux64</os.type>
-  </properties>
   <modules>
     <module>invoice-example</module>
     <module>runtime</module>
   </modules>
-  <profiles>
-    <profile>
-      <id>windows</id>
-      <activation>
-        <os>
-          <family>windows</family>
-        </os>
-      </activation>
-      <properties>
-        <os.type>win32</os.type>
-      </properties>
-    </profile>
-    <profile>
-      <id>mac</id>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-      <properties>
-        <os.type>mac64</os.type>
-      </properties>
-    </profile>
-  </profiles>
 </project>

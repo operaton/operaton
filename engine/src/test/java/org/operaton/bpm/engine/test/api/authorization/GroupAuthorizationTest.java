@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentCaptor.forClass;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,6 +25,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -47,6 +40,14 @@ import org.operaton.bpm.engine.impl.interceptor.Session;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentCaptor.forClass;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class GroupAuthorizationTest extends AuthorizationTest {
 
@@ -78,7 +79,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
       taskQuery.list();
 
       verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(TEST_GROUP_IDS);
-      verify(authCheck).setAuthGroupIds(Collections.<String>emptyList());
+      verify(authCheck).setAuthGroupIds(Collections.emptyList());
 
       return null;
     });
@@ -139,7 +140,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
       taskQuery.list();
 
       verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds((List<String>) null);
-      verify(authCheck).setAuthGroupIds(Collections.<String>emptyList());
+      verify(authCheck).setAuthGroupIds(Collections.emptyList());
 
       return null;
     });

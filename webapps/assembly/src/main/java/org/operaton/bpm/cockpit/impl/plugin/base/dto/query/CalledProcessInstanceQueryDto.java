@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin.base.dto.query;
 
+import java.io.Serial;
 import jakarta.ws.rs.core.MultivaluedMap;
 
-
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.CalledProcessInstanceDto;
-
-import java.io.Serial;
 
 public class CalledProcessInstanceQueryDto extends AbstractProcessInstanceQueryDto<CalledProcessInstanceDto> {
 

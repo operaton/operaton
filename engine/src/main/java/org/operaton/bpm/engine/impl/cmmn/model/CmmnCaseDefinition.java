@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cmmn.model;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionImpl;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnCaseInstance;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;

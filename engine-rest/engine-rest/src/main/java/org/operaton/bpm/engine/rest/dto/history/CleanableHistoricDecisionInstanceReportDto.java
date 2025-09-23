@@ -19,8 +19,9 @@ package org.operaton.bpm.engine.rest.dto.history;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.CleanableHistoricDecisionInstanceReport;
@@ -29,9 +30,7 @@ import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-public class CleanableHistoricDecisionInstanceReportDto extends AbstractQueryDto<CleanableHistoricDecisionInstanceReport>{
+public class CleanableHistoricDecisionInstanceReportDto extends AbstractQueryDto<CleanableHistoricDecisionInstanceReport> {
 
   protected String[] decisionDefinitionIdIn;
   protected String[] decisionDefinitionKeyIn;

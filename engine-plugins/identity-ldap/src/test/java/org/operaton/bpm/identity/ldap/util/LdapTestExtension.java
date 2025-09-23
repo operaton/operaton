@@ -15,17 +15,18 @@
  */
 package org.operaton.bpm.identity.ldap.util;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
 
 /**
  * This extension is used to configure and set up a containerised LDAP test instance,
@@ -38,10 +39,10 @@ public class LdapTestExtension implements BeforeAllCallback, AfterAllCallback {
     private static final String ADMIN_DN = "cn=admin,dc=operaton,dc=org";
     private LdapTestContext ldapTestContextContext;
 
-    private int additionalNumberOfUsers = 0;
-    private int additionalNumberOfGroups = 0;
-    private int additionalNumberOfRoles = 0;
-    private boolean posixContext = false;
+    private int additionalNumberOfUsers;
+    private int additionalNumberOfGroups;
+    private int additionalNumberOfRoles;
+    private boolean posixContext;
 
     private final GenericContainer<?> ldapContainer = new GenericContainer<>("osixia/openldap:latest")
             .withExposedPorts(389)
@@ -95,7 +96,7 @@ public class LdapTestExtension implements BeforeAllCallback, AfterAllCallback {
      */
     public void injectLdapUrlIntoProcessEngineConfiguration(ProcessEngineConfigurationImpl peConfig) {
         peConfig.getProcessEnginePlugins().stream()
-                .filter(plugin -> plugin instanceof LdapIdentityProviderPlugin)
+                .filter(LdapIdentityProviderPlugin.class::isInstance)
                 .map(LdapIdentityProviderPlugin.class::cast)
                 .findFirst()
                 .ifPresent(ldapPlugin -> {

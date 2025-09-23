@@ -16,28 +16,13 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_UPDATE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.CASE_INSTANCE_ID;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELEGATION;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELETE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DESCRIPTION;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DUE_DATE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.FOLLOW_UP_DATE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.NAME;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PARENT_TASK;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PRIORITY;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
@@ -46,6 +31,12 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
+
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_UPDATE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Danny Gräf

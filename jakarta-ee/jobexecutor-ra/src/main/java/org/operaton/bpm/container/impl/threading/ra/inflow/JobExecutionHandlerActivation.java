@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.container.impl.threading.ra.inflow;
 
-import jakarta.resource.ResourceException;
 import jakarta.resource.spi.endpoint.MessageEndpointFactory;
+
 import org.operaton.bpm.container.impl.threading.ra.JcaExecutorServiceConnector;
 
 /**
@@ -34,7 +34,7 @@ public class JobExecutionHandlerActivation {
 
   protected MessageEndpointFactory endpointFactory;
 
-  public JobExecutionHandlerActivation() throws ResourceException {
+  public JobExecutionHandlerActivation() {
     this(null, null, null);
   }
 
@@ -52,7 +52,7 @@ public class JobExecutionHandlerActivation {
     return endpointFactory;
   }
 
-  public void start() throws ResourceException {
+  public void start() {
     // nothing to do here
   }
 

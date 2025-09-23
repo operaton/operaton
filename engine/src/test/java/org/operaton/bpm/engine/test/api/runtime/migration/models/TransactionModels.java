@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.models;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.CancelEventDefinition;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class TransactionModels {
+public final class TransactionModels {
 
   public static final BpmnModelInstance ONE_TASK_TRANSACTION = ProcessModels.newModel()
     .startEvent()
@@ -56,5 +56,8 @@ public class TransactionModels {
 
     CancelEventDefinition eventDefinition = model.newInstance(CancelEventDefinition.class);
     element.addChildElement(eventDefinition);
+  }
+
+  private TransactionModels() {
   }
 }

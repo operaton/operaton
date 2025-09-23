@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +29,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.slf4j.Logger;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
@@ -50,7 +47,6 @@ import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.task.Task;
@@ -64,7 +60,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.slf4j.Logger;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Frederik Heremans
@@ -404,7 +405,7 @@ public class HistoryServiceTest {
     for (Task task : tasks) {
       Map<String, Object> variables = new HashMap<>();
       // set token local variable
-      LOG.debug("setting variables on task " + task.getId() + ", execution " + task.getExecutionId());
+      LOG.debug("setting variables on task {}, execution {}", task.getId(), task.getExecutionId());
       runtimeService.setVariableLocal(task.getExecutionId(), "parallelValue1", task.getName());
       runtimeService.setVariableLocal(task.getExecutionId(), "parallelValue2", "test");
       taskService.complete(task.getId(), variables);
@@ -856,13 +857,7 @@ public class HistoryServiceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testDeleteProcessInstancesWithNull() {
-    try {
-      //when
-      historyService.deleteHistoricProcessInstances(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      //expected
-    }
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstances(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -1317,8 +1312,7 @@ public class HistoryServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
-    List<String> processInstanceIds = new ArrayList<>(Arrays.asList(
-        new String[]{processInstance.getId(), processInstance2.getId()}));
+    List<String> processInstanceIds = new ArrayList<>(Arrays.asList(processInstance.getId(), processInstance2.getId()));
     runtimeService.deleteProcessInstances(processInstanceIds, null, true, true);
 
     return processInstanceIds;

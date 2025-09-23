@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
-import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateDecision;
-
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.operaton.bpm.engine.impl.dmn.result.DecisionResultMapper;
+
+import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateDecision;
 
 /**
  * @author Roman Smirnov

@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.qa.rolling.update.timestamp;
 
+import java.util.Date;
+
+import org.junit.Test;
+
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.qa.upgrade.Origin;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.Test;
-
-import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

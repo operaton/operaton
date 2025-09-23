@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.Arrays;
+
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
-
-import java.util.Arrays;
 
 /**
  * @author Daniel Meyer
@@ -31,6 +31,7 @@ public class TransitionInstanceImpl extends ProcessElementInstanceImpl implement
   protected String activityId;
   protected String activityName;
   protected String activityType;
+  protected String subProcessInstanceId;
 
   protected String[] incidentIds = NO_IDS;
   protected Incident[] incidents = new Incident[0];
@@ -92,6 +93,14 @@ public class TransitionInstanceImpl extends ProcessElementInstanceImpl implement
 
   public void setIncidents(Incident[] incidents) {
     this.incidents = incidents;
+  }
+
+  public void setSubProcessInstanceId(String subProcessInstanceId) {
+    this.subProcessInstanceId = subProcessInstanceId;
+  }
+
+  public String getSubProcessInstanceId() {
+    return subProcessInstanceId;
   }
 
   @Override

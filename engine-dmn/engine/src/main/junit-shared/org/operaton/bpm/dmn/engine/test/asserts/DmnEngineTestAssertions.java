@@ -17,6 +17,7 @@
 package org.operaton.bpm.dmn.engine.test.asserts;
 
 import org.assertj.core.api.Assertions;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 
 public class DmnEngineTestAssertions extends Assertions {

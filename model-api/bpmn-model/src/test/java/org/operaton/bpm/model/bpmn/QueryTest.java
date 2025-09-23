@@ -18,6 +18,7 @@ package org.operaton.bpm.model.bpmn;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.instance.FlowNode;
 import org.operaton.bpm.model.bpmn.instance.Gateway;
 import org.operaton.bpm.model.bpmn.instance.Task;

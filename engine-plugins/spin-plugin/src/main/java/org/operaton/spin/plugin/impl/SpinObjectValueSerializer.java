@@ -16,6 +16,8 @@
  */
 package org.operaton.spin.plugin.impl;
 
+import java.io.*;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -27,8 +29,6 @@ import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.spi.DataFormatReader;
 import org.operaton.spin.spi.DataFormatWriter;
-
-import java.io.*;
 
 import static java.util.Objects.requireNonNull;
 
@@ -51,6 +51,7 @@ public class SpinObjectValueSerializer extends AbstractObjectValueSerializer {
     this.dataFormat = dataFormat;
   }
 
+  @Override
   public String getName() {
     return name;
   }

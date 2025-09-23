@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import org.operaton.bpm.engine.impl.persistence.AbstractManager;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 
 /**
  * @author Tom Baeyens

@@ -44,6 +44,6 @@ public class GetUserInfoCmd implements Command<String>, Serializable {
       .getIdentityInfoManager()
       .findUserInfoByUserIdAndKey(userId, key);
 
-    return (identityInfo!=null ? identityInfo.getValue() : null);
+    return identityInfo!=null ? identityInfo.getValue() : null;
   }
 }

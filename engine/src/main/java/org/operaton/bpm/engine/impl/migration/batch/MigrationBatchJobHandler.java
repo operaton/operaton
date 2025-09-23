@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.migration.batch;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
@@ -34,10 +38,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.migration.MigrationPlanExecutionBuilder;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Job handler for batch migration jobs. The batch migration job

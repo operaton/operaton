@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.application.impl;
 
+import java.util.Set;
 import jakarta.servlet.ServletContainerInitializer;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.HandlesTypes;
-import java.util.Set;
+
 import org.operaton.bpm.application.ProcessApplication;
 
 /**

@@ -43,11 +43,13 @@ public class LdapGroupQuery extends GroupQueryImpl {
 
   // execute queries ////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     final LdapIdentityProviderSession identityProvider = getLdapIdentityProvider(commandContext);
     return identityProvider.findGroupCountByQueryCriteria(this);
   }
 
+  @Override
   public List<Group> executeList(CommandContext commandContext, Page page) {
     final LdapIdentityProviderSession identityProvider = getLdapIdentityProvider(commandContext);
     return identityProvider.findGroupByQueryCriteria(this);

@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.Query;
 import org.operaton.bpm.model.bpmn.builder.AbstractFlowNodeBuilder;
-
-import java.util.Collection;
 
 /**
  * The BPMN flowNode element

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.disabled;
 
-import org.operaton.bpm.engine.ProcessEngine;
-
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -25,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+
+import org.operaton.bpm.engine.ProcessEngine;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

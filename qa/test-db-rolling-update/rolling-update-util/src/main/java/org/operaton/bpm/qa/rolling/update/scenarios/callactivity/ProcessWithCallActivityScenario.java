@@ -48,22 +48,17 @@ public final class ProcessWithCallActivityScenario {
   @DescribesScenario("init")
   @Times(1)
   public static ScenarioSetup startProcess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
-      }
-    };
+    return (engine, scenarioName) ->
+      engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
   }
 
   @DescribesScenario("init.complete.one")
   @Times(1)
   public static ScenarioSetup startProcessAndCompleteFirstTask() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        ProcessInstance procInst = engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
-        Task task = engine.getTaskService().createTaskQuery().processInstanceId(procInst.getId()).singleResult();
-        engine.getTaskService().complete(task.getId());
-      }
+    return (engine, scenarioName) -> {
+      ProcessInstance procInst = engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
+      Task task = engine.getTaskService().createTaskQuery().processInstanceId(procInst.getId()).singleResult();
+      engine.getTaskService().complete(task.getId());
     };
   }
 }

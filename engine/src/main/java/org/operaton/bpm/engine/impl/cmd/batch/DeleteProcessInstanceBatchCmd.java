@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.cmd.batch;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -30,13 +34,10 @@ import org.operaton.bpm.engine.impl.batch.deletion.DeleteProcessInstanceBatchCon
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import org.operaton.commons.utils.CollectionUtil;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 
 /**
  * @author Askar Akhmerov

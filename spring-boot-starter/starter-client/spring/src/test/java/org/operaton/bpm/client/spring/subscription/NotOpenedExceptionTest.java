@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.client.spring.subscription;
 
-import org.operaton.bpm.client.spring.MockedTest;
-import org.operaton.bpm.client.spring.exception.NotOpenedException;
-import org.operaton.bpm.client.spring.subscription.configuration.NotOpenedExceptionConfiguration;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import org.operaton.bpm.client.spring.MockedTest;
+import org.operaton.bpm.client.spring.exception.NotOpenedException;
+import org.operaton.bpm.client.spring.subscription.configuration.NotOpenedExceptionConfiguration;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 class NotOpenedExceptionTest {
 
   @BeforeEach

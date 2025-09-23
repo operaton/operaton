@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.model.xml;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
 import static org.operaton.bpm.model.xml.impl.util.StringUtil.joinCommaSeparatedList;
 import static org.operaton.bpm.model.xml.impl.util.StringUtil.splitCommaSeparatedList;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

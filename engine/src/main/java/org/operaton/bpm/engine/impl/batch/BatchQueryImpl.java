@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.util.List;
 
@@ -29,6 +27,8 @@ import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class BatchQueryImpl extends AbstractQuery<BatchQuery, Batch> implements BatchQuery {
 

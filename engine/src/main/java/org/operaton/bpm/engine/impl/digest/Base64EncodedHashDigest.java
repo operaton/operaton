@@ -18,8 +18,8 @@ package org.operaton.bpm.engine.impl.digest;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import java.util.Base64;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import static java.nio.charset.StandardCharsets.UTF_8;

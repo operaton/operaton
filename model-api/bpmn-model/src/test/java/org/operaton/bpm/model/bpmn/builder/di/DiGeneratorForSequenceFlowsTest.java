@@ -15,21 +15,22 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.builder.di;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.END_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEQUENCE_FLOW_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
-
 import java.util.Collection;
 import java.util.Iterator;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
+
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.END_EVENT_ID;
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEQUENCE_FLOW_ID;
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DiGeneratorForSequenceFlowsTest {
 
@@ -54,7 +55,7 @@ class DiGeneratorForSequenceFlowsTest {
                   .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertEquals(1, allEdges.size());
+    assertThat(allEdges).hasSize(1);
 
     assertBpmnEdgeExists(SEQUENCE_FLOW_ID);
   }
@@ -76,7 +77,7 @@ class DiGeneratorForSequenceFlowsTest {
         .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertEquals(3, allEdges.size());
+    assertThat(allEdges).hasSize(3);
 
     assertBpmnEdgeExists("s1");
     assertBpmnEdgeExists("s2");
@@ -102,7 +103,7 @@ class DiGeneratorForSequenceFlowsTest {
         .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertEquals(4, allEdges.size());
+    assertThat(allEdges).hasSize(4);
 
     assertBpmnEdgeExists("s1");
     assertBpmnEdgeExists("s2");
@@ -129,7 +130,7 @@ class DiGeneratorForSequenceFlowsTest {
         .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertEquals(4, allEdges.size());
+    assertThat(allEdges).hasSize(4);
 
     assertBpmnEdgeExists("s1");
     assertBpmnEdgeExists("s2");
@@ -156,7 +157,7 @@ class DiGeneratorForSequenceFlowsTest {
         .done();
 
     Collection<BpmnEdge> allEdges = instance.getModelElementsByType(BpmnEdge.class);
-    assertEquals(4, allEdges.size());
+    assertThat(allEdges).hasSize(4);
 
     assertBpmnEdgeExists("s1");
     assertBpmnEdgeExists("s2");
@@ -179,6 +180,6 @@ class DiGeneratorForSequenceFlowsTest {
 
   protected void assertBpmnEdgeExists(String id) {
     BpmnEdge edge = findBpmnEdge(id);
-    assertNotNull(edge);
+    assertThat(edge).isNotNull();
   }
 }

@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+
 class OperatonBpmConfigurationTest {
 
   @Test

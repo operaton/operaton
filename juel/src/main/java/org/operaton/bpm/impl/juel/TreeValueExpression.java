@@ -15,15 +15,15 @@
  */
 package org.operaton.bpm.impl.juel;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.PrintWriter;
+import java.io.Serial;
 import jakarta.el.ELContext;
 import jakarta.el.ELException;
 import jakarta.el.FunctionMapper;
 import jakarta.el.ValueReference;
 import jakarta.el.VariableMapper;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.PrintWriter;
-import java.io.Serial;
 
 /**
  * A value expression is ready to be evaluated (by calling either

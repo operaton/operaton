@@ -16,16 +16,7 @@
  */
 package org.operaton.bpm.run;
 
-import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
-import org.operaton.bpm.run.property.OperatonBpmRunAuthenticationProperties;
-import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
-import org.operaton.bpm.run.property.OperatonBpmRunProperties;
-import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
-import org.operaton.bpm.spring.boot.starter.rest.OperatonBpmRestInitializer;
-import org.operaton.bpm.spring.boot.starter.rest.OperatonJerseyResourceConfig;
-
 import java.util.Collections;
-
 import jakarta.servlet.Filter;
 
 import org.apache.catalina.filters.CorsFilter;
@@ -39,9 +30,17 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
+import org.operaton.bpm.run.property.OperatonBpmRunAuthenticationProperties;
+import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
+import org.operaton.bpm.run.property.OperatonBpmRunProperties;
+import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
+import org.operaton.bpm.spring.boot.starter.rest.OperatonBpmRestInitializer;
+import org.operaton.bpm.spring.boot.starter.rest.OperatonJerseyResourceConfig;
+
 @EnableConfigurationProperties(OperatonBpmRunProperties.class)
 @Configuration
-@AutoConfigureAfter({ OperatonBpmAutoConfiguration.class })
+@AutoConfigureAfter({OperatonBpmAutoConfiguration.class})
 @ConditionalOnClass(OperatonBpmRestInitializer.class)
 public class OperatonBpmRunRestConfiguration {
 

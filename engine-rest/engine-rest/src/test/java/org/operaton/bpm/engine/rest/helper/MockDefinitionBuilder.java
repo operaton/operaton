@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.helper;
 
+import org.operaton.bpm.engine.repository.ProcessDefinition;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 public class MockDefinitionBuilder {
 

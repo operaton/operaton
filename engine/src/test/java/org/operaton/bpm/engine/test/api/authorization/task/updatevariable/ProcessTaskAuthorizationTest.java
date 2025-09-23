@@ -16,16 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.task.updatevariable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_TASK;
-import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.UPDATE_TASK_VARIABLE;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIABLE;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -33,6 +23,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -49,6 +40,16 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_TASK;
+import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.UPDATE_TASK_VARIABLE;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIABLE;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Yana.Vasileva

@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.client.spring;
 
-import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
-import org.operaton.bpm.client.spring.configuration.SimpleSubscriptionConfiguration;
-import org.operaton.bpm.client.task.ExternalTaskHandler;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
+import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
+import org.operaton.bpm.client.spring.configuration.SimpleSubscriptionConfiguration;
+import org.operaton.bpm.client.task.ExternalTaskHandler;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @ContextConfiguration(classes = {
-    SimpleClientConfiguration.class,
-    SimpleSubscriptionConfiguration.class,
+  SimpleClientConfiguration.class,
+  SimpleSubscriptionConfiguration.class,
 })
 class SimpleConfigurationTest extends MockedTest {
 

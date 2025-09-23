@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.persistence;
 
-import org.operaton.bpm.engine.impl.cfg.IdGenerator;
-
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
+
+import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 
 /**
  * {@link IdGenerator} implementation based on the current time and the ethernet

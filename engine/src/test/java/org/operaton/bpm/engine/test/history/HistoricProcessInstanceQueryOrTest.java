@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +24,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -42,6 +40,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
 @ExtendWith(ProcessEngineExtension.class)
@@ -809,6 +810,168 @@ class HistoricProcessInstanceQueryOrTest {
 
     // then
     assertThat(processInstances).hasSize(2);
+  }
+
+  @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnHistoricProcInstWithMultipleStates() {
+    // given
+    setupMultipleProcessInstances();
+
+    // when
+    List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
+        .or()
+        .active()
+        .suspended()
+        .endOr()
+        .list();
+
+    // then
+    assertThat(processInstances).hasSize(2);
+  }
+
+  @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnHistoricProcInstWithMatchingState() {
+    // given
+    setupMultipleProcessInstances();
+
+    // when
+    List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
+        .or()
+        .active()
+        .endOr()
+        .list();
+
+    // then
+    assertThat(processInstances).hasSize(1);
+    assertThat(processInstances.get(0).getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
+  }
+
+  protected void setupMultipleProcessInstances() {
+    BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
+        .name("process1")
+        .startEvent()
+        .userTask()
+        .endEvent()
+        .done();
+
+    String deploymentId = repositoryService
+        .createDeployment()
+        .addModelInstance("foo.bpmn", aProcessDefinition)
+        .deploy()
+        .getId();
+
+    deploymentIds.add(deploymentId);
+
+    ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("aProcessDefinition");
+
+    BpmnModelInstance anotherProcessDefinition = Bpmn.createExecutableProcess("anotherProcessDefinition")
+        .startEvent()
+        .userTask()
+        .endEvent()
+        .done();
+
+    deploymentId = repositoryService
+        .createDeployment()
+        .addModelInstance("foo.bpmn", anotherProcessDefinition)
+        .deploy()
+        .getId();
+
+    deploymentIds.add(deploymentId);
+
+    runtimeService.startProcessInstanceByKey("anotherProcessDefinition");
+    runtimeService.updateProcessInstanceSuspensionState()
+        .byProcessInstanceId(processInstance1.getId()).suspend();
+  }
+
+  @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnHistoricProcInstWithVarValue1OrVarValue21() {
+    // given
+    Map<String, Object> vars = new HashMap<>();
+    vars.put("stringVar", "abcdef");
+    runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
+
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+
+    String processKey = "process";
+    deployFailingProcess(processKey);
+
+    vars = new HashMap<>();
+    vars.put("stringVar", "ghijkl");
+    runtimeService.startProcessInstanceByKey(processKey, vars);
+
+    String jobId = managementService.createJobQuery().singleResult().getId();
+
+    managementService.setJobRetries(jobId, 0);
+
+    // when
+    List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
+      .withIncidents()
+      .or()
+      .variableValueEquals("stringVar", "abcdef")
+      .variableValueEquals("stringVar", "ghijkl")
+      .endOr()
+      .list();
+
+    // then
+    assertThat(processInstances).hasSize(1);
+  }
+
+  protected void deployFailingProcess(String processKey) {
+    BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess(processKey)
+      .startEvent()
+      .serviceTask()
+      .operatonClass("org.camunda.bpm.engine.test.jobexecutor.FailingDelegate")
+      .operatonAsyncBefore()
+      .endEvent()
+      .done();
+
+    String deploymentId = repositoryService
+      .createDeployment()
+      .addModelInstance("foo.bpmn", aProcessDefinition)
+      .deploy()
+      .getId();
+
+    deploymentIds.add(deploymentId);
+  }
+
+  @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnHistoricProcInstWithVarValue1OrVarValue23() {
+    // given
+    Map<String, Object> vars = new HashMap<>();
+    vars.put("stringVar", "abcdef");
+    runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
+
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+
+    String processKey = "process";
+    deployFailingProcess(processKey);
+
+    vars = new HashMap<>();
+    vars.put("stringVar", "ghijkl");
+    runtimeService.startProcessInstanceByKey(processKey, vars);
+
+    String jobId = managementService.createJobQuery().singleResult().getId();
+
+    managementService.setJobRetries(jobId, 0);
+
+    // when
+    List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
+      .or()
+      .withIncidents()
+      .variableValueEquals("stringVar", "abcdef")
+      .endOr()
+      .list();
+
+    // then
+    assertThat(processInstances).hasSize(1);
   }
 
 }

@@ -21,10 +21,11 @@ package org.operaton.bpm.engine.authorization;
  *
  * @author Nico Rehwaldt
  */
-public interface Groups {
+public final class Groups {
 
-  String OPERATON_ADMIN = "operaton-admin";
-  String GROUP_TYPE_SYSTEM = "SYSTEM";
-  String GROUP_TYPE_WORKFLOW = "WORKFLOW";
+  public static final String OPERATON_ADMIN = "operaton-admin";
+  public static final String GROUP_TYPE_SYSTEM = "SYSTEM";
+  public static final String GROUP_TYPE_WORKFLOW = "WORKFLOW";
 
+  private Groups() {}
 }

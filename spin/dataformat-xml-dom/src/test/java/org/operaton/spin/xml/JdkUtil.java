@@ -16,7 +16,7 @@
  */
 package org.operaton.spin.xml;
 
-public class JdkUtil {
+public final class JdkUtil {
 
   public static boolean runsOnIbmJDK() {
     String vendor = System.getProperty("java.vm.vendor");
@@ -26,5 +26,8 @@ public class JdkUtil {
     } else {
       return vendor.contains("IBM");
     }
+  }
+
+  private JdkUtil() {
   }
 }

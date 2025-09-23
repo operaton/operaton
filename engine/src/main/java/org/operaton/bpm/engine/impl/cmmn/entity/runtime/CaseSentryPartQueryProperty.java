@@ -23,11 +23,13 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * @author Roman Smirnov
  *
  */
-public interface CaseSentryPartQueryProperty {
+final class CaseSentryPartQueryProperty {
 
-  QueryProperty CASE_SENTRY_PART_ID = new QueryPropertyImpl("ID_");
-  QueryProperty CASE_INSTANCE_ID = new QueryPropertyImpl("CASE_INST_ID_");
-  QueryProperty CASE_EXECUTION_ID = new QueryPropertyImpl("CASE_EXEC_ID");
-  QueryProperty SENTRY_ID = new QueryPropertyImpl("SENTRY_ID_");
-  QueryProperty SOURCE = new QueryPropertyImpl("SOURCE");
+  public static final QueryProperty CASE_SENTRY_PART_ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty CASE_INSTANCE_ID = new QueryPropertyImpl("CASE_INST_ID_");
+  public static final QueryProperty CASE_EXECUTION_ID = new QueryPropertyImpl("CASE_EXEC_ID");
+  public static final QueryProperty SENTRY_ID = new QueryPropertyImpl("SENTRY_ID_");
+  public static final QueryProperty SOURCE = new QueryPropertyImpl("SOURCE");
+
+  private CaseSentryPartQueryProperty() {}
 }

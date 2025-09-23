@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.model.xml.type.attribute;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.type.attribute.AttributeImpl;
 import org.operaton.bpm.model.xml.testmodel.Gender;
@@ -29,8 +32,6 @@ import org.operaton.bpm.model.xml.testmodel.instance.AnimalTest;
 import org.operaton.bpm.model.xml.testmodel.instance.Animals;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-
-import java.util.stream.Stream;
 
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 
@@ -101,6 +102,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(idAttribute).hasValue(tweety, identifier);
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testSetDefaultValue(TestModelArgs args) {
     init(args);
@@ -121,6 +123,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(nameAttribute).hasNoDefaultValue();
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testRequired(TestModelArgs args) {
     init(args);
@@ -133,6 +136,7 @@ public class AttributeTest extends TestModelTest {
     ((AttributeImpl<String>) nameAttribute).setRequired(false);
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testSetNamespaceUri(TestModelArgs args) {
     init(args);
@@ -145,6 +149,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(idAttribute).hasNoNamespaceUri();
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testIdAttribute(TestModelArgs args) {
     init(args);
@@ -153,6 +158,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(fatherAttribute).isNotIdAttribute();
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testAttributeName(TestModelArgs args) {
     init(args);
@@ -161,6 +167,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(fatherAttribute).hasAttributeName("father");
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testRemoveAttribute(TestModelArgs args) {
     init(args);
@@ -173,6 +180,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(nameAttribute).hasNoValue(tweety);
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testIncomingReferences(TestModelArgs args) {
     init(args);
@@ -181,6 +189,7 @@ public class AttributeTest extends TestModelTest {
     assertThat(fatherAttribute).hasNoIncomingReferences();
   }
 
+  @ParameterizedTest
   @MethodSource("models")
   void testOutgoingReferences(TestModelArgs args) {
     init(args);

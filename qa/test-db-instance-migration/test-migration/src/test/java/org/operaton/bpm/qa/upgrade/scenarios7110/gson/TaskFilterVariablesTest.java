@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7110.gson;
 
-import org.operaton.bpm.engine.filter.Filter;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.filter.Filter;
+import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

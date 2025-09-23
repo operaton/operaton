@@ -17,11 +17,13 @@
 package org.operaton.bpm.spring.boot.starter.rest;
 
 import jakarta.ws.rs.ApplicationPath;
-import org.operaton.bpm.engine.rest.impl.OperatonRestResources;
+
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+
+import org.operaton.bpm.engine.rest.impl.OperatonRestResources;
 
 @ApplicationPath("/engine-rest")
 public class OperatonJerseyResourceConfig extends ResourceConfig implements InitializingBean {

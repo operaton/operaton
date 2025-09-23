@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios730.job;
 
-import org.operaton.bpm.engine.runtime.Job;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.runtime.Job;
 
 /**
  * This actually tests migration from 7.0 jobs (where there was no suspension state)

@@ -578,7 +578,7 @@
 
                         <!-- LDAP CONFIGURATION -->
                         <!-- Uncomment this section in order to enable LDAP support for this process engine -->
-                        <!-- Adjust configuration, see ( http://docs.operaton.org/latest/guides/user-guide/#process-engine-identity-service-the-ldap-identity-service ) -->
+                        <!-- Adjust configuration, see ( https://docs.operaton.org/latest/guides/user-guide/#process-engine-identity-service-the-ldap-identity-service ) -->
                         <!--
                             <plugin>
                                 <class>org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin</class>

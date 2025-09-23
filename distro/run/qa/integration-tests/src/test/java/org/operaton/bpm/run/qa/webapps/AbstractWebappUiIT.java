@@ -16,15 +16,9 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import org.operaton.bpm.util.SeleniumScreenshotExtension;
-
-import java.io.File;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Locale;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -33,6 +27,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+
+import org.operaton.bpm.util.SeleniumScreenshotExtension;
 
 /**
  * NOTE: copied from
@@ -44,24 +40,14 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
   protected static WebDriver driver;
 
   @RegisterExtension
-  private SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
+  @SuppressWarnings("unused")
+  private final SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
 
   @BeforeAll
   static void createDriver() {
-    String chromeDriverExecutable = "chromedriver";
-    if (System.getProperty( "os.name" ).toLowerCase(Locale.US).indexOf("windows") > -1) {
-      chromeDriverExecutable += ".exe";
-    }
-
-    File chromeDriver = new File("target/chromedriver/" + chromeDriverExecutable);
-    if (!chromeDriver.exists()) {
-      throw new RuntimeException("chromedriver could not be located!");
-    }
-
     ChromeDriverService chromeDriverService = new ChromeDriverService.Builder()
         .withVerbose(true)
         .usingAnyFreePort()
-        .usingDriverExecutable(chromeDriver)
         .build();
 
     ChromeOptions chromeOptions = new ChromeOptions()
@@ -75,40 +61,25 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
 
   public static ExpectedCondition<Boolean> currentURIIs(final URI pageURI) {
 
-    return new ExpectedCondition<>() {
-      @Override
-      public Boolean apply(WebDriver webDriver) {
-        try {
-          return new URI(webDriver.getCurrentUrl()).equals(pageURI);
-        } catch (URISyntaxException e) {
-          return false;
-        }
+    return webDriver -> {
+      try {
+        return URI.create(webDriver.getCurrentUrl()).equals(pageURI);
+      } catch (IllegalArgumentException e) {
+        return false;
       }
     };
 
   }
 
   public static ExpectedCondition<Boolean> containsCurrentUrl(final String url) {
-
-    return new ExpectedCondition<>() {
-      @Override
-      public Boolean apply(WebDriver webDriver) {
-        return webDriver.getCurrentUrl().contains(url);
-      }
-    };
-
+    return webDriver -> webDriver.getCurrentUrl().contains(url);
   }
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
-  }
-
-  @AfterEach
-  void after() {
-    testUtil.destroy();
   }
 
   @AfterAll

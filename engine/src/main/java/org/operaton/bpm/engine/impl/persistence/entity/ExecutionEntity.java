@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
+import java.util.*;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -63,7 +66,6 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 import org.operaton.bpm.engine.impl.tree.ExecutionTopDownWalker;
 import org.operaton.bpm.engine.impl.util.BitMaskUtil;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -75,9 +77,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.FlowElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-
-import java.io.Serial;
-import java.util.*;
+import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * @author Tom Baeyens
@@ -637,14 +637,13 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   @SuppressWarnings("deprecation")
   protected boolean requiresUnsuspendedExecution(AtomicOperation executionOperation) {
-    if (executionOperation != PvmAtomicOperation.TRANSITION_DESTROY_SCOPE
-        && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_END
-        && executionOperation != PvmAtomicOperation.TRANSITION_CREATE_SCOPE && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_START
-        && executionOperation != PvmAtomicOperation.DELETE_CASCADE && executionOperation != PvmAtomicOperation.DELETE_CASCADE_FIRE_ACTIVITY_END) {
-      return true;
-    }
-
-    return false;
+    return executionOperation != PvmAtomicOperation.TRANSITION_CREATE_SCOPE
+      && executionOperation != PvmAtomicOperation.TRANSITION_DESTROY_SCOPE
+      && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_START
+      && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE
+      && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_END
+      && executionOperation != PvmAtomicOperation.DELETE_CASCADE
+      && executionOperation != PvmAtomicOperation.DELETE_CASCADE_FIRE_ACTIVITY_END;
   }
 
   @SuppressWarnings({"unchecked"})
@@ -873,7 +872,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
       String compositeId = activityId + ":" + nextId;
       if (compositeId.length() > 64) {
-        return String.valueOf(nextId);
+        return nextId;
       } else {
         return compositeId;
       }
@@ -1776,14 +1775,14 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     // Only mark a flag as false when the list is not-null and empty. If null,
     // we can't be sure there are no entries in it since
     // the list hasn't been initialized/queried yet.
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, TASKS_STATE_BIT, (tasks == null || !tasks.isEmpty()));
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, EVENT_SUBSCRIPTIONS_STATE_BIT, (eventSubscriptions == null || !eventSubscriptions.isEmpty()));
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, JOBS_STATE_BIT, (jobs == null || !jobs.isEmpty()));
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, INCIDENT_STATE_BIT, (incidents == null || !incidents.isEmpty()));
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, VARIABLES_STATE_BIT, (!variableStore.isInitialized() || !variableStore.isEmpty()));
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, TASKS_STATE_BIT, tasks == null || !tasks.isEmpty());
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, EVENT_SUBSCRIPTIONS_STATE_BIT, eventSubscriptions == null || !eventSubscriptions.isEmpty());
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, JOBS_STATE_BIT, jobs == null || !jobs.isEmpty());
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, INCIDENT_STATE_BIT, incidents == null || !incidents.isEmpty());
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, VARIABLES_STATE_BIT, !variableStore.isInitialized() || !variableStore.isEmpty());
     cachedEntityState = BitMaskUtil.setBit(cachedEntityState, SUB_PROCESS_INSTANCE_STATE_BIT, shouldQueryForSubprocessInstance);
     cachedEntityState = BitMaskUtil.setBit(cachedEntityState, SUB_CASE_INSTANCE_STATE_BIT, shouldQueryForSubCaseInstance);
-    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, EXTERNAL_TASKS_BIT, (externalTasks == null || !externalTasks.isEmpty()));
+    cachedEntityState = BitMaskUtil.setBit(cachedEntityState, EXTERNAL_TASKS_BIT, externalTasks == null || !externalTasks.isEmpty());
 
     return cachedEntityState;
   }

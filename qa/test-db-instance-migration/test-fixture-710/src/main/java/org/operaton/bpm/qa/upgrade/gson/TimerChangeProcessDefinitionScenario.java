@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.qa.upgrade.gson;
 
+import java.util.Date;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
-
-import java.util.Date;
 
 /**
  * @author Tassilo Weidner
@@ -36,54 +36,52 @@ public final class TimerChangeProcessDefinitionScenario {
 
   @DescribesScenario("initTimerChangeProcessDefinition")
   public static ScenarioSetup initTimerChangeProcessDefinition() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        String processDefinitionIdWithoutTenant = engine.getRepositoryService().createDeployment()
-          .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessTimer.bpmn20.xml")
-          .tenantId(null)
-          .deployWithResult()
-          .getDeployedProcessDefinitions()
-          .get(0)
-          .getId();
+      String processDefinitionIdWithoutTenant = engine.getRepositoryService().createDeployment()
+        .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessTimer.bpmn20.xml")
+        .tenantId(null)
+        .deployWithResult()
+        .getDeployedProcessDefinitions()
+        .get(0)
+        .getId();
 
-        engine.getRuntimeService()
-          .startProcessInstanceById(processDefinitionIdWithoutTenant, "TimerChangeProcessDefinitionScenarioV1");
+      engine.getRuntimeService()
+        .startProcessInstanceById(processDefinitionIdWithoutTenant, "TimerChangeProcessDefinitionScenarioV1");
 
-        engine.getRepositoryService()
-          .updateProcessDefinitionSuspensionState()
-          .byProcessDefinitionId(processDefinitionIdWithoutTenant)
-          .includeProcessInstances(true)
-          .executionDate(FIXED_DATE_ONE)
-          .suspend();
+      engine.getRepositoryService()
+        .updateProcessDefinitionSuspensionState()
+        .byProcessDefinitionId(processDefinitionIdWithoutTenant)
+        .includeProcessInstances(true)
+        .executionDate(FIXED_DATE_ONE)
+        .suspend();
 
-        String processDefinitionIdWithTenant = engine.getRepositoryService().createDeployment()
-          .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessTimer.bpmn20.xml")
-          .tenantId("aTenantId")
-          .deployWithResult()
-          .getDeployedProcessDefinitions()
-          .get(0)
-          .getId();
+      String processDefinitionIdWithTenant = engine.getRepositoryService().createDeployment()
+        .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessTimer.bpmn20.xml")
+        .tenantId("aTenantId")
+        .deployWithResult()
+        .getDeployedProcessDefinitions()
+        .get(0)
+        .getId();
 
-        engine.getRuntimeService()
-          .startProcessInstanceById(processDefinitionIdWithTenant, "TimerChangeProcessDefinitionScenarioV2");
+      engine.getRuntimeService()
+        .startProcessInstanceById(processDefinitionIdWithTenant, "TimerChangeProcessDefinitionScenarioV2");
 
-        engine.getRepositoryService()
-          .updateProcessDefinitionSuspensionState()
-          .byProcessDefinitionKey("oneTaskProcessTimer_710")
-          .processDefinitionTenantId("aTenantId")
-          .includeProcessInstances(true)
-          .executionDate(FIXED_DATE_TWO)
-          .suspend();
+      engine.getRepositoryService()
+        .updateProcessDefinitionSuspensionState()
+        .byProcessDefinitionKey("oneTaskProcessTimer_710")
+        .processDefinitionTenantId("aTenantId")
+        .includeProcessInstances(true)
+        .executionDate(FIXED_DATE_TWO)
+        .suspend();
 
-        engine.getRepositoryService()
-          .updateProcessDefinitionSuspensionState()
-          .byProcessDefinitionKey("oneTaskProcessTimer_710")
-          .processDefinitionWithoutTenantId()
-          .includeProcessInstances(false)
-          .executionDate(FIXED_DATE_THREE)
-          .suspend();
-      }
+      engine.getRepositoryService()
+        .updateProcessDefinitionSuspensionState()
+        .byProcessDefinitionKey("oneTaskProcessTimer_710")
+        .processDefinitionWithoutTenantId()
+        .includeProcessInstances(false)
+        .executionDate(FIXED_DATE_THREE)
+        .suspend();
     };
   }
 }

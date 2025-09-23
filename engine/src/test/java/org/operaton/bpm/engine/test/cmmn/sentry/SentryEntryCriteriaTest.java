@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseSentryPartQueryImpl;
@@ -27,10 +31,6 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -543,19 +543,16 @@ class SentryEntryCriteriaTest extends CmmnTest {
     assertThat(thirdHumanTask.isAvailable()).isTrue();
 
 
-    assertThatThrownBy(() -> {
-      manualStart(firstHumanTaskId);
-    }).withFailMessage("First human task should be available.")
+    assertThatThrownBy(() ->
+      manualStart(firstHumanTaskId)).withFailMessage("First human task should be available.")
       .isInstanceOf(NotAllowedException.class);
 
-    assertThatThrownBy(() -> {
-      manualStart(secondHumanTaskId);
-    }).withFailMessage("It should not be possible to start the second human task manually.")
+    assertThatThrownBy(() ->
+      manualStart(secondHumanTaskId)).withFailMessage("It should not be possible to start the second human task manually.")
       .isInstanceOf(NotAllowedException.class);
 
-    assertThatThrownBy(() -> {
-      manualStart(thirdHumanTaskId);
-    }).withFailMessage("It should not be possible to third the second human task manually.")
+    assertThatThrownBy(() ->
+      manualStart(thirdHumanTaskId)).withFailMessage("It should not be possible to third the second human task manually.")
       .isInstanceOf(NotAllowedException.class);
   }
 

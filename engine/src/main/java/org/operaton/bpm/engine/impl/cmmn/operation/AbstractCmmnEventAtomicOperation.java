@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
-import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
-
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.core.operation.AbstractEventAtomicOperation;
+
+import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
 
 /**
  * @author Roman Smirnov

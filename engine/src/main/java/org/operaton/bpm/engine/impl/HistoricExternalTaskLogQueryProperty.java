@@ -18,20 +18,22 @@ package org.operaton.bpm.engine.impl;
 
 import org.operaton.bpm.engine.query.QueryProperty;
 
-public interface HistoricExternalTaskLogQueryProperty {
+final class HistoricExternalTaskLogQueryProperty {
 
-  QueryProperty EXTERNAL_TASK_ID = new QueryPropertyImpl("EXT_TASK_ID_");
-  QueryProperty TIMESTAMP = new QueryPropertyImpl("TIMESTAMP_");
-  QueryProperty TOPIC_NAME = new QueryPropertyImpl("TOPIC_NAME_");
-  QueryProperty WORKER_ID = new QueryPropertyImpl("WORKER_ID_");
-  QueryProperty ACTIVITY_ID = new QueryPropertyImpl("ACT_ID_");
-  QueryProperty ACTIVITY_INSTANCE_ID = new QueryPropertyImpl("ACT_INST_ID_");
-  QueryProperty EXECUTION_ID = new QueryPropertyImpl("EXECUTION_ID_");
-  QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
-  QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("PROC_DEF_ID_");
-  QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("PROC_DEF_KEY_");
-  QueryProperty RETRIES = new QueryPropertyImpl("RETRIES_");
-  QueryProperty PRIORITY = new QueryPropertyImpl("PRIORITY_");
-  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  public static final QueryProperty EXTERNAL_TASK_ID = new QueryPropertyImpl("EXT_TASK_ID_");
+  public static final QueryProperty TIMESTAMP = new QueryPropertyImpl("TIMESTAMP_");
+  public static final QueryProperty TOPIC_NAME = new QueryPropertyImpl("TOPIC_NAME_");
+  public static final QueryProperty WORKER_ID = new QueryPropertyImpl("WORKER_ID_");
+  public static final QueryProperty ACTIVITY_ID = new QueryPropertyImpl("ACT_ID_");
+  public static final QueryProperty ACTIVITY_INSTANCE_ID = new QueryPropertyImpl("ACT_INST_ID_");
+  public static final QueryProperty EXECUTION_ID = new QueryPropertyImpl("EXECUTION_ID_");
+  public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
+  public static final QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("PROC_DEF_ID_");
+  public static final QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("PROC_DEF_KEY_");
+  public static final QueryProperty RETRIES = new QueryPropertyImpl("RETRIES_");
+  public static final QueryProperty PRIORITY = new QueryPropertyImpl("PRIORITY_");
+  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+
+  private HistoricExternalTaskLogQueryProperty() {}
 
 }

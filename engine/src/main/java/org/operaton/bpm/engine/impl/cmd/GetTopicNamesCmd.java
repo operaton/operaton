@@ -17,12 +17,12 @@
 
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.operaton.bpm.engine.impl.ExternalTaskQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-
-import java.io.Serializable;
-import java.util.List;
 
 public class GetTopicNamesCmd implements Command<List<String>>, Serializable {
 

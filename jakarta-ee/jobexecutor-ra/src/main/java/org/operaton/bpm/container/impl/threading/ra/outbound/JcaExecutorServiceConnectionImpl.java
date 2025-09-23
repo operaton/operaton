@@ -49,6 +49,7 @@ public class JcaExecutorServiceConnectionImpl implements JcaExecutorServiceConne
     return mc.schedule(runnable, isLongRunning);
   }
 
+  @Override
   public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
     return mc.getExecuteJobsRunnable(jobIds, processEngine);
   }

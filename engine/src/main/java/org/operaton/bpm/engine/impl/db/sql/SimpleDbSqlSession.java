@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.engine.impl.db.sql;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.sql.Connection;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.ExecutorType;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.FlushResult;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbBulkOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbEntityOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * For mybatis {@link ExecutorType#SIMPLE}

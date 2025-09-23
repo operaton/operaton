@@ -16,18 +16,17 @@
  */
 package org.operaton.bpm.quarkus.engine.test.persistence.conf;
 
+import jakarta.inject.Inject;
+
 import io.quarkus.test.QuarkusUnitTest;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import jakarta.inject.Inject;
-
-import java.sql.SQLException;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,7 +41,7 @@ class DatasourceConfigurationTest {
   protected ProcessEngine processEngine;
 
   @Test
-  void shouldOverrideDefaultDatasource() throws SQLException {
+  void shouldOverrideDefaultDatasource() throws Exception {
     ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
     assertThat(configuration.getDataSource().getConnection()).asString().contains("jdbc:h2:mem:primary");
   }

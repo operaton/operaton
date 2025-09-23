@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.qa.performance.engine.sqlstatementlog;
 
-import org.operaton.bpm.qa.performance.engine.util.DelegatingSqlSessionFactory;
-
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+
+import org.operaton.bpm.qa.performance.engine.util.DelegatingSqlSessionFactory;
 
 /**
  * {@link DelegatingSqlSessionFactory} wrapping the created sessions using a {@link StatementLogSqlSession}.

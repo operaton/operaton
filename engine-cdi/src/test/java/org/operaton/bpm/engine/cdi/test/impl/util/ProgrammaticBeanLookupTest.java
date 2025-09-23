@@ -16,10 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Named;
+
 import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -28,9 +27,12 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.operaton.bpm.engine.cdi.impl.ProcessEngineServicesProducer;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.cdi.test.impl.beans.SpecializedTestBean;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *

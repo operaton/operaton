@@ -32,14 +32,17 @@ public class CommonjDeamonWorkRunnableAdapter implements Work {
     this.runnable = runnable;
   }
 
+  @Override
   public void run() {
     runnable.run();
   }
 
+  @Override
   public boolean isDaemon() {
     return true;
   }
 
+  @Override
   public void release() {
     // unsupported
   }

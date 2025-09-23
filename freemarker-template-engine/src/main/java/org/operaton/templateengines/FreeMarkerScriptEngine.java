@@ -16,14 +16,13 @@
  */
 package org.operaton.templateengines;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import javax.script.*;
 
 /**

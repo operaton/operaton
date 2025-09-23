@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -34,6 +33,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
@@ -41,8 +42,6 @@ import org.operaton.bpm.engine.rest.dto.ExceptionDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.impl.NamedProcessEngineRestServiceImpl;
 import org.operaton.bpm.engine.rest.util.EngineUtil;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * <p>

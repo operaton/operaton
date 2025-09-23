@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.test.cmmn.listener;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 import org.operaton.bpm.engine.runtime.CaseExecution;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

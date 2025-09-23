@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.test.persistence;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.impl.cmd.CompleteTaskCmd;
@@ -31,7 +31,8 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DatabaseFlushTest extends ConcurrencyTestCase {
 

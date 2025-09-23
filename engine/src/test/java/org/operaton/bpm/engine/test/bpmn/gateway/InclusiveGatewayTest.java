@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.gateway;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,13 +23,13 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
@@ -45,7 +39,13 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
 import org.operaton.bpm.model.bpmn.Bpmn;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Joram Barrez
@@ -249,12 +249,7 @@ class InclusiveGatewayTest {
 
     ProcessInstance pi;
     var variables = CollectionUtil.singletonMap("orders", orders);
-    try {
-      runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnListOrArrayOfBeans", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expect an exception to be thrown here
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnListOrArrayOfBeans", variables)).isInstanceOf(ProcessEngineException.class);
 
     orders.set(1, new InclusiveGatewayTestOrder(175));
     pi = runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnListOrArrayOfBeans", variables);
@@ -316,12 +311,7 @@ class InclusiveGatewayTest {
     assertThat(expectedNames).isEmpty();
     var variables = CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(300));
 
-    try {
-      runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnBeanMethod", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // Should get an exception indicating that no path could be taken
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnBeanMethod", variables)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -597,12 +587,7 @@ class InclusiveGatewayTest {
 
     // Test with input == 4
     variables.put("input", 4);
-    try {
-      runtimeService.startProcessInstanceByKey("inclusiveGateway", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // Exception is expected since no outgoing sequence flow matches
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("inclusiveGateway", variables)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -684,7 +669,7 @@ class InclusiveGatewayTest {
     // then
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("beforeTask")
         .activity("afterTask")
@@ -701,7 +686,7 @@ class InclusiveGatewayTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("task1")
         .activity("task2")

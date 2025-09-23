@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Execution;
+
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer
@@ -38,14 +38,15 @@ public class ExecutionTreeProcessDefinitionIdAssertion implements ExecutionTreeA
 
     if (!nonMatchingExecutions.isEmpty()) {
       StringBuilder sb = new StringBuilder();
-      sb.append("Expected all executions to have process definition id " + expectedProcessDefinitionId + "\n");
-      sb.append("Actual Tree: \n");
-      sb.append(tree);
-      sb.append("\nExecutions with unexpected process definition id:\n");
-      sb.append("[\n");
+      sb.append("Expected all executions to have process definition id ")
+        .append(expectedProcessDefinitionId)
+        .append("\n");
+      sb.append("Actual Tree: \n")
+        .append(tree)
+        .append("\nExecutions with unexpected process definition id:\n")
+        .append("[\n");
       for (Execution execution : nonMatchingExecutions) {
-        sb.append(execution);
-        sb.append("\n");
+        sb.append(execution).append("\n");
       }
       sb.append("]\n");
       fail(sb.toString());

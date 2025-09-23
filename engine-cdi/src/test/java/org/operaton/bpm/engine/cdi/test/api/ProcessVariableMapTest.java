@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.test.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.jboss.arquillian.junit.Arquillian;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -26,9 +27,9 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Michael Scholz
@@ -53,7 +54,7 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     businessProcess.setVariable(VARNAME_1, Variables.stringValue(aValue));
 
     // Legacy API
-    assertThat(variables.get(VARNAME_1)).isEqualTo(aValue);
+    assertThat(variables).containsEntry(VARNAME_1, aValue);
 
     // Typed variable API
     TypedValue aTypedValue = variables.getValueTyped(VARNAME_1);
@@ -100,7 +101,7 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     businessProcess.setVariableLocal(VARNAME_1, Variables.stringValue(aValue));
 
     // Legacy API
-    assertThat(variables.get(VARNAME_1)).isEqualTo(aValue);
+    assertThat(variables).containsEntry(VARNAME_1, aValue);
 
     // Typed variable API
     TypedValue aTypedValue = variables.getValueTyped(VARNAME_1);

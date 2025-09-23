@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.client.topic.impl;
 
-import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
-import org.operaton.bpm.client.task.ExternalTaskHandler;
-import org.operaton.bpm.client.topic.TopicSubscription;
-import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
+import org.operaton.bpm.client.task.ExternalTaskHandler;
+import org.operaton.bpm.client.topic.TopicSubscription;
+import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
 
 /**
  * @author Tassilo Weidner

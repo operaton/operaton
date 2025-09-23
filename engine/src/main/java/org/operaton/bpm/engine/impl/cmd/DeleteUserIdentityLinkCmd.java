@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;

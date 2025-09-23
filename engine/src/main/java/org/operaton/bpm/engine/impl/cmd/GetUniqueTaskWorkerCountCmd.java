@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 

@@ -142,8 +142,7 @@ public class ModelImpl implements Model {
   public int hashCode() {
     int prime = 31;
     int result = 1;
-    result = prime * result + ((modelName == null) ? 0 : modelName.hashCode());
-    return result;
+    return prime * result + (modelName == null ? 0 : modelName.hashCode());
   }
 
   @Override

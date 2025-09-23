@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.test.logging;
 
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 public class LogEngineNameDelegate implements JavaDelegate {
 
@@ -28,7 +29,7 @@ public class LogEngineNameDelegate implements JavaDelegate {
   @Override
   public void execute(DelegateExecution execution) throws Exception {
     Logger logger = LoggerFactory.getLogger(this.getClass());
-    logger.debug(LOG_MESSAGE + " " + execution.getProcessEngine().getName());
+    logger.debug("{} {}", execution.getProcessEngine().getName(), LOG_MESSAGE);
   }
 
 }

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import org.operaton.bpm.engine.rest.dto.SignalDto;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+
+import org.operaton.bpm.engine.rest.dto.SignalDto;
 
 /**
  * @author Tassilo Weidner

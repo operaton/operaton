@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.DEFAULT_WORKER_EXTERNAL_TASK;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.fetchAndLock;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.DEFAULT_WORKER_EXTERNAL_TASK;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.fetchAndLock;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {

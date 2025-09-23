@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.client.spring.boot.starter;
 
-import org.operaton.bpm.client.spring.impl.client.ClientConfiguration;
-import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.operaton.bpm.client.spring.impl.client.ClientConfiguration;
+import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
 
 @ConfigurationProperties(prefix = "operaton.bpm.client")
 public class ClientProperties extends ClientConfiguration {

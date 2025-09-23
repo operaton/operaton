@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios720.multiinstance;
 
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
-
-import org.operaton.bpm.engine.migration.MigrationPlan;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.migration.MigrationPlan;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+
+import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 @ScenarioUnderTest("MultiInstanceReceiveTaskScenario")
 @Origin("7.2.0")

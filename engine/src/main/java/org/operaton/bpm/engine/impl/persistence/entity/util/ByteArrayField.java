@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity.util;
 
+import java.util.Date;
+
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.Nameable;
 import org.operaton.bpm.engine.impl.variable.serializer.ValueFields;
 import org.operaton.bpm.engine.repository.ResourceType;
-
-import java.util.Date;
 
 /**
  * A byte array value field what load and save {@link ByteArrayEntity}. It can

@@ -18,6 +18,8 @@ package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
 import java.io.Serial;
 import java.io.Serializable;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.cdi.annotation.ProcessVariableTyped;
@@ -25,9 +27,6 @@ import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 
 /**
  * @author Tobias Metzke

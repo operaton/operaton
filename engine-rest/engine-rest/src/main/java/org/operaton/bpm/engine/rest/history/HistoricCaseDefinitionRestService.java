@@ -17,11 +17,6 @@
 package org.operaton.bpm.engine.rest.history;
 
 import java.util.List;
-
-import org.operaton.bpm.engine.rest.dto.history.HistoricCaseActivityStatisticsDto;
-import org.operaton.bpm.engine.rest.dto.CountResultDto;
-import org.operaton.bpm.engine.rest.dto.history.CleanableHistoricCaseInstanceReportResultDto;
-
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -30,6 +25,10 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
+
+import org.operaton.bpm.engine.rest.dto.CountResultDto;
+import org.operaton.bpm.engine.rest.dto.history.CleanableHistoricCaseInstanceReportResultDto;
+import org.operaton.bpm.engine.rest.dto.history.HistoricCaseActivityStatisticsDto;
 
 /**
  * @author Roman Smirnov

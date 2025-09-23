@@ -35,13 +35,11 @@ public final class Tccl {
   public static <T> T runUnderClassloader(final Operation<T> operation, final ClassLoader classLoader) {
     SecurityManager sm = System.getSecurityManager();
     if (sm != null) {
-      return AccessController.doPrivileged(new PrivilegedAction<T>() {
-        public T run() {
-          try {
-            return runWithTccl(operation, classLoader);
-          } catch (Exception e) {
-            throw new RuntimeException(e);
-          }
+      return AccessController.doPrivileged((PrivilegedAction<T>) () -> {
+        try {
+          return runWithTccl(operation, classLoader);
+        } catch (Exception e) {
+          throw new RuntimeException(e);
         }
       });
     } else {

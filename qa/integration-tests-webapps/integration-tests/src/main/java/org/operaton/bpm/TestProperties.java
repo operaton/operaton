@@ -35,19 +35,15 @@ public class TestProperties {
   private final Properties properties;
   private final int defaultPort;
 
-  public TestProperties() throws IOException {
+  public TestProperties() {
     this(8080);
   }
 
-  public TestProperties(int defaultPort) throws IOException {
+  public TestProperties(int defaultPort) {
 
     this.defaultPort = defaultPort;
 
     properties = getTestProperties();
-  }
-
-  public Properties getProps() {
-    return properties;
   }
 
   public String getApplicationPath(String contextPath) {
@@ -76,21 +72,21 @@ public class TestProperties {
     return getStringProperty("http.host", "localhost");
   }
 
-  public static Properties getTestProperties() throws IOException {
+  public String getWebappCtxPath() {
+    return getStringProperty("webapp.ctx.path", "operaton/");
+  }
+
+  public String getRestCtxPath() {
+    return getStringProperty("rest.ctx.path", "engine-rest/");
+  }
+
+  public static Properties getTestProperties() {
     Properties properties = new Properties();
 
-    InputStream propertiesStream = null;
-    try {
-      propertiesStream = TestProperties.class.getResourceAsStream(TESTCONFIG_PROPERTIES_FILE);
+    try (InputStream propertiesStream = TestProperties.class.getResourceAsStream(TESTCONFIG_PROPERTIES_FILE)) {
       properties.load(propertiesStream);
-    } finally {
-      try {
-        if (propertiesStream != null) {
-          propertiesStream.close();
-        }
-      } catch(Exception e) {
-        // nop
-      }
+    } catch (IOException e) {
+      throw new RuntimeException("Could not load test properties from " + TESTCONFIG_PROPERTIES_FILE, e);
     }
     Stream.of(HTTP_PORT, HTTP_CTX_PATH_WEBAPP, HTTP_CTX_PATH_REST).forEach(prop -> {
       if (System.getProperty(prop) != null) {

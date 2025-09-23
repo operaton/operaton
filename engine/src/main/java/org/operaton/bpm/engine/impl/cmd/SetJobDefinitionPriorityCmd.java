@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -30,6 +28,8 @@ import org.operaton.bpm.engine.impl.oplog.UserOperationLogContextEntry;
 import org.operaton.bpm.engine.impl.oplog.UserOperationLogContextEntryBuilder;
 import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Thorben Lindhauer

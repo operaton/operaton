@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.rest.TelemetryRestService;
 import org.operaton.bpm.engine.rest.dto.TelemetryConfigurationDto;
 import org.operaton.bpm.engine.rest.dto.telemetry.TelemetryDataDto;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TelemetryRestServiceImpl extends AbstractRestProcessEngineAware implements TelemetryRestService {
 

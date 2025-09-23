@@ -19,12 +19,13 @@ package org.operaton.spin.impl.xml.dom;
 import java.io.IOException;
 import java.io.Writer;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+
 import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
 import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
 
 /**
  * Wrapper of a xml dom attribute.

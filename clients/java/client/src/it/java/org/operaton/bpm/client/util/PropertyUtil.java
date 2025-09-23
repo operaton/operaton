@@ -22,7 +22,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PropertyUtil {
+public final class PropertyUtil {
 
   public static final String DEFAULT_PROPERTIES_PATH = "integration-rules.properties";
   public static final String CAMUNDA_ENGINE_REST = "operaton.engine.rest";
@@ -46,6 +46,9 @@ public class PropertyUtil {
 
   public static Properties loadProperties() {
     return PropertyUtil.loadProperties("service.properties");
+  }
+
+  private PropertyUtil() {
   }
 
 }

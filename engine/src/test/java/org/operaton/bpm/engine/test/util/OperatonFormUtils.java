@@ -22,12 +22,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import org.junit.rules.TemporaryFolder;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 import org.operaton.bpm.engine.test.form.deployment.FindOperatonFormDefinitionsCmd;
-import org.junit.rules.TemporaryFolder;
 
-public class OperatonFormUtils {
+public final class OperatonFormUtils {
 
   public static List<OperatonFormDefinition> findAllOperatonFormDefinitionEntities(ProcessEngineConfigurationImpl config) {
     return config.getCommandExecutorTxRequired()
@@ -58,4 +59,7 @@ public class OperatonFormUtils {
     }
     return file;
 }
+
+  private OperatonFormUtils() {
+  }
 }

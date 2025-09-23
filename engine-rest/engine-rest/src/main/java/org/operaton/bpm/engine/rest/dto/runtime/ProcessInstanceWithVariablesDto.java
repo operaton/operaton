@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.dto.runtime;
 
 import java.util.Map;
+
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;

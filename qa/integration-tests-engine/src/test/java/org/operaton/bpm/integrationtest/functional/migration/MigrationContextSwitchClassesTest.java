@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.migration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
@@ -30,6 +28,7 @@ import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -41,6 +40,8 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author Thorben Lindhauer
  *
@@ -48,7 +49,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 @ExtendWith(ArquillianExtension.class)
 public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegrationTest {
 
-  public static final BpmnModelInstance oneTaskProcess(String key) {
+  public static BpmnModelInstance oneTaskProcess(String key) {
     return  Bpmn.createExecutableProcess(key)
         .operatonHistoryTimeToLive(180)
       .startEvent()
@@ -57,7 +58,7 @@ public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegr
       .done();
   }
 
-  public static final BpmnModelInstance subProcessProcess(String key) {
+  public static BpmnModelInstance subProcessProcess(String key) {
     return  Bpmn.createExecutableProcess(key)
         .operatonHistoryTimeToLive(180)
       .startEvent()

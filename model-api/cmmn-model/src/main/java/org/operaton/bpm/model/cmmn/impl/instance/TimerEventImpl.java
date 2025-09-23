@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_TIMER_EVENT;
-
 import org.operaton.bpm.model.cmmn.instance.Event;
 import org.operaton.bpm.model.cmmn.instance.StartTrigger;
 import org.operaton.bpm.model.cmmn.instance.TimerEvent;
@@ -28,6 +25,9 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_TIMER_EVENT;
 
 /**
  * @author Roman Smirnov

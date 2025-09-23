@@ -16,48 +16,41 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
+class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfProperties() {
-    // given
-
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfProperties() {
     // when
-    target = client.target(appBasePath + TASKLIST_PATH);
-
     // Send GET request and return the Response
-    response = target.request().get(Response.class);
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
 
     // then
-    assertEquals(200, response.getStatus());
-    assertTrue(isCookieHeaderValuePresent("HttpOnly", response));
-    assertFalse(isCookieHeaderValuePresent("Secure", response));
+    assertThat(response.getStatus()).isEqualTo(200);
+    assertThat(isCookieHeaderValuePresent("HttpOnly", response)).isTrue();
+    assertThat(isCookieHeaderValuePresent("Secure", response)).isFalse();
   }
 
-  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {
-    MultivaluedMap<String, Object> headers = response.getHeaders();
+  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, HttpResponse<String> response) {
+    List<String> values = response.getHeaders().get("Set-Cookie");
 
-    List<Object> values = headers.get("Set-Cookie");
     for (Object value : values) {
       if (value.toString().startsWith("JSESSIONID=")) {
         return value.toString().contains(expectedHeaderValue);

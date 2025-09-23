@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +23,9 @@ import java.util.Map;
 import java.util.Set;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
@@ -37,8 +39,8 @@ import org.operaton.bpm.engine.rest.dto.converter.StringSetConverter;
 import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
-import static java.lang.Boolean.TRUE;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
+import static java.lang.Boolean.TRUE;
 
 public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricProcessInstanceQuery> {
 
@@ -72,6 +74,7 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
   private String processInstanceId;
   private Set<String> processInstanceIds;
   private List<String> processInstanceIdNotIn;
+  private String rootProcessInstanceId;
   private String processDefinitionId;
   private String processDefinitionKey;
   private List<String> processDefinitionKeys;
@@ -148,6 +151,15 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
   @OperatonQueryParam(value = "processInstanceIdNotIn", converter = StringListConverter.class)
   public void setProcessInstanceIdNotIn(List<String> processInstanceIdNotIn) {
     this.processInstanceIdNotIn = processInstanceIdNotIn;
+  }
+
+  public String getRootProcessInstanceId() {
+    return rootProcessInstanceId;
+  }
+
+  @OperatonQueryParam("rootProcessInstanceId")
+  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+    this.rootProcessInstanceId = rootProcessInstanceId;
   }
 
   public String getProcessDefinitionId() {
@@ -425,6 +437,9 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
     }
     if (processInstanceIdNotIn != null && !processInstanceIdNotIn.isEmpty()) {
       query.processInstanceIdNotIn(processInstanceIdNotIn.toArray(new String[0]));
+    }
+    if(rootProcessInstanceId != null) {
+      query.rootProcessInstanceId(rootProcessInstanceId);
     }
     if (processDefinitionId != null) {
       query.processDefinitionId(processDefinitionId);

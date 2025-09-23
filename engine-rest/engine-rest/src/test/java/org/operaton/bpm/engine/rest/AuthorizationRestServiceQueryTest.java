@@ -16,23 +16,19 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.expect;
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
 
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
@@ -47,15 +43,17 @@ import org.operaton.bpm.engine.impl.cfg.auth.DefaultPermissionProvider;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
+import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Daniel Meyer
@@ -152,23 +150,21 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    Assertions.assertEquals(1, instances.size(), "There should be one authorization returned.");
+    assertThat(instances).as("There should be one authorization returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned authorization should not be null.").isNotNull();
 
     Authorization mockAuthorization = mockAuthorizations.get(0);
 
-    Assertions.assertEquals(mockAuthorization.getId(), from(content).getString("[0].id"));
-    Assertions.assertEquals(mockAuthorization.getAuthorizationType(), from(content).getInt("[0].type"));
-    Assertions.assertEquals(Permissions.READ.getName(), from(content).getString("[0].permissions[0]"));
-    Assertions.assertEquals(Permissions.UPDATE.getName(), from(content).getString("[0].permissions[1]"));
-    Assertions.assertEquals(mockAuthorization.getUserId(), from(content).getString("[0].userId"));
-    Assertions.assertEquals(mockAuthorization.getGroupId(), from(content).getString("[0].groupId"));
-    Assertions.assertEquals(mockAuthorization.getResourceType(), from(content).getInt("[0].resourceType"));
-    Assertions.assertEquals(mockAuthorization.getResourceId(), from(content).getString("[0].resourceId"));
-    Assertions.assertEquals(mockAuthorization.getRemovalTime(),
-        DateTimeUtil.parseDate(from(content).getString("[0].removalTime")));
-    Assertions.assertEquals(mockAuthorization.getRootProcessInstanceId(),
-        from(content).getString("[0].rootProcessInstanceId"));
+    assertThat(from(content).getString("[0].id")).isEqualTo(mockAuthorization.getId());
+    assertThat(from(content).getInt("[0].type")).isEqualTo(mockAuthorization.getAuthorizationType());
+    assertThat(from(content).getString("[0].permissions[0]")).isEqualTo(Permissions.READ.getName());
+    assertThat(from(content).getString("[0].permissions[1]")).isEqualTo(Permissions.UPDATE.getName());
+    assertThat(from(content).getString("[0].userId")).isEqualTo(mockAuthorization.getUserId());
+    assertThat(from(content).getString("[0].groupId")).isEqualTo(mockAuthorization.getGroupId());
+    assertThat(from(content).getInt("[0].resourceType")).isEqualTo(mockAuthorization.getResourceType());
+    assertThat(from(content).getString("[0].resourceId")).isEqualTo(mockAuthorization.getResourceId());
+    assertThat(DateTimeUtil.parseDate(from(content).getString("[0].removalTime"))).isEqualTo(mockAuthorization.getRemovalTime());
+    assertThat(from(content).getString("[0].rootProcessInstanceId")).isEqualTo(mockAuthorization.getRootProcessInstanceId());
 
   }
 

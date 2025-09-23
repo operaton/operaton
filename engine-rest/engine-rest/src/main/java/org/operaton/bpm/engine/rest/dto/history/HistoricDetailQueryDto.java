@@ -16,7 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricDetailQuery;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
@@ -27,13 +35,6 @@ import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import static java.lang.Boolean.TRUE;
 

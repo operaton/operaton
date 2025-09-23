@@ -16,20 +16,10 @@
  */
 package org.operaton.bpm.model.dmn.impl;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN11_ALTERNATIVE_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN11_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN12_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN13_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN14_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN15_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_11_ALTERNATIVE_SCHEMA_LOCATION;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_11_SCHEMA_LOCATION;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_12_SCHEMA_LOCATION;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_13_SCHEMA_LOCATION;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_14_SCHEMA_LOCATION;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_15_SCHEMA_LOCATION;
-
 import java.io.InputStream;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.validation.SchemaFactory;
 
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelException;
@@ -39,8 +29,7 @@ import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.validation.SchemaFactory;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.*;
 
 public class DmnParser extends AbstractModelParser {
 

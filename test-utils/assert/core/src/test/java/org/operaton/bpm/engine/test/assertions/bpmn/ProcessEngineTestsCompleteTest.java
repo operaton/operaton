@@ -16,17 +16,19 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
 
 class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
 

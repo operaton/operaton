@@ -16,16 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.cdi.CdiStandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
@@ -33,6 +31,8 @@ import org.operaton.bpm.integrationtest.functional.cdi.beans.ExampleBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -76,7 +76,7 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
     // assert that we cannot resolve the bean here:
     assertThat(ProgrammaticBeanLookup.lookup("exampleBean")).isNull();
 
-    Assertions.assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isZero();
     // but the process engine can:
     runtimeService.startProcessInstanceByKey("testResolveBean");
 
@@ -87,13 +87,13 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
   @OperateOnDeployment("clientDeployment")
   void testResolveBeanFromJobExecutor() {
 
-    Assertions.assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isZero();
     runtimeService.startProcessInstanceByKey("testResolveBeanFromJobExecutor");
-    Assertions.assertEquals(1,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(1);
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assertions.assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isZero();
 
   }
 

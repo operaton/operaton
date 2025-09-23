@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -25,7 +27,6 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
-import org.junit.jupiter.api.extension.RegisterExtension;
 
 /**
  * @author Daniel Meyer

@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import org.apache.commons.mail2.core.EmailException;
 import org.apache.commons.mail2.jakarta.Email;
 import org.apache.commons.mail2.jakarta.HtmlEmail;
 import org.apache.commons.mail2.jakarta.SimpleEmail;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Joram Barrez

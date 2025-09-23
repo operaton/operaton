@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.model.xml.testmodel;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.testmodel.instance.Animal;
 import org.operaton.bpm.model.xml.testmodel.instance.Animals;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class TestModelInstanceTest {
 

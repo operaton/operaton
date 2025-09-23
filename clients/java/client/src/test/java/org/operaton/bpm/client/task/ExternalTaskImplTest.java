@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.client.task;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
 import org.operaton.bpm.client.variable.impl.DefaultValueMappers;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
@@ -31,6 +30,8 @@ import org.operaton.bpm.client.variable.impl.ValueMappers;
 import org.operaton.bpm.client.variable.impl.VariableValue;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tobias Metzke
@@ -42,26 +43,26 @@ class ExternalTaskImplTest {
   void shouldDisplayAttributesEmptyInToString() {
     // no attributes set, only priority initialized as 0
     ExternalTaskImpl task = new ExternalTaskImpl();
-    assertEquals("ExternalTaskImpl [activityId=null, "
-        + "activityInstanceId=null, "
-        + "businessKey=null, "
-        + "errorDetails=null, "
-        + "errorMessage=null, "
-        + "executionId=null, "
-        + "id=null, "
-        + "lockExpirationTime=null, "
-        + "createTime=null, "
-        + "priority=0, "
-        + "processDefinitionId=null, "
-        + "processDefinitionKey=null, "
-        + "processDefinitionVersionTag=null, "
-        + "processInstanceId=null, "
-        + "receivedVariableMap=null, "
-        + "retries=null, "
-        + "tenantId=null, "
-        + "topicName=null, "
-        + "variables=null, "
-        + "workerId=null]", task.toString());
+    assertThat(task).hasToString("ExternalTaskImpl [activityId=null, "
+      + "activityInstanceId=null, "
+      + "businessKey=null, "
+      + "errorDetails=null, "
+      + "errorMessage=null, "
+      + "executionId=null, "
+      + "id=null, "
+      + "lockExpirationTime=null, "
+      + "createTime=null, "
+      + "priority=0, "
+      + "processDefinitionId=null, "
+      + "processDefinitionKey=null, "
+      + "processDefinitionVersionTag=null, "
+      + "processInstanceId=null, "
+      + "receivedVariableMap=null, "
+      + "retries=null, "
+      + "tenantId=null, "
+      + "topicName=null, "
+      + "variables=null, "
+      + "workerId=null]");
   }
 
   @Test
@@ -89,27 +90,26 @@ class ExternalTaskImplTest {
     task.setTopicName("tn");
     task.setWorkerId("wi");
 
-    assertEquals("ExternalTaskImpl [activityId=ai, "
-        + "activityInstanceId=aii, "
-        + "businessKey=bk, "
-        + "errorDetails=ed, "
-        + "errorMessage=em, "
-        + "executionId=ei, "
-        + "id=i, "
-        + "lockExpirationTime=" + DateFormat.getDateTimeInstance().format(date) + ", "
-        + "createTime=" + DateFormat.getDateTimeInstance().format(date) + ", "
-        + "priority=3, "
-        + "processDefinitionId=pdi, "
-        + "processDefinitionKey=pdk, "
-        + "processDefinitionVersionTag=versionTag, "
-        + "processInstanceId=pii, "
-        + "receivedVariableMap=null, "
-        + "retries=34, "
-        + "tenantId=ti, "
-        + "topicName=tn, "
-        + "variables=null, "
-        + "workerId=wi]",
-        task.toString());
+    assertThat(task).hasToString("ExternalTaskImpl [activityId=ai, "
+      + "activityInstanceId=aii, "
+      + "businessKey=bk, "
+      + "errorDetails=ed, "
+      + "errorMessage=em, "
+      + "executionId=ei, "
+      + "id=i, "
+      + "lockExpirationTime=" + DateFormat.getDateTimeInstance().format(date) + ", "
+      + "createTime=" + DateFormat.getDateTimeInstance().format(date) + ", "
+      + "priority=3, "
+      + "processDefinitionId=pdi, "
+      + "processDefinitionKey=pdk, "
+      + "processDefinitionVersionTag=versionTag, "
+      + "processInstanceId=pii, "
+      + "receivedVariableMap=null, "
+      + "retries=34, "
+      + "tenantId=ti, "
+      + "topicName=tn, "
+      + "variables=null, "
+      + "workerId=wi]");
   }
 
   @SuppressWarnings("rawtypes")
@@ -148,34 +148,34 @@ class ExternalTaskImplTest {
     variables.put("v2", generateTypedValueField(ValueType.INTEGER.getName(), 999, 43, "vi3", 88L));
     task.setVariables(variables);
 
-    assertEquals("ExternalTaskImpl [activityId=ai, "
-        + "activityInstanceId=aii, "
-        + "businessKey=bk, "
-        + "errorDetails=ed, "
-        + "errorMessage=em, "
-        + "executionId=ei, "
-        + "id=i, "
-        + "lockExpirationTime=" + DateFormat.getDateTimeInstance().format(date) + ", "
-        + "createTime=" + DateFormat.getDateTimeInstance().format(date) + ", "
-        + "priority=3, "
-        + "processDefinitionId=pdi, "
-        + "processDefinitionKey=pdk, "
-        + "processDefinitionVersionTag=versionTag, "
-        + "processInstanceId=pii, "
-        + "receivedVariableMap={"
-          + "rv1=VariableValue [cachedValue=null, executionId=ei, variableName=variable1, typedValueField="
-            + "TypedValueField [type=string, value=value1, valueInfo={vi1=42, vi2=vi2}]], "
-          + "rv2=VariableValue [cachedValue=null, executionId=ei, variableName=variable2, typedValueField="
-            + "TypedValueField [type=integer, value=99, valueInfo={vi1=42, vi2=vi2, vi3=87}]]"
-        + "}, "
-        + "retries=34, "
-        + "tenantId=ti, "
-        + "topicName=tn, "
-        + "variables={"
-          + "v1=TypedValueField [type=string, value=value2, valueInfo={vi1=43, vi2=vi3}], "
-          + "v2=TypedValueField [type=integer, value=999, valueInfo={vi1=43, vi2=vi3, vi3=88}]"
-        + "}, "
-        + "workerId=wi]", task.toString());
+    assertThat(task).hasToString("ExternalTaskImpl [activityId=ai, "
+      + "activityInstanceId=aii, "
+      + "businessKey=bk, "
+      + "errorDetails=ed, "
+      + "errorMessage=em, "
+      + "executionId=ei, "
+      + "id=i, "
+      + "lockExpirationTime=" + DateFormat.getDateTimeInstance().format(date) + ", "
+      + "createTime=" + DateFormat.getDateTimeInstance().format(date) + ", "
+      + "priority=3, "
+      + "processDefinitionId=pdi, "
+      + "processDefinitionKey=pdk, "
+      + "processDefinitionVersionTag=versionTag, "
+      + "processInstanceId=pii, "
+      + "receivedVariableMap={"
+      + "rv1=VariableValue [cachedValue=null, executionId=ei, variableName=variable1, typedValueField="
+      + "TypedValueField [type=string, value=value1, valueInfo={vi1=42, vi2=vi2}]], "
+      + "rv2=VariableValue [cachedValue=null, executionId=ei, variableName=variable2, typedValueField="
+      + "TypedValueField [type=integer, value=99, valueInfo={vi1=42, vi2=vi2, vi3=87}]]"
+      + "}, "
+      + "retries=34, "
+      + "tenantId=ti, "
+      + "topicName=tn, "
+      + "variables={"
+      + "v1=TypedValueField [type=string, value=value2, valueInfo={vi1=43, vi2=vi3}], "
+      + "v2=TypedValueField [type=integer, value=999, valueInfo={vi1=43, vi2=vi3, vi3=88}]"
+      + "}, "
+      + "workerId=wi]");
   }
 
   // helper methods and constants

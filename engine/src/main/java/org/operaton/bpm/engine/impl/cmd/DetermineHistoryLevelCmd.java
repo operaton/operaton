@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-
-import java.util.List;
 
 /**
  * Read the already configured historyLevel from DB and map to given list of total levels.

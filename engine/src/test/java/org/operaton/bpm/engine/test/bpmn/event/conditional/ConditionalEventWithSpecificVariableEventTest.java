@@ -16,15 +16,13 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.TestTemplate;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
@@ -33,6 +31,9 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameteri
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>

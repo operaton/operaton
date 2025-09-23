@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.deployment.ear.beans;
 
+import jakarta.inject.Named;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-
-import jakarta.inject.Named;
 
 /**
  * @author Roman Smirnov

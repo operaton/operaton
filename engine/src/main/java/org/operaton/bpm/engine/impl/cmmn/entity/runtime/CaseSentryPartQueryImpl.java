@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.entity.runtime;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.util.List;
 
@@ -26,6 +24,8 @@ import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * This query is currently not public API on purpose.

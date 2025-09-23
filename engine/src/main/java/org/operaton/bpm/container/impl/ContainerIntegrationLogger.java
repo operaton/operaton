@@ -27,10 +27,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.management.ObjectName;
 import javax.naming.NamingException;
+import org.jboss.vfs.VirtualFile;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.jboss.vfs.VirtualFile;
 
 /**
  * @author Daniel Meyer
@@ -173,20 +173,18 @@ public class ContainerIntegrationLogger extends ProcessEngineLogger {
   }
 
   public void deploymentSummary(Collection<String> deploymentResourceNames, String deploymentName) {
-
     StringBuilder builder = new StringBuilder();
-    builder.append("Deployment summary for process archive '" + deploymentName + "': \n");
-    builder.append("\n");
+    builder.append("Deployment summary for process archive '")
+      .append(deploymentName)
+      .append("':\n\n");
+
     for (String resourceName : deploymentResourceNames) {
-      builder.append("        ");
-      builder.append(resourceName);
-      builder.append("\n");
+      builder.append("        ")
+        .append(resourceName)
+        .append("\n");
     }
 
-    logInfo(
-        "023",
-        builder.toString());
-
+    logInfo("023", builder.toString());
   }
 
   public void foundProcessesXmlFile(String string) {

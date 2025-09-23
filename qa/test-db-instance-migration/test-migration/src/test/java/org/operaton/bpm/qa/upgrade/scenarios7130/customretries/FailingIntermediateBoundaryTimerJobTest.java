@@ -16,24 +16,25 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7130.customretries;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 public class FailingIntermediateBoundaryTimerJobTest {
 
@@ -57,11 +58,7 @@ public class FailingIntermediateBoundaryTimerJobTest {
         if (job.getRetries() == 1) {
           assertNotNull(((JobEntity) job).getLockExpirationTime());
         }
-        try {
-          managementService.executeJob(job.getId());
-        } catch (Exception e) {
-          // ignore
-        }
+        executeJobIgnoringException(managementService, job.getId());
       }
 
       List<Job> jobs = managementService.createJobQuery().processDefinitionKey("failingTimer").list();

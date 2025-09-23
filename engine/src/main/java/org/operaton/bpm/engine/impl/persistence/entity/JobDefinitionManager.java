@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.impl.JobDefinitionQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.management.JobDefinition;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>Manager implementation for {@link JobDefinitionEntity}</p>

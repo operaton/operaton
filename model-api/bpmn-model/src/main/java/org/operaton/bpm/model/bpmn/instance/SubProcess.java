@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.operaton.bpm.model.bpmn.builder.SubProcessBuilder;
-
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.builder.SubProcessBuilder;
 
 /**
  * The BPMN subProcess element

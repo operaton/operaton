@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
-
 import java.util.Date;
+
+import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
 
 public class HistoricExternalTaskLogDto {
 

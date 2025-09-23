@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.dmn.engine.hitpolicy;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.engine.test.asserts.DmnDecisionTableResultAssert;
 import org.operaton.bpm.engine.variable.Variables;
-
-import org.junit.jupiter.api.Test;
 
 /**
  * Tests the type of the result value of an evaluated decision table with

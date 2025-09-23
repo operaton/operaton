@@ -16,15 +16,14 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collection;
-import java.util.Map;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *

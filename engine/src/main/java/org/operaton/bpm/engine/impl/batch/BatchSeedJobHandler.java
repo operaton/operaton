@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import org.operaton.bpm.engine.impl.batch.BatchSeedJobHandler.BatchSeedJobConfiguration;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * The batch seed job handler is responsible to

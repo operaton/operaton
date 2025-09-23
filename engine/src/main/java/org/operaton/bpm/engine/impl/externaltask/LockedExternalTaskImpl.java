@@ -197,7 +197,7 @@ public class LockedExternalTaskImpl implements LockedExternalTask {
     execution.collectVariables(result.variables, variablesToFetch, isLocal, deserializeVariables);
 
     if(includeExtensionProperties) {
-      result.extensionProperties = (Map<String, String>) execution.getActivity().getProperty(BpmnProperties.EXTENSION_PROPERTIES.getName());
+      result.extensionProperties = (Map<String, String>) execution.getActivity().getProperty(BpmnProperties.EXTENSION_PROPERTIES.name());
     }
     if(result.extensionProperties == null) {
       result.extensionProperties = Collections.emptyMap();

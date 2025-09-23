@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.operaton.bpm.engine.identity.User;
-
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.identity.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;

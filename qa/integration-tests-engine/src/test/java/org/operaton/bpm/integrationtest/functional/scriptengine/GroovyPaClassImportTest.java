@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
@@ -26,10 +23,13 @@ import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.integrationtest.functional.scriptengine.classes.CustomClass;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -90,8 +90,9 @@ public class GroovyPaClassImportTest extends AbstractFoxPlatformIntegrationTest 
     // then start process 2
     String processInstanceId = runtimeService.startProcessInstanceByKey("process2").getId();
     Object foo = runtimeService.getVariable(processInstanceId, "greeting");
-    assertThat(foo).isNotNull();
-    assertEquals("Hi Ho", foo);
+    assertThat(foo)
+            .isNotNull()
+            .isEqualTo("Hi Ho");
   }
 
 }

@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7110.gson;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
+
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.QueryEntityRelationCondition;
 import org.operaton.bpm.engine.impl.QueryOperator;
@@ -26,12 +33,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.junit.Rule;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.fail;

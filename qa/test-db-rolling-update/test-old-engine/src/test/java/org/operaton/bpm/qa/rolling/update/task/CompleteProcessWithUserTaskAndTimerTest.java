@@ -17,13 +17,15 @@
 package org.operaton.bpm.qa.rolling.update.task;
 
 import java.util.Date;
+
+import org.junit.Test;
+
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.Assert;
-import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test ensures that the old engine can complete an
@@ -39,22 +41,24 @@ public class CompleteProcessWithUserTaskAndTimerTest extends AbstractRollingUpda
   public void testCompleteProcessWithUserTaskAndTimer() {
     //given a process instance with user task and timer boundary event
     Job job = rule.jobQuery().singleResult();
-    Assert.assertNotNull(job);
+    assertThat(job).isNotNull();
     //job is not available since timer is set to 2 mintues in the future
-    Assert.assertFalse(!job.isSuspended()
+    assertThat(!job.isSuspended()
             && job.getRetries() > 0
             && (job.getDuedate() == null
-                || ClockUtil.getCurrentTime().after(job.getDuedate())));
+                || ClockUtil.getCurrentTime().after(job.getDuedate())))
+            .isFalse();
 
     //when time is incremented by five minutes
     ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() + 60 * 1000 * 5));
 
     //then job is available and timer should executed and process instance ends
     job = rule.jobQuery().singleResult();
-    Assert.assertTrue(!job.isSuspended()
+    assertThat(!job.isSuspended()
             && job.getRetries() > 0
             && (job.getDuedate() == null
-                || ClockUtil.getCurrentTime().after(job.getDuedate())));
+                || ClockUtil.getCurrentTime().after(job.getDuedate())))
+            .isTrue();
     rule.getManagementService().executeJob(job.getId());
     rule.assertScenarioEnded();
   }

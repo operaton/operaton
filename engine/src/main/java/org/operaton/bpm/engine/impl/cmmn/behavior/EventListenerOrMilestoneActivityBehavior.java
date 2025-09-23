@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.operaton.bpm.engine.exception.cmmn.CaseIllegalStateTransitionException;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
+
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
-
-import org.operaton.bpm.engine.exception.cmmn.CaseIllegalStateTransitionException;
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 
 /**
  * @author Roman Smirnov

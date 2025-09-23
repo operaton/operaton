@@ -43,13 +43,13 @@ import org.operaton.bpm.qa.upgrade.scenarios.eventsubprocess.NonInterruptingEven
 import org.operaton.bpm.qa.upgrade.scenarios.eventsubprocess.ParallelNestedNonInterruptingEventSubprocessScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.eventsubprocess.TwoLevelNestedNonInterruptingEventSubprocessScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.gateway.EventBasedGatewayScenario;
+import org.operaton.bpm.qa.upgrade.scenarios.histperms.HistoricInstancePermissionsWithoutProcDefKeyScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.job.AsyncParallelMultiInstanceScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.job.AsyncSequentialMultiInstanceScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.multiinstance.MultiInstanceReceiveTaskScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.multiinstance.NestedSequentialMultiInstanceSubprocessScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.multiinstance.ParallelMultiInstanceSubprocessScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.multiinstance.SequentialMultiInstanceSubprocessScenario;
-import org.operaton.bpm.qa.upgrade.scenarios.histperms.HistoricInstancePermissionsWithoutProcDefKeyScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.task.OneScopeTaskScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.task.OneTaskScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.task.ParallelScopeTasksScenario;

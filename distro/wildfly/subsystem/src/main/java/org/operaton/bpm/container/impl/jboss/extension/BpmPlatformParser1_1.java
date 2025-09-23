@@ -16,7 +16,12 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension;
 
-import org.operaton.bpm.engine.ProcessEngineException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
 import org.jboss.as.connector.util.AbstractParser;
 import org.jboss.as.connector.util.ParserException;
 import org.jboss.as.controller.AttributeDefinition;
@@ -30,16 +35,12 @@ import org.jboss.staxmapper.XMLElementWriter;
 import org.jboss.staxmapper.XMLExtendedStreamReader;
 import org.jboss.staxmapper.XMLExtendedStreamWriter;
 
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import org.operaton.bpm.engine.ProcessEngineException;
 
-import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
-import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 import static org.operaton.bpm.container.impl.jboss.extension.Attribute.DEFAULT;
 import static org.operaton.bpm.container.impl.jboss.extension.Attribute.NAME;
+import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
+import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.*;
 import static org.jboss.as.controller.parsing.ParseUtils.*;
 
@@ -65,7 +66,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
   }
 
   protected void parseProcessEngines(final XMLExtendedStreamReader reader, final List<ModelNode> operations, final ModelNode parentAddress) throws XMLStreamException, ParserException {
-    List<String> discoveredEngineNames = new ArrayList<String>();
+    List<String> discoveredEngineNames = new ArrayList<>();
 
     while (reader.hasNext() && reader.nextTag() != END_ELEMENT) {
       final Element element = Element.forName(reader.getLocalName());
@@ -93,7 +94,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
       switch(attribute) {
         case NAME: {
           engineName = rawAttributeText(reader, NAME.getLocalName());
-          if (engineName != null && !engineName.equals("null")) {
+          if (engineName != null && !"null".equals(engineName)) {
             SubsystemAttributeDefinitons.NAME.parseAndSetParameter(engineName, addProcessEngineOp, reader);
           } else {
             throw missingRequiredElement(reader, Collections.singleton(NAME.getLocalName()));
@@ -320,7 +321,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
       switch(attribute) {
         case NAME: {
           acquisitionName = rawAttributeText(reader, NAME.getLocalName());
-          if (acquisitionName != null && !acquisitionName.equals("null")) {
+          if (acquisitionName != null && !"null".equals(acquisitionName)) {
             SubsystemAttributeDefinitons.NAME.parseAndSetParameter(acquisitionName, addJobAcquisitionOp, reader);
           } else {
             throw missingRequiredElement(reader, Collections.singleton(NAME.getLocalName()));
@@ -394,14 +395,12 @@ public class BpmPlatformParser1_1 extends AbstractParser {
 
 
       while(reader.hasNext() && !reader.isEndElement()) {
-        switch (reader.getLocalName()) {
-          case SUBSYSTEM: {
-            try {
-              final BpmPlatformParser1_1 parser = new BpmPlatformParser1_1();
-              parser.parse(reader, operations, subsystemAddress);
-            } catch (Exception e) {
-              throw new XMLStreamException(e);
-            }
+        if (reader.getLocalName() == SUBSYSTEM) {
+          try {
+            final BpmPlatformParser1_1 parser = new BpmPlatformParser1_1();
+            parser.parse(reader, operations, subsystemAddress);
+          } catch (Exception e) {
+            throw new XMLStreamException(e);
           }
         }
       }

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.incident;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.util.EnsureUtil;
-import org.operaton.bpm.engine.runtime.Incident;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
+import org.operaton.bpm.engine.runtime.Incident;
 
 /**
  * <p>

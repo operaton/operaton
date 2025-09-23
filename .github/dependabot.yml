@@ -10,3 +10,16 @@ updates:
    directory: "/"
    schedule:
      interval: weekly
+ - package-ecosystem: "github-actions"
+   directory: "/"
+   schedule:
+     interval: "weekly"
+   reviewers:
+     - "kthoms"
+ - package-ecosystem: "maven"
+   directory: "/"
+   schedule:
+     interval: "daily"
+     time: "01:00"
+   reviewers:
+     - "kthoms"

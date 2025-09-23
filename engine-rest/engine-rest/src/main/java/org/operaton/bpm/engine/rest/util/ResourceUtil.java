@@ -42,27 +42,29 @@ public class ResourceUtil implements Resource {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((resourceName == null) ? 0 : resourceName.hashCode());
-    result = prime * result + resourceType;
-    return result;
+    result = prime * result + (resourceName == null ? 0 : resourceName.hashCode());
+    return prime * result + resourceType;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     ResourceUtil other = (ResourceUtil) obj;
     if (resourceName == null) {
-      if (other.resourceName != null)
+      if (other.resourceName != null) {
         return false;
-    } else if (!resourceName.equals(other.resourceName))
+      }
+    } else if (!resourceName.equals(other.resourceName)) {
       return false;
-    if (resourceType != other.resourceType)
-      return false;
-    return true;
+    }
+    return resourceType == other.resourceType;
   }
 }

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.helper;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.util.Date;
 
 import org.operaton.bpm.engine.runtime.Job;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MockJobBuilder {
 

@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.batch.removaltime;
 
-import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
@@ -31,7 +33,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
  * @author Tassilo Weidner
  */
 public class SetRemovalTimeJsonConverter
-    extends AbstractBatchConfigurationObjectConverter<SetRemovalTimeBatchConfiguration> {
+  extends AbstractBatchConfigurationObjectConverter<SetRemovalTimeBatchConfiguration> {
 
   public static final SetRemovalTimeJsonConverter INSTANCE = new SetRemovalTimeJsonConverter();
 

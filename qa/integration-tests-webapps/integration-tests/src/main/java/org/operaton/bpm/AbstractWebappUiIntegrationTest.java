@@ -16,13 +16,9 @@
  */
 package org.operaton.bpm;
 
-import java.io.File;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Locale;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -31,6 +27,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+
 import org.operaton.bpm.util.SeleniumScreenshotExtension;
 
 public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest {
@@ -41,30 +38,20 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
   public SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
 
   @BeforeAll
-  public static void createDriver() {
-    String chromeDriverExecutable = "chromedriver";
-    if (System.getProperty( "os.name" ).toLowerCase(Locale.US).indexOf("windows") > -1) {
-      chromeDriverExecutable += ".exe";
-    }
-
-    File chromeDriver = new File("target/chromedriver/" + chromeDriverExecutable);
-    if (!chromeDriver.exists()) {
-      throw new RuntimeException("chromedriver could not be located!");
-    }
+  static void createDriver() {
 
     ChromeDriverService chromeDriverService = new ChromeDriverService.Builder()
-        .withVerbose(true)
-        .usingAnyFreePort()
-        .usingDriverExecutable(chromeDriver)
-        .build();
+            .withVerbose(true)
+            .usingAnyFreePort()
+            .build();
 
     ChromeOptions chromeOptions = new ChromeOptions()
-        .addArguments("--headless=new")
-        .addArguments("--window-size=1920,1200")
-        .addArguments("--disable-gpu")
-        .addArguments("--no-sandbox")
-        .addArguments("--disable-dev-shm-usage")
-        .addArguments("--remote-allow-origins=*");
+            .addArguments("--headless=new")
+            .addArguments("--window-size=1920,1200")
+            .addArguments("--disable-gpu")
+            .addArguments("--no-sandbox")
+            .addArguments("--disable-dev-shm-usage")
+            .addArguments("--remote-allow-origins=*");
 
     driver = new ChromeDriver(chromeDriverService, chromeOptions);
   }
@@ -73,8 +60,8 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
 
     return webDriver -> {
       try {
-        return new URI(webDriver.getCurrentUrl()).equals(pageURI);
-      } catch (URISyntaxException e) {
+        return URI.create(webDriver.getCurrentUrl()).equals(pageURI);
+      } catch (IllegalArgumentException e) {
         return false;
       }
     };
@@ -88,19 +75,14 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
   }
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
-  @AfterEach
-  public void after() {
-    testUtil.destroy();
-  }
-
   @AfterAll
-  public static void quitDriver() {
+  static void quitDriver() {
     driver.quit();
   }
 

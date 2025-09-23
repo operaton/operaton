@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
-import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse.PROPERTYNAME_HAS_CONDITIONAL_EVENTS;
-
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.bpmn.parser.ConditionalEventDefinition;
 import org.operaton.bpm.engine.impl.bpmn.parser.ErrorEventDefinition;
-import org.operaton.bpm.engine.impl.bpmn.parser.OperatonErrorEventDefinition;
 import org.operaton.bpm.engine.impl.bpmn.parser.EscalationEventDefinition;
 import org.operaton.bpm.engine.impl.bpmn.parser.EventSubscriptionDeclaration;
+import org.operaton.bpm.engine.impl.bpmn.parser.OperatonErrorEventDefinition;
 import org.operaton.bpm.engine.impl.core.model.Properties;
 import org.operaton.bpm.engine.impl.core.model.PropertyKey;
 import org.operaton.bpm.engine.impl.core.model.PropertyListKey;
 import org.operaton.bpm.engine.impl.core.model.PropertyMapKey;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerDeclarationImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
+
+import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse.PROPERTYNAME_HAS_CONDITIONAL_EVENTS;
 
 /**
  * Properties of bpmn elements.

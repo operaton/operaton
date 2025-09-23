@@ -12,7 +12,7 @@
 
 
 [![Forum](https://img.shields.io/badge/forum-Operaton-green)](https://forum.operaton.org/)
-[![Slack](https://img.shields.io/badge/chat-Slack-purple)](https://join.slack.com/t/operaton/shared_invite/zt-3b5h8r9g4-BMvgBIue9rieW4TY~tdT8A)
+[![Slack](https://img.shields.io/badge/chat-Slack-purple)](https://join.slack.com/t/operaton/shared_invite/zt-3dcu23dis-ouyeAbungz_ge_9CactG6w)
 
 Operaton is a native BPMN 2.0 process engine that runs inside the Java Virtual Machine. It can be embedded inside any Java application and any Runtime Container. It integrates with Spring, Spring Boot, Quarkus and is a perfect match for Jakarta EE. On top of the process engine, you can choose from a stack of tools for human workflow management, operations and monitoring.
 
@@ -121,6 +121,12 @@ Java 17 or higher is required.
 The source files in this repository are made available under the [Apache License Version 2.0](./LICENSE).
 
 Operaton uses and includes third-party dependencies published under various licenses. By downloading and using Operaton artifacts, you agree to their terms and conditions. Refer to our [license-book.txt](./distro/license-book/src/main/resources/license-book.txt) for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.
+
+## Project reports
+
+- [Dependency Update Candidates](https://operaton.github.io/operaton/reports/dependency-updates-aggregate-report.html)
+- [Maven Plugin Update Candidates](https://operaton.github.io/operaton/reports/plugin-updates-aggregate-report.html)
+- [Javadoc API](https://operaton.github.io/operaton/javadoc/operaton/1.0/index.html)
 
 ## Contributors
 

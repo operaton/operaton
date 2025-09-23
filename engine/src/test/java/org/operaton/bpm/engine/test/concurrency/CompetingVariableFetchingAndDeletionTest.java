@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-import static org.operaton.bpm.model.bpmn.Bpmn.createExecutableProcess;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 import java.util.Arrays;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.CachedDbEntity;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
-import org.junit.jupiter.api.Test;
+
+import static org.operaton.bpm.engine.variable.Variables.createVariables;
+import static org.operaton.bpm.model.bpmn.Bpmn.createExecutableProcess;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * This test makes sure that if one thread loads a variable

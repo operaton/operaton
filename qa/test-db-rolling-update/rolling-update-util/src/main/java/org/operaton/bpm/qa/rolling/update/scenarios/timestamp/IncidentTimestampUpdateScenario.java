@@ -47,22 +47,19 @@ public class IncidentTimestampUpdateScenario extends AbstractTimestampUpdateScen
   @DescribesScenario("initIncidentTimestamp")
   @Times(1)
   public static ScenarioSetup initIncidentTimestamp() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine processEngine, String scenarioName) {
+    return (processEngine, scenarioName) -> {
 
-        ClockUtil.setCurrentTime(TIMESTAMP);
+      ClockUtil.setCurrentTime(TIMESTAMP);
 
-        deployModel(processEngine, PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY, FAILING_SERVICE_TASK_MODEL);
+      deployModel(processEngine, PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY, FAILING_SERVICE_TASK_MODEL);
 
-        String processInstanceId = processEngine.getRuntimeService()
-          .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, scenarioName)
-          .getId();
+      String processInstanceId = processEngine.getRuntimeService()
+        .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, scenarioName)
+        .getId();
 
-        causeIncident(processEngine, processInstanceId);
+      causeIncident(processEngine, processInstanceId);
 
-        ClockUtil.reset();
-      }
+      ClockUtil.reset();
     };
   }
 
@@ -96,7 +93,7 @@ public class IncidentTimestampUpdateScenario extends AbstractTimestampUpdateScen
 
       Boolean fail = (Boolean) execution.getVariable("fail");
 
-      if (fail == null || fail == true) {
+      if (fail == null || fail) {
         throw new ProcessEngineException(EXCEPTION_MESSAGE);
       }
 

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
     <relativePath>../../database</relativePath>
   </parent>
   <groupId>org.operaton.bpm.run</groupId>
@@ -30,6 +30,11 @@
         <groupId>org.graalvm.js</groupId>
         <artifactId>js-scriptengine</artifactId>
         <version>${version.graal.js}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.nimbusds</groupId>
+        <artifactId>nimbus-jose-jwt</artifactId>
+        <version>9.37.4</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

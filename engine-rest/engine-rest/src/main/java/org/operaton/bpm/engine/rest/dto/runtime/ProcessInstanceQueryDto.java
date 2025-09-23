@@ -16,6 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.dto.runtime;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
@@ -27,17 +36,8 @@ import org.operaton.bpm.engine.rest.dto.converter.StringSetConverter;
 import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response.Status;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static java.lang.Boolean.TRUE;
 
 public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQuery> {
@@ -75,6 +75,7 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
   private Set<String> processInstanceIds;
   private Boolean withIncident;
   private String incidentId;
+  private String rootProcessInstanceId;
   private String incidentType;
   private String incidentMessage;
   private String incidentMessageLike;
@@ -285,6 +286,15 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
     this.incidentId = incidentId;
   }
 
+  public String getRootProcessInstanceId() {
+    return rootProcessInstanceId;
+  }
+
+  @OperatonQueryParam("rootProcessInstanceId")
+  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+    this.rootProcessInstanceId = rootProcessInstanceId;
+  }
+
   public String getIncidentType() {
     return incidentType;
   }
@@ -441,6 +451,9 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
     }
     if (incidentId != null) {
       query.incidentId(incidentId);
+    }
+    if (rootProcessInstanceId != null) {
+      query.rootProcessInstanceId(rootProcessInstanceId);
     }
     if (incidentType != null) {
       query.incidentType(incidentType);

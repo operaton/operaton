@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.application.impl.metadata;
 
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.NAME;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROCESS;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROCESS_ARCHIVE;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROCESS_ENGINE;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROPERTIES;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.RESOURCE;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.TENANT_ID;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +29,14 @@ import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 import org.operaton.bpm.engine.impl.util.xml.Parse;
 import org.operaton.bpm.engine.impl.util.xml.Parser;
+
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.NAME;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROCESS;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROCESS_ARCHIVE;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROCESS_ENGINE;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROPERTIES;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.RESOURCE;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.TENANT_ID;
 
 /**
  * <p>{@link Parse} object for the <code>processes.xml</code> file.</p>

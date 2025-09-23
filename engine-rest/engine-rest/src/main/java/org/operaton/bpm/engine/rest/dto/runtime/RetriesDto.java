@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.dto.runtime;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties("dueDateSet")
 public class RetriesDto {

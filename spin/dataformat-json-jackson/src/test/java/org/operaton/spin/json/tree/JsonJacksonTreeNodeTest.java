@@ -16,14 +16,16 @@
  */
 package org.operaton.spin.json.tree;
 
-import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static org.operaton.spin.Spin.S;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
-
 import java.io.StringWriter;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.impl.json.jackson.JacksonJsonNode;
+
+import static org.operaton.spin.Spin.S;
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class JsonJacksonTreeNodeTest {
 

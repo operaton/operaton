@@ -21,10 +21,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.operaton.bpm.engine.variable.VariableMap;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+
+import org.operaton.bpm.engine.variable.VariableMap;
 
 public class EqualsMap extends BaseMatcher<Map<String, Object>> {
 

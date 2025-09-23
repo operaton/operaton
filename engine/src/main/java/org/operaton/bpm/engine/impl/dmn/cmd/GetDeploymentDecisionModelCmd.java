@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.dmn.cmd;
 import java.io.InputStream;
 import java.io.Serial;
 import java.io.Serializable;
+
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;

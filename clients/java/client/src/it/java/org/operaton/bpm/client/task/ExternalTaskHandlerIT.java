@@ -16,9 +16,16 @@
  */
 package org.operaton.bpm.client.task;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.IncidentDto;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
@@ -34,23 +41,9 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.BoundaryEvent;
 import org.operaton.bpm.model.bpmn.instance.ErrorEventDefinition;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.client.rule.ClientRule.LOCK_DURATION;
-import static org.operaton.bpm.client.util.ProcessModels.BPMN_ERROR_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_ID;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_PRIORITY;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
-import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY;
-import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY_2;
-import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_AFTER_BPMN_ERROR;
-import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_ID;
-import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclusiveGateway;
+import static org.operaton.bpm.client.util.ProcessModels.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ExternalTaskHandlerIT {
 
@@ -119,9 +112,8 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldCompleteTask() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.complete(task);
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.complete(task));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -336,9 +328,8 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldCompleteById() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.complete(task.getId(), null, null);
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.complete(task.getId(), null, null));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -357,10 +348,9 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldLock() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       // an external task may be locked again by the same worker
-      client.lock(task, LOCK_DURATION * 10);
-    });
+      client.lock(task, LOCK_DURATION * 10));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -377,10 +367,9 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldLockById() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       // an external task may be locked again by the same worker
-      client.lock(task.getId(), LOCK_DURATION * 10);
-    });
+      client.lock(task.getId(), LOCK_DURATION * 10));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -397,9 +386,8 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldExtendLock() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.extendLock(task, LOCK_DURATION * 10);
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.extendLock(task, LOCK_DURATION * 10));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -418,9 +406,8 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldExtendLockById() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.extendLock(task.getId(), LOCK_DURATION * 10);
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.extendLock(task.getId(), LOCK_DURATION * 10));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -462,9 +449,8 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldInvokeHandleBpmnError() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.handleBpmnError(task, "500");
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.handleBpmnError(task, "500"));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -515,9 +501,8 @@ public class ExternalTaskHandlerIT {
   public void shouldInvokeHandleBpmnErrorWithErrorMessage() {
     // given
     String anErrorMessage = "meaningful error message";
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.handleBpmnError(task, "500", anErrorMessage);
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.handleBpmnError(task, "500", anErrorMessage));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -540,9 +525,8 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldInvokeHandleBpmnErrorById() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.handleBpmnError(task.getId(), "500", null, null);
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.handleBpmnError(task.getId(), "500", null, null));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -561,9 +545,8 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldInvokeHandleFailure() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.handleFailure(task, "my-message", "my-details", 0, 0);
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.handleFailure(task, "my-message", "my-details", 0, 0));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -582,9 +565,8 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldInvokeHandleFailureWithRetries() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.handleFailure(task, "my-message", "my-details", 1, 0);
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.handleFailure(task, "my-message", "my-details", 1, 0));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -609,9 +591,8 @@ public class ExternalTaskHandlerIT {
   @Test
   public void shouldInvokeHandleFailureById() {
     // given
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
-      client.handleFailure(task.getId(), "my-message", "my-details", 0, 0);
-    });
+    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
+      client.handleFailure(task.getId(), "my-message", "my-details", 0, 0));
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)

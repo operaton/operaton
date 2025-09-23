@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.*;
-
-import io.restassured.http.ContentType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -40,9 +40,11 @@ import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.ModificationInstructionBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.RestartProcessInstanceBuilder;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
+
+import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.*;
 
 public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTest {
 

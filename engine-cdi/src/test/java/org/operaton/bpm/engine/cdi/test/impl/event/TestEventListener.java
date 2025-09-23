@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.event;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.HashSet;
+import java.util.Set;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
 
 import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
 import org.operaton.bpm.engine.cdi.annotation.event.*;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.Observes;
-import java.util.HashSet;
-import java.util.Set;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ApplicationScoped
 public class TestEventListener {

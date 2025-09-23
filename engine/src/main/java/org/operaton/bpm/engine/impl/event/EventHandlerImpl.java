@@ -63,7 +63,7 @@ public class EventHandlerImpl implements EventHandler {
     }
 
     if (payloadToTriggeredScope instanceof Map) {
-      if (ActivityTypes.INTERMEDIATE_EVENT_MESSAGE.equals(activity.getProperty(BpmnProperties.TYPE.getName()))) {
+      if (ActivityTypes.INTERMEDIATE_EVENT_MESSAGE.equals(activity.getProperty(BpmnProperties.TYPE.name()))) {
         execution.setVariablesLocal((Map<String, Object>) payloadToTriggeredScope);
       } else {
         execution.getProcessInstance().setPayloadForTriggeredScope((Map<String, Object>) payloadToTriggeredScope);

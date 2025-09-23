@@ -16,19 +16,19 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class HttpHeaderSecurityDefaultsIT {
 
   @RegisterExtension

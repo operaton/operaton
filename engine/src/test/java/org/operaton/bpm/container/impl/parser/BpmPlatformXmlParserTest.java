@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.container.impl.parser;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.container.impl.metadata.BpmPlatformXmlParser;
 import org.operaton.bpm.container.impl.metadata.spi.BpmPlatformXml;
 import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
 import org.operaton.bpm.container.impl.metadata.spi.JobExecutorXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>The testcases for the {@link BpmPlatformXmlParser}</p>

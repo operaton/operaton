@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7110.gson;
 
-import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.filter.Filter;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.Map;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.filter.Filter;
+import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;

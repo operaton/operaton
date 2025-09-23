@@ -18,15 +18,17 @@ package org.operaton.bpm.engine.spring.application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jakarta.el.ELResolver;
 import jakarta.servlet.ServletContext;
+
+import org.springframework.util.ClassUtils;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationElResolver;
 import org.operaton.bpm.application.impl.EjbProcessApplication;
 import org.operaton.bpm.engine.spring.ApplicationContextElResolver;
-import jakarta.el.ELResolver;
-import org.springframework.util.ClassUtils;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * <p>ProcessApplicationElResolver implementation providing support for the Spring Framework.</p>

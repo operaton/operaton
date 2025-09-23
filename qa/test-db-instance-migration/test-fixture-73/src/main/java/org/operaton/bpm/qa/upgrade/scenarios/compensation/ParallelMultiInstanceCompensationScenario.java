@@ -43,36 +43,32 @@ public final class ParallelMultiInstanceCompensationScenario {
   @DescribesScenario("singleActivityHandler.multiInstancePartial")
   @Times(3)
   public static ScenarioSetup singleActivityHandlerMultiInstancePartial() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("ParallelMultiInstanceCompensationSingleActivityHandlerScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("ParallelMultiInstanceCompensationSingleActivityHandlerScenario", scenarioName);
 
-        // complete two out of three MI tasks
-        List<Task> miTasks = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).list();
-        engine.getTaskService().complete(miTasks.get(0).getId());
-        engine.getTaskService().complete(miTasks.get(1).getId());
-      }
+      // complete two out of three MI tasks
+      List<Task> miTasks = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).list();
+      engine.getTaskService().complete(miTasks.get(0).getId());
+      engine.getTaskService().complete(miTasks.get(1).getId());
     };
   }
 
   @DescribesScenario("singleActivityHandler.beforeCompensate")
   @Times(3)
   public static ScenarioSetup singleActivityHandlerBeforeCompensate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("ParallelMultiInstanceCompensationSingleActivityHandlerScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("ParallelMultiInstanceCompensationSingleActivityHandlerScenario", scenarioName);
 
-        // complete all mi tasks
-        List<Task> miTasks = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).list();
-        for (Task miTask : miTasks) {
-          engine.getTaskService().complete(miTask.getId());
-        }
+      // complete all mi tasks
+      List<Task> miTasks = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).list();
+      for (Task miTask : miTasks) {
+        engine.getTaskService().complete(miTask.getId());
       }
     };
   }
@@ -81,13 +77,11 @@ public final class ParallelMultiInstanceCompensationScenario {
   @ExtendsScenario("singleActivityHandler.beforeCompensate")
   @Times(3)
   public static ScenarioSetup singleActivityHandlerThrowCompensate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
+    return (engine, scenarioName) -> {
+      Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
 
-        engine.getTaskService().complete(beforeCompensateTask.getId());
-      }
+      engine.getTaskService().complete(beforeCompensateTask.getId());
     };
   }
 
@@ -99,36 +93,32 @@ public final class ParallelMultiInstanceCompensationScenario {
   @DescribesScenario("defaultHandler.multiInstancePartial")
   @Times(3)
   public static ScenarioSetup defaultHandlerMultiInstancePartial() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("ParallelMultiInstanceCompensationDefaultHandlerScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("ParallelMultiInstanceCompensationDefaultHandlerScenario", scenarioName);
 
-        // complete two out of three MI tasks
-        List<Task> miTasks = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).list();
-        engine.getTaskService().complete(miTasks.get(0).getId());
-        engine.getTaskService().complete(miTasks.get(1).getId());
-      }
+      // complete two out of three MI tasks
+      List<Task> miTasks = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).list();
+      engine.getTaskService().complete(miTasks.get(0).getId());
+      engine.getTaskService().complete(miTasks.get(1).getId());
     };
   }
 
   @DescribesScenario("defaultHandler.beforeCompensate")
   @Times(3)
   public static ScenarioSetup defaultHandlerBeforeCompensate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("ParallelMultiInstanceCompensationDefaultHandlerScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("ParallelMultiInstanceCompensationDefaultHandlerScenario", scenarioName);
 
-        // complete all mi tasks
-        List<Task> miTasks = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).list();
-        for (Task miTask : miTasks) {
-          engine.getTaskService().complete(miTask.getId());
-        }
+      // complete all mi tasks
+      List<Task> miTasks = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).list();
+      for (Task miTask : miTasks) {
+        engine.getTaskService().complete(miTask.getId());
       }
     };
   }
@@ -137,13 +127,11 @@ public final class ParallelMultiInstanceCompensationScenario {
   @ExtendsScenario("defaultHandler.beforeCompensate")
   @Times(3)
   public static ScenarioSetup defaultHandlerThrowCompensate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
+    return (engine, scenarioName) -> {
+      Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
 
-        engine.getTaskService().complete(beforeCompensateTask.getId());
-      }
+      engine.getTaskService().complete(beforeCompensateTask.getId());
     };
   }
 
@@ -155,36 +143,32 @@ public final class ParallelMultiInstanceCompensationScenario {
   @DescribesScenario("subProcessHandler.multiInstancePartial")
   @Times(3)
   public static ScenarioSetup subProcessHandlerMultiInstancePartial() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("ParallelMultiInstanceCompensationSubProcessHandlerScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("ParallelMultiInstanceCompensationSubProcessHandlerScenario", scenarioName);
 
-        // complete two out of three MI tasks
-        List<Task> miTasks = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).list();
-        engine.getTaskService().complete(miTasks.get(0).getId());
-        engine.getTaskService().complete(miTasks.get(1).getId());
-      }
+      // complete two out of three MI tasks
+      List<Task> miTasks = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).list();
+      engine.getTaskService().complete(miTasks.get(0).getId());
+      engine.getTaskService().complete(miTasks.get(1).getId());
     };
   }
 
   @DescribesScenario("subProcessHandler.beforeCompensate")
   @Times(3)
   public static ScenarioSetup subProcessHandlerBeforeCompensate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("ParallelMultiInstanceCompensationSubProcessHandlerScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("ParallelMultiInstanceCompensationSubProcessHandlerScenario", scenarioName);
 
-        // complete all mi tasks
-        List<Task> miTasks = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).list();
-        for (Task miTask : miTasks) {
-          engine.getTaskService().complete(miTask.getId());
-        }
+      // complete all mi tasks
+      List<Task> miTasks = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).list();
+      for (Task miTask : miTasks) {
+        engine.getTaskService().complete(miTask.getId());
       }
     };
   }
@@ -193,13 +177,11 @@ public final class ParallelMultiInstanceCompensationScenario {
   @ExtendsScenario("subProcessHandler.beforeCompensate")
   @Times(3)
   public static ScenarioSetup subProcessHandlerThrowCompensate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
+    return (engine, scenarioName) -> {
+      Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
 
-        engine.getTaskService().complete(beforeCompensateTask.getId());
-      }
+      engine.getTaskService().complete(beforeCompensateTask.getId());
     };
   }
 

@@ -15,9 +15,6 @@
  */
 package org.operaton.bpm.engine.spring.components.aop;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.spring.annotations.ProcessVariable;
-import org.operaton.bpm.engine.spring.annotations.StartProcess;
 import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.AopInfrastructureBean;
 import org.springframework.aop.framework.ProxyConfig;
@@ -27,6 +24,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.util.ClassUtils;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.spring.annotations.ProcessVariable;
+import org.operaton.bpm.engine.spring.annotations.StartProcess;
 
 /**
  * Proxies beans with methods annotated with {@link StartProcess}.

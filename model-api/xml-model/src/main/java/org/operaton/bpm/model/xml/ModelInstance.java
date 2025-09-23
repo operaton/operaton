@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.model.xml;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.validation.ModelElementValidator;
 import org.operaton.bpm.model.xml.validation.ValidationResults;
-
-import java.util.Collection;
 
 /**
  * An instance of a model

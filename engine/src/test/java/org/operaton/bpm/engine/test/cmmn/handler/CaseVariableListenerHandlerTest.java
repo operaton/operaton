@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.Expression;
@@ -34,8 +35,8 @@ import org.operaton.bpm.model.cmmn.instance.ExtensionElements;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonField;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableListener;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

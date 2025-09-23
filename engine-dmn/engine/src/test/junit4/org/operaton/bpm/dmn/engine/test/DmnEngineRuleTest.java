@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.dmn.engine.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngine;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DmnEngineRuleTest {
 

@@ -21,10 +21,10 @@ import java.util.Set;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.container.impl.jmx.MBeanServiceContainer;
 import org.operaton.bpm.container.impl.jmx.kernel.util.FailingDeploymentOperationStep;
 import org.operaton.bpm.container.impl.jmx.kernel.util.StartServiceDeploymentOperationStep;
@@ -34,7 +34,8 @@ import org.operaton.bpm.container.impl.jmx.kernel.util.TestServiceType;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.engine.ProcessEngineException;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Testcases for the {@link MBeanServiceContainer} Kernel.
@@ -194,7 +195,7 @@ class MBeanServiceContainerTest {
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
     assertThat(serviceNames).containsExactlyInAnyOrder(service1Name, service2Name);
 
-    serviceNames = serviceContainer.<TestService>getServiceNames(TestServiceType.TYPE2);
+    serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE2);
     assertThat(serviceNames).containsExactlyInAnyOrder(service3Name, service4Name);
 
   }

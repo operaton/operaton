@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios730.compensation;
 
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 /**
  * Tests that the 7.2-to-current migration logic (where an event subprocess was no scope)

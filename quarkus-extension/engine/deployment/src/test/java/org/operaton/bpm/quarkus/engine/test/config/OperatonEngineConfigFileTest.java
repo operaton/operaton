@@ -16,19 +16,19 @@
  */
 package org.operaton.bpm.quarkus.engine.test.config;
 
-import io.quarkus.test.QuarkusUnitTest;
 import jakarta.inject.Inject;
+
+import io.quarkus.test.QuarkusUnitTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.quarkus.engine.extension.OperatonEngineConfig;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
-
-import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,7 +46,7 @@ class OperatonEngineConfigFileTest {
   ProcessEngine processEngine;
 
   @Test
-  void shouldLoadAllConfigProperties() throws SQLException {
+  void shouldLoadAllConfigProperties() throws Exception {
     // given
     // a .properties file with process engine and job executor configuration
 

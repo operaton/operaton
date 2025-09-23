@@ -16,9 +16,9 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
-
 import org.junit.jupiter.api.BeforeEach;
+
+import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
 
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;

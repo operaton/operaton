@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.resources;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.repository.ResourceTypes.RUNTIME;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +26,7 @@ import org.apache.ibatis.jdbc.RuntimeSqlException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -53,6 +50,10 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.operaton.bpm.engine.repository.ResourceTypes.RUNTIME;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RuntimeByteArrayTest {
   protected static final String WORKER_ID = "aWorkerId";
@@ -152,12 +153,7 @@ class RuntimeByteArrayTest {
     String jobId = managementService.createJobQuery().singleResult().getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
     assertThat(job).isNotNull();

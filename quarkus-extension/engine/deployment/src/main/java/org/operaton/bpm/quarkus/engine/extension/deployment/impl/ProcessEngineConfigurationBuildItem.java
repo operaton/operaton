@@ -18,6 +18,7 @@ package org.operaton.bpm.quarkus.engine.extension.deployment.impl;
 
 import io.quarkus.builder.item.SimpleBuildItem;
 import io.quarkus.runtime.RuntimeValue;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 public final class ProcessEngineConfigurationBuildItem extends SimpleBuildItem {

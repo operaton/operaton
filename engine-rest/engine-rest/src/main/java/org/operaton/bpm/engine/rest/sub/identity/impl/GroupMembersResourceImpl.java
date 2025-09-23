@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.rest.sub.identity.impl;
 
+import java.net.URI;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.UriInfo;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.rest.GroupRestService;
 import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
 import org.operaton.bpm.engine.rest.sub.identity.GroupMembersResource;
 import org.operaton.bpm.engine.rest.util.PathUtil;
-
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.UriInfo;
-import java.net.URI;
 
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE;

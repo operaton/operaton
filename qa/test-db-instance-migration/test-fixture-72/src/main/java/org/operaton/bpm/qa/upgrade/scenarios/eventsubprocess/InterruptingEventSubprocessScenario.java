@@ -39,17 +39,15 @@ public final class InterruptingEventSubprocessScenario {
   @DescribesScenario("init")
   @Times(3)
   public static ScenarioSetup instantiateAndTriggerSubprocess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("InterruptingEventSubprocessScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("InterruptingEventSubprocessScenario", scenarioName);
 
-        engine.getRuntimeService()
-          .createMessageCorrelation("Message")
-          .processInstanceBusinessKey(scenarioName)
-          .correlate();
-      }
+      engine.getRuntimeService()
+        .createMessageCorrelation("Message")
+        .processInstanceBusinessKey(scenarioName)
+        .correlate();
     };
   }
 }

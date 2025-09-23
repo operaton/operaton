@@ -18,7 +18,6 @@ package org.operaton.spin.xml.mapping;
 
 import java.util.Date;
 import java.util.LinkedList;
-
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;

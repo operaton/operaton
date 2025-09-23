@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.error;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.delegate.BpmnError;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test asserts the constructors of the {@link BpmnError} class as this

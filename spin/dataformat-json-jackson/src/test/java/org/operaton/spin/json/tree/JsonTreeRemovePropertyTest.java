@@ -16,19 +16,19 @@
  */
 package org.operaton.spin.json.tree;
 
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.json.SpinJsonPropertyException;
-import static org.operaton.spin.Spin.JSON;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.json.SpinJsonPropertyException;
+
+import static org.operaton.spin.Spin.JSON;
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Stefan Hentschel
@@ -72,7 +72,7 @@ class JsonTreeRemovePropertyTest {
 
   @Test
   void failWhileRemovePropertyByName() {
-    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.deleteProp("waldo"));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> jsonNode.deleteProp("waldo"));
   }
 
   @Test
@@ -80,6 +80,6 @@ class JsonTreeRemovePropertyTest {
     List<String> names = new ArrayList<>();
     names.add(active);
     names.add("waldo");
-    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.deleteProp(names));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> jsonNode.deleteProp(names));
   }
 }

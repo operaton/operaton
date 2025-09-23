@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.test.junit5.deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ProcessEngineExtensionDeploymentIdTest {
 

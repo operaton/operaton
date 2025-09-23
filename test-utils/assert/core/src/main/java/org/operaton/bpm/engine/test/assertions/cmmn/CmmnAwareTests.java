@@ -20,6 +20,7 @@ package org.operaton.bpm.engine.test.assertions.cmmn;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.CaseDefinitionQuery;

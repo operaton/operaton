@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.model.xml.impl.type.child;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.impl.ModelBuildOperation;
 import org.operaton.bpm.model.xml.impl.type.ModelElementTypeImpl;
@@ -23,9 +26,6 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.child.ChildElementBuilder;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollectionBuilder;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Daniel Meyer

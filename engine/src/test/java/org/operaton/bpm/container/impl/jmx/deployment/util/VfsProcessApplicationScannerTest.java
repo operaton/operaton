@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.container.impl.deployment.scanning.ProcessApplicationScanningUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -33,7 +33,7 @@ import org.operaton.bpm.container.impl.deployment.scanning.ProcessApplicationSca
 class VfsProcessApplicationScannerTest {
 
   @Test
-  void testScanProcessArchivePathForResources() throws MalformedURLException {
+  void testScanProcessArchivePathForResources() throws Exception {
 
     // given: scanning the relative test resource root
     URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file:")});
@@ -48,7 +48,7 @@ class VfsProcessApplicationScannerTest {
   }
 
   @Test
-  void testScanProcessArchivePathForCmmnResources() throws MalformedURLException {
+  void testScanProcessArchivePathForCmmnResources() throws Exception {
 
     // given: scanning the relative test resource root
     URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file:")});
@@ -63,7 +63,7 @@ class VfsProcessApplicationScannerTest {
   }
 
   @Test
-  void testScanProcessArchivePathWithAdditionalResourceSuffixes() throws MalformedURLException {
+  void testScanProcessArchivePathWithAdditionalResourceSuffixes() throws Exception {
     URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file:")});
     String processRootPath = "classpath:org/operaton/bpm/container/impl/jmx/deployment/script/";
     String[] additionalResourceSuffixes = new String[] { "py", "groovy", "rb" };

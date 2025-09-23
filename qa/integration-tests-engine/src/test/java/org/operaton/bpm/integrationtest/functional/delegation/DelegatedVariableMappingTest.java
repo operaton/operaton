@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.delegation;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
@@ -25,6 +23,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
@@ -33,6 +32,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestConstants;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -46,6 +47,7 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "mainDeployment.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(TestConstants.class)
@@ -78,21 +80,21 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
 
     //when
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
 
     //then check value from input variable
     Object inputVar = runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "TestInputVar");
-    assertEquals("inValue", inputVar);
+    assertThat(inputVar).isEqualTo("inValue");
 
     //when completing the task in the subprocess, finishes the subprocess
     taskService.complete(taskInSubProcess.getId());
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     //then check value from output variable
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
     Object outputVar = runtimeService.getVariable(processInstance.getId(), "TestOutputVar");
-    assertEquals("outValue", outputVar);
+    assertThat(outputVar).isEqualTo("outValue");
 
     //complete task after sub process
     taskService.complete(taskAfterSubProcess.getId());

@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
-import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
-import org.operaton.bpm.identity.impl.ldap.util.LdapPluginLogger;
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
@@ -32,10 +34,9 @@ import javax.naming.ldap.LdapContext;
 import javax.naming.ldap.PagedResultsControl;
 import javax.naming.ldap.SortControl;
 import javax.naming.ldap.SortKey;
-import java.io.IOException;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+
+import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
+import org.operaton.bpm.identity.impl.ldap.util.LdapPluginLogger;
 
 /**
  * This wrapper class should ensure that LDAP exceptions are wrapped as process engine exceptions

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
@@ -28,6 +29,7 @@ import javax.naming.ldap.Control;
 import javax.naming.ldap.LdapContext;
 import javax.naming.ldap.PagedResultsResponseControl;
 import javax.naming.ldap.SortKey;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.identity.Group;
@@ -89,14 +91,17 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
   // Users /////////////////////////////////////////////////
 
+  @Override
   public User findUserById(String userId) {
     return createUserQuery(getCommandContext()).userId(userId).singleResult();
   }
 
+  @Override
   public UserQuery createUserQuery() {
     return new LdapUserQueryImpl(getProcessEngineConfiguration().getCommandExecutorTxRequired(), ldapConfiguration);
   }
 
+  @Override
   public UserQueryImpl createUserQuery(CommandContext commandContext) {
     return new LdapUserQueryImpl(ldapConfiguration);
   }
@@ -189,6 +194,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     return userList;
   }
 
+  @Override
   public boolean checkPassword(String userId, String password) {
 
     // prevent a null password
@@ -302,14 +308,17 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
   // Groups ///////////////////////////////////////////////
 
+  @Override
   public Group findGroupById(String groupId) {
     return createGroupQuery(getCommandContext()).groupId(groupId).singleResult();
   }
 
+  @Override
   public GroupQuery createGroupQuery() {
     return new LdapGroupQuery(getProcessEngineConfiguration().getCommandExecutorTxRequired());
   }
 
+  @Override
   public GroupQuery createGroupQuery(CommandContext commandContext) {
     return new LdapGroupQuery();
   }

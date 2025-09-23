@@ -22,8 +22,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.db.DbEntity;
+import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.db.HistoricEntity;
 import org.operaton.bpm.engine.task.Attachment;
 

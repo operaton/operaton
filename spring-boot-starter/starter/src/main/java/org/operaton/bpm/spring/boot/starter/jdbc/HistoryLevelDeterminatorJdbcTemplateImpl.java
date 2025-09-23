@@ -21,15 +21,16 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import org.operaton.bpm.engine.impl.history.HistoryLevel;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 public class HistoryLevelDeterminatorJdbcTemplateImpl implements HistoryLevelDeterminator, InitializingBean {
 
@@ -46,8 +47,8 @@ public class HistoryLevelDeterminatorJdbcTemplateImpl implements HistoryLevelDet
 
   protected static final String SQL_TEMPLATE = "SELECT VALUE_ FROM " + TABLE_PREFIX_PLACEHOLDER + "ACT_GE_PROPERTY WHERE NAME_='historyLevel'";
 
-  protected final List<HistoryLevel> historyLevels = new ArrayList<>(Arrays.asList(new HistoryLevel[] { HistoryLevel.HISTORY_LEVEL_ACTIVITY,
-      HistoryLevel.HISTORY_LEVEL_AUDIT, HistoryLevel.HISTORY_LEVEL_FULL, HistoryLevel.HISTORY_LEVEL_NONE }));
+  protected final List<HistoryLevel> historyLevels = new ArrayList<>(Arrays.asList( HistoryLevel.HISTORY_LEVEL_ACTIVITY,
+      HistoryLevel.HISTORY_LEVEL_AUDIT, HistoryLevel.HISTORY_LEVEL_FULL, HistoryLevel.HISTORY_LEVEL_NONE));
 
   protected String defaultHistoryLevel = new SpringProcessEngineConfiguration().getHistory();
 

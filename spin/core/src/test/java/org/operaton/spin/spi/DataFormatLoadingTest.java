@@ -16,19 +16,17 @@
  */
 package org.operaton.spin.spi;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.ServiceLoader;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.operaton.spin.DataFormats;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.ServiceLoader;
+import org.operaton.spin.DataFormats;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -134,7 +132,7 @@ class DataFormatLoadingTest {
 
     // when a map of configuration properties is passed to the "load" method
     DataFormats.getInstance().registerDataFormats(DataFormats.class.getClassLoader(),
-                                                  Collections.EMPTY_LIST,
+      Collections.emptyList(),
                                                   Collections.singletonMap("conditional-prop", true));
 
     // then the configuration property is applied
@@ -145,22 +143,10 @@ class DataFormatLoadingTest {
   }
 
   protected void mockProviders(final DataFormatProvider... providers) {
-    when(mockServiceLoader.iterator()).thenAnswer(new Answer<Iterator<DataFormatProvider>>() {
-
-      @Override
-      public Iterator<DataFormatProvider> answer(InvocationOnMock invocation) {
-        return Arrays.asList(providers).iterator();
-      }
-    });
+    when(mockServiceLoader.iterator()).thenAnswer(invocation -> Arrays.asList(providers).iterator());
   }
 
   protected void mockConfigurators(final DataFormatConfigurator<?>... configurators) {
-    when(mockConfiguratorLoader.iterator()).thenAnswer(new Answer<Iterator<DataFormatConfigurator<?>>>() {
-
-      @Override
-      public Iterator<DataFormatConfigurator<?>> answer(InvocationOnMock invocation) {
-        return Arrays.asList(configurators).iterator();
-      }
-    });
+    when(mockConfiguratorLoader.iterator()).thenAnswer(invocation -> Arrays.asList(configurators).iterator());
   }
 }

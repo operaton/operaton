@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 
 /**

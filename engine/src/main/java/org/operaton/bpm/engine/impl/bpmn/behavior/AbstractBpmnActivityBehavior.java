@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
-
 import java.util.concurrent.Callable;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -30,6 +28,8 @@ import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
 
 
 /**

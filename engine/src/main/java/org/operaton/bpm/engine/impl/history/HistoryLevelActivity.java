@@ -16,28 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.ACTIVITY_INSTANCE_END;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.ACTIVITY_INSTANCE_START;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.ACTIVITY_INSTANCE_UPDATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.ACTIVITY_INSTANCE_MIGRATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.CASE_ACTIVITY_INSTANCE_CREATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.CASE_ACTIVITY_INSTANCE_END;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.CASE_ACTIVITY_INSTANCE_UPDATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.CASE_INSTANCE_CLOSE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.CASE_INSTANCE_CREATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.CASE_INSTANCE_UPDATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.PROCESS_INSTANCE_END;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.PROCESS_INSTANCE_START;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.PROCESS_INSTANCE_UPDATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.PROCESS_INSTANCE_MIGRATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.TASK_INSTANCE_COMPLETE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.TASK_INSTANCE_CREATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.TASK_INSTANCE_DELETE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.TASK_INSTANCE_MIGRATE;
-import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.TASK_INSTANCE_UPDATE;
-
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
+
+import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.*;
 
 /**
  * @author Daniel Meyer

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.builtin;
 
+import org.slf4j.Logger;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
@@ -23,7 +25,6 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.impl.util.xml.Element;
-import org.slf4j.Logger;
 
 public class PreParseListener implements BpmnParseListener {
 

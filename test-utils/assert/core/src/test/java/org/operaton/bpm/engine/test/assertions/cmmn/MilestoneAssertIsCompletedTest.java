@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 
-import org.junit.jupiter.api.Test;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 
 @Deployment(resources = "cmmn/MilestoneAssertIsCompletedTest.cmmn")
 class MilestoneAssertIsCompletedTest extends ProcessAssertTestCase {
@@ -41,11 +41,6 @@ class MilestoneAssertIsCompletedTest extends ProcessAssertTestCase {
   void is_completed_fail() {
     final CaseInstance caseInstance = caseService().createCaseInstanceByKey("MilestoneAssertIsCompletedTest");
 
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).milestone("Milestone").isCompleted();
-      }
-    });
+    expect(() -> assertThat(caseInstance).milestone("Milestone").isCompleted());
   }
 }

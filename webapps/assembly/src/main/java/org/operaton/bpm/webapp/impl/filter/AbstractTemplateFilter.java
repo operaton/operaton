@@ -19,7 +19,6 @@ package org.operaton.bpm.webapp.impl.filter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -28,6 +27,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import org.operaton.commons.utils.IoUtil;
 
 /**

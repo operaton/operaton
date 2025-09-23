@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNumberOfElements;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
@@ -31,6 +27,10 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionManager;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNumberOfElements;
 
 
 /**

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.spring.boot.starter.property.headersec;
 
-import org.operaton.bpm.spring.boot.starter.property.HeaderSecurityProperties;
-import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
+
+import org.operaton.bpm.spring.boot.starter.property.HeaderSecurityProperties;
+import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

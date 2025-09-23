@@ -16,48 +16,20 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.ANOTHER_EXAMPLE_ACTIVITY_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_BATCH_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_BATCH_JOBS_PER_SEED;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_BATCH_JOB_DEFINITION_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_BATCH_TOTAL_JOBS;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_BATCH_TYPE;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_INVOCATIONS_PER_BATCH_JOB;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_MONITOR_JOB_DEFINITION_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_SEED_JOB_DEFINITION_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TENANT_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_ACTIVITY_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_PROCESS_DEFINITION_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
-import static org.operaton.bpm.engine.rest.helper.NoIntermediaryInvocation.immediatelyAfter;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.StringValueImpl;
-import static org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.LongValueImpl;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.isNull;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -83,21 +55,25 @@ import org.operaton.bpm.engine.rest.helper.MockMigrationPlanBuilder;
 import org.operaton.bpm.engine.rest.helper.MockMigrationPlanBuilder.JoinedMigrationPlanBuilderMock;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.rest.util.migration.MigrationExecutionDtoBuilder;
+import org.operaton.bpm.engine.rest.util.migration.MigrationInstructionDtoBuilder;
 import org.operaton.bpm.engine.rest.util.migration.MigrationPlanDtoBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
 
-import io.restassured.response.Response;
-import java.util.List;
-import org.operaton.bpm.engine.rest.util.migration.MigrationInstructionDtoBuilder;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
+import static org.operaton.bpm.engine.rest.helper.NoIntermediaryInvocation.immediatelyAfter;
+import static org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.LongValueImpl;
+import static org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.StringValueImpl;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.*;
 
 public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest {
 
@@ -138,7 +114,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   @Test
   void generateMigrationPlanWithInitialEmptyInstructions() {
     Map<String, Object> initialMigrationPlan = new MigrationPlanDtoBuilder(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)
-      .instructions(Collections.<Map<String, Object>>emptyList())
+      .instructions(Collections.emptyList())
       .build();
 
     Response response = given()
@@ -1572,7 +1548,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   protected void verifyMigrationExecutionBuilderInteraction(InOrder inOrder, Map<String, Object> migrationExecution) {
-    List<String> processInstanceIds = ((List<String>) migrationExecution.get(MigrationExecutionDtoBuilder.PROP_PROCESS_INSTANCE_IDS));
+    List<String> processInstanceIds = (List<String>) migrationExecution.get(MigrationExecutionDtoBuilder.PROP_PROCESS_INSTANCE_IDS);
 
     inOrder.verify(migrationPlanExecutionBuilderMock).processInstanceIds(processInstanceIds);
     ProcessInstanceQueryDto processInstanceQuery = (ProcessInstanceQueryDto) migrationExecution.get(MigrationExecutionDtoBuilder.PROP_PROCESS_INSTANCE_QUERY);

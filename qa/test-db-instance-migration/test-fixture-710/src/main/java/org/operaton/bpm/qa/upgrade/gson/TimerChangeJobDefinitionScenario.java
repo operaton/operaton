@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.qa.upgrade.gson;
 
+import java.util.Date;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
-
-import java.util.Date;
 
 /**
  * @author Tassilo Weidner
@@ -37,57 +37,55 @@ public final class TimerChangeJobDefinitionScenario {
 
   @DescribesScenario("initTimerChangeJobDefinition")
   public static ScenarioSetup initTimerChangeJobDefinition() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        String processDefinitionIdWithoutTenant = engine.getRepositoryService().createDeployment()
-          .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessTimerJob.bpmn20.xml")
-          .deployWithResult()
-          .getDeployedProcessDefinitions()
-          .get(0)
-          .getId();
+      String processDefinitionIdWithoutTenant = engine.getRepositoryService().createDeployment()
+        .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessTimerJob.bpmn20.xml")
+        .deployWithResult()
+        .getDeployedProcessDefinitions()
+        .get(0)
+        .getId();
 
-        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcessTimerJob_710");
+      engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcessTimerJob_710");
 
-        Job job = engine.getManagementService().createJobQuery()
-          .processDefinitionKey("oneTaskProcessTimerJob_710")
-          .singleResult();
+      Job job = engine.getManagementService().createJobQuery()
+        .processDefinitionKey("oneTaskProcessTimerJob_710")
+        .singleResult();
 
-        engine.getManagementService()
-          .updateJobDefinitionSuspensionState()
-          .byJobDefinitionId(job.getJobDefinitionId())
-          .includeJobs(true)
-          .executionDate(FIXED_DATE_ONE)
-          .suspend();
+      engine.getManagementService()
+        .updateJobDefinitionSuspensionState()
+        .byJobDefinitionId(job.getJobDefinitionId())
+        .includeJobs(true)
+        .executionDate(FIXED_DATE_ONE)
+        .suspend();
 
-        engine.getManagementService()
-          .updateJobDefinitionSuspensionState()
-          .byProcessDefinitionId(processDefinitionIdWithoutTenant)
-          .includeJobs(false)
-          .executionDate(FIXED_DATE_TWO)
-          .suspend();
+      engine.getManagementService()
+        .updateJobDefinitionSuspensionState()
+        .byProcessDefinitionId(processDefinitionIdWithoutTenant)
+        .includeJobs(false)
+        .executionDate(FIXED_DATE_TWO)
+        .suspend();
 
-        engine.getRepositoryService().createDeployment()
-          .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessTimerJob.bpmn20.xml")
-          .tenantId("aTenantId")
-          .deploy();
+      engine.getRepositoryService().createDeployment()
+        .addClasspathResource("org/operaton/bpm/qa/upgrade/gson/oneTaskProcessTimerJob.bpmn20.xml")
+        .tenantId("aTenantId")
+        .deploy();
 
-        engine.getManagementService()
-          .updateJobDefinitionSuspensionState()
-          .byProcessDefinitionKey("oneTaskProcessTimerJob_710")
-          .processDefinitionTenantId("aTenantId")
-          .includeJobs(false)
-          .executionDate(FIXED_DATE_THREE)
-          .suspend();
+      engine.getManagementService()
+        .updateJobDefinitionSuspensionState()
+        .byProcessDefinitionKey("oneTaskProcessTimerJob_710")
+        .processDefinitionTenantId("aTenantId")
+        .includeJobs(false)
+        .executionDate(FIXED_DATE_THREE)
+        .suspend();
 
-        engine.getManagementService()
-          .updateJobDefinitionSuspensionState()
-          .byProcessDefinitionKey("oneTaskProcessTimerJob_710")
-          .processDefinitionWithoutTenantId()
-          .includeJobs(false)
-          .executionDate(FIXED_DATE_FOUR)
-          .suspend();
-      }
+      engine.getManagementService()
+        .updateJobDefinitionSuspensionState()
+        .byProcessDefinitionKey("oneTaskProcessTimerJob_710")
+        .processDefinitionWithoutTenantId()
+        .includeJobs(false)
+        .executionDate(FIXED_DATE_FOUR)
+        .suspend();
     };
   }
 }

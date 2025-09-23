@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil.join;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import static org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil.join;
 import static org.assertj.core.api.Assertions.assertThat;
+
 class AbstractOperatonConfigurationTest {
 
   @Test

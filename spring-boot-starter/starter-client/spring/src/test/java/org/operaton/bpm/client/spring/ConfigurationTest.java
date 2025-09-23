@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.client.spring;
 
-import org.operaton.bpm.client.spring.configuration.FullConfiguration;
-import org.operaton.bpm.client.task.ExternalTaskHandler;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+
+import org.operaton.bpm.client.spring.configuration.FullConfiguration;
+import org.operaton.bpm.client.task.ExternalTaskHandler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

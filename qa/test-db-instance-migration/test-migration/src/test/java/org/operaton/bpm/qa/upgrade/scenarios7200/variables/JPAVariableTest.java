@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7200.variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.util.Map;
 
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ScenarioUnderTest("JpaVariableScenario")
 @Origin("7.19.0")

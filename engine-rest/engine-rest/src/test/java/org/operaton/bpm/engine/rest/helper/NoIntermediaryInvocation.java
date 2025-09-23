@@ -62,7 +62,7 @@ public class NoIntermediaryInvocation implements VerificationInOrderMode, Verifi
     throw new RuntimeException("Applies only to inorder verification");
   }
 
-  public static final NoIntermediaryInvocation immediatelyAfter() {
+  public static NoIntermediaryInvocation immediatelyAfter() {
     return new NoIntermediaryInvocation();
   }
 

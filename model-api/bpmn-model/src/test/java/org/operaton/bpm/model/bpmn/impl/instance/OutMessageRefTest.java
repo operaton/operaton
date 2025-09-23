@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
-import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
-
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
 /**
  * @author Sebastian Menski

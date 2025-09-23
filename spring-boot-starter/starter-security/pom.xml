@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <groupId>org.operaton.bpm.springboot</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-security</artifactId>
@@ -33,6 +33,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <!-- override nimbus-jose-jwt version, consider removal when org.springframework.security:spring-security-oauth2-jose uses this or a newer version -->
+    <!-- org.springframework.security:spring-security-oauth2-jose 6.5.3 is using 9.37.3 -->
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <version>9.37.4</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

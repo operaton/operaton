@@ -130,8 +130,8 @@ public final class Context {
   }
 
   public static CoreExecutionContext<? extends CoreExecution> getCoreExecutionContext() {
-    Deque<CoreExecutionContext<? extends CoreExecution>> stack = getStack(executionContextStackThreadLocal);
-    if(stack == null || stack.isEmpty()) {
+    var stack = getStack(executionContextStackThreadLocal);
+    if(stack.isEmpty()) {
       return null;
     } else {
       return stack.peek();
@@ -214,7 +214,7 @@ public final class Context {
       } catch (Exception e) {
 
         // unwrap exception
-        if(e.getCause() != null && e.getCause() instanceof RuntimeException runtimeException) {
+        if(e.getCause() instanceof RuntimeException runtimeException) {
           throw runtimeException;
         }else {
           throw new ProcessEngineException("Unexpected exeption while executing within process application ", e);

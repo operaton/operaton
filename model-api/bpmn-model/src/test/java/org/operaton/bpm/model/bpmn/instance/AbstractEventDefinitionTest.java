@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import java.io.InputStream;
+import java.util.Collection;
+
 import org.junit.jupiter.api.BeforeEach;
+
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.Query;
 import org.operaton.bpm.model.bpmn.impl.QueryImpl;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
-
-import java.io.InputStream;
-import java.util.Collection;
 
 public abstract class AbstractEventDefinitionTest extends BpmnModelElementInstanceTest {
 

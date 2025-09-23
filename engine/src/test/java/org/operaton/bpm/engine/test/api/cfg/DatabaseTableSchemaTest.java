@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -25,14 +33,6 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguratio
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSession;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -95,7 +95,7 @@ class DatabaseTableSchemaTest {
   }
 
   @Test
-  void testTablePresentWithSchemaAndPrefix() throws SQLException {
+  void testTablePresentWithSchemaAndPrefix() throws Exception {
 
     Connection connection = pooledDataSource.getConnection();
     connection.createStatement().execute("drop schema if exists " + SCHEMA_NAME + " cascade");

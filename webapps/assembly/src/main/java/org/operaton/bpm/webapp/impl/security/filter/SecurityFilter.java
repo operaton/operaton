@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -32,9 +31,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 import org.operaton.bpm.webapp.impl.security.auth.Authentications;
 import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
+import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 
 
 /**
@@ -76,12 +75,12 @@ public class SecurityFilter implements Filter {
       String application = authorization.getApplication();
 
       if (application != null) {
-        sendForbiddenApplicationAccess(application, request, response);
+        sendForbiddenApplicationAccess(application, response);
       } else {
-        sendForbidden(request, response);
+        sendForbidden(response);
       }
     } else {
-      sendUnauthorized(request, response);
+      sendUnauthorized(response);
     }
   }
 
@@ -128,19 +127,19 @@ public class SecurityFilter implements Filter {
     }
   }
 
-  protected void sendForbidden(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  protected void sendForbidden(HttpServletResponse response) throws IOException {
     response.sendError(403);
   }
 
-  protected void sendUnauthorized(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  protected void sendUnauthorized(HttpServletResponse response) throws IOException {
     response.sendError(401);
   }
 
-  protected void sendForbiddenApplicationAccess(String application, HttpServletRequest request, HttpServletResponse response) throws IOException {
+  protected void sendForbiddenApplicationAccess(String application, HttpServletResponse response) throws IOException {
     response.sendError(403, "No access rights for " + application);
   }
 
-  protected boolean isAuthenticated(HttpServletRequest request) {
+  protected boolean isAuthenticated() {
     return Authentications.getCurrent() != null;
   }
 

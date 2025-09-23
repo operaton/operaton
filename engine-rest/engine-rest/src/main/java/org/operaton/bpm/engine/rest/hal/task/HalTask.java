@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.hal.task;
 
 import java.util.Date;
-
 import jakarta.ws.rs.core.UriBuilder;
 
 import org.operaton.bpm.engine.BadUserRequestException;

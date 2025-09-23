@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.dto.identity;
 
-import org.operaton.bpm.engine.identity.Group;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.operaton.bpm.engine.identity.Group;
 
 /**
  * @author Daniel Meyer

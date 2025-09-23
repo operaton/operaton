@@ -32,10 +32,12 @@ public class JcaWorkRunnableAdapter implements Work {
     this.runnable = runnable;
   }
 
+  @Override
   public void run() {
     runnable.run();
   }
 
+  @Override
   public void release() {
     // nothing to do here
   }

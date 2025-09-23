@@ -17,7 +17,6 @@
 package org.operaton.bpm.webapp.impl.security.filter;
 
 import java.util.Arrays;
-
 import jakarta.servlet.FilterConfig;
 
 import org.operaton.bpm.engine.ProcessEngineException;

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.DeploymentQueryImpl;
 import org.operaton.bpm.engine.impl.Page;

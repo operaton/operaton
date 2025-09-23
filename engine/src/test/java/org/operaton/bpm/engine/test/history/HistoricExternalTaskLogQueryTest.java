@@ -16,20 +16,12 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_EXTERNAL_TASK_NAME;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
-
 import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -45,6 +37,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_EXTERNAL_TASK_NAME;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class HistoricExternalTaskLogQueryTest {
@@ -75,7 +73,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
   }
 
@@ -92,7 +90,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getId()).isEqualTo(logId);
   }
 
@@ -122,7 +120,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -138,7 +136,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(logExternalTaskId);
   }
 
@@ -168,7 +166,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -186,7 +184,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
   }
 
@@ -216,7 +214,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -234,7 +232,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(taskToCheck.getId());
   }
 
@@ -265,7 +263,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -283,7 +281,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(taskList.get(1).getId());
   }
 
@@ -313,7 +311,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -329,7 +327,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
   }
 
@@ -386,7 +384,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -406,7 +404,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
   }
 
@@ -463,7 +461,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -479,7 +477,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getId()).isEqualTo(taskLog.getId());
   }
 
@@ -537,7 +535,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -553,7 +551,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -582,7 +580,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -598,7 +596,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getProcessDefinitionId()).isEqualTo(definitionId);
   }
 
@@ -628,7 +626,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -644,7 +642,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
   }
 
@@ -674,7 +672,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNull(log);
+    assertThat(log).isNull();
   }
 
   @Test
@@ -690,7 +688,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
   }
 
@@ -707,7 +705,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
   }
 
@@ -724,7 +722,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
   }
 
@@ -741,7 +739,7 @@ class HistoricExternalTaskLogQueryTest {
       .singleResult();
 
     // then
-    assertNotNull(log);
+    assertThat(log).isNotNull();
     assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
   }
 
@@ -760,7 +758,7 @@ class HistoricExternalTaskLogQueryTest {
     // then
     assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
-      assertTrue(log.getPriority() <= 2);
+      assertThat(log.getPriority()).isLessThanOrEqualTo(2);
     }
 
   }
@@ -780,7 +778,7 @@ class HistoricExternalTaskLogQueryTest {
     // then
     assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
-      assertTrue(log.getPriority() >= 2);
+      assertThat(log.getPriority()).isGreaterThanOrEqualTo(2);
     }
 
   }
@@ -801,7 +799,7 @@ class HistoricExternalTaskLogQueryTest {
     // then
     assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
-      assertTrue(log.getPriority() <= 3 && log.getPriority() >= 1);
+      assertThat(log.getPriority() <= 3 && log.getPriority() >= 1).isTrue();
     }
 
   }

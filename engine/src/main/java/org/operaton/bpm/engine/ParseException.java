@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine;
 
-import org.operaton.bpm.engine.impl.bpmn.parser.ResourceReportImpl;
-
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.operaton.bpm.engine.impl.bpmn.parser.ResourceReportImpl;
 
 public class ParseException extends ProcessEngineException {
 

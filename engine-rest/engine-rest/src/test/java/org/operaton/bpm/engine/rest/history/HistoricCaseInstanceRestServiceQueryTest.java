@@ -16,20 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import static io.restassured.RestAssured.expect;
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -38,9 +24,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.history.HistoricCaseInstanceQuery;
@@ -51,15 +44,20 @@ import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.util.OrderingBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -331,7 +329,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    Assertions.assertEquals(1, instances.size());
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseInstanceId = from(content).getString("[0].id");
@@ -351,22 +349,22 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     boolean terminated = from(content).getBoolean("[0].terminated");
     boolean closed = from(content).getBoolean("[0].closed");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_INSTANCE_ID, returnedCaseInstanceId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_INSTANCE_BUSINESS_KEY, returnedCaseInstanceBusinessKey);
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_ID, returnedCaseDefinitionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_KEY, returnedCaseDefinitionKey);
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_NAME, returnedCaseDefinitionName);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATE_TIME, returnedCreateTime);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CLOSE_TIME, returnedCloseTime);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_DURATION_MILLIS, returnedDurationInMillis);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATE_USER_ID, returnedCreateUserId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_SUPER_CASE_INSTANCE_ID, returnedSuperCaseInstanceId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_SUPER_PROCESS_INSTANCE_ID, returnedSuperProcessInstanceId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_IS_ACTIVE, active);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_IS_COMPLETED, completed);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_IS_TERMINATED, terminated);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_IS_CLOSED, closed);
+    assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
+    assertThat(returnedCaseInstanceBusinessKey).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_BUSINESS_KEY);
+    assertThat(returnedCaseDefinitionId).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
+    assertThat(returnedCaseDefinitionKey).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_KEY);
+    assertThat(returnedCaseDefinitionName).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_NAME);
+    assertThat(returnedCreateTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATE_TIME);
+    assertThat(returnedCloseTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CLOSE_TIME);
+    assertThat(returnedDurationInMillis).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_DURATION_MILLIS);
+    assertThat(returnedCreateUserId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATE_USER_ID);
+    assertThat(returnedSuperCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_SUPER_CASE_INSTANCE_ID);
+    assertThat(returnedSuperProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_SUPER_PROCESS_INSTANCE_ID);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(active).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_IS_ACTIVE);
+    assertThat(completed).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_IS_COMPLETED);
+    assertThat(terminated).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_IS_TERMINATED);
+    assertThat(closed).isEqualTo(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_IS_CLOSED);
   }
 
   @Test
@@ -632,14 +630,14 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    Assertions.assertEquals(1, instances.size());
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseInstanceId = from(content).getString("[0].id");
     String returnedCloseTime = from(content).getString("[0].closeTime");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_INSTANCE_ID, returnedCaseInstanceId);
-    Assertions.assertEquals(null, returnedCloseTime);
+    assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
+    assertThat(returnedCloseTime).isNull();
   }
 
   @Test
@@ -666,14 +664,14 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    Assertions.assertEquals(1, instances.size());
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseInstanceId = from(content).getString("[0].id");
     String returnedCloseTime = from(content).getString("[0].closeTime");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_INSTANCE_ID, returnedCaseInstanceId);
-    Assertions.assertEquals(null, returnedCloseTime);
+    assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
+    assertThat(returnedCloseTime).isNull();
   }
 
   @Test

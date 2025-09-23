@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-engine</artifactId>
@@ -234,6 +234,12 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-email2-jakarta</artifactId>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.cronutils</groupId>
+      <artifactId>cron-utils</artifactId>
+      <version>${version.cronutils}</version>
     </dependency>
 
     <!-- test dependencies  -->
@@ -620,6 +626,10 @@
             <relocation>
               <pattern>com.google.gson</pattern>
               <shadedPattern>operatonjar.impl.com.google.gson</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>com.cronutils</pattern>
+              <shadedPattern>operatonjar.impl.com.cronutils</shadedPattern>
             </relocation>
           </relocations>
           <transformers>

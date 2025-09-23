@@ -17,8 +17,6 @@
 package org.operaton.bpm.integrationtest.deployment.war;
 
 
-import static org.assertj.core.api.Assertions.fail;
-
 import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -28,9 +26,12 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.integrationtest.deployment.war.apps.CustomServletPA;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -77,19 +78,9 @@ public class TestWarDeploymentWithNonExistingDS_JBOSS {
   @RunAsClient
   void testDeploymentFails(){
 
-    try {
-      deployer.deploy(DEPLOYMENT_WITH_EJB_PA);
-      fail("Deployment exception expected");
-    } catch(Exception e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deployer.deploy(DEPLOYMENT_WITH_EJB_PA)).isInstanceOf(Exception.class);
 
-    try {
-      deployer.deploy(DEPLOYMENT_WITH_SERVLET_PA);
-      fail("Deployment exception expected");
-    } catch(Exception e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deployer.deploy(DEPLOYMENT_WITH_SERVLET_PA)).isInstanceOf(Exception.class);
 
   }
 

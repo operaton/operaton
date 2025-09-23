@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.client.variable.impl.format.json;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.spi.DataFormat;
 import org.operaton.bpm.client.variable.impl.format.TypeDetector;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 public class JacksonJsonDataFormat implements DataFormat {
 

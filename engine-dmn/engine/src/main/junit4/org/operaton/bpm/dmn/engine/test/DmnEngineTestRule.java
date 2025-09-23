@@ -19,10 +19,11 @@ package org.operaton.bpm.dmn.engine.test;
 import java.io.InputStream;
 import java.util.List;
 
+import org.junit.runner.Description;
+
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.runner.Description;
 
 /**
  * JUnit test rule for internal unit tests. Uses The

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.identity;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**

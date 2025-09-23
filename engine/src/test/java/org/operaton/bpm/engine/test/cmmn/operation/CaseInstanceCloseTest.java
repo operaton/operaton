@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.test.cmmn.operation;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.exception.cmmn.CaseIllegalStateTransitionException;
 import org.operaton.bpm.engine.impl.cmmn.behavior.StageActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
@@ -25,13 +30,8 @@ import org.operaton.bpm.engine.impl.cmmn.model.CaseDefinitionBuilder;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -282,13 +282,7 @@ class CaseInstanceCloseTest {
 
     CmmnActivityExecution taskA = caseInstance.findCaseExecution("A");
 
-    try {
-      // when
-      taskA.close();
-      fail("It should not be possible to close a task.");
-    } catch (CaseIllegalStateTransitionException e) {
-
-    }
+    assertThatThrownBy(taskA::close).isInstanceOf(CaseIllegalStateTransitionException.class);
 
     // then
     assertThat(stateTransitionCollector.stateTransitions).isEmpty();
@@ -340,13 +334,7 @@ class CaseInstanceCloseTest {
 
     CmmnActivityExecution stageX = caseInstance.findCaseExecution("X");
 
-    try {
-      // when
-      stageX.close();
-      fail("It should not be possible to close a stage.");
-    } catch (CaseIllegalStateTransitionException e) {
-
-    }
+    assertThatThrownBy(stageX::close).isInstanceOf(CaseIllegalStateTransitionException.class);
 
     // then
     assertThat(stateTransitionCollector.stateTransitions).isEmpty();

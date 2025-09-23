@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.operaton.bpm.engine.impl.EventSubscriptionQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -26,13 +33,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.ProcessEventJobHandler;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.commons.utils.EnsureUtil;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Daniel Meyer

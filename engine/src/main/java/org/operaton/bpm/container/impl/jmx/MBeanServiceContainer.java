@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.container.impl.jmx;
 
+import java.lang.management.ManagementFactory;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation.DeploymentOperationBuilder;
@@ -23,13 +30,8 @@ import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
-import java.lang.management.ManagementFactory;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * <p>A simple Service Container that delegates to the JVM's {@link MBeanServer}.</p>

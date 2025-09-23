@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine.engine;
 
-import javax.script.ScriptContext;
-
 /**
  * @author Thorben Lindhauer
  *
@@ -25,13 +23,7 @@ import javax.script.ScriptContext;
 public class AlwaysTrueScriptEngineFactory extends AbstractScriptEngineFactory {
 
   public AlwaysTrueScriptEngineFactory() {
-    super("always-true", "0.1.0", new ScriptEngineBehavior() {
-
-      @Override
-      public Object eval(String script, ScriptContext context) {
-        return true;
-      }
-    });
+    super("always-true", "0.1.0", (script, context) -> true);
   }
 
 }

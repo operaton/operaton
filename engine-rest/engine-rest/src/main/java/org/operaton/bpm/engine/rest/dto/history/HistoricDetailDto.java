@@ -18,24 +18,24 @@ package org.operaton.bpm.engine.rest.dto.history;
 
 import java.util.Date;
 
-import org.operaton.bpm.engine.history.HistoricDetail;
-import org.operaton.bpm.engine.history.HistoricFormField;
-import org.operaton.bpm.engine.history.HistoricVariableUpdate;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import org.operaton.bpm.engine.history.HistoricDetail;
+import org.operaton.bpm.engine.history.HistoricFormField;
+import org.operaton.bpm.engine.history.HistoricVariableUpdate;
 
 /**
  * @author Roman Smirnov
  *
  */
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.PROPERTY, property="type"
+  use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type"
 )
 @JsonSubTypes({
-    @Type(HistoricFormFieldDto.class),
-    @Type(HistoricVariableUpdateDto.class)
+  @Type(HistoricFormFieldDto.class),
+  @Type(HistoricVariableUpdateDto.class)
 })
 public abstract class HistoricDetailDto {
 

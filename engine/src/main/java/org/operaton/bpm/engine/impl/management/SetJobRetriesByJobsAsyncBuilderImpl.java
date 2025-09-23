@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.management;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +27,8 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.management.SetJobRetriesAsyncBuilder;
 import org.operaton.bpm.engine.management.SetJobRetriesByJobsAsyncBuilder;
 import org.operaton.bpm.engine.runtime.JobQuery;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class SetJobRetriesByJobsAsyncBuilderImpl implements SetJobRetriesByJobsAsyncBuilder {
 

@@ -21,8 +21,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
@@ -51,6 +51,11 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery processInstanceIds(Set<String> processInstanceIds);
+
+  /**
+  * Only select historic process instances for the given root process instance id
+  */
+  HistoricProcessInstanceQuery rootProcessInstanceId(String rootProcessInstanceId);
 
   /**
    * Only select historic process instances whose id is not in the given set of ids.

@@ -75,7 +75,6 @@ public class Scopifier extends BeanDefinitionVisitor {
 		}
 
 		// Nested inner bean definitions are recursively analysed here
-		value = super.resolveValue(value);
-		return value;
+		return super.resolveValue(value);
 	}
 }

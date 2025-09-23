@@ -16,18 +16,18 @@
  */
 package org.operaton.spin.json.tree;
 
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.json.SpinJsonPropertyException;
-import static org.operaton.spin.Spin.JSON;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
-
 import java.util.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.json.SpinJsonPropertyException;
+
+import static org.operaton.spin.Spin.JSON;
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Stefan Hentschel
@@ -200,7 +200,7 @@ class JsonTreeSetPropertyTest {
     active = jsonNode.prop("active");
 
     Boolean oldValue = active.boolValue();
-    Boolean value = !oldValue;
+    Boolean value = Boolean.FALSE.equals(oldValue);
 
     assertThat(customers.isArray()).isTrue();
     assertThat(active.isBoolean()).isTrue();
@@ -356,7 +356,7 @@ class JsonTreeSetPropertyTest {
     Map<String, Object> map = new HashMap<>();
     map.put("date", date);
 
-    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.prop("test", map));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> jsonNode.prop("test", map));
   }
 
   @Test
@@ -365,7 +365,7 @@ class JsonTreeSetPropertyTest {
     ArrayList<Object> list = new ArrayList<>();
     list.add(date);
 
-    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.prop("test", list));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> jsonNode.prop("test", list));
   }
 
   @Test

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
+
+import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -18,12 +18,12 @@ package org.operaton.bpm.engine.impl.batch.deletion;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
-
-import com.google.gson.JsonObject;
 
 /**
  * Perform serialization of DeleteProcessInstanceBatchConfiguration into JSON format.
@@ -31,7 +31,7 @@ import com.google.gson.JsonObject;
  * @author Askar Akhmerov
  */
 public class DeleteProcessInstanceBatchConfigurationJsonConverter
-    extends AbstractBatchConfigurationObjectConverter<DeleteProcessInstanceBatchConfiguration> {
+  extends AbstractBatchConfigurationObjectConverter<DeleteProcessInstanceBatchConfiguration> {
 
   public static final DeleteProcessInstanceBatchConfigurationJsonConverter INSTANCE = new DeleteProcessInstanceBatchConfigurationJsonConverter();
 

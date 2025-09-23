@@ -22,6 +22,7 @@ import org.operaton.bpm.engine.impl.migration.instance.MigratingIncident;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingJobInstance;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
+
 import static org.operaton.bpm.engine.runtime.Incident.EXTERNAL_TASK_HANDLER_TYPE;
 import static org.operaton.bpm.engine.runtime.Incident.FAILED_JOB_HANDLER_TYPE;
 

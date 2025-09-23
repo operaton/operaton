@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.test.junit5.deployment;
 
-import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 public class CustomProcessEngineExtension extends ProcessEngineExtension {
 

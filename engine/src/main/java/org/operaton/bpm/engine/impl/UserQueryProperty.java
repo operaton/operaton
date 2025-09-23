@@ -26,11 +26,13 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * @author Joram Barrez
  */
-public interface UserQueryProperty {
+public final class UserQueryProperty {
 
-  QueryProperty USER_ID = new QueryPropertyImpl("ID_");
-  QueryProperty FIRST_NAME = new QueryPropertyImpl("FIRST_");
-  QueryProperty LAST_NAME = new QueryPropertyImpl("LAST_");
-  QueryProperty EMAIL = new QueryPropertyImpl("EMAIL_");
+  public static final QueryProperty USER_ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty FIRST_NAME = new QueryPropertyImpl("FIRST_");
+  public static final QueryProperty LAST_NAME = new QueryPropertyImpl("LAST_");
+  public static final QueryProperty EMAIL = new QueryPropertyImpl("EMAIL_");
+
+  private UserQueryProperty() {}
 
 }

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
+import java.io.Serial;
+import java.util.*;
+
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -49,11 +52,9 @@ import org.operaton.bpm.engine.impl.tree.*;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.variable.VariableMap;
+
 import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
 import static org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState.ENDING;
-
-import java.io.Serial;
-import java.util.*;
 
 /**
  * @author Daniel Meyer
@@ -842,7 +843,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * check  https://github.com/camunda/camunda-bpm-platform/issues/3979
    */
   protected void setDelayedPayloadToNewScope(PvmActivity activity) {
-    String activityType = (String) activity.getProperty(BpmnProperties.TYPE.getName());
+    String activityType = (String) activity.getProperty(BpmnProperties.TYPE.name());
     if ((ActivityTypes.START_EVENT_MESSAGE.equals(activityType) // Event subprocess message start event
         || ActivityTypes.BOUNDARY_MESSAGE.equals(activityType))
             && getProcessInstance().getPayloadForTriggeredScope() != null) {
@@ -1005,7 +1006,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   @Override
   public void leaveActivityViaTransition(PvmTransition outgoingTransition) {
-    leaveActivityViaTransitions(Arrays.asList(outgoingTransition), Collections.<ActivityExecution>emptyList());
+    leaveActivityViaTransitions(Arrays.asList(outgoingTransition), Collections.emptyList());
   }
 
   @Override
@@ -1536,9 +1537,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
     // finally extend the mapping for the current execution
     // (note that the current execution need not be a leaf itself)
-    mapping = this.createActivityExecutionMapping(currentScope, mapping);
-
-    return mapping;
+    return this.createActivityExecutionMapping(currentScope, mapping);
   }
 
   @Override
@@ -2192,10 +2191,10 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
                                    String currentActivityInstanceId, String currentActivityId) {
     return
       //activityInstanceId's can be null on transitions, so the activityId must be equal
-      ((lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && lastActivityId.equals(currentActivityId))
+      (lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && lastActivityId.equals(currentActivityId))
         //if activityInstanceId's are not null they must be equal -> otherwise execution changed
         || (lastActivityInstanceId != null && lastActivityInstanceId.equals(currentActivityInstanceId)
-        && (lastActivityId == null || lastActivityId.equals(currentActivityId))));
+        && (lastActivityId == null || lastActivityId.equals(currentActivityId)));
 
   }
 
@@ -2210,7 +2209,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       return targetScope.getActivityInstanceId();
     } else {
       ActivityImpl targetActivity = targetScope.getActivity();
-      if ((targetActivity != null && targetActivity.getActivities().isEmpty())) {
+      if (targetActivity != null && targetActivity.getActivities().isEmpty()) {
         return targetScope.getActivityInstanceId();
       } else {
         return targetScope.getParentActivityInstanceId();

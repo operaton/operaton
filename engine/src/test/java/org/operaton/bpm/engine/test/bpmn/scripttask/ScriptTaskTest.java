@@ -16,24 +16,25 @@
  */
 package org.operaton.bpm.engine.test.bpmn.scripttask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ScriptCompilationException;
 import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.exception.NullValueException;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.model.bpmn.Bpmn;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  *
@@ -571,13 +572,7 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
         .userTask()
         .endEvent()
       .done();
-    try {
-      deployProcess(processBuilder);
-
-      fail("this process should not be deployable");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> deployProcess(processBuilder)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

@@ -24,9 +24,12 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * @author Philipp Ossler
  */
-public interface HistoricDecisionInstanceQueryProperty {
+final class HistoricDecisionInstanceQueryProperty {
 
-  QueryProperty EVALUATION_TIME = new QueryPropertyImpl("EVAL_TIME_");
-  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  public static final QueryProperty DECISION_INSTANCE_ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty EVALUATION_TIME = new QueryPropertyImpl("EVAL_TIME_");
+  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+
+  private  HistoricDecisionInstanceQueryProperty() {}
 
 }

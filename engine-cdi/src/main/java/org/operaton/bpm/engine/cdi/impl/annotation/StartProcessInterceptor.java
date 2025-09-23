@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-
 import jakarta.inject.Inject;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
@@ -57,7 +56,7 @@ public class StartProcessInterceptor implements Serializable {
 
       String key = startProcessAnnotation.value();
 
-      Map<String, Object> variables = extractVariables(startProcessAnnotation, ctx);
+      Map<String, Object> variables = extractVariables(ctx);
 
       businessProcess.startProcessByKey(key, variables);
 
@@ -74,7 +73,7 @@ public class StartProcessInterceptor implements Serializable {
     }
   }
 
-  private Map<String, Object> extractVariables(StartProcess startProcessAnnotation, InvocationContext ctx) throws Exception {
+  private Map<String, Object> extractVariables(InvocationContext ctx) throws Exception {
     VariableMap variables = new VariableMapImpl();
     for (Field field : ctx.getMethod().getDeclaringClass().getDeclaredFields()) {
       if (!field.isAnnotationPresent(ProcessVariable.class) && !field.isAnnotationPresent(ProcessVariableTyped.class)) {

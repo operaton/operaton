@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createExceptionByteArray;
-import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,6 +44,9 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.runtime.Incident;
+
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createExceptionByteArray;
+import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
 
 /**
  * @author Thorben Lindhauer
@@ -520,7 +520,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   }
 
   protected boolean evaluateThrowBpmnError(ExecutionEntity execution, boolean continueOnException) {
-    List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = (List<OperatonErrorEventDefinition>) execution.getActivity().getProperty(BpmnProperties.CAMUNDA_ERROR_EVENT_DEFINITION.getName());
+    List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = (List<OperatonErrorEventDefinition>) execution.getActivity().getProperty(BpmnProperties.CAMUNDA_ERROR_EVENT_DEFINITION.name());
     if (operatonErrorEventDefinitions != null && !operatonErrorEventDefinitions.isEmpty()) {
       for (OperatonErrorEventDefinition operatonErrorEventDefinition : operatonErrorEventDefinitions) {
         if (errorEventDefinitionMatches(operatonErrorEventDefinition, continueOnException)) {

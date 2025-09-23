@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios730.sentry;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -30,9 +28,12 @@ import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseSentryPartQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Roman Smirnov

@@ -17,12 +17,12 @@
 package org.operaton.bpm.engine.impl.event;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ConditionalEventBehavior;
+import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-import org.operaton.bpm.engine.impl.bpmn.behavior.ConditionalEventBehavior;
-import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
 
 /**
  *

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import java.io.Serial;
 
 import org.operaton.bpm.engine.identity.Group;
-
-import java.io.Serial;
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**

@@ -23,8 +23,8 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.JobQueryImpl;
 import org.operaton.bpm.engine.impl.batch.BatchElementConfiguration;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.JobQuery;
+import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * @author Askar Akhmerov

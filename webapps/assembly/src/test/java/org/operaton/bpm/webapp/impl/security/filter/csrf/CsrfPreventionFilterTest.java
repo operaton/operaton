@@ -15,29 +15,30 @@
  * limitations under the License.
  */
 package org.operaton.bpm.webapp.impl.security.filter.csrf;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.operaton.bpm.webapp.impl.security.filter.CsrfPreventionFilter;
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.mock.web.MockFilterChain;
-import org.springframework.mock.web.MockFilterConfig;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockHttpSession;
-
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.core.Response;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.webapp.impl.security.filter.util.CsrfConstants.CSRF_PATH_FIELD_NAME;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.mock.web.MockFilterChain;
+import org.springframework.mock.web.MockFilterConfig;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
+
+import org.operaton.bpm.webapp.impl.security.filter.CsrfPreventionFilter;
+
 import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.SET_COOKIE_HEADER_NAME;
+import static org.operaton.bpm.webapp.impl.security.filter.util.CsrfConstants.CSRF_PATH_FIELD_NAME;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Nikola Koevski
@@ -106,7 +107,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void nonModifyingRequestTokenGeneration(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void nonModifyingRequestTokenGeneration(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     MockHttpServletResponse response = performNonModifyingRequest(nonModifyingRequestUrl, new MockHttpSession());
 
@@ -125,7 +126,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void nonModifyingRequestTokenGenerationWithRootContextPath(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void nonModifyingRequestTokenGenerationWithRootContextPath(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     // given
     MockHttpSession session = new MockHttpSession();
@@ -159,7 +160,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void consecutiveNonModifyingRequestTokens(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void consecutiveNonModifyingRequestTokens(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     MockHttpSession session = new MockHttpSession();
 
@@ -177,7 +178,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void modifyingRequestTokenValidation(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void modifyingRequestTokenValidation(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     MockHttpSession session = new MockHttpSession();
 
@@ -193,7 +194,7 @@ public class CsrfPreventionFilterTest {
 
   @MethodSource("getRequestUrls")
   @ParameterizedTest
-  void modifyingRequestInvalidToken(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws IOException, ServletException {
+  void modifyingRequestInvalidToken(String nonModifyingRequestUrl, String modifyingRequestUrl, boolean isModifyingFetchRequest) throws Exception {
     initCsrfPreventionFilterTest(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
     MockHttpSession session = new MockHttpSession();
     performNonModifyingRequest(nonModifyingRequestUrl, session);

@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -27,10 +30,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -493,12 +494,7 @@ class IntermediateConditionalEventTest extends AbstractConditionalEventTestCase 
 
     //when variable which triggers condition is set
     //then exception is expected
-    try {
-      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
-      fail("Should fail!");
-    } catch (SuspendedEntityInteractionException seie) {
-      //expected
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1)).isInstanceOf(SuspendedEntityInteractionException.class);
     runtimeService.activateProcessInstanceById(procInst.getId());
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }

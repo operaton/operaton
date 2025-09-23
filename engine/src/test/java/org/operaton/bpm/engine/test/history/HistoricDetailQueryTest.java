@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.Assertions.tuple;
-
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,6 +25,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -58,6 +54,11 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.tuple;
 
 /**
  *
@@ -143,10 +144,7 @@ class HistoricDetailQueryTest {
     assertThat(query.list()).isEmpty();
     assertThat(query.count()).isZero();
 
-    try {
-      query.userOperationId(null);
-      fail("It was possible to set a null value as userOperationId.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.userOperationId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -314,21 +312,9 @@ class HistoricDetailQueryTest {
     // then
     assertThat(query.count()).isZero();
 
-    try {
-      // when
-      query.variableTypeIn(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.variableTypeIn(null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      // when
-      query.variableTypeIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.variableTypeIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -522,9 +508,8 @@ class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery();
 
     // then
-    assertThatThrownBy(() -> {
-      query.variableNameLike(null);
-    })
+    assertThatThrownBy(() ->
+      query.variableNameLike(null))
         .isInstanceOf(NullValueException.class)
         .hasMessageContaining("Variable name like is null");
   }
@@ -601,21 +586,9 @@ class HistoricDetailQueryTest {
     HistoricDetailQuery query =
       historyService.createHistoricDetailQuery();
 
-    try {
-      // when
-      query.processInstanceIdIn(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.processInstanceIdIn(null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      // when
-      query.processInstanceIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.processInstanceIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -708,13 +681,7 @@ class HistoricDetailQueryTest {
     HistoricDetailQuery query =
       historyService.createHistoricDetailQuery();
 
-    try {
-      // when
-      query.occurredBefore(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.occurredBefore(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -729,13 +696,7 @@ class HistoricDetailQueryTest {
     HistoricDetailQuery query =
       historyService.createHistoricDetailQuery();
 
-    try {
-      // when
-      query.occurredAfter(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.occurredAfter(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

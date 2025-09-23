@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.container.impl.jboss.config;
 
-import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
-import org.operaton.bpm.engine.ProcessEngineException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
+import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
  * @author Daniel Meyer
@@ -205,7 +205,9 @@ public class ManagedProcessEngineMetadata {
       ProcessEnginePluginXml pluginConfiguration = pluginConfigurations.get(i);
       if (pluginConfiguration.getPluginClass() == null || pluginConfiguration.getPluginClass().isEmpty()) {
         isValid = false;
-        validationErrorBuilder.append(" property 'class' in plugin[" + i + "] cannot be null \n");
+        validationErrorBuilder.append(" property 'class' in plugin[")
+          .append(i)
+          .append("] cannot be null \n");
       }
     }
 
@@ -217,7 +219,7 @@ public class ManagedProcessEngineMetadata {
   private Map<String, String> selectProperties(Map<String, String> allProperties, boolean selectFoxProperties) {
     Map<String, String> result = null;
     if (selectFoxProperties) {
-      result = new HashMap<String, String>();
+      result = new HashMap<>();
       String isAutoSchemaUpdate = allProperties.get(PROP_IS_AUTO_SCHEMA_UPDATE);
       String isActivateJobExecutor = allProperties.get(PROP_IS_ACTIVATE_JOB_EXECUTOR);
       String isIdentityUsed = allProperties.get(PROP_IS_IDENTITY_USED);
@@ -240,7 +242,7 @@ public class ManagedProcessEngineMetadata {
         result.put(PROP_JOB_EXECUTOR_ACQUISITION_NAME, jobExecutorAcquisitionName);
       }
     } else {
-      result = new HashMap<String, String>(allProperties);
+      result = new HashMap<>(allProperties);
       result.remove(PROP_IS_AUTO_SCHEMA_UPDATE);
       result.remove(PROP_IS_ACTIVATE_JOB_EXECUTOR);
       result.remove(PROP_IS_IDENTITY_USED);

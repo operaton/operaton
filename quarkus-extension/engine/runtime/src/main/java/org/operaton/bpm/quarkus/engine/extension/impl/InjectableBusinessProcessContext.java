@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.quarkus.engine.extension.impl;
 
-import io.quarkus.arc.InjectableContext;
-import org.operaton.bpm.engine.cdi.impl.context.BusinessProcessContext;
-import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
-
 import jakarta.enterprise.context.spi.Contextual;
 import jakarta.enterprise.inject.spi.BeanManager;
+
+import io.quarkus.arc.InjectableContext;
+
+import org.operaton.bpm.engine.cdi.impl.context.BusinessProcessContext;
+import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
 
 public class InjectableBusinessProcessContext extends BusinessProcessContext implements InjectableContext {
 

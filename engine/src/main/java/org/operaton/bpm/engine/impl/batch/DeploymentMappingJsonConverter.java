@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
-
-import com.google.gson.JsonObject;
 
 public class DeploymentMappingJsonConverter extends JsonObjectConverter<DeploymentMapping> {
 

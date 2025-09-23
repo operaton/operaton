@@ -16,13 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.migration.batch;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.impl.batch.builder.BatchBuilder;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
 import org.operaton.bpm.engine.impl.batch.DeploymentMapping;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
+import org.operaton.bpm.engine.impl.batch.builder.BatchBuilder;
 import org.operaton.bpm.engine.impl.core.variable.VariableUtil;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -30,10 +34,6 @@ import org.operaton.bpm.engine.impl.migration.AbstractMigrationCmd;
 import org.operaton.bpm.engine.impl.migration.MigrationPlanExecutionBuilderImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.migration.MigrationPlan;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;

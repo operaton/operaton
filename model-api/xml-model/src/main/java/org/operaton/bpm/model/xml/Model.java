@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.xml;
 
-import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.operaton.bpm.model.xml.type.ModelElementType;
-
 import java.util.Collection;
 import java.util.Set;
+
+import org.operaton.bpm.model.xml.instance.ModelElementInstance;
+import org.operaton.bpm.model.xml.type.ModelElementType;
 
 /**
  * A model contains all defined types and the relationship between them.

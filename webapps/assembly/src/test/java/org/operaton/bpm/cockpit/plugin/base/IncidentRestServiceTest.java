@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.IncidentQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.resources.IncidentRestService;
@@ -27,8 +30,6 @@ import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -502,8 +503,9 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
   protected void verifySorting(String sortBy, String sortOrder, int expectedResult) {
     List<IncidentDto> result = queryIncidents(sortBy, sortOrder);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(expectedResult);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(expectedResult);
   }
 
 }

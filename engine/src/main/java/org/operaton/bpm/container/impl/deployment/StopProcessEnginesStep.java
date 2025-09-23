@@ -17,10 +17,11 @@
 package org.operaton.bpm.container.impl.deployment;
 
 import java.util.Set;
+
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
-import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
+import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 

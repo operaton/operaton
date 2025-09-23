@@ -27,6 +27,14 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.jboss.as.ee.component.ComponentView;
+import org.jboss.as.naming.ManagedReference;
+import org.jboss.modules.Module;
+import org.jboss.msc.service.Service;
+import org.jboss.msc.service.StartContext;
+import org.jboss.msc.service.StartException;
+import org.jboss.msc.service.StopContext;
+
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
@@ -39,13 +47,6 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeploymentBuilder;
 import org.operaton.bpm.engine.repository.ResumePreviousBy;
-import org.jboss.as.ee.component.ComponentView;
-import org.jboss.as.naming.ManagedReference;
-import org.jboss.modules.Module;
-import org.jboss.msc.service.Service;
-import org.jboss.msc.service.StartContext;
-import org.jboss.msc.service.StartException;
-import org.jboss.msc.service.StopContext;
 
 /**
  * <p>Service responsible for performing a deployment to the process engine and managing
@@ -102,17 +103,14 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   public void start(final StartContext context) throws StartException {
     provider.accept(this);
     context.asynchronous();
-    executorSupplier.get().submit(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          performDeployment();
-          context.complete();
-        } catch (StartException e) {
-          context.failed(e);
-        } catch (Throwable e) {
-          context.failed(new StartException(e));
-        }
+    executorSupplier.get().submit(() -> {
+      try {
+        performDeployment();
+        context.complete();
+      } catch (StartException e) {
+        context.failed(e);
+      } catch (Throwable e) {
+        context.failed(new StartException(e));
       }
     });
   }
@@ -121,14 +119,11 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   public void stop(final StopContext context) {
     provider.accept(null);
     context.asynchronous();
-    executorSupplier.get().submit(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          performUndeployment();
-        } finally {
-          context.complete();
-        }
+    executorSupplier.get().submit(() -> {
+      try {
+        performUndeployment();
+      } finally {
+        context.complete();
       }
     });
   }
@@ -230,17 +225,23 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
     } else if (isValidValueForResumePreviousBy(resumePreviousBy)) {
       deploymentBuilder.resumePreviousVersionsBy(resumePreviousBy);
     } else {
-      StringBuilder b = new StringBuilder();
-      b.append("Illegal value passed for property ").append(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY);
-      b.append(". Value was ").append(resumePreviousBy);
-      b.append(" expected ").append(ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME);
-      b.append(" or ").append(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY).append(".");
+      var b = new StringBuilder();
+      b.append("Illegal value passed for property ")
+        .append(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY)
+        .append(". Value was ")
+        .append(resumePreviousBy)
+        .append(", expected ")
+        .append(ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME)
+        .append(" or ")
+        .append(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY)
+        .append(".");
+
       throw new IllegalArgumentException(b.toString());
     }
   }
 
   protected boolean isValidValueForResumePreviousBy(String resumePreviousBy) {
-    return resumePreviousBy.equals(ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME) || resumePreviousBy.equals(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY);
+    return ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME.equals(resumePreviousBy) || ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY.equals(resumePreviousBy);
   }
 
   /**
@@ -250,11 +251,16 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   protected void logDeploymentSummary(Collection<String> resourceNames, String deploymentName, String processApplicationName) {
     // log a summary of the deployment
     StringBuilder builder = new StringBuilder();
-    builder.append("Deployment summary for process archive '"+deploymentName+"' of process application '"+processApplicationName+"': \n");
-    builder.append("\n");
+    builder.append("Deployment summary for process archive '")
+          .append(deploymentName)
+          .append("' of process application '")
+          .append(processApplicationName)
+          .append("':\n\n");
+
     for (String resourceName : resourceNames) {
-      builder.append("        "+resourceName);
-      builder.append("\n");
+      builder.append("        ")
+              .append(resourceName)
+              .append("\n");
     }
     LOGGER.log(Level.INFO, builder.toString());
   }

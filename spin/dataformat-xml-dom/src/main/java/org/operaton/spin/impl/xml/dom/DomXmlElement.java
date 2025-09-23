@@ -16,10 +16,6 @@
  */
 package org.operaton.spin.impl.xml.dom;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-import static org.operaton.commons.utils.EnsureUtil.ensureParamInstanceOf;
-import static org.operaton.spin.impl.xml.dom.util.DomXmlEnsure.ensureChildElement;
-
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -30,6 +26,11 @@ import java.util.List;
 import javax.xml.transform.Transformer;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.SpinListImpl;
@@ -39,11 +40,10 @@ import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.xml.SpinXPathQuery;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
+import static org.operaton.commons.utils.EnsureUtil.ensureParamInstanceOf;
+import static org.operaton.spin.impl.xml.dom.util.DomXmlEnsure.ensureChildElement;
 
 /**
  * Wrapper for an xml dom element.

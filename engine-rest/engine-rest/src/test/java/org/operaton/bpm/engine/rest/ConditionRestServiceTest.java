@@ -16,23 +16,16 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -44,13 +37,18 @@ import org.operaton.bpm.engine.rest.util.VariablesBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.ConditionEvaluationBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import io.restassured.response.Response;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 public class ConditionRestServiceTest extends AbstractRestServiceTest {
 
@@ -271,12 +269,12 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
   }
 
   protected void checkResult(String content) {
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, from(content).get("[" + 0 + "].id"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, from(content).get("[" + 0+ "].definitionId"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, from(content).get("[" + 0+ "].definitionKey"));
-    Assertions.assertEquals(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID, from(content).get("[" + 1 + "].id"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, from(content).get("[" + 1+ "].definitionId"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, from(content).get("[" + 1+ "].definitionKey"));
+    assertThat(from(content).<String>get("[" + 0 + "].id")).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(from(content).<String>get("[" + 0 + "].definitionId")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(from(content).<String>get("[" + 0 + "].definitionKey")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+    assertThat(from(content).<String>get("[" + 1 + "].id")).isEqualTo(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(from(content).<String>get("[" + 1 + "].definitionId")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(from(content).<String>get("[" + 1 + "].definitionKey")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
     
   }
 

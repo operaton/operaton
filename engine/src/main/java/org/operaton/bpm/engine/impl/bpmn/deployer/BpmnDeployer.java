@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.AbstractDefinitionDeployer;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -396,7 +397,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   }
 
   enum ExprType {
-	  USER, GROUP;
+	  USER, GROUP
 
   }
 

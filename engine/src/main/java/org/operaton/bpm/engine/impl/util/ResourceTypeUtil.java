@@ -16,30 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.operaton.bpm.engine.authorization.Resources.BATCH;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
-import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.SYSTEM;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-
 import java.util.HashMap;
 import java.util.Map;
+
 import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.authorization.BatchPermissions;
-import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
-import org.operaton.bpm.engine.authorization.Permission;
-import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.Resource;
-import org.operaton.bpm.engine.authorization.Resources;
-import org.operaton.bpm.engine.authorization.SystemPermissions;
-import org.operaton.bpm.engine.authorization.TaskPermissions;
-import org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions;
+import org.operaton.bpm.engine.authorization.*;
+
+import static org.operaton.bpm.engine.authorization.Resources.*;
 
 public final class ResourceTypeUtil {
 
@@ -62,7 +45,7 @@ public final class ResourceTypeUtil {
             HISTORIC_TASK.resourceType(), HistoricTaskPermissions.class,
             HISTORIC_PROCESS_INSTANCE.resourceType(), HistoricProcessInstancePermissions.class,
             OPERATION_LOG_CATEGORY.resourceType(), UserOperationLogCategoryPermissions.class,
-            SYSTEM.resourceType(), SystemPermissions.class
+            OPTIMIZE.resourceType(), OptimizePermissions.class, SYSTEM.resourceType(), SystemPermissions.class
     ));
 
     // the rest
@@ -107,7 +90,7 @@ public final class ResourceTypeUtil {
     if (clazz == null) {
       return Permissions.values();
     }
-    return ((Permission[]) clazz.getEnumConstants());
+    return (Permission[]) clazz.getEnumConstants();
   }
 
   /**

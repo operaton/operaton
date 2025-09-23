@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
+import jakarta.el.BeanELResolver;
+import jakarta.el.ELResolver;
+
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
-import jakarta.el.BeanELResolver;
-import jakarta.el.ELResolver;
 
 /**
  * <p>Resolves a {@link BeanELResolver} from the current process application.

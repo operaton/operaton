@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.client.topic.impl.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import org.operaton.bpm.client.impl.RequestDto;
 import org.operaton.bpm.client.task.OrderingConfig;
 import org.operaton.bpm.client.task.SortingDto;

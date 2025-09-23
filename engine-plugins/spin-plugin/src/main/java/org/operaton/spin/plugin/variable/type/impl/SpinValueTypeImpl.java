@@ -39,22 +39,26 @@ public abstract class SpinValueTypeImpl extends AbstractValueTypeImpl implements
     super(name);
   }
 
+  @Override
   public TypedValue createValue(Object value, Map<String, Object> valueInfo) {
     SpinValueBuilder<?> builder = createValue((SpinValue) value);
     applyValueInfo(builder, valueInfo);
     return builder.create();
   }
 
+  @Override
   public SerializableValue createValueFromSerialized(String serializedValue, Map<String, Object> valueInfo) {
     SpinValueBuilder<?> builder = createValueFromSerialized(serializedValue);
     applyValueInfo(builder, valueInfo);
     return builder.create();
   }
 
+  @Override
   public boolean isPrimitiveValueType() {
     return false;
   }
 
+  @Override
   public Map<String, Object> getValueInfo(TypedValue typedValue) {
     if(!(typedValue instanceof SpinValue)) {
       throw new IllegalArgumentException("Value not of type Spin Value.");

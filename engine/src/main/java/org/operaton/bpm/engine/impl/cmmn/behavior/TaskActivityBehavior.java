@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
+import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
+
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.FAILED;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_BLOCKING;
-
-import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 
 /**
  * @author Roman Smirnov
@@ -47,7 +47,7 @@ public class TaskActivityBehavior extends StageOrTaskActivityBehavior {
   protected boolean isBlocking(CmmnActivityExecution execution) {
     CmmnActivity activity = execution.getActivity();
     Object isBlockingProperty = activity.getProperty(PROPERTY_IS_BLOCKING);
-    if (isBlockingProperty != null && isBlockingProperty instanceof Boolean b) {
+    if (isBlockingProperty instanceof Boolean b) {
       return b;
     }
     return false;

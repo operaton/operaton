@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.client.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.util.Timeout;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.UrlResolver;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.mockito.ArgumentCaptor;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 class ExternalTaskClientBuilderImplTest {
 
@@ -86,6 +87,7 @@ class ExternalTaskClientBuilderImplTest {
       this.baseUrl = baseURl;
     }
 
+    @Override
     public String getBaseUrl() {
       return baseUrl;
     }

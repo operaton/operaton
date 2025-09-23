@@ -16,15 +16,10 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.Assertions.tuple;
-
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +29,7 @@ import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.HistoryService;
@@ -59,7 +55,6 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -80,6 +75,14 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.propertyComparator;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.tuple;
 
 /**
  * @author Christian Lipphardt (Camunda)
@@ -261,6 +264,10 @@ class HistoricVariableInstanceTest {
     assertThat(historyService.createHistoricVariableInstanceQuery().orderByProcessInstanceId().asc().list()).hasSize(5);
     assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableName().asc().count()).isEqualTo(5);
     assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableName().asc().list()).hasSize(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByTenantId().asc().count()).isEqualTo(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByTenantId().asc().list()).hasSize(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableId().asc().count()).isEqualTo(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableId().asc().list()).hasSize(5);
 
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(2);
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(2);
@@ -472,19 +479,9 @@ class HistoricVariableInstanceTest {
     var processInstanceId = processInstance.getProcessInstanceId();
 
     // check existing variables for task ID
-    try {
-      historicVariableInstanceQuery.processInstanceIdIn(processInstanceId, null);
-      fail("Search by process instance ID was finished");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.processInstanceIdIn(processInstanceId, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicVariableInstanceQuery.processInstanceIdIn(null, processInstanceId);
-      fail("Search by process instance ID was finished");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.processInstanceIdIn(null, processInstanceId)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -519,19 +516,9 @@ class HistoricVariableInstanceTest {
     assertThat(query.count()).isZero();
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
 
-    try {
-      historicVariableInstanceQuery.executionIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.executionIdIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicVariableInstanceQuery.executionIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.executionIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -540,19 +527,9 @@ class HistoricVariableInstanceTest {
     assertThat(query.count()).isZero();
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
 
-    try {
-      historicVariableInstanceQuery.taskIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.taskIdIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicVariableInstanceQuery.taskIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.taskIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -588,19 +565,9 @@ class HistoricVariableInstanceTest {
     query.taskIdIn("invalid");
     assertThat(query.count()).isZero();
 
-    try {
-      query.taskIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.taskIdIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.taskIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.taskIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -672,21 +639,9 @@ class HistoricVariableInstanceTest {
     // then
     assertThat(query.count()).isZero();
 
-    try {
-      // when
-      query.variableTypeIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.variableTypeIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      // when
-      query.variableTypeIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.variableTypeIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1947,26 +1902,11 @@ class HistoricVariableInstanceTest {
     assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
-    try {
-      query.caseActivityIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseActivityIdIn((String[]) null)).isInstanceOf(NullValueException.class);
 
-    try {
-      query.caseActivityIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseActivityIdIn((String) null)).isInstanceOf(NullValueException.class);
 
-    try {
-      query.caseActivityIdIn(values);
-      fail("A ProcessEngineException was expected.");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseActivityIdIn(values)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -2468,7 +2408,7 @@ class HistoricVariableInstanceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  void testVariableCreateTime() throws ParseException {
+  void testVariableCreateTime() throws Exception {
     // given
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
     Date fixedDate = sdf.parse("01/01/2001 01:01:01.000");
@@ -2672,5 +2612,55 @@ class HistoricVariableInstanceTest {
         .isInstanceOf(NullValueException.class)
         .hasMessage("Variable names is null");
   }
+
+  @Deployment(resources = {
+    "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testCallSimpleSubProcess.bpmn20.xml",
+    "org/operaton/bpm/engine/test/history/simpleSubProcess.bpmn20.xml"
+  })
+  @Test
+  void shouldBeCorrectlySortedWhenSortingByVariableCreationTime() {
+  // given
+  runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
+
+  // when
+  List<HistoricVariableInstance> historicVariableInstancesAsc =
+      historyService.createHistoricVariableInstanceQuery().orderByCreationTime().asc().list();
+  List<HistoricVariableInstance> historicVariableInstancesDesc =
+      historyService.createHistoricVariableInstanceQuery().orderByCreationTime().desc().list();
+
+  // then
+  assertThat(historicVariableInstancesAsc).hasSize(5);
+  assertThat(historicVariableInstancesDesc).hasSize(5);
+  verifySorting(historicVariableInstancesAsc, propertyComparator(HistoricVariableInstance::getCreateTime));
+  verifySorting(historicVariableInstancesDesc, inverted(propertyComparator(HistoricVariableInstance::getCreateTime)));
+}
+
+  @Deployment(resources = {
+    "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testCallSimpleSubProcess.bpmn20.xml",
+    "org/operaton/bpm/engine/test/history/simpleSubProcess.bpmn20.xml"
+  })
+  @Test
+  void shouldQueryByCreatedAfter() {
+  // given
+  Calendar creationDate = Calendar.getInstance();
+  ClockUtil.setCurrentTime(creationDate.getTime());
+  runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
+
+  creationDate.add(Calendar.HOUR, 1);
+  ClockUtil.setCurrentTime(creationDate.getTime());
+  runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
+
+  // when
+  List<HistoricVariableInstance> variablesCreatedAfter = historyService.createHistoricVariableInstanceQuery()
+      .createdAfter(creationDate.getTime())
+      .list();
+  List<HistoricVariableInstance> allVariables = historyService.createHistoricVariableInstanceQuery().list();
+
+  // then
+  assertThat(variablesCreatedAfter).hasSize(5);
+  assertThat(allVariables).hasSize(10);
+}
+
+
 
 }

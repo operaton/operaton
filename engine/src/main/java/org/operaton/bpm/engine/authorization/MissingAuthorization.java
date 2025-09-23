@@ -59,10 +59,12 @@ public class MissingAuthorization {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o)
+    if (this == o) {
       return true;
-    if (o == null || getClass() != o.getClass())
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
+    }
     MissingAuthorization that = (MissingAuthorization) o;
     return Objects.equals(permissionName, that.permissionName) && Objects.equals(resourceType, that.resourceType)
         && Objects.equals(resourceId, that.resourceId);

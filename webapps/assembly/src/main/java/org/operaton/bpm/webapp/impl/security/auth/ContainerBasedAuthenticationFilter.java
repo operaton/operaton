@@ -16,14 +16,11 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
-import static org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter.AUTHENTICATION_PROVIDER_PARAM;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -40,6 +37,8 @@ import org.operaton.bpm.engine.rest.security.auth.AuthenticationProvider;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
 import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
+
+import static org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter.AUTHENTICATION_PROVIDER_PARAM;
 
 public class ContainerBasedAuthenticationFilter implements Filter {
 
@@ -78,6 +77,7 @@ public class ContainerBasedAuthenticationFilter implements Filter {
   public void destroy() {
   }
 
+  @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     final HttpServletRequest req = (HttpServletRequest) request;
     final HttpServletResponse resp = (HttpServletResponse) response;

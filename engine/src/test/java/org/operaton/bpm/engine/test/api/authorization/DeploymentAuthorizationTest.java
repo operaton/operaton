@@ -16,22 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
-import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
-
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
@@ -44,6 +35,16 @@ import org.operaton.bpm.engine.authorization.SystemPermissions;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentQuery;
 import org.operaton.bpm.engine.repository.Resource;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -59,7 +60,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testSimpleDeploymentQueryWithoutAuthorization() {
     // given
-    createDeployment(null);
+    createDeployment();
 
     // when
     DeploymentQuery query = repositoryService.createDeploymentQuery();
@@ -71,7 +72,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testSimpleDeploymentQueryWithReadPermissionOnDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
 
     // when
@@ -84,7 +85,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testSimpleDeploymentQueryWithReadPermissionOnAnyDeployment() {
     // given
-    createDeployment(null);
+    createDeployment();
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
     // when
@@ -97,7 +98,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testSimpleDeploymentQueryWithMultiple() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -111,8 +112,8 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testDeploymentQueryWithoutAuthorization() {
     // given
-    createDeployment("first");
-    createDeployment("second");
+    createDeployment();
+    createDeployment();
 
     // when
     DeploymentQuery query = repositoryService.createDeploymentQuery();
@@ -124,8 +125,8 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testDeploymentQueryWithReadPermissionOnDeployment() {
     // given
-    String deploymentId1 = createDeployment("first");
-    createDeployment("second");
+    String deploymentId1 = createDeployment();
+    createDeployment();
     createGrantAuthorization(DEPLOYMENT, deploymentId1, userId, READ);
 
     // when
@@ -138,8 +139,8 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testDeploymentQueryWithReadPermissionOnAnyDeployment() {
     // given
-    createDeployment("first");
-    createDeployment("second");
+    createDeployment();
+    createDeployment();
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
     // when
@@ -152,8 +153,8 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void shouldNotFindDeploymentWithRevokedReadPermissionOnAnyDeployment() {
     // given
-    createDeployment("first");
-    createDeployment("second");
+    createDeployment();
+    createDeployment();
     createGrantAuthorization(DEPLOYMENT, ANY, ANY, READ);
     createRevokeAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -208,7 +209,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testDeleteDeploymentWithoutAuthorization() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
 
     // when
     assertThatThrownBy(() -> repositoryService.deleteDeployment(deploymentId))
@@ -222,7 +223,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testDeleteDeploymentWithDeletePermissionOnDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, DELETE);
 
     // when
@@ -238,7 +239,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testDeleteDeploymentWithDeletePermissionOnAnyDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, ANY, userId, DELETE);
 
     // when
@@ -256,7 +257,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetDeploymentResourceNamesWithoutAuthorization() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
 
     // when
     assertThatThrownBy(() -> repositoryService.getDeploymentResourceNames(deploymentId))
@@ -270,7 +271,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetDeploymentResourceNamesWithReadPermissionOnDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
 
     // when
@@ -287,7 +288,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetDeploymentResourceNamesWithReadPermissionOnAnyDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
     // when
@@ -306,7 +307,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetDeploymentResourcesWithoutAuthorization() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
 
     // when
     assertThatThrownBy(() -> repositoryService.getDeploymentResources(deploymentId))
@@ -319,7 +320,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetDeploymentResourcesWithReadPermissionOnDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
 
     // when
@@ -334,7 +335,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetDeploymentResourcesWithReadPermissionOnAnyDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
     // when
@@ -351,7 +352,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetResourceAsStreamWithoutAuthorization() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
 
     assertThatThrownBy(() -> repositoryService.getResourceAsStream(deploymentId, FIRST_RESOURCE))
       .isInstanceOf(AuthorizationException.class)
@@ -363,7 +364,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetResourceAsStreamWithReadPermissionOnDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
 
     // when
@@ -376,7 +377,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetResourceAsStreamWithReadPermissionOnAnyDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
     // when
@@ -391,7 +392,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetResourceAsStreamByIdWithoutAuthorization() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
 
     disableAuthorization();
     List<Resource> resources = repositoryService.getDeploymentResources(deploymentId);
@@ -408,7 +409,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetResourceAsStreamByIdWithReadPermissionOnDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
 
     disableAuthorization();
@@ -426,7 +427,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   void testGetResourceAsStreamByIdWithReadPermissionOnAnyDeployment() {
     // given
-    String deploymentId = createDeployment(null);
+    String deploymentId = createDeployment();
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
     disableAuthorization();
@@ -506,7 +507,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
     ProcessApplicationReference reference = processApplication.getReference();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     ProcessApplicationRegistration registration = managementService.registerProcessApplication(deploymentId, reference);
@@ -522,7 +523,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
     ProcessApplicationReference reference = processApplication.getReference();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     ProcessApplicationRegistration registration = managementService.registerProcessApplication(deploymentId, reference);
@@ -539,7 +540,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
     ProcessApplicationReference reference = processApplication.getReference();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     ProcessApplicationRegistration registration = managementService.registerProcessApplication(deploymentId, reference);
@@ -553,10 +554,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotRegisterProcessApplicationWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.registerProcessApplication(null, null);
-    })
+      managementService.registerProcessApplication(null, null))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
   }
@@ -568,7 +568,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
     ProcessApplicationReference reference = processApplication.getReference();
     registerProcessApplication(deploymentId, reference);
 
@@ -585,7 +585,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
     ProcessApplicationReference reference = processApplication.getReference();
     registerProcessApplication(deploymentId, reference);
 
@@ -603,7 +603,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
     ProcessApplicationReference reference = processApplication.getReference();
     registerProcessApplication(deploymentId, reference);
 
@@ -618,10 +618,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotUnregisterProcessApplicationWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.unregisterProcessApplication("anyDeploymentId", true);
-    })
+      managementService.unregisterProcessApplication("anyDeploymentId", true))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
   }
@@ -634,7 +633,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
     ProcessApplicationReference reference = processApplication.getReference();
     registerProcessApplication(deploymentId, reference);
 
@@ -651,7 +650,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
     ProcessApplicationReference reference = processApplication.getReference();
     registerProcessApplication(deploymentId, reference);
 
@@ -669,7 +668,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
     ProcessApplicationReference reference = processApplication.getReference();
     registerProcessApplication(deploymentId, reference);
 
@@ -684,10 +683,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotGetProcessApplicationForDeploymentWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getProcessApplicationForDeployment("anyDeploymentId");
-    })
+      managementService.getProcessApplicationForDeployment("anyDeploymentId"))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -699,7 +697,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     Set<String> deployments = managementService.getRegisteredDeployments();
@@ -713,7 +711,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     Set<String> deployments = managementService.getRegisteredDeployments();
@@ -728,7 +726,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     Set<String> deployments = managementService.getRegisteredDeployments();
@@ -741,10 +739,9 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotGetRegisteredDeploymentsWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getRegisteredDeployments();
-    })
+      managementService.getRegisteredDeployments())
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -756,7 +753,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     managementService.registerDeploymentForJobExecutor(deploymentId);
@@ -770,7 +767,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     managementService.registerDeploymentForJobExecutor(deploymentId);
@@ -785,7 +782,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     managementService.registerDeploymentForJobExecutor(deploymentId);
@@ -798,13 +795,12 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotRegisterDeploymentWithoutAuthorization() {
     // given
     disableAuthorization();
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
     enableAuthorization();
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.registerDeploymentForJobExecutor(deploymentId);
-    })
+      managementService.registerDeploymentForJobExecutor(deploymentId))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
   }
@@ -816,7 +812,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     managementService.unregisterDeploymentForJobExecutor(deploymentId);
@@ -830,7 +826,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     managementService.unregisterDeploymentForJobExecutor(deploymentId);
@@ -845,7 +841,7 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
-    String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
+    String deploymentId = createDeployment(FIRST_RESOURCE).getId();
 
     // when
     managementService.unregisterDeploymentForJobExecutor(deploymentId);
@@ -858,18 +854,17 @@ class DeploymentAuthorizationTest extends AuthorizationTest {
   void shouldNotUnregisterDeploymentWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.unregisterDeploymentForJobExecutor("anyDeploymentId");
-    })
+      managementService.unregisterDeploymentForJobExecutor("anyDeploymentId"))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
   }
 
   // helper /////////////////////////////////////////////////////////
 
-  protected String createDeployment(String name) {
-    return createDeployment(name, FIRST_RESOURCE, SECOND_RESOURCE).getId();
+  protected String createDeployment() {
+    return createDeployment(FIRST_RESOURCE, SECOND_RESOURCE).getId();
   }
 
   protected void registerProcessApplication(String deploymentId, ProcessApplicationReference reference) {

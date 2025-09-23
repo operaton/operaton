@@ -64,7 +64,7 @@ CaseInstance.terminate = function(instanceId, params, done) {
 /**
  * Sets a variable of a given case instance by id.
  *
- * @see http://docs.operaton.org/manual/develop/reference/rest/case-instance/variables/put-variable/
+ * @see https://docs.operaton.org/manual/develop/reference/rest/case-instance/variables/put-variable/
  *
  * @param   {uuid}              id
  * @param   {Object}            params

@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.spring.test.application;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

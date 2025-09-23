@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.deployment.callbacks;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPa;
-
 import java.util.List;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -27,8 +24,12 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployInjectApp;
+
+import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPa;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

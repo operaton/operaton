@@ -16,16 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.PropertyBatchUpdateException;
+import org.springframework.beans.factory.BeanCreationException;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -42,8 +40,10 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.springframework.beans.PropertyBatchUpdateException;
-import org.springframework.beans.factory.BeanCreationException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Nikola Koevski
@@ -194,7 +194,7 @@ class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  void testBatchWindowMapInXmlConfig() throws ParseException {
+  void testBatchWindowMapInXmlConfig() throws Exception {
     // given
     //we're on Monday
     ClockUtil.setCurrentTime(sdf.parse("2018-05-14T22:00:00"));
@@ -287,7 +287,7 @@ class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  void testBatchWindowOneDayOfWeek() throws ParseException {
+  void testBatchWindowOneDayOfWeek() throws Exception {
     ClockUtil.setCurrentTime(sdf.parse("2018-05-14T22:00:00"));       //monday
     //given
     final ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
@@ -329,7 +329,7 @@ class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  void testBatchWindow24Hours() throws ParseException {
+  void testBatchWindow24Hours() throws Exception {
     //given
     final ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
     //we have batch window for 24 hours

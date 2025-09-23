@@ -16,12 +16,12 @@
  */
 package org.operaton.spin.impl.json.jackson.format;
 
-import static org.operaton.spin.DataFormats.JSON_DATAFORMAT_NAME;
-
 import java.util.Set;
 
 import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.spi.DataFormatProvider;
+
+import static org.operaton.spin.DataFormats.JSON_DATAFORMAT_NAME;
 
 /**
  * Provides the {@link JacksonJsonDataFormat} with default configuration.

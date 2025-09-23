@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.model.dmn.util;
 
+import java.io.InputStream;
+import java.util.Optional;
+
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
-
-import java.io.InputStream;
-import java.util.Optional;
 
 public class ParseDmnModelRule implements BeforeEachCallback {
 

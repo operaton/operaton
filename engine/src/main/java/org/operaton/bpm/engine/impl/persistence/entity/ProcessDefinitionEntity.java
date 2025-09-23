@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serial;
+import java.util.*;
+
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -35,9 +38,6 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.task.IdentityLinkType;
-
-import java.io.Serial;
-import java.util.*;
 
 
 /**
@@ -325,7 +325,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   @Override
   public void setVersion(int version) {
     this.version = version;
-    firstVersion = (this.version == 1);
+    firstVersion = this.version == 1;
   }
 
   @Override

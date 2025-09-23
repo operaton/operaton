@@ -16,18 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
+
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

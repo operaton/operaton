@@ -17,9 +17,10 @@
 package org.operaton.bpm.container.impl.jboss.config;
 
 import java.util.Set;
+
 import org.operaton.bpm.engine.impl.cfg.JakartaTransactionProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
+import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 
 /**
  *

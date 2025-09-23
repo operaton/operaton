@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
-import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_XML_RESOURCES;
-
 import java.net.URL;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -26,6 +24,8 @@ import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
+
+import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_XML_RESOURCES;
 
 /**
  * <p>

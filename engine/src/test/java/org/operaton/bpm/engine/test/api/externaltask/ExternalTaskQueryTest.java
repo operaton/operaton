@@ -1,4 +1,5 @@
 /*
+
  * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
  * under one or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information regarding copyright
@@ -16,28 +17,13 @@
  */
 package org.operaton.bpm.engine.test.api.externaltask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskById;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByLockExpirationTime;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessDefinitionKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -53,8 +39,20 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskById;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByLockExpirationTime;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessDefinitionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessDefinitionKey;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -65,6 +63,10 @@ class ExternalTaskQueryTest {
   protected static final String WORKER_ID = "aWorkerId";
   protected static final String TOPIC_NAME = "externalTaskTopic";
   protected static final String ERROR_MESSAGE = "error";
+  // The range of Oracle's NUMBER field is limited to ~10e+125
+  // which is below Double.MAX_VALUE, so we only test with the following
+  // max value
+  protected static final double MAX_DOUBLE_VALUE = 10E+124;
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -669,6 +671,454 @@ class ExternalTaskQueryTest {
     ExternalTask task = externalTaskService.createExternalTaskQuery().singleResult();
 
     assertThat(task.getProcessDefinitionVersionTag()).isEqualTo("1.2.3.4");
+  }
+
+  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessDefinitionKey() {
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKey("oneExternalTaskProcess").count()).isZero();
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKey("oneExternalTaskProcess").count()).isEqualTo(1);
+  }
+
+  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessDefinitionKeyIn() {
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKeyIn("oneExternalTaskProcess").count()).isZero();
+    var processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
+    assertThat(processInstance).isNotNull();
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKeyIn("oneExternalTaskProcess").count()).isEqualTo(1);
+  }
+
+  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessDefinitionName() {
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionName("One external task process").count()).isZero();
+    var processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
+    assertThat(processInstance).isNotNull();
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionName("One external task process").count()).isEqualTo(1);
+  }
+
+  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void processDefinitionNameLike() {
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionNameLike("One external task proc%").count()).isZero();
+    var processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
+    assertThat(processInstance).isNotNull();
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionNameLike("One external task proc%").count()).isEqualTo(1);
+  }
+
+  @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableValueEquals() {
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("longVar", 928374L);
+    variables.put("shortVar", (short) 123);
+    variables.put("integerVar", 1234);
+    variables.put("stringVar", "stringValue");
+    variables.put("booleanVar", true);
+    Date date = Calendar.getInstance().getTime();
+    variables.put("dateVar", date);
+    variables.put("nullVar", null);
+
+    // Start process-instance with all types of variables
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
+
+    // Test query matches
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("longVar", 928374L).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("shortVar",  (short) 123).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("integerVar", 1234).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("stringVar", "stringValue").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("booleanVar", true).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("dateVar", date).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("nullVar", null).count()).isEqualTo(1);
+
+    // Test query for other values on existing variables
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("longVar", 999L).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("shortVar",  (short) 999).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("integerVar", 999).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("stringVar", "999").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("booleanVar", false).count()).isEqualTo(0);
+    Calendar otherDate = Calendar.getInstance();
+    otherDate.add(Calendar.YEAR, 1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("dateVar", otherDate.getTime()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("nullVar", "999").count()).isEqualTo(0);
+
+    // Test querying for task variables not equals
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("longVar", 999L).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("shortVar",  (short) 999).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("integerVar", 999).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("stringVar", "999").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("booleanVar", false).count()).isEqualTo(1);
+
+    // and query for the existing variable with NOT should result in nothing found:
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("longVar", 928374L).count()).isEqualTo(0);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableNameEqualsIgnoreCase() {
+    String variableName = "someVariable";
+    String variableValue = "someCamelCaseValue";
+    Map<String, Object> variables = new HashMap<>();
+    variables.put(variableName, variableValue);
+
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
+
+    // query for case-insensitive variable name should only return a result if case-insensitive search is used
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableNamesIgnoreCase().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(0);
+
+    // query should treat all variables case-insensitively, even when flag is set after variable
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableValueEqualsIgnoreCase() {
+    String variableName = "someVariable";
+    String variableValue = "someCamelCaseValue";
+    Map<String, Object> variables = new HashMap<>();
+    variables.put(variableName, variableValue);
+
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
+
+    // query for existing variable should return one result
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName, variableValue).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+
+    // query for non existing variable should return zero results
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isEqualTo(0);
+
+    // query for existing variable with different value should return zero results
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName, "nonExistentValue").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, "nonExistentValue".toLowerCase()).count()).isEqualTo(0);
+
+    // query for case-insensitive variable value should only return a result when case-insensitive search is used
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+
+    // query for case-insensitive variable with not equals operator should only return a result when case-sensitive search is used
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(0);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableValueLike() {
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("stringVar", "stringValue");
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVal%").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngValue").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngVal%").count()).isEqualTo(1);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVar%").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngVar").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngVar%").count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVal").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("nonExistingVar", "string%").count()).isEqualTo(0);
+
+    // test with null value
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(() ->
+            externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", null).count());
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableValueLikeIgnoreCase() {
+
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("stringVar", "stringValue");
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngValue".toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVal%".toLowerCase()).count()).isEqualTo(1);
+
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVar%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVar".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVar%".toLowerCase()).count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVal".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+
+    // test with null value
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+            externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", null).count());
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableValueNotLike() {
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("stringVar", "stringValue");
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVal%").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngValue").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngVal%").count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVar%").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngVar").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngVar%").count()).isEqualTo(1);
+
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVal").count()).isEqualTo(1);
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("nonExistingVar", "string%").count()).isEqualTo(0);
+
+    // test with null value
+      assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+            externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", null).count());
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableValueNotLikeIgnoreCase() {
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("stringVar", "stringValue");
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngValue".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVal%".toLowerCase()).count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVar%".toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar".toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar%".toLowerCase()).count()).isEqualTo(1);
+
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal".toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+
+    // test with null value
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+            externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", null).count());
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableValueCompare() {
+
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("numericVar", 928374);
+    Date date = new GregorianCalendar(2014, 2, 2, 2, 2, 2).getTime();
+    variables.put("dateVar", date);
+    variables.put("stringVar", "ab");
+    variables.put("nullVar", null);
+
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
+
+    // test compare methods with numeric values
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("numericVar", 928373).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("numericVar", 928374).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("numericVar", 928375).count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("numericVar", 928373).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("numericVar", 928375).count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("numericVar", 928375).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("numericVar", 928374).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("numericVar", 928373).count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("numericVar", 928375).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("numericVar", 928373).count()).isEqualTo(0);
+
+    // test compare methods with date values
+    Date before = new GregorianCalendar(2014, 2, 2, 2, 2, 1).getTime();
+    Date after = new GregorianCalendar(2014, 2, 2, 2, 2, 3).getTime();
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("dateVar", before).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("dateVar", date).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("dateVar", after).count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("dateVar", before).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("dateVar", date).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("dateVar", after).count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", after).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", date).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", before).count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", after).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", date).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", before).count()).isEqualTo(0);
+
+    //test with string values
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("stringVar", "aa").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("stringVar", "ab").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("stringVar", "ba").count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("stringVar", "aa").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("stringVar", "ba").count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("stringVar", "ba").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("stringVar", "ab").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("stringVar", "aa").count()).isEqualTo(0);
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("stringVar", "ba").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("stringVar", "aa").count()).isEqualTo(0);
+
+    // test with null value
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+        externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("nullVar", null).count());
+
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+            externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("nullVar", null).count());
+
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+        externalTaskService.createExternalTaskQuery().processVariableValueLessThan("nullVar", null).count());
+
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+            externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("nullVar", null).count());
+
+    // test with boolean value
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+            externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("nullVar", true).count());
+
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+            externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("nullVar", false).count());
+
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+        externalTaskService.createExternalTaskQuery().processVariableValueLessThan("nullVar", true).count());
+
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+            externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("nullVar", false).count());
+
+    // test non existing variable
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("nonExisting", 123).count()).isEqualTo(0);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableValueEqualsNumber() {
+    // long
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", 123L));
+
+    // non-matching long
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", 12345L));
+
+    // short
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", (short) 123));
+
+    // double
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", 123.0d));
+
+    // integer
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", 123));
+
+    // untyped null (should not match)
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", null));
+
+    // typed null (should not match)
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", Variables.longValue(null)));
+
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", "123"));
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
+
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testProcessVariableValueNumberComparison() {
+    // long
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", 123L));
+
+    // non-matching long
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", 12345L));
+
+    // short
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", (short) 123));
+
+    // double
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", 123.0d));
+
+    // integer
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", 123));
+
+    // untyped null
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", null));
+
+    // typed null
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", Variables.longValue(null)));
+
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", "123"));
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("var", Variables.numberValue(123)).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("var", Variables.numberValue(123)).count()).isEqualTo(5);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("var", Variables.numberValue(123)).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testVariableEqualsNumberMax() {
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", MAX_DOUBLE_VALUE));
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", Long.MAX_VALUE));
+
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(Long.MAX_VALUE)).count()).isEqualTo(1);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testVariableEqualsNumberLongValueOverflow() {
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", MAX_DOUBLE_VALUE));
+
+    // this results in an overflow
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", (long) MAX_DOUBLE_VALUE));
+
+    // the query should not find the long variable
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isEqualTo(1);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
+  @Test
+  void testVariableEqualsNumberNonIntegerDoubleShouldNotMatchInteger() {
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Variables.createVariables().putValue("var", 42).putValue("var2", 52.4d));
+
+    // querying by 42.4 should not match the integer variable 42
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(42.4d)).count()).isEqualTo(0);
+
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
+            Collections.<String, Object>singletonMap("var", 42.4d));
+
+    // querying by 52 should not find the double variable 52.4
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(52)).count()).isEqualTo(0);
   }
 
   protected List<ProcessInstance> startInstancesByKey(String processDefinitionKey, int number) {

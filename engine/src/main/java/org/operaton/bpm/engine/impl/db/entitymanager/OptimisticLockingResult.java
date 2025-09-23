@@ -29,5 +29,5 @@ public enum OptimisticLockingResult {
    * in a failure when handling an {@link org.operaton.bpm.engine.OptimisticLockingException}
    * and the exception should be re-thrown to the caller.
    */
-  THROW;
+  THROW
 }

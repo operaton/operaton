@@ -16,6 +16,13 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.skyscreamer.jsonassert.JSONAssert;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -29,17 +36,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
+
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
-
-import java.util.List;
-
-import org.json.JSONException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.skyscreamer.jsonassert.JSONAssert;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ProcessEngineExtension.class)
 class HistoricVariableJsonSerializationTest {
@@ -71,22 +70,22 @@ class HistoricVariableJsonSerializationTest {
       runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(bean).serializationDataFormat(JSON_FORMAT_NAME).create());
 
       HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
-      assertNotNull(historicVariable.getValue());
-      assertNull(historicVariable.getErrorMessage());
+      assertThat(historicVariable.getValue()).isNotNull();
+      assertThat(historicVariable.getErrorMessage()).isNull();
 
-      assertEquals(ValueType.OBJECT.getName(), historicVariable.getTypeName());
-      assertEquals(ValueType.OBJECT.getName(), historicVariable.getVariableTypeName());
+      assertThat(historicVariable.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
+      assertThat(historicVariable.getVariableTypeName()).isEqualTo(ValueType.OBJECT.getName());
 
       JsonSerializable historyValue = (JsonSerializable) historicVariable.getValue();
-      assertEquals(bean.getStringProperty(), historyValue.getStringProperty());
-      assertEquals(bean.getIntProperty(), historyValue.getIntProperty());
-      assertEquals(bean.getBooleanProperty(), historyValue.getBooleanProperty());
+      assertThat(historyValue.getStringProperty()).isEqualTo(bean.getStringProperty());
+      assertThat(historyValue.getIntProperty()).isEqualTo(bean.getIntProperty());
+      assertThat(historyValue.getBooleanProperty()).isEqualTo(bean.getBooleanProperty());
     }
   }
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  void selectHistoricSerializedValues() throws JSONException {
+  void selectHistoricSerializedValues() throws Exception {
     if (processEngineConfiguration.getHistoryLevel().getId() >=
         HistoryLevel.HISTORY_LEVEL_AUDIT.getId()) {
 
@@ -97,19 +96,19 @@ class HistoricVariableJsonSerializationTest {
       runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(bean).serializationDataFormat(JSON_FORMAT_NAME));
 
       HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
-      assertNotNull(historicVariable.getValue());
-      assertNull(historicVariable.getErrorMessage());
+      assertThat(historicVariable.getValue()).isNotNull();
+      assertThat(historicVariable.getErrorMessage()).isNull();
 
       ObjectValue typedValue = (ObjectValue) historicVariable.getTypedValue();
-      assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
+      assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
       JSONAssert.assertEquals(bean.toExpectedJsonString(),new String(typedValue.getValueSerialized()), true);
-      assertEquals(JsonSerializable.class.getName(), typedValue.getObjectTypeName());
+      assertThat(typedValue.getObjectTypeName()).isEqualTo(JsonSerializable.class.getName());
     }
   }
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  void selectHistoricSerializedValuesUpdate() throws JSONException {
+  void selectHistoricSerializedValuesUpdate() throws Exception {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JsonSerializable bean = new JsonSerializable("a String", 42, false);
@@ -120,21 +119,21 @@ class HistoricVariableJsonSerializationTest {
       HistoricVariableUpdate historicUpdate = (HistoricVariableUpdate)
           historyService.createHistoricDetailQuery().variableUpdates().singleResult();
 
-      assertNotNull(historicUpdate.getValue());
-      assertNull(historicUpdate.getErrorMessage());
+      assertThat(historicUpdate.getValue()).isNotNull();
+      assertThat(historicUpdate.getErrorMessage()).isNull();
 
-      assertEquals(ValueType.OBJECT.getName(), historicUpdate.getTypeName());
-      assertEquals(ValueType.OBJECT.getName(), historicUpdate.getVariableTypeName());
+      assertThat(historicUpdate.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
+      assertThat(historicUpdate.getVariableTypeName()).isEqualTo(ValueType.OBJECT.getName());
 
       JsonSerializable historyValue = (JsonSerializable) historicUpdate.getValue();
-      assertEquals(bean.getStringProperty(), historyValue.getStringProperty());
-      assertEquals(bean.getIntProperty(), historyValue.getIntProperty());
-      assertEquals(bean.getBooleanProperty(), historyValue.getBooleanProperty());
+      assertThat(historyValue.getStringProperty()).isEqualTo(bean.getStringProperty());
+      assertThat(historyValue.getIntProperty()).isEqualTo(bean.getIntProperty());
+      assertThat(historyValue.getBooleanProperty()).isEqualTo(bean.getBooleanProperty());
 
       ObjectValue typedValue = (ObjectValue) historicUpdate.getTypedValue();
-      assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
+      assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
       JSONAssert.assertEquals(bean.toExpectedJsonString(),new String(typedValue.getValueSerialized()), true);
-      assertEquals(JsonSerializable.class.getName(), typedValue.getObjectTypeName());
+      assertThat(typedValue.getObjectTypeName()).isEqualTo(JsonSerializable.class.getName());
 
     }
   }

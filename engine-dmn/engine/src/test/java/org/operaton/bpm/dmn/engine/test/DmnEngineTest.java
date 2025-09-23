@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.dmn.engine.test;
 
-import org.operaton.bpm.dmn.engine.*;
-import org.operaton.bpm.dmn.engine.test.asserts.DmnDecisionTableResultAssert;
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.commons.utils.IoUtil;
-import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
-
 import java.io.InputStream;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
+import org.operaton.bpm.dmn.engine.*;
+import org.operaton.bpm.dmn.engine.test.asserts.DmnDecisionTableResultAssert;
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.commons.utils.IoUtil;
+
+import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
 
 public abstract class DmnEngineTest {
 

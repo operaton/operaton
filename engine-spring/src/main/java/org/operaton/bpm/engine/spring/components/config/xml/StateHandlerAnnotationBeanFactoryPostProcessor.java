@@ -15,9 +15,8 @@
  */
 package org.operaton.bpm.engine.spring.components.config.xml;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.spring.components.ActivitiContextUtils;
-import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistry;
+import java.util.logging.Logger;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -27,7 +26,9 @@ import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 
-import java.util.logging.Logger;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.spring.components.ActivitiContextUtils;
+import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistry;
 
 /**
  * this class is responsible for registering the other {@link org.springframework.beans.factory.config.BeanFactoryPostProcessor}s

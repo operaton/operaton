@@ -17,9 +17,9 @@
 
 package org.operaton.bpm.qa.upgrade.scenarios7190.httl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.qa.upgrade.scenarios7190.httl.EnforceHistoryTimeToLiveTest.Assert.assertDoesNotThrow;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -28,9 +28,10 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.operaton.bpm.qa.upgrade.scenarios7190.httl.EnforceHistoryTimeToLiveTest.Assert.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 @ScenarioUnderTest("EnforceHistoryTimeToLiveScenario")
 @Origin("7.19.0")

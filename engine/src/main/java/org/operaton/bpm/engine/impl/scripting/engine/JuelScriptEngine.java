@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
-import jakarta.el.ELContext;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.el.ExpressionFactoryResolver;
-import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.bpm.impl.juel.SimpleResolver;
-import jakarta.el.*;
-
-import javax.script.*;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import jakarta.el.*;
+import jakarta.el.ELContext;
+
+import javax.script.*;
+
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.el.ExpressionFactoryResolver;
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
+import org.operaton.bpm.impl.juel.SimpleResolver;
 
 
 /**
@@ -265,7 +266,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
       if (scope != -1) {
         // Methods are added as variables in the ScriptScope
         Object attributeValue = scriptContext.getAttribute(functionName);
-        return (attributeValue instanceof Method method) ? method : null;
+        return attributeValue instanceof Method method ? method : null;
       } else {
         return null;
       }

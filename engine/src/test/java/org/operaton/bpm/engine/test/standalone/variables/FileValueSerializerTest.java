@@ -16,22 +16,16 @@
  */
 package org.operaton.bpm.engine.test.standalone.variables;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.variable.serializer.FileValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.ValueFields;
 import org.operaton.bpm.engine.variable.Variables;
@@ -39,6 +33,11 @@ import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Ronny Bräunlich
@@ -131,7 +130,7 @@ class FileValueSerializerTest {
   }
 
   @Test
-  void testWriteMimetypeFilenameAndBytesValueWithShortcutMethod() throws URISyntaxException {
+  void testWriteMimetypeFilenameAndBytesValueWithShortcutMethod() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt").toURI());
     FileValue fileValue = Variables.fileValue(file);
     ValueFields valueFields = new MockValueFields();
@@ -146,11 +145,11 @@ class FileValueSerializerTest {
   @Test
   void testThrowsExceptionWhenConvertingUnknownUntypedValueToTypedValue() {
     UntypedValueImpl untypedValue = (UntypedValueImpl) Variables.untypedValue(new Object());
-    assertThrows(UnsupportedOperationException.class, () -> serializer.convertToTypedValue(untypedValue));
+    assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(() -> serializer.convertToTypedValue(untypedValue));
   }
 
   @Test
-  void testReadFileNameMimeTypeAndByteArray() throws IOException {
+  void testReadFileNameMimeTypeAndByteArray() throws Exception {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -171,7 +170,7 @@ class FileValueSerializerTest {
   }
 
   @Test
-  void testReadFileNameEncodingAndByteArray() throws IOException {
+  void testReadFileNameEncodingAndByteArray() throws Exception {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -193,7 +192,7 @@ class FileValueSerializerTest {
   }
 
   @Test
-  void testReadFullValue() throws IOException {
+  void testReadFullValue() throws Exception {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -217,7 +216,7 @@ class FileValueSerializerTest {
   }
 
   @Test
-  void testReadFilenameAndByteArrayValue() throws IOException {
+  void testReadFilenameAndByteArrayValue() throws Exception {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);

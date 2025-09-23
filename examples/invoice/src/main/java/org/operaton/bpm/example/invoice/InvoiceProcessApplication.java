@@ -23,8 +23,6 @@ import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 
-import jakarta.servlet.annotation.WebListener;
-
 /**
  * Process Application exposing this application's resources the process engine.
  */
@@ -43,6 +41,6 @@ public class InvoiceProcessApplication extends JakartaServletProcessApplication 
   @Override
   public void createDeployment(String processArchiveName, DeploymentBuilder deploymentBuilder) {
     ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getProcessEngine("default");
-    InvoiceApplicationHelper.createDeployment(processArchiveName, processEngine, getProcessApplicationClassloader(), getReference());
+    InvoiceApplicationHelper.createDeployment(processEngine, getProcessApplicationClassloader(), getReference());
   }
 }

@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.model.xml.testmodel;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.validation.SchemaFactory;
+import org.xml.sax.SAXException;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.ModelImpl;
@@ -23,10 +27,6 @@ import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
 import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.DomDocument;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.validation.SchemaFactory;
 
 /**
  * @author Daniel Meyer

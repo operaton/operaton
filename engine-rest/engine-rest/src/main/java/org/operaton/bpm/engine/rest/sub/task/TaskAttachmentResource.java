@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.sub.task;
 
-import org.operaton.bpm.engine.rest.dto.task.AttachmentDto;
-import org.operaton.bpm.engine.rest.mapper.MultipartFormData;
-
+import java.io.InputStream;
+import java.util.List;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
-import java.io.InputStream;
-import java.util.List;
+
+import org.operaton.bpm.engine.rest.dto.task.AttachmentDto;
+import org.operaton.bpm.engine.rest.mapper.MultipartFormData;
 
 public interface TaskAttachmentResource {
 

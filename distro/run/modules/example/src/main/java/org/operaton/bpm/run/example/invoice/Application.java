@@ -17,12 +17,7 @@
 package org.operaton.bpm.run.example.invoice;
 
 import jakarta.annotation.PostConstruct;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.example.invoice.InvoiceApplicationHelper;
-import org.operaton.bpm.example.invoice.InvoiceProcessApplication;
-import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
-import org.operaton.bpm.spring.boot.starter.event.PostDeployEvent;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +26,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.example.invoice.InvoiceApplicationHelper;
+import org.operaton.bpm.example.invoice.InvoiceProcessApplication;
+import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
+import org.operaton.bpm.spring.boot.starter.event.PostDeployEvent;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 @ConditionalOnProperty(name = "enabled", havingValue = "true", prefix = OperatonBpmProperties.PREFIX + ".run.example")
 @Configuration
@@ -51,7 +53,7 @@ public class Application implements WebMvcConfigurer {
   @PostConstruct
   public void deployInvoice() {
     LOG.info("Invoice example started, creating deployment");
-    InvoiceApplicationHelper.createDeployment("invoiceProcessApplicationSpringBoot", processEngine, invoicePa.getClass().getClassLoader(), invoicePa.getReference());
+    InvoiceApplicationHelper.createDeployment(processEngine, invoicePa.getClass().getClassLoader(), invoicePa.getReference());
   }
 
   @EventListener

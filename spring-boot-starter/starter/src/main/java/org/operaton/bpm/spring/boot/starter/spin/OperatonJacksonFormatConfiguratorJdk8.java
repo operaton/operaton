@@ -18,6 +18,7 @@ package org.operaton.bpm.spring.boot.starter.spin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+
 import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.operaton.spin.spi.DataFormatConfigurator;
 

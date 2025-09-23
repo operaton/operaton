@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.dmn.engine.test.asserts;
 
+import java.util.ArrayList;
+
 import org.assertj.core.api.AbstractListAssert;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableResultImpl;
-
-import java.util.ArrayList;
 
 public class DmnDecisionTableResultAssert extends AbstractListAssert<DmnDecisionTableResultAssert, DmnDecisionTableResult, DmnDecisionRuleResult, DmnDecisionRuleResultAssert> {
 

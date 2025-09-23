@@ -16,21 +16,22 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.task.getvariable;
 
+import java.util.Collection;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+
+import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
+import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+
 import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.READ_TASK_VARIABLE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-
-import java.util.Collection;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
-import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
 /**
  * @author Yana.Vasileva

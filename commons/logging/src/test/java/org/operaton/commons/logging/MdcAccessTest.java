@@ -16,13 +16,13 @@
  */
 package org.operaton.commons.logging;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 class MdcAccessTest {
 
@@ -57,7 +57,7 @@ class MdcAccessTest {
 
   @Test
   void shouldNotPutNullKeyToMdc() {
-    assertThrows(IllegalArgumentException.class, () ->
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->
       // when
       MdcAccess.put(null, "bar"));
   }
@@ -74,7 +74,7 @@ class MdcAccessTest {
 
   @Test
   void shouldNotGetNullKeyFromMdc() {
-    assertThrows(IllegalArgumentException.class, () ->
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->
       // when
       MdcAccess.get(null));
   }
@@ -93,7 +93,7 @@ class MdcAccessTest {
 
   @Test
   void shouldNotRemoveNullKeyFromMdc() {
-    assertThrows(IllegalArgumentException.class, () ->
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->
       // when
       MdcAccess.remove(null));
   }

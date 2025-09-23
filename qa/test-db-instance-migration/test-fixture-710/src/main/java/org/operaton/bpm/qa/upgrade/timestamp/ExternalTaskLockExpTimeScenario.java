@@ -45,24 +45,21 @@ public class ExternalTaskLockExpTimeScenario extends AbstractTimestampMigrationS
   @DescribesScenario("initExternalTaskLockExpTime")
   @Times(1)
   public static ScenarioSetup initExternalTaskLockExpTime() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine processEngine, String scenarioName) {
+    return (processEngine, scenarioName) -> {
 
-        ClockUtil.setCurrentTime(TIMESTAMP);
+      ClockUtil.setCurrentTime(TIMESTAMP);
 
-        deployModel(processEngine, PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY, EXT_TASK_MODEL);
+      deployModel(processEngine, PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY, EXT_TASK_MODEL);
 
-        processEngine.getRuntimeService()
-          .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, scenarioName);
+      processEngine.getRuntimeService()
+        .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, scenarioName);
 
-        processEngine.getExternalTaskService()
-          .fetchAndLock(1, WORKER_ID)
-          .topic(TOPIC_NAME, LOCK_TIME)
-          .execute();
+      processEngine.getExternalTaskService()
+        .fetchAndLock(1, WORKER_ID)
+        .topic(TOPIC_NAME, LOCK_TIME)
+        .execute();
 
-        ClockUtil.reset();
-      }
+      ClockUtil.reset();
     };
   }
 }

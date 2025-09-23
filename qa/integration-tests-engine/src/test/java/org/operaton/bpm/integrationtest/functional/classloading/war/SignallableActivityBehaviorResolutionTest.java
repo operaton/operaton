@@ -16,22 +16,23 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.war;
 
-import static org.assertj.core.api.Assertions.fail;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleSignallableActivityBehavior;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -67,12 +68,7 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
   @OperateOnDeployment("clientDeployment")
   void testResolveClass() {
     // assert that we cannot load the delegate here:
-    try {
-      Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleSignallableActivityBehavior");
-      fail("CNFE expected");
-    }catch (ClassNotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleSignallableActivityBehavior")).isInstanceOf(ClassNotFoundException.class);
 
     // but the process can since it performs context switch to the process archive for execution
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testResolveClass");
@@ -88,15 +84,15 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 
-    Assertions.assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(1);
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assertions.assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(1);
 
     runtimeService.signal(processInstance.getId());
 
-    Assertions.assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
 
   }
 

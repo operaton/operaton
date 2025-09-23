@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.entity.repository;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
-
 import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +28,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.CaseDefinitionQuery;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
 
 /**
  * @author Roman Smirnov

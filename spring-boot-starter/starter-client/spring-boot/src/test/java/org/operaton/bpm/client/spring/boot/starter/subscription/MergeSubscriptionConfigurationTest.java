@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.subscription;
 
-import org.operaton.bpm.client.ExternalTaskClient;
-import org.operaton.bpm.client.spring.SpringTopicSubscription;
-import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
-import org.operaton.bpm.client.spring.boot.starter.impl.ClientAutoConfiguration;
-import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.FullSubscriptionConfiguration;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +24,24 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.spring.SpringTopicSubscription;
+import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
+import org.operaton.bpm.client.spring.boot.starter.impl.ClientAutoConfiguration;
+import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.FullSubscriptionConfiguration;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestPropertySource(properties = {
-    "operaton.bpm.client.subscriptions.topic-one.auto-open=false",
-    "operaton.bpm.client.subscriptions.topic-one.variable-names=var-one,var-two",
-    "operaton.bpm.client.subscriptions.topic-one.business-key=business-key",
-    "operaton.bpm.client.subscriptions.topic-one.process-definition-id=id-one",
+  "operaton.bpm.client.subscriptions.topic-one.auto-open=false",
+  "operaton.bpm.client.subscriptions.topic-one.variable-names=var-one,var-two",
+  "operaton.bpm.client.subscriptions.topic-one.business-key=business-key",
+  "operaton.bpm.client.subscriptions.topic-one.process-definition-id=id-one",
 })
 @ContextConfiguration(classes = {
-    ParsePropertiesHelper.TestConfig.class,
-    ClientAutoConfiguration.class,
-    FullSubscriptionConfiguration.class
+  ParsePropertiesHelper.TestConfig.class,
+  ClientAutoConfiguration.class,
+  FullSubscriptionConfiguration.class
 })
 @ExtendWith(SpringExtension.class)
 class MergeSubscriptionConfigurationTest extends ParsePropertiesHelper {

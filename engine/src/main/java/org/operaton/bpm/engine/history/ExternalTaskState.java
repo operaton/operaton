@@ -47,18 +47,20 @@ public interface ExternalTaskState {
     public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + stateCode;
-      return result;
+      return prime * result + stateCode;
     }
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
+      }
       ExternalTaskStateImpl other = (ExternalTaskStateImpl) obj;
       return stateCode == other.stateCode;
     }

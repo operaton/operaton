@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.entity.repository;
 
+import java.io.Serial;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -30,10 +34,6 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.repository.CaseDefinition;
-
-import java.io.Serial;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Roman Smirnov
@@ -108,7 +108,7 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
   @Override
   public void setVersion(int version) {
     this.version = version;
-    this.firstVersion = (this.version == 1);
+    this.firstVersion = this.version == 1;
   }
 
   @Override

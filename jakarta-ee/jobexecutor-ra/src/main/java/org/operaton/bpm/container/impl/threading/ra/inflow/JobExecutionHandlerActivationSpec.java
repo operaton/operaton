@@ -18,7 +18,6 @@ package org.operaton.bpm.container.impl.threading.ra.inflow;
 
 import java.io.Serial;
 import java.io.Serializable;
-
 import jakarta.resource.spi.Activation;
 import jakarta.resource.spi.ActivationSpec;
 import jakarta.resource.spi.InvalidPropertyException;
@@ -30,7 +29,7 @@ import jakarta.resource.spi.ResourceAdapter;
  * @author Daniel Meyer
  */
 @Activation(
-  messageListeners = { JobExecutionHandler.class }
+  messageListeners = {JobExecutionHandler.class}
 )
 public class JobExecutionHandlerActivationSpec implements ActivationSpec, Serializable {
 
@@ -40,14 +39,17 @@ public class JobExecutionHandlerActivationSpec implements ActivationSpec, Serial
   /** Please check #CAM-9811  */
   private String dummyPojo;
 
+  @Override
   public void validate() throws InvalidPropertyException {
     // nothing to do (the endpoint has no activation properties)
   }
 
+  @Override
   public ResourceAdapter getResourceAdapter() {
     return ra;
   }
 
+  @Override
   public void setResourceAdapter(ResourceAdapter ra) {
     this.ra = ra;
   }

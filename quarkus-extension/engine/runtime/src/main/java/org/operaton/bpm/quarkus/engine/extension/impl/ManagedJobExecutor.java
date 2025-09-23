@@ -19,10 +19,11 @@ package org.operaton.bpm.quarkus.engine.extension.impl;
 import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 
+import org.eclipse.microprofile.context.ManagedExecutor;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.eclipse.microprofile.context.ManagedExecutor;
 
 /**
  * A {@link JobExecutor} implementation that utilises a separate thread pool

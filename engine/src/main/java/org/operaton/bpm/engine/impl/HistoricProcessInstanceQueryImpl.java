@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmptyString;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
-
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +36,15 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
+import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmptyString;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
@@ -56,6 +56,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Serial private static final long serialVersionUID = 1L;
   private static final String MSG_ALREADY_QUERYING = "Already querying for historic process instance with another state";
   protected String processInstanceId;
+  protected String rootProcessInstanceId;
   protected String processDefinitionId;
   protected String processDefinitionName;
   protected String processDefinitionNameLike;
@@ -95,8 +96,8 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected String[] executedActivityIds;
   protected String[] activeActivityIds;
   protected String[] activityIds;
-  protected String state;
   protected String[] incidentIds;
+  protected Set<String> state = new HashSet<>();
 
   protected String caseInstanceId;
 
@@ -129,6 +130,13 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   public HistoricProcessInstanceQuery processInstanceIdNotIn(String... processInstanceIdNotIn){
     ensureNotNull("processInstanceIdNotIn", (Object[]) processInstanceIdNotIn);
     this.processInstanceIdNotIn = processInstanceIdNotIn;
+    return this;
+  }
+
+  @Override
+  public HistoricProcessInstanceQuery rootProcessInstanceId(String rootProcessInstanceId) {
+    ensureNotNull("Root process instance id", rootProcessInstanceId);
+    this.rootProcessInstanceId = rootProcessInstanceId;
     return this;
   }
 
@@ -571,6 +579,10 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return executedActivityBefore;
   }
 
+  public String getRootProcessInstanceId() {
+    return rootProcessInstanceId;
+  }
+
   public Date getExecutedJobAfter() {
     return executedJobAfter;
   }
@@ -679,7 +691,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return incidentStatus;
   }
 
-  public String getState() {
+  public Set<String> getState() {
     return state;
   }
 
@@ -872,36 +884,46 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
 
   @Override
   public HistoricProcessInstanceQuery active() {
-    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
-    state = HistoricProcessInstance.STATE_ACTIVE;
+    if (!isOrQueryActive) {
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
+    }
+    state.add(HistoricProcessInstance.STATE_ACTIVE);
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery suspended() {
-    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
-    state = HistoricProcessInstance.STATE_SUSPENDED;
+    if (!isOrQueryActive) {
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
+    }
+    state.add(HistoricProcessInstance.STATE_SUSPENDED);
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery completed() {
-    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
-    state = HistoricProcessInstance.STATE_COMPLETED;
+    if (!isOrQueryActive) {
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
+    }
+    state.add(HistoricProcessInstance.STATE_COMPLETED);
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery externallyTerminated() {
-    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
-    state = HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED;
+    if (!isOrQueryActive) {
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
+    }
+    state.add(HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED);
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery internallyTerminated() {
-    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
-    state = HistoricProcessInstance.STATE_INTERNALLY_TERMINATED;
+    if (!isOrQueryActive) {
+      ensureEmpty(BadUserRequestException.class, MSG_ALREADY_QUERYING, state);
+    }
+    state.add(HistoricProcessInstance.STATE_INTERNALLY_TERMINATED);
     return this;
   }
 

@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.engine.test;
 
-import org.operaton.bpm.engine.*;
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
-import org.operaton.bpm.engine.impl.test.RequiredDatabase;
-import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +25,14 @@ import org.junit.Assume;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+
+import org.operaton.bpm.engine.*;
+import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
+import org.operaton.bpm.engine.impl.test.RequiredDatabase;
+import org.operaton.bpm.engine.impl.test.TestHelper;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
 
 
 /**

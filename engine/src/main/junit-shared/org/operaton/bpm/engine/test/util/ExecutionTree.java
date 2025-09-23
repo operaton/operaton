@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.test.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.runtime.Execution;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Thorben Lindhauer
@@ -75,7 +75,7 @@ public class ExecutionTree implements Execution {
     List<ExecutionTree> executions = new ArrayList<>();
 
     for (ExecutionTree child : children) {
-      if (!child.isEventScope()) {
+      if (Boolean.FALSE.equals(child.isEventScope())) {
         if (child.getActivityId() != null) {
           if (activityId.equals(child.getActivityId())) {
             executions.add(child);

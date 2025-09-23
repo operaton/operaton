@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.qa.performance.engine.query;
 
-import org.operaton.bpm.engine.management.Metrics;
-import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
-import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.GenerateMetricsTask;
-import org.operaton.bpm.qa.performance.engine.steps.MetricIntervalStep;
-import org.operaton.bpm.qa.performance.engine.steps.MetricSumStep;
-
 import java.util.Arrays;
 import java.util.Date;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import org.operaton.bpm.engine.management.Metrics;
+import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
+import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.GenerateMetricsTask;
+import org.operaton.bpm.qa.performance.engine.steps.MetricIntervalStep;
+import org.operaton.bpm.qa.performance.engine.steps.MetricSumStep;
 
 /**
  *

@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertNotSame;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +23,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -54,6 +50,10 @@ import org.operaton.bpm.engine.test.util.Removable;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class IncidentTest {
 
@@ -149,12 +149,7 @@ class IncidentTest {
     var jobId = job.getId();
 
     // set job retries to 1 -> should fail again and a second incident should be created
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception was expected.");
-    } catch (ProcessEngineException e) {
-      // exception expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
@@ -179,7 +174,7 @@ class IncidentTest {
 
     String executionIdOfNestedFailingExecution = job.getExecutionId();
 
-    assertNotSame(processInstance.getId(), executionIdOfNestedFailingExecution);
+    assertThat(executionIdOfNestedFailingExecution).isNotSameAs(processInstance.getId());
 
     assertThat(incident.getId()).isNotNull();
     assertThat(incident.getIncidentTimestamp()).isNotNull();
@@ -454,12 +449,7 @@ class IncidentTest {
     String jobId = job.getId();
 
     while(0 != job.getRetries()) {
-      try {
-        managementService.executeJob(jobId);
-        fail("Exception expected");
-      } catch (Exception e) {
-        // expected
-      }
+      executeJobExpectingException(managementService, jobId);
       job = jobQuery.jobId(jobId).singleResult();
 
     }
@@ -517,7 +507,7 @@ class IncidentTest {
 
     Incident incident = runtimeService.createIncidentQuery().singleResult();
     assertThat(incident).isNotNull();
-    assertNotSame(processInstanceId, incident.getExecutionId());
+    assertThat(incident.getExecutionId()).isNotSameAs(processInstanceId);
 
     runtimeService.correlateMessage("Message");
 
@@ -555,13 +545,7 @@ class IncidentTest {
     var jobDefinitionId = job.getJobDefinitionId();
 
     // retries should still be 0 after execution this job again
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     job = managementService.createJobQuery().singleResult();
     assertThat(job.getRetries()).isZero();
@@ -570,21 +554,9 @@ class IncidentTest {
     assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
 
     // it should not be possible to set the retries to a negative number with the management service
-    try {
-      managementService.setJobRetries(jobId, -200);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
-    try {
-      managementService.setJobRetriesByJobDefinitionId(jobDefinitionId, -300);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.setJobRetriesByJobDefinitionId(jobDefinitionId, -300)).isInstanceOf(ProcessEngineException.class);
 
   }
 

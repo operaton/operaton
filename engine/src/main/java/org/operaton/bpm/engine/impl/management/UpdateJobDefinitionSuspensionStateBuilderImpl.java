@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.management;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
-
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -30,8 +27,11 @@ import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateBuil
 import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateSelectBuilder;
 import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateTenantBuilder;
 
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
+
 public class UpdateJobDefinitionSuspensionStateBuilderImpl
-    implements UpdateJobDefinitionSuspensionStateBuilder, UpdateJobDefinitionSuspensionStateSelectBuilder, UpdateJobDefinitionSuspensionStateTenantBuilder {
+  implements UpdateJobDefinitionSuspensionStateBuilder, UpdateJobDefinitionSuspensionStateSelectBuilder, UpdateJobDefinitionSuspensionStateTenantBuilder {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 

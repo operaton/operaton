@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.client.backoff;
 
+import java.util.List;
+
 import org.operaton.bpm.client.exception.BadRequestException;
 import org.operaton.bpm.client.exception.ConnectionLostException;
 import org.operaton.bpm.client.exception.EngineException;
 import org.operaton.bpm.client.exception.ExternalTaskClientException;
 import org.operaton.bpm.client.exception.UnknownHttpErrorException;
 import org.operaton.bpm.client.task.ExternalTask;
-
-import java.util.List;
 
 /**
  * <p>Provides a way to define a back off between fetch and lock requests.

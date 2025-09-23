@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -27,14 +30,10 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Here we test how the engine behaves, when more than one object serializers are available.
@@ -58,20 +57,20 @@ class JavaSerializationTest {
 
     // validate untyped value
     Object value = runtimeService.getVariable(instance.getId(), "simpleBean");
-    assertEquals(bean, value);
+    assertThat(value).isEqualTo(bean);
 
     // validate typed value
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
-    assertEquals(ValueType.OBJECT, typedValue.getType());
+    assertThat(typedValue.getType()).isEqualTo(ValueType.OBJECT);
 
-    assertTrue(typedValue.isDeserialized());
+    assertThat(typedValue.isDeserialized()).isTrue();
 
-    assertEquals(bean, typedValue.getValue());
-    assertEquals(bean, typedValue.getValue(JavaSerializable.class));
-    assertEquals(JavaSerializable.class, typedValue.getObjectType());
+    assertThat(typedValue.getValue()).isEqualTo(bean);
+    assertThat(typedValue.getValue(JavaSerializable.class)).isEqualTo(bean);
+    assertThat(typedValue.getObjectType()).isEqualTo(JavaSerializable.class);
 
-    assertEquals(Variables.SerializationDataFormats.JAVA.getName(), typedValue.getSerializationDataFormat());
-    assertEquals(JavaSerializable.class.getName(), typedValue.getObjectTypeName());
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(Variables.SerializationDataFormats.JAVA.getName());
+    assertThat(typedValue.getObjectTypeName()).isEqualTo(JavaSerializable.class.getName());
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)

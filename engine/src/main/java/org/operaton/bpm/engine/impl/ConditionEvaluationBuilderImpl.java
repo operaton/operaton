@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +26,8 @@ import org.operaton.bpm.engine.runtime.ConditionEvaluationBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class ConditionEvaluationBuilderImpl implements ConditionEvaluationBuilder {
   protected CommandExecutor commandExecutor;

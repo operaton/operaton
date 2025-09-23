@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

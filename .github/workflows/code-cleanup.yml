@@ -1,0 +1,52 @@
+name: Code Cleanup
+
+on:
+  schedule:
+    - cron: "30 3 * * *"     # Runs at 3:30 AM UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - name: Build
+        run: .devenv/scripts/build/build.sh --profile=max --skip-tests
+      - name: Code Cleanup
+        run: |
+          .devenv/scripts/maintenance/code-cleanup.sh --cleanups=imports,code
+          .devenv/scripts/maintenance/code-cleanup.sh --cleanups=tests
+      - name: Verification Build
+        run: .devenv/scripts/build/build.sh --profile=max --skip-tests
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e #v7.0.8
+        with:
+          title: '[bot] Code cleanup'
+          commit-message: 'refactor(cleanup): Apply coding rules'
+          body: |
+              ## Code Cleanup
+  
+              This PR cleans up the code using OpenRewrite recipes configured in [`rewrite.yml`](https://github.com/operaton/operaton/blob/main/rewrite.yml).
+          branch: 'refactor/automatic-code-cleanup'
+          labels: refactoring
+          milestone: '1.0.0-rc-1'
+          reviewers: kthoms

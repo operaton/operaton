@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test.application;
 
-import org.operaton.bpm.application.PostDeploy;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
-
 import java.io.Serial;
 
 import org.springframework.beans.BeansException;
@@ -28,6 +24,10 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
+
+import org.operaton.bpm.application.PostDeploy;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
 
 public class PostDeployWithNestedContext extends SpringProcessApplication {
 

@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.builtin;
 
+import org.slf4j.Logger;
+
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.slf4j.Logger;
 
 public class TestTaskListener implements TaskListener {
 

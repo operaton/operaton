@@ -16,6 +16,17 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -32,20 +43,9 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
 
-import java.io.Serial;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static java.lang.Boolean.TRUE;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.lang.Boolean.TRUE;
 
 /**
  * @author Joram Barrez
@@ -143,6 +143,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected String key;
   protected String keyLike;
   protected String[] taskDefinitionKeys;
+  protected String[] taskDefinitionKeyNotIn;
   protected String processDefinitionKey;
   protected String[] processDefinitionKeys;
   protected String processDefinitionId;
@@ -499,7 +500,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   @Override
   public TaskQuery includeAssignedTasks() {
     if (candidateUser == null && candidateGroup == null && candidateGroupLike == null && candidateGroups == null
-        && !isWithCandidateGroups() && !isWithoutCandidateGroups() && !isWithCandidateUsers() && !isWithoutCandidateUsers()
+        && Boolean.FALSE.equals(isWithCandidateGroups()) && Boolean.FALSE.equals(isWithoutCandidateGroups()) && Boolean.FALSE.equals(isWithCandidateUsers()) && Boolean.FALSE.equals(isWithoutCandidateUsers())
         && !expressions.containsKey(KEY_TASK_CANDIDATE_USER) && !expressions.containsKey(KEY_TASK_CANDIDATE_GROUP)
         && !expressions.containsKey(KEY_TASK_CANDIDATE_GROUP_IN)) {
       throw new ProcessEngineException("Invalid query usage: candidateUser, candidateGroup, candidateGroupLike, candidateGroupIn, withCandidateGroups, withoutCandidateGroups, withCandidateUsers, withoutCandidateUsers has to be called before 'includeAssignedTasks'.");
@@ -667,6 +668,12 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskDefinitionKeyIn(String... taskDefinitionKeys) {
     this.taskDefinitionKeys = taskDefinitionKeys;
   	return this;
+  }
+
+  @Override
+  public TaskQuery taskDefinitionKeyNotIn(String... taskDefinitionKeyNotIn) {
+    this.taskDefinitionKeyNotIn = taskDefinitionKeyNotIn;
+    return this;
   }
 
   @Override
@@ -1086,6 +1093,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       || CompareUtil.areNotInAscendingOrder(followUpAfter, followUpDate, followUpBefore)
       || CompareUtil.areNotInAscendingOrder(createTimeAfter, createTime, createTimeBefore)
       || CompareUtil.elementIsNotContainedInArray(key, taskDefinitionKeys)
+      || CompareUtil.elementIsContainedInArray(key, taskDefinitionKeyNotIn)
       || CompareUtil.elementIsNotContainedInArray(processDefinitionKey, processDefinitionKeys)
       || CompareUtil.elementIsNotContainedInArray(processInstanceBusinessKey, processInstanceBusinessKeys);
   }
@@ -1567,7 +1575,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   public String getDelegationStateString() {
-    return (delegationState!=null ? delegationState.toString() : null);
+    return delegationState!=null ? delegationState.toString() : null;
   }
 
   public String getCandidateUser() {
@@ -1660,6 +1668,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   public String[] getKeys() {
     return taskDefinitionKeys;
+  }
+
+  public String[] getKeyNotIn() {
+    return taskDefinitionKeyNotIn;
   }
 
   public String getKeyLike() {
@@ -1788,6 +1800,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   public String[] getTaskDefinitionKeys() {
     return taskDefinitionKeys;
+  }
+
+  public String[] getTaskDefinitionKeyNotIn() {
+    return taskDefinitionKeyNotIn;
   }
 
   public boolean getIsTenantIdSet() {
@@ -2087,6 +2103,13 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       extendedQuery.taskDefinitionKeyIn(this.getKeys());
     }
 
+    if (extendingQuery.getKeyNotIn() != null) {
+      extendedQuery.taskDefinitionKeyNotIn(extendingQuery.getKeyNotIn());
+    }
+    else if (this.getKeyNotIn() != null) {
+      extendedQuery.taskDefinitionKeyNotIn(this.getKeyNotIn());
+    }
+
     if (extendingQuery.getParentTaskId() != null) {
       extendedQuery.taskParentTaskId(extendingQuery.getParentTaskId());
     }
@@ -2354,8 +2377,12 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
     @Override
     public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
 
       TaskQueryVariableValue other = ((TaskQueryVariableValueComparable) o).getVariableValue();
 
@@ -2368,8 +2395,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     public int hashCode() {
       int result = variableValue.getName() != null ? variableValue.getName().hashCode() : 0;
       result = 31 * result + (variableValue.isProcessInstanceVariable() ? 1 : 0);
-      result = 31 * result + (variableValue.isLocal() ? 1 : 0);
-      return result;
+      return 31 * result + (variableValue.isLocal() ? 1 : 0);
     }
 
   }

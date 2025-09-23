@@ -16,6 +16,10 @@
  */
 package org.operaton.qa.impl;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
@@ -24,10 +28,6 @@ import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.management.DatabasePurgeReport;
 import org.operaton.bpm.engine.impl.management.PurgeReport;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.CachePurgeReport;
-
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Daniel Meyer

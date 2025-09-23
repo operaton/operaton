@@ -16,119 +16,98 @@
  */
 package org.operaton.bpm.rest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.util.EntityUtils;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+
 import org.operaton.bpm.AbstractWebIntegrationTest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
+import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.core.HttpHeaders;
-import jakarta.ws.rs.core.MediaType;
-
-public class RestJaxRs2IT extends AbstractWebIntegrationTest {
+@SuppressWarnings("java:S5960")
+class RestJaxRs2IT extends AbstractWebIntegrationTest {
 
   private static final String ENGINE_DEFAULT_PATH = "engine/default";
   private static final String FETCH_AND_LOCK_PATH = ENGINE_DEFAULT_PATH + "/external-task/fetchAndLock";
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getRestCtxPath());
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldUseJaxRs2Artifact() throws JsonProcessingException {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldUseJaxRs2Artifact() {
     Map<String, Object> payload = new HashMap<>();
     payload.put("workerId", "aWorkerId");
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
 
-    target = client.target(appBasePath + FETCH_AND_LOCK_PATH);
+    HttpResponse<JsonNode> response = Unirest.post(appBasePath + FETCH_AND_LOCK_PATH)
+            .header(ACCEPT, APPLICATION_JSON)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .body(payload)
+            .asJson();
 
-    // Make POST request with the payload
-    response = target.request()
-            .accept(MediaType.APPLICATION_JSON)
-            .post(Entity.entity(payload, MediaType.APPLICATION_JSON));
-
-    assertEquals(400, response.getStatus());
-    ObjectMapper objectMapper = new ObjectMapper();
-    JsonNode responseJson = objectMapper.readTree(response.getEntity().toString());
-    String responseMessage = responseJson.get("message").asText();
-    assertTrue("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds".equals(responseMessage));
-    response.close();
+    assertThat(response.getStatus()).isEqualTo(400);
+    String responseMessage = response.getBody().getObject().get("message").toString();
+    assertThat(responseMessage).isEqualTo("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds");
   }
 
   @Test
-  public void shouldPerform500ConcurrentRequests() throws InterruptedException, ExecutionException {
-    PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
-    final CloseableHttpClient httpClient = HttpClients.custom()
-      .setConnectionManager(cm)
-      .build();
+  void shouldPerform500ConcurrentRequests() throws Exception {
+    Callable<String> performRequest = () -> {
+      Map<String, Object> requestBody = new HashMap<>();
+      requestBody.put("workerId", "aWorkerId");
+      requestBody.put("asyncResponseTimeout", 1000);
 
-    Callable<String> performRequest = new Callable<>() {
+      HttpResponse<String> response = Unirest.post(appBasePath + FETCH_AND_LOCK_PATH)
+              .header(CONTENT_TYPE, APPLICATION_JSON)
+              .body(requestBody)
+              .asString();
 
-      @Override
-      public String call() throws IOException {
-        HttpPost request = new HttpPost(appBasePath + FETCH_AND_LOCK_PATH);
-        request.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-        StringEntity stringEntity = new StringEntity("{ \"workerId\": \"aWorkerId\", \"asyncResponseTimeout\": 1000 }");
-        request.setEntity(stringEntity);
-
-        var response = httpClient.execute(request, HttpClientContext.create());
-        String responseBody = null;
-        try {
-          HttpEntity entity = response.getEntity();
-          responseBody = EntityUtils.toString(entity);
-          request.releaseConnection();
-        } finally {
-          response.close();
-        }
-
-        return responseBody;
-      }
-
+      return response.getBody();
     };
 
     int requestsCount = 500;
     ExecutorService service = Executors.newFixedThreadPool(requestsCount);
 
-    List<Callable<String>> requests = new ArrayList<>();
-    for (int i = 0; i < requestsCount; i++) {
-      requests.add(performRequest);
-    }
+    try {
+      List<Callable<String>> requests = new ArrayList<>();
+      for (int i = 0; i < requestsCount; i++) {
+        requests.add(performRequest);
+      }
 
-    List<Future<String>> futures = service.invokeAll(requests);
-    service.shutdown();
-    service.awaitTermination(1, TimeUnit.HOURS);
+      List<Future<String>> futures = service.invokeAll(requests);
+      service.shutdown();
+      boolean terminated = service.awaitTermination(1, TimeUnit.HOURS);
+      if (!terminated) {
+        service.shutdownNow();
+      }
 
-    for (Future<String> future : futures) {
-      assertEquals(future.get(), "[]");
+      for (Future<String> future : futures) {
+        assertThat(future.get()).isEqualTo("[]");
+      }
+    } finally {
+      if (!service.isShutdown()) {
+        service.shutdown();
+      }
     }
   }
 

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
 import org.operaton.bpm.engine.management.MetricIntervalValue;
@@ -116,8 +117,7 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity, Seri
     int hash = 7;
     hash = 67 * hash + (this.timestamp != null ? this.timestamp.hashCode() : 0);
     hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
-    hash = 67 * hash + (this.reporter != null ? this.reporter.hashCode() : 0);
-    return hash;
+    return 67 * hash + (this.reporter != null ? this.reporter.hashCode() : 0);
   }
 
   @Override
@@ -132,16 +132,13 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity, Seri
       return false;
     }
     final MetricIntervalEntity other = (MetricIntervalEntity) obj;
-    if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+    if (this.name == null ? (other.name != null) : !this.name.equals(other.name)) {
       return false;
     }
-    if ((this.reporter == null) ? (other.reporter != null) : !this.reporter.equals(other.reporter)) {
+    if (this.reporter == null ? (other.reporter != null) : !this.reporter.equals(other.reporter)) {
       return false;
     }
-    if (this.timestamp != other.timestamp && (this.timestamp == null || !this.timestamp.equals(other.timestamp))) {
-      return false;
-    }
-    return true;
+    return !(this.timestamp != other.timestamp && (this.timestamp == null || !this.timestamp.equals(other.timestamp)));
   }
 
 }

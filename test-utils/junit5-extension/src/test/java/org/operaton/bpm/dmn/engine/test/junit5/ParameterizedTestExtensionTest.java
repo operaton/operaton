@@ -15,16 +15,17 @@
  */
 package org.operaton.bpm.dmn.engine.test.junit5;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
+
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test uses the ParameterizedTestExtension and demonstrates that the

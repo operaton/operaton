@@ -61,13 +61,9 @@ public final class ProcessWithExternalTaskScenario {
   @DescribesScenario("init")
   @Times(1)
   public static ScenarioSetup startProcess() {
-    return new ScenarioSetup() {
-
-      @Override
-      public void execute(ProcessEngine engine, String scenarioName) {
-        deploy(engine, scenarioName);
-        engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
-      }
+    return (engine, scenarioName) -> {
+      deploy(engine, scenarioName);
+      engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
     };
   }
 
@@ -75,17 +71,13 @@ public final class ProcessWithExternalTaskScenario {
   @DescribesScenario("init.fetch")
   @Times(1)
   public static ScenarioSetup startProcessWithFetch() {
-    return new ScenarioSetup() {
+    return (engine, scenarioName) -> {
+      deploy(engine, scenarioName);
 
-      @Override
-      public void execute(ProcessEngine engine, String scenarioName) {
-        deploy(engine, scenarioName);
-
-        engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
-        engine.getExternalTaskService().fetchAndLock(1, scenarioName)
-                                       .topic(scenarioName, LOCK_TIME)
-                                       .execute();
-      }
+      engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
+      engine.getExternalTaskService().fetchAndLock(1, scenarioName)
+        .topic(scenarioName, LOCK_TIME)
+        .execute();
     };
   }
 }

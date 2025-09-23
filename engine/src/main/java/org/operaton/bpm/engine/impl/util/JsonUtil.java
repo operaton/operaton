@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
-
 import java.util.*;
 import java.util.function.Supplier;
 
 import com.google.gson.*;
 import com.google.gson.internal.LazilyParsedNumber;
+
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 
 /**
  * @author Tassilo Weidner

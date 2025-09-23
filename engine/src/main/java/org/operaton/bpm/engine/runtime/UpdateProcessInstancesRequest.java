@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.runtime;
 
 import java.util.List;
+
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 
 public interface UpdateProcessInstancesRequest {

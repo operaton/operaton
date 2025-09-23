@@ -25,7 +25,6 @@ import org.operaton.bpm.model.xml.testmodel.instance.FlyingAnimal;
 /**
  * @author Daniel Meyer
  */
-@SuppressWarnings("resource")
 public class TestResultFormatter implements ValidationResultFormatter {
 
   public static final String OMITTED_RESULTS_SUFFIX_FORMAT = "and %d more errors and/or warnings";
@@ -35,9 +34,9 @@ public class TestResultFormatter implements ValidationResultFormatter {
     Formatter formatter = new Formatter(writer);
 
     if (element instanceof FlyingAnimal flyingAnimal) {
-      formatter.format("%s\n", flyingAnimal.getId());
+      formatter.format("%s%n", flyingAnimal.getId());
     } else {
-      formatter.format("%s\n", element.getElementType().getTypeName());
+      formatter.format("%s%n", element.getElementType().getTypeName());
     }
 
     formatter.flush();
@@ -46,7 +45,7 @@ public class TestResultFormatter implements ValidationResultFormatter {
   @Override
   public void formatResult(StringWriter writer, ValidationResult result) {
     new Formatter(writer)
-        .format("\t%s (%d): %s\n", result.getType(), result.getCode(), result.getMessage())
+        .format("\t%s (%d): %s%n", result.getType(), result.getCode(), result.getMessage())
         .flush();
   }
 

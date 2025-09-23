@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.cdi.annotation.event;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
 import jakarta.inject.Qualifier;
 
 /**

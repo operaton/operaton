@@ -16,23 +16,24 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import org.operaton.bpm.engine.rest.MetricsRestService;
-import org.operaton.bpm.engine.rest.sub.metrics.MetricsResource;
-import org.operaton.bpm.engine.rest.sub.metrics.MetricsResourceImpl;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import org.operaton.bpm.engine.management.MetricsQuery;
-import org.operaton.bpm.engine.rest.dto.metrics.MetricsIntervalResultDto;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.management.MetricIntervalValue;
+import org.operaton.bpm.engine.management.MetricsQuery;
+import org.operaton.bpm.engine.rest.MetricsRestService;
 import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
 import org.operaton.bpm.engine.rest.dto.converter.IntegerConverter;
 import org.operaton.bpm.engine.rest.dto.converter.LongConverter;
+import org.operaton.bpm.engine.rest.dto.metrics.MetricsIntervalResultDto;
+import org.operaton.bpm.engine.rest.sub.metrics.MetricsResource;
+import org.operaton.bpm.engine.rest.sub.metrics.MetricsResourceImpl;
 
 /**
  * @author Daniel Meyer

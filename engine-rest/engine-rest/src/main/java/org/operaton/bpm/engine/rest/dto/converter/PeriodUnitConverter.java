@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.dto.converter;
 
+import jakarta.ws.rs.core.Response.Status;
+
 import org.operaton.bpm.engine.query.PeriodUnit;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-
-import jakarta.ws.rs.core.Response.Status;
 
 /**
  * @author Roman Smirnov

@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Resources.GROUP;
-import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.checkPagingResults;
-import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testGroupPaging;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -42,6 +36,13 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.identity.ldap.util.LdapTestExtension;
+
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Resources.GROUP;
+import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.checkPagingResults;
+import static org.operaton.bpm.identity.ldap.util.LdapTestUtilities.testGroupPaging;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 class LdapGroupQueryTest {

@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Thorben Lindhauer
  *
  */
-public class MessageReceiveModels {
+public final class MessageReceiveModels {
 
   public static final String MESSAGE_NAME = "Message";
 
@@ -61,4 +61,7 @@ public class MessageReceiveModels {
     .userTask("userTask")
     .endEvent()
     .done();
+
+  private MessageReceiveModels() {
+  }
 }

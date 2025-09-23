@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.database;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -28,17 +25,19 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.PersistenceSession;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
@@ -103,16 +102,13 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
       if (databaseTablePrefix.isEmpty()) {
         processEngineConfiguration
           .getCommandExecutorSchemaOperations()
-          .execute(new Command<Object>() {
-          @Override
-          public Object execute(CommandContext commandContext) {
-              PersistenceSession persistenceSession = commandContext.getSession(PersistenceSession.class);
-              persistenceSession.dbSchemaDrop();
-              persistenceSession.dbSchemaCreate();
-              HistoryLevelSetupCommand.dbCreateHistoryLevel(commandContext);
-              return null;
-            }
-          });
+          .execute(commandContext -> {
+          PersistenceSession persistenceSession = commandContext.getSession(PersistenceSession.class);
+          persistenceSession.dbSchemaDrop();
+          persistenceSession.dbSchemaCreate();
+          HistoryLevelSetupCommand.dbCreateHistoryLevel(commandContext);
+          return null;
+        });
       }
       fail(outputMessage.toString());
     }

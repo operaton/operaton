@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_REQUIRED_INPUT;
-
 import org.operaton.bpm.model.dmn.instance.DmnElementReference;
 import org.operaton.bpm.model.dmn.instance.RequiredInputReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_REQUIRED_INPUT;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 
 public class RequiredInputReferenceImpl extends DmnElementReferenceImpl implements RequiredInputReference {
 

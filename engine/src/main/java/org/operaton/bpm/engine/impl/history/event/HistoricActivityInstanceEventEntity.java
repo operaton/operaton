@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
 
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -29,6 +26,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.joda.time.DateTime;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -42,7 +41,9 @@ import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.impl.util.QueryMaxResultsLimitUtil;
 import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.query.QueryProperty;
-import org.joda.time.DateTime;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
 
 /**
@@ -79,7 +80,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     // all queries that are created with a dedicated command executor
     // are treated as adhoc queries (i.e. queries not created in the context
     // of a command)
-    addValidator(AdhocQueryValidator.<AbstractQuery<?, ?>>get());
+     addValidator(AdhocQueryValidator.get());
   }
 
   public AbstractQuery<T, U> setCommandExecutor(CommandExecutor commandExecutor) {
@@ -212,7 +213,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   public long evaluateExpressionsAndExecuteCount(CommandContext commandContext) {
     validate();
     evaluateExpressions();
-    return !hasExcludingConditions() ? executeCount(commandContext) : 0l;
+    return hasExcludingConditions() ? 0l : executeCount(commandContext);
   }
 
   public abstract long executeCount(CommandContext commandContext);
@@ -221,7 +222,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     checkMaxResultsLimit();
     validate();
     evaluateExpressions();
-    return !hasExcludingConditions() ? executeList(commandContext, page) : new ArrayList<>();
+    return hasExcludingConditions() ? new ArrayList<>() : executeList(commandContext, page);
   }
 
   /**
@@ -391,7 +392,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   public List<String> evaluateExpressionsAndExecuteIdsList(CommandContext commandContext) {
     validate();
     evaluateExpressions();
-    return !hasExcludingConditions() ? executeIdsList(commandContext) : new ArrayList<>();
+    return hasExcludingConditions() ? new ArrayList<>() : executeIdsList(commandContext);
   }
 
   public List<String> executeIdsList(CommandContext commandContext) {
@@ -401,7 +402,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   public List<ImmutablePair<String, String>> evaluateExpressionsAndExecuteDeploymentIdMappingsList(CommandContext commandContext) {
     validate();
     evaluateExpressions();
-    return !hasExcludingConditions() ? executeDeploymentIdMappingsList(commandContext) : new ArrayList<>();
+    return hasExcludingConditions() ? new ArrayList<>() : executeDeploymentIdMappingsList(commandContext);
   }
 
   public List<ImmutablePair<String, String>> executeDeploymentIdMappingsList(CommandContext commandContext) {

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.ProcessEngineLogger.CMD_LOGGER;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -36,8 +34,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.repository.CalledProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.CallableElementUtil;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.CalledProcessDefinition;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
+
+import static org.operaton.bpm.engine.impl.ProcessEngineLogger.CMD_LOGGER;
 
 public class GetStaticCalledProcessDefinitionCmd implements Command<Collection<CalledProcessDefinition>> {
 

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.helper;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.variable.impl.value.ObjectValueImpl;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 

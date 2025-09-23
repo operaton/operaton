@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.HashSet;
@@ -29,6 +26,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -51,6 +49,9 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class DeploymentAwareJobExecutorTest {
 
@@ -226,7 +227,7 @@ class DeploymentAwareJobExecutorTest {
         .setProcessEngineName(OTHER_PROCESS_ENGINE_NAME)
         .buildProcessEngine();
     } catch (RuntimeException ex) {
-      if (ex.getCause() != null && ex.getCause() instanceof FileNotFoundException) {
+      if (ex.getCause() instanceof FileNotFoundException) {
         otherProcessEngine = ProcessEngineConfiguration
           .createProcessEngineConfigurationFromResource("activiti.cfg.xml")
           .setProcessEngineName(OTHER_PROCESS_ENGINE_NAME)

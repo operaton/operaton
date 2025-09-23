@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionResultException;
@@ -23,12 +29,6 @@ import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -52,7 +52,8 @@ class DmnDecisionResultTest extends DmnEngineTest {
     assertThat(results.getFirstResult()).isNull();
     assertThat(results.getSingleResult()).isNull();
 
-    assertThat(results.getSingleEntry() == null).isTrue();
+    Object result = results.getSingleEntry();
+    assertThat(result).isNull();
     assertThat((Object) results.getSingleEntryTyped()).isNull();
   }
 
@@ -109,7 +110,8 @@ class DmnDecisionResultTest extends DmnEngineTest {
 
     assertNoOutputValue(decisionResult.getFirstResult());
 
-    assertThat(decisionResult.getSingleEntry() == null).isTrue();
+    Object result = decisionResult.getSingleEntry();
+    assertThat(result).isNull();
   }
 
   @Test

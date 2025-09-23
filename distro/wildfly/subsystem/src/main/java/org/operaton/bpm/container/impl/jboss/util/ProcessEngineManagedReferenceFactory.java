@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.container.impl.jboss.util;
 
-import org.operaton.bpm.engine.ProcessEngine;
 import org.jboss.as.naming.ManagedReference;
 import org.jboss.as.naming.ManagedReferenceFactory;
+
+import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * @author Daniel Meyer
@@ -32,12 +33,15 @@ public class ProcessEngineManagedReferenceFactory implements ManagedReferenceFac
     this.processEngine = processEngine;
   }
 
+  @Override
   public ManagedReference getReference() {
     return new ManagedReference() {
 
+      @Override
       public void release() {
       }
 
+      @Override
       public Object getInstance() {
         return processEngine;
       }

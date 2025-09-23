@@ -43,24 +43,18 @@ public final class AsyncSequentialMultiInstanceScenario {
   @DescribesScenario("initAsyncBeforeSubprocess")
   @Times(4)
   public static ScenarioSetup initializeAsyncBeforeSubprocess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("AsyncBeforeSequentialMultiInstanceSubprocess", scenarioName);
-      }
-    };
+    return (engine, scenarioName) ->
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("AsyncBeforeSequentialMultiInstanceSubprocess", scenarioName);
   }
 
   @DescribesScenario("initAsyncBeforeTask")
   @Times(4)
   public static ScenarioSetup initializeAsyncBeforeTask() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("AsyncBeforeSequentialMultiInstanceTask", scenarioName);
-      }
-    };
+    return (engine, scenarioName) ->
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("AsyncBeforeSequentialMultiInstanceTask", scenarioName);
   }
 }

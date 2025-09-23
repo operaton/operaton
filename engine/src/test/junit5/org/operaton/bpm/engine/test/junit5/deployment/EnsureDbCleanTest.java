@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.junit5.deployment;
 
-import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -26,6 +24,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.platform.testkit.engine.EngineExecutionResults;
 import org.junit.platform.testkit.engine.EngineTestKit;
 import org.junit.platform.testkit.engine.Events;
+
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectMethod;

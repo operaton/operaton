@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.admin;
 
+import java.util.Set;
+
 import org.operaton.bpm.admin.plugin.spi.impl.AbstractAdminPlugin;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.SsoLogoutPluginConstants;
-
-import java.util.Set;
 
 public class SsoLogoutAdminPlugin extends AbstractAdminPlugin {
 

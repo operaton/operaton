@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
@@ -38,6 +37,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class MultiTenancyRepositoryServiceTest {
 
@@ -152,6 +153,35 @@ class MultiTenancyRepositoryServiceTest {
     // then a new deployment is created
     assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(2L);
   }
+
+  @Test
+  void deploymentWithDuplicateFilteringForDifferentTenantsRepeated() {
+    // given: a deployment with tenant ID
+    createDeploymentBuilder()
+        .enableDuplicateFiltering(false)
+        .name("twice")
+        .tenantId(TENANT_ONE)
+        .deploy();
+
+    // if the same process is deployed with the another tenant ID
+    createDeploymentBuilder()
+        .enableDuplicateFiltering(false)
+        .name("twice")
+        .tenantId(TENANT_TWO)
+        .deploy();
+
+    // and then with the first tenant ID again
+    createDeploymentBuilder()
+        .enableDuplicateFiltering(false)
+        .name("twice")
+        .tenantId(TENANT_ONE)
+        .deploy();
+
+    // then only 2 deployment is created
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(2L);
+  }
+
+
 
   @Test
   void deploymentWithDuplicateFilteringIgnoreDeploymentForNoTenant() {

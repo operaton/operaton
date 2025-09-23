@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.test.standalone.testing;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Checks if the test is ignored than the current history level is lower than

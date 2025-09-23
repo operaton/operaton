@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
@@ -23,10 +27,6 @@ import org.operaton.bpm.engine.history.SetRemovalTimeSelectModeForHistoricDecisi
 import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricDecisionInstancesBuilder;
 import org.operaton.bpm.engine.impl.cmd.batch.removaltime.SetRemovalTimeToHistoricDecisionInstancesCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
@@ -114,7 +114,7 @@ public class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements Set
   public enum Mode {
     CALCULATED_REMOVAL_TIME,
     ABSOLUTE_REMOVAL_TIME,
-    CLEARED_REMOVAL_TIME;
+    CLEARED_REMOVAL_TIME
   }
 
   public boolean isHierarchical() {

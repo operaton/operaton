@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.quarkus.engine.test.helper;
 
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.function.Supplier;
+
 import io.quarkus.arc.Arc;
 import io.quarkus.test.QuarkusUnitTest;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.function.Supplier;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.test.TestHelper;
+import org.operaton.bpm.engine.test.Deployment;
 
 public class ProcessEngineAwareExtension extends QuarkusUnitTest {
 

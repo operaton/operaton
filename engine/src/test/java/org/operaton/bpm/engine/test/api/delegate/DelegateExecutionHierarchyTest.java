@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.test.api.delegate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the execution hierarchy methods exposed in delegate execution

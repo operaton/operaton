@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
-import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 
 @SpringBootApplication
 @EnableProcessApplication

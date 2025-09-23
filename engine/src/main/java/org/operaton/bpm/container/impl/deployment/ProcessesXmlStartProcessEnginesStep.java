@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
-import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_XML_RESOURCES;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +24,8 @@ import java.util.Map;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
+
+import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_XML_RESOURCES;
 
 /**
  * <p> Retrieves the List of ProcessEngines from an attached {@link ProcessesXml}.</p>

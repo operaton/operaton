@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.engine.test.bpmn.subprocess;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.impl.persistence.entity.ActivityInstanceImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -39,7 +38,9 @@ import org.operaton.bpm.engine.test.bpmn.subprocess.util.GetActInstanceDelegate;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
+import org.operaton.commons.utils.CollectionUtil;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Joram Barrez
@@ -506,6 +507,23 @@ class SubProcessTest {
   void testNestedSubProcessesWithoutEndEvents() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testNestedSubProcessesWithoutEndEvents");
     testRule.assertProcessEnded(pi.getId());
+  }
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml", "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+  @Test
+  void testInstanceSubProcessInstanceIdSet() {
+    // given
+    ProcessInstance pi = runtimeService.startProcessInstanceByKey("nestedSimpleSubProcess");
+    ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(pi.getProcessInstanceId());
+    ActivityInstance subProcessInstance = rootActivityInstance.getChildActivityInstances()[0];
+
+    // when
+    String subProcessInstanceId = ((ActivityInstanceImpl) subProcessInstance).getSubProcessInstanceId();
+
+    // then
+    assertThat(subProcessInstanceId).isNotNull();
+    ProcessInstance subProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("simpleSubProcess").singleResult();
+    assertThat(subProcess.getId()).isEqualTo(subProcessInstanceId);
   }
 
   @Deployment

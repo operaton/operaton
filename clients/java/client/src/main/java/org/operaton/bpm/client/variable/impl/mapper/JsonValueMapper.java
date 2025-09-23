@@ -27,6 +27,7 @@ public class JsonValueMapper extends PrimitiveValueMapper<JsonValue> {
     super(ClientValues.JSON);
   }
 
+  @Override
   public JsonValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return ClientValues.jsonValue((String) untypedValue.getValue());
   }

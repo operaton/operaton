@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.quarkus.engine.test.lookup;
 
-import io.quarkus.test.QuarkusUnitTest;
-import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
-
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.enterprise.inject.Specializes;
 import jakarta.inject.Named;
+
+import io.quarkus.test.QuarkusUnitTest;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
+import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
+import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

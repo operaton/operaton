@@ -16,52 +16,24 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import static org.operaton.bpm.engine.rest.util.EngineUtil.getProcessEngineProvider;
-
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriBuilder;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import org.operaton.bpm.engine.rest.AuthorizationRestService;
-import org.operaton.bpm.engine.rest.BatchRestService;
-import org.operaton.bpm.engine.rest.CaseDefinitionRestService;
-import org.operaton.bpm.engine.rest.CaseExecutionRestService;
-import org.operaton.bpm.engine.rest.CaseInstanceRestService;
-import org.operaton.bpm.engine.rest.ConditionRestService;
-import org.operaton.bpm.engine.rest.DecisionDefinitionRestService;
-import org.operaton.bpm.engine.rest.DecisionRequirementsDefinitionRestService;
-import org.operaton.bpm.engine.rest.DeploymentRestService;
-import org.operaton.bpm.engine.rest.EventSubscriptionRestService;
-import org.operaton.bpm.engine.rest.ExecutionRestService;
-import org.operaton.bpm.engine.rest.ExternalTaskRestService;
-import org.operaton.bpm.engine.rest.FilterRestService;
-import org.operaton.bpm.engine.rest.GroupRestService;
-import org.operaton.bpm.engine.rest.IdentityRestService;
-import org.operaton.bpm.engine.rest.IncidentRestService;
-import org.operaton.bpm.engine.rest.JobDefinitionRestService;
-import org.operaton.bpm.engine.rest.JobRestService;
-import org.operaton.bpm.engine.rest.MessageRestService;
-import org.operaton.bpm.engine.rest.MetricsRestService;
-import org.operaton.bpm.engine.rest.MigrationRestService;
-import org.operaton.bpm.engine.rest.ModificationRestService;
-import org.operaton.bpm.engine.rest.ProcessDefinitionRestService;
-import org.operaton.bpm.engine.rest.ProcessInstanceRestService;
-import org.operaton.bpm.engine.rest.SchemaLogRestService;
-import org.operaton.bpm.engine.rest.SignalRestService;
-import org.operaton.bpm.engine.rest.TaskRestService;
-import org.operaton.bpm.engine.rest.TelemetryRestService;
-import org.operaton.bpm.engine.rest.TenantRestService;
-import org.operaton.bpm.engine.rest.UserRestService;
-import org.operaton.bpm.engine.rest.VariableInstanceRestService;
+
+import org.operaton.bpm.engine.rest.*;
 import org.operaton.bpm.engine.rest.dto.ProcessEngineDto;
 import org.operaton.bpm.engine.rest.history.HistoryRestService;
+import org.operaton.bpm.engine.rest.impl.optimize.OptimizeRestService;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
+
+import static org.operaton.bpm.engine.rest.util.EngineUtil.getProcessEngineProvider;
 
 
 @Path(NamedProcessEngineRestServiceImpl.PATH)
@@ -241,6 +213,12 @@ public class NamedProcessEngineRestServiceImpl extends AbstractProcessEngineRest
   @Path("/{name}" + ConditionRestService.PATH)
   public ConditionRestService getConditionRestService(@PathParam("name") String engineName) {
     return super.getConditionRestService(engineName);
+  }
+
+  @Override
+  @Path("/{name}" + OptimizeRestService.PATH)
+  public OptimizeRestService getOptimizeRestService(@PathParam("name") String engineName) {
+    return super.getOptimizeRestService(engineName);
   }
 
   @Override

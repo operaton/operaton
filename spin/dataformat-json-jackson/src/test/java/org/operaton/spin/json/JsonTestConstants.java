@@ -16,9 +16,6 @@
  */
 package org.operaton.spin.json;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +26,10 @@ import org.operaton.spin.json.mapping.Order;
 import org.operaton.spin.json.mapping.OrderDetails;
 import org.operaton.spin.json.mapping.RegularCustomer;
 
-public class JsonTestConstants {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+
+public final class JsonTestConstants {
 
   public static final String EXAMPLE_JSON_FILE_NAME = "org/operaton/spin/json/example.json";
 
@@ -97,7 +97,6 @@ public class JsonTestConstants {
     assertThat(orderDetails.getCurrencies()).containsExactly("euro", "dollar");
 
     List<RegularCustomer> customers = order.getCustomers();
-    assertThat(customers).isNotNull();
     assertThat(customers).hasSize(3);
 
     assertThat(customers).extracting("name", "contractStartDate")
@@ -127,6 +126,9 @@ public class JsonTestConstants {
     assertThat(customer).isInstanceOf(RegularCustomer.class);
     assertThat(customer.getName()).isEqualTo("Kermit");
     assertThat(customer.getContractStartDate()).isEqualTo(20130505);
+  }
+
+  private JsonTestConstants() {
   }
 
 }

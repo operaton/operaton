@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.cdi.impl.util;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.spi.CreationalContext;
 
@@ -42,10 +41,12 @@ public class CreationalContextReleaseListener implements CommandContextListener 
     context = ctx;
   }
 
+  @Override
   public void onCommandContextClose(CommandContext commandContext) {
     release(context);
   }
 
+  @Override
   public void onCommandFailed(CommandContext commandContext, Throwable t) {
     // ignore
   }
@@ -54,7 +55,7 @@ public class CreationalContextReleaseListener implements CommandContextListener 
     try {
       creationalContext.release();
     } catch(Exception e) {
-      LOG.log(Level.WARNING, "Exception while releasing CDI creational context "+e.getMessage(), e);
+      LOG.log(Level.WARNING, e, () -> "Exception while releasing CDI creational context " + e.getMessage());
     }
   }
 

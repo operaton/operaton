@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import org.operaton.bpm.engine.rest.dto.CountResultDto;
-import org.operaton.bpm.engine.rest.dto.history.UserOperationLogEntryDto;
-import org.operaton.bpm.engine.rest.dto.AnnotationDto;
-
+import java.util.List;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
@@ -31,7 +28,10 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import java.util.List;
+
+import org.operaton.bpm.engine.rest.dto.AnnotationDto;
+import org.operaton.bpm.engine.rest.dto.CountResultDto;
+import org.operaton.bpm.engine.rest.dto.history.UserOperationLogEntryDto;
 
 /**
  * Exposes the {@link org.operaton.bpm.engine.history.UserOperationLogQuery} as REST service.

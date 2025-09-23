@@ -16,17 +16,10 @@
  */
 package org.operaton.bpm.dmn.feel.impl;
 
-import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
-import org.operaton.bpm.dmn.feel.impl.juel.el.FeelFunctionMapper;
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.value.DateValue;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -36,6 +29,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
+import org.operaton.bpm.dmn.feel.impl.juel.el.FeelFunctionMapper;
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.DateValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -192,7 +191,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  void threadSafetyDateAndTimeParsing() throws ExecutionException, InterruptedException {
+  void threadSafetyDateAndTimeParsing() throws Exception {
     int threadCount = 2;
     ExecutorService pool = Executors.newFixedThreadPool(threadCount);
 

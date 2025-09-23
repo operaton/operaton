@@ -78,28 +78,30 @@ public class DbEntityOperation extends DbOperation {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((entity == null) ? 0 : entity.hashCode());
-    result = prime * result + ((operationType == null) ? 0 : operationType.hashCode());
-    return result;
+    result = prime * result + (entity == null ? 0 : entity.hashCode());
+    return prime * result + (operationType == null ? 0 : operationType.hashCode());
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     DbEntityOperation other = (DbEntityOperation) obj;
     if (entity == null) {
-      if (other.entity != null)
+      if (other.entity != null) {
         return false;
-    } else if (!entity.equals(other.entity))
+      }
+    } else if (!entity.equals(other.entity)) {
       return false;
-    if (operationType != other.operationType)
-      return false;
-    return true;
+    }
+    return operationType == other.operationType;
   }
 
 }

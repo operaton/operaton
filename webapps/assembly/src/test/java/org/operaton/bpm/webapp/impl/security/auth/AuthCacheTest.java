@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
-import org.operaton.bpm.webapp.impl.security.SecurityActions;
-import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
-import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpSession;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,17 +33,17 @@ import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
+import org.operaton.bpm.webapp.impl.security.SecurityActions;
+import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
+import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.addDays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.addDays;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.any;
@@ -100,7 +101,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldTrimTimeToLive() throws ServletException {
+  void shouldTrimTimeToLive() throws Exception {
     AuthenticationFilter authenticationFilter = new AuthenticationFilter();
     MockFilterConfig config = new MockFilterConfig();
     config.addInitParameter(AuthenticationFilter.AUTH_CACHE_TTL_INIT_PARAM_NAME, " 123   ");
@@ -109,7 +110,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldRevalidateWhenValidationTimeDue() throws ServletException, IOException {
+  void shouldRevalidateWhenValidationTimeDue() throws Exception {
     // given
     setupEngineMock();
     AuthenticationFilter filter = setupFilter(1000 * 60 * 5);
@@ -140,7 +141,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldRevalidateWhenTTLZero() throws ServletException, IOException {
+  void shouldRevalidateWhenTTLZero() throws Exception {
     // given
     setupEngineMock();
     AuthenticationFilter filter = setupFilter(0);
@@ -169,7 +170,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldNotRevalidateWhenValidationTimeNotDue() throws ServletException, IOException {
+  void shouldNotRevalidateWhenValidationTimeNotDue() throws Exception {
     // given
     setupEngineMock();
     AuthenticationFilter filter = setupFilter(1000 * 60 * 5);
@@ -199,7 +200,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldNotRevalidateWhenDisabled() throws ServletException, IOException {
+  void shouldNotRevalidateWhenDisabled() throws Exception {
     setupEngineMock();
     Authentications authentications = setupAuth();
     UserAuthentication initialAuthentication = getAuthByEngine(authentications, "engine1");
@@ -218,7 +219,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldSetValidationTimeInitially() throws ServletException, IOException {
+  void shouldSetValidationTimeInitially() throws Exception {
     // given
     setupEngineMock();
     Authentications authentications = setupAuth();
@@ -240,7 +241,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldHaveValidationTimeInitially() throws ServletException, IOException {
+  void shouldHaveValidationTimeInitially() throws Exception {
     // given
     setupEngineMock();
     Authentications authentications = setupAuth();
@@ -263,7 +264,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldInvalidateSessionDueToDeletedUser() throws ServletException, IOException {
+  void shouldInvalidateSessionDueToDeletedUser() throws Exception {
     // given
     ProcessEngine engineMock = setupEngineMock()[0];
     Authentications authentications = setupAuth();
@@ -301,7 +302,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldRevalidateWhenValidationTimeDueWithMultipleAuths() throws ServletException, IOException {
+  void shouldRevalidateWhenValidationTimeDueWithMultipleAuths() throws Exception {
     // given
     setupEngineMock("engine1", "engine2", "engine3");
     AuthenticationFilter filter = setupFilter(1000 * 60 * 5);
@@ -360,7 +361,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldInvalidateSessionDueToDeletedUserWithMultipleAuths() throws ServletException, IOException {
+  void shouldInvalidateSessionDueToDeletedUserWithMultipleAuths() throws Exception {
     // given
     ProcessEngine[] engineMocks = setupEngineMock("engine1", "engine2", "engine3");
     Authentications authentications = setupAuth("engine1", "engine2", "engine3");
@@ -416,7 +417,7 @@ class AuthCacheTest {
   }
 
   @Test
-  void shouldNotRevalidateWhenValidationTimeNotDueWithMultipleAuths() throws ServletException, IOException {
+  void shouldNotRevalidateWhenValidationTimeNotDueWithMultipleAuths() throws Exception {
     // given
     setupEngineMock("engine1", "engine2", "engine3");
     AuthenticationFilter filter = setupFilter(1000 * 60 * 5);

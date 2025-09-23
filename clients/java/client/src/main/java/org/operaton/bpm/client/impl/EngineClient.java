@@ -19,6 +19,7 @@ package org.operaton.bpm.client.impl;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
 import org.operaton.bpm.client.UrlResolver;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.OrderingConfig;

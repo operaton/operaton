@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.operaton.bpm.client.interceptor.auth.BasicAuthProvider;
 import org.operaton.bpm.client.spring.boot.starter.BasicAuthProperties;
 import org.operaton.bpm.client.spring.boot.starter.ClientProperties;
 import org.operaton.bpm.client.spring.impl.client.ClientConfiguration;
 import org.operaton.bpm.client.spring.impl.client.ClientFactory;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class PropertiesAwareClientFactory extends ClientFactory {
 
@@ -63,7 +63,7 @@ public class PropertiesAwareClientFactory extends ClientFactory {
     if (clientConfigurationProps.getMaxTasks() != null) {
       clientConfiguration.setMaxTasks(clientConfigurationProps.getMaxTasks());
     }
-    if (clientConfigurationProps.getUsePriority() != null && !clientConfigurationProps.getUsePriority()) {
+    if (clientConfigurationProps.getUsePriority() != null && Boolean.FALSE.equals(clientConfigurationProps.getUsePriority())) {
       clientConfiguration.setUsePriority(false);
     }
     if (clientConfigurationProps.getDefaultSerializationFormat() != null) {

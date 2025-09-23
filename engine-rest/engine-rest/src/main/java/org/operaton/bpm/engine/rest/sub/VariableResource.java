@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.sub;
 
 import java.util.Map;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.spi;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.rest.dto.externaltask.FetchExternalTasksExtendedDto;
-
 import jakarta.servlet.ServletContextEvent;
 import jakarta.ws.rs.container.AsyncResponse;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.rest.dto.externaltask.FetchExternalTasksExtendedDto;
 
 /**
  * SPI supposed to replace the default implementation of the long-polling fetch and lock handler

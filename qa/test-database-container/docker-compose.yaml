@@ -1,0 +1,51 @@
+services:
+  mysql:
+    image: mysql:9.2.0
+    container_name: mysql
+    ports:
+      - "${MT_MYSQL_HOST_PORT:-33060}:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MT_MYSQL_PASSWORD:-123456}
+      - MYSQL_DATABASE=${MT_MYSQL_DATABASE:-operaton}
+    volumes:
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+
+  mariadb:
+    image: mariadb:11.8
+    container_name: mariadb
+    ports:
+      - "${MT_MARIADB_HOST_PORT:-33070}:3306"
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MT_MARIADB_PASSWORD:-123456}
+      - MARIADB_DATABASE=${MT_MARIADB_DATABASE:-operaton}
+    volumes:
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+
+  oracle:
+    image: gvenzl/oracle-xe:21-faststart
+    container_name: oracle
+    ports:
+      - "${MT_ORACLE_HOST_PORT:-15210}:1521"
+    environment:
+      - ORACLE_PASSWORD=${MT_ORACLE_PASSWORD:-123456}
+      - ORACLE_DATABASE=${MT_ORACLE_DATABASE:-SYSTEM}
+
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    ports:
+      - "${MT_POSTGRES_HOST_PORT:-54320}:5432"
+    environment:
+      - POSTGRES_PASSWORD=${MT_POSTGRES_PASSWORD:-123456}
+      - POSTGRES_DB=${MT_POSTGRES_DATABASE:-operaton}
+      - POSTGRES_USER=${MT_POSTGRES_USERNAME:-root}
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "${MT_MSSQL_HOST_PORT:-14330}:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${MT_MSSQL_PASSWORD:-P@ssw0rd123ABC}
+      - MSSQL_PID=Developer

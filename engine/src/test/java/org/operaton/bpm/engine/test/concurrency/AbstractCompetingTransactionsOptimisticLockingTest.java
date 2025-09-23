@@ -16,8 +16,12 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -32,9 +36,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
-import org.slf4j.Logger;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -144,7 +145,7 @@ public abstract class AbstractCompetingTransactionsOptimisticLockingTest {
       } catch (ProcessEngineException e) {
         this.exception = e;
       }
-      LOG.debug(getName() + " ends.");
+      LOG.debug("{} ends.", getName());
     }
   }
 }

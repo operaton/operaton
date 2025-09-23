@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.dmn.engine.impl.type;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import org.operaton.bpm.dmn.engine.impl.DmnEngineLogger;
 import org.operaton.bpm.dmn.engine.impl.DmnLogger;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformer;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnTypeDefinition;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 public class DmnTypeDefinitionImpl implements DmnTypeDefinition {
 

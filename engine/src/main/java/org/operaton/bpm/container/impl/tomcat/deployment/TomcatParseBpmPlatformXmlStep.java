@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.container.impl.tomcat.deployment;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * <p>This deployment operation step is responsible for parsing and attaching the bpm-platform.xml file on tomcat.</p>

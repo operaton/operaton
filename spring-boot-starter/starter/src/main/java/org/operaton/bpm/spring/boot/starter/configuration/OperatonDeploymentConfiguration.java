@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration;
 
-import org.springframework.core.io.Resource;
-
 import java.util.Set;
+
+import org.springframework.core.io.Resource;
 
 public interface OperatonDeploymentConfiguration extends OperatonProcessEngineConfiguration {
 

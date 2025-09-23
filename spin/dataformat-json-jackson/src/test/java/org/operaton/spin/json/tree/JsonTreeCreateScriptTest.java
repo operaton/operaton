@@ -16,14 +16,15 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
-
 import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.impl.json.jackson.JacksonJsonNode;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.impl.test.ScriptVariable;
+
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

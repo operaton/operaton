@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.client.impl;
 
-import org.apache.hc.core5.http.HttpRequest;
-import org.operaton.bpm.client.exception.RestException;
-
 import java.io.IOException;
+
+import org.apache.hc.core5.http.HttpRequest;
+
+import org.operaton.bpm.client.exception.RestException;
 
 /**
  * @author Tassilo Weidner

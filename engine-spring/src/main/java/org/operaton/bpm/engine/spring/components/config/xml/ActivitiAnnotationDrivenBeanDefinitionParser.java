@@ -16,9 +16,6 @@
 package org.operaton.bpm.engine.spring.components.config.xml;
 
 
-import org.operaton.bpm.engine.spring.components.ActivitiContextUtils;
-import org.operaton.bpm.engine.spring.components.aop.ProcessStartAnnotationBeanPostProcessor;
-import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
@@ -30,6 +27,10 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.core.Conventions;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
+
+import org.operaton.bpm.engine.spring.components.ActivitiContextUtils;
+import org.operaton.bpm.engine.spring.components.aop.ProcessStartAnnotationBeanPostProcessor;
+import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
 
 /**
  * registers support for handling the annotations in the org.operaton.bpm.engine.annotations package.

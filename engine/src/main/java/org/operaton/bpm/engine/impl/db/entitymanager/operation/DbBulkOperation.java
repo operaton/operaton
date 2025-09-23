@@ -71,30 +71,36 @@ public class DbBulkOperation extends DbOperation {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((parameter == null) ? 0 : parameter.hashCode());
-    result = prime * result + ((statement == null) ? 0 : statement.hashCode());
-    return result;
+    result = prime * result + (parameter == null ? 0 : parameter.hashCode());
+    return prime * result + (statement == null ? 0 : statement.hashCode());
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     DbBulkOperation other = (DbBulkOperation) obj;
     if (parameter == null) {
-      if (other.parameter != null)
+      if (other.parameter != null) {
         return false;
-    } else if (!parameter.equals(other.parameter))
+      }
+    } else if (!parameter.equals(other.parameter)) {
       return false;
+    }
     if (statement == null) {
-      if (other.statement != null)
+      if (other.statement != null) {
         return false;
-    } else if (!statement.equals(other.statement))
+      }
+    } else if (!statement.equals(other.statement)) {
       return false;
+    }
     return true;
   }
 

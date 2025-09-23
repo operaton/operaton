@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -27,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -44,6 +42,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Sebastian Menski
@@ -242,14 +242,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     var historicCaseInstanceQuery = historicQuery();
 
 
-    try {
-      // oracle handles empty string like null which seems to lead to undefined behavior of the LIKE comparison
-      historicCaseInstanceQuery.caseDefinitionKeyNotIn(emptyCaseDefinitionKeys);
-      fail("Exception expected");
-    }
-    catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseInstanceQuery.caseDefinitionKeyNotIn(emptyCaseDefinitionKeys)).isInstanceOf(NotValidException.class);
 
 
     assertCount(1, historicQuery().caseDefinitionName("One Task Case"));
@@ -545,14 +538,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(historicInstance).isNotNull();
     var historicInstanceId = historicInstance.getId();
 
-    try {
-      // should not be able to delete historic case instance cause the case instance is still running
-      historyService.deleteHistoricCaseInstance(historicInstanceId);
-      fail("Exception expected");
-    }
-    catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historyService.deleteHistoricCaseInstance(historicInstanceId)).isInstanceOf(NullValueException.class);
 
     terminate(caseInstanceId);
     close(caseInstanceId);
@@ -801,13 +787,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
   @Test
   void testFailQueryByCaseActivityIdNull() {
     var historicCaseInstanceQuery = historyService.createHistoricCaseInstanceQuery();
-    try {
-      historicCaseInstanceQuery.caseActivityIdIn((String) null);
-
-      fail("expected exception");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseInstanceQuery.caseActivityIdIn((String) null)).isInstanceOf(NullValueException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")

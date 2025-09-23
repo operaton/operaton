@@ -16,17 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.diagram;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParser;
-import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.repository.DiagramElement;
-import org.operaton.bpm.engine.repository.DiagramLayout;
-import org.operaton.bpm.engine.repository.DiagramNode;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -35,13 +31,18 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParser;
+import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.repository.DiagramElement;
+import org.operaton.bpm.engine.repository.DiagramLayout;
+import org.operaton.bpm.engine.repository.DiagramNode;
 
 /**
  * Provides positions and dimensions of elements in a process diagram as
@@ -155,10 +156,10 @@ public class ProcessDiagramLayoutFactory {
           minY = y;
         }
         if (maxX == null || maxX < (x + width)) {
-          maxX = (x + width);
+          maxX = x + width;
         }
         if (maxY == null || maxY < (y + height)) {
-          maxY = (y + height);
+          maxY = y + height;
         }
       }
     }
@@ -239,7 +240,7 @@ public class ProcessDiagramLayoutFactory {
   
     int marginTop = 0;
     for (int row = 0; row < height; row++) {
-      if (rowIsWhite.get(row)) {
+      if (Boolean.TRUE.equals(rowIsWhite.get(row))) {
         ++marginTop;
       } else {
         // Margin Top Found
@@ -249,7 +250,7 @@ public class ProcessDiagramLayoutFactory {
     
     int marginLeft = 0;
     for (int column = 0; column < width; column++) {
-      if (columnIsWhite.get(column)) {
+      if (Boolean.TRUE.equals(columnIsWhite.get(column))) {
         ++marginLeft;
       } else {
         // Margin Left Found
@@ -259,7 +260,7 @@ public class ProcessDiagramLayoutFactory {
     
     int marginRight = 0;
     for (int column = width - 1; column >= 0; column--) {
-      if (columnIsWhite.get(column)) {
+      if (Boolean.TRUE.equals(columnIsWhite.get(column))) {
         ++marginRight;
       } else {
         // Margin Right Found
@@ -269,7 +270,7 @@ public class ProcessDiagramLayoutFactory {
     
     int marginBottom = 0;
     for (int row = height -1; row >= 0; row--) {
-      if (rowIsWhite.get(row)) {
+      if (Boolean.TRUE.equals(rowIsWhite.get(row))) {
         ++marginBottom;
       } else {
         // Margin Bottom Found

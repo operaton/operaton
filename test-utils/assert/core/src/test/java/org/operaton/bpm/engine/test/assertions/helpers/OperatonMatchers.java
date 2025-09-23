@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.test.assertions.helpers;
 
+import org.mockito.ArgumentMatchers;
+
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
 import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.mockito.ArgumentMatchers;
 
 public class OperatonMatchers extends ArgumentMatchers {
 

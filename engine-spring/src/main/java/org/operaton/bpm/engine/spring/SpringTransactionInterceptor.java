@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.spring;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
-import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.interceptor.Command;
+import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
+import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 
 /**
  * @author Dave Syer

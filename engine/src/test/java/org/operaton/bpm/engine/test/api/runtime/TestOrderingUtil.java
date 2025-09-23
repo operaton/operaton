@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import java.util.Comparator;
+import java.util.List;
+
+import junit.framework.TestCase;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -38,11 +43,6 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 
-import java.util.Comparator;
-import java.util.List;
-
-import junit.framework.TestCase;
-
 /**
  * This class provides utils to verify the sorting of queries of engine entities.
  * Assuming we sort over a property x, there are two valid orderings when some entities
@@ -53,7 +53,7 @@ import junit.framework.TestCase;
  * @author Thorben Lindhauer
  *
  */
-public class TestOrderingUtil {
+public final class TestOrderingUtil {
 
   // EXECUTION
 
@@ -449,7 +449,7 @@ public class TestOrderingUtil {
     };
   }
 
-  protected interface PropertyAccessor<T, P extends Comparable<P>> {
+  public interface PropertyAccessor<T, P extends Comparable<P>> {
     P getProperty(T obj);
   }
 
@@ -563,6 +563,9 @@ public class TestOrderingUtil {
     TestCase.assertEquals(expectedCount, elements.size());
 
     verifySorting(elements, expectedOrdering);
+  }
+
+  private TestOrderingUtil() {
   }
 
 }

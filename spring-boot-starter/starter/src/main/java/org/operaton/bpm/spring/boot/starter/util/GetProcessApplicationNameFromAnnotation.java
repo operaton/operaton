@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.util;
 
-import org.apache.commons.lang3.StringUtils;
-import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
-import org.springframework.context.ApplicationContext;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,6 +26,11 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
+
+import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 
 public final class GetProcessApplicationNameFromAnnotation implements Supplier<Optional<String>>, UnaryOperator<Optional<String>> {
 

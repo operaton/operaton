@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,6 +29,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.api.io.TempDir;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -52,6 +48,11 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.OperatonFormUtils;
+
+import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RetrieveOperatonFormRefTest {
 
@@ -85,7 +86,7 @@ class RetrieveOperatonFormRefTest {
   /* TASK FORMS */
 
   @Test
-  void shouldRetrieveTaskFormBindingLatestWithSingleVersionSeparateDeloyments() throws IOException {
+  void shouldRetrieveTaskFormBindingLatestWithSingleVersionSeparateDeloyments() throws Exception {
     // given two separate deployments
     deployClasspathResources(true,
         "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.taskFormBindingLatest.bpmn",
@@ -110,7 +111,7 @@ class RetrieveOperatonFormRefTest {
   }
 
   @Test
-  void shouldRetrieveTaskFormBindingLatestWithMultipleVersions() throws IOException {
+  void shouldRetrieveTaskFormBindingLatestWithMultipleVersions() throws Exception {
     // given two versions of the same form
     deployUpdateFormResource(TASK_FORM_CONTENT_V1, TASK_FORM_CONTENT_V2, "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.taskFormBindingLatest.bpmn");
 
@@ -133,7 +134,7 @@ class RetrieveOperatonFormRefTest {
   }
 
   @Test
-  void shouldRetrieveTaskFormBindingDeployment() throws IOException {
+  void shouldRetrieveTaskFormBindingDeployment() throws Exception {
     // given two versions of the same form
     deployUpdateFormResource(TASK_FORM_CONTENT_V1, TASK_FORM_CONTENT_V2, "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.taskFormBindingDeployment.bpmn");
 
@@ -156,7 +157,7 @@ class RetrieveOperatonFormRefTest {
   }
 
   @Test
-  void shouldRetrieveTaskFormBindingVersionWithMultipleVersions() throws IOException {
+  void shouldRetrieveTaskFormBindingVersionWithMultipleVersions() throws Exception {
     // given two versions of the same form
     deployUpdateFormResource(TASK_FORM_CONTENT_V1, TASK_FORM_CONTENT_V2, "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.taskFormBindingVersion1.bpmn");
 
@@ -256,7 +257,7 @@ class RetrieveOperatonFormRefTest {
   @org.operaton.bpm.engine.test.Deployment(resources = {
       "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.shouldRetrieveTaskFormBindingLatestWithKeyExpression.bpmn",
       "org/operaton/bpm/engine/test/api/form/task.form"})
-  void shouldRetrieveTaskFormBindingLatestWithKeyExpression() throws IOException {
+  void shouldRetrieveTaskFormBindingLatestWithKeyExpression() throws Exception {
     // given BPMN model referencing form by ${key} expression
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("key", "myTaskForm");
@@ -282,7 +283,7 @@ class RetrieveOperatonFormRefTest {
   @org.operaton.bpm.engine.test.Deployment(resources = {
       "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.shouldRetrieveTaskFormBindingVersionWithExpression.bpmn",
       "org/operaton/bpm/engine/test/api/form/task.form"})
-  void shouldRetrieveTaskFormBindingVersionWithExpression() throws IOException {
+  void shouldRetrieveTaskFormBindingVersionWithExpression() throws Exception {
     // given BPMN model referencing version by ${ver} expression
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("ver", "1");
@@ -307,7 +308,7 @@ class RetrieveOperatonFormRefTest {
   /* START FORMS */
 
   @Test
-  void shouldRetrieveStartFormBindingLatestWithSingleVersionSeparateDeloyments() throws IOException {
+  void shouldRetrieveStartFormBindingLatestWithSingleVersionSeparateDeloyments() throws Exception {
     // given two separate deployments
     deployClasspathResources(true,
         "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.startFormBindingLatest.bpmn",
@@ -329,7 +330,7 @@ class RetrieveOperatonFormRefTest {
   }
 
   @Test
-  void shouldRetrieveStartFormBindingLatestWithMultipleVersions() throws IOException {
+  void shouldRetrieveStartFormBindingLatestWithMultipleVersions() throws Exception {
     // given two versions of the same form
     deployUpdateFormResource(START_FORM_CONTENT_V1, START_FORM_CONTENT_V2, "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.startFormBindingLatest.bpmn");
 
@@ -349,7 +350,7 @@ class RetrieveOperatonFormRefTest {
   }
 
   @Test
-  void shouldRetrieveStartFormBindingDeployment() throws IOException {
+  void shouldRetrieveStartFormBindingDeployment() throws Exception {
     // given two versions of the same form
     deployUpdateFormResource(START_FORM_CONTENT_V1, START_FORM_CONTENT_V2, "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.startFormBindingDeployment.bpmn");
 
@@ -369,7 +370,7 @@ class RetrieveOperatonFormRefTest {
   }
 
   @Test
-  void shouldRetrieveStartFormBindingVersionWithMultipleVersions() throws IOException {
+  void shouldRetrieveStartFormBindingVersionWithMultipleVersions() throws Exception {
     // given two versions of the same form
     deployUpdateFormResource(START_FORM_CONTENT_V1, START_FORM_CONTENT_V2, "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.startFormBindingVersion1.bpmn");
 

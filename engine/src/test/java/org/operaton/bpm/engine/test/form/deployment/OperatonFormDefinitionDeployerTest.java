@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.engine.test.form.deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collection;
 import java.util.List;
 
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.OperatonFormDefinition;
@@ -33,6 +32,8 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.OperatonFormUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Parameterized
 public class OperatonFormDefinitionDeployerTest {

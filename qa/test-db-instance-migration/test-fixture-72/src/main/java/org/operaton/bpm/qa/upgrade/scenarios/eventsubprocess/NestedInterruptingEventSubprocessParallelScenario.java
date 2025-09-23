@@ -39,17 +39,15 @@ public final class NestedInterruptingEventSubprocessParallelScenario {
   @DescribesScenario("init")
   @Times(2)
   public static ScenarioSetup instantiateAndTriggerSubprocess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NestedInterruptingEventSubprocessParallelScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NestedInterruptingEventSubprocessParallelScenario", scenarioName);
 
-        engine.getRuntimeService()
-          .createMessageCorrelation("Message")
-          .processInstanceBusinessKey(scenarioName)
-          .correlate();
-      }
+      engine.getRuntimeService()
+        .createMessageCorrelation("Message")
+        .processInstanceBusinessKey(scenarioName)
+        .correlate();
     };
   }
 }

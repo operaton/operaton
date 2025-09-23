@@ -18,12 +18,13 @@ package org.operaton.bpm.engine.test.standalone.pvm.activities;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
-import org.slf4j.Logger;
 
 /**
  * @author Tom Baeyens
@@ -46,11 +47,11 @@ public class ParallelGateway implements ActivityBehavior {
     int nbrOfExecutionsJoined = joinedExecutions.size();
 
     if (nbrOfExecutionsJoined==nbrOfExecutionsToJoin) {
-      LOG.debug("parallel gateway '"+activity.getId()+"' activates: "+nbrOfExecutionsJoined+" of "+nbrOfExecutionsToJoin+" joined");
+      LOG.debug("parallel gateway '{}' activates: {} of {} joined", activity.getId(), nbrOfExecutionsJoined, nbrOfExecutionsToJoin);
       execution.leaveActivityViaTransitions(outgoingTransitions, joinedExecutions);
 
     } else {
-      LOG.debug("parallel gateway '"+activity.getId()+"' does not activate: "+nbrOfExecutionsJoined+" of "+nbrOfExecutionsToJoin+" joined");
+      LOG.debug("parallel gateway '{}' does not activate: {} of {} joined", activity.getId(), nbrOfExecutionsJoined, nbrOfExecutionsToJoin);
     }
   }
 }

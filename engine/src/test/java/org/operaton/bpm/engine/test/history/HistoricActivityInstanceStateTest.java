@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -31,6 +30,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -515,7 +516,7 @@ class HistoricActivityInstanceStateTest {
     for (HistoricActivityInstance instance : allInstances) {
       if (instance.getActivityId().equals(activityId)) {
         found++;
-        assertThat(instance.isCanceled()).as("expect <%s> to be %scanceled".formatted(activityId, (canceled ? "" : "non-"))).isEqualTo(canceled);
+        assertThat(instance.isCanceled()).as("expect <%s> to be %scanceled".formatted(activityId, canceled ? "" : "non-")).isEqualTo(canceled);
       }
     }
 
@@ -548,7 +549,7 @@ class HistoricActivityInstanceStateTest {
     for (HistoricActivityInstance instance : allInstances) {
       if (instance.getActivityId().equals(activityId)) {
         found++;
-        assertThat(instance.isCompleteScope()).as("expect <%s> to be %scompleting".formatted(activityId, (completing ? "" : "non-"))).isEqualTo(completing);
+        assertThat(instance.isCompleteScope()).as("expect <%s> to be %scompleting".formatted(activityId, completing ? "" : "non-")).isEqualTo(completing);
       }
     }
 

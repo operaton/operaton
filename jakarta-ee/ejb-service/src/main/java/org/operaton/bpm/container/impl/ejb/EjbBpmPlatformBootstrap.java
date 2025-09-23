@@ -16,6 +16,16 @@
  */
 package org.operaton.bpm.container.impl.ejb;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
+
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.container.ExecutorService;
@@ -32,17 +42,6 @@ import org.operaton.bpm.container.impl.ejb.deployment.EjbJarParsePlatformXmlStep
 import org.operaton.bpm.container.impl.ejb.deployment.StartJcaExecutorServiceStep;
 import org.operaton.bpm.container.impl.ejb.deployment.StopJcaExecutorServiceStep;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
-import jakarta.ejb.EJB;
-import jakarta.ejb.Singleton;
-import jakarta.ejb.Startup;
-import jakarta.ejb.TransactionAttribute;
-import jakarta.ejb.TransactionAttributeType;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 /**
  * <p>Bootstrap for the Operaton using a singleton EJB</p>
@@ -50,7 +49,7 @@ import java.util.logging.Logger;
  * @author Daniel Meyer
  */
 @Startup
-@Singleton(name="BpmPlatformBootstrap")
+@Singleton(name = "BpmPlatformBootstrap")
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class EjbBpmPlatformBootstrap {
 

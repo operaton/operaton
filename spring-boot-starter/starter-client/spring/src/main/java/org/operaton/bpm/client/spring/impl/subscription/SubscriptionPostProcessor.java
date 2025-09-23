@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.client.spring.impl.subscription;
 
-import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
-import org.operaton.bpm.client.spring.impl.subscription.util.SubscriptionLoggerUtil;
-import org.operaton.bpm.client.spring.impl.util.AnnotationUtil;
-import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
-import org.operaton.bpm.client.task.ExternalTaskHandler;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
@@ -31,6 +25,12 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.core.type.AnnotatedTypeMetadata;
+
+import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
+import org.operaton.bpm.client.spring.impl.subscription.util.SubscriptionLoggerUtil;
+import org.operaton.bpm.client.spring.impl.util.AnnotationUtil;
+import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
+import org.operaton.bpm.client.task.ExternalTaskHandler;
 
 public class SubscriptionPostProcessor implements BeanDefinitionRegistryPostProcessor {
 

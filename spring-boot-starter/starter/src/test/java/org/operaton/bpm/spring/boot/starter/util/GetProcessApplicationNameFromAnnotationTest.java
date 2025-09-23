@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter.util;
 
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
-import org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.AnnotatedBean;
-
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
+import org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.AnnotatedBean;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 class GetProcessApplicationNameFromAnnotationTest {
 
   @EnableProcessApplication("withNameApplication")

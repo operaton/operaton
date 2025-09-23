@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.BusinessRuleTaskBuilder;
 import org.operaton.bpm.model.bpmn.instance.BusinessRuleTask;
@@ -28,6 +26,8 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
 
 /**
  * The BPMN businessRuleTask element

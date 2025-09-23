@@ -16,28 +16,24 @@
  */
 package org.operaton.bpm.webapp.plugin.resource;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.servlet.ServletContext;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.StreamingOutput;
 import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.StreamingOutput;
 import jakarta.ws.rs.core.UriInfo;
 
+import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.webapp.AppRuntimeDelegate;
 import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
-import org.operaton.bpm.engine.impl.util.IoUtil;
 
 /**
  * A resource class that provides a plugins restful API.
@@ -50,7 +46,7 @@ import org.operaton.bpm.engine.impl.util.IoUtil;
  * <p>
  *
  * Subresources must properly initialize the subresources via
- * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource, String) }.
+ * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource) }.
  *
  * <pre>
  * @Path("myplugin")
@@ -110,10 +106,9 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
    *
    * @param <T>
    * @param subResource
-   * @param engineName
    * @return
    */
-  protected <S extends AbstractAppPluginResource<T>> S subResource(S subResource, String engineName) {
+  protected <S extends AbstractAppPluginResource<T>> S subResource(S subResource) {
     return subResource;
   }
 
@@ -136,28 +131,24 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
 
     if (plugin != null) {
       InputStream assetStream = getPluginAssetAsStream(plugin, file);
-      final InputStream filteredStream = applyResourceOverrides(file, assetStream);
+      final InputStream filteredStream = applyResourceOverrides(assetStream);
 
       if (assetStream != null) {
         String contentType = getContentType(file);
-        return Response.ok(new StreamingOutput() {
+        return Response.ok((StreamingOutput) out -> {
 
-          @Override
-          public void write(OutputStream out) throws IOException, WebApplicationException {
-
-            try {
-              byte[] buff = new byte[16 * 1000];
-              int read = 0;
-              while((read = filteredStream.read(buff)) > 0) {
-                out.write(buff, 0, read);
-              }
+          try {
+            byte[] buff = new byte[16 * 1000];
+            int read = 0;
+            while ((read = filteredStream.read(buff)) > 0) {
+              out.write(buff, 0, read);
             }
-            finally {
-              IoUtil.closeSilently(filteredStream);
-              IoUtil.closeSilently(out);
-            }
-
           }
+          finally {
+            IoUtil.closeSilently(filteredStream);
+            IoUtil.closeSilently(out);
+          }
+
         }, contentType).build();
       }
     }
@@ -167,10 +158,9 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
   }
 
   /**
-   * @param file
    * @param assetStream
    */
-  protected InputStream applyResourceOverrides(String file, InputStream assetStream) {
+  protected InputStream applyResourceOverrides(InputStream assetStream) {
     // use a copy of the list cause it could be modified during iteration
     List<PluginResourceOverride> resourceOverrides = new ArrayList<>(runtimeDelegate.getResourceOverrides());
     for (PluginResourceOverride pluginResourceOverride : resourceOverrides) {

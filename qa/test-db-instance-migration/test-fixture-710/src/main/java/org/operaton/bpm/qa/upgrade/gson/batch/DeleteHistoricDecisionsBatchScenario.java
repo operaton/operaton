@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.qa.upgrade.gson.batch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -23,9 +26,6 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Tassilo Weidner
@@ -42,28 +42,26 @@ public final class DeleteHistoricDecisionsBatchScenario {
 
   @DescribesScenario("initDeleteHistoricDecisionsBatch")
   public static ScenarioSetup initDeleteHistoricDecisionsBatch() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        VariableMap variables = Variables.createVariables()
-          .putValue("status", "silver")
-          .putValue("sum", 723);
+      VariableMap variables = Variables.createVariables()
+        .putValue("status", "silver")
+        .putValue("sum", 723);
 
-        for (int i = 0; i < 10; i++) {
-          engine.getDecisionService().evaluateDecisionByKey("decision_710")
-            .variables(variables)
-            .evaluate();
-        }
-
-        List<String> decisionInstanceIds = new ArrayList<>();
-
-        List<HistoricDecisionInstance> decisionInstances = engine.getHistoryService().createHistoricDecisionInstanceQuery().list();
-        for (HistoricDecisionInstance decisionInstance : decisionInstances) {
-          decisionInstanceIds.add(decisionInstance.getId());
-        }
-
-        engine.getHistoryService().deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
+      for (int i = 0; i < 10; i++) {
+        engine.getDecisionService().evaluateDecisionByKey("decision_710")
+          .variables(variables)
+          .evaluate();
       }
+
+      List<String> decisionInstanceIds = new ArrayList<>();
+
+      List<HistoricDecisionInstance> decisionInstances = engine.getHistoryService().createHistoricDecisionInstanceQuery().list();
+      for (HistoricDecisionInstance decisionInstance : decisionInstances) {
+        decisionInstanceIds.add(decisionInstance.getId());
+      }
+
+      engine.getHistoryService().deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
     };
   }
 }

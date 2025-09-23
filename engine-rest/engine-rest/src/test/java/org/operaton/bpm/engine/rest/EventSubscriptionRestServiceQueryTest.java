@@ -16,6 +16,25 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+
+import org.operaton.bpm.engine.rest.helper.MockProvider;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.operaton.bpm.engine.runtime.EventSubscription;
+import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
+
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -25,27 +44,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import jakarta.ws.rs.core.Response.Status;
-
-import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.operaton.bpm.engine.runtime.EventSubscription;
-import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
-
-import io.restassured.response.Response;
 
 public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -99,7 +97,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    Assertions.assertEquals(1, instances.size(), "There should be one event subscription returned.");
+    assertThat(instances).as("There should be one event subscription returned.").hasSize(1);
     assertThat(instances.get(0)).as("There should be one event subscription returned").isNotNull();
 
     String returnedEventSubscriptionId = from(content).getString("[0].id");
@@ -111,14 +109,14 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
     String returnedCreatedDate = from(content).getString("[0].createdDate");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_ID, returnedEventSubscriptionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_TYPE, returnedEventType);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_NAME, returnedEventName);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_ACTIVITY_ID, returnedActivityId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_CREATION_DATE, returnedCreatedDate);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+    assertThat(returnedEventSubscriptionId).isEqualTo(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_ID);
+    assertThat(returnedEventType).isEqualTo(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_TYPE);
+    assertThat(returnedEventName).isEqualTo(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_NAME);
+    assertThat(returnedExecutionId).isEqualTo(MockProvider.EXAMPLE_EXECUTION_ID);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedActivityId).isEqualTo(MockProvider.EXAMPLE_ACTIVITY_ID);
+    assertThat(returnedCreatedDate).isEqualTo(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_CREATION_DATE);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
   }
 
   @Test

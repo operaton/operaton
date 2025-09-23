@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.container.impl.jboss.util;
 
-import org.jboss.msc.service.LifecycleEvent;
-import org.jboss.msc.service.LifecycleListener;
-import org.jboss.msc.service.ServiceController;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import org.jboss.msc.service.LifecycleEvent;
+import org.jboss.msc.service.LifecycleListener;
+import org.jboss.msc.service.ServiceController;
 
 /**
  * <p>A {@link Future} implementation backed by a {@link LifecycleListener}</p>
@@ -65,20 +65,24 @@ public abstract class ServiceListenerFuture<S, V> implements LifecycleListener, 
 
   protected abstract void serviceAvailable();
 
+  @Override
   public boolean cancel(boolean mayInterruptIfRunning) {
     // unsupported
     return false;
   }
 
+  @Override
   public boolean isCancelled() {
     // unsupported
     return cancelled;
   }
 
+  @Override
   public boolean isDone() {
     return value != null;
   }
 
+  @Override
   public V get() throws InterruptedException, ExecutionException {
     if (!failed && !cancelled && value == null) {
       synchronized (this) {
@@ -90,6 +94,7 @@ public abstract class ServiceListenerFuture<S, V> implements LifecycleListener, 
     return value;
   }
 
+  @Override
   public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
     if (!failed && !cancelled && value == null) {
       synchronized (this) {

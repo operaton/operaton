@@ -16,21 +16,22 @@
  */
 package org.operaton.bpm.admin.impl.plugin.resources;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.operaton.bpm.admin.impl.plugin.base.dto.MetricsAggregatedQueryDto;
-import org.operaton.bpm.admin.impl.plugin.base.dto.MetricsAggregatedResultDto;
-import org.operaton.bpm.admin.resource.AbstractAdminPluginResource;
-import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
-import org.operaton.bpm.engine.management.Metrics;
-
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.operaton.bpm.admin.impl.plugin.base.dto.MetricsAggregatedQueryDto;
+import org.operaton.bpm.admin.impl.plugin.base.dto.MetricsAggregatedResultDto;
+import org.operaton.bpm.admin.resource.AbstractAdminPluginResource;
+import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
+import org.operaton.bpm.engine.management.Metrics;
 
 public class MetricsRestService extends AbstractAdminPluginResource {
 

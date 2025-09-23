@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
   <groupId>org.operaton.connect</groupId>
@@ -13,8 +13,7 @@
   <name>Operaton - Connect - Root</name>
   <description>${project.name}</description>
   <properties>
-    <commons-codec.version>1.15</commons-codec.version>
-    <connect.version.old>7.22.0</connect.version.old>
+    <connect.version.old>1.0.0-beta-5</connect.version.old>
     <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <additionalparam>-Xdoclint:none</additionalparam>
@@ -27,11 +26,6 @@
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>commons-codec</groupId>
-        <artifactId>commons-codec</artifactId>
-        <version>${commons-codec.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

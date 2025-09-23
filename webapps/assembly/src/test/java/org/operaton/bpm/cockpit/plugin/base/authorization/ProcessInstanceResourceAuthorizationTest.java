@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.authorization;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.CalledProcessInstanceDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.CalledProcessInstanceQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessInstanceResource;
@@ -26,14 +29,12 @@ import org.operaton.bpm.engine.impl.db.AuthorizationCheck;
 import org.operaton.bpm.engine.impl.db.PermissionCheck;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -53,7 +54,7 @@ class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest {
   public void setUp() {
     super.setUp();
 
-    deploymentId = createDeployment(null, "processes/user-task-process.bpmn", "processes/calling-user-task-process.bpmn").getId();
+    deploymentId = createDeployment("processes/user-task-process.bpmn", "processes/calling-user-task-process.bpmn").getId();
 
     startProcessInstances(CALLING_USER_TASK_PROCESS_KEY, 3);
   }

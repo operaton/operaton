@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance.operaton;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.impl.instance.BpmnModelElementInstanceImpl;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonFormField;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonProperties;
@@ -28,8 +30,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
-
-import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
 

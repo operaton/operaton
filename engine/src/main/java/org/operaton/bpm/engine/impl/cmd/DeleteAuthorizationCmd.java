@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.AuthorizationQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,8 +24,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
 /**
  * @author Daniel Meyer

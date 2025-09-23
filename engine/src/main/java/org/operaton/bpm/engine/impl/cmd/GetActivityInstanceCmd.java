@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,9 +36,11 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.CompensationBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Incident;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * <p>Creates an activity instance tree according to the following strategy:
@@ -210,6 +210,10 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
     actInst.setProcessDefinitionId(scopeExecution.getProcessDefinitionId());
     actInst.setBusinessKey(scopeExecution.getBusinessKey());
     actInst.setActivityId(scope.getId());
+    PvmExecutionImpl subProcessInstance = scopeExecution.getSubProcessInstance();
+    if (subProcessInstance != null) {
+      actInst.setSubProcessInstanceId(subProcessInstance.getId());
+    }
 
     String name = scope.getName();
     if (name == null) {
@@ -267,6 +271,10 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
     transitionInstance.setProcessDefinitionId(execution.getProcessDefinitionId());
     transitionInstance.setExecutionId(execution.getId());
     transitionInstance.setActivityId(execution.getActivityId());
+    PvmExecutionImpl subProcessInstance = execution.getSubProcessInstance();
+    if (subProcessInstance != null) {
+      transitionInstance.setSubProcessInstanceId(subProcessInstance.getId());
+    }
 
     ActivityImpl activity = execution.getActivity();
     if (activity != null) {

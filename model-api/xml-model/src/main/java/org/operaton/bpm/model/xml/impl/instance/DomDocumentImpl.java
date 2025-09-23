@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.model.xml.impl.instance;
 
+import java.util.List;
+
+import javax.xml.transform.dom.DOMSource;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.util.DomUtil;
 import org.operaton.bpm.model.xml.impl.util.XmlQName;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.DomElement;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import javax.xml.transform.dom.DOMSource;
-import java.util.List;
 
 import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
 

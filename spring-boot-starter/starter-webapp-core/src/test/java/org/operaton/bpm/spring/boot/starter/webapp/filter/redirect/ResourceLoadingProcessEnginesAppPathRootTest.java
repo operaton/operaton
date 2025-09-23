@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-
-import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import org.apache.commons.io.IOUtils;
@@ -29,14 +25,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { FilterTestApp.class},
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    properties = {
-        "operaton.bpm.webapp.application-path=/",
-        "operaton.bpm.webapp.index-redirect-enabled=false" })
+@SpringBootTest(classes = {FilterTestApp.class},
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+  properties = {
+    "operaton.bpm.webapp.application-path=/",
+    "operaton.bpm.webapp.index-redirect-enabled=false"})
 @DirtiesContext
 class ResourceLoadingProcessEnginesAppPathRootTest {
 
@@ -47,7 +46,7 @@ class ResourceLoadingProcessEnginesAppPathRootTest {
   public int port;
 
   @Test
-  void shouldRedirectToStaticContent() throws IOException {
+  void shouldRedirectToStaticContent() throws Exception {
     // given
     // send GET request to /
     HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/");

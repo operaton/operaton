@@ -16,6 +16,8 @@
  */
 package org.operaton.spin.json.tree;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.Spin;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
@@ -23,13 +25,11 @@ import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPropertyException;
+
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Thorben Lindhauer
@@ -141,7 +141,7 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailToCheckObject(){
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   /**
@@ -151,7 +151,7 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailToCheckObject2(){
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   /**
@@ -161,7 +161,7 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailToReadProperty(){
-    assertThrows(SpinJsonPropertyException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(this::failingWithException);
   }
 
   /**
@@ -171,7 +171,7 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailToReadProperty2(){
-    assertThrows(IllegalArgumentException.class, this::failingWithException);
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(this::failingWithException);
   }
 
 
@@ -207,21 +207,21 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailToReadNumberValue() {
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailToReadBooleanValue() {
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailToReadStringValue() {
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   @Test
@@ -296,7 +296,7 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailToReadObjectInNonArray(){
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   @Test

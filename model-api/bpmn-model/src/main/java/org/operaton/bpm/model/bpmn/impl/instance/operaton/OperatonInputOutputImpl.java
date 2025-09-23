@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.bpmn.impl.instance.operaton;
 
 import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.impl.instance.BpmnModelElementInstanceImpl;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputOutput;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputParameter;

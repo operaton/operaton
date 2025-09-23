@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.impl.HistoricTaskInstanceQueryImpl;
@@ -32,12 +38,6 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
-
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 

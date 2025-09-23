@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd.MAX_THREADS_NUMBER;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,6 +37,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
@@ -52,6 +50,7 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
+
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
@@ -87,6 +86,7 @@ import org.operaton.bpm.engine.impl.HistoryServiceImpl;
 import org.operaton.bpm.engine.impl.IdentityServiceImpl;
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.ModificationBatchJobHandler;
+import org.operaton.bpm.engine.impl.OptimizeService;
 import org.operaton.bpm.engine.impl.PriorityProvider;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -221,26 +221,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.DelegateInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.ExceptionCodeInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
-import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.DefaultFailedJobCommandFactory;
-import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
-import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobPriorityProvider;
-import org.operaton.bpm.engine.impl.jobexecutor.FailedJobCommandFactory;
-import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.NotifyAcquisitionRejectedJobsHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.ProcessEventJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.RejectedJobsHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateJobDefinitionHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateProcessDefinitionHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerCatchIntermediateEventJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerExecuteNestedActivityJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventSubprocessJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendJobDefinitionHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendProcessDefinitionHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerTaskListenerJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.*;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.BatchWindowManager;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.DefaultBatchWindowManager;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupBatch;
@@ -284,52 +265,13 @@ import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventSc
 import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventTypeValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.UpdateEventTriggersValidator;
 import org.operaton.bpm.engine.impl.mock.MocksResolverFactory;
+import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.GenericManagerFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.Deployer;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.CacheFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DefaultCacheFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
-import org.operaton.bpm.engine.impl.persistence.entity.AttachmentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
-import org.operaton.bpm.engine.impl.persistence.entity.BatchManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayManager;
-import org.operaton.bpm.engine.impl.persistence.entity.CommentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.DeploymentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskManager;
-import org.operaton.bpm.engine.impl.persistence.entity.FilterManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricActivityInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricBatchManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricExternalTaskLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIdentityLinkLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricStatisticsManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IdentityLinkManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IncidentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-import org.operaton.bpm.engine.impl.persistence.entity.MeterLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ReportManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ResourceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.StatisticsManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TableDataManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TaskReportManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TenantManager;
-import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.*;
 import org.operaton.bpm.engine.impl.repository.DefaultDeploymentHandlerFactory;
 import org.operaton.bpm.engine.impl.runtime.ConditionHandler;
 import org.operaton.bpm.engine.impl.runtime.CorrelationHandler;
@@ -357,21 +299,7 @@ import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.impl.variable.ValueTypeResolverImpl;
-import org.operaton.bpm.engine.impl.variable.serializer.BooleanValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.ByteArrayValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.DateValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.DefaultVariableSerializers;
-import org.operaton.bpm.engine.impl.variable.serializer.DoubleValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.FileValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.IntegerValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.JavaObjectSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.LongValueSerlializer;
-import org.operaton.bpm.engine.impl.variable.serializer.NullValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.ShortValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.StringValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializerFactory;
-import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
+import org.operaton.bpm.engine.impl.variable.serializer.*;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
@@ -382,6 +310,10 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd.MAX_THREADS_NUMBER;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @author Tom Baeyens
@@ -432,6 +364,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile FilterService filterService = new FilterServiceImpl();
   protected volatile ExternalTaskService externalTaskService = new ExternalTaskServiceImpl();
   protected volatile DecisionService decisionService = new DecisionServiceImpl();
+  protected volatile OptimizeService optimizeService = new OptimizeService();
 
   // COMMAND EXECUTORS ////////////////////////////////////////////////////////
 
@@ -1060,6 +993,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile int removalTimeUpdateChunkSize = 500;
 
   /**
+   * This legacy behavior sets the retry counter to 3 in the context when running a job for the first time.
+   * This has been patched up to fetch the correct counter value.
+   */
+  protected boolean legacyJobRetryBehaviorEnabled;
+
+  /**
    * @return {@code true} if the exception code feature is disabled and vice-versa.
    */
   public boolean isDisableExceptionCode() {
@@ -1624,6 +1563,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     initService(filterService);
     initService(externalTaskService);
     initService(decisionService);
+    initService(optimizeService);
   }
 
   protected void initService(Object service) {
@@ -1647,7 +1587,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         }
 
       } else if (jdbcUrl != null) {
-        if ((jdbcDriver == null) || (jdbcUrl == null) || (jdbcUsername == null)) {
+        if (jdbcDriver == null || jdbcUsername == null) {
           throw new ProcessEngineException("DataSource or JDBC properties have to be specified in a process engine configuration");
         }
 
@@ -1881,61 +1821,61 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public static void initSqlSessionFactoryProperties(Properties properties, String databaseTablePrefix, String databaseType) {
 
     if (databaseType != null) {
-      properties.put("limitBefore", DbSqlSessionFactory.databaseSpecificLimitBeforeStatements.get(databaseType));
-      properties.put("limitAfter", DbSqlSessionFactory.databaseSpecificLimitAfterStatements.get(databaseType));
-      properties.put("limitBeforeWithoutOffset", DbSqlSessionFactory.databaseSpecificLimitBeforeWithoutOffsetStatements.get(databaseType));
-      properties.put("limitAfterWithoutOffset", DbSqlSessionFactory.databaseSpecificLimitAfterWithoutOffsetStatements.get(databaseType));
+      properties.put("limitBefore", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeStatements().get(databaseType));
+      properties.put("limitAfter", DbSqlSessionFactory.getDatabaseSpecificLimitAfterStatements().get(databaseType));
+      properties.put("limitBeforeWithoutOffset", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeWithoutOffsetStatements().get(databaseType));
+      properties.put("limitAfterWithoutOffset", DbSqlSessionFactory.getDatabaseSpecificLimitAfterWithoutOffsetStatements().get(databaseType));
 
-      properties.put("optimizeLimitBeforeWithoutOffset", DbSqlSessionFactory.optimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements.get(databaseType));
-      properties.put("optimizeLimitAfterWithoutOffset", DbSqlSessionFactory.optimizeDatabaseSpecificLimitAfterWithoutOffsetStatements.get(databaseType));
-      properties.put("innerLimitAfter", DbSqlSessionFactory.databaseSpecificInnerLimitAfterStatements.get(databaseType));
-      properties.put("limitBetween", DbSqlSessionFactory.databaseSpecificLimitBetweenStatements.get(databaseType));
-      properties.put("limitBetweenFilter", DbSqlSessionFactory.databaseSpecificLimitBetweenFilterStatements.get(databaseType));
-      properties.put("limitBetweenAcquisition", DbSqlSessionFactory.databaseSpecificLimitBetweenAcquisitionStatements.get(databaseType));
-      properties.put("orderBy", DbSqlSessionFactory.databaseSpecificOrderByStatements.get(databaseType));
-      properties.put("limitBeforeNativeQuery", DbSqlSessionFactory.databaseSpecificLimitBeforeNativeQueryStatements.get(databaseType));
-      properties.put("distinct", DbSqlSessionFactory.databaseSpecificDistinct.get(databaseType));
-      properties.put("numericCast", DbSqlSessionFactory.databaseSpecificNumericCast.get(databaseType));
+      properties.put("optimizeLimitBeforeWithoutOffset", DbSqlSessionFactory.getOptimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements().get(databaseType));
+      properties.put("optimizeLimitAfterWithoutOffset", DbSqlSessionFactory.getOptimizeDatabaseSpecificLimitAfterWithoutOffsetStatements().get(databaseType));
+      properties.put("innerLimitAfter", DbSqlSessionFactory.getDatabaseSpecificInnerLimitAfterStatements().get(databaseType));
+      properties.put("limitBetween", DbSqlSessionFactory.getDatabaseSpecificLimitBetweenStatements().get(databaseType));
+      properties.put("limitBetweenFilter", DbSqlSessionFactory.getDatabaseSpecificLimitBetweenFilterStatements().get(databaseType));
+      properties.put("limitBetweenAcquisition", DbSqlSessionFactory.getDatabaseSpecificLimitBetweenAcquisitionStatements().get(databaseType));
+      properties.put("orderBy", DbSqlSessionFactory.getDatabaseSpecificOrderByStatements().get(databaseType));
+      properties.put("limitBeforeNativeQuery", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeNativeQueryStatements().get(databaseType));
+      properties.put("distinct", DbSqlSessionFactory.getDatabaseSpecificDistinct().get(databaseType));
+      properties.put("numericCast", DbSqlSessionFactory.getDatabaseSpecificNumericCast().get(databaseType));
 
-      properties.put("limitBeforeInUpdate", DbSqlSessionFactory.databaseSpecificLimitBeforeInUpdate.get(databaseType));
-      properties.put("limitAfterInUpdate", DbSqlSessionFactory.databaseSpecificLimitAfterInUpdate.get(databaseType));
+      properties.put("limitBeforeInUpdate", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeInUpdate().get(databaseType));
+      properties.put("limitAfterInUpdate", DbSqlSessionFactory.getDatabaseSpecificLimitAfterInUpdate().get(databaseType));
 
-      properties.put("countDistinctBeforeStart", DbSqlSessionFactory.databaseSpecificCountDistinctBeforeStart.get(databaseType));
-      properties.put("countDistinctBeforeEnd", DbSqlSessionFactory.databaseSpecificCountDistinctBeforeEnd.get(databaseType));
-      properties.put("countDistinctAfterEnd", DbSqlSessionFactory.databaseSpecificCountDistinctAfterEnd.get(databaseType));
+      properties.put("countDistinctBeforeStart", DbSqlSessionFactory.getDatabaseSpecificCountDistinctBeforeStart().get(databaseType));
+      properties.put("countDistinctBeforeEnd", DbSqlSessionFactory.getDatabaseSpecificCountDistinctBeforeEnd().get(databaseType));
+      properties.put("countDistinctAfterEnd", DbSqlSessionFactory.getDatabaseSpecificCountDistinctAfterEnd().get(databaseType));
 
-      properties.put("escapeChar", DbSqlSessionFactory.databaseSpecificEscapeChar.get(databaseType));
+      properties.put("escapeChar", DbSqlSessionFactory.getDatabaseSpecificEscapeChar().get(databaseType));
 
-      properties.put("bitand1", DbSqlSessionFactory.databaseSpecificBitAnd1.get(databaseType));
-      properties.put("bitand2", DbSqlSessionFactory.databaseSpecificBitAnd2.get(databaseType));
-      properties.put("bitand3", DbSqlSessionFactory.databaseSpecificBitAnd3.get(databaseType));
+      properties.put("bitand1", DbSqlSessionFactory.getDatabaseSpecificBitAnd1().get(databaseType));
+      properties.put("bitand2", DbSqlSessionFactory.getDatabaseSpecificBitAnd2().get(databaseType));
+      properties.put("bitand3", DbSqlSessionFactory.getDatabaseSpecificBitAnd3().get(databaseType));
 
-      properties.put("datepart1", DbSqlSessionFactory.databaseSpecificDatepart1.get(databaseType));
-      properties.put("datepart2", DbSqlSessionFactory.databaseSpecificDatepart2.get(databaseType));
-      properties.put("datepart3", DbSqlSessionFactory.databaseSpecificDatepart3.get(databaseType));
+      properties.put("datepart1", DbSqlSessionFactory.getDatabaseSpecificDatepart1().get(databaseType));
+      properties.put("datepart2", DbSqlSessionFactory.getDatabaseSpecificDatepart2().get(databaseType));
+      properties.put("datepart3", DbSqlSessionFactory.getDatabaseSpecificDatepart3().get(databaseType));
 
-      properties.put("trueConstant", DbSqlSessionFactory.databaseSpecificTrueConstant.get(databaseType));
-      properties.put("falseConstant", DbSqlSessionFactory.databaseSpecificFalseConstant.get(databaseType));
+      properties.put("trueConstant", DbSqlSessionFactory.getDatabaseSpecificTrueConstant().get(databaseType));
+      properties.put("falseConstant", DbSqlSessionFactory.getDatabaseSpecificFalseConstant().get(databaseType));
 
-      properties.put("dbSpecificDummyTable", DbSqlSessionFactory.databaseSpecificDummyTable.get(databaseType));
-      properties.put("dbSpecificIfNullFunction", DbSqlSessionFactory.databaseSpecificIfNull.get(databaseType));
+      properties.put("dbSpecificDummyTable", DbSqlSessionFactory.getDatabaseSpecificDummyTable().get(databaseType));
+      properties.put("dbSpecificIfNullFunction", DbSqlSessionFactory.getDatabaseSpecificIfNull().get(databaseType));
 
-      properties.put("dayComparator", DbSqlSessionFactory.databaseSpecificDaysComparator.get(databaseType));
+      properties.put("dayComparator", DbSqlSessionFactory.getDatabaseSpecificDaysComparator().get(databaseType));
 
-      properties.put("collationForCaseSensitivity", DbSqlSessionFactory.databaseSpecificCollationForCaseSensitivity.get(databaseType));
+      properties.put("collationForCaseSensitivity", DbSqlSessionFactory.getDatabaseSpecificCollationForCaseSensitivity().get(databaseType));
 
-      properties.put("authJoinStart", DbSqlSessionFactory.databaseSpecificAuthJoinStart.get(databaseType));
-      properties.put("authJoinEnd", DbSqlSessionFactory.databaseSpecificAuthJoinEnd.get(databaseType));
-      properties.put("authJoinSeparator", DbSqlSessionFactory.databaseSpecificAuthJoinSeparator.get(databaseType));
+      properties.put("authJoinStart", DbSqlSessionFactory.getDatabaseSpecificAuthJoinStart().get(databaseType));
+      properties.put("authJoinEnd", DbSqlSessionFactory.getDatabaseSpecificAuthJoinEnd().get(databaseType));
+      properties.put("authJoinSeparator", DbSqlSessionFactory.getDatabaseSpecificAuthJoinSeparator().get(databaseType));
 
-      properties.put("authJoin1Start", DbSqlSessionFactory.databaseSpecificAuth1JoinStart.get(databaseType));
-      properties.put("authJoin1End", DbSqlSessionFactory.databaseSpecificAuth1JoinEnd.get(databaseType));
-      properties.put("authJoin1Separator", DbSqlSessionFactory.databaseSpecificAuth1JoinSeparator.get(databaseType));
+      properties.put("authJoin1Start", DbSqlSessionFactory.getDatabaseSpecificAuth1JoinStart().get(databaseType));
+      properties.put("authJoin1End", DbSqlSessionFactory.getDatabaseSpecificAuth1JoinEnd().get(databaseType));
+      properties.put("authJoin1Separator", DbSqlSessionFactory.getDatabaseSpecificAuth1JoinSeparator().get(databaseType));
 
-      properties.put("extractTimeUnitFromDate", DbSqlSessionFactory.databaseSpecificExtractTimeUnitFromDate.get(databaseType));
-      properties.put("authCheckMethodSuffix", DbSqlSessionFactory.databaseSpecificAuthCheckMethodSuffix.getOrDefault(databaseType, ""));
+      properties.put("extractTimeUnitFromDate", DbSqlSessionFactory.getDatabaseSpecificExtractTimeUnitFromDate().get(databaseType));
+      properties.put("authCheckMethodSuffix", DbSqlSessionFactory.getDatabaseSpecificAuthCheckMethodSuffix().getOrDefault(databaseType, ""));
 
-      Map<String, String> constants = DbSqlSessionFactory.dbSpecificConstants.get(databaseType);
+      Map<String, String> constants = DbSqlSessionFactory.getDatabaseSpecificConstants().get(databaseType);
       for (Entry<String, String> entry : constants.entrySet()) {
         properties.put(entry.getKey(), entry.getValue());
       }
@@ -2013,6 +1953,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       addSessionFactory(new GenericManagerFactory(HistoricDecisionInstanceManager.class));
 
       addSessionFactory(new GenericManagerFactory(OperatonFormDefinitionManager.class));
+
+      addSessionFactory(new GenericManagerFactory(OptimizeManager.class));
 
       sessionFactories.put(ReadOnlyIdentityProvider.class, identityProviderSessionFactory);
 
@@ -2357,16 +2299,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     HistoryCleanupJobHandler historyCleanupJobHandler = new HistoryCleanupJobHandler();
     jobHandlers.put(historyCleanupJobHandler.getType(), historyCleanupJobHandler);
 
-    for (JobHandler batchHandler : batchHandlers.values()) {
-      jobHandlers.put(batchHandler.getType(), batchHandler);
-    }
+    batchHandlers.values().forEach(jobHandler -> jobHandlers.put(jobHandler.getType(), jobHandler));
 
     // if we have custom job handlers, register them
-    if (getCustomJobHandlers() != null) {
-      for (JobHandler customJobHandler : getCustomJobHandlers()) {
-        jobHandlers.put(customJobHandler.getType(), customJobHandler);
-      }
-    }
+    getCustomJobHandlers().forEach(jobHandler -> jobHandlers.put(jobHandler.getType(), jobHandler));
 
     jobExecutor.setAutoActivate(jobExecutorActivate);
 
@@ -2898,7 +2834,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (adminGroups == null) {
       adminGroups = new ArrayList<>();
     }
-    if (adminGroups.isEmpty() || !(adminGroups.contains(Groups.OPERATON_ADMIN))) {
+    if (adminGroups.isEmpty() || !adminGroups.contains(Groups.OPERATON_ADMIN)) {
       adminGroups.add(Groups.OPERATON_ADMIN);
     }
   }
@@ -3143,6 +3079,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public void setDecisionService(DecisionService decisionService) {
     this.decisionService = decisionService;
+  }
+
+  public OptimizeService getOptimizeService() {
+    return optimizeService;
   }
 
   public Map<Class<?>, SessionFactory> getSessionFactories() {
@@ -3436,7 +3376,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   public List<JobHandler> getCustomJobHandlers() {
-    return customJobHandlers;
+    return customJobHandlers != null ? customJobHandlers : Collections.emptyList();
   }
 
   public ProcessEngineConfigurationImpl setCustomJobHandlers(List<JobHandler> customJobHandlers) {
@@ -5317,6 +5257,15 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public ProcessEngineConfigurationImpl setRemovalTimeUpdateChunkSize(int removalTimeUpdateChunkSize) {
     this.removalTimeUpdateChunkSize = removalTimeUpdateChunkSize;
+    return this;
+  }
+
+  public boolean isLegacyJobRetryBehaviorEnabled() {
+    return legacyJobRetryBehaviorEnabled;
+  }
+  
+  public ProcessEngineConfiguration setLegacyJobRetryBehaviorEnabled(boolean legacyJobRetryBehaviorEnabled) {
+    this.legacyJobRetryBehaviorEnabled = legacyJobRetryBehaviorEnabled;
     return this;
   }
 

@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -33,6 +31,9 @@ import org.operaton.bpm.engine.repository.Resource;
 import org.operaton.bpm.engine.test.form.deployment.FindOperatonFormDefinitionsCmd;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class OperatonFormDefinitionStrictParseTest {
 
@@ -81,9 +82,8 @@ class OperatonFormDefinitionStrictParseTest {
     processEngineConfiguration.setDisableStrictOperatonFormParsing(false);
 
     // then deployment fails with an exception
-    assertThatThrownBy(() -> {
-      testRule.deploy(FORM);
-    }).isInstanceOf(ProcessEngineException.class)
+    assertThatThrownBy(() ->
+      testRule.deploy(FORM)).isInstanceOf(ProcessEngineException.class)
     .hasMessageContaining("ENGINE-09033 Could not parse Operaton Form resource org/operaton/bpm/engine/test/bpmn/OperatonFormDefinitionStrictParseTest.anyForm.form.");
     assertThat(repositoryService.createDeploymentQuery().list()).isEmpty();
   }

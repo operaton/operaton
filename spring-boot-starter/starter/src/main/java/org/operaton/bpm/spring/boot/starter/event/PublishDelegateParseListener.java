@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.context.ApplicationEventPublisher;
+
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -29,10 +34,6 @@ import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 import org.operaton.bpm.spring.boot.starter.property.EventingProperty;
-import org.springframework.context.ApplicationEventPublisher;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.operaton.bpm.engine.delegate.ExecutionListener.*;
 import static org.operaton.bpm.engine.delegate.TaskListener.*;
@@ -61,7 +62,7 @@ public class PublishDelegateParseListener implements BpmnParseListener {
   public PublishDelegateParseListener(final ApplicationEventPublisher publisher, final EventingProperty property) {
 
     this.skippable = property.isSkippable();
-    if (property.isTask()) {
+    if (Boolean.TRUE.equals(property.isTask())) {
       this.taskListener = delegateTask -> {
         publisher.publishEvent(delegateTask);
         publisher.publishEvent(new TaskEvent(delegateTask));

@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -24,11 +27,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Thorben Lindhauer
@@ -60,10 +60,10 @@ class FallbackSerializationTest {
             .hasMessageContaining("Fallback serializer cannot handle deserialized objects");
 
     ObjectValue returnedValue = runtimeService.getVariableTyped(processInstanceId, "var", false);
-    assertFalse(returnedValue.isDeserialized());
-    assertEquals("application/foo", returnedValue.getSerializationDataFormat());
-    assertEquals("foo", returnedValue.getValueSerialized());
-    assertEquals("org.operaton.Foo", returnedValue.getObjectTypeName());
+    assertThat(returnedValue.isDeserialized()).isFalse();
+    assertThat(returnedValue.getSerializationDataFormat()).isEqualTo("application/foo");
+    assertThat(returnedValue.getValueSerialized()).isEqualTo("foo");
+    assertThat(returnedValue.getObjectTypeName()).isEqualTo("org.operaton.Foo");
 
   }
 }

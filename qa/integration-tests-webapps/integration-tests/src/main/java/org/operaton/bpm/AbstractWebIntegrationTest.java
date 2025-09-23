@@ -18,27 +18,21 @@ package org.operaton.bpm;
 
 import java.util.List;
 import java.util.logging.Logger;
+import jakarta.ws.rs.core.MediaType;
 
-import org.glassfish.jersey.client.ClientConfig;
-import org.junit.jupiter.api.AfterEach;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import kong.unirest.HttpResponse;
+import kong.unirest.ObjectMapper;
+import kong.unirest.Unirest;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
-import org.operaton.bpm.util.TestUtil;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import static jakarta.ws.rs.core.HttpHeaders.SET_COOKIE;
 
 /**
- *
  * @author Daniel Meyer
  * @author Roman Smirnov
- *
  */
 public abstract class AbstractWebIntegrationTest {
 
@@ -52,96 +46,93 @@ public abstract class AbstractWebIntegrationTest {
   protected static final String JSESSIONID_IDENTIFIER = "JSESSIONID=";
   protected static final String XSRF_TOKEN_IDENTIFIER = "XSRF-TOKEN=";
 
-  protected static final String HOST_NAME = "localhost";
-
   protected String appBasePath;
   protected String appUrl;
-  protected TestUtil testUtil;
   protected TestProperties testProperties;
 
   protected static ChromeDriverService service;
 
-  protected Client client;
-  protected String httpPort;
-
   protected String csrfToken;
   protected String sessionId;
 
-  // current target under test
-  protected WebTarget target;
-  // current response under test
-  protected Response response;
+  @BeforeAll
+  public static void setUpClass() {
+    Unirest.config().reset().enableCookieManagement(false).setObjectMapper(new ObjectMapper() {
+      final com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+
+      @Override
+      public String writeValue(Object value) {
+        try {
+          return mapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+          throw new RuntimeException(e);
+        }
+      }
+
+      @Override
+      public <T> T readValue(String value, Class<T> valueType) {
+        try {
+          return mapper.readValue(value, valueType);
+        } catch (JsonProcessingException e) {
+          throw new RuntimeException(e);
+        }
+      }
+    });
+  }
 
   @BeforeEach
-  public void before() throws Exception {
+  public void before() {
     testProperties = new TestProperties(48080);
-    testUtil = new TestUtil(testProperties);
   }
 
-  @AfterEach
-  public void destroyClient() {
-    client.close();
-    if (response != null) {
-      response.close();
-    }
-  }
-
-  public void createClient(String ctxPath) throws Exception {
+  public void createClient(String ctxPath) {
     testProperties = new TestProperties();
 
     appBasePath = testProperties.getApplicationPath("/" + ctxPath);
     LOGGER.info("Connecting to application " + appBasePath);
-
-    var clientConfig = new ClientConfig();
-    clientConfig.register(JacksonJaxbJsonProvider.class);  // Register Jackson for POJO mapping
-
-    client = ClientBuilder.newClient(clientConfig);
   }
 
   protected void getTokens() {
     // First request, first set of cookies
-    target = client.target(appBasePath + "/tasklist"); // replace TASKLIST_PATH
-    Response clientResponse = target.request().get();
-    List<Object> cookieValues = getCookieHeaders(clientResponse);
-    clientResponse.close();
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
+    List<String> cookieValues = response.getHeaders().get(SET_COOKIE);
 
     String startCsrfCookie = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
     String startSessionCookie = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
 
-    // Login with user, update session cookie
-    target = client.target(appBasePath + "api/admin/auth/user/default/login/cockpit");
-    clientResponse = target
-            .request()
+    // login with user, update session cookie
+    response = Unirest.post(appBasePath + "api/admin/auth/user/default/login/cockpit")
+            .body("username=demo&password=demo")
+            .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
             .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, startSessionCookie))
             .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
-            .accept(MediaType.APPLICATION_JSON)
-            .post(Entity.entity("username=demo&password=demo", MediaType.APPLICATION_FORM_URLENCODED));
-
-    cookieValues = clientResponse.getHeaders().get("Set-Cookie");
-    clientResponse.close();
+            .header("Accept", MediaType.APPLICATION_JSON)
+            .asString();
+    cookieValues = response.getHeaders().get(SET_COOKIE);
 
     sessionId = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
 
-    // Update CSRF cookie
-    clientResponse = client.target(appBasePath + "api/engine/engine")
-            .request()
+    // update CSRF cookie
+    response = Unirest.get(appBasePath + "api/engine/engine")
             .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, sessionId))
             .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
-            .get();
+            .asString();
 
-    cookieValues = getCookieHeaders(clientResponse);
-    clientResponse.close();
+    cookieValues = response.getHeaders().get(SET_COOKIE);
 
     csrfToken = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
   }
 
-  protected List<Object> getCookieHeaders(Response response) {
-    return response.getHeaders().get("Set-Cookie");
+  protected List<String> getCookieHeaders(HttpResponse<?> response) {
+    return response.getHeaders().get(SET_COOKIE);
   }
 
-  protected String getCookie(List<Object> cookieValues, String cookieName) {
+  protected String getCookie(List<String> cookieValues, String cookieName) {
     String cookieValue = getCookieValue(cookieValues, cookieName);
-    int valueEnd = cookieValue.contains(";") ? cookieValue.indexOf(';') : cookieValue.length() - 1;
+    if (cookieValue == null || cookieValue.isEmpty() || cookieValue.length() <= cookieName.length()) {
+      return "";
+    }
+    int valueEnd = cookieValue.contains(";") ? cookieValue.indexOf(';') : cookieValue.length();
     return cookieValue.substring(cookieName.length(), valueEnd);
   }
 
@@ -153,38 +144,45 @@ public abstract class AbstractWebIntegrationTest {
     return XSRF_TOKEN_IDENTIFIER + csrf + "; " + JSESSIONID_IDENTIFIER + session;
   }
 
-  protected String getXsrfTokenHeader(Response response) {
-    return response.getHeaders().getFirst(X_XSRF_TOKEN_HEADER).toString();
+  protected String getXsrfTokenHeader(HttpResponse<?> response) {
+    return response.getHeaders().getFirst(X_XSRF_TOKEN_HEADER);
   }
 
-  protected String getXsrfCookieValue(Response response) {
+  protected String getXsrfCookieValue(HttpResponse<?> response) {
     return getCookieValue(response, XSRF_TOKEN_IDENTIFIER);
   }
 
-  protected String getCookieValue(Response response, String cookieName) {
+  protected String getCookieValue(HttpResponse<?> response, String cookieName) {
     return getCookieValue(getCookieHeaders(response), cookieName);
   }
 
-  protected String getCookieValue(List<Object> cookies, String cookieName) {
-    for (Object cookie : cookies) {
-      if (cookie.toString().startsWith(cookieName)) {
-        return cookie.toString();
+  protected String getCookieValue(List<String> cookieValues, String cookieName) {
+    if (cookieValues != null) {
+      for (String cookieValue : cookieValues) {
+        if (cookieValue != null && cookieValue.contains(cookieName)) {
+          return cookieValue;
+        }
       }
     }
 
     return "";
   }
 
-  protected void preventRaceConditions() throws InterruptedException {
-    // just wait some seconds before starting because of Wildfly / Cargo race conditions
-    Thread.sleep(5 * 1000L);
-  }
-
+  // Helper methods for common test operations
   protected String getWebappCtxPath() {
-    return testProperties.getStringProperty("http.ctx-path.webapp", null);
+    return testProperties.getWebappCtxPath();
   }
 
   protected String getRestCtxPath() {
-    return testProperties.getStringProperty("http.ctx-path.rest", null);
+    return testProperties.getRestCtxPath();
   }
+
+  protected void preventRaceConditions() {
+    try {
+      Thread.sleep(500); // Simple delay to prevent race conditions
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+  }
+
 }

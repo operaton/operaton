@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
@@ -30,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -46,6 +41,12 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Yana.Vasileva

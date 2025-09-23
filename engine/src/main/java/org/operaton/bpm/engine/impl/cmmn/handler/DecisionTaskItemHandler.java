@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.handler;
 
-import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.getDecisionResultMapperForName;
-
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.DmnDecisionTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
@@ -26,6 +24,8 @@ import org.operaton.bpm.engine.impl.dmn.result.DecisionResultMapper;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.cmmn.instance.DecisionRefExpression;
 import org.operaton.bpm.model.cmmn.instance.DecisionTask;
+
+import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.getDecisionResultMapperForName;
 
 
 /**

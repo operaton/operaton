@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
-
 import java.io.ByteArrayInputStream;
 import java.util.Calendar;
 import java.util.Collections;
@@ -32,6 +28,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -74,6 +71,11 @@ import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 /**
  * @author Tassilo Weidner
@@ -908,12 +910,8 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) {
-      // expected
-    }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
@@ -942,12 +940,8 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) {
-      // expected
-    }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
 
@@ -1009,12 +1003,8 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) {
-      // expected
-    }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricJobLog> jobLog = historyService.createHistoricJobLogQuery().list();
 
@@ -1637,12 +1627,8 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) {
-      // expected
-    }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity) historyService.createHistoricJobLogQuery()
       .jobExceptionMessage("I'm supposed to fail!")
@@ -2017,11 +2003,7 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     List<Job> jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
-      try {
-        managementService.executeJob(job.getId());
-      } catch (RuntimeException ignored) {
-        // expected
-      }
+      executeJobIgnoringException(managementService, job.getId());
     }
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity)historyService.createHistoricJobLogQuery()

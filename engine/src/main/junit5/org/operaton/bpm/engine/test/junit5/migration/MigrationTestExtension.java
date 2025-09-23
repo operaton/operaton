@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.junit5.migration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +43,10 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ActivityInstanceAssert.ActivityInstanceAssertThatClause;
 import org.operaton.bpm.engine.test.util.ExecutionAssert;
+
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer

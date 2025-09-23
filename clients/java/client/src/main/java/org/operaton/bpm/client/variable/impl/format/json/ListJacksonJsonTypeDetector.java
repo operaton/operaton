@@ -19,10 +19,10 @@ package org.operaton.bpm.client.variable.impl.format.json;
 import java.lang.reflect.TypeVariable;
 import java.util.List;
 
-import org.operaton.bpm.client.variable.impl.format.TypeDetector;
-
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+
+import org.operaton.bpm.client.variable.impl.format.TypeDetector;
 
 public class ListJacksonJsonTypeDetector implements TypeDetector {
 
@@ -51,7 +51,7 @@ public class ListJacksonJsonTypeDetector implements TypeDetector {
 
   private boolean bindingsArePresent(Class<?> erasedType) {
     TypeVariable<?>[] vars = erasedType.getTypeParameters();
-    int varLen = (vars == null) ? 0 : vars.length;
+    int varLen = vars == null ? 0 : vars.length;
     if (varLen == 0) {
       return false;
     }

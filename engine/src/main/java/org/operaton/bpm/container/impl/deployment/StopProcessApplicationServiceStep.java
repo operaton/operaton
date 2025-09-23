@@ -18,9 +18,9 @@ package org.operaton.bpm.container.impl.deployment;
 
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessApplication;
-import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
+import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
 
 /**

@@ -15,9 +15,15 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.type.child;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
 import org.operaton.bpm.model.xml.impl.type.child.ChildElementCollectionImpl;
@@ -28,13 +34,8 @@ import org.operaton.bpm.model.xml.testmodel.TestModelTest;
 import org.operaton.bpm.model.xml.testmodel.instance.*;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski

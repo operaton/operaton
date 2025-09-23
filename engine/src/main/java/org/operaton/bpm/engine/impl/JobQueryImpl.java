@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,6 +32,9 @@ import org.operaton.bpm.engine.impl.util.CompareUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**
@@ -72,6 +72,7 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
   protected String failedActivityId;
   protected boolean noRetriesLeft;
   protected SuspensionState suspensionState;
+  protected boolean acquired;
 
   protected boolean isTenantIdSet;
   protected String[] tenantIds;
@@ -287,6 +288,12 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
   }
 
   @Override
+  public JobQuery acquired() {
+    acquired = true;
+    return this;
+  }
+
+  @Override
   protected boolean hasExcludingConditions() {
     return super.hasExcludingConditions()
       || CompareUtil.areNotInAscendingOrder(priorityHigherThanOrEqual, priorityLowerThanOrEqual)
@@ -442,6 +449,9 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
   }
   public String getExceptionMessage() {
     return exceptionMessage;
+  }
+  public boolean getAcquired() {
+    return acquired;
   }
 
 }

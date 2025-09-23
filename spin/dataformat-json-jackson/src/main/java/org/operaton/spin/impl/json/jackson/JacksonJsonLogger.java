@@ -16,6 +16,10 @@
  */
 package org.operaton.spin.impl.json.jackson;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
+
 import org.operaton.commons.logging.BaseLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 import org.operaton.spin.json.SpinJsonDataFormatException;
@@ -23,10 +27,6 @@ import org.operaton.spin.json.SpinJsonException;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPathException;
 import org.operaton.spin.json.SpinJsonPropertyException;
-
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 /**
  * @author Thorben Lindhauer

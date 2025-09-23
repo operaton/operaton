@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.test.standalone.testing;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineTestCase;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

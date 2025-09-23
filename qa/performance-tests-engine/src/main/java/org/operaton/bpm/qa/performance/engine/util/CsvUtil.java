@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.qa.performance.engine.util;
 
-import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
-
 import java.util.List;
+
+import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
 
 /**
  * <p>Provides export functionality for exporting a {@link TabularResultSet}

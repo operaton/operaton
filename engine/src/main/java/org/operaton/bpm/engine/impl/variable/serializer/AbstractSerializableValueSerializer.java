@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.variable.serializer;
 
 import java.util.Base64;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;

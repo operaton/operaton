@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
-import java.io.IOException;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestHelper;
 
@@ -44,14 +43,14 @@ public class TestWarDeploymentWithDiagram extends AbstractFoxPlatformIntegration
   }
 
   @Test
-  void testDeployProcessArchive() throws IOException {
+  void testDeployProcessArchive() throws Exception {
     String expectedDiagramResource = "/org/operaton/bpm/integrationtest/testDeployProcessArchive.png";
     String processDefinitionKey = "testDeployProcessArchive";
     TestHelper.assertDiagramIsDeployed(true, getClass(), expectedDiagramResource, processDefinitionKey);
   }
 
   @Test
-  void testInvoiceProcess() throws IOException {
+  void testInvoiceProcess() throws Exception {
     String expectedDiagramResource = "/org/operaton/bpm/integrationtest/invoice-it.jpg";
     String processDefinitionKey = "invoice-it";
     TestHelper.assertDiagramIsDeployed(true, getClass(), expectedDiagramResource, processDefinitionKey);

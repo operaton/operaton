@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.run.test;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
-import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
-import org.operaton.bpm.run.OperatonApp;
-
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
+import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
+import org.operaton.bpm.run.OperatonApp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

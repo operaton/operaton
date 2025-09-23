@@ -16,11 +16,8 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-
 import java.lang.reflect.Method;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,14 +25,16 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
@@ -126,15 +125,14 @@ class LoginIT extends AbstractWebappUiIT {
     }).doesNotThrowAnyException();
   }
 
-  void loginToCockpit() throws URISyntaxException {
+  void loginToCockpit() {
     String appName = "cockpit";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector(".deployed .processes .stats-label"),
         "Process Definitions"));
 
-    wait.until(currentURIIs(new URI(appUrl + "app/"
-        + appName + "/default/#/dashboard")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#/dashboard")));
   }
 
   @MethodSource("commands")
@@ -175,15 +173,14 @@ class LoginIT extends AbstractWebappUiIT {
     }).doesNotThrowAnyException();
   }
 
-  void loginToAdmin() throws URISyntaxException {
+  void loginToAdmin() {
     String appName = "admin";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector("[ng-class=\"activeClass('#/authorization')\"] a"),
         "Authorizations"));
 
-    wait.until(currentURIIs(new URI(appUrl
-        + "app/" + appName + "/default/#/")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#/")));
   }
 
   @MethodSource("commands")
@@ -199,15 +196,14 @@ class LoginIT extends AbstractWebappUiIT {
     }).doesNotThrowAnyException();
   }
 
-  void loginToWelcome() throws URISyntaxException {
+  void loginToWelcome() {
     String appName = "welcome";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector(".webapps .section-title"),
         "Applications"));
 
-    wait.until(currentURIIs(new URI(appUrl
-        + "app/" + appName + "/default/#!/welcome")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#!/welcome")));
   }
 
   @BeforeEach

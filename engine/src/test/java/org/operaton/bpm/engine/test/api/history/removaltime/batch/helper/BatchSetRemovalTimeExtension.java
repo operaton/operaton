@@ -22,6 +22,7 @@ import java.util.GregorianCalendar;
 import java.util.Map;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
+
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -54,7 +55,7 @@ public class BatchSetRemovalTimeExtension extends BatchExtension {
   }
 
   @Override
-  public void beforeTestExecution(ExtensionContext context) throws Exception {
+  public void beforeTestExecution(ExtensionContext context) {
     getProcessEngineConfiguration()
       .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
       .setHistoryRemovalTimeStrategy(ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -73,7 +74,7 @@ public class BatchSetRemovalTimeExtension extends BatchExtension {
   }
 
   @Override
-  public void afterTestExecution(ExtensionContext context) throws Exception {
+  public void afterTestExecution(ExtensionContext context) {
     super.afterTestExecution(context);
 
     getProcessEngineConfiguration()
@@ -163,10 +164,9 @@ public class BatchSetRemovalTimeExtension extends BatchExtension {
     engineRule.getAuthorizationService()
         .createAuthorizationQuery()
         .list()
-        .forEach(authorization -> {
+        .forEach(authorization ->
           engineRule.getAuthorizationService()
-              .deleteAuthorization(authorization.getId());
-        });
+              .deleteAuthorization(authorization.getId()));
   }
 
   public class TestProcessBuilder {

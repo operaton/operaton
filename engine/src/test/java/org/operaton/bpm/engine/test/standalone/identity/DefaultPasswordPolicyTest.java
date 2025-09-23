@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.engine.test.standalone.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.identity.PasswordPolicy;
@@ -38,6 +36,9 @@ import org.operaton.bpm.engine.impl.identity.PasswordPolicySpecialCharacterRuleI
 import org.operaton.bpm.engine.impl.identity.PasswordPolicyUpperCaseRuleImpl;
 import org.operaton.bpm.engine.impl.identity.PasswordPolicyUserDataRuleImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Miklas Boskamp

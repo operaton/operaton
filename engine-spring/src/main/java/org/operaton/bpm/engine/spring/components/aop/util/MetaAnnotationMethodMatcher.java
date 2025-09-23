@@ -15,12 +15,12 @@
  */
 package org.operaton.bpm.engine.spring.components.aop.util;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
 import org.springframework.aop.support.AopUtils;
 import org.springframework.aop.support.annotation.AnnotationMethodMatcher;
 import org.springframework.core.annotation.AnnotationUtils;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
 /**
  * this code is taken almost verbatim from the Spring Integration
@@ -54,7 +54,7 @@ public class MetaAnnotationMethodMatcher extends AnnotationMethodMatcher {
 		}
 		// The method may be on an interface, so let's check on the target class as well.
 		Method specificMethod = AopUtils.getMostSpecificMethod(method, targetClass);
-		return (specificMethod != method &&
-				(AnnotationUtils.getAnnotation(specificMethod, this.annotationType) != null));
+		return specificMethod != method &&
+				(AnnotationUtils.getAnnotation(specificMethod, this.annotationType) != null);
 	}
 }

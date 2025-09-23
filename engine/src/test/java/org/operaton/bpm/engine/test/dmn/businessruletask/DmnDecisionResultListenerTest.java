@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.test.dmn.businessruletask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collections;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.operaton.bpm.engine.RuntimeService;
@@ -32,6 +31,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.IntegerValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests the decision result that is retrieved by an execution listener.

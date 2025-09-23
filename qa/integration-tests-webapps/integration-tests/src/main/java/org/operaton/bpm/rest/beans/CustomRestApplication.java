@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.rest.beans;
 
-import org.operaton.bpm.engine.rest.impl.OperatonRestResources;
-
-import jakarta.ws.rs.ApplicationPath;
-import jakarta.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
+
+import org.operaton.bpm.engine.rest.impl.OperatonRestResources;
 
 @ApplicationPath("/")
 public class CustomRestApplication extends Application {

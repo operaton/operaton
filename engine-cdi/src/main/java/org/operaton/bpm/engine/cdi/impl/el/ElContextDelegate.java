@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.cdi.impl.el;
 
+import java.util.Locale;
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
 import jakarta.el.FunctionMapper;
 import jakarta.el.VariableMapper;
-import java.util.Locale;
 
 /**
  * @author Daniel Meyer

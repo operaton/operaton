@@ -16,6 +16,14 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.skyscreamer.jsonassert.JSONAssert;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -32,26 +40,15 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.SpinRuntimeException;
 import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.JsonValue;
 import org.operaton.spin.plugin.variable.value.builder.JsonValueBuilder;
 
-import org.json.JSONException;
 import static org.operaton.spin.DataFormats.json;
 import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
 import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.skyscreamer.jsonassert.JSONAssert;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Roman Smirnov
@@ -78,7 +75,7 @@ class JsonValueTest {
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  void getUntypedJsonValue() throws JSONException {
+  void getUntypedJsonValue() throws Exception {
     // given
     JsonValue jsonValue = jsonValue(jsonString).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);
@@ -90,7 +87,7 @@ class JsonValueTest {
 
     // then
     JSONAssert.assertEquals(jsonString, value.toString(), true);
-    assertEquals(json().getName(), value.getDataFormatName());
+    assertThat(value.getDataFormatName()).isEqualTo(json().getName());
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -111,7 +108,7 @@ class JsonValueTest {
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  void getTypedJsonValue() throws JSONException {
+  void getTypedJsonValue() throws Exception {
     // given
     JsonValue jsonValue = jsonValue(jsonString).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);
@@ -125,9 +122,9 @@ class JsonValueTest {
     SpinJsonNode value = typedValue.getValue();
     JSONAssert.assertEquals(jsonString, value.toString(), true);
 
-    assertTrue(typedValue.isDeserialized());
-    assertEquals(JSON, typedValue.getType());
-    assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
+    assertThat(typedValue.isDeserialized()).isTrue();
+    assertThat(typedValue.getType()).isEqualTo(JSON);
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(JSON_FORMAT_NAME);
     JSONAssert.assertEquals(jsonString, typedValue.getValueSerialized(), true);
   }
 
@@ -162,8 +159,8 @@ class JsonValueTest {
 
     // However, I can access the serialized value
     JsonValue jsonValue = runtimeService.getVariableTyped(processInstanceId, variableName, false);
-    assertFalse(jsonValue.isDeserialized());
-    assertEquals(brokenJsonString, jsonValue.getValueSerialized());
+    assertThat(jsonValue.isDeserialized()).isFalse();
+    assertThat(jsonValue.getValueSerialized()).isEqualTo(brokenJsonString);
 
     // but not the deserialized properties
     assertThatThrownBy(jsonValue::getValue)
@@ -200,7 +197,7 @@ class JsonValueTest {
 
     // then
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("task1", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("task1");
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -215,7 +212,7 @@ class JsonValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+    assertThat(variableInstances).isEmpty();
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -230,7 +227,7 @@ class JsonValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+    assertThat(variableInstances).isEmpty();
   }
 
   @Test
@@ -240,12 +237,12 @@ class JsonValueTest {
     valueInfo.put(ValueType.VALUE_INFO_TRANSIENT, true);
 
     // when
-    JsonValue jsonValue = (JsonValue) SpinValueType.JSON.createValueFromSerialized(jsonString, valueInfo);
+    JsonValue jsonValue = (JsonValue) JSON.createValueFromSerialized(jsonString, valueInfo);
 
     // then
-    assertTrue(jsonValue.isTransient());
-    Map<String, Object> returnedValueInfo = SpinValueType.JSON.getValueInfo(jsonValue);
-    assertEquals(true, returnedValueInfo.get(ValueType.VALUE_INFO_TRANSIENT));
+    assertThat(jsonValue.isTransient()).isTrue();
+    Map<String, Object> returnedValueInfo = JSON.getValueInfo(jsonValue);
+    assertThat(returnedValueInfo).containsEntry(ValueType.VALUE_INFO_TRANSIENT, true);
   }
 
   /**
@@ -297,11 +294,11 @@ class JsonValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+    assertThat(variableInstances).isEmpty();
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("userTask1", task.getTaskDefinitionKey());
+    assertThat(task).isNotNull();
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("userTask1");
   }
 
 }

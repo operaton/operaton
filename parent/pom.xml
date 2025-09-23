@@ -40,7 +40,7 @@
     <version.cronutils>9.2.1</version.cronutils>
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.assertj>3.27.4</version.assertj>
-    <version.mockito>5.19.0</version.mockito>
+    <version.mockito>5.20.0</version.mockito>
     <version.jna>5.17.0</version.jna>
     <version.testcontainers>1.21.3</version.testcontainers>
     <version.unirest-java>3.14.5</version.unirest-java>

@@ -40,8 +40,8 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
   private ProcessDefinitionRestService resource;
@@ -147,7 +147,9 @@ class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
     // when + then
-    assertDoesNotThrow(() -> resource.queryStatistics(uriInfo, null, null), "No exception expected");
+    assertThatCode(() -> resource.queryStatistics(uriInfo, null, null))
+      .as("No exception expected")
+      .doesNotThrowAnyException();
   }
 
   protected void assertProcessDefinitionStatisticsDto(ProcessDefinitionStatisticsDto actual,

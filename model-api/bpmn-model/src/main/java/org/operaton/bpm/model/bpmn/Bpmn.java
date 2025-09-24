@@ -252,7 +252,7 @@ public class Bpmn {
     INSTANCE = Objects.requireNonNull(instance, "No BpmnFactory found");
   }
 
-  /**{@link BpmnParser} created by the first {@link BpmnParserFactory} found via the {@link ServiceLoader}.
+  /** {@link BpmnParser} created by the first {@link BpmnParserFactory} found via the {@link ServiceLoader}.
    * <p>To customize the behavior, provide a custom {@link BpmnParserFactory} implementation and declare it in:
    * {@code META-INF/services/org.operaton.bpm.model.bpmn.BpmnParserFactory}.</p>
    */

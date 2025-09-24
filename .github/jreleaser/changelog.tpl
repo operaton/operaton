@@ -98,6 +98,11 @@ has been completed.
 
 49/53 (+5) modules have been migrated to JUnit 5.
 
+## Customizable Model Singletons
+
+BPMN, CMMN, and DMN singletons are now loaded via factories discovered with `ServiceLoader`, allowing custom implementations.
+To override, create an implementation of desired factory and register it in corresponding file in `META-INF/services`.
+
 
 {{changelogContributors}}
 

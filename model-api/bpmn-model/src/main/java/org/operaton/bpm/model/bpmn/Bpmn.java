@@ -17,6 +17,8 @@
 package org.operaton.bpm.model.bpmn;
 
 import java.io.*;
+import java.util.Objects;
+import java.util.ServiceLoader;
 
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.impl.BpmnParser;
@@ -236,12 +238,25 @@ import static org.operaton.bpm.model.bpmn.impl.instance.ProcessImpl.DEFAULT_HIST
  */
 public class Bpmn {
 
-  /** the singleton instance of {@link Bpmn}. If you want to customize the behavior of Bpmn,
-   * replace this instance with an instance of a custom subclass of {@link Bpmn}. */
-  public static final Bpmn INSTANCE = new Bpmn();
+  /** The singleton instance of {@link Bpmn} created by the first {@link BpmnFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior of Bpmn, add the fully qualified class name of the custom implementation to the file:
+   * {@code META-INF/services/org.operaton.bpm.model.bpmn.BpmnFactory}</p>. */
+  public static final Bpmn INSTANCE;
 
-  /** the parser used by the Bpmn implementation. */
-  private final BpmnParser bpmnParser = new BpmnParser();
+  static {
+    Bpmn instance = null;
+    for(BpmnFactory factory : ServiceLoader.load(BpmnFactory.class)) {
+      instance = factory.newInstance();
+      break;
+    }
+    INSTANCE = Objects.requireNonNull(instance, "No BpmnFactory found");
+  }
+
+  /**{@link BpmnParser} created by the first {@link BpmnParserFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior, provide a custom {@link BpmnParserFactory} implementation and declare it in:
+   * {@code META-INF/services/org.operaton.bpm.model.bpmn.BpmnParserFactory}.</p>
+   */
+  private final BpmnParser bpmnParser;
   private final ModelBuilder bpmnModelBuilder;
 
   /** The {@link Model}
@@ -362,7 +377,13 @@ public class Bpmn {
   /**
    * Register known types of the BPMN model
    */
-  protected Bpmn() {
+  public Bpmn() {
+    BpmnParser parser = null;
+    for(BpmnParserFactory factory : ServiceLoader.load(BpmnParserFactory.class)) {
+      parser = factory.newInstance();
+      break;
+    }
+    bpmnParser = Objects.requireNonNull(parser, "No BpmnParserFactory found");
     bpmnModelBuilder = ModelBuilder.createInstance("BPMN Model");
     bpmnModelBuilder.alternativeNamespace(CAMUNDA_NS, OPERATON_NS);
     doRegisterTypes(bpmnModelBuilder);

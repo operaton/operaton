@@ -18,6 +18,33 @@ package org.operaton.bpm.model.bpmn;
 
 /**
  * The factory for creating {@link Bpmn} instances.
+ *
+ * <p>
+ * Implementations of this interface are discovered using Java's {@link java.util.ServiceLoader} mechanism.
+ * To provide a custom implementation, create a class that implements {@code BpmnFactory} and
+ * register it by adding its fully qualified class name to a file named
+ * {@code META-INF/services/org.operaton.bpm.model.bpmn.BpmnFactory} in your JAR.
+ * </p>
+ *
+ * <p>
+ * Example:
+ * <pre>
+ * // In your implementation JAR:
+ * // File: META-INF/services/org.operaton.bpm.model.bpmn.BpmnFactory
+ * com.example.MyCustomBpmnFactory
+ * </pre>
+ * </p>
+ *
+ * <p>
+ * To obtain an instance, use:
+ * <pre>
+ * ServiceLoader&lt;BpmnFactory&gt; loader = ServiceLoader.load(BpmnFactory.class);
+ * for (BpmnFactory factory : loader) {
+ *   Bpmn bpmn = factory.newInstance();
+ *   // use bpmn
+ * }
+ * </pre>
+ * </p>
  */
 public interface BpmnFactory {
   Bpmn newInstance();

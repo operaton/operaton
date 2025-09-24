@@ -65,6 +65,14 @@
                 <exclude>org/operaton/connect/impl/**</exclude>
               </excludes>
             </configuration>
+            <executions>
+              <execution>
+                <id>restrictive</id>
+                <configuration>
+                  <ignoredDifferencesFile>../.clirr-ignore.xml</ignoredDifferencesFile>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>

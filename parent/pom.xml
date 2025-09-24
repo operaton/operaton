@@ -451,7 +451,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <clirr.failOnWarning.restrictive>false</clirr.failOnWarning.restrictive>
+        <clirr.failOnWarning.restrictive>true</clirr.failOnWarning.restrictive>
         <clirr.comparisonVersion>${operaton.version.old}</clirr.comparisonVersion>
       </properties>
       <build>

@@ -36,6 +36,11 @@
     <className>org/operaton/bpm/model/bpmn/builder/Abstract*EventDefinitionBuilder</className>
     <method>**Abstract*EventDefinitionBuilder**</method>
   </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/model/xml/type/reference/AttributeReferenceCollection</className>
+    <method>**AttributeReferenceCollection**</method>
+  </difference>
   <!-- Unnecessary overridden methods from superclass removed -->
   <difference>
     <differenceType>7002</differenceType>

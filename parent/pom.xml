@@ -445,6 +445,78 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>check-api-compatibility</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <clirr.failOnWarning.restrictive>false</clirr.failOnWarning.restrictive>
+        <clirr.comparisonVersion>${operaton.version.old}</clirr.comparisonVersion>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>initialize-clirr-dirs</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <mkdir dir="${maven.multiModuleProjectDirectory}/target/reports/clirr/all"/>
+                    <mkdir dir="${maven.multiModuleProjectDirectory}/target/reports/clirr/restrictive"/>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>clirr-maven-plugin</artifactId>
+              <configuration>
+                <skip>false</skip>
+                <comparisonVersion>${clirr.comparisonVersion}</comparisonVersion>
+                <logResults>true</logResults>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>all</id>
+                  <phase>verify</phase>
+                  <goals>
+                    <goal>check-no-fork</goal>
+                  </goals>
+                  <configuration>
+                    <textOutputFile>${maven.multiModuleProjectDirectory}/target/reports/clirr/all/${project.artifactId}.txt</textOutputFile>
+                    <failOnWarning>false</failOnWarning>
+                    <failOnError>false</failOnError>
+                  </configuration>
+                </execution>
+                <execution>
+                  <id>restrictive</id>
+                  <phase>verify</phase>
+                  <goals>
+                    <goal>check-no-fork</goal>
+                  </goals>
+                  <configuration>
+                    <textOutputFile>${maven.multiModuleProjectDirectory}/target/reports/clirr/restrictive/${project.artifactId}.txt</textOutputFile>
+                    <failOnWarning>${clirr.failOnWarning.restrictive}</failOnWarning>
+                    <failOnError>${clirr.failOnWarning.restrictive}</failOnError>
+                    <ignoredDifferencesFile>${maven.multiModuleProjectDirectory}/.devenv/clirr-ignore.xml</ignoredDifferencesFile>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
   </profiles>
   <repositories>
     <repository>

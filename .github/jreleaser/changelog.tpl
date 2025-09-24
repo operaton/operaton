@@ -29,7 +29,7 @@ Operaton is based on:
 ### Quarkus Extension
 
 <!-- /pom.xml -->
-The Operaton Quarkus extension is based on **Quarkus 3.26.0** (upgrade from 3.24.2).
+The Operaton Quarkus extension is based on **Quarkus 3.28.0** (upgrade from 3.26.3).
 
 ### Distributions
 

@@ -84,7 +84,7 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
     // this test makes sure the delegate invoked by the called process can be resolved (context switch necessary).
 
     // we cannot load the class
-    assertThatThrownBy(() -> new CalledProcessDelegate()).isInstanceOf(NoClassDefFoundError.class);
+    assertThatThrownBy(CalledProcessDelegate::new).isInstanceOf(NoClassDefFoundError.class);
 
     // our bean manager does not know this bean
     Set<Bean< ? >> beans = beanManager.getBeans("calledProcessDelegate");

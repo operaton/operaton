@@ -72,6 +72,28 @@ Example:
 ./build/build-and-run-database-update-tests.sh --db=h2
 ```
 
+## `check-api-compatibility.sh`
+
+This script checks the API compatibility of the main Java modules against a previous version using the Maven Clirr plugin.
+
+**Usage:**
+```bash
+.devenv/scripts/build/check-api-compatibility.sh [--comparison-version <version>] [--help]
+```
+
+**Options:** 
+- `--comparison-version <version>` Sets the Clirr comparison version (overrides the default).</version>
+- `--help` Shows help and exits.
+
+
+**Example:**
+```bash
+.devenv/scripts/build/check-api-compatibility.sh --comparison-version 7.24.0
+``` 
+
+Results are available under `target/reports/clirr/` and in the `target/reports/clirr/clirr.md` file.
+
+
 # Directory `maintenance`
 
 ## `code-cleanup.sh`

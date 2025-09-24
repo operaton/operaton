@@ -212,17 +212,15 @@ def update_old_engine_pom(current_version, previous_version):
     with open(pom, "w", encoding="utf-8") as f:
         f.write(content)
 
-def update_sql_script_pom(current_version):
+def update_sql_script_pom(new_version):
     pom_path = "distro/sql-script/pom.xml"
     tree = ET.parse(pom_path)
     root = tree.getroot()
     ns = {'m': 'http://maven.apache.org/POM/4.0.0'}
-    parent = root.find('m:parent', ns)
-    if parent is not None:
-        version = parent.find('m:version', ns)
-        if version is not None:
-            version.text = current_version
-            tree.write(pom_path, encoding='utf-8', xml_declaration=True, pretty_print=True)
+    version = root.find('m:version', ns)
+    if version is not None:
+        version.text = new_version
+        tree.write(pom_path, encoding='utf-8', xml_declaration=True, pretty_print=True)
 
 def main():
     parser = argparse.ArgumentParser(description="Initialize new database version for Operaton")
@@ -284,7 +282,7 @@ def main():
     update_liquibase_changelog(cur_vwp, new_vwp, new_version)
     create_test_fixture(cur_vwpwd, new_vwpwd, current_version, new_version)
     update_old_engine_pom(current_version, previous_version)
-    update_sql_script_pom(current_version)
+    update_sql_script_pom(new_version)
 
     print("\nDatabase version update completed successfully!")
     print("Please review the changes and commit them when ready.")

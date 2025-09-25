@@ -2564,7 +2564,7 @@ public class BpmnParse extends Parse {
     Map<String, String> properties = parseOperatonExtensionProperties(operatonPropertiesElement);
     activity.getProperties().set(BpmnProperties.EXTENSION_PROPERTIES, properties);
     List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = parseOperatonErrorEventDefinitions(activity, serviceTaskElement);
-    activity.getProperties().set(BpmnProperties.CAMUNDA_ERROR_EVENT_DEFINITION, operatonErrorEventDefinitions);
+    activity.getProperties().set(BpmnProperties.OPERATON_ERROR_EVENT_DEFINITION, operatonErrorEventDefinitions);
     activity.setActivityBehavior(new ExternalTaskActivityBehavior(topicNameProvider, priorityProvider));
   }
 

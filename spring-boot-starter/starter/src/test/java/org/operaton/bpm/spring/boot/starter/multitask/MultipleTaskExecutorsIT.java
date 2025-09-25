@@ -44,7 +44,7 @@ class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT {
   private final TaskExecutor operatonTaskExecutor;
 
   @Autowired
-  public MultipleTaskExecutorsIT(TaskExecutor[] taskExecutors, @Qualifier(JobConfiguration.CAMUNDA_TASK_EXECUTOR_QUALIFIER) TaskExecutor operatonTaskExecutor) {
+  public MultipleTaskExecutorsIT(TaskExecutor[] taskExecutors, @Qualifier(JobConfiguration.OPERATON_TASK_EXECUTOR_QUALIFIER) TaskExecutor operatonTaskExecutor) {
       this.taskExecutors = taskExecutors;
       this.operatonTaskExecutor = operatonTaskExecutor;
   }

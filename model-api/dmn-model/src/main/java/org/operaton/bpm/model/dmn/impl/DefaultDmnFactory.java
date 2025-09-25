@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.model.bpmn.impl;
+package org.operaton.bpm.model.dmn.impl;
 
-import org.operaton.bpm.model.bpmn.Bpmn;
-import org.operaton.bpm.model.bpmn.BpmnFactory;
+import org.operaton.bpm.model.dmn.Dmn;
+import org.operaton.bpm.model.dmn.DmnFactory;
 
 /**
- * Default implementation of {@link BpmnFactory}.
+ * Default implementation of {@link DmnFactory}.
  */
-public class DefaultBpmnFactory implements BpmnFactory {
+public class DefaultDmnFactory implements DmnFactory {
   @Override
-  public Bpmn newInstance() {
-    return new Bpmn();
+  public Dmn newInstance() {
+    return new Dmn();
   }
 }

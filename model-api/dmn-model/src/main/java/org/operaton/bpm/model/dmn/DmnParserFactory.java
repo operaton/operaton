@@ -13,40 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.model.bpmn;
+package org.operaton.bpm.model.dmn;
 
-import org.operaton.bpm.model.bpmn.impl.BpmnParser;
+import org.operaton.bpm.model.dmn.impl.DmnParser;
 
 /**
- * The factory for creating {@link BpmnParser} instances.
+ * The factory for creating {@link DmnParser} instances.
  *
  * <p>
  * Implementations of this interface are discovered using Java's {@link java.util.ServiceLoader} mechanism.
- * To provide a custom implementation, create a class that implements {@code BpmnParserFactory} and
+ * To provide a custom implementation, create a class that implements {@code DmnParserFactory} and
  * register it by adding its fully qualified class name to a file named
- * {@code META-INF/services/org.operaton.bpm.model.bpmn.BpmnParserFactory} in your JAR.
+ * {@code META-INF/services/org.operaton.bpm.model.dmn.DmnParserFactory} in your JAR.
  * </p>
  *
  * <p>
  * Example:
  * <pre>
  * // In your implementation JAR:
- * // File: META-INF/services/org.operaton.bpm.model.bpmn.BpmnParserFactory
- * com.example.MyCustomBpmnParserFactory
+ * // File: META-INF/services/org.operaton.bpm.model.dmn.DmnParserFactory
+ * com.example.MyCustomDmnParserFactory
  * </pre>
  * </p>
  *
  * <p>
  * To obtain an instance, use:
  * <pre>
- * ServiceLoader&lt;BpmnParserFactory&gt; loader = ServiceLoader.load(BpmnParserFactory.class);
- * for (BpmnParserFactory factory : loader) {
- *   BpmnParser parser = factory.newInstance();
+ * ServiceLoader&lt;DmnParserFactory&gt; loader = ServiceLoader.load(DmnParserFactory.class);
+ * for (DmnParserFactory factory : loader) {
+ *   DmnParser parser = factory.newInstance();
  *   // use parser
  * }
  * </pre>
  * </p>
  */
-public interface BpmnParserFactory {
-  BpmnParser newInstance();
+public interface DmnParserFactory {
+  DmnParser newInstance();
 }

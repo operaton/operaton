@@ -13,40 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.model.bpmn;
-
-import org.operaton.bpm.model.bpmn.impl.BpmnParser;
+package org.operaton.bpm.model.cmmn;
 
 /**
- * The factory for creating {@link BpmnParser} instances.
+ * The factory for creating {@link Cmmn} instances.
  *
  * <p>
  * Implementations of this interface are discovered using Java's {@link java.util.ServiceLoader} mechanism.
- * To provide a custom implementation, create a class that implements {@code BpmnParserFactory} and
+ * To provide a custom implementation, create a class that implements {@code CmmnFactory} and
  * register it by adding its fully qualified class name to a file named
- * {@code META-INF/services/org.operaton.bpm.model.bpmn.BpmnParserFactory} in your JAR.
+ * {@code META-INF/services/org.operaton.bpm.model.cmmn.CmmnFactory} in your JAR.
  * </p>
  *
  * <p>
  * Example:
  * <pre>
  * // In your implementation JAR:
- * // File: META-INF/services/org.operaton.bpm.model.bpmn.BpmnParserFactory
- * com.example.MyCustomBpmnParserFactory
+ * // File: META-INF/services/org.operaton.bpm.model.cmmn.CmmnFactory
+ * com.example.MyCustomCmmnFactory
  * </pre>
  * </p>
  *
  * <p>
  * To obtain an instance, use:
  * <pre>
- * ServiceLoader&lt;BpmnParserFactory&gt; loader = ServiceLoader.load(BpmnParserFactory.class);
- * for (BpmnParserFactory factory : loader) {
- *   BpmnParser parser = factory.newInstance();
- *   // use parser
+ * ServiceLoader&lt;CmmnFactory&gt; loader = ServiceLoader.load(CmmnFactory.class);
+ * for (CmmnFactory factory : loader) {
+ *   Cmmn cmmn = factory.newInstance();
+ *   // use cmmn
  * }
  * </pre>
  * </p>
  */
-public interface BpmnParserFactory {
-  BpmnParser newInstance();
+public interface CmmnFactory {
+  Cmmn newInstance();
 }

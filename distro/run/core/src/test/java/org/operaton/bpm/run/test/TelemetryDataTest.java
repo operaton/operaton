@@ -47,6 +47,6 @@ class TelemetryDataTest {
     TelemetryDataImpl telemetryData = processEngineConfiguration.getTelemetryData();
     Set<String> operatonIntegration = telemetryData.getProduct().getInternals().getOperatonIntegration();
     assertThat(operatonIntegration)
-      .containsExactlyInAnyOrder(OperatonIntegration.CAMUNDA_BPM_RUN, OperatonIntegration.SPRING_BOOT_STARTER);
+      .containsExactlyInAnyOrder(OperatonIntegration.OPERATON_BPM_RUN, OperatonIntegration.SPRING_BOOT_STARTER);
   }
 }

@@ -61,7 +61,7 @@ public class OperatonBpmRunProcessEngineConfiguration extends SpringProcessEngin
   protected void initTelemetryData() {
     super.initTelemetryData();
     Set<String> operatonIntegration = telemetryData.getProduct().getInternals().getOperatonIntegration();
-    operatonIntegration.add(OperatonIntegration.CAMUNDA_BPM_RUN);
+    operatonIntegration.add(OperatonIntegration.OPERATON_BPM_RUN);
   }
 
   protected void configureProcessEnginePlugins(List<ProcessEnginePlugin> processEnginePluginsFromContext,

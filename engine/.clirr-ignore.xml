@@ -1,0 +1,156 @@
+<differences>
+  <difference>
+    <!-- It is okay to add classes to the set of superclasses -->
+    <className>**</className>
+    <differenceType>5000</differenceType>
+    <to>**</to>
+  </difference>
+  <difference>
+    <!-- It is okay to add methods to an interface-->
+    <className>**</className>
+    <differenceType>7012</differenceType>
+    <method>*</method>
+  </difference>
+
+
+  <!-- Operaton 1/0 -->
+  <!-- 3003: Utility classes are final -->
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>**/AuthorizationTestUtil</className>
+  </difference>
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>**/TypedValueAssert</className>
+  </difference>
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>org/operaton/bpm/application/ProcessApplicationContext</className>
+  </difference>
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>org/operaton/bpm/engine/EntityTypes</className>
+  </difference>
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>org/operaton/bpm/engine/context/DelegateExecutionContext</className>
+  </difference>
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>org/operaton/bpm/engine/context/ProcessEngineContext</className>
+  </difference>
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>org/operaton/bpm/engine/management/Metrics</className>
+  </difference>
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>org/operaton/bpm/engine/task/IdentityLinkType</className>
+  </difference>
+  <!-- 7009: Constructor visibility reduced (utility class) -->
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>**/AuthorizationTestUtil</className>
+    <method>**AuthorizationTestUtil**</method>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>**/TypedValueAssert</className>
+    <method>**TypedValueAssert**</method>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/application/ProcessApplicationContext</className>
+    <method>**ProcessApplicationContext**</method>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/engine/EntityTypes</className>
+    <method>**EntityTypes**</method>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/engine/context/DelegateExecutionContext</className>
+    <method>**DelegateExecutionContext**</method>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/engine/context/ProcessEngineContext</className>
+    <method>**ProcessEngineContext**</method>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/engine/management/Metrics</className>
+    <method>**Metrics**</method>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/engine/task/IdentityLinkType</className>
+    <method>**IdentityLinkType**</method>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/BpmPlatform</className>
+    <method>**BpmPlatform**</method>
+  </difference>
+  <!-- Constant interfaces to abstract classes -->
+  <difference>
+    <differenceType>2001</differenceType>
+    <className>org/operaton/bpm/engine/authorization/Groups</className>
+  </difference>
+  <!-- ProcessEngines structural changes -->
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>org/operaton/bpm/engine/ProcessEngines</className>
+  </difference>
+  <difference>
+    <differenceType>6001</differenceType>
+    <className>org/operaton/bpm/engine/ProcessEngines</className>
+    <field>**</field>
+  </difference>
+  <difference>
+    <differenceType>6010</differenceType>
+    <className>org/operaton/bpm/engine/ProcessEngines</className>
+    <field>**</field>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/engine/ProcessEngines</className>
+    <method>**</method>
+  </difference>
+  <!-- Moved Mock classes -->
+  <difference>
+    <differenceType>8001</differenceType>
+    <className>org/operaton/bpm/engine/test/mock/*</className>
+  </difference>
+  <!-- 6006: Fields in Exception classes are final -->
+  <difference>
+    <differenceType>6006</differenceType>
+    <className>**/*Exception</className>
+    <field>**</field>
+  </difference>
+  <!-- Removed license key concept -->
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>**</className>
+    <method>**LicenseKey**</method>
+  </difference>
+  <difference>
+    <differenceType>8001</differenceType>
+    <className>org/operaton/bpm/engine/telemetry/LicenseKeyData</className>
+  </difference>
+  <!-- Constructors of abstract classes can be protected -->
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/engine/repository/DiagramElement</className>
+    <method>**DiagramElement**</method>
+  </difference>
+  <!-- Obvious typos in names -->
+  <difference>
+    <differenceType>6001</differenceType>
+    <className>org/operaton/bpm/engine/ParseException</className>
+    <field>resorceReports</field>
+  </difference>
+
+
+</differences>

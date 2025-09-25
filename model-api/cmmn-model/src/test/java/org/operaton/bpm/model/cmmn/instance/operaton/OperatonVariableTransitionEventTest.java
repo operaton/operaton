@@ -20,7 +20,7 @@ import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  *
@@ -32,7 +32,7 @@ public class OperatonVariableTransitionEventTest extends CmmnModelElementInstanc
 
   @Override
   public TypeAssumption getTypeAssumption() {
-    return new TypeAssumption(CAMUNDA_NS,false);
+    return new TypeAssumption(OPERATON_NS,false);
   }
 
   @Override

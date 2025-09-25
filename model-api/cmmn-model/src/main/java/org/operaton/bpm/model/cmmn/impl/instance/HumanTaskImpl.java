@@ -197,31 +197,31 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     /** operaton extensions */
 
     operatonAssigneeAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ASSIGNEE)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonCandidateGroupsAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CANDIDATE_GROUPS)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonCandidateUsersAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CANDIDATE_USERS)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonDueDateAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DUE_DATE)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonFollowUpDateAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FOLLOW_UP_DATE)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonFormKeyAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FORM_KEY)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonPriorityAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PRIORITY)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

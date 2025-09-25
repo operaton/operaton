@@ -1,0 +1,2 @@
+http\://www.activiti.org/schema/spring/components/activiti-5.0.xsd=org/operaton/bpm/engine/spring/components/config/xml/operaton-7.0.xsd
+http\://www.activiti.org/schema/spring/components/activiti.xsd=org/operaton/bpm/engine/spring/components/config/xml/operaton-7.0.xsd

@@ -21,7 +21,7 @@
     <dependencies>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <artifactId>operaton-core-dependencies-spring-6</artifactId>
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
@@ -199,7 +199,7 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-core-internal-dependencies</artifactId>
+      <artifactId>operaton-core-dependencies-spring-6</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
       <scope>test</scope>
@@ -324,7 +324,7 @@
           <!-- import internal dependencies before JBoss to preserve internal versions, e.g. for JUnit -->
           <dependency>
             <groupId>org.operaton.bpm</groupId>
-            <artifactId>operaton-core-internal-dependencies</artifactId>
+            <artifactId>operaton-core-dependencies-spring-6</artifactId>
             <version>${project.version}</version>
             <scope>import</scope>
             <type>pom</type>

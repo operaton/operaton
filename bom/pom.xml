@@ -14,6 +14,8 @@
     <module>operaton-only-bom</module>
     <module>operaton-bom</module>
     <module>internal-dependencies</module>
+    <module>dependencies-spring-6</module>
+    <module>dependencies-spring-7</module>
     <module>commons</module>
     <module>connect</module>
     <module>spin</module>

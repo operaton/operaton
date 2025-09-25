@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-core-internal-dependencies</artifactId>
+    <relativePath>../internal-dependencies/pom.xml</relativePath>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>operaton-core-dependencies-spring-6</artifactId>
+  <packaging>pom</packaging>
+  <name>Operaton - Core - Internal Dependencies</name>
+
+  <description>
+    This is a Bill of Materials (BOM) for internal dependencies of Operaton.
+    All modules should import this BOM to ensure consistent versions of dependencies.
+    By using this BOM, you can omit the version tag in dependency declarations.
+  </description>
+
+  <dependencyManagement>
+
+    <dependencies>
+
+      <!-- BOMs -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>${version.spring-6}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${version.spring-boot-3}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>

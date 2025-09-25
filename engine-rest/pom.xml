@@ -26,7 +26,7 @@
     <dependencies>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <artifactId>operaton-core-dependencies-spring-6</artifactId>
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>

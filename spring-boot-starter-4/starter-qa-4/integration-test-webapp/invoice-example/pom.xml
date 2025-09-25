@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.operaton.bpm.springboot.project</groupId>
+    <artifactId>qa-webapp</artifactId>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
+  </parent>
+  <artifactId>qa-webapp-invoice-example-4</artifactId>
+  <name>Operaton - Spring Boot Starter - QA - Webapps Invoice Example</name>
+  <description>${project.name}</description>
+  <dependencies>
+    <dependency>
+      <groupId>org.operaton.bpm.springboot</groupId>
+      <artifactId>operaton-bpm-spring-boot-starter-webapp-4</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm.example</groupId>
+      <artifactId>operaton-example-invoice</artifactId>
+      <version>${project.version}</version>
+      <classifier>classes</classifier>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

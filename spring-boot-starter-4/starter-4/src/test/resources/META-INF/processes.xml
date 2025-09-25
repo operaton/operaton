@@ -1,0 +1,12 @@
+<process-application
+  xmlns="http://www.operaton.org/schema/1.0/ProcessApplication"
+>
+
+  <process-archive name="testProcessApplication">
+    <properties>
+      <property name="isDeleteUponUndeploy">true</property>
+      <property name="isScanForProcessDefinitions">true</property>
+    </properties>
+  </process-archive>
+
+</process-application>

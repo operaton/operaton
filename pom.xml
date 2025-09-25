@@ -579,6 +579,15 @@
       </modules>
     </profile>
     <profile>
+      <id>distro-webjar-neo</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>        
+        <module>distro/webjar-neo</module>
+      </modules>
+    </profile>
+    <profile>
       <id>distro-run</id>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -642,6 +651,7 @@
         <module>webapps-neo</module>
         <module>engine-plugins</module>
         <module>distro/webjar</module>
+        <module>distro/webjar-neo</module>
         <module>distro/sql-script</module>
         <module>clients/java</module>
         <module>test-utils/junit5-extension</module>

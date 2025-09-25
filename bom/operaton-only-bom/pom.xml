@@ -115,6 +115,24 @@
         <classifier>classes</classifier>
       </dependency>
       <dependency>
+        <groupId>org.operaton.bpm.webapp-neo</groupId>
+        <artifactId>operaton-webapp-neo-webjar</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.operaton.bpm.webapp-neo</groupId>
+        <artifactId>operaton-webapp-neo</artifactId>
+        <version>${project.version}</version>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.operaton.bpm.webapp-neo</groupId>
+        <artifactId>operaton-webapp-neo</artifactId>
+        <version>${project.version}</version>
+        <type>jar</type>
+        <classifier>classes</classifier>
+      </dependency>
+      <dependency>
         <groupId>org.operaton.bpm.springboot</groupId>
         <artifactId>operaton-bpm-spring-boot-starter</artifactId>
         <version>${project.version}</version>
@@ -127,6 +145,11 @@
       <dependency>
         <groupId>org.operaton.bpm.springboot</groupId>
         <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.operaton.bpm.springboot</groupId>
+        <artifactId>operaton-bpm-spring-boot-starter-webapp-neo</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.operaton.bpm.springboot.project</groupId>
+    <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
+  </parent>
+  <groupId>org.operaton.bpm.springboot</groupId>
+  <artifactId>operaton-bpm-spring-boot-starter-webapp-neo</artifactId>
+  <name>Operaton - Spring Boot Starter - Webapps</name>
+  <description>${project.name}</description>
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>operaton-bpm-spring-boot-starter-webapp-neo-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm.webapp-neo</groupId>
+      <artifactId>operaton-webapp-neo-webjar</artifactId>
+      <!-- fixme: shouldn't be necessary to add explicit version -->
+      <!-- <version>1.0.0-rc-1-SNAPSHOT</version> -->
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

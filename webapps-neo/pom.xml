@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
     <relativePath>../database</relativePath>
   </parent>
   <groupId>org.operaton.bpm.webapp-neo</groupId>
@@ -34,7 +34,7 @@
         <configuration>
           <filesets>
             <fileset>
-              <directory>./ui/dist</directory>
+              <directory>./frontend/target</directory>
             </fileset>
           </filesets>
         </configuration>
@@ -44,7 +44,7 @@
         <artifactId>frontend-maven-plugin</artifactId>
         <inherited>false</inherited>
         <configuration>
-          <workingDirectory>./ui</workingDirectory>
+          <workingDirectory>./frontend</workingDirectory>
           <outputdir>${project.build.directory}/webapp</outputdir>
           <skip>${skip.frontend.build}</skip>
         </configuration>
@@ -79,9 +79,12 @@
       </plugin>
     </plugins>
   </build>
+  <modules>
+    <module>assembly</module>
+  </modules>
   <profiles>
     <profile>
-      <id>skipFrontendBuild</id>
+      <id>skipFrontendNeoBuild</id>
       <properties>
         <skip.frontend.build>true</skip.frontend.build>
       </properties>

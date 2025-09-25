@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-parent</artifactId>
+    <relativePath>../../parent</relativePath>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
+  </parent>
+  <groupId>org.operaton.bpm.webapp-neo</groupId>
+  <artifactId>operaton-webapp-neo-webjar</artifactId>
+  <name>Operaton - Webapp - Webjar</name>
+  <description>${project.name}</description>
+  <properties>
+    <skipTests>true</skipTests>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <build>
+    <plugins>
+      <!-- first fetch and unpack the war -->
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.operaton.bpm.webapp-neo</groupId>
+                  <artifactId>operaton-webapp-neo</artifactId>
+                  <version>${project.parent.version}</version>
+                  <type>war</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.outputDirectory}/META-INF/resources/webjars/operaton
+                  </outputDirectory>
+                  <excludes>META-INF/**</excludes>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- then remove the WEB-INF part except the security.json -->
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>generate-resources</phase>
+            <configuration>
+              <skip>${skip.frontend.build}</skip>
+              <target>
+                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/"/>
+                <delete dir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF"/>
+                <!-- <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/plugin" tofile="${project.build.outputDirectory}/META-INF/resources/plugin" verbose="true"/> -->
+                <!-- add operaton-welcome page -->
+                <!-- <copy todir="${project.build.outputDirectory}/META-INF/resources/operaton-welcome/"> -->
+                  <!-- <fileset dir="../operaton-welcome/"/> -->
+                <!-- </copy> -->
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>skipFrontendBuild</id>
+      <properties>
+        <skip.frontend.build>true</skip.frontend.build>
+      </properties>
+    </profile>
+  </profiles>
+</project>

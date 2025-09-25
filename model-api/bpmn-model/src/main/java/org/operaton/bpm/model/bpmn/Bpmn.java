@@ -17,14 +17,10 @@
 package org.operaton.bpm.model.bpmn;
 
 import java.io.*;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.ServiceLoader;
 
-import java.util.stream.Stream;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.impl.BpmnParser;
-import org.operaton.bpm.model.bpmn.impl.DefaultBpmnFactory;
 import org.operaton.bpm.model.bpmn.impl.instance.ActivationConditionImpl;
 import org.operaton.bpm.model.bpmn.impl.instance.ActivityImpl;
 import org.operaton.bpm.model.bpmn.impl.instance.ArtifactImpl;
@@ -228,7 +224,6 @@ import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
 
-import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;

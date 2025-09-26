@@ -29,14 +29,14 @@ import org.operaton.bpm.engine.telemetry.Internals;
 public class InternalsDto {
 
   public static final String SERIALIZED_APPLICATION_SERVER = "application-server";
-  public static final String SERIALIZED_CAMUNDA_INTEGRATION = "operaton-integration";
+  public static final String SERIALIZED_OPERATON_INTEGRATION = "operaton-integration";
   public static final String SERIALIZED_LICENSE_KEY = "license-key";
   public static final String SERIALIZED_TELEMETRY_DATA_COLLECTION_START_DATE = "data-collection-start-date";
 
   protected DatabaseDto database;
   @JsonProperty(SERIALIZED_APPLICATION_SERVER)
   protected ApplicationServerDto applicationServer;
-  @JsonProperty(SERIALIZED_CAMUNDA_INTEGRATION)
+  @JsonProperty(SERIALIZED_OPERATON_INTEGRATION)
   protected Set<String> operatonIntegration;
   @JsonProperty(SERIALIZED_TELEMETRY_DATA_COLLECTION_START_DATE)
   protected Date dataCollectionStartDate;

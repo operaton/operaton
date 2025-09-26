@@ -5,33 +5,67 @@
 The following versions of our project are actively supported with security updates:
 
 | Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | ✅ Fully supported |
-| 5.0.x   | ❌ Unsupported     |
-| 4.0.x   | ✅ Supported (LTS)|
-| < 4.0   | ❌ Unsupported     |
+|---------| ------------------ |
+| 1.0.x   | ✅ Fully supported |
 
-🔒 We generally provide security updates for the **latest major version** and the **most recent LTS version**.
+🔒 We generally provide security updates for the **latest major version**.
 
 ---
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, please report it **privately** so we can address it before public disclosure.
+If you believe you have found a security vulnerability in Operaton, 
+open a private report through the GitHub Security Advisories interface:
 
-### How to Report
-- 📧 Email: **security@operaton.org**  
-- 🔒 Alternatively, use [GitHub Security Advisories](https://github.com/org/repo/security/advisories) for confidential reporting.  
+https://github.com/operaton/operaton/security/advisories
 
-### What to Expect
-1. We will **acknowledge your report within 48 hours**.  
-2. Within **7 days**, you will receive an initial assessment and timeline for a fix.  
-3. If the vulnerability is confirmed, we will:  
-   - Work on a fix and release a patched version.  
-   - Provide clear release notes.  
-   - Credit you in the changelog (if you want).  
+See [GitHub's guide on creating security advisories](https://docs.github.com/en/code-security/security-advisories/creating-a-security-advisory) for more details.
+
+### Information to Include
+
+- A clear description of the issue and its impact
+- Affected Operaton version(s) and environment details
+- Steps to reproduce (proof-of-concept if possible)
+- Your preferred contact details
+- Whether you would like credit in the advisory
+
+
+## Our Process
+
+As a volunteer-driven project, we cannot guarantee strict timelines. However, we will:
+
+- Acknowledge your report as quickly as possible (usually within a few days)
+- Investigate the issue and keep you updated on progress
+- Prepare a fix and release it in a new version once ready
+- Publish an advisory with details and credit to reporters who request it
+- Please note that fixes may require coordination with upstream dependencies or related projects.
 
 ⚠️ **Important:** Please do not disclose vulnerabilities publicly until we have released a fix.  
+
+## Scope
+
+This policy applies to vulnerabilities in the Operaton source code, builds, and official release artifacts.
+
+Out-of-scope examples include:
+
+- Denial of service through excessive traffic
+- Issues in third-party dependencies (please report upstream)
+- Social engineering or attacks against project members
+- Vulnerabilities requiring privileged local access without privilege escalation
+
+## Coordinated Disclosure
+
+We ask that you do not publicly disclose details of a vulnerability until:
+
+A fix has been released, and
+An advisory has been published.
+This helps protect users by giving them time to update.
+
+## Legal Notice
+
+Operaton is provided under the terms of the Apache License 2.0,
+on an “AS IS” basis, without warranties or conditions of any kind.
+This security policy does not create contractual obligations or service-level guarantees.
 
 ---
 

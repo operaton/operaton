@@ -20,11 +20,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.junit.rules.TestRule;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
+
+import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 /**
  * Runner that ensures closing process engines after test run.
@@ -42,8 +43,8 @@ public class ProcessEngineRuleRunner extends BlockJUnit4ClassRunner {
     List<TestRule> testRules = super.getTestRules(target);
 
     testRules.stream()
-      .filter(t -> t instanceof ProcessEngineRule)
-      .map(t -> (ProcessEngineRule)t)
+      .filter(ProcessEngineRule.class::isInstance)
+      .map(ProcessEngineRule.class::cast)
       .forEach(processEngineRules::add);
 
     return testRules;

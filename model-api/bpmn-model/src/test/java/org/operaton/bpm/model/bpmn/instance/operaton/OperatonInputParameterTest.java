@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.bpmn.instance.operaton;
 
 import java.util.Collection;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Disabled;

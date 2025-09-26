@@ -2,11 +2,17 @@
 
 ## Supported Versions
 
-The following versions of our project are actively supported with security updates:
+We actively maintain and provide updates for specific releases of this project.
+Versions that are listed as supported may receive bug fixes, security updates, and compatibility
+improvements.
+Versions not listed as supported will no longer be maintained.
 
-| Version | Supported          |
-|---------| ------------------ |
-| 1.0.x   | ✅ Fully supported |
+All versions of this project are distributed under
+the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+| Version | Maintained           |
+|---------|----------------------|
+| 1.0.x   | ✅ Fully maintained  |
 
 🔒 We generally provide security updates for the **latest major version**.
 
@@ -14,12 +20,13 @@ The following versions of our project are actively supported with security updat
 
 ## Reporting a Vulnerability
 
-If you believe you have found a security vulnerability in Operaton, 
+If you believe you have found a security vulnerability in Operaton,
 open a private report through the GitHub Security Advisories interface:
 
 https://github.com/operaton/operaton/security/advisories
 
-See [GitHub's guide on creating security advisories](https://docs.github.com/en/code-security/security-advisories/creating-a-security-advisory) for more details.
+See [GitHub's guide on creating security advisories](https://docs.github.com/en/code-security/security-advisories/creating-a-security-advisory)
+for more details.
 
 ### Information to Include
 
@@ -28,7 +35,6 @@ See [GitHub's guide on creating security advisories](https://docs.github.com/en/
 - Steps to reproduce (proof-of-concept if possible)
 - Your preferred contact details
 - Whether you would like credit in the advisory
-
 
 ## Our Process
 
@@ -40,11 +46,12 @@ As a volunteer-driven project, we cannot guarantee strict timelines. However, we
 - Publish an advisory with details and credit to reporters who request it
 - Please note that fixes may require coordination with upstream dependencies or related projects.
 
-⚠️ **Important:** Please do not disclose vulnerabilities publicly until we have released a fix.  
+⚠️ **Important:** Please do not disclose vulnerabilities publicly until we have released a fix.
 
 ## Scope
 
-This policy applies to vulnerabilities in the Operaton source code, builds, and official release artifacts.
+This policy applies to vulnerabilities in the Operaton source code, builds, and official release
+artifacts.
 
 Out-of-scope examples include:
 

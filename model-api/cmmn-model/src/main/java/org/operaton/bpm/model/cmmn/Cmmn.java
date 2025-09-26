@@ -125,8 +125,7 @@ import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.*;
 
 /**
  * <p>Provides access to the operaton CMMN model api.</p>
@@ -249,8 +248,9 @@ public class Cmmn {
    * Register known types of the Cmmn model
    */
   public Cmmn() {
-    cmmnModelBuilder = ModelBuilder.createInstance("CMMN Model");
-    cmmnModelBuilder.alternativeNamespace(CMMN10_NS, CMMN11_NS);
+    cmmnModelBuilder = ModelBuilder.createInstance("CMMN Model")
+            .alternativeNamespace(CAMUNDA_NS, OPERATON_NS)
+            .alternativeNamespace(CMMN10_NS, CMMN11_NS);
     doRegisterTypes(cmmnModelBuilder);
     cmmnModel = cmmnModelBuilder.build();
   }

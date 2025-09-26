@@ -140,7 +140,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
         .build();
 
     operatonHistoryTimeToLive = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
-        .namespace(CAMUNDA_NS)
+        .namespace(OPERATON_NS)
         .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

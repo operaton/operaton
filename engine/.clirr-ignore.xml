@@ -151,6 +151,32 @@
     <className>org/operaton/bpm/engine/ParseException</className>
     <field>resorceReports</field>
   </difference>
+  <!-- Removal of methods in test rules/extensions -->
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>org/operaton/bpm/engine/test/junit5/ProcessEngineExtension</className>
+    <method>**cacheForConfigurationResource**</method>
+  </difference>
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>org/operaton/bpm/engine/test/util/ProcessEngineTestRule</className>
+    <method>**areJobsAvailable**</method>
+  </difference>
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>org/operaton/bpm/engine/test/util/ProcessEngineTestRule</className>
+    <method>**availableJobs**</method>
+  </difference>
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>org/operaton/bpm/engine/test/util/ProvidedProcessEngineRule</className>
+    <method>**getOrInitializeCachedProcessEngine**</method>
+  </difference>
+  <!-- removal of InterruptTask ok -->
+  <difference>
+    <differenceType>8001</differenceType>
+    <className>org/operaton/bpm/engine/test/junit5/ProcessEngineTestExtension$InterruptTask</className>
+  </difference>
 
 
 </differences>

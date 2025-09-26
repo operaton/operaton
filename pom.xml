@@ -17,7 +17,7 @@
     <version.joda-time>2.12.5</version.joda-time>
     <version.uuid-generator>5.1.0</version.uuid-generator>
     <version.feel-scala>1.19.3</version.feel-scala>
-    <version.quarkus>3.28.0</version.quarkus>
+    <version.quarkus>3.28.1</version.quarkus>
     <version.java>17</version.java>
     <version.spring>6.2.11</version.spring>
     <version.spring-boot>3.5.6</version.spring-boot>
@@ -97,7 +97,7 @@
       <plugin>
         <groupId>org.openrewrite.maven</groupId>
         <artifactId>rewrite-maven-plugin</artifactId>
-        <version>6.18.0</version>
+        <version>6.19.0</version>
         <configuration>
           <activeRecipes>
             <recipe>org.operaton.recipe.CodeCleanup</recipe>
@@ -161,6 +161,11 @@
             <exclusion>**/MigrationPlanGenerationTest.java</exclusion>
             <!-- org.openrewrite.java.UseStaticImport -->
             <exclusion>**/CaseInstanceAssertTest.java</exclusion>
+            <!-- Invalid to convert lamdba to method reference -->
+            <exclusion>**/CallActivityContextSwitchTest.java</exclusion>
+            <!-- Parser errors -->
+            <exclusion>**/TestFixture.java</exclusion>
+            <exclusion>**/org/operaton/bpm/integrationtest/util/TestContainer.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>
@@ -187,7 +192,7 @@
         <plugin>
           <groupId>com.github.eirslett</groupId>
           <artifactId>frontend-maven-plugin</artifactId>
-          <version>1.15.1</version>
+          <version>1.15.4</version>
         </plugin>
         <plugin>
           <groupId>com.mycila</groupId>

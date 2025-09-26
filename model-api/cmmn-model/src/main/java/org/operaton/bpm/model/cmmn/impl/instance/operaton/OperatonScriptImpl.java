@@ -23,7 +23,7 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_RESOURCE;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_SCRIPT_FORMAT;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_SCRIPT;
@@ -39,15 +39,15 @@ public class OperatonScriptImpl extends CmmnModelElementInstanceImpl implements 
 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonScript.class, OPERATON_ELEMENT_SCRIPT)
-      .namespaceUri(CAMUNDA_NS)
+      .namespaceUri(OPERATON_NS)
       .instanceProvider(OperatonScriptImpl::new);
 
     operatonScriptFormatAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SCRIPT_FORMAT)
-        .namespace(CAMUNDA_NS)
+        .namespace(OPERATON_NS)
         .build();
 
     operatonResourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_RESOURCE)
-        .namespace(CAMUNDA_NS)
+        .namespace(OPERATON_NS)
         .build();
 
     typeBuilder.build();

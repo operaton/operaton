@@ -19,7 +19,7 @@ package org.operaton.bpm.model.cmmn.instance;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  * @author Roman Smirnov
@@ -44,9 +44,9 @@ public class ProcessTaskTest extends CmmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
         new AttributeAssumption("processRef"),
-        new AttributeAssumption(CAMUNDA_NS, "processBinding"),
-        new AttributeAssumption(CAMUNDA_NS, "processVersion"),
-        new AttributeAssumption(CAMUNDA_NS, "processTenantId")
+        new AttributeAssumption(OPERATON_NS, "processBinding"),
+        new AttributeAssumption(OPERATON_NS, "processVersion"),
+        new AttributeAssumption(OPERATON_NS, "processTenantId")
       );
   }
 

@@ -161,6 +161,11 @@
             <exclusion>**/MigrationPlanGenerationTest.java</exclusion>
             <!-- org.openrewrite.java.UseStaticImport -->
             <exclusion>**/CaseInstanceAssertTest.java</exclusion>
+            <!-- Invalid to convert lamdba to method reference -->
+            <exclusion>**/CallActivityContextSwitchTest.java</exclusion>
+            <!-- Parser errors -->
+            <exclusion>**/TestFixture.java</exclusion>
+            <exclusion>**/org/operaton/bpm/integrationtest/util/TestContainer.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>

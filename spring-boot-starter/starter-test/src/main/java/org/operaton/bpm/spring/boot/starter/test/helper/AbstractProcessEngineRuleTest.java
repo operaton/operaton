@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.helper;
 
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 @RunWith(ProcessEngineRuleRunner.class)
 public abstract class AbstractProcessEngineRuleTest {

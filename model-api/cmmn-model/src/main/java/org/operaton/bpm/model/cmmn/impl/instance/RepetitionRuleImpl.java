@@ -28,7 +28,7 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_CONTEXT_REF;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_NAME;
@@ -108,7 +108,7 @@ public class RepetitionRuleImpl extends CmmnElementImpl implements RepetitionRul
     /** Operaton extensions */
 
     operatonRepeatOnStandardEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_REPEAT_ON_STANDARD_EVENT)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

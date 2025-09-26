@@ -48,7 +48,7 @@ public class CaseTest extends CmmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
           new AttributeAssumption("name"),
-          new AttributeAssumption(CmmnModelConstants.CAMUNDA_NS, "historyTimeToLive")
+          new AttributeAssumption(CmmnModelConstants.OPERATON_NS, "historyTimeToLive")
         );
   }
 

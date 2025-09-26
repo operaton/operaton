@@ -30,7 +30,7 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_PROCESS_REF;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_PROCESS_TASK;
@@ -123,15 +123,15 @@ public class ProcessTaskImpl extends TaskImpl implements ProcessTask {
     /** operaton extensions */
 
     operatonProcessBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PROCESS_BINDING)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonProcessVersionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PROCESS_VERSION)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonProcessTenantIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PROCESS_TENANT_ID)
-        .namespace(CAMUNDA_NS)
+        .namespace(OPERATON_NS)
         .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

@@ -30,7 +30,7 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_CASE_REF;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_CASE_TASK;
@@ -125,15 +125,15 @@ public class CaseTaskImpl extends TaskImpl implements CaseTask {
     /** operaton extensions */
 
     operatonCaseBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CASE_BINDING)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonCaseVersionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CASE_VERSION)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonCaseTenantIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CASE_TENANT_ID)
-        .namespace(CAMUNDA_NS)
+        .namespace(OPERATON_NS)
         .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

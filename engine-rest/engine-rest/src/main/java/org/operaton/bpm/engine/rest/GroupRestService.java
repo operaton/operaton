@@ -72,7 +72,7 @@ public interface GroupRestService {
   @POST
   @Path("/create")
   @Consumes(MediaType.APPLICATION_JSON)
-  void createGroup(GroupDto GroupDto);
+  void createGroup(GroupDto groupDto);
 
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)

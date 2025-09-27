@@ -122,6 +122,10 @@ The source files in this repository are made available under the [Apache License
 
 Operaton uses and includes third-party dependencies published under various licenses. By downloading and using Operaton artifacts, you agree to their terms and conditions. Refer to our [license-book.txt](./distro/license-book/src/main/resources/license-book.txt) for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.
 
+## Security
+
+Please see our [security policy](SECURITY.md) for how to report security vulnerabilities.
+
 ## Project reports
 
 - [Dependency Update Candidates](https://operaton.github.io/operaton/reports/dependency-updates-aggregate-report.html)

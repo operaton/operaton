@@ -49,7 +49,7 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
   void returnsHumanTaskAssertForGivenActivityId() {
 		// Given
 		CaseInstance caseInstance = aStartedCase();
-		CaseExecution pi_taskA = caseService()
+		CaseExecution taskAId = caseService()
 				.createCaseExecutionQuery()
 				.activityId(TASK_A).singleResult();
 		// Then
@@ -62,8 +62,8 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 				.assertThat(actual)
 				.overridingErrorMessage(
 						"Expected case execution " + toString(actual)
-								+ " to be equal to " + toString(pi_taskA))
-				.isEqualToComparingOnlyGivenFields(pi_taskA, "id");
+								+ " to be equal to " + toString(taskAId))
+				.isEqualToComparingOnlyGivenFields(taskAId, "id");
 	}
 
   @Test

@@ -392,9 +392,9 @@ public final class EnsureUtil {
 
   public static void ensureWhitelistedResourceId(CommandContext commandContext, String resourceType, String resourceId) {
     String resourcePattern = determineResourceWhitelistPattern(commandContext.getProcessEngineConfiguration(), resourceType);
-    Pattern PATTERN = Pattern.compile(resourcePattern);
+    Pattern pattern = Pattern.compile(resourcePattern);
 
-    if (!PATTERN.matcher(resourceId).matches()) {
+    if (!pattern.matcher(resourceId).matches()) {
       throw generateException(ProcessEngineException.class, resourceType + " has an invalid id", "'" + resourceId + "'", "is not a valid resource identifier.");
     }
   }

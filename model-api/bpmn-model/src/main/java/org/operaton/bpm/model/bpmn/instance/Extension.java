@@ -27,7 +27,7 @@ public interface Extension extends BpmnModelElementInstance {
 
   String getDefinition();
 
-  void setDefinition(String Definition);
+  void setDefinition(String definition);
 
   boolean mustUnderstand();
 

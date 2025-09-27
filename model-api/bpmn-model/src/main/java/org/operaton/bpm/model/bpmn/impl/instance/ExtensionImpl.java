@@ -71,8 +71,8 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
   }
 
   @Override
-  public void setDefinition(String Definition) {
-    definitionAttribute.setValue(this, Definition);
+  public void setDefinition(String definition) {
+    definitionAttribute.setValue(this, definition);
   }
 
   @Override

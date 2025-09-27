@@ -89,7 +89,8 @@ class ManagementServiceTest {
 
   protected boolean tearDownEnsureJobDueDateNotNull;
 
-  static final Date TEST_DUE_DATE = new Date(1675752840000L);
+  private static final Date TEST_DUE_DATE = new Date(1675752840000L);
+  private static final int SECOND = 1000;
 
   @AfterEach
   void tearDown() {
@@ -703,7 +704,6 @@ class ManagementServiceTest {
         .singleResult();
 
     // normalize date for mysql dropping fractional seconds in time values
-    int SECOND = 1000;
     assertThat((newTimerJob.getDuedate().getTime() / SECOND) * SECOND).isEqualTo((cal.getTime().getTime() / SECOND) * SECOND);
   }
 

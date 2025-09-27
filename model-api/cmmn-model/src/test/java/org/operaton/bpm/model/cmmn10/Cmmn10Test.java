@@ -160,12 +160,12 @@ class Cmmn10Test {
   @Test
   void shouldGetCaseRoles() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
-    Case _case = modelInstance.getModelElementsByType(Case.class).iterator().next();
+    Case caseElement = modelInstance.getModelElementsByType(Case.class).iterator().next();
 
-    Collection<CaseRole> roles = _case.getCaseRoles();
+    Collection<CaseRole> roles = caseElement.getCaseRoles();
     assertThat(roles).hasSize(2);
 
-    CaseRoles caseRole = _case.getRoles();
+    CaseRoles caseRole = caseElement.getRoles();
     assertThat(caseRole).isNull();
   }
 

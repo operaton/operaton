@@ -334,13 +334,13 @@ public class Parser {
 	 */
 	protected AstEval eval(boolean required, boolean deferred) throws Scanner.ScanException, ParseException {
 		AstEval v = null;
-		Scanner.Symbol start_eval = deferred ? Scanner.Symbol.START_EVAL_DEFERRED : Scanner.Symbol.START_EVAL_DYNAMIC;
-		if (token.getSymbol() == start_eval) {
+		Scanner.Symbol startEval = deferred ? Scanner.Symbol.START_EVAL_DEFERRED : Scanner.Symbol.START_EVAL_DYNAMIC;
+		if (token.getSymbol() == startEval) {
 			consumeToken();
 			v = new AstEval(expr(true), deferred);
 			consumeToken(Scanner.Symbol.END_EVAL);
 		} else if (required) {
-			fail(start_eval);
+			fail(startEval);
 		}
 		return v;
 	}

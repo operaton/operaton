@@ -1010,10 +1010,11 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   @Override
-  public void leaveActivityViaTransitions(List<PvmTransition> _transitions, List<? extends ActivityExecution> _recyclableExecutions) {
-    List<? extends ActivityExecution> recyclableExecutions = Collections.emptyList();
-    if (_recyclableExecutions != null) {
-      recyclableExecutions = new ArrayList<>(_recyclableExecutions);
+  public void leaveActivityViaTransitions(List<PvmTransition> transitions, List<? extends ActivityExecution> recyclableExecutions) {
+    if (recyclableExecutions != null) {
+      recyclableExecutions = new ArrayList<>(recyclableExecutions);
+    } else {
+      recyclableExecutions = new ArrayList<>();
     }
 
     // if recyclable executions size is greater
@@ -1059,7 +1060,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     // executions first.
     for (ActivityExecution execution : recyclableExecutions) {
       execution.setIgnoreAsync(true);
-      execution.end(_transitions.isEmpty());
+      execution.end(transitions.isEmpty());
     }
 
     PvmExecutionImpl propagatingExecution = this;
@@ -1070,10 +1071,10 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     propagatingExecution.isActive = true;
     propagatingExecution.isEnded = false;
 
-    if (_transitions.isEmpty()) {
+    if (transitions.isEmpty()) {
       propagatingExecution.end(!propagatingExecution.isConcurrent());
     } else {
-      propagatingExecution.setTransitionsToTake(_transitions);
+      propagatingExecution.setTransitionsToTake(transitions);
       propagatingExecution.performOperation(PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_END);
     }
   }

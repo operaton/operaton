@@ -124,14 +124,17 @@ public final class StringUtil {
    * multi-line log outputs which can disrupt log readability and parsing.
    * If the input string is null, it returns the literal string "(null)".
    *
-   * @param s the input string to sanitize, may be null
+   * @param input the input string to sanitize, may be null
    * @return a sanitized string with escaped line breaks or "(null)" if input was null
    */
-  public static String sanitize(String s) {
-    if (s == null) {
+  public static String sanitize(String input) {
+    if (input == null) {
       return "(null)";
     }
 
-    return s.replace("\r", "\\r").replace("\n", "\\n");
+    return input
+            .replace("\r", "\\r")
+            .replace("\n", "\\n")
+            .replace("\t", "\\t");
   }
 }

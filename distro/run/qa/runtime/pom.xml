@@ -165,48 +165,9 @@
               </execution>
             </executions>
           </plugin>
-          <plugin>
-            <groupId>com.googlecode.maven-download-plugin</groupId>
-            <artifactId>download-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://chromedriver.storage.googleapis.com/${version.chromedriver}/chromedriver_${os.type}.zip</url>
-                  <outputFileName>chromedriver.zip</outputFileName>
-                  <unpack>true</unpack>
-                  <outputDirectory>${project.build.directory}/chromedriver</outputDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
         </plugins>
       </build>
     </profile>
-    <profile>
-      <id>windows</id>
-      <activation>
-        <os>
-          <family>windows</family>
-        </os>
-      </activation>
-      <properties>
-        <os.type>win32</os.type>
-      </properties>
-    </profile>
-    <profile>
-      <id>mac</id>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-      <properties>
-        <os.type>mac64</os.type>
-      </properties>
-    </profile>
+
   </profiles>
 </project>

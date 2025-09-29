@@ -29,7 +29,7 @@ Operaton is based on:
 ### Quarkus Extension
 
 <!-- /pom.xml -->
-The Operaton Quarkus extension is based on **Quarkus 3.26.0** (upgrade from 3.24.2).
+The Operaton Quarkus extension is based on **Quarkus 3.28.0** (upgrade from 3.26.3).
 
 ### Distributions
 
@@ -97,6 +97,11 @@ Especially worth mentioning is that the tests of the most complex module, `engin
 has been completed.
 
 49/53 (+5) modules have been migrated to JUnit 5.
+
+## Customizable Model Singletons
+
+BPMN, CMMN, and DMN singletons are now loaded via factories discovered with `ServiceLoader`, allowing custom implementations.
+To override, create an implementation of desired factory and register it in corresponding file in `META-INF/services`.
 
 
 {{changelogContributors}}

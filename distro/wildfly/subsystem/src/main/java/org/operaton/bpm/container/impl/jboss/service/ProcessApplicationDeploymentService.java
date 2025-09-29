@@ -105,7 +105,7 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   public void start(final StartContext context) throws StartException {
     provider.accept(this);
     context.asynchronous();
-    executorSupplier.get().submit((Runnable) () -> {
+    executorSupplier.get().submit(() -> {
       try {
         performDeployment();
         context.complete();
@@ -121,7 +121,7 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   public void stop(final StopContext context) {
     provider.accept(null);
     context.asynchronous();
-    executorSupplier.get().submit((Runnable) () -> {
+    executorSupplier.get().submit(() -> {
       try {
         performUndeployment();
       } finally {
@@ -243,7 +243,7 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   }
 
   protected boolean isValidValueForResumePreviousBy(String resumePreviousBy) {
-    return resumePreviousBy.equals(ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME) || resumePreviousBy.equals(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY);
+    return ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME.equals(resumePreviousBy) || ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY.equals(resumePreviousBy);
   }
 
   protected void logDeploymentSummary(Collection<String> resourceNames, String deploymentName, String processApplicationName) {

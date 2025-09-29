@@ -464,13 +464,13 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
     // when
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callingProcess");
 
-    HistoricExternalTaskLog ExternalTaskLog = historyService.createHistoricExternalTaskLogQuery().singleResult();
+    HistoricExternalTaskLog externalTaskLog = historyService.createHistoricExternalTaskLogQuery().singleResult();
 
     // assume
-    assertThat(ExternalTaskLog).isNotNull();
+    assertThat(externalTaskLog).isNotNull();
 
     // then
-    assertThat(ExternalTaskLog.getRootProcessInstanceId()).isEqualTo(processInstance.getRootProcessInstanceId());
+    assertThat(externalTaskLog.getRootProcessInstanceId()).isEqualTo(processInstance.getRootProcessInstanceId());
   }
 
   @Test

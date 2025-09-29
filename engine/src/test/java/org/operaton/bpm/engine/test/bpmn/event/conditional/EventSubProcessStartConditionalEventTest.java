@@ -34,7 +34,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -1065,12 +1065,7 @@ class EventSubProcessStartConditionalEventTest extends AbstractConditionalEventT
 
     //when variable which triggers condition is set
     //then exception is expected
-    try {
-      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
-      fail("Should fail!");
-    } catch (SuspendedEntityInteractionException seie) {
-      //expected
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1)).isInstanceOf(SuspendedEntityInteractionException.class);
     runtimeService.activateProcessInstanceById(processInstanceId);
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }
@@ -1099,12 +1094,7 @@ class EventSubProcessStartConditionalEventTest extends AbstractConditionalEventT
 
     //when variable which triggers condition is set
     //then exception is expected
-    try {
-      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
-      fail("Should fail!");
-    } catch (SuspendedEntityInteractionException seie) {
-      //expected
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1)).isInstanceOf(SuspendedEntityInteractionException.class);
     runtimeService.activateProcessInstanceById(processInstanceId);
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }

@@ -17,7 +17,6 @@
 package org.operaton.bpm;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Arrays;
 
@@ -68,15 +67,14 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
     }).doesNotThrowAnyException();
   }
 
-  public void loginToCockpit() throws URISyntaxException {
+  public void loginToCockpit() {
     String appName = "cockpit";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector(".deployed .processes .stats-label"),
         "Process Definitions"));
 
-    wait.until(currentURIIs(new URI(appUrl + "app/"
-        + appName + "/default/#/dashboard")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#/dashboard")));
   }
 
   @Test
@@ -112,15 +110,14 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
     }).doesNotThrowAnyException();
   }
 
-  public void loginToAdmin() throws URISyntaxException {
+  public void loginToAdmin() {
     String appName = "admin";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector("[ng-class=\"activeClass('#/authorization')\"] a"),
         "Authorizations"));
 
-    wait.until(currentURIIs(new URI(appUrl
-        + "app/" + appName + "/default/#/")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#/")));
   }
 
   @Test
@@ -134,15 +131,14 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
     }).doesNotThrowAnyException();
   }
 
-  public void loginToWelcome() throws URISyntaxException {
+  public void loginToWelcome() {
     String appName = "welcome";
     login(appName);
     wait.until(textToBePresentInElementLocated(
         By.cssSelector(".webapps .section-title"),
         "Applications"));
 
-    wait.until(currentURIIs(new URI(appUrl
-        + "app/" + appName + "/default/#!/welcome")));
+    wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#!/welcome")));
   }
 
 }

@@ -72,6 +72,28 @@ Example:
 ./build/build-and-run-database-update-tests.sh --db=h2
 ```
 
+## `check-api-compatibility.sh`
+
+This script checks the API compatibility of the main Java modules against a previous version using the Maven Clirr plugin.
+
+**Usage:**
+```bash
+.devenv/scripts/build/check-api-compatibility.sh [--comparison-version <version>] [--help]
+```
+
+**Options:** 
+- `--comparison-version <version>` Sets the Clirr comparison version (overrides the default).</version>
+- `--help` Shows help and exits.
+
+
+**Example:**
+```bash
+.devenv/scripts/build/check-api-compatibility.sh --comparison-version 7.24.0
+``` 
+
+Results are available under `target/reports/clirr/` and in the `target/reports/clirr/clirr.md` file.
+
+
 # Directory `maintenance`
 
 ## `code-cleanup.sh`
@@ -84,6 +106,36 @@ Execute this script from the root of the repository:
 ```bash
 .devenv/scripts/maintenance/code-cleanup.sh
 ```
+
+### Options
+
+- `--cleanups=LIST`  
+  Comma-separated list of cleanups to run. Valid values: `imports`, `code`, `tests`.  
+  If not specified, all cleanups are run.
+- `--help`  
+  Show usage and exit.
+
+### Examples
+
+Run all cleanups (imports, code, tests):
+
+```bash
+.devenv/scripts/maintenance/code-cleanup.sh
+```
+
+Run only imports and code cleanups:
+
+```bash
+.devenv/scripts/maintenance/code-cleanup.sh --cleanups=imports,code
+```
+
+Show help:
+
+```bash
+.devenv/scripts/maintenance/code-cleanup.sh --help
+```
+
+If an invalid cleanup value is specified, the script prints an error and exits.
 
 ## `init-database-version.py` — Database Version Maintenance
 

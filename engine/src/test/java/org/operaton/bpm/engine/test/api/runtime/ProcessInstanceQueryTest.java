@@ -61,8 +61,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processI
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessInstanceId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static java.util.Collections.emptySet;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Joram Barrez
@@ -188,12 +187,7 @@ public class ProcessInstanceQueryTest {
   @Test
   void testQueryNoSpecificsSingleResult() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // Exception is expected
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -219,12 +213,7 @@ public class ProcessInstanceQueryTest {
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
 
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // Exception is expected
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -287,25 +276,13 @@ public class ProcessInstanceQueryTest {
   @Test
   void testQueryByOneInvalidProcessDefinitionKeyIn() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
-    try {
-      // when
-      processInstanceQuery.processDefinitionKeyIn((String) null);
-      fail("Exception expected");
-    } catch(ProcessEngineException expected) {
-      // then Exception is expected
-    }
+    assertThatThrownBy(() -> processInstanceQuery.processDefinitionKeyIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testQueryByMultipleInvalidProcessDefinitionKeyIn() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
-    try {
-      // when
-      processInstanceQuery.processDefinitionKeyIn(PROCESS_DEFINITION_KEY, null);
-      fail("Exception expected");
-    } catch(ProcessEngineException expected) {
-      // Exception is expected
-    }
+    assertThatThrownBy(() -> processInstanceQuery.processDefinitionKeyIn(PROCESS_DEFINITION_KEY, null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -343,25 +320,13 @@ public class ProcessInstanceQueryTest {
   @Test
   void testQueryByOneInvalidProcessDefinitionKeyNotIn() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
-    try {
-      // when
-      processInstanceQuery.processDefinitionKeyNotIn((String) null);
-      fail("Exception expected");
-    } catch(ProcessEngineException expected) {
-      // then Exception is expected
-    }
+    assertThatThrownBy(() -> processInstanceQuery.processDefinitionKeyNotIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testQueryByMultipleInvalidProcessDefinitionKeyNotIn() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
-    try {
-      // when
-      processInstanceQuery.processDefinitionKeyNotIn(PROCESS_DEFINITION_KEY, null);
-      fail("Exception expected");
-    } catch(ProcessEngineException expected) {
-      // then Exception is expected
-    }
+    assertThatThrownBy(() -> processInstanceQuery.processDefinitionKeyNotIn(PROCESS_DEFINITION_KEY, null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -515,12 +480,7 @@ public class ProcessInstanceQueryTest {
   @Test
   void testQueryInvalidSorting() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery().orderByProcessDefinitionId();
-    try {
-      processInstanceQuery.list(); // asc - desc not called -> exception
-      fail("Exception expected");
-    }catch (ProcessEngineException ignored) {
-      // expected
-    }
+    assertThatThrownBy(processInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1501,12 +1461,7 @@ public class ProcessInstanceQueryTest {
 
     assertThat(query.incidentId("invalid").count()).isZero();
 
-    try {
-      query.incidentId(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException ignored) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.incidentId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1534,12 +1489,7 @@ public class ProcessInstanceQueryTest {
 
     assertThat(query.incidentType("invalid").count()).isZero();
 
-    try {
-      query.incidentType(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException ignored) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.incidentType(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1567,12 +1517,7 @@ public class ProcessInstanceQueryTest {
 
     assertThat(query.incidentMessage("invalid").count()).isZero();
 
-    try {
-      query.incidentMessage(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException ignored) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.incidentMessage(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1598,12 +1543,7 @@ public class ProcessInstanceQueryTest {
 
     assertThat(query.incidentMessageLike("invalid").count()).isZero();
 
-    try {
-      query.incidentMessageLike(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException ignored) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.incidentMessageLike(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1716,12 +1656,7 @@ public class ProcessInstanceQueryTest {
 
     assertThat(query.count()).isZero();
 
-    try {
-      query.caseInstanceId(null);
-      fail("The passed case instance should not be null.");
-    } catch (Exception ignored) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseInstanceId(null)).isInstanceOf(Exception.class);
 
   }
 
@@ -1860,12 +1795,7 @@ public class ProcessInstanceQueryTest {
     assertThat(query.superProcessInstanceId("invalid").singleResult()).isNull();
     assertThat(query.superProcessInstanceId("invalid").list()).isEmpty();
 
-    try {
-      query.superCaseInstanceId(null);
-      fail("Exception expected");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.superCaseInstanceId(null)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -1925,12 +1855,7 @@ public class ProcessInstanceQueryTest {
     assertThat(query.subProcessInstanceId("invalid").singleResult()).isNull();
     assertThat(query.subProcessInstanceId("invalid").list()).isEmpty();
 
-    try {
-      query.subCaseInstanceId(null);
-      fail("Exception expected");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.subCaseInstanceId(null)).isInstanceOf(NullValueException.class);
   }
 
   @Test

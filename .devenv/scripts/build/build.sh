@@ -5,7 +5,9 @@ PROFILES=()
 BUILD_PROFILE="normal"
 SKIP_TESTS="false"
 REPORT_PLUGINS="false"
+RUNNER="./mvnw"
 VALID_BUILD_PROFILES=("fast" "normal" "max")
+VALID_RUNNERS=("mvn" "./mvnw" "mvnd")
 
 ##########################################################################
 check_valid_values() {
@@ -35,6 +37,17 @@ parse_args() {
       --reports)
         REPORT_PLUGINS="true"
         ;;
+      --runner=*)
+        runner_param="${1#*=}"
+        case "$runner_param" in
+          mvn|mvnd)
+            RUNNER="$runner_param"
+            ;;
+          mvnw)
+            RUNNER="./mvnw"
+            ;;
+        esac
+        ;;
       *)
         MVN_ARGS+=("$1")
         ;;
@@ -43,11 +56,18 @@ parse_args() {
   done
 
   check_valid_values "profile" "$BUILD_PROFILE" "${VALID_BUILD_PROFILES[@]}"
+  check_valid_values "runner" "$RUNNER" "${VALID_RUNNERS[@]}"
 }
 
 ##########################################################################
 # main script
 parse_args "$@"
+
+# Check if RUNNER exists, fallback if not
+if ! command -v ${RUNNER} &> /dev/null; then
+  echo "⚠️  Warning: Runner '${RUNNER}' not found. Falling back to './mvnw'."
+  RUNNER="./mvnw"
+fi
 
 pushd $(pwd) > /dev/null
 cd $(git rev-parse --show-toplevel) || exit 1
@@ -72,14 +92,14 @@ case "$BUILD_PROFILE" in
     PROFILES+=(distro h2-in-memory)
     ;;
   "normal")
-    PROFILES+=(distro distro-webjar distro-run distro-tomcat tomcat h2-in-memory)
+    PROFILES+=(distro distro-webjar distro-run distro-tomcat tomcat h2-in-memory check-api-compatibility)
     ;;
   "max")
-    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter distro-serverless h2-in-memory)
+    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter distro-serverless h2-in-memory check-api-compatibility)
     ;;
 esac
 
-MVN_CMD="./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
+MVN_CMD="$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
 echo "ℹ️ $MVN_CMD"
 $MVN_CMD
 

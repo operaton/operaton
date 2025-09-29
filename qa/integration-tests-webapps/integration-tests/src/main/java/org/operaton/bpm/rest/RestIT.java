@@ -63,7 +63,7 @@ class RestIT extends AbstractWebIntegrationTest {
   private static final Logger log = LoggerFactory.getLogger(RestIT.class);
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getRestCtxPath());
   }

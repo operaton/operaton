@@ -82,11 +82,11 @@ public abstract class AbstractWebIntegrationTest {
   }
 
   @BeforeEach
-  public void before() throws Exception {
+  public void before() {
     testProperties = new TestProperties(48080);
   }
 
-  public void createClient(String ctxPath) throws Exception {
+  public void createClient(String ctxPath) {
     testProperties = new TestProperties();
 
     appBasePath = testProperties.getApplicationPath("/" + ctxPath);

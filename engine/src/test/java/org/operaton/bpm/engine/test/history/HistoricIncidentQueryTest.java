@@ -133,10 +133,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.incidentId("invalid").list()).isEmpty();
     assertThat(query.incidentId("invalid").count()).isZero();
 
-    try {
-      query.incidentId(null);
-      fail("It was possible to set a null value as incidentId.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.incidentId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -158,10 +155,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.incidentType("invalid").list()).isEmpty();
     assertThat(query.incidentType("invalid").count()).isZero();
 
-    try {
-      query.incidentType(null);
-      fail("It was possible to set a null value as incidentType.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.incidentType(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -183,10 +177,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.incidentMessage("invalid").list()).isEmpty();
     assertThat(query.incidentMessage("invalid").count()).isZero();
 
-    try {
-      query.incidentMessage(null);
-      fail("It was possible to set a null value as incidentMessage.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.incidentMessage(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -223,10 +214,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.processDefinitionId("invalid").list()).isEmpty();
     assertThat(query.processDefinitionId("invalid").count()).isZero();
 
-    try {
-      query.processDefinitionId(null);
-      fail("It was possible to set a null value as processDefinitionId.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.processDefinitionId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -303,10 +291,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.processInstanceId("invalid").list()).isEmpty();
     assertThat(query.processInstanceId("invalid").count()).isZero();
 
-    try {
-      query.processInstanceId(null);
-      fail("It was possible to set a null value as processInstanceId.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.processInstanceId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -330,10 +315,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.executionId("invalid").list()).isEmpty();
     assertThat(query.executionId("invalid").count()).isZero();
 
-    try {
-      query.executionId(null);
-      fail("It was possible to set a null value as executionId.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.executionId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -358,10 +340,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.activityId("invalid").list()).isEmpty();
     assertThat(query.activityId("invalid").count()).isZero();
 
-    try {
-      query.activityId(null);
-      fail("It was possible to set a null value as activityId.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.activityId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -386,10 +365,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.failedActivityId("invalid").list()).isEmpty();
     assertThat(query.failedActivityId("invalid").count()).isZero();
 
-    try {
-      query.failedActivityId(null);
-      fail("It was possible to set a null value as failedActivityId.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.failedActivityId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -421,10 +397,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.causeIncidentId("invalid").list()).isEmpty();
     assertThat(query.causeIncidentId("invalid").count()).isZero();
 
-    try {
-      query.causeIncidentId(null);
-      fail("It was possible to set a null value as causeIncidentId.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.causeIncidentId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -456,10 +429,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.rootCauseIncidentId("invalid").list()).isEmpty();
     assertThat(query.rootCauseIncidentId("invalid").count()).isZero();
 
-    try {
-      query.rootCauseIncidentId(null);
-      fail("It was possible to set a null value as rootCauseIncidentId.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.rootCauseIncidentId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -483,10 +453,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.configuration("invalid").list()).isEmpty();
     assertThat(query.configuration("invalid").count()).isZero();
 
-    try {
-      query.configuration(null);
-      fail("It was possible to set a null value as configuration.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.configuration(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -527,10 +494,7 @@ public class HistoricIncidentQueryTest {
     assertThat(query.historyConfiguration("invalid").list()).isEmpty();
     assertThat(query.historyConfiguration("invalid").count()).isZero();
 
-    try {
-      query.historyConfiguration(null);
-      fail("It was possible to set a null value as history configuration.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(() -> query.historyConfiguration(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -550,10 +514,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
     var historicIncidentQuery = query.open();
 
-    try {
-      historicIncidentQuery.open();
-      fail("It was possible to set a the open flag twice.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(historicIncidentQuery::open).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -576,10 +537,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
     var historicIncidentQuery = query.resolved();
 
-    try {
-      historicIncidentQuery.resolved();
-      fail("It was possible to set a the resolved flag twice.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(historicIncidentQuery::resolved).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -602,10 +560,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
     var historicIncidentQuery = query.deleted();
 
-    try {
-      historicIncidentQuery.deleted();
-      fail("It was possible to set a the deleted flag twice.");
-    } catch (ProcessEngineException e) { }
+    assertThatThrownBy(historicIncidentQuery::deleted).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

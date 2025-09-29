@@ -19,10 +19,10 @@
     <version.jersey3>3.1.11</version.jersey3>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
-    <version.groovy>5.0.0</version.groovy>
+    <version.groovy>5.0.1</version.groovy>
     <version.jython>2.7.4</version.jython>
     <version.graal.js>22.3.5</version.graal.js>
-    <version.nashorn>15.6</version.nashorn>
+    <version.nashorn>15.7</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
     <version.json-path>2.9.0</version.json-path>
@@ -40,15 +40,15 @@
     <version.cronutils>9.2.1</version.cronutils>
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.assertj>3.27.4</version.assertj>
-    <version.mockito>5.19.0</version.mockito>
-    <version.jna>5.17.0</version.jna>
+    <version.mockito>5.20.0</version.mockito>
+    <version.jna>5.18.0</version.jna>
     <version.testcontainers>1.21.3</version.testcontainers>
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.commonj>1.1.0</version.commonj>
     <!-- application servers -->
     <version.wildfly>37.0.1.Final</version.wildfly>
-    <version.wildfly.core>29.0.0.Final</version.wildfly.core>
-    <version.tomcat>11.0.10</version.tomcat>
+    <version.wildfly.core>29.0.1.Final</version.wildfly.core>
+    <version.tomcat>11.0.11</version.tomcat>
     <version.arquillian>1.10.0.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.4</version.shrinkwrap.resolvers>
     <version.selenium>4.35.0</version.selenium>
@@ -443,6 +443,78 @@
             </executions>
           </plugin>
         </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>check-api-compatibility</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <clirr.failOnWarning.restrictive>true</clirr.failOnWarning.restrictive>
+        <clirr.comparisonVersion>${operaton.version.old}</clirr.comparisonVersion>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>initialize-clirr-dirs</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <mkdir dir="${maven.multiModuleProjectDirectory}/target/reports/clirr/all"/>
+                    <mkdir dir="${maven.multiModuleProjectDirectory}/target/reports/clirr/restrictive"/>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>clirr-maven-plugin</artifactId>
+              <configuration>
+                <skip>false</skip>
+                <comparisonVersion>${clirr.comparisonVersion}</comparisonVersion>
+                <logResults>true</logResults>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>all</id>
+                  <phase>verify</phase>
+                  <goals>
+                    <goal>check-no-fork</goal>
+                  </goals>
+                  <configuration>
+                    <textOutputFile>${maven.multiModuleProjectDirectory}/target/reports/clirr/all/${project.artifactId}.txt</textOutputFile>
+                    <failOnWarning>false</failOnWarning>
+                    <failOnError>false</failOnError>
+                  </configuration>
+                </execution>
+                <execution>
+                  <id>restrictive</id>
+                  <phase>verify</phase>
+                  <goals>
+                    <goal>check-no-fork</goal>
+                  </goals>
+                  <configuration>
+                    <textOutputFile>${maven.multiModuleProjectDirectory}/target/reports/clirr/restrictive/${project.artifactId}.txt</textOutputFile>
+                    <failOnWarning>${clirr.failOnWarning.restrictive}</failOnWarning>
+                    <failOnError>${clirr.failOnWarning.restrictive}</failOnError>
+                    <ignoredDifferencesFile>${maven.multiModuleProjectDirectory}/.devenv/clirr-ignore.xml</ignoredDifferencesFile>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
       </build>
     </profile>
   </profiles>

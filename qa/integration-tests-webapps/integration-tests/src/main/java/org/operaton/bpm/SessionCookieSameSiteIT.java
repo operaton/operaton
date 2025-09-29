@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }

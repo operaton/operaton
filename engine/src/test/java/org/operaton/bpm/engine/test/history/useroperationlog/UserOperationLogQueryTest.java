@@ -66,7 +66,7 @@ import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNE
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Danny Gräf
@@ -1239,19 +1239,9 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.entityTypeIn((String[]) null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.entityTypeIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.entityTypeIn(TASK, null, EntityTypes.VARIABLE);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.entityTypeIn(TASK, null, EntityTypes.VARIABLE)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -1301,26 +1291,12 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.category(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    var query2 = query;
+    assertThatThrownBy(() -> query2.category(null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.categoryIn((String[]) null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query2.categoryIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.categoryIn(UserOperationLogEntry.CATEGORY_ADMIN, null, UserOperationLogEntry.CATEGORY_TASK_WORKER);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query2.categoryIn(UserOperationLogEntry.CATEGORY_ADMIN, null, UserOperationLogEntry.CATEGORY_TASK_WORKER)).isInstanceOf(ProcessEngineException.class);
   }
 
   // ----- DELETE VARIABLE HISTORY -----
@@ -1685,12 +1661,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.deploymentId(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.deploymentId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   private Map<String, Object> createMapForVariableAddition() {

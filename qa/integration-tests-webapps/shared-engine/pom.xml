@@ -89,6 +89,8 @@
                 <home>${jboss.runtime}</home>
                 <timeout>${cargo.timeout}</timeout>
                 <output>${project.build.directory}/cargo.log</output>
+                <log>${project.build.directory}/server.log</log>
+                <logLevel>DEBUG</logLevel>
               </container>
               <configuration>
                 <type>standalone</type>

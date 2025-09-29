@@ -64,8 +64,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 /**
@@ -717,59 +716,24 @@ class FullHistoryTest {
   @Test
   void testHistoricDetailQueryInvalidSorting() {
     var historicDetailQuery = historyService.createHistoricDetailQuery();
-    try {
-      historicDetailQuery.asc();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(historicDetailQuery::asc).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicDetailQuery.desc();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(historicDetailQuery::desc).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByProcessInstanceId = historicDetailQuery.orderByProcessInstanceId();
-    try {
-      queryOrderByProcessInstanceId.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryOrderByProcessInstanceId::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByTime = historicDetailQuery.orderByTime();
-    try {
-      queryOrderByTime.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryOrderByTime::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByVariableName = historicDetailQuery.orderByVariableName();
-    try {
-      queryOrderByVariableName.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryOrderByVariableName::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByVariableRevision = historicDetailQuery.orderByVariableRevision();
-    try {
-      queryOrderByVariableRevision.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryOrderByVariableRevision::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryByVariableType = historicDetailQuery.orderByVariableType();
-    try {
-      queryByVariableType.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryByVariableType::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1297,19 +1261,9 @@ class FullHistoryTest {
     query.variableInstanceId("invalid");
     assertThat(query.count()).isZero();
 
-    try {
-      query.variableInstanceId(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.variableInstanceId(null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.variableInstanceId((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.variableInstanceId((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

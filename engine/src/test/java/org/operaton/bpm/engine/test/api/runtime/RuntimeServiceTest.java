@@ -95,7 +95,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Frederik Heremans
@@ -123,12 +122,7 @@ public class RuntimeServiceTest {
 
   @Test
   void testStartProcessInstanceByKeyNullKey() {
-    try {
-      runtimeService.startProcessInstanceByKey(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      // Expected exception
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -143,12 +137,7 @@ public class RuntimeServiceTest {
 
   @Test
   void testStartProcessInstanceByIdNullId() {
-    try {
-      runtimeService.startProcessInstanceById(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      // Expected exception
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceById(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -493,7 +482,8 @@ public class RuntimeServiceTest {
 
   @Test
   void testDeleteProcessInstanceIfExistsWithFake() {
-    assertDoesNotThrow(() -> runtimeService.deleteProcessInstanceIfExists("aFake", null, false, false, false, false));
+    assertThatCode(() -> runtimeService.deleteProcessInstanceIfExists("aFake", null, false, false, false, false))
+      .doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1736,12 +1726,7 @@ public class RuntimeServiceTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
 
-    try {
-      tree.getActivityInstances(null);
-      fail("exception expected");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> tree.getActivityInstances(null)).isInstanceOf(NullValueException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetActivityInstancesForActivity.bpmn20.xml")
@@ -1791,12 +1776,7 @@ public class RuntimeServiceTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
 
-    try {
-      tree.getTransitionInstances(null);
-      fail("exception expected");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> tree.getTransitionInstances(null)).isInstanceOf(NullValueException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetTransitionInstancesForActivity.bpmn20.xml")

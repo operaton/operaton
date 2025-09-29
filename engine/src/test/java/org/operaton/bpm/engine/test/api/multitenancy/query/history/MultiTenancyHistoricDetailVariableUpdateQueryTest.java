@@ -45,7 +45,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historic
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class MultiTenancyHistoricDetailVariableUpdateQueryTest {
@@ -161,16 +161,7 @@ class MultiTenancyHistoricDetailVariableUpdateQueryTest {
   void shouldFailQueryByTenantIdNull() {
     var historicDetailQuery = historyService.createHistoricDetailQuery()
         .variableUpdates();
-    try {
-      // when
-      historicDetailQuery.tenantIdIn((String) null);
-
-      fail("expected exception");
-
-      // then
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicDetailQuery.tenantIdIn((String) null)).isInstanceOf(NullValueException.class);
   }
 
   @Test

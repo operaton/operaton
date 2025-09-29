@@ -9,7 +9,7 @@
   </parent>
   <groupId>org.operaton.bpm.distro</groupId>
   <artifactId>operaton-sql-scripts</artifactId>
-  <version>${operaton.dbscheme.current.version}</version>
+  <version>7.24.0</version>
   <name>Operaton - SQL scripts</name>
   <description>${project.name}</description>
   <properties>

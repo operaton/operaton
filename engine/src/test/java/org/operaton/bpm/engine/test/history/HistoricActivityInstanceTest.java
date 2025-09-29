@@ -50,8 +50,7 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Tom Baeyens
@@ -356,26 +355,11 @@ class HistoricActivityInstanceTest {
   @Test
   void testInvalidSorting() {
     var historicActivityInstanceQuery = historyService.createHistoricActivityInstanceQuery().orderByHistoricActivityInstanceDuration();
-    try {
-      historicActivityInstanceQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(historicActivityInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicActivityInstanceQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(historicActivityInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicActivityInstanceQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(historicActivityInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
@@ -465,12 +449,7 @@ class HistoricActivityInstanceTest {
     var historicActivityInstanceQuery = historyService
           .createHistoricActivityInstanceQuery()
           .completeScope();
-    try {
-      historicActivityInstanceQuery.canceled();
-      fail("It should not be possible to query by completeScope and canceled.");
-    } catch (ProcessEngineException e) {
-      // exception expected
-    }
+    assertThatThrownBy(historicActivityInstanceQuery::canceled).isInstanceOf(ProcessEngineException.class);
   }
 
   /**

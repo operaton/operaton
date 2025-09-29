@@ -490,12 +490,7 @@ public class IncidentQueryTest {
             .isNotEmpty()
             .hasSize(3);
 
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // Exception is expected
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
   }
 

@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,11 +30,10 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
-import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
-import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
-import org.operaton.bpm.engine.rest.dto.converter.LongConverter;
-import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
-import org.operaton.bpm.engine.rest.dto.converter.StringSetConverter;
+import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
+import org.operaton.bpm.engine.rest.dto.converter.*;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+
 
 /**
  * @author Thorben Lindhauer
@@ -64,7 +64,11 @@ public class ExternalTaskQueryDto extends AbstractQueryDto<ExternalTaskQuery> {
   protected String executionId;
   protected String processInstanceId;
   protected List<String> processInstanceIdIn;
+  protected String processDefinitionKey;
+  protected String[] processDefinitionKeyIn;
   protected String processDefinitionId;
+  protected String processDefinitionName;
+  protected String processDefinitionNameLike;
   protected Boolean active;
   protected Boolean suspended;
   protected Boolean withRetriesLeft;
@@ -73,6 +77,10 @@ public class ExternalTaskQueryDto extends AbstractQueryDto<ExternalTaskQuery> {
   protected List<String> tenantIds;
   protected Long priorityHigherThanOrEquals;
   protected Long priorityLowerThanOrEquals;
+  protected Boolean variableNamesIgnoreCase;
+  protected Boolean variableValuesIgnoreCase;
+
+  private List<VariableQueryParameterDto> processVariables;
 
   public ExternalTaskQueryDto() {
   }
@@ -145,9 +153,29 @@ public class ExternalTaskQueryDto extends AbstractQueryDto<ExternalTaskQuery> {
     return processDefinitionId;
   }
 
+  @OperatonQueryParam("processDefinitionKey")
+  public void setProcessDefinitionKey(String processDefinitionKey) {
+    this.processDefinitionKey = processDefinitionKey;
+  }
+
+  @OperatonQueryParam(value = "processDefinitionKeyIn", converter = StringArrayConverter.class)
+  public void setProcessDefinitionKeyIn(String[] processDefinitionKeyIn) {
+    this.processDefinitionKeyIn = processDefinitionKeyIn;
+  }
+
   @OperatonQueryParam("processDefinitionId")
   public void setProcessDefinitionId(String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
+  }
+
+  @OperatonQueryParam("processDefinitionName")
+  public void setProcessDefinitionName(String processDefinitionName) {
+    this.processDefinitionName = processDefinitionName;
+  }
+
+  @OperatonQueryParam("processDefinitionNameLike")
+  public void setProcessDefinitionNameLike(String processDefinitionNameLike) {
+    this.processDefinitionNameLike = processDefinitionNameLike;
   }
 
   @OperatonQueryParam(value = "active", converter = BooleanConverter.class)
@@ -182,6 +210,21 @@ public class ExternalTaskQueryDto extends AbstractQueryDto<ExternalTaskQuery> {
   @OperatonQueryParam(value="priorityHigherThanOrEquals", converter = LongConverter.class)
   public void setPriorityHigherThanOrEquals(Long priorityHigherThanOrEquals) {
     this.priorityHigherThanOrEquals = priorityHigherThanOrEquals;
+  }
+
+  @OperatonQueryParam(value = "variableNamesIgnoreCase", converter = BooleanConverter.class)
+  public void setVariableNamesIgnoreCase(Boolean variableNamesCaseInsensitive) {
+    this.variableNamesIgnoreCase = variableNamesCaseInsensitive;
+  }
+
+  @OperatonQueryParam(value ="variableValuesIgnoreCase", converter = BooleanConverter.class)
+  public void setVariableValuesIgnoreCase(Boolean variableValuesCaseInsensitive) {
+    this.variableValuesIgnoreCase = variableValuesCaseInsensitive;
+  }
+
+  @OperatonQueryParam(value = "processVariables", converter = VariableListConverter.class)
+  public void setProcessVariables(List<VariableQueryParameterDto> processVariables) {
+    this.processVariables = processVariables;
   }
 
   @OperatonQueryParam(value="priorityLowerThanOrEquals", converter = LongConverter.class)
@@ -237,8 +280,20 @@ public class ExternalTaskQueryDto extends AbstractQueryDto<ExternalTaskQuery> {
     if (processInstanceIdIn != null && !processInstanceIdIn.isEmpty()) {
       query.processInstanceIdIn(processInstanceIdIn.toArray(new String[0]));
     }
+    if (processDefinitionKey != null) {
+      query.processDefinitionKey(processDefinitionKey);
+    }
+    if (processDefinitionKeyIn != null && processDefinitionKeyIn.length > 0) {
+      query.processDefinitionKeyIn(processDefinitionKeyIn);
+    }
     if (processDefinitionId != null) {
       query.processDefinitionId(processDefinitionId);
+    }
+    if (processDefinitionName != null) {
+      query.processDefinitionName(processDefinitionName);
+    }
+    if (processDefinitionNameLike != null) {
+      query.processDefinitionNameLike(processDefinitionNameLike);
     }
     if (active != null && active) {
       query.active();
@@ -257,6 +312,38 @@ public class ExternalTaskQueryDto extends AbstractQueryDto<ExternalTaskQuery> {
     }
     if (noRetriesLeft != null && noRetriesLeft) {
       query.noRetriesLeft();
+    }
+    if(variableValuesIgnoreCase != null && variableValuesIgnoreCase) {
+      query.matchVariableValuesIgnoreCase();
+    }
+    if(variableNamesIgnoreCase != null && variableNamesIgnoreCase) {
+      query.matchVariableNamesIgnoreCase();
+    }
+    if (processVariables != null) {
+      for (VariableQueryParameterDto variableQueryParam : processVariables) {
+        String variableName = variableQueryParam.getName();
+        String op = variableQueryParam.getOperator();
+        Object variableValue = variableQueryParam.resolveValue(objectMapper);
+        if (VariableQueryParameterDto.EQUALS_OPERATOR_NAME.equals(op)) {
+          query.processVariableValueEquals(variableName, variableValue);
+        } else if (VariableQueryParameterDto.NOT_EQUALS_OPERATOR_NAME.equals(op)) {
+          query.processVariableValueNotEquals(variableName, variableValue);
+        } else if (VariableQueryParameterDto.GREATER_THAN_OPERATOR_NAME.equals(op)) {
+          query.processVariableValueGreaterThan(variableName, variableValue);
+        } else if (VariableQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
+          query.processVariableValueGreaterThanOrEquals(variableName, variableValue);
+        } else if (VariableQueryParameterDto.LESS_THAN_OPERATOR_NAME.equals(op)) {
+          query.processVariableValueLessThan(variableName, variableValue);
+        } else if (VariableQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME.equals(op)) {
+          query.processVariableValueLessThanOrEquals(variableName, variableValue);
+        } else if (VariableQueryParameterDto.LIKE_OPERATOR_NAME.equals(op)) {
+          query.processVariableValueLike(variableName, String.valueOf(variableValue));
+        } else if (VariableQueryParameterDto.NOT_LIKE_OPERATOR_NAME.equals(op)) {
+          query.processVariableValueNotLike(variableName, String.valueOf(variableValue));
+        } else {
+          throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Invalid process variable comparator specified: " + op);
+        }
+      }
     }
     if (workerId != null) {
       query.workerId(workerId);

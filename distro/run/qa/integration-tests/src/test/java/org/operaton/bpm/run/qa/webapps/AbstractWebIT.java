@@ -70,11 +70,11 @@ public abstract class AbstractWebIT {
   }
 
   @BeforeEach
-  public void before() throws Exception {
+  public void before() {
     testProperties = new TestProperties(48080);
   }
 
-  public void createClient(String ctxPath) throws Exception {
+  public void createClient(String ctxPath) {
     // Initialize test properties
     testProperties = new TestProperties();
 
@@ -83,9 +83,13 @@ public abstract class AbstractWebIT {
     LOGGER.info("Connecting to application {}", appBasePath);
   }
 
-  public void preventRaceConditions() throws InterruptedException {
+  public void preventRaceConditions() {
     // just wait some seconds before starting because of Wildfly / Cargo race conditions
-    Thread.sleep(6 * 1000);
+    try {
+      Thread.sleep(6 * 1000);
+    } catch (InterruptedException ignored) {
+      Thread.currentThread().interrupt();
+    }
   }
 
   protected String getWebappCtxPath() {

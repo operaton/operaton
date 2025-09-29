@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.operaton.bpm.springboot.project</groupId>
+    <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
+  </parent>
+  <groupId>org.operaton.bpm.springboot</groupId>
+  <artifactId>operaton-bpm-spring-boot-starter-test-junit5</artifactId>
+  <name>Operaton - Spring Boot Starter - Test - JUnit 5</name>
+  <description>${project.name}</description>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-assert</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-junit5</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

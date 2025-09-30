@@ -334,15 +334,19 @@
       </dependency>
 
       <dependency>
-        <groupId>org.graalvm.js</groupId>
+        <groupId>org.graalvm.polyglot</groupId>
         <artifactId>js</artifactId>
         <version>${version.graal.js}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
+
       <dependency>
-        <groupId>org.graalvm.js</groupId>
-        <artifactId>js-scriptengine</artifactId>
+        <groupId>org.graalvm.polyglot</groupId>
+        <artifactId>polyglot</artifactId>
         <version>${version.graal.js}</version>
       </dependency>
+
       <dependency>
         <groupId>org.xmlunit</groupId>
         <artifactId>xmlunit-core</artifactId>

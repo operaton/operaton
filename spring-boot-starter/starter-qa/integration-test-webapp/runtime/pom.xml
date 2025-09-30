@@ -74,14 +74,8 @@
           <artifactId>selenium-java</artifactId>
         </dependency>
         <dependency>
-          <groupId>org.graalvm.js</groupId>
-          <artifactId>js</artifactId>
-          <version>${version.graal.js}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.graalvm.js</groupId>
-          <artifactId>js-scriptengine</artifactId>
-          <version>${version.graal.js}</version>
+          <groupId>org.graalvm.polyglot</groupId>
+          <artifactId>polyglot</artifactId>
         </dependency>
         <dependency>
           <groupId>com.konghq</groupId>

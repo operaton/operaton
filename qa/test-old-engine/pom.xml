@@ -119,6 +119,7 @@
         <dependency>
           <groupId>org.hamcrest</groupId>
           <artifactId>hamcrest-library</artifactId>
+          <version>2.2</version>
           <scope>test</scope>
         </dependency>
         <dependency>
@@ -144,6 +145,7 @@
         <dependency>
           <groupId>org.subethamail</groupId>
           <artifactId>subethasmtp-wiser</artifactId>
+          <version>1.2</version>
           <scope>test</scope>
         </dependency>
         <dependency>

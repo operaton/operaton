@@ -22,10 +22,6 @@
         <type>pom</type>
       </dependency>
       <dependency>
-        <groupId>org.graalvm.polyglot</groupId>
-        <artifactId>polyglot</artifactId>
-      </dependency>
-      <dependency>
         <groupId>com.nimbusds</groupId>
         <artifactId>nimbus-jose-jwt</artifactId>
         <version>9.37.4</version>

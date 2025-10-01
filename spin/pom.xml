@@ -51,8 +51,16 @@
       </dependency>
       <dependency>
         <groupId>org.graalvm.polyglot</groupId>
-        <artifactId>polyglot</artifactId>
-        <scope>runtime</scope>
+        <artifactId>js</artifactId>
+        <type>pom</type>
+        <scope>test</scope>
+        <version>${version.graal.js}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.graalvm.js</groupId>
+        <artifactId>js-scriptengine</artifactId>
+        <scope>test</scope>
+        <version>${version.graal.js}</version>
       </dependency>
       <dependency>
         <groupId>net.javacrumbs.json-unit</groupId>

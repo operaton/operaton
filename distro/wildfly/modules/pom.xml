@@ -266,6 +266,9 @@
                 <replace dir="target/modules" token="@version.jackson@" value="${version.jackson}">
                   <include name="**/module.xml"/>
                 </replace>
+                <replace dir="target/modules" token="@version.uuid-generator@" value="${version.uuid-generator}">
+                  <include name="**/module.xml"/>
+                </replace>
                 <move file="target/modules/com/fasterxml/jackson/core/jackson-annotations/version.jackson" toFile="target/modules/com/fasterxml/jackson/core/jackson-annotations/${version.jackson}"/>
                 <move file="target/modules/com/fasterxml/jackson/core/jackson-core/version.jackson" toFile="target/modules/com/fasterxml/jackson/core/jackson-core/${version.jackson}"/>
                 <move file="target/modules/com/fasterxml/jackson/core/jackson-databind/version.jackson" toFile="target/modules/com/fasterxml/jackson/core/jackson-databind/${version.jackson}"/>

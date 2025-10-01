@@ -36,6 +36,8 @@ Prerequisites:
 
 JDK 17 or newer - check `java -version`
 
+Operaton is tested and supported on Java 17, 21, and 25.
+
 You can use the Maven Wrapper script to execute the build. The script downloads and installs (if necessary) the required Maven version to `~/.m2/wrapper` and runs it from there.
 
 On Linux and MacOS, run
@@ -114,7 +116,7 @@ To run the tests in this repository, please see our [testing tips and tricks](TE
 
 ## Prerequisites
 
-Java 17 or higher is required.
+Java 17 or higher is required. Operaton is tested and supported on Java 17, 21, and 25.
 
 ## License
 

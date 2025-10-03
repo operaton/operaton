@@ -70,14 +70,6 @@
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-language</artifactId>
-      <version>25.0.0</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.graalvm.truffle</groupId>
-      <artifactId>truffle-runtime</artifactId>
-      <version>25.0.0</version>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>

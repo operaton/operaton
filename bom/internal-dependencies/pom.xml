@@ -348,6 +348,12 @@
 
       <dependency>
         <groupId>org.graalvm.js</groupId>
+        <artifactId>js-language</artifactId>
+        <version>${version.graal.js}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.graalvm.js</groupId>
         <artifactId>js-scriptengine</artifactId>
         <version>${version.graal.js}</version>
       </dependency>

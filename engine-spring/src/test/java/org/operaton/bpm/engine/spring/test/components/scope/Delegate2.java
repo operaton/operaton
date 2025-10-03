@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.engine.spring.test.components.scope;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("unused")
 public class Delegate2 implements JavaDelegate {
 
-  private static final Logger LOG = Logger.getLogger(Delegate2.class.getName());
+  private static final Logger LOG = LoggerFactory.getLogger(Delegate2.class);
 
 	@Autowired private StatefulObject statefulObject;
 
@@ -44,6 +45,6 @@ public class Delegate2 implements JavaDelegate {
 
     assertThat(this.statefulObject).as("the 'scopedCustomer' reference can't be null").isNotNull();
     assertThat(this.statefulObject.getName()).as("the 'scopedCustomer.name' property should be non-null, since it was set in a previous delegate bound to this very thread").isNotNull();
-		LOG.info( "the 'uuid' value retrieved from the ScopedCustomer#name property is '" +  this.statefulObject.getName()+ "' in "+getClass().getName());
+		LOG.info("the 'uuid' value retrieved from the ScopedCustomer#name property is '{}' in {}", this.statefulObject.getName(), getClass().getName());
 	}
 }

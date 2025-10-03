@@ -31,14 +31,14 @@ import org.operaton.bpm.engine.telemetry.Metric;
 public class InternalsImpl implements Internals {
 
   public static final String SERIALIZED_APPLICATION_SERVER = "application-server";
-  public static final String SERIALIZED_CAMUNDA_INTEGRATION = "operaton-integration";
+  public static final String SERIALIZED_OPERATON_INTEGRATION = "operaton-integration";
   public static final String SERIALIZED_LICENSE_KEY = "license-key";
   public static final String SERIALIZED_DATA_COLLECTION_START_DATE = "data-collection-start-date";
 
   protected DatabaseImpl database;
   @SerializedName(SERIALIZED_APPLICATION_SERVER)
   protected ApplicationServerImpl applicationServer;
-  @SerializedName(SERIALIZED_CAMUNDA_INTEGRATION)
+  @SerializedName(SERIALIZED_OPERATON_INTEGRATION)
   protected Set<String> operatonIntegration;
   @SerializedName(SERIALIZED_DATA_COLLECTION_START_DATE)
   protected Date dataCollectionStartDate;

@@ -28,8 +28,8 @@ import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
 import org.operaton.bpm.client.util.PropertyUtil;
 
-import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_NAME;
-import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_REST;
+import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_NAME;
+import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_REST;
 import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
 import static org.operaton.bpm.client.util.TestUtil.waitUntil;
 
@@ -46,8 +46,8 @@ public class ClientRule implements BeforeEachCallback, AfterEachCallback {
 
   public ClientRule(Properties properties) {
     this(() -> {
-      String endpoint = properties.getProperty(CAMUNDA_ENGINE_REST);
-      String engine = properties.getProperty(CAMUNDA_ENGINE_NAME);
+      String endpoint = properties.getProperty(OPERATON_ENGINE_REST);
+      String engine = properties.getProperty(OPERATON_ENGINE_NAME);
       return ExternalTaskClient.create()
               .baseUrl(endpoint + engine)
               .lockDuration(LOCK_DURATION);

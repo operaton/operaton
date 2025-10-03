@@ -1,0 +1,10 @@
+<module xmlns="urn:jboss:module:1.0" name="org.graalvm.shadowed.icu4j">
+  <resources>
+    <resource-root path="icu4j-@version.graal.js@.jar" />
+  </resources>
+
+  <dependencies>
+    <module name="java.base" />
+    <module name="org.graalvm.shadowed.xz" />
+  </dependencies>
+</module>

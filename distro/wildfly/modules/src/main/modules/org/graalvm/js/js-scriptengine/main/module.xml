@@ -8,10 +8,6 @@
     <module name="java.scripting" />
     <module name="sun.jdk" />
     <module name="org.operaton.spin.operaton-spin-core" />
-    <module name="org.graalvm.js.js" services="export" export="true" />
-    <module name="org.graalvm.regex.regex" services="export" export="true" />
-    <module name="org.graalvm.truffle.truffle-api" services="export" export="true" />
-    <module name="org.graalvm.sdk.graal-sdk" services="export" export="true" />
-    <module name="com.ibm.icu.icu4j" export="true" />
+    <module name="org.graalvm.polyglot.polyglot" services="export" export="true" />
   </dependencies>
 </module>

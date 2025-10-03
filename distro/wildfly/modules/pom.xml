@@ -107,8 +107,13 @@
       <artifactId>groovy-datetime</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.graalvm.js</groupId>
+      <groupId>org.graalvm.polyglot</groupId>
       <artifactId>js</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>polyglot</artifactId>
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
@@ -294,9 +299,6 @@
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.graal.js@" value="${version.graal.js}">
-                  <include name="**/module.xml"/>
-                </replace>
-                <replace dir="target/modules" token="@version.icu.icu4j@" value="${version.icu.icu4j}">
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.assertj@" value="${version.assertj}">

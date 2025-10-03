@@ -65,11 +65,11 @@
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
-      <artifactId>js</artifactId>
+      <artifactId>js-scriptengine</artifactId>
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
-      <artifactId>js-scriptengine</artifactId>
+      <artifactId>js-language</artifactId>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>

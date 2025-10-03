@@ -1,0 +1,9 @@
+<module xmlns="urn:jboss:module:1.0" name="org.graalvm.truffle.truffle-compiler">
+  <resources>
+    <resource-root path="truffle-compiler-@version.graal.js@.jar" />
+  </resources>
+
+  <dependencies>
+    <module name="java.base" />
+  </dependencies>
+</module>

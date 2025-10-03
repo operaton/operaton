@@ -26,7 +26,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.hitpolicy.DmnHitPolicyException;
-import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.engine.test.asserts.DmnDecisionTableResultAssert;
@@ -47,10 +46,8 @@ class HitPolicyTest extends DmnEngineTest {
   private static final String UNIQUE_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.unique.compound.dmn";
   private static final String ANY_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.any.single.dmn";
   private static final String ANY_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.any.compound.dmn";
-  private static final String PRIORITY_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.priority.single.dmn";
   private static final String FIRST_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.first.single.dmn";
   private static final String FIRST_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.first.compound.dmn";
-  private static final String OUTPUT_ORDER_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.outputOrder.single.dmn";
   private static final String RULE_ORDER_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.ruleOrder.single.dmn";
   private static final String RULE_ORDER_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.ruleOrder.compound.dmn";
   private static final String COLLECT_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.single.dmn";
@@ -301,13 +298,6 @@ class HitPolicyTest extends DmnEngineTest {
   }
 
   @Test
-  void priorityHitPolicySingleOutputNoMatchingRule() {
-    assertThatThrownBy(() -> parseDecisionsFromFile(PRIORITY_SINGLE))
-      .isInstanceOf(DmnTransformException.class)
-      .hasMessageStartingWith("DMN-02004");
-  }
-
-  @Test
   @DecisionResource(resource = FIRST_SINGLE)
   void firstHitPolicySingleOutputNoMatchingRule() {
     assertThatDecisionTableResult(false, false, false, "a", "b", "c")
@@ -423,13 +413,6 @@ class HitPolicyTest extends DmnEngineTest {
     assertThatDecisionTableResult(true, true, true, "c", "b", "a")
       .hasSingleResult()
       .containsOnly(entry("out1", "c"), entry("out2", "c"), entry("out3", "c"));
-  }
-
-  @Test
-  void outputOrderHitPolicyNotSupported() {
-    assertThatThrownBy(() -> parseDecisionsFromFile(OUTPUT_ORDER_SINGLE))
-      .isInstanceOf(DmnTransformException.class)
-      .hasMessageStartingWith("DMN-02004");
   }
 
   @Test

@@ -10,5 +10,6 @@
     <module name="jdk.unsupported" />
     <module name="sun.jdk" />
     <module name="org.graalvm.sdk.graal-sdk" services="export" export="true" />
+    <module name="org.graalvm.shadowed.icu4j" />
   </dependencies>
 </module>

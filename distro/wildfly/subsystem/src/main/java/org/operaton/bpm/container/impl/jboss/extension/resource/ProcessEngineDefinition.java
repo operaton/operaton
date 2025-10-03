@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.jboss.as.controller.AttributeDefinition;
-import org.jboss.as.controller.PersistentResourceDefinition;
+import org.jboss.as.controller.SimpleResourceDefinition;
 
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
@@ -28,7 +28,7 @@ import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinit
 import org.operaton.bpm.container.impl.jboss.extension.handler.ProcessEngineAdd;
 import org.operaton.bpm.container.impl.jboss.extension.handler.ProcessEngineRemove;
 
-public final class ProcessEngineDefinition extends PersistentResourceDefinition {
+public final class ProcessEngineDefinition extends SimpleResourceDefinition {
 
   public static final ProcessEngineDefinition INSTANCE = new ProcessEngineDefinition();
 

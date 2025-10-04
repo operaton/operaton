@@ -1,36 +1,41 @@
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
-xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
-xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
-xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
-id="Definitions_1215v40" name="DRD" namespace="http://camunda.org/schema/1.0/dmn"
-xmlns:modeler="http://camunda.org/schema/modeler/1.0"
-exporter="Camunda Modeler" exporterVersion="5.34.0"
-modeler:executionPlatform="Camunda Platform"
-modeler:executionPlatformVersion="7.23.0">
-  <decision id="decision1" name="RiskDecision">
-    <decisionTable hitPolicy="PRIORITY" id="decisionTable1">
-      <input id="input1" label="Risk Category">
-        <inputExpression id="inputExpression1" typeRef="string">
-          <text>RiskCategory</text>
-        </inputExpression>
-      </input>
-      <output id="output1" name="Action" typeRef="string">
-        <outputValues>
-          <text>"Declined", "ManualReviewed", "Approved"</text>
-        </outputValues>
-     </output>
-      <rule id="rule1">
-        <inputEntry><text>"High"</text></inputEntry>
-        <outputEntry><text>"ManualReviewed"</text></outputEntry>
-      </rule>
-      <rule id="rule2">
-        <inputEntry><text>"High"</text></inputEntry>
-        <outputEntry><text>"Declined"</text></outputEntry>
-      </rule>
-      <rule id="rule3">
-        <inputEntry><text>"Low"</text></inputEntry>
-        <outputEntry><text>"Approved"</text></outputEntry>
-       </rule>
-    </decisionTable>
-  </decision>
-</definitions>
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:definitions xmlns:ns0="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:ns1="http://camunda.org/schema/modeler/1.0" id="Definitions_1215v40" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.34.0" ns1:executionPlatform="Camunda Platform" ns1:executionPlatformVersion="7.23.0">
+  <ns0:decision id="decision1" name="RiskDecision">
+    <ns0:decisionTable hitPolicy="PRIORITY" id="decisionTable1">
+      <ns0:input id="input1" label="Risk Category">
+        <ns0:inputExpression id="inputExpression1" typeRef="string">
+          <ns0:text>RiskCategory</ns0:text>
+        </ns0:inputExpression>
+      </ns0:input>
+      <ns0:output id="output1" name="Action" typeRef="string">
+        <ns0:outputValues>
+          <ns0:text>"Declined", "ManualReviewed", "Approved"</ns0:text>
+        </ns0:outputValues>
+      </ns0:output>
+      <ns0:rule id="rule1">
+        <ns0:inputEntry>
+          <ns0:text>"High"</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"ManualReviewed"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule2">
+        <ns0:inputEntry>
+          <ns0:text>"High"</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"Declined"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule3">
+        <ns0:inputEntry>
+          <ns0:text>"Low"</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"Approved"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+    </ns0:decisionTable>
+  </ns0:decision>
+</ns0:definitions>

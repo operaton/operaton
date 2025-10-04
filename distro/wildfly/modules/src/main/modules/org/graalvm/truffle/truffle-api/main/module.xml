@@ -11,5 +11,7 @@
     <module name="sun.jdk" />
     <module name="org.graalvm.truffle.truffle-runtime" export="true"/>
     <module name="org.graalvm.polyglot.polyglot" export="true"/>
+    <module name="org.graalvm.sdk.nativeimage" export="true" />
+    <module name="org.graalvm.sdk.jniutils" export="true" />
   </dependencies>
 </module>

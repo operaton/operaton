@@ -24,10 +24,46 @@ import org.operaton.bpm.dmn.engine.impl.delegate.DmnDecisionTableEvaluationEvent
 import org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandler;
 import org.operaton.bpm.model.dmn.HitPolicy;
 
-
+/**
+ * Implements the FIRST hit policy as defined in the DMN 1.3 specification (section 8.2.8).
+ *
+ * <p>The FIRST hit policy returns the first rule that matches, according to the order
+ * of rules in the decision table. All subsequent matching rules are ignored. This policy
+ * is useful when rules are ordered by priority or when early termination is desired.</p>
+ *
+ * <p><strong>Key Characteristics:</strong></p>
+ * <ul>
+ *   <li>Returns only the first matching rule in table order</li>
+ *   <li>Evaluation can short-circuit after the first match (implementation-dependent)</li>
+ *   <li>Rule order in the decision table definition is significant</li>
+ *   <li>No validation that only one rule matches (unlike UNIQUE)</li>
+ * </ul>
+ *
+ * <p><strong>Difference to other single hit policies:</strong></p>
+ * <ul>
+ *   <li><strong>FIRST vs UNIQUE:</strong> FIRST allows multiple matches but returns only the first;
+ *       UNIQUE enforces that at most one rule matches</li>
+ *   <li><strong>FIRST vs PRIORITY:</strong> FIRST uses table order; PRIORITY uses output value order</li>
+ *   <li><strong>FIRST vs ANY:</strong> FIRST returns the first match without validation;
+ *       ANY validates all matches have identical outputs</li>
+ * </ul>
+ *
+ * @see DmnHitPolicyHandler
+ * @see UniqueHitPolicyHandler
+ * @see PriorityHitPolicyHandler
+ */
 public class FirstHitPolicyHandler implements DmnHitPolicyHandler {
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.FIRST, null);
 
+  /**
+   * Applies the FIRST hit policy logic to the evaluation event.
+   *
+   * <p>If any rules match, this method retains only the first matching rule (index 0)
+   * and discards all others. If no rules match, the event is returned unchanged.</p>
+   *
+   * @param decisionTableEvaluationEvent the evaluation event containing the matching rules
+   * @return the evaluation event with only the first matching rule (or empty if no matches)
+   */
   @Override
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     if (!decisionTableEvaluationEvent.getMatchingRules().isEmpty()) {
@@ -37,14 +73,24 @@ public class FirstHitPolicyHandler implements DmnHitPolicyHandler {
     return decisionTableEvaluationEvent;
   }
 
+  /**
+   * Retrieves the hit policy entry for the FIRST hit policy.
+   *
+   * @return the hit policy entry defining the FIRST hit policy (without aggregator)
+   */
   @Override
   public HitPolicyEntry getHitPolicyEntry() {
     return HIT_POLICY;
   }
 
+  /**
+   * Returns a string representation of the FirstHitPolicyHandler.
+   *
+   * @return a string that represents this handler instance with its hit policy
+   */
   @Override
   public String toString() {
-    return "FirstHitPolicyHandler{}";
+    return "FirstHitPolicyHandler{hitPolicy=" + HIT_POLICY.getHitPolicy() + "}";
   }
 
 }

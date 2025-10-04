@@ -111,7 +111,4 @@ class DefaultProcessEngineConfigurationTest {
     assertThat(configuration.getDefaultNumberOfRetries()).isEqualTo(1);
   }
 
-  private void initIdGenerator(IdGenerator idGenerator) {
-    ReflectionTestUtils.setField(instance, "idGenerator", Optional.ofNullable(idGenerator));
-  }
 }

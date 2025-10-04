@@ -8,13 +8,26 @@ import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableOutputImpl;
 import org.operaton.bpm.model.dmn.HitPolicy;
 
 /**
- * PriorityHitPolicyHandler is a concrete implementation of the SortingHitPolicyHandler
- * class, which enforces the "Priority" hit policy for decision tables in a DMN engine.
+ * Implements the PRIORITY hit policy as defined in the DMN 1.3 specification (section 8.2.8).
  *
- * The "Priority" hit policy ensures that out of all the matching decision rules,
- * only the rule with the highest priority (as determined by a specified comparator)
- * is selected as the applicable rule. At least one output value is required in
- * the decision table outputs for this policy to apply.
+ * <p>The PRIORITY hit policy returns only the rule with the highest priority among all matching rules.
+ * Priority is determined by the order in which output values are listed in the decision table's output
+ * definition. The rule whose output value appears first in the output value list has the highest priority.</p>
+ *
+ * <p><strong>Difference to OUTPUT_ORDER:</strong> While OUTPUT_ORDER returns all matching rules sorted
+ * by their output values lexicographically, PRIORITY returns only the single highest-priority rule
+ * and requires at least one output value to be defined for validation purposes.</p>
+ *
+ * <p>This handler extends {@link SortingHitPolicyHandler}, using its sorting infrastructure
+ * with a comparator based on output value priority to select the single highest-priority rule.</p>
+ *
+ * <p><strong>Key Characteristics:</strong></p>
+ * <ul>
+ *   <li>Returns only the highest-priority rule (not all matching rules)</li>
+ *   <li>Priority is based on output value order in the decision table definition</li>
+ *   <li>Requires at least one output value to be defined</li>
+ *   <li>Uses comparator to find the minimum (highest priority) rule</li>
+ * </ul>
  */
 public final class PriorityHitPolicyHandler extends SortingHitPolicyHandler {
 
@@ -22,9 +35,12 @@ public final class PriorityHitPolicyHandler extends SortingHitPolicyHandler {
   private static final int MINIMUM_REQUIRED_OUTPUT_VALUES = 1;
 
   /**
-   * Validates the outputs of the decision table for adherence to the "Priority" hit policy.
-   * Specifically, this method ensures that at least one output value is present in the
-   * decision table outputs. If the validation fails, an exception is thrown.
+   * Validates the outputs of the decision table for adherence to the PRIORITY hit policy.
+   *
+   * <p>The PRIORITY hit policy requires at least one output value to be defined in the
+   * decision table outputs. This validation ensures that the priority comparison can be
+   * performed based on the output value definitions. If no output values are defined,
+   * priority cannot be determined, and an exception is thrown.</p>
    *
    * @param matchingRules the list of decision rules that matched, which may be used for
    *                      validation or further processing
@@ -62,7 +78,7 @@ public final class PriorityHitPolicyHandler extends SortingHitPolicyHandler {
 
   /**
    * Validates whether the number of output values in the decision table meets the minimum
-   * required for the "Priority" hit policy. If the number of output values is less than
+   * required for the PRIORITY hit policy. If the number of output values is less than
    * the required minimum, an exception is thrown.
    *
    * @param outputValuesCount the count of output values in the decision table
@@ -76,8 +92,12 @@ public final class PriorityHitPolicyHandler extends SortingHitPolicyHandler {
   }
 
   /**
-   * Evaluates the decision rules using the "Priority" hit policy and returns the highest
+   * Evaluates the decision rules using the PRIORITY hit policy and returns the highest
    * priority rule among the matching rules.
+   *
+   * <p>The ruleComparator determines priority based on the output value order defined in
+   * the decision table. The rule with the minimum comparator value (highest priority) is
+   * selected. Empty streams are already handled by the parent class validation logic.</p>
    *
    * @param matchingRulesStream a stream of decision rules that match the evaluation criteria
    * @param ruleComparator a comparator used to determine the highest priority rule among the matching rules
@@ -108,9 +128,11 @@ public final class PriorityHitPolicyHandler extends SortingHitPolicyHandler {
   }
 
   /**
-   * Retrieves the {@link HitPolicyEntry} associated with this handler.
+   * Retrieves the hit policy entry associated with this handler.
+   * The hit policy entry represents the specific hit policy and optional aggregator
+   * used for evaluating decision tables.
    *
-   * @return the hit policy entry defined for this handler.
+   * @return the hit policy entry defining the PRIORITY hit policy (without aggregator)
    */
   @Override
   public HitPolicyEntry getHitPolicyEntry() {
@@ -118,12 +140,12 @@ public final class PriorityHitPolicyHandler extends SortingHitPolicyHandler {
   }
 
   /**
-   * Returns a string representation of the PriorityHitPolicyHandler object.
+   * Returns a string representation of the PriorityHitPolicyHandler.
    *
-   * @return a string describing the PriorityHitPolicyHandler instance
+   * @return a string that represents this handler instance with its hit policy
    */
   @Override
   public String toString() {
-    return "PriorityHitPolicyHandler{}";
+    return "PriorityHitPolicyHandler{hitPolicy=" + HIT_POLICY.getHitPolicy() + "}";
   }
 }

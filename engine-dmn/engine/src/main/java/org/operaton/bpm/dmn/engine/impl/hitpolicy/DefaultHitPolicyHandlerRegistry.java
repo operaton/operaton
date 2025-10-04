@@ -24,33 +24,103 @@ import org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandlerRegistr
 import org.operaton.bpm.model.dmn.BuiltinAggregator;
 import org.operaton.bpm.model.dmn.HitPolicy;
 
+/**
+ * Default implementation of the {@link DmnHitPolicyHandlerRegistry} that provides
+ * pre-configured handlers for all standard DMN 1.3 hit policies.
+ *
+ * <p>This registry contains handlers for:</p>
+ * <ul>
+ *   <li><strong>Single Hit Policies:</strong>
+ *     <ul>
+ *       <li>UNIQUE - Only one rule can match, enforced at evaluation time</li>
+ *       <li>FIRST - Returns the first matching rule in table order</li>
+ *       <li>PRIORITY - Returns the highest-priority rule based on output values</li>
+ *       <li>ANY - Returns any matching rule (all must have equal outputs)</li>
+ *     </ul>
+ *   </li>
+ *   <li><strong>Multiple Hit Policies:</strong>
+ *     <ul>
+ *       <li>RULE_ORDER - Returns all matching rules in table order</li>
+ *       <li>OUTPUT_ORDER - Returns all matching rules sorted by output values</li>
+ *       <li>COLLECT - Returns all matching rules without specific ordering</li>
+ *     </ul>
+ *   </li>
+ *   <li><strong>Aggregation Functions (COLLECT only):</strong>
+ *     <ul>
+ *       <li>COUNT - Counts the number of matching rules</li>
+ *       <li>SUM - Sums numeric output values</li>
+ *       <li>MIN - Returns the minimum numeric output value</li>
+ *       <li>MAX - Returns the maximum numeric output value</li>
+ *     </ul>
+ *   </li>
+ * </ul>
+ *
+ * <p><strong>Thread Safety:</strong> This implementation uses a static shared map for handlers.
+ * While reads are thread-safe, adding handlers via {@link #addHandler} should be synchronized
+ * externally if done concurrently.</p>
+ *
+ * @see DmnHitPolicyHandlerRegistry
+ * @see DmnHitPolicyHandler
+ */
 public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegistry {
 
   protected static final Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = getDefaultHandlers();
 
+  /**
+   * Creates and initializes the map of default hit policy handlers.
+   *
+   * <p>This method registers all standard DMN 1.3 hit policy handlers according to the
+   * specification. The handlers are instantiated once and reused for all evaluations.</p>
+   *
+   * @return a map containing all default hit policy handler registrations
+   */
   protected static Map<HitPolicyEntry, DmnHitPolicyHandler> getDefaultHandlers() {
     Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = new HashMap<>();
 
+    // Single hit policies
     handlers.put(new HitPolicyEntry(HitPolicy.UNIQUE, null), new UniqueHitPolicyHandler());
     handlers.put(new HitPolicyEntry(HitPolicy.FIRST, null), new FirstHitPolicyHandler());
     handlers.put(new HitPolicyEntry(HitPolicy.ANY, null), new AnyHitPolicyHandler());
+
+    // Multiple hit policies with sorting
     handlers.put(new HitPolicyEntry(HitPolicy.RULE_ORDER, null), new RuleOrderHitPolicyHandler());
+    handlers.put(new HitPolicyEntry(HitPolicy.OUTPUT_ORDER, null), new OutputOrderHitPolicyHandler());
+    handlers.put(new HitPolicyEntry(HitPolicy.PRIORITY, null), new PriorityHitPolicyHandler());
+
+    // COLLECT policy without aggregation
     handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, null), new CollectHitPolicyHandler());
+
+    // COLLECT policy with aggregation
     handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.COUNT), new CollectCountHitPolicyHandler());
     handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.SUM), new CollectSumHitPolicyHandler());
     handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MIN), new CollectMinHitPolicyHandler());
     handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MAX), new CollectMaxHitPolicyHandler());
-    handlers.put(new HitPolicyEntry(HitPolicy.OUTPUT_ORDER, null), new OutputOrderHitPolicyHandler());
-    handlers.put(new HitPolicyEntry(HitPolicy.PRIORITY, null), new PriorityHitPolicyHandler());
 
     return handlers;
   }
 
+  /**
+   * Retrieves the hit policy handler for the specified hit policy and aggregator combination.
+   *
+   * @param hitPolicy the hit policy to look up
+   * @param builtinAggregator the aggregator to look up, or null for policies without aggregation
+   * @return the registered handler, or null if no handler is found for this combination
+   */
   @Override
   public DmnHitPolicyHandler getHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator) {
     return handlers.get(new HitPolicyEntry(hitPolicy, builtinAggregator));
   }
 
+  /**
+   * Registers a custom hit policy handler or replaces an existing one.
+   *
+   * <p><strong>Note:</strong> This modifies the shared static handlers map. If called
+   * concurrently, external synchronization is required.</p>
+   *
+   * @param hitPolicy the hit policy to register the handler for
+   * @param builtinAggregator the aggregator, or null for policies without aggregation
+   * @param hitPolicyHandler the handler implementation to register
+   */
   @Override
   public void addHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator, DmnHitPolicyHandler hitPolicyHandler) {
     handlers.put(new HitPolicyEntry(hitPolicy, builtinAggregator), hitPolicyHandler);

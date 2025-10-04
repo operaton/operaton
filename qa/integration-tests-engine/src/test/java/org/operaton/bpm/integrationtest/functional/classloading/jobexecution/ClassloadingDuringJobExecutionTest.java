@@ -73,7 +73,7 @@ public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformInteg
   }
 
   @Test
-  void shouldLoadBPMNErorClassUsedInGroovyScriptDuringJobExecution() {
+  void shouldLoadBPMNErrorClassUsedInGroovyScriptDuringJobExecution() {
     // given
     String deploymentId = repositoryService.createDeployment()
         .addString("process.bpmn", process)

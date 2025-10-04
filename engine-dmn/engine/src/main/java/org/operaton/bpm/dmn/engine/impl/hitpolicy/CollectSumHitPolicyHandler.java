@@ -54,7 +54,7 @@ import org.operaton.bpm.model.dmn.HitPolicy;
  * @see CollectHitPolicyHandler
  */
 public class CollectSumHitPolicyHandler extends AbstractCollectNumberHitPolicyHandler {
-  protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.SUM);
+  private static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.SUM);
 
   /**
    * Retrieves the hit policy entry for the COLLECT SUM hit policy.

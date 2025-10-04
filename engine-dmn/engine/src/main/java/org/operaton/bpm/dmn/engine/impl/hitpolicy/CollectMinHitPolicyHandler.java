@@ -58,7 +58,7 @@ import org.operaton.bpm.model.dmn.HitPolicy;
  * @see CollectHitPolicyHandler
  */
 public class CollectMinHitPolicyHandler extends AbstractCollectNumberHitPolicyHandler {
-  protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MIN);
+  private static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MIN);
 
   /**
    * Retrieves the hit policy entry for the COLLECT MIN hit policy.

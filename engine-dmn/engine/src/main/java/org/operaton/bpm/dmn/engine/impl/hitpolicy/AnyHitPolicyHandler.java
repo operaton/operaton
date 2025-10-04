@@ -19,6 +19,7 @@ package org.operaton.bpm.dmn.engine.impl.hitpolicy;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionTableEvaluationEvent;
 import org.operaton.bpm.dmn.engine.delegate.DmnEvaluatedDecisionRule;
@@ -63,7 +64,7 @@ import org.operaton.bpm.model.dmn.HitPolicy;
 public class AnyHitPolicyHandler implements DmnHitPolicyHandler {
 
   public static final DmnHitPolicyLogger LOG = DmnLogger.HIT_POLICY_LOGGER;
-  protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.ANY, null);
+  private static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.ANY, null);
 
   /**
    * Retrieves the hit policy entry for the ANY hit policy.
@@ -93,7 +94,9 @@ public class AnyHitPolicyHandler implements DmnHitPolicyHandler {
     if (!matchingRules.isEmpty()) {
       if (allOutputsAreEqual(matchingRules)) {
         DmnEvaluatedDecisionRule firstMatchingRule = matchingRules.get(0);
-        ((DmnDecisionTableEvaluationEventImpl) decisionTableEvaluationEvent).setMatchingRules(Collections.singletonList(firstMatchingRule));
+        if (decisionTableEvaluationEvent instanceof DmnDecisionTableEvaluationEventImpl impl) {
+          impl.setMatchingRules(Collections.singletonList(firstMatchingRule));
+        }
       } else {
         throw LOG.anyHitPolicyRequiresThatAllOutputsAreEqual(matchingRules);
       }
@@ -105,9 +108,9 @@ public class AnyHitPolicyHandler implements DmnHitPolicyHandler {
   /**
    * Validates that all matching rules have identical output values.
    *
-   * <p>This method compares the output entries of all matching rules. The comparison
-   * uses the {@link Map#equals} method, which checks both keys (output names) and
-   * values (output values) for equality.</p>
+   * <p>This method compares the output entries of all matching rules using {@link Objects#equals},
+   * which properly handles null values and delegates to the {@link Map#equals} method for
+   * non-null values.</p>
    *
    * <p><strong>Edge Cases:</strong></p>
    * <ul>
@@ -121,17 +124,10 @@ public class AnyHitPolicyHandler implements DmnHitPolicyHandler {
    */
   protected boolean allOutputsAreEqual(List<DmnEvaluatedDecisionRule> matchingRules) {
     Map<String, DmnEvaluatedOutput> firstOutputEntries = matchingRules.get(0).getOutputEntries();
-    if (firstOutputEntries == null) {
-      for (int i = 1; i < matchingRules.size(); i++) {
-        if (matchingRules.get(i).getOutputEntries() != null) {
-          return false;
-        }
-      }
-    } else {
-      for (int i = 1; i < matchingRules.size(); i++) {
-        if (!firstOutputEntries.equals(matchingRules.get(i).getOutputEntries())) {
-          return false;
-        }
+
+    for (int i = 1; i < matchingRules.size(); i++) {
+      if (!Objects.equals(firstOutputEntries, matchingRules.get(i).getOutputEntries())) {
+        return false;
       }
     }
     return true;

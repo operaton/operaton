@@ -60,7 +60,7 @@ import org.operaton.bpm.model.dmn.HitPolicy;
  * @see AbstractCollectNumberHitPolicyHandler
  */
 public class CollectHitPolicyHandler implements DmnHitPolicyHandler {
-  protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, null);
+  private static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, null);
 
   /**
    * Retrieves the hit policy entry for the COLLECT hit policy without aggregation.

@@ -54,7 +54,8 @@ import org.operaton.bpm.model.dmn.HitPolicy;
 public class UniqueHitPolicyHandler implements DmnHitPolicyHandler {
 
   public static final DmnHitPolicyLogger LOG = DmnLogger.HIT_POLICY_LOGGER;
-  protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.UNIQUE, null);
+  private static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.UNIQUE, null);
+  private static final int MAX_ALLOWED_MATCHES = 1;
 
   /**
    * Applies the UNIQUE hit policy logic to the evaluation event.
@@ -71,7 +72,7 @@ public class UniqueHitPolicyHandler implements DmnHitPolicyHandler {
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     List<DmnEvaluatedDecisionRule> matchingRules = decisionTableEvaluationEvent.getMatchingRules();
 
-    if (matchingRules.size() < 2) {
+    if (matchingRules.size() <= MAX_ALLOWED_MATCHES) {
       return decisionTableEvaluationEvent;
     }
     else {

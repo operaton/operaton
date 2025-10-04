@@ -58,7 +58,7 @@ import org.operaton.bpm.model.dmn.HitPolicy;
  * @see CollectHitPolicyHandler
  */
 public class CollectMaxHitPolicyHandler extends AbstractCollectNumberHitPolicyHandler {
-  protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MAX);
+  private static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MAX);
 
   /**
    * Retrieves the hit policy entry for the COLLECT MAX hit policy.

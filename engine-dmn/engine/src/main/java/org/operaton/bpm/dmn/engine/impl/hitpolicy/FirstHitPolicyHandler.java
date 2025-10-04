@@ -53,7 +53,7 @@ import org.operaton.bpm.model.dmn.HitPolicy;
  * @see PriorityHitPolicyHandler
  */
 public class FirstHitPolicyHandler implements DmnHitPolicyHandler {
-  protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.FIRST, null);
+  private static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.FIRST, null);
 
   /**
    * Applies the FIRST hit policy logic to the evaluation event.
@@ -68,7 +68,9 @@ public class FirstHitPolicyHandler implements DmnHitPolicyHandler {
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     if (!decisionTableEvaluationEvent.getMatchingRules().isEmpty()) {
       DmnEvaluatedDecisionRule firstMatchedRule = decisionTableEvaluationEvent.getMatchingRules().get(0);
-      ((DmnDecisionTableEvaluationEventImpl) decisionTableEvaluationEvent).setMatchingRules(Collections.singletonList(firstMatchedRule));
+      if (decisionTableEvaluationEvent instanceof DmnDecisionTableEvaluationEventImpl impl) {
+        impl.setMatchingRules(Collections.singletonList(firstMatchedRule));
+      }
     }
     return decisionTableEvaluationEvent;
   }

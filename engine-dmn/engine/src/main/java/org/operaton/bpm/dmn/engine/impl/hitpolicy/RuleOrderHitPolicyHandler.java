@@ -52,7 +52,7 @@ import org.operaton.bpm.model.dmn.HitPolicy;
  */
 public class RuleOrderHitPolicyHandler implements DmnHitPolicyHandler {
 
-  protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.RULE_ORDER, null);
+  private static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.RULE_ORDER, null);
 
   /**
    * Retrieves the hit policy entry for the RULE_ORDER hit policy.

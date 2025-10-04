@@ -9,7 +9,7 @@
     <module name="java.sql" />
     <module name="jdk.unsupported" />
     <module name="sun.jdk" />
-    <module name="org.graalvm.sdk.graal-sdk" services="export" export="true" />
-    <module name="org.graalvm.shadowed.icu4j" />
+    <module name="org.graalvm.truffle.truffle-runtime" export="true"/>
+    <module name="org.graalvm.polyglot.polyglot" export="true"/>
   </dependencies>
 </module>

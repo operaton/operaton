@@ -10,8 +10,5 @@
     <module name="sun.jdk" />
     <module name="org.operaton.spin.operaton-spin-core" />
     <module name="org.graalvm.regex.regex" services="export" export="true" />
-    <module name="org.graalvm.truffle.truffle-api" services="export" export="true" />
-    <module name="org.graalvm.truffle.truffle-runtime" services="export" export="true" />
-    <module name="org.graalvm.shadowed.icu4j" />
   </dependencies>
 </module>

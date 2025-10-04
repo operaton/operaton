@@ -1,0 +1,15 @@
+chore(engine-dmn): format DMN test files with consistent XML indentation
+
+Format all DMN test files in hitpolicy directories with consistent XML
+formatting to improve readability and maintainability.
+
+Changes:
+- Format 26 DMN files in engine/src/test/resources/org/operaton/bpm/dmn/engine/hitpolicy
+- Format 10 DMN files in engine/src/test/resources/org/operaton/bpm/dmn/engine/impl/hitpolicy
+- Apply consistent 2-space indentation throughout all files
+- Ensure proper XML declaration and newline at end of file
+- Normalize namespace prefixes for consistency
+
+All files maintain their original functionality and content while
+following consistent XML formatting standards.
+

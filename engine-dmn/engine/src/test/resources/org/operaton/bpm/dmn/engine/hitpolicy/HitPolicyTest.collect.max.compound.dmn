@@ -1,59 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
-             id="definitions"
-             expressionLanguage="juel"
-             name="operaton"
-             namespace="http://operaton.org/schema/1.0/dmn">
-  <decision id="decision" name="decision">
-    <decisionTable id="decisionTable" hitPolicy="COLLECT" aggregation="MAX">
-      <input id="input" label="Input">
-        <inputExpression/>
-      </input>
-      <output id="output1" label="Output 1" name="out1" />
-      <output id="output2" label="Output 2" name="out2" />
-      <output id="output3" label="Output 3" name="out3" />
-      <rule id="rule1">
-        <inputEntry id="inputEntry1">
-          <text>${input1}</text>
-        </inputEntry>
-        <outputEntry id="outputEntry11">
-          <text>${output1}</text>
-        </outputEntry>
-        <outputEntry id="outputEntry21">
-          <text>${output1}</text>
-        </outputEntry>
-        <outputEntry id="outputEntry31">
-          <text>${output1}</text>
-        </outputEntry>
-      </rule>
-      <rule id="rule2">
-        <inputEntry id="inputEntry2">
-          <text>${input2}</text>
-        </inputEntry>
-        <outputEntry id="outputEntry12">
-          <text>${output2}</text>
-        </outputEntry>
-        <outputEntry id="outputEntry22">
-          <text>${output2}</text>
-        </outputEntry>
-        <outputEntry id="outputEntry32">
-          <text>${output2}</text>
-        </outputEntry>
-      </rule>
-      <rule id="rule3">
-        <inputEntry id="inputEntry3">
-          <text>${input3}</text>
-        </inputEntry>
-        <outputEntry id="outputEntry13">
-          <text>${output3}</text>
-        </outputEntry>
-        <outputEntry id="outputEntry23">
-          <text>${output3}</text>
-        </outputEntry>
-        <outputEntry id="outputEntry33">
-          <text>${output3}</text>
-        </outputEntry>
-      </rule>
-    </decisionTable>
-  </decision>
-</definitions>
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:definitions xmlns:ns0="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="definitions" expressionLanguage="juel" name="operaton" namespace="http://operaton.org/schema/1.0/dmn">
+  <ns0:decision id="decision" name="decision">
+    <ns0:decisionTable id="decisionTable" hitPolicy="COLLECT" aggregation="MAX">
+      <ns0:input id="input" label="Input">
+        <ns0:inputExpression />
+      </ns0:input>
+      <ns0:output id="output1" label="Output 1" name="out1" />
+      <ns0:output id="output2" label="Output 2" name="out2" />
+      <ns0:output id="output3" label="Output 3" name="out3" />
+      <ns0:rule id="rule1">
+        <ns0:inputEntry id="inputEntry1">
+          <ns0:text>${input1}</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry id="outputEntry11">
+          <ns0:text>${output1}</ns0:text>
+        </ns0:outputEntry>
+        <ns0:outputEntry id="outputEntry21">
+          <ns0:text>${output1}</ns0:text>
+        </ns0:outputEntry>
+        <ns0:outputEntry id="outputEntry31">
+          <ns0:text>${output1}</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule2">
+        <ns0:inputEntry id="inputEntry2">
+          <ns0:text>${input2}</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry id="outputEntry12">
+          <ns0:text>${output2}</ns0:text>
+        </ns0:outputEntry>
+        <ns0:outputEntry id="outputEntry22">
+          <ns0:text>${output2}</ns0:text>
+        </ns0:outputEntry>
+        <ns0:outputEntry id="outputEntry32">
+          <ns0:text>${output2}</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule3">
+        <ns0:inputEntry id="inputEntry3">
+          <ns0:text>${input3}</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry id="outputEntry13">
+          <ns0:text>${output3}</ns0:text>
+        </ns0:outputEntry>
+        <ns0:outputEntry id="outputEntry23">
+          <ns0:text>${output3}</ns0:text>
+        </ns0:outputEntry>
+        <ns0:outputEntry id="outputEntry33">
+          <ns0:text>${output3}</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+    </ns0:decisionTable>
+  </ns0:decision>
+</ns0:definitions>

@@ -18,6 +18,8 @@ package org.operaton.bpm.dmn.engine.impl.hitpolicy;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandler;
 import org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandlerRegistry;
@@ -55,16 +57,16 @@ import org.operaton.bpm.model.dmn.HitPolicy;
  *   </li>
  * </ul>
  *
- * <p><strong>Thread Safety:</strong> This implementation uses a static shared map for handlers.
- * While reads are thread-safe, adding handlers via {@link #addHandler} should be synchronized
- * externally if done concurrently.</p>
+ * <p><strong>Thread Safety:</strong> This implementation uses a {@link ConcurrentHashMap} for thread-safe
+ * handler registration and retrieval. Multiple threads can safely call {@link #getHandler} and
+ * {@link #addHandler} concurrently.</p>
  *
  * @see DmnHitPolicyHandlerRegistry
  * @see DmnHitPolicyHandler
  */
 public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegistry {
 
-  protected static final Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = getDefaultHandlers();
+  protected static final Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = new ConcurrentHashMap<>(getDefaultHandlers());
 
   /**
    * Creates and initializes the map of default hit policy handlers.
@@ -75,36 +77,37 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
    * @return a map containing all default hit policy handler registrations
    */
   protected static Map<HitPolicyEntry, DmnHitPolicyHandler> getDefaultHandlers() {
-    Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = new HashMap<>();
+    Map<HitPolicyEntry, DmnHitPolicyHandler> defaultHandlers = new HashMap<>();
 
     // Single hit policies
-    handlers.put(new HitPolicyEntry(HitPolicy.UNIQUE, null), new UniqueHitPolicyHandler());
-    handlers.put(new HitPolicyEntry(HitPolicy.FIRST, null), new FirstHitPolicyHandler());
-    handlers.put(new HitPolicyEntry(HitPolicy.ANY, null), new AnyHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.UNIQUE, null), new UniqueHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.FIRST, null), new FirstHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.ANY, null), new AnyHitPolicyHandler());
 
     // Multiple hit policies with sorting
-    handlers.put(new HitPolicyEntry(HitPolicy.RULE_ORDER, null), new RuleOrderHitPolicyHandler());
-    handlers.put(new HitPolicyEntry(HitPolicy.OUTPUT_ORDER, null), new OutputOrderHitPolicyHandler());
-    handlers.put(new HitPolicyEntry(HitPolicy.PRIORITY, null), new PriorityHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.RULE_ORDER, null), new RuleOrderHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.OUTPUT_ORDER, null), new OutputOrderHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.PRIORITY, null), new PriorityHitPolicyHandler());
 
     // COLLECT policy without aggregation
-    handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, null), new CollectHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.COLLECT, null), new CollectHitPolicyHandler());
 
     // COLLECT policy with aggregation
-    handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.COUNT), new CollectCountHitPolicyHandler());
-    handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.SUM), new CollectSumHitPolicyHandler());
-    handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MIN), new CollectMinHitPolicyHandler());
-    handlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MAX), new CollectMaxHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.COUNT), new CollectCountHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.SUM), new CollectSumHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MIN), new CollectMinHitPolicyHandler());
+    defaultHandlers.put(new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.MAX), new CollectMaxHitPolicyHandler());
 
-    return handlers;
+    return defaultHandlers;
   }
 
   /**
    * Retrieves the hit policy handler for the specified hit policy and aggregator combination.
    *
-   * @param hitPolicy the hit policy to look up
+   * @param hitPolicy the hit policy to look up, must not be null
    * @param builtinAggregator the aggregator to look up, or null for policies without aggregation
    * @return the registered handler, or null if no handler is found for this combination
+   * @throws NullPointerException if hitPolicy is null
    */
   @Override
   public DmnHitPolicyHandler getHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator) {
@@ -114,15 +117,17 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
   /**
    * Registers a custom hit policy handler or replaces an existing one.
    *
-   * <p><strong>Note:</strong> This modifies the shared static handlers map. If called
-   * concurrently, external synchronization is required.</p>
+   * <p><strong>Thread Safety:</strong> This method is thread-safe and can be called concurrently
+   * from multiple threads.</p>
    *
-   * @param hitPolicy the hit policy to register the handler for
+   * @param hitPolicy the hit policy to register the handler for, must not be null
    * @param builtinAggregator the aggregator, or null for policies without aggregation
-   * @param hitPolicyHandler the handler implementation to register
+   * @param hitPolicyHandler the handler implementation to register, must not be null
+   * @throws NullPointerException if hitPolicy or hitPolicyHandler is null
    */
   @Override
   public void addHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator, DmnHitPolicyHandler hitPolicyHandler) {
+    Objects.requireNonNull(hitPolicyHandler, "hitPolicyHandler must not be null");
     handlers.put(new HitPolicyEntry(hitPolicy, builtinAggregator), hitPolicyHandler);
   }
 

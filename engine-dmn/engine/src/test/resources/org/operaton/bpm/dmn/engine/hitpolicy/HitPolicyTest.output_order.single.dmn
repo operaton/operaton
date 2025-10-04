@@ -1,64 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
-xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_1215v40" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
-   <decision name="Approval Status" id="_3b2953a3-745f-4d2e-b55d-75c8c5ae653c">
-        <variable typeRef="tApprovalStatus_4" name="Approval Status" id="_3cf2bd40-2c83-4e6f-8039-81b391eebf2d"/>
-        <informationRequirement id="_503ea582-3702-418d-8a71-354cf8cb7729">
-            <requiredInput href="#_41effb45-b3c4-46ac-b1da-122b3e428a98"/>
-        </informationRequirement>
-        <decisionTable hitPolicy="OUTPUT ORDER" outputLabel="Approval Status" typeRef="tApprovalStatus_4" id="_e7995f4c-0575-4579-8119-aa4f5cb262f6">
-            <input id="_f64e79ef-12df-471a-8830-18dd1060e8f0">
-                <inputExpression typeRef="number">
-                    <text>Age</text>
-                </inputExpression>
-            </input>
-            <output id="_c8adc49f-998f-48b8-bd79-746d9c3d25b3">
-                <outputValues>
-                    <text>"Approved","Declined"</text>
-                </outputValues>
-            </output>
-            <rule id="_d720490a-c6c7-4e48-b003-44d99720c632">
-                <inputEntry id="_d720490a-c6c7-4e48-b003-44d99720c632-0">
-                    <text>&gt;=18</text>
-                </inputEntry>
-                <outputEntry id="_d720490a-c6c7-4e48-b003-44d99720c632-3">
-                    <text>"Approved"</text>
-                </outputEntry>
-            </rule>
-            <rule id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a">
-                <inputEntry id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a-0">
-                    <text>&lt;18</text>
-                </inputEntry>
-                <outputEntry id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a-3">
-                    <text>"Declined"</text>
-                </outputEntry>
-            </rule>
-            <rule id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0">
-                <inputEntry id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0-0">
-                    <text>&gt;=0</text>
-                </inputEntry>
-                <outputEntry id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0-3">
-                    <text>"Approved"</text>
-                </outputEntry>
-            </rule>
-        </decisionTable>
-    </decision>
-    <inputData name="Age" id="_41effb45-b3c4-46ac-b1da-122b3e428a98">
-        <variable typeRef="number" name="Age" id="_78044e5c-314d-4029-8a54-573107f67895"/>
-    </inputData>
-    <dmndi:DMNDI>
-        <dmndi:DMNDiagram id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_D1">
-            <dmndi:Size height="650.0" width="650.0"/>
-            <dmndi:DMNShape dmnElementRef="_3b2953a3-745f-4d2e-b55d-75c8c5ae653c" id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_s1">
-                <dc:Bounds height="61.0" width="154.0" x="150.0" y="150.0"/>
-            </dmndi:DMNShape>
-            <dmndi:DMNShape dmnElementRef="_41effb45-b3c4-46ac-b1da-122b3e428a98" id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_s2">
-                <dc:Bounds height="60.0" width="153.0" x="151.0" y="331.0"/>
-            </dmndi:DMNShape>
-            <dmndi:DMNEdge dmnElementRef="_503ea582-3702-418d-8a71-354cf8cb7729" id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_e1">
-                <di:waypoint x="227.0" y="331.0"/>
-                <di:waypoint x="227.0" y="211.0"/>
-            </dmndi:DMNEdge>
-        </dmndi:DMNDiagram>
-    </dmndi:DMNDI>
-</definitions>
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:definitions xmlns:ns0="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:ns1="http://camunda.org/schema/modeler/1.0" xmlns:ns2="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:ns3="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:ns4="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1215v40" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.34.0" ns1:executionPlatform="Camunda Platform" ns1:executionPlatformVersion="7.23.0">
+  <ns0:decision name="Approval Status" id="_3b2953a3-745f-4d2e-b55d-75c8c5ae653c">
+    <ns0:variable typeRef="tApprovalStatus_4" name="Approval Status" id="_3cf2bd40-2c83-4e6f-8039-81b391eebf2d" />
+    <ns0:informationRequirement id="_503ea582-3702-418d-8a71-354cf8cb7729">
+      <ns0:requiredInput href="#_41effb45-b3c4-46ac-b1da-122b3e428a98" />
+    </ns0:informationRequirement>
+    <ns0:decisionTable hitPolicy="OUTPUT ORDER" outputLabel="Approval Status" typeRef="tApprovalStatus_4" id="_e7995f4c-0575-4579-8119-aa4f5cb262f6">
+      <ns0:input id="_f64e79ef-12df-471a-8830-18dd1060e8f0">
+        <ns0:inputExpression typeRef="number">
+          <ns0:text>Age</ns0:text>
+        </ns0:inputExpression>
+      </ns0:input>
+      <ns0:output id="_c8adc49f-998f-48b8-bd79-746d9c3d25b3">
+        <ns0:outputValues>
+          <ns0:text>"Approved","Declined"</ns0:text>
+        </ns0:outputValues>
+      </ns0:output>
+      <ns0:rule id="_d720490a-c6c7-4e48-b003-44d99720c632">
+        <ns0:inputEntry id="_d720490a-c6c7-4e48-b003-44d99720c632-0">
+          <ns0:text>&gt;=18</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry id="_d720490a-c6c7-4e48-b003-44d99720c632-3">
+          <ns0:text>"Approved"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a">
+        <ns0:inputEntry id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a-0">
+          <ns0:text>&lt;18</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry id="_8e20e9ca-e276-4c26-b09a-52fe55f7b18a-3">
+          <ns0:text>"Declined"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0">
+        <ns0:inputEntry id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0-0">
+          <ns0:text>&gt;=0</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry id="_784c2e00-6d8d-4739-8aff-4bd810e4f1d0-3">
+          <ns0:text>"Approved"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+    </ns0:decisionTable>
+  </ns0:decision>
+  <ns0:inputData name="Age" id="_41effb45-b3c4-46ac-b1da-122b3e428a98">
+    <ns0:variable typeRef="number" name="Age" id="_78044e5c-314d-4029-8a54-573107f67895" />
+  </ns0:inputData>
+  <ns2:DMNDI>
+    <ns2:DMNDiagram id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_D1">
+      <ns2:Size height="650.0" width="650.0" />
+      <ns2:DMNShape dmnElementRef="_3b2953a3-745f-4d2e-b55d-75c8c5ae653c" id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_s1">
+        <ns3:Bounds height="61.0" width="154.0" x="150.0" y="150.0" />
+      </ns2:DMNShape>
+      <ns2:DMNShape dmnElementRef="_41effb45-b3c4-46ac-b1da-122b3e428a98" id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_s2">
+        <ns3:Bounds height="60.0" width="153.0" x="151.0" y="331.0" />
+      </ns2:DMNShape>
+      <ns2:DMNEdge dmnElementRef="_503ea582-3702-418d-8a71-354cf8cb7729" id="_791b8e95-b7a7-40e7-9dd1-5ff12364f340_e1">
+        <ns4:waypoint x="227.0" y="331.0" />
+        <ns4:waypoint x="227.0" y="211.0" />
+      </ns2:DMNEdge>
+    </ns2:DMNDiagram>
+  </ns2:DMNDI>
+</ns0:definitions>

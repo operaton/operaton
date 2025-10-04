@@ -8,7 +8,8 @@
     <module name="java.logging" />
     <module name="jdk.unsupported" />
     <module name="sun.jdk" />
-    <module name="org.graalvm.sdk.collections" />
-    <module name="org.graalvm.sdk.nativeimage" />
+    <module name="org.graalvm.sdk.collections" export="true"/>
+    <module name="org.graalvm.sdk.nativeimage" export="true"/>
+    <module name="org.graalvm.shadowed.icu4j" export="true"/>
   </dependencies>
 </module>

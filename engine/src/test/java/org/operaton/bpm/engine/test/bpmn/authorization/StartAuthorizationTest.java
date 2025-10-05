@@ -205,17 +205,10 @@ class StartAuthorizationTest {
   }
 
   private boolean containsUserOrGroup(String userId, String groupId, List<IdentityLink> links) {
-    boolean found = false;
-    for (IdentityLink identityLink : links) {
-      if(userId != null && userId.equals(identityLink.getUserId())) {
-        found = true;
-        break;
-      } else if(groupId != null && groupId.equals(identityLink.getGroupId())) {
-        found = true;
-        break;
-      }
-    }
-    return found;
+    return links.stream().anyMatch(identityLink ->
+      (userId != null && userId.equals(identityLink.getUserId())) ||
+      (groupId != null && groupId.equals(identityLink.getGroupId()))
+    );
   }
 
   @Deployment

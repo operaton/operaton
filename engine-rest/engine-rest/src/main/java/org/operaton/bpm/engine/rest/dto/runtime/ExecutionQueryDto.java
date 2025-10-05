@@ -276,6 +276,7 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
     case SORT_BY_DEFINITION_KEY_VALUE -> query.orderByProcessDefinitionKey();
     case SORT_BY_DEFINITION_ID_VALUE -> query.orderByProcessDefinitionId();
     case SORT_BY_TENANT_ID -> query.orderByTenantId();
+    default -> throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid sort operator specified: " + sortBy);
     }
   }
 }

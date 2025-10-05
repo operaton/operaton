@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.util;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -44,9 +45,10 @@ public final class StringUtil {
 
   /**
    * Checks whether a {@link String} seams to be an expression or not
-   *
+   * <p>
    * Note: In most cases you should check for composite expressions. See
    * {@link #isCompositeExpression(String, ExpressionManager)} for more information.
+   * </p>
    *
    * @param text the text to check
    * @return true if the text seams to be an expression false otherwise
@@ -60,10 +62,10 @@ public final class StringUtil {
    * Checks whether a {@link String} seams to be a composite expression or not. In contrast to an eval expression
    * is the composite expression also allowed to consist of a combination of literal and eval expressions, e.g.,
    * "Welcome ${customer.name} to our site".
-   *
+   * <p>
    * Note: If you just want to allow eval expression, then the expression must always start with "#{" or "${".
    * Use {@link #isExpression(String)} to conduct these kind of checks.
-   *
+   * </p>
    */
   public static boolean isCompositeExpression(String text, ExpressionManager expressionManager) {
     return !expressionManager.createExpression(text).isLiteralText();
@@ -71,7 +73,7 @@ public final class StringUtil {
 
   public static String[] split(String text, String regex) {
     if (text == null) {
-      return null;
+      return new String[0];
     }
     else if (regex == null) {
       return new String[] { text };
@@ -106,7 +108,9 @@ public final class StringUtil {
   public static String fromBytes(byte[] bytes) {
     EnsureUtil.ensureActiveCommandContext("StringUtil.fromBytes");
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    return fromBytes(bytes, processEngineConfiguration.getProcessEngine());
+    ProcessEngineImpl processEngine = processEngineConfiguration.getProcessEngine();
+    Objects.requireNonNull(processEngine);
+    return fromBytes(bytes, processEngine);
   }
 
   /**
@@ -133,7 +137,9 @@ public final class StringUtil {
   public static byte[] toByteArray(String string) {
     EnsureUtil.ensureActiveCommandContext("StringUtil.toByteArray");
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    return toByteArray(string, processEngineConfiguration.getProcessEngine());
+    ProcessEngineImpl processEngine = processEngineConfiguration.getProcessEngine();
+    Objects.requireNonNull(processEngine);
+    return toByteArray(string, processEngine);
   }
 
   /**

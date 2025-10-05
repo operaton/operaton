@@ -9,6 +9,7 @@
     <module name="sun.jdk" />
     <module name="org.operaton.spin.operaton-spin-core" />
     <module name="org.graalvm.polyglot.polyglot" />
+    <module name="org.graalvm.js.js-language" />
     <module name="org.graalvm.sdk.collections" />
     <module name="org.graalvm.sdk.word" />
   </dependencies>

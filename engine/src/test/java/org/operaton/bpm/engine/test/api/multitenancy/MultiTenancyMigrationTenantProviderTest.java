@@ -161,10 +161,10 @@ class MultiTenancyMigrationTenantProviderTest {
 
   protected void assertInstanceOfDefinition(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
     assertThat(engineRule.getRuntimeService()
-        .createProcessInstanceQuery()
-        .processInstanceId(processInstance.getId())
-        .processDefinitionId(targetDefinition.getId())
-        .count()).isEqualTo(1);
+      .createProcessInstanceQuery()
+      .processInstanceId(processInstance.getId())
+      .processDefinitionId(targetDefinition.getId())
+      .count()).isOne();
   }
 
   protected ProcessInstance startInstanceForTenant(ProcessDefinition processDefinition, String tenantId) {

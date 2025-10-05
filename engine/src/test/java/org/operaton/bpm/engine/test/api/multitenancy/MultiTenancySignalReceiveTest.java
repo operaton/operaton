@@ -84,7 +84,7 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").withoutTenantId().send();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
     assertThat(query.singleResult().getTenantId()).isNull();
   }
 
@@ -97,8 +97,8 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").tenantId(TENANT_TWO).send();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -108,7 +108,7 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").send();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -118,7 +118,7 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").send();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -132,7 +132,7 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").withoutTenantId().send();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
     assertThat(query.singleResult().getTenantId()).isNull();
   }
 
@@ -148,8 +148,8 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").tenantId(TENANT_TWO).send();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -161,7 +161,7 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").send();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -173,7 +173,7 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").send();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -216,8 +216,8 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").send();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -231,8 +231,8 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").send();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -245,8 +245,8 @@ class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").send();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test

@@ -94,7 +94,7 @@ class MultiTenancyBatchQueryTest {
     assertThat(batches).hasSize(1);
     assertThat(batches.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    assertThat(managementService.createBatchQuery().count()).isEqualTo(1);
+    assertThat(managementService.createBatchQuery().count()).isOne();
 
     identityService.clearAuthentication();
   }
@@ -143,7 +143,7 @@ class MultiTenancyBatchQueryTest {
     assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    assertThat(managementService.createBatchStatisticsQuery().count()).isEqualTo(1);
+    assertThat(managementService.createBatchStatisticsQuery().count()).isOne();
 
     identityService.clearAuthentication();
   }

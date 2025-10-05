@@ -557,7 +557,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
   protected void assertHistoricBatchExists() {
     if (testHelper.isHistoryLevelFull()) {
-      assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1);
+      assertThat(historyService.createHistoricBatchQuery().count()).isOne();
     }
   }
 

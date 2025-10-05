@@ -340,7 +340,7 @@ class MultiTenancyFormServiceCmdsTenantCheckTest {
 
     runtimeService.startProcessInstanceById(processDefinitionId);
 
-    assertThat(taskService.createTaskQuery().processDefinitionId(processDefinitionId).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processDefinitionId(processDefinitionId).count()).isOne();
 
     String taskId = taskService.createTaskQuery().processDefinitionId(processDefinitionId).singleResult().getId();
 

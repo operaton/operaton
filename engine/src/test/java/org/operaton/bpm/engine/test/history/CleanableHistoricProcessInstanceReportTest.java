@@ -166,7 +166,7 @@ class CleanableHistoricProcessInstanceReportTest {
 
     // then
     assertThat(reportResults).hasSize(1);
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
 
     checkResultNumbers(reportResults.get(0), 10, 10);
   }

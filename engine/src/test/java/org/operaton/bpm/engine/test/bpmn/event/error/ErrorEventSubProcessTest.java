@@ -68,8 +68,8 @@ class ErrorEventSubProcessTest {
     // The process will throw an error event,
     // which is caught and escalated by a User Task
     assertThat(taskService.createTaskQuery()
-        .taskDefinitionKey("taskAfterErrorCatch2") // <!>
-        .count()).as("No tasks found in task list.").isEqualTo(1);
+      .taskDefinitionKey("taskAfterErrorCatch2") // <!>
+      .count()).as("No tasks found in task list.").isOne();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Escalated Task");
 
@@ -304,7 +304,7 @@ class ErrorEventSubProcessTest {
   private void assertThatErrorHasBeenCaught(String procId) {
     // The process will throw an error event,
     // which is caught and escalated by a User Task
-    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isOne();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Escalated Task");
 

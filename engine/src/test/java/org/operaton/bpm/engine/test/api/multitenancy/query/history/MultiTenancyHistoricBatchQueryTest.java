@@ -98,7 +98,7 @@ class MultiTenancyHistoricBatchQueryTest {
     assertThat(batches).hasSize(1);
     assertThat(batches.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricBatchQuery().count()).isOne();
 
     identityService.clearAuthentication();
   }

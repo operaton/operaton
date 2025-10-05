@@ -331,7 +331,7 @@ class UserQueryTest {
       managementService.getTableName(UserEntity.class));
 
     assertThat(identityService.createNativeUserQuery().sql("SELECT * " + fromWhereClauses).parameter("searchPattern", searchPattern).list()).hasSize(1);
-    assertThat(identityService.createNativeUserQuery().sql("SELECT count(*) " + fromWhereClauses).parameter("searchPattern", searchPattern).count()).isEqualTo(1);
+    assertThat(identityService.createNativeUserQuery().sql("SELECT count(*) " + fromWhereClauses).parameter("searchPattern", searchPattern).count()).isOne();
   }
 
   @Test

@@ -121,10 +121,10 @@ class TimerRecalculationTest {
     variables1.put("dueDate", new Date());
 
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables1);
-    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery().executable();
-    assertThat(jobQuery.count()).isEqualTo(1L);
+    assertThat(jobQuery.count()).isOne();
 
     // job duedate can be recalculated, job still exists in runtime
     String jobId = jobQuery.singleResult().getId();

@@ -185,7 +185,7 @@ class AuthorizationServiceTest {
     // save the authorization
     authorizationService.saveAuthorization(authorization);
     // authorization exists
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isOne();
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone
@@ -209,7 +209,7 @@ class AuthorizationServiceTest {
     // save the authorization
     authorizationService.saveAuthorization(authorization);
     // authorization exists
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isOne();
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone

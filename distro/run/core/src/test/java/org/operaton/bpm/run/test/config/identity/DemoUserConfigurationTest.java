@@ -65,7 +65,7 @@ class DemoUserConfigurationTest {
     List<User> userList = userQuery.list();
 
     // then
-    assertThat(userCount).isEqualTo(1);
+    assertThat(userCount).isOne();
     String userId = userList.get(0).getId();
     assertThat(userId).isEqualTo("demo");
     assertThat(identityService.checkPassword(userId, "demo")).isTrue();

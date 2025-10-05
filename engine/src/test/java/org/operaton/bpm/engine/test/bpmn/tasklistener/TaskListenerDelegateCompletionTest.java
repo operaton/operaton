@@ -143,7 +143,7 @@ class TaskListenerDelegateCompletionTest {
     runtimeService.startProcessInstanceByKey("process");
 
     // assume
-    assertThat(taskQuery.count()).isEqualTo(1L);
+    assertThat(taskQuery.count()).isOne();
 
     // when
     ClockUtil.offset(TimeUnit.MINUTES.toMillis(70L));

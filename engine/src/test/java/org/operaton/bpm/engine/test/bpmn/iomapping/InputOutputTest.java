@@ -902,7 +902,7 @@ class InputOutputTest {
     assertThat(runtimeService.getVariable(miExecution.getId(), "loopCounter")).isEqualTo(0);
 
     // input mapping
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isOne();
     assertThat(runtimeService.getVariableLocal(miExecution.getId(), "miCounterValue")).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -915,7 +915,7 @@ class InputOutputTest {
     assertThat(runtimeService.getVariable(miExecution.getId(), "loopCounter")).isEqualTo(1);
 
     // input mapping
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isOne();
     assertThat(runtimeService.getVariableLocal(miExecution.getId(), "miCounterValue")).isEqualTo(2);
 
     task = taskService.createTaskQuery().singleResult();
@@ -939,7 +939,7 @@ class InputOutputTest {
     assertThat(runtimeService.getVariable(miScopeExecution.getId(), "loopCounter")).isEqualTo(0);
 
     // input mapping
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isOne();
     assertThat(runtimeService.getVariableLocal(miScopeExecution.getId(), "miCounterValue")).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -952,7 +952,7 @@ class InputOutputTest {
     assertThat(runtimeService.getVariable(miScopeExecution.getId(), "loopCounter")).isEqualTo(1);
 
     // input mapping
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isOne();
     assertThat(runtimeService.getVariableLocal(miScopeExecution.getId(), "miCounterValue")).isEqualTo(2);
 
     task = taskService.createTaskQuery().singleResult();
@@ -1117,7 +1117,7 @@ class InputOutputTest {
     // then: variable mapped exists
     assertThat(runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count()).isZero();
     assertThat(runtimeService.createVariableInstanceQuery().variableName("localMapped").count()).isZero();
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isOne();
 
     taskService.complete(task.getId());
 
@@ -1161,7 +1161,7 @@ class InputOutputTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskOk");
 
     // then: variable mapped exists
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isOne();
 
     taskService.complete(task.getId());
 
@@ -1210,7 +1210,7 @@ class InputOutputTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskOk");
 
     // then: variable mapped exists
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isOne();
 
     taskService.complete(task.getId());
 

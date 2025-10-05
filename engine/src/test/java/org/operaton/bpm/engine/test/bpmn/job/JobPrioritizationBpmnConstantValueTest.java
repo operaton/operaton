@@ -330,7 +330,7 @@ class JobPrioritizationBpmnConstantValueTest {
     runtimeService.startProcessInstanceByKey("intermediateSignalJobPrioProcess");
 
     // then there is an async job for the signal start event with the priority defined in the BPMN XML
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     Job signalStartJob = managementService.createJobQuery().singleResult();
     assertThat(signalStartJob).isNotNull();
     assertThat(signalStartJob.getPriority()).isEqualTo(4);
@@ -342,7 +342,7 @@ class JobPrioritizationBpmnConstantValueTest {
     runtimeService.startProcessInstanceByKey("miBodyAsyncPriorityProcess");
 
     // then there is a job that has the priority as defined on the activity
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     Job miBodyJob = managementService.createJobQuery().singleResult();
     assertThat(miBodyJob).isNotNull();
     assertThat(miBodyJob.getPriority()).isEqualTo(5);

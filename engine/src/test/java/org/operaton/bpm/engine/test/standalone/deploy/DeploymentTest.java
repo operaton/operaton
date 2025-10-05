@@ -74,7 +74,7 @@ class DeploymentTest {
          .deployWithResult();
 
      engineRule.getRuntimeService().startProcessInstanceByKey("process");
-     assertThat(engineRule.getRuntimeService().createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(engineRule.getRuntimeService().createProcessInstanceQuery().count()).isOne();
 
      engineRule.getRepositoryService().deleteDeployment(deployment.getId(), true);
 

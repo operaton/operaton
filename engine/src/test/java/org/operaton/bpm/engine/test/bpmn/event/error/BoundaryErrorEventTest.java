@@ -751,7 +751,7 @@ class BoundaryErrorEventTest {
   private void assertThatErrorHasBeenCaught(String procId) {
     // The service task will throw an error event,
     // which is caught on the service task boundary
-    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isOne();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Escalated Task");
 
@@ -763,7 +763,7 @@ class BoundaryErrorEventTest {
   private void assertThatExceptionHasBeenCaught(String procId) {
     // The service task will throw an error event,
     // which is caught on the service task boundary
-    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isOne();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Escalated Exception Task");
 

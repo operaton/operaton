@@ -158,8 +158,8 @@ class TaskCandidateTest {
     // and anyone in the management/accountancy group
     assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list()).hasSize(1);
     assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list()).hasSize(1);
-    assertThat(taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateGroup("accountancy").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("accountancy").count()).isOne();
     assertThat(taskService.createTaskQuery().taskCandidateGroup("sales").count()).isZero();
 
     // Gonzo claims the task
@@ -175,9 +175,9 @@ class TaskCandidateTest {
 
     // The task will be visible on the personal task list of Gonzo
     assertThat(taskService
-        .createTaskQuery()
-        .taskAssignee(GONZO)
-        .count()).isEqualTo(1);
+      .createTaskQuery()
+      .taskAssignee(GONZO)
+      .count()).isOne();
 
     // But not on the personal task list of (for example) Kermit
     assertThat(taskService.createTaskQuery().taskAssignee(KERMIT).count()).isZero();

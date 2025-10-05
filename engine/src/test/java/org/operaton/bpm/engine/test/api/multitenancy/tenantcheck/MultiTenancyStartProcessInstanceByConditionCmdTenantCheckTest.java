@@ -92,8 +92,8 @@ class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     ProcessInstanceQuery processInstanceQuery = engineRule.getRuntimeService().createProcessInstanceQuery();
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
-    assertThat(processInstanceQuery.withoutTenantId().count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
+    assertThat(processInstanceQuery.withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -124,7 +124,7 @@ class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     ProcessInstanceQuery processInstanceQuery = engineRule.getRuntimeService().createProcessInstanceQuery();
-    assertThat(processInstanceQuery.tenantIdIn(TENANT_ONE).count()).isEqualTo(1);
+    assertThat(processInstanceQuery.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(processInstanceQuery.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
@@ -155,7 +155,7 @@ class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     ProcessInstanceQuery processInstanceQuery = engineRule.getRuntimeService().createProcessInstanceQuery();
-    assertThat(processInstanceQuery.tenantIdIn(TENANT_ONE).count()).isEqualTo(1);
+    assertThat(processInstanceQuery.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(processInstanceQuery.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
@@ -234,7 +234,7 @@ class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     ProcessInstanceQuery processInstanceQuery = engineRule.getRuntimeService().createProcessInstanceQuery();
-    assertThat(processInstanceQuery.tenantIdIn(TENANT_ONE).count()).isEqualTo(1);
+    assertThat(processInstanceQuery.tenantIdIn(TENANT_ONE).count()).isOne();
 
     EventSubscription eventSubscription = engineRule.getRuntimeService().createEventSubscriptionQuery().singleResult();
     assertThat(eventSubscription.getEventType()).isEqualTo(EventType.CONDITONAL.name());

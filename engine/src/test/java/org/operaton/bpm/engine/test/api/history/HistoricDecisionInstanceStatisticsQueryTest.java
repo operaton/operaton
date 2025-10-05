@@ -178,7 +178,7 @@ class HistoricDecisionInstanceStatisticsQueryTest {
             decisionRequirementsDefinition.getId());
 
     //then
-    assertThat(statisticsQuery.count()).isEqualTo(1L);
+    assertThat(statisticsQuery.count()).isOne();
     assertThat(statisticsQuery.list()).hasSize(1);
     assertThat(statisticsQuery.list().get(0).getEvaluations()).isEqualTo(1);
     assertThat(statisticsQuery.list().get(0).getDecisionDefinitionKey()).isNotNull();
@@ -208,7 +208,7 @@ class HistoricDecisionInstanceStatisticsQueryTest {
             decisionRequirementsDefinition.getId());
 
     //then
-    assertThat(statisticsQuery.count()).isEqualTo(1L);
+    assertThat(statisticsQuery.count()).isOne();
     assertThat(statisticsQuery.list()).hasSize(1);
     assertThat(statisticsQuery.list().get(0).getEvaluations()).isEqualTo(1);
     assertThat(statisticsQuery.list().get(0).getDecisionDefinitionKey()).isNotNull();

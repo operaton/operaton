@@ -83,7 +83,7 @@ public class ManagedJobExecutorTest {
     try {
       String pid = runtimeService.startProcessInstanceByKey("testBusinessProcessScopedWithJobExecutor").getId();
 
-      assertThat(managementService.createJobQuery().processInstanceId(pid).count()).isEqualTo(1L);
+      assertThat(managementService.createJobQuery().processInstanceId(pid).count()).isOne();
 
       executeJobs(pid);
 

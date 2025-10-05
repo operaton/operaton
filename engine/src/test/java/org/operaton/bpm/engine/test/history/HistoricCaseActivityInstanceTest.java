@@ -612,11 +612,11 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     // select with distinct
     assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT DISTINCT * FROM " + tableName).list()).hasSize(4);
 
-    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = '" + instanceId + "'").count()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = '" + instanceId + "'").count()).isOne();
     assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT * FROM " + tableName + " H WHERE H.ID_ = '" + instanceId + "'").list()).hasSize(1);
 
     // use parameters
-    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = #{caseActivityInstanceId}").parameter("caseActivityInstanceId", instanceId).count()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = #{caseActivityInstanceId}").parameter("caseActivityInstanceId", instanceId).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -695,7 +695,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
         .createHistoricCaseActivityInstanceQuery()
         .required();
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
 
     HistoricCaseActivityInstance activityInstance = query.singleResult();
@@ -789,10 +789,10 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
 
     // then
     HistoricCaseActivityInstanceQuery query = historicQuery().caseActivityId("PI_Stage_1");
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     query = historicQuery().caseActivityId("PI_HumanTask_1");
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     query = historicQuery().caseActivityId("PI_HumanTask_2");
     assertThat(query.count()).isEqualTo(2);
@@ -814,7 +814,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     assertThat(query.count()).isEqualTo(2);
 
     query = historicQuery().caseActivityId("PI_Stage_1");
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
   }
 

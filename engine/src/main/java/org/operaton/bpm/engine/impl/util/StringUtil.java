@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
@@ -32,7 +26,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
-import org.operaton.bpm.engine.runtime.ProcessElementInstance;
 
 /**
  * @author Sebastian Menski
@@ -131,22 +124,6 @@ public final class StringUtil {
     return bytes != null ? new String(bytes, charset) : "";
   }
 
-  public static Reader readerFromBytes(byte[] bytes) {
-    EnsureUtil.ensureActiveCommandContext("StringUtil.readerFromBytes");
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-
-    return new InputStreamReader(inputStream, processEngineConfiguration.getDefaultCharset());
-  }
-
-  public static Writer writerForStream(OutputStream outStream) {
-    EnsureUtil.ensureActiveCommandContext("StringUtil.readerFromBytes");
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-
-    return new OutputStreamWriter(outStream, processEngineConfiguration.getDefaultCharset());
-  }
-
-
   /**
    * Gets the bytes from a string using the current process engine's default charset
    *
@@ -187,16 +164,6 @@ public final class StringUtil {
 
   public static String joinDbEntityIds(Collection<? extends DbEntity> dbEntities) {
     return join(new StringIterator<DbEntity>(dbEntities.iterator()) {
-      @Override
-      public String next() {
-        return iterator.next().getId();
-      }
-    });
-  }
-
-  public static String joinProcessElementInstanceIds(Collection<? extends ProcessElementInstance> processElementInstances) {
-    final Iterator<? extends ProcessElementInstance> iterator = processElementInstances.iterator();
-    return join(new StringIterator<ProcessElementInstance>(iterator) {
       @Override
       public String next() {
         return iterator.next().getId();

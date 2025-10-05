@@ -47,10 +47,19 @@ If you want to run a single engine integration test, use `-Dsurefire.includes=**
 ./mvnw -Pengine-integration,tomcat,h2 verify -Dsurefire.includes="**/*Nashorn*" -f qa
 ```
 
-```shell
 ### Running tests with the Maven Wrapper
 
 With `mvnw`, from the root of the project,
 run: `./mvnw clean install -f qa/pom.xml -P${integration-test-id},${application-server-id},${database-id}`
 where `${database-id}` is for example `h2`, `${application-server-id}` is for e.g. `wildfly,wildfly-domain`,
 and `${integration-test-id}` can be either `engine-integration` or `webapps-integration`.
+
+
+### Remote Debugging
+
+To enable remote debugging, modifiy the JVM options in `arquillian.xml`
+
+- `qa/integration-tests-engine/src/test/resources-tomcat/arquillian.xml`
+- `qa/integration-tests-engine/src/test/resources-wildfly/arquillian.xml`
+
+Then create a remote debug configuration in your IDE for port `8787`.

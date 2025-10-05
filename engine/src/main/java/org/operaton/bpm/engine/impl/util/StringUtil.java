@@ -128,7 +128,7 @@ public final class StringUtil {
   public static String fromBytes(byte[] bytes, ProcessEngine processEngine) {
     ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
     Charset charset = processEngineConfiguration.getDefaultCharset();
-    return bytes != null ? new String(bytes, charset) : new String();
+    return bytes != null ? new String(bytes, charset) : "";
   }
 
   public static Reader readerFromBytes(byte[] bytes) {

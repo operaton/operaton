@@ -710,8 +710,10 @@ public class Parser {
 			case EXTENSION:
 				if (getExtensionHandler(token).getExtensionPoint() == ExtensionPoint.LITERAL) {
 					v = getExtensionHandler(consumeToken()).createAstNode();
-					break;
 				}
+				break;
+			default:
+				break;
 		}
 		return v;
 	}

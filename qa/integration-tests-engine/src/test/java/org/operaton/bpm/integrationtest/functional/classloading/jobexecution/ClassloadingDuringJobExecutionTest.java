@@ -53,7 +53,7 @@ public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformInteg
           <extensionElements>
             <operaton:inputOutput>
               <operaton:outputParameter name="output">
-                <operaton:script scriptFormat="Javascript">throw new org.operaton.bpm.engine.delegate.BpmnError("Test error thrown");</operaton:script>
+                <operaton:script scriptFormat="javascript">throw new org.operaton.bpm.engine.delegate.BpmnError("Test error thrown");</operaton:script>
               </operaton:outputParameter>
             </operaton:inputOutput>
           </extensionElements>

@@ -18,12 +18,12 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.List;
 import java.util.Map;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQueryBuilder;
 import org.operaton.bpm.engine.externaltask.FetchAndLockBuilder;
-import org.operaton.bpm.engine.impl.externaltask.FetchAndLockBuilderImpl;
 import org.operaton.bpm.engine.externaltask.UpdateExternalTaskRetriesSelectBuilder;
 import org.operaton.bpm.engine.impl.cmd.CompleteExternalTaskCmd;
 import org.operaton.bpm.engine.impl.cmd.ExtendLockOnExternalTaskCmd;
@@ -37,6 +37,7 @@ import org.operaton.bpm.engine.impl.cmd.SetExternalTaskRetriesCmd;
 import org.operaton.bpm.engine.impl.cmd.UnlockExternalTaskCmd;
 import org.operaton.bpm.engine.impl.cmd.UpdateExternalTaskRetriesBuilderImpl;
 import org.operaton.bpm.engine.impl.externaltask.ExternalTaskQueryTopicBuilderImpl;
+import org.operaton.bpm.engine.impl.externaltask.FetchAndLockBuilderImpl;
 
 /**
  * @author Thorben Lindhauer

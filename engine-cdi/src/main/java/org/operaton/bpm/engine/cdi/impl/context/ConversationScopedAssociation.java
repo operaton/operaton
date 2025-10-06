@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.impl.context;
 
-import jakarta.enterprise.context.ConversationScoped;
 import java.io.Serializable;
+import jakarta.enterprise.context.ConversationScoped;
 
 @ConversationScoped
 public class ConversationScopedAssociation extends ScopedAssociation implements Serializable {

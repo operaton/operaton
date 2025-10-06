@@ -17,8 +17,9 @@
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
 import java.util.List;
-import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
+
 import org.operaton.bpm.engine.ActivityTypes;
+import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 

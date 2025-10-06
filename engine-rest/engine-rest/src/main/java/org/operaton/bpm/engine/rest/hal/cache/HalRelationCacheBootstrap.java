@@ -19,16 +19,15 @@ package org.operaton.bpm.engine.rest.hal.cache;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
-
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.rest.cache.Cache;
 import org.operaton.bpm.engine.rest.hal.Hal;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HalRelationCacheBootstrap implements ServletContextListener {
 

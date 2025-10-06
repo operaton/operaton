@@ -16,49 +16,45 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
+@SuppressWarnings("java:S5960")
+class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfSameSiteProperties() {
-    // given
-
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfSameSiteProperties() {
     // when
-    target = client.target(appBasePath + TASKLIST_PATH);
-
-    // Send GET request and return the Response
-    response = target.request().get(Response.class);
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
 
     // then
-    assertEquals(200, response.getStatus());
-    assertTrue(isCookieHeaderValuePresent("SameSite=Lax", response));
+    assertThat(response.getStatus()).isEqualTo(200);
+    assertThat(isCookieHeaderValuePresent("SameSite=Lax", response)).isTrue();
   }
 
-  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {
-    MultivaluedMap<String, Object> headers = response.getHeaders();
+  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, HttpResponse<String> response) {
+    List<String> values = response.getHeaders().get("Set-Cookie");
 
-    List<Object> values = headers.get("Set-Cookie");
-    for (Object value : values) {
-      if (value.toString().startsWith("JSESSIONID=")) {
-        return value.toString().contains(expectedHeaderValue);
+    if (values != null) {
+      for (String value : values) {
+        if (value.startsWith("JSESSIONID=")) {
+          return value.contains(expectedHeaderValue);
+        }
       }
     }
 

@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.jboss.arquillian.junit.Arquillian;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.annotation.StartProcessInterceptor;
@@ -26,9 +28,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Testcase for assuring that the {@link StartProcessInterceptor} behaves as

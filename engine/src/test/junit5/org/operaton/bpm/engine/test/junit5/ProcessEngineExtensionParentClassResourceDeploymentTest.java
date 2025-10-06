@@ -19,10 +19,11 @@ package org.operaton.bpm.engine.test.junit5;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 @ExtendWith(ProcessEngineExtension.class)
 class ProcessEngineExtensionParentClassResourceDeploymentTest extends ProcessEngineExtensionParentClass {

@@ -17,7 +17,9 @@
 package org.operaton.bpm.client;
 
 import java.util.function.Consumer;
+
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.backoff.ExponentialBackoffStrategy;
 import org.operaton.bpm.client.exception.ExternalTaskClientException;

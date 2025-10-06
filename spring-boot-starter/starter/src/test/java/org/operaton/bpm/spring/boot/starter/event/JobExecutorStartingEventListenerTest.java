@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,7 +23,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+
 import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 class JobExecutorStartingEventListenerTest {
 

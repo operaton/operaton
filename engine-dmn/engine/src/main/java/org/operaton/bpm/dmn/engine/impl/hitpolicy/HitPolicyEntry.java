@@ -36,12 +36,18 @@ public class HitPolicyEntry {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
 
     HitPolicyEntry that = (HitPolicyEntry) o;
 
-    if (hitPolicy != that.hitPolicy) return false;
+    if (hitPolicy != that.hitPolicy) {
+      return false;
+    }
     return aggregator == that.aggregator;
 
   }
@@ -49,8 +55,7 @@ public class HitPolicyEntry {
   @Override
   public int hashCode() {
     int result = hitPolicy != null ? hitPolicy.hashCode() : 0;
-    result = 31 * result + (aggregator != null ? aggregator.hashCode() : 0);
-    return result;
+    return 31 * result + (aggregator != null ? aggregator.hashCode() : 0);
   }
 
   public HitPolicy getHitPolicy() {

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.webapp.db;
 
-import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
-
 import java.util.List;
+
+import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 
 public interface QueryService {
 

@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.rest.sub.runtime.impl;
 
 import jakarta.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -30,8 +32,6 @@ import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.sub.runtime.EventSubscriptionResource;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.variable.VariableMap;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MessageEventSubscriptionResource implements EventSubscriptionResource {
 

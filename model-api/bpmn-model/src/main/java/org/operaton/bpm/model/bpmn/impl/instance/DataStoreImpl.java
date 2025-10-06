@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-
 import org.operaton.bpm.model.bpmn.instance.DataState;
 import org.operaton.bpm.model.bpmn.instance.DataStore;
 import org.operaton.bpm.model.bpmn.instance.ItemDefinition;
@@ -29,6 +27,8 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
 
 /**
  * The BPMN dataStore element

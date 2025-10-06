@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.admin.impl.plugin.resources;
 
-import org.operaton.bpm.admin.impl.plugin.AdminPlugins;
-import org.operaton.bpm.admin.resource.AbstractAdminPluginRootResource;
-
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+
+import org.operaton.bpm.admin.impl.plugin.AdminPlugins;
+import org.operaton.bpm.admin.resource.AbstractAdminPluginRootResource;
 
 /**
  * @author vale
@@ -34,7 +34,7 @@ public class AdminPluginsRootResource extends AbstractAdminPluginRootResource {
 
   @Path("{engine}" + MetricsRestService.PATH)
   public MetricsRestService getProcessDefinitionResource(@PathParam("engine") String engineName) {
-    return subResource(new MetricsRestService(engineName), engineName);
+    return subResource(new MetricsRestService(engineName));
   }
 
 }

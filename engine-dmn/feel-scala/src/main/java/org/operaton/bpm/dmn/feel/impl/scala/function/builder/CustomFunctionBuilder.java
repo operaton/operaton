@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala.function.builder;
 
+import java.util.List;
+import java.util.function.Function;
+
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunction;
 import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
-
-import java.util.List;
-import java.util.function.Function;
 
 /**
  * Fluent builder to create a {@link CustomFunction}.

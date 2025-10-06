@@ -28,6 +28,7 @@ public class LongValueMapper extends NumberValueMapper<LongValue> {
     super(ValueType.LONG);
   }
 
+  @Override
   public LongValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.longValue((Long) untypedValue.getValue());
   }

@@ -46,30 +46,26 @@ public final class NonInterruptingBoundaryEventScenario {
   @DescribesScenario("initTimer")
   @Times(5)
   public static ScenarioSetup initTimer() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        ProcessInstance instance = engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NonInterruptingTimerBoundaryEventScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      ProcessInstance instance = engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NonInterruptingTimerBoundaryEventScenario", scenarioName);
 
-        Job job = engine.getManagementService()
-          .createJobQuery().processInstanceId(instance.getId()).singleResult();
-        engine.getManagementService().executeJob(job.getId());
-      }
+      Job job = engine.getManagementService()
+        .createJobQuery().processInstanceId(instance.getId()).singleResult();
+      engine.getManagementService().executeJob(job.getId());
     };
   }
 
   @DescribesScenario("initMessage")
   @Times(6)
   public static ScenarioSetup initMessage() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NonInterruptingMessageBoundaryEventScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NonInterruptingMessageBoundaryEventScenario", scenarioName);
 
-        engine.getRuntimeService().correlateMessage("BoundaryEventMessage", scenarioName);
-      }
+      engine.getRuntimeService().correlateMessage("BoundaryEventMessage", scenarioName);
     };
   }
 }

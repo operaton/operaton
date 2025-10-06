@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.json;
 
 import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.migration.MigrationInstructionImpl;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;

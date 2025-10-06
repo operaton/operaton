@@ -16,16 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -46,7 +41,11 @@ import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionList
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Thorben Lindhauer
@@ -86,9 +85,9 @@ class ProcessInstantiationAtActivitiesTest {
     assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree).isNotNull();
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
         .activity("task1")
       .done());
@@ -114,9 +113,9 @@ class ProcessInstantiationAtActivitiesTest {
     assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree).isNotNull();
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
         .activity("task1")
       .done());
@@ -169,9 +168,9 @@ class ProcessInstantiationAtActivitiesTest {
     assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree).isNotNull();
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
         .activity("task1")
       .done());
@@ -229,9 +228,9 @@ class ProcessInstantiationAtActivitiesTest {
     assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree).isNotNull();
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
         .activity("task1")
         .activity("task2")
@@ -289,9 +288,9 @@ class ProcessInstantiationAtActivitiesTest {
     assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree).isNotNull();
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
         .activity("outerTask")
         .beginScope("subProcess")
@@ -326,20 +325,10 @@ class ProcessInstantiationAtActivitiesTest {
   @Test
   void testStartNullProcessDefinition() {
     var processInstantiationBuilder1 = runtimeService.createProcessInstanceById(null).startBeforeActivity("start");
-    try {
-      processInstantiationBuilder1.execute();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(processInstantiationBuilder1::execute).isInstanceOf(ProcessEngineException.class);
 
     var processInstantiationBuilder2 = runtimeService.createProcessInstanceByKey(null).startBeforeActivity("start");
-    try {
-      processInstantiationBuilder2.execute();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(processInstantiationBuilder2::execute).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = LISTENERS_PROCESS)
@@ -355,9 +344,9 @@ class ProcessInstantiationAtActivitiesTest {
 
     // then
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree).isNotNull();
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
         .beginScope("subProcess")
           .activity("innerTask")
@@ -393,9 +382,9 @@ class ProcessInstantiationAtActivitiesTest {
 
     // then
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree).isNotNull();
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
         .beginScope("subProcess")
           .activity("innerTask")
@@ -493,9 +482,9 @@ class ProcessInstantiationAtActivitiesTest {
     assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree).isNotNull();
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
         .transition("task2")
       .done());

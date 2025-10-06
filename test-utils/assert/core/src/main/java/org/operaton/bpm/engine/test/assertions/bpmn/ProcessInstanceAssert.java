@@ -27,6 +27,7 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ListAssert;
 import org.assertj.core.api.MapAssert;
 import org.assertj.core.util.Lists;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
@@ -129,11 +130,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     ActivityInstance activityInstanceTree = runtimeService().getActivityInstance(actual.getId());
 
     // Collect all children recursively
-    Stream <ActivityInstance> flattenedActivityInstances = collectAllDecendentActivities(activityInstanceTree);
+    Stream <ActivityInstance> flattenedActivityInstances = collectAllDescendantActivities(activityInstanceTree);
 
-    Stream<String> decendentActivityIdStream = flattenedActivityInstances
+    Stream<String> descendantActivityIdStream = flattenedActivityInstances
         .flatMap(this::getActivityIdAndCollectTransitions);
-    List<String> decendentActivityIds = decendentActivityIdStream.filter(
+    List<String> descendantActivityIds = descendantActivityIdStream.filter(
         // remove the root id from the list
         activityId -> !activityId.equals(activityInstanceTree.getActivityId())
     ).toList();
@@ -141,11 +142,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     final String message = "Expecting %s " +
       (isWaitingAt ? "to be waiting at " + (exactly ? "exactly " : "") + "%s, ": "NOT to be waiting at %s, ") +
       "but it is actually waiting at %s.";
-    ListAssert<String> assertion = Assertions.assertThat(decendentActivityIds)
+    ListAssert<String> assertion = Assertions.assertThat(descendantActivityIds)
       .overridingErrorMessage(message,
         toString(current),
         Lists.newArrayList(activityIds),
-        decendentActivityIds);
+        descendantActivityIds);
     if (exactly) {
       if (isWaitingAt) {
         assertion.containsOnly(activityIds);
@@ -163,11 +164,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return this;
   }
 
-  private Stream<ActivityInstance> collectAllDecendentActivities(ActivityInstance root) {
+  private Stream<ActivityInstance> collectAllDescendantActivities(ActivityInstance root) {
     ActivityInstance[] childActivityInstances = root.getChildActivityInstances();
     return Stream.concat(
         Stream.of(root),
-        Arrays.stream(childActivityInstances).flatMap(this::collectAllDecendentActivities)
+        Arrays.stream(childActivityInstances).flatMap(this::collectAllDescendantActivities)
     );
   }
 
@@ -344,7 +345,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     message.append("Expecting %s to hold ");
     if (shouldHaveVariables) {
       message.append("process variables");
-      message.append((shouldHaveSpecificVariables ? " %s, " : ", "));
+      message.append(shouldHaveSpecificVariables ? " %s, " : ", ");
     } else {
       message.append("no variables at all, ");
     }

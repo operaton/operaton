@@ -18,7 +18,6 @@ package org.operaton.bpm.container.impl.ejb;
 
 import java.util.List;
 import java.util.Set;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Local;
@@ -35,7 +34,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  * @author Daniel Meyer
  *
  */
-@Stateless(name="ProcessEngineService", mappedName="ProcessEngineService")
+@Stateless(name = "ProcessEngineService", mappedName = "ProcessEngineService")
 @Local(ProcessEngineService.class)
 @TransactionAttribute(TransactionAttributeType.SUPPORTS)
 public class EjbProcessEngineService implements ProcessEngineService {
@@ -51,18 +50,22 @@ public class EjbProcessEngineService implements ProcessEngineService {
     processEngineServiceDelegate = ejbBpmPlatform.getProcessEngineService();
   }
 
+  @Override
   public ProcessEngine getDefaultProcessEngine() {
     return processEngineServiceDelegate.getDefaultProcessEngine();
   }
 
+  @Override
   public List<ProcessEngine> getProcessEngines() {
     return processEngineServiceDelegate.getProcessEngines();
   }
 
+  @Override
   public Set<String> getProcessEngineNames() {
     return processEngineServiceDelegate.getProcessEngineNames();
   }
 
+  @Override
   public ProcessEngine getProcessEngine(String name) {
     return processEngineServiceDelegate.getProcessEngine(name);
   }

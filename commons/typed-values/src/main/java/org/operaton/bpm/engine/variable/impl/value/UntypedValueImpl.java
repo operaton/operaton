@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.variable.impl.value;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -66,29 +65,30 @@ public class UntypedValueImpl implements TypedValue {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((value == null) ? 0 : value.hashCode());
-    result = prime * result + (isTransient ? 1 : 0);
-    return result;
+    result = prime * result + (value == null ? 0 : value.hashCode());
+    return prime * result + (isTransient ? 1 : 0);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    UntypedValueImpl other = (UntypedValueImpl) obj;
-    if (value == null) {
-      if (other.value != null)
-        return false;
-    } else if (!value.equals(other.value))
-      return false;
-    if (isTransient != other.isTransient()) {
+    }
+    if (obj == null) {
       return false;
     }
-    return true;
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    UntypedValueImpl other = (UntypedValueImpl) obj;
+    if (value == null) {
+      if (other.value != null) {
+        return false;
+      }
+    } else if (!value.equals(other.value)) {
+      return false;
+    }
+    return isTransient == other.isTransient();
   }
 
   @Override

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.quarkus.engine.extension.deployment.impl;
 
-import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
+import jakarta.enterprise.context.Dependent;
 
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
@@ -31,7 +31,8 @@ import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.ShutdownContextBuildItem;
 import io.quarkus.runtime.RuntimeValue;
-import jakarta.enterprise.context.Dependent;
+import org.jboss.jandex.DotName;
+
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.ProcessVariables;
 import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;
@@ -42,17 +43,18 @@ import org.operaton.bpm.engine.cdi.impl.context.RequestScopedAssociation;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.quarkus.engine.extension.OperatonEngineConfig;
 import org.operaton.bpm.quarkus.engine.extension.QuarkusProcessEngineConfiguration;
-import org.operaton.bpm.quarkus.engine.extension.impl.OperatonEngineRecorder;
 import org.operaton.bpm.quarkus.engine.extension.impl.InjectableBusinessProcessContext;
-import org.jboss.jandex.DotName;
+import org.operaton.bpm.quarkus.engine.extension.impl.OperatonEngineRecorder;
+
+import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
 
 public class OperatonEngineProcessor {
 
-  protected static final String FEATURE = "operaton-platform-engine";
+  protected static final String FEATURE_NAME = "operaton-platform-engine";
 
   @BuildStep
   protected FeatureBuildItem feature() {
-    return new FeatureBuildItem(FEATURE);
+    return new FeatureBuildItem(FEATURE_NAME);
   }
 
   @BuildStep

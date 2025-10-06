@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.run.test.config.cors;
 
-import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
-import org.operaton.bpm.run.test.AbstractRestTest;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Disabled;
@@ -29,6 +26,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+
+import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
+import org.operaton.bpm.run.test.AbstractRestTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

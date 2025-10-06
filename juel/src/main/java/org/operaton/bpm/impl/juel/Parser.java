@@ -334,13 +334,13 @@ public class Parser {
 	 */
 	protected AstEval eval(boolean required, boolean deferred) throws Scanner.ScanException, ParseException {
 		AstEval v = null;
-		Scanner.Symbol start_eval = deferred ? Scanner.Symbol.START_EVAL_DEFERRED : Scanner.Symbol.START_EVAL_DYNAMIC;
-		if (token.getSymbol() == start_eval) {
+		Scanner.Symbol startEval = deferred ? Scanner.Symbol.START_EVAL_DEFERRED : Scanner.Symbol.START_EVAL_DYNAMIC;
+		if (token.getSymbol() == startEval) {
 			consumeToken();
 			v = new AstEval(expr(true), deferred);
 			consumeToken(Scanner.Symbol.END_EVAL);
 		} else if (required) {
-			fail(start_eval);
+			fail(startEval);
 		}
 		return v;
 	}
@@ -637,27 +637,24 @@ public class Parser {
 	 */
 	protected AstNode nonliteral() throws Scanner.ScanException, ParseException {
 		AstNode v = null;
-		switch (token.getSymbol()) {
-			case IDENTIFIER:
-				String name = consumeToken().getImage();
-				if (token.getSymbol() == Scanner.Symbol.COLON && lookahead(0).getSymbol() == Scanner.Symbol.IDENTIFIER && lookahead(1).getSymbol() == Scanner.Symbol.LPAREN) { // ns:f(...)
-					consumeToken();
-					name += ":" + token.getImage();
-					consumeToken();
-				}
-				if (token.getSymbol() == Scanner.Symbol.LPAREN) { // function
-					v = function(name, params());
-				} else { // identifier
-					v = identifier(name);
-				}
-				break;
-			case LPAREN:
-				consumeToken();
-				v = expr(true);
-				consumeToken(Scanner.Symbol.RPAREN);
-				v = new AstNested(v);
-				break;
-		}
+    if (token.getSymbol() == Scanner.Symbol.IDENTIFIER) {
+      String name = consumeToken().getImage();
+      if (token.getSymbol() == Scanner.Symbol.COLON && lookahead(0).getSymbol() == Scanner.Symbol.IDENTIFIER && lookahead(1).getSymbol() == Scanner.Symbol.LPAREN) { // ns:f(...)
+        consumeToken();
+        name += ":" + token.getImage();
+        consumeToken();
+      }
+      if (token.getSymbol() == Scanner.Symbol.LPAREN) { // function
+        v = function(name, params());
+      } else { // identifier
+        v = identifier(name);
+      }
+    } else if (token.getSymbol() == Scanner.Symbol.LPAREN) {
+      consumeToken();
+      v = expr(true);
+      consumeToken(Scanner.Symbol.RPAREN);
+      v = new AstNested(v);
+    }
 		return v;
 	}
 
@@ -713,8 +710,10 @@ public class Parser {
 			case EXTENSION:
 				if (getExtensionHandler(token).getExtensionPoint() == ExtensionPoint.LITERAL) {
 					v = getExtensionHandler(consumeToken()).createAstNode();
-					break;
 				}
+				break;
+			default:
+				break;
 		}
 		return v;
 	}

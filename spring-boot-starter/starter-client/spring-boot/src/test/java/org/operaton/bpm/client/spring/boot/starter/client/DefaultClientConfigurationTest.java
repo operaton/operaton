@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.client;
 
-import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

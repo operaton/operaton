@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.impl.transform;
 
+import java.io.File;
+import java.io.InputStream;
+import java.util.*;
+import java.util.List;
+
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
 import org.operaton.bpm.dmn.engine.impl.*;
@@ -26,12 +31,8 @@ import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelException;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.bpm.model.dmn.instance.*;
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.List;
-import java.util.*;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 public class DefaultDmnTransform implements DmnTransform, DmnElementTransformContext {
 

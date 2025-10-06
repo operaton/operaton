@@ -18,6 +18,16 @@ package org.operaton.bpm.container.impl.jboss.extension.handler;
 
 import java.util.function.Consumer;
 
+import org.jboss.as.controller.AbstractBoottimeAddStepHandler;
+import org.jboss.as.controller.OperationContext;
+import org.jboss.as.controller.OperationFailedException;
+import org.jboss.as.server.AbstractDeploymentChainStep;
+import org.jboss.as.server.DeploymentProcessorTarget;
+import org.jboss.as.server.deployment.Phase;
+import org.jboss.dmr.ModelNode;
+import org.jboss.msc.service.ServiceBuilder;
+import org.jboss.msc.service.ServiceController.Mode;
+
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.jboss.deployment.processor.ModuleDependencyProcessor;
 import org.operaton.bpm.container.impl.jboss.deployment.processor.ProcessApplicationDeploymentProcessor;
@@ -29,15 +39,6 @@ import org.operaton.bpm.container.impl.jboss.service.MscBpmPlatformPlugins;
 import org.operaton.bpm.container.impl.jboss.service.MscRuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
 import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
-import org.jboss.as.controller.AbstractBoottimeAddStepHandler;
-import org.jboss.as.controller.OperationContext;
-import org.jboss.as.controller.OperationFailedException;
-import org.jboss.as.server.AbstractDeploymentChainStep;
-import org.jboss.as.server.DeploymentProcessorTarget;
-import org.jboss.as.server.deployment.Phase;
-import org.jboss.dmr.ModelNode;
-import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceController.Mode;
 
 
 /**

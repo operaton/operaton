@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.bpmn;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.instance.Definitions;
 
 import static org.assertj.core.api.Assertions.assertThat;

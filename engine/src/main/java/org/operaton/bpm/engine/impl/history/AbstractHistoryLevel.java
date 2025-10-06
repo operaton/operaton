@@ -26,22 +26,22 @@ public abstract class AbstractHistoryLevel implements HistoryLevel {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + getId();
-    return result;
+    return prime * result + getId();
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     AbstractHistoryLevel other = (AbstractHistoryLevel) obj;
-    if (getId() != other.getId())
-      return false;
-    return true;
+    return getId() == other.getId();
   }
 
   @Override

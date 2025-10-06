@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.quarkus.engine.extension;
 
+import java.util.Map;
+import java.util.Optional;
+
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
-import java.util.Map;
-import java.util.Optional;
 
 @ConfigMapping(prefix = "quarkus.operaton")
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)

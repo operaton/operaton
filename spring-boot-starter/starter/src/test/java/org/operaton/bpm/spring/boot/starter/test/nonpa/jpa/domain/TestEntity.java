@@ -70,9 +70,8 @@ public class TestEntity {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    result = prime * result + ((text == null) ? 0 : text.hashCode());
-    return result;
+    result = prime * result + (id == null ? 0 : id.hashCode());
+    return prime * result + (text == null ? 0 : text.hashCode());
   }
 
   /*
@@ -82,22 +81,28 @@ public class TestEntity {
    */
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     TestEntity other = (TestEntity) obj;
     if (id == null) {
-      if (other.id != null)
+      if (other.id != null) {
         return false;
-    } else if (!id.equals(other.id))
+      }
+    } else if (!id.equals(other.id)) {
       return false;
+    }
     if (text == null) {
       return other.text == null;
-    } else
+    } else {
       return text.equals(other.text);
+    }
   }
 
   /*

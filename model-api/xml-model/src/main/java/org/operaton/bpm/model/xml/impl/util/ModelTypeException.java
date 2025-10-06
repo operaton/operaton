@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
-import org.operaton.bpm.model.xml.ModelException;
-
 import java.io.Serial;
 import java.lang.reflect.Type;
+
+import org.operaton.bpm.model.xml.ModelException;
 
 /**
  * <p>Thrown in case a value cannot be converted to or from the requested type</p>

@@ -28,6 +28,7 @@ public class BooleanValueMapper extends PrimitiveValueMapper<BooleanValue> {
     super(ValueType.BOOLEAN);
   }
 
+  @Override
   public BooleanValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.booleanValue((Boolean) untypedValue.getValue());
   }

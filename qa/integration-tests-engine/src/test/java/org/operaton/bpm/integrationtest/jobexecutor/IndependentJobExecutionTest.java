@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 import java.util.Set;
 
@@ -28,10 +26,10 @@ import org.jboss.arquillian.protocol.servlet5.arq514hack.descriptors.api.web.Web
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
@@ -47,6 +45,8 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
@@ -92,13 +92,13 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
 
     List<ProcessApplicationDeploymentInfo> pa1DeploymentInfo = pa1Info.getDeploymentInfo();
 
-    Assertions.assertEquals(1, pa1DeploymentInfo.size());
+    assertThat(pa1DeploymentInfo).hasSize(1);
     assertThat(registeredDeploymentsForEngine1).contains(pa1DeploymentInfo.get(0).getDeploymentId());
 
     ProcessApplicationInfo pa2Info = getProcessApplicationDeploymentInfo("pa2");
 
     List<ProcessApplicationDeploymentInfo> pa2DeploymentInfo = pa2Info.getDeploymentInfo();
-    Assertions.assertEquals(1, pa2DeploymentInfo.size());
+    assertThat(pa2DeploymentInfo).hasSize(1);
     assertThat(registeredDeploymentsForDefaultEngine).contains(pa2DeploymentInfo.get(0).getDeploymentId());
   }
 
@@ -127,7 +127,7 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
     CommandExecutor commandExecutor = engine1Configuration.getCommandExecutorTxRequired();
     AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor1));
 
-    Assertions.assertEquals(1, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isEqualTo(1);
     assertThat(acquiredJobs.contains(job1.getId())).isTrue();
     assertThat(acquiredJobs.contains(job2.getId())).isFalse();
   }
@@ -149,7 +149,7 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
     try {
       AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(defaultJobExecutor));
 
-      Assertions.assertEquals(2, acquiredJobs.size());
+      assertThat(acquiredJobs.size()).isEqualTo(2);
       assertThat(acquiredJobs.contains(job1.getId())).isTrue();
       assertThat(acquiredJobs.contains(job2.getId())).isTrue();
     } finally {

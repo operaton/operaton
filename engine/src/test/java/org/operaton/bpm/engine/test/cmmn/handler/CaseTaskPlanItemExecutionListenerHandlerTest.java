@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
+
 import org.operaton.bpm.engine.impl.cmmn.handler.CaseTaskItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.test.cmmn.handler.specification.AbstractExecutionListenerSpec;
-import org.operaton.bpm.model.cmmn.instance.CaseTask;
-import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.model.cmmn.instance.CaseTask;
+import org.operaton.bpm.model.cmmn.instance.PlanItem;
 
 /**
  * @author Thorben Lindhauer

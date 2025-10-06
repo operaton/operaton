@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.example.invoice;
 
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.logging.Logger;
+
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
@@ -27,13 +32,9 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.fileValue;
-
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.logging.Logger;
 
 public final class InvoiceApplicationHelper {
 
@@ -66,7 +67,7 @@ public final class InvoiceApplicationHelper {
     processEngineConfiguration.setDbMetricsReporterActivate(false);
   }
 
-  public static void createDeployment(String processArchiveName, ProcessEngine processEngine, ClassLoader classLoader, ProcessApplicationReference applicationReference) {
+  public static void createDeployment(ProcessEngine processEngine, ClassLoader classLoader, ProcessApplicationReference applicationReference) {
     // Hack: deploy the first version of the invoice process once before the process application
     //   is deployed the first time
     if (processEngine != null) {
@@ -84,7 +85,7 @@ public final class InvoiceApplicationHelper {
   }
 
   protected static boolean isProcessDeployed(RepositoryService repositoryService, String key) {
-    return repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCDEFKEY_INVOICE).count() > 0;
+    return repositoryService.createProcessDefinitionQuery().processDefinitionKey(key).count() > 0;
   }
 
   protected static void startProcessInstances(ProcessEngine processEngine, String processDefinitionKey, Integer version) {

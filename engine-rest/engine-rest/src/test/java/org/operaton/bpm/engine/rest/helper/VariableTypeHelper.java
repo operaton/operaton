@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
  * @author Thorben Lindhauer
  *
  */
-public class VariableTypeHelper {
+public final class VariableTypeHelper {
 
   /**
    * The REST API is expected to return the variable's value type name in capitalized form.
@@ -31,5 +31,8 @@ public class VariableTypeHelper {
     String typeName = type.getName();
 
     return typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
+  }
+
+  private VariableTypeHelper() {
   }
 }

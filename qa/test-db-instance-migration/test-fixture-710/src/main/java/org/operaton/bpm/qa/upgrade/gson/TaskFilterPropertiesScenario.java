@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.qa.upgrade.gson;
 
-import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.filter.Filter;
-import org.operaton.bpm.qa.upgrade.DescribesScenario;
-import org.operaton.bpm.qa.upgrade.ScenarioSetup;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.filter.Filter;
+import org.operaton.bpm.qa.upgrade.DescribesScenario;
+import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 /**
  * @author Tassilo Weidner
@@ -38,40 +38,38 @@ public final class TaskFilterPropertiesScenario {
 
   @DescribesScenario("initTaskFilterProperties")
   public static ScenarioSetup initTaskFilterProperties() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        FilterService filterService = engine.getFilterService();
+    return (engine, scenarioName) -> {
+      FilterService filterService = engine.getFilterService();
 
-        Filter filterOne = filterService
-          .newTaskFilter("taskFilterOne");
+      Filter filterOne = filterService
+        .newTaskFilter("taskFilterOne");
 
-        Map<String, Object> primitivesMap = new HashMap<>();
-        primitivesMap.put("string", "aStringValue");
-        primitivesMap.put("int", 47);
-        primitivesMap.put("intOutOfRange", Integer.MAX_VALUE + 1L);
-        primitivesMap.put("long", Long.MAX_VALUE);
-        primitivesMap.put("double", 3.14159265359D);
-        primitivesMap.put("boolean", true);
-        primitivesMap.put("null", null);
+      Map<String, Object> primitivesMap = new HashMap<>();
+      primitivesMap.put("string", "aStringValue");
+      primitivesMap.put("int", 47);
+      primitivesMap.put("intOutOfRange", Integer.MAX_VALUE + 1L);
+      primitivesMap.put("long", Long.MAX_VALUE);
+      primitivesMap.put("double", 3.14159265359D);
+      primitivesMap.put("boolean", true);
+      primitivesMap.put("null", null);
 
-        filterOne.setProperties(Collections.<String, Object>singletonMap("foo", Collections.singletonList(primitivesMap)));
-        filterService.saveFilter(filterOne);
+      filterOne.setProperties(Collections.<String, Object>singletonMap("foo", Collections.singletonList(primitivesMap)));
+      filterService.saveFilter(filterOne);
 
-        Filter filterTwo = engine.getFilterService()
-          .newTaskFilter("taskFilterTwo");
+      Filter filterTwo = engine.getFilterService()
+        .newTaskFilter("taskFilterTwo");
 
-        List<Object> primitivesList = new ArrayList<>();
-        primitivesList.add("aStringValue");
-        primitivesList.add(47);
-        primitivesList.add(Integer.MAX_VALUE + 1L);
-        primitivesList.add(Long.MAX_VALUE);
-        primitivesList.add(3.14159265359D);
-        primitivesList.add(true);
-        primitivesList.add(null);
+      List<Object> primitivesList = new ArrayList<>();
+      primitivesList.add("aStringValue");
+      primitivesList.add(47);
+      primitivesList.add(Integer.MAX_VALUE + 1L);
+      primitivesList.add(Long.MAX_VALUE);
+      primitivesList.add(3.14159265359D);
+      primitivesList.add(true);
+      primitivesList.add(null);
 
-        filterTwo.setProperties(Collections.<String, Object>singletonMap("foo", Collections.singletonMap("bar", primitivesList)));
-        filterService.saveFilter(filterTwo);
-      }
+      filterTwo.setProperties(Collections.<String, Object>singletonMap("foo", Collections.singletonMap("bar", primitivesList)));
+      filterService.saveFilter(filterTwo);
     };
   }
 }

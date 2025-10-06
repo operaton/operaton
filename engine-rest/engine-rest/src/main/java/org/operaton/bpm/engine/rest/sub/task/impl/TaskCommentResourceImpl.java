@@ -23,7 +23,7 @@ import java.util.List;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriInfo;
-import org.operaton.bpm.engine.AuthorizationException;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -80,6 +80,7 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
     return CommentDto.fromComment(comment);
   }
 
+  @Override
   public void deleteComment(String commentId) {
     ensureHistoryEnabled(Status.FORBIDDEN);
     ensureTaskExists(Status.NOT_FOUND);
@@ -87,26 +88,24 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
     TaskService taskService = engine.getTaskService();
     try {
       taskService.deleteTaskComment(taskId, commentId);
-    } catch (AuthorizationException e) {
-      throw e;
     } catch (NullValueException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     }
   }
 
+  @Override
   public void updateComment(CommentDto comment) {
     ensureHistoryEnabled(Status.FORBIDDEN);
     ensureTaskExists(Status.NOT_FOUND);
 
     try {
       engine.getTaskService().updateTaskComment(taskId, comment.getId(), comment.getMessage());
-    } catch (AuthorizationException e) {
-      throw e;
     } catch (NullValueException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     }
   }
 
+  @Override
   public void deleteComments() {
     ensureHistoryEnabled(Status.FORBIDDEN);
     ensureTaskExists(Status.NOT_FOUND);
@@ -114,8 +113,6 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
 
     try {
       taskService.deleteTaskComments(taskId);
-    } catch (AuthorizationException e) {
-      throw e;
     } catch (NullValueException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     }

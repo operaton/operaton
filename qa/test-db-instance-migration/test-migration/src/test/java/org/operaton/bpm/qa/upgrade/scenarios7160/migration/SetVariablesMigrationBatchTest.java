@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7160.migration;
 
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.Map;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.batch.Batch;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

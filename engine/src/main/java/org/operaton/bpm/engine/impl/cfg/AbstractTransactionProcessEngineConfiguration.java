@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cfg;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import org.operaton.bpm.engine.impl.cfg.standalone.StandaloneTransactionContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContextInterceptor;

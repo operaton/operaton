@@ -20,7 +20,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
 import jakarta.inject.Qualifier;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -44,7 +43,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
  */
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD, ElementType.TYPE })
+@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD, ElementType.TYPE})
 public @interface ProcessInstanceId {
 
 }

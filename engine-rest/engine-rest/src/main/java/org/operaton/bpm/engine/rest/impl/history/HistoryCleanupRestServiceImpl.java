@@ -18,8 +18,9 @@ package org.operaton.bpm.engine.rest.impl.history;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -30,8 +31,6 @@ import org.operaton.bpm.engine.rest.dto.runtime.JobDto;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.history.HistoryCleanupRestService;
 import org.operaton.bpm.engine.runtime.Job;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HistoryCleanupRestServiceImpl implements HistoryCleanupRestService {
 

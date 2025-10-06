@@ -16,8 +16,11 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.authorization;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
@@ -30,8 +33,6 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-
-import java.util.List;
 
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -169,7 +170,7 @@ public abstract class AuthorizationTest extends AbstractCockpitPluginTest {
     enableAuthorization();
   }
 
-  protected Deployment createDeployment(String name, String... resources) {
+  protected Deployment createDeployment(String... resources) {
     disableAuthorization();
     DeploymentBuilder builder = repositoryService.createDeployment();
     for (String resource : resources) {

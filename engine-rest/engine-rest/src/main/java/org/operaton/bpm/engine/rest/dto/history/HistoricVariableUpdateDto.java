@@ -18,10 +18,10 @@ package org.operaton.bpm.engine.rest.dto.history;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
-
-import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  * @author Roman Smirnov

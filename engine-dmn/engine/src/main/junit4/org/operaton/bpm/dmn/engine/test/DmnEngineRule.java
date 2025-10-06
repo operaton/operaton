@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.test;
 
-import org.operaton.bpm.dmn.engine.DmnEngine;
-import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
+
+import org.operaton.bpm.dmn.engine.DmnEngine;
+import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 
 /**
  * JUnit rule for {@link DmnEngine} initialization.

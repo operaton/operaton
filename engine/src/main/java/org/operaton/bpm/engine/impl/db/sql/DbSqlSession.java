@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.db.sql;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,6 +31,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.BatchResult;
 import org.apache.ibatis.mapping.BoundSql;
@@ -40,6 +39,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -58,6 +58,8 @@ import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.camunda.migration.CamundaToOperatonLiquibaseMigration;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
 *
@@ -302,12 +304,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   protected void executeInsertEntity(String insertStatement, Object parameter) {
     LOG.executeDatabaseOperation("INSERT", parameter);
-    try {
-      sqlSession.insert(insertStatement, parameter);
-    } catch (Exception e) {
-      // exception is wrapped later
-      throw e;
-    }
+    sqlSession.insert(insertStatement, parameter);
   }
 
   @SuppressWarnings("unused")
@@ -333,24 +330,14 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   protected int executeDelete(String deleteStatement, Object parameter) {
     // map the statement
     String mappedDeleteStatement = dbSqlSessionFactory.mapStatement(deleteStatement);
-    try {
-      return sqlSession.delete(mappedDeleteStatement, parameter);
-    } catch (Exception e) {
-      // Exception is wrapped later
-      throw e;
-    }
+    return sqlSession.delete(mappedDeleteStatement, parameter);
   }
 
   // update ////////////////////////////////////////
 
   public int executeUpdate(String updateStatement, Object parameter) {
     String mappedUpdateStatement = dbSqlSessionFactory.mapStatement(updateStatement);
-    try {
-      return sqlSession.update(mappedUpdateStatement, parameter);
-    } catch (Exception e) {
-      // Exception is wrapped later
-      throw e;
-    }
+    return sqlSession.update(mappedUpdateStatement, parameter);
   }
 
   public int update(String updateStatement, Object parameter) {
@@ -389,14 +376,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   }
 
   public List<BatchResult> flushBatchOperations() {
-    try {
-      return sqlSession.flushStatements();
-
-    } catch (PersistenceException ex) {
-      // exception is wrapped later
-      throw ex;
-
-    }
+    return sqlSession.flushStatements();
   }
 
   @Override
@@ -647,8 +627,6 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
           }
           LOG.fetchDatabaseTables("jdbc metadata", tableNames);
         }
-      } catch (SQLException se) {
-        throw se;
       } finally {
         if (tablesRs != null) {
           tablesRs.close();

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Date;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ClockUtilTest {
 
@@ -52,7 +52,7 @@ class ClockUtilTest {
   }
 
   @Test
-  void offsetShouldTravelInTime() throws InterruptedException {
+  void offsetShouldTravelInTime() throws Exception {
     long duration = TWO_DAYS;
     Date target = new Date(new Date().getTime() + duration);
 
@@ -64,7 +64,7 @@ class ClockUtilTest {
   }
 
   @Test
-  void setCurrentTimeShouldFreezeTime() throws InterruptedException {
+  void setCurrentTimeShouldFreezeTime() throws Exception {
     long duration = TWO_DAYS;
     Date target = new Date(new Date().getTime() + duration);
 
@@ -103,7 +103,7 @@ class ClockUtilTest {
   }
 
   @Test
-  void timeShouldMoveOnAfterTravel() throws InterruptedException {
+  void timeShouldMoveOnAfterTravel() throws Exception {
     Date now = new Date();
     long duration = TWO_DAYS;
     Date target = new Date(now.getTime() + duration);
@@ -118,7 +118,7 @@ class ClockUtilTest {
   }
 
   @Test
-  void timeShouldFreezeWithSetCurrentTime() throws InterruptedException {
+  void timeShouldFreezeWithSetCurrentTime() throws Exception {
     Date now = new Date();
     long duration = TWO_DAYS;
     Date target = new Date(now.getTime() + duration);

@@ -20,12 +20,12 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.regex.Pattern;
 
-import com.fasterxml.jackson.databind.node.MissingNode;
-import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
-import org.operaton.spin.spi.TextBasedDataFormatReader;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.MissingNode;
+
+import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
+import org.operaton.spin.spi.TextBasedDataFormatReader;
 
 /**
  * @author Thorben Lindhauer

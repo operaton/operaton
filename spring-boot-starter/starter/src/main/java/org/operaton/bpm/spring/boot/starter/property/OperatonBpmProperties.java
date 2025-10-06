@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngines;
-import org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
-
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringJoiner;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
+
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngines;
+import org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration;
 
 import static org.springframework.core.io.support.ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX;
 
@@ -141,6 +142,12 @@ public class OperatonBpmProperties {
   @NestedConfigurationProperty
   private WebappProperty webapp = new WebappProperty();
 
+  /**
+   * REST API configuration
+   */
+  @NestedConfigurationProperty
+  private RestApiProperty restApi = new RestApiProperty();
+
   @NestedConfigurationProperty
   private AuthorizationProperty authorization = new AuthorizationProperty();
 
@@ -249,6 +256,14 @@ public class OperatonBpmProperties {
     this.webapp = webapp;
   }
 
+  public RestApiProperty getRestApi() {
+    return restApi;
+  }
+
+  public void setRestApi(RestApiProperty restApi) {
+    this.restApi = restApi;
+  }
+
   public AuthorizationProperty getAuthorization() {
     return authorization;
   }
@@ -346,6 +361,7 @@ public class OperatonBpmProperties {
       .add("database=" + database)
       .add("jobExecution=" + jobExecution)
       .add("webapp=" + webapp)
+      .add("restApi=" + restApi)
       .add("authorization=" + authorization)
       .add("genericProperties=" + genericProperties)
       .add("adminUser=" + adminUser)

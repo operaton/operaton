@@ -17,9 +17,10 @@
 package org.operaton.bpm.dmn.engine.impl.el;
 
 import jakarta.el.ELContext;
+import jakarta.el.ELResolver;
+
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.impl.juel.SimpleContext;
-import jakarta.el.ELResolver;
 
 /**
  * @author Daniel Meyer

@@ -38,6 +38,7 @@ public abstract class AbstractTypedValueMapper<T extends TypedValue> implements 
     return null;
   }
 
+  @Override
   public boolean canHandleTypedValue(TypedValue typedValue) {
     ValueType type = typedValue.getType();
     return (type == null || valueType.getClass().isAssignableFrom(type.getClass())) && canWriteValue(typedValue);

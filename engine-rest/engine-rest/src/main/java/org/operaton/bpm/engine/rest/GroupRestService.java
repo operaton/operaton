@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.List;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.OPTIONS;
@@ -73,7 +72,7 @@ public interface GroupRestService {
   @POST
   @Path("/create")
   @Consumes(MediaType.APPLICATION_JSON)
-  void createGroup(GroupDto GroupDto);
+  void createGroup(GroupDto groupDto);
 
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)

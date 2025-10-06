@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.jboss.arquillian.junit.Arquillian;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.annotation.CompleteTaskInterceptor;
@@ -24,9 +26,8 @@ import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.DeclarativeProcessController;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Testcase for assuring that the {@link CompleteTaskInterceptor} works as

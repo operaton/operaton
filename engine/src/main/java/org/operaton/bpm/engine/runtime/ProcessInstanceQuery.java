@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.runtime;
 import java.io.Serializable;
 import java.util.Set;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.query.Query;
 
 /**
@@ -41,6 +41,12 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    * Select process instances whose id is in the given set of ids
    */
   ProcessInstanceQuery processInstanceIds(Set<String> processInstanceIds);
+
+
+  /**
+   * Select process instances for the given root process instance id
+   */
+  ProcessInstanceQuery rootProcessInstanceId(String rootProcessInstanceId);
 
   /**
    * Select process instances with the given business key

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.error;
 
+import jakarta.inject.Named;
+
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
-
-import jakarta.inject.Named;
 
 @Named
 public class ThrowErrorDelegate extends AbstractBpmnActivityBehavior {

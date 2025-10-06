@@ -18,6 +18,7 @@ package org.operaton.bpm.run.plugins;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+
 import org.operaton.bpm.cockpit.plugin.resource.AbstractCockpitPluginRootResource;
 
 @Path("plugin/" + TestCockpitPlugin.ID)

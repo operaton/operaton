@@ -16,21 +16,22 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.AbstractSpringSecurityIT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.test.context.TestPropertySource;
+
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.AbstractSpringSecurityIT;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @TestPropertySource("/oauth2-mock.properties")
 class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {

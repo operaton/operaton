@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
@@ -33,8 +35,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.commons.utils.cache.Cache;
-
-import java.util.List;
 
 
 /**

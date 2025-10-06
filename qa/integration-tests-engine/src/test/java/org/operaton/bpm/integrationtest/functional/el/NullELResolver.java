@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.functional.el;
 
+import jakarta.el.ELResolver;
+
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationElResolver;
-
-import jakarta.el.ELResolver;
 
 /**
  * @author Thorben Lindhauer

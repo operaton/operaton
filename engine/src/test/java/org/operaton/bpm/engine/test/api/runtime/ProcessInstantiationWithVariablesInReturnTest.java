@@ -16,23 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
-import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
@@ -49,6 +40,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+
+import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
+import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * Represents the test class for the process instantiation on which
@@ -85,19 +81,19 @@ class ProcessInstantiationWithVariablesInReturnTest {
             .asc()
             .list();
 
-    assertEquals(expectedSize, variables.size());
+    assertThat(variables).hasSize(expectedSize);
 
-    assertEquals(variables.size(), map.size());
+    assertThat(map).hasSize(variables.size());
     for (HistoricVariableInstance instance : variables) {
-      assertTrue(map.containsKey(instance.getName()));
+      assertThat(map).containsKey(instance.getName());
       Object instanceValue = instance.getTypedValue().getValue();
       Object mapValue = map.getValueTyped(instance.getName()).getValue();
       if (instanceValue == null) {
-        assertNull(mapValue);
+        assertThat(mapValue).isNull();
       } else if (instanceValue instanceof byte[] bytes) {
-        assertTrue(Arrays.equals(bytes, (byte[]) mapValue));
+        assertThat((byte[]) mapValue).isEqualTo(bytes);
       } else {
-        assertEquals(instanceValue, mapValue);
+        assertThat(mapValue).isEqualTo(instanceValue);
       }
     }
   }
@@ -122,10 +118,10 @@ class ProcessInstantiationWithVariablesInReturnTest {
 
     //then returned instance contains serialized variable
     VariableMap map = procInstance.getVariables();
-    assertNotNull(map);
+    assertThat(map).isNotNull();
 
     ObjectValue serializedVar = (ObjectValue) map.getValueTyped("serializedVar");
-    assertFalse(serializedVar.isDeserialized());
+    assertThat(serializedVar.isDeserialized()).isFalse();
     assertObjectValueSerializedJava(serializedVar, javaSerializable);
 
     //access on value should fail because variable is not deserialized
@@ -133,7 +129,7 @@ class ProcessInstantiationWithVariablesInReturnTest {
       serializedVar.getValue();
       fail("Deserialization should fail!");
     } catch (IllegalStateException ise) {
-      assertEquals("Object is not deserialized.", ise.getMessage());
+      assertThat(ise.getMessage()).isEqualTo("Object is not deserialized.");
     }
   }
 
@@ -163,7 +159,7 @@ class ProcessInstantiationWithVariablesInReturnTest {
 
     //when returned instance contains variables
     VariableMap map = procInstance.getVariables();
-    assertNotNull(map);
+    assertThat(map).isNotNull();
 
     // then variables equal to variables which are accessible via query
     checkVariables(map, 4);
@@ -183,7 +179,7 @@ class ProcessInstantiationWithVariablesInReturnTest {
 
     //when returned instance contains variables
     VariableMap map = procInstance.getVariables();
-    assertNotNull(map);
+    assertThat(map).isNotNull();
 
     // then variables equal to variables which are accessible via query
     checkVariables(map, 4);
@@ -204,7 +200,7 @@ class ProcessInstantiationWithVariablesInReturnTest {
 
     //when returned instance contains variables
     VariableMap map = procInstance.getVariables();
-    assertNotNull(map);
+    assertThat(map).isNotNull();
 
     // then variables equal to variables which are accessible via query
     checkVariables(map, 4);
@@ -219,7 +215,7 @@ class ProcessInstantiationWithVariablesInReturnTest {
             .executeWithVariablesInReturn();
     //when returned instance contains variables
     VariableMap map = procInstance.getVariables();
-    assertNotNull(map);
+    assertThat(map).isNotNull();
 
     // then variables equal to variables which are accessible via query
     checkVariables(map, 8);
@@ -234,7 +230,7 @@ class ProcessInstantiationWithVariablesInReturnTest {
             .executeWithVariablesInReturn();
     //when returned instance contains variables
     VariableMap map = procInstance.getVariables();
-    assertNotNull(map);
+    assertThat(map).isNotNull();
 
     // then variables equal to variables which are accessible via query
     checkVariables(map, 8);
@@ -253,7 +249,7 @@ class ProcessInstantiationWithVariablesInReturnTest {
             .executeWithVariablesInReturn();
     //when returned instance contains variables
     VariableMap map = procInstance.getVariables();
-    assertNotNull(map);
+    assertThat(map).isNotNull();
 
     // then variables equal to variables which are accessible via query
     checkVariables(map, 12);
@@ -273,7 +269,7 @@ class ProcessInstantiationWithVariablesInReturnTest {
             .executeWithVariablesInReturn(false, false);
     //when returned instance contains variables
     VariableMap map = procInstance.getVariables();
-    assertNotNull(map);
+    assertThat(map).isNotNull();
 
     // then variables equal to variables which are accessible via query
     checkVariables(map, 8);

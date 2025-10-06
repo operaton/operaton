@@ -19,13 +19,13 @@ package org.operaton.spin.impl.json.jackson.format;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
-import org.operaton.spin.spi.DataFormatWriter;
-
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
+import org.operaton.spin.spi.DataFormatWriter;
 
 /**
  * @author Daniel Meyer

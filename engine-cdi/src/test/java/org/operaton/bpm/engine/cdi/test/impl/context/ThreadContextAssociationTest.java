@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.jboss.arquillian.junit.Arquillian;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.ProcessScopedMessageBean;
 import org.operaton.bpm.engine.test.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.test.util.JobExecutorAssert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *

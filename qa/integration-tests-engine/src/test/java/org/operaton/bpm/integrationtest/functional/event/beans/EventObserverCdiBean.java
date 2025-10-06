@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.event.beans;
 
-import org.operaton.bpm.engine.cdi.BusinessProcess;
-import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
-
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
+
+import org.operaton.bpm.engine.cdi.BusinessProcess;
+import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
 
 /**
  * @author Daniel Meyer

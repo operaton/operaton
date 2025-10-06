@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collection;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -34,6 +33,8 @@ import org.operaton.bpm.model.bpmn.instance.ServiceTask;
 import org.operaton.bpm.model.bpmn.instance.Task;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

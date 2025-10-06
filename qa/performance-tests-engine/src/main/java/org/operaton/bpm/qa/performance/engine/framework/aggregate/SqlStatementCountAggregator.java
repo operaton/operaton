@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.aggregate;
 
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepResult;
-import org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogSqlSession.SqlStatementType;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepResult;
+import org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogSqlSession.SqlStatementType;
 
 /**
  * Aggregates the results from a Sql Statement Test run.

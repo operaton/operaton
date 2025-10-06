@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.test.cmmn.casetask;
 
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -29,12 +33,7 @@ import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Roman Smirnov
@@ -846,11 +845,7 @@ class CaseTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(caseTaskId);
 
-    try {
-      // when
-      caseExecutionCommandBuilder.manualStart();
-      fail("It should not be possible to start a not existing case instance.");
-    } catch (NotFoundException e) {}
+    assertThatThrownBy(caseExecutionCommandBuilder::manualStart).isInstanceOf(NotFoundException.class);
 
     // complete //////////////////////////////////////////////////////////
 
@@ -1351,11 +1346,7 @@ class CaseTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(caseTaskId);
 
-    try {
-      // when
-      caseExecutionCommandBuilder.complete();
-      fail("It should not be possible to complete a case task, while the case instance is active.");
-    } catch (NotAllowedException e) {}
+    assertThatThrownBy(caseExecutionCommandBuilder::complete).isInstanceOf(NotAllowedException.class);
 
 
     // complete ////////////////////////////////////////////////////////

@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.DecisionService;
@@ -30,9 +34,6 @@ import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * Exposes all operaton process engine services as beans.

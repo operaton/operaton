@@ -20,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 class ConcurrentLruCacheTest {
 
@@ -96,21 +96,21 @@ class ConcurrentLruCacheTest {
 
   @Test
   void failToInsertInvalidKey() {
-    assertThrows(NullPointerException.class, () ->
+    assertThatExceptionOfType(NullPointerException.class).isThrownBy(() ->
 
       cache.put(null, "1"));
   }
 
   @Test
   void failToInsertInvalidValue() {
-    assertThrows(NullPointerException.class, () ->
+    assertThatExceptionOfType(NullPointerException.class).isThrownBy(() ->
 
       cache.put("a", null));
   }
 
   @Test
   void failToCreateCacheWithInvalidCapacity() {
-    assertThrows(IllegalArgumentException.class, () -> {
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
 
       new ConcurrentLruCache<String, String>(-1);
     });

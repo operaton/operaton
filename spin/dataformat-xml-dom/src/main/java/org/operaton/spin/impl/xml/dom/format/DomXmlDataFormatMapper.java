@@ -16,17 +16,18 @@
  */
 package org.operaton.spin.impl.xml.dom.format;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import java.beans.Introspector;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
 import javax.xml.namespace.QName;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import org.operaton.spin.DeserializationTypeValidator;
 import org.operaton.spin.SpinRuntimeException;
@@ -34,8 +35,8 @@ import org.operaton.spin.impl.util.SpinReflectUtil;
 import org.operaton.spin.impl.xml.dom.DomXmlLogger;
 import org.operaton.spin.impl.xml.dom.format.spi.JaxBContextProvider;
 import org.operaton.spin.spi.DataFormatMapper;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 /**
  * {@link DataFormatMapper} using JAXB for mapping Java Objects to XML and vice-versa.

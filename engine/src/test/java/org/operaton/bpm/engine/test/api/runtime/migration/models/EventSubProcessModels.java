@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.models;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class EventSubProcessModels {
+public final class EventSubProcessModels {
 
   public static final String MESSAGE_NAME = "Message";
   public static final String SIGNAL_NAME = "Signal";
@@ -152,4 +152,7 @@ public class EventSubProcessModels {
         .endEvent()
       .subProcessDone()
       .done();
+
+  private EventSubProcessModels() {
+  }
 }

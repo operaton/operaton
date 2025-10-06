@@ -19,6 +19,7 @@ package org.operaton.spin.impl.xml.dom.format;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
@@ -28,10 +29,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import org.w3c.dom.Node;
+
 import org.operaton.spin.impl.xml.dom.DomXmlLogger;
 import org.operaton.spin.spi.DataFormatWriter;
 import org.operaton.spin.xml.SpinXmlElementException;
-import org.w3c.dom.Node;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 

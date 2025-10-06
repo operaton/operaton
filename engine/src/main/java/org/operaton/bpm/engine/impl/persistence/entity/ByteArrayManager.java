@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
-import org.operaton.bpm.engine.impl.persistence.AbstractManager;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
+import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
+import org.operaton.bpm.engine.impl.persistence.AbstractManager;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
 
 /**
  * @author Joram Barrez

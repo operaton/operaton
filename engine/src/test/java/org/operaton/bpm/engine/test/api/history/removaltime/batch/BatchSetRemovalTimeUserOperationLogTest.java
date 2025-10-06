@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime.batch;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
-
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -29,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -46,6 +44,9 @@ import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSe
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner

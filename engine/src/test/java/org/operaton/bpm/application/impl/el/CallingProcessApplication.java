@@ -18,19 +18,19 @@ package org.operaton.bpm.application.impl.el;
 
 import java.util.HashMap;
 import java.util.Map;
+import jakarta.el.ELResolver;
 
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.impl.el.ReadOnlyMapELResolver;
-import jakarta.el.ELResolver;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @ProcessApplication(
-    value="calling-app",
-    deploymentDescriptors={"org/operaton/bpm/application/impl/el/calling-process-app.xml"}
+  value = "calling-app",
+  deploymentDescriptors = {"org/operaton/bpm/application/impl/el/calling-process-app.xml"}
 )
 public class CallingProcessApplication extends EmbeddedProcessApplication {
 

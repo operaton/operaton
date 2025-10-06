@@ -18,6 +18,8 @@ package org.operaton.bpm.application;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
+import jakarta.el.BeanELResolver;
+import jakarta.el.ELResolver;
 
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.impl.EjbProcessApplication;
@@ -25,8 +27,6 @@ import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.application.impl.ServletProcessApplication;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
-import jakarta.el.BeanELResolver;
-import jakarta.el.ELResolver;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 
 /**

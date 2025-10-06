@@ -16,9 +16,13 @@
  */
 package org.operaton.bpm.client.variable;
 
+import java.util.Arrays;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -36,13 +40,10 @@ import org.operaton.spin.Spin;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.xml.SpinXmlElement;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.client.util.ProcessModels.*;
 import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.XML;
 import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
+import static org.assertj.core.api.Assertions.*;
 
 public class XmlSerializationIT {
 
@@ -248,7 +249,7 @@ public class XmlSerializationIT {
 
     SpinXmlElement serializedValue = Spin.XML(typedValue.getValueSerialized());
     SpinList<SpinXmlElement> childElements = serializedValue.childElements();
-    childElements.forEach((c) -> {
+    childElements.forEach(c -> {
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getStringProperty()).isEqualTo(c.childElement("stringProperty").textContent());
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getBooleanProperty()).isEqualTo(Boolean.parseBoolean(c.childElement("booleanProperty").textContent()));
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getIntProperty()).isEqualTo(Integer.parseInt(c.childElement("intProperty").textContent()));
@@ -698,7 +699,7 @@ public class XmlSerializationIT {
 
     SpinXmlElement spinElement = Spin.XML(serializedValue.getValueSerialized());
     SpinList<SpinXmlElement> childElements = spinElement.childElements();
-    childElements.forEach((c) -> {
+    childElements.forEach(c -> {
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getStringProperty()).isEqualTo(c.childElement("stringProperty").textContent());
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getBooleanProperty()).isEqualTo(Boolean.parseBoolean(c.childElement("booleanProperty").textContent()));
       assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getIntProperty()).isEqualTo(Integer.parseInt(c.childElement("intProperty").textContent()));

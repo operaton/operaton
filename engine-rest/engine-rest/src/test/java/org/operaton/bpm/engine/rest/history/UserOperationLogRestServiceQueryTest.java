@@ -16,29 +16,17 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import static io.restassured.RestAssured.expect;
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CLAIM;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_LOG_ID;
-
 import java.util.Date;
 import java.util.List;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
@@ -52,10 +40,22 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CLAIM;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_LOG_ID;
+import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Danny Gräf
@@ -187,27 +187,27 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
 
     String json = response.asString();
     UserOperationLogEntryDto actual = from(json).getObject("[0]", UserOperationLogEntryDto.class);
-    assertEquals(MockProvider.EXAMPLE_USER_OPERATION_LOG_ID, actual.getId());
-    assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, actual.getDeploymentId());
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, actual.getProcessDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, actual.getProcessDefinitionKey());
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, actual.getProcessInstanceId());
-    assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, actual.getExecutionId());
-    assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_ID, actual.getCaseDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_CASE_INSTANCE_ID, actual.getCaseInstanceId());
-    assertEquals(MockProvider.EXAMPLE_CASE_EXECUTION_ID, actual.getCaseExecutionId());
-    assertEquals(MockProvider.EXAMPLE_TASK_ID, actual.getTaskId());
-    assertEquals(MockProvider.EXAMPLE_JOB_ID, actual.getJobId());
-    assertEquals(MockProvider.EXAMPLE_JOB_DEFINITION_ID, actual.getJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_BATCH_ID, actual.getBatchId());
-    assertEquals(MockProvider.EXAMPLE_USER_ID, actual.getUserId());
-    assertEquals(MockProvider.EXAMPLE_USER_OPERATION_TIMESTAMP, from(json).getString("[0].timestamp"));
-    assertEquals(MockProvider.EXAMPLE_USER_OPERATION_ID, actual.getOperationId());
-    assertEquals(MockProvider.EXAMPLE_USER_OPERATION_TYPE, actual.getOperationType());
-    assertEquals(MockProvider.EXAMPLE_USER_OPERATION_ENTITY, actual.getEntityType());
-    assertEquals(MockProvider.EXAMPLE_USER_OPERATION_PROPERTY, actual.getProperty());
-    assertEquals(MockProvider.EXAMPLE_USER_OPERATION_ORG_VALUE, actual.getOrgValue());
-    assertEquals(MockProvider.EXAMPLE_USER_OPERATION_NEW_VALUE, actual.getNewValue());
+    assertThat(actual.getId()).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_LOG_ID);
+    assertThat(actual.getDeploymentId()).isEqualTo(MockProvider.EXAMPLE_DEPLOYMENT_ID);
+    assertThat(actual.getProcessDefinitionId()).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(actual.getProcessDefinitionKey()).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+    assertThat(actual.getProcessInstanceId()).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(actual.getExecutionId()).isEqualTo(MockProvider.EXAMPLE_EXECUTION_ID);
+    assertThat(actual.getCaseDefinitionId()).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
+    assertThat(actual.getCaseInstanceId()).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
+    assertThat(actual.getCaseExecutionId()).isEqualTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID);
+    assertThat(actual.getTaskId()).isEqualTo(MockProvider.EXAMPLE_TASK_ID);
+    assertThat(actual.getJobId()).isEqualTo(MockProvider.EXAMPLE_JOB_ID);
+    assertThat(actual.getJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_JOB_DEFINITION_ID);
+    assertThat(actual.getBatchId()).isEqualTo(MockProvider.EXAMPLE_BATCH_ID);
+    assertThat(actual.getUserId()).isEqualTo(MockProvider.EXAMPLE_USER_ID);
+    assertThat(from(json).getString("[0].timestamp")).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_TIMESTAMP);
+    assertThat(actual.getOperationId()).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_ID);
+    assertThat(actual.getOperationType()).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_TYPE);
+    assertThat(actual.getEntityType()).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_ENTITY);
+    assertThat(actual.getProperty()).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_PROPERTY);
+    assertThat(actual.getOrgValue()).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_ORG_VALUE);
+    assertThat(actual.getNewValue()).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_NEW_VALUE);
   }
 
   @Test

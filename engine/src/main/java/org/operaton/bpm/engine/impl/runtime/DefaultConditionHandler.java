@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.runtime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.bpmn.parser.ConditionalEventDefinition;
@@ -29,9 +32,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Yana Vasileva

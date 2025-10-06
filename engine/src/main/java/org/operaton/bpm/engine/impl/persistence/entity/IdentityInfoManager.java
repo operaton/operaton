@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import org.operaton.bpm.engine.impl.persistence.AbstractManager;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 
 /**
  * @author Tom Baeyens
@@ -49,7 +49,7 @@ public class IdentityInfoManager extends AbstractManager {
     }
   }
 
-  public IdentityInfoEntity findUserAccountByUserIdAndKey(String userId, String userPassword, String key) {
+  public IdentityInfoEntity findUserAccountByUserIdAndKey(String userId, String key) {
     IdentityInfoEntity identityInfoEntity = findUserInfoByUserIdAndKey(userId, key);
     if (identityInfoEntity==null) {
       return null;
@@ -64,7 +64,7 @@ public class IdentityInfoManager extends AbstractManager {
     identityInfoEntity.setDetails(details);
 
     if (identityInfoEntity.getPasswordBytes()!=null) {
-      String password = decryptPassword(identityInfoEntity.getPasswordBytes(), userPassword);
+      String password = decryptPassword(identityInfoEntity.getPasswordBytes());
       identityInfoEntity.setPassword(password);
     }
 
@@ -76,10 +76,10 @@ public class IdentityInfoManager extends AbstractManager {
     return getDbEntityManager().selectList("selectIdentityInfoDetails", identityInfoId);
   }
 
-  public void setUserInfo(String userId, String userPassword, String type, String key, String value, String accountPassword, Map<String, String> accountDetails) {
+  public void setUserInfo(String userId, String type, String key, String value, String accountPassword, Map<String, String> accountDetails) {
     byte[] storedPassword = null;
     if (accountPassword!=null) {
-      storedPassword = encryptPassword(accountPassword, userPassword);
+      storedPassword = encryptPassword(accountPassword);
     }
 
     IdentityInfoEntity identityInfoEntity = findUserInfoByUserIdAndKey(userId, key);
@@ -134,12 +134,12 @@ public class IdentityInfoManager extends AbstractManager {
     }
   }
 
-  public byte[] encryptPassword(String accountPassword, String userPassword) {
+  public byte[] encryptPassword(String accountPassword) {
     // TODO
     return accountPassword.getBytes();
   }
 
-  public String decryptPassword(byte[] storedPassword, String userPassword) {
+  public String decryptPassword(byte[] storedPassword) {
     // TODO
     return new String(storedPassword);
   }

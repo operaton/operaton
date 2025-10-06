@@ -44,24 +44,18 @@ public final class OneTaskScenario {
   @DescribesScenario("init.plain")
   @Times(1)
   public static ScenarioSetup instantiatePlain() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("OneTaskScenario.plain", scenarioName);
-      }
-    };
+    return (engine, scenarioName) ->
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("OneTaskScenario.plain", scenarioName);
   }
 
   @DescribesScenario("init.nested")
   @Times(1)
   public static ScenarioSetup instantiateNested() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("OneTaskScenario.nested", scenarioName);
-      }
-    };
+    return (engine, scenarioName) ->
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("OneTaskScenario.nested", scenarioName);
   }
 }

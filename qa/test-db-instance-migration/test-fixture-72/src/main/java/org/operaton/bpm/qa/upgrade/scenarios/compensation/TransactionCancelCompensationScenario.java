@@ -41,17 +41,15 @@ public final class TransactionCancelCompensationScenario {
   @DescribesScenario("init")
   @Times(3)
   public static ScenarioSetup instantiate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("TransactionCancelCompensationScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("TransactionCancelCompensationScenario", scenarioName);
 
-        // create the compensation event subscription and wait before throwing cancel end event
-        Task userTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(userTask.getId());
-      }
+      // create the compensation event subscription and wait before throwing cancel end event
+      Task userTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(userTask.getId());
     };
   }
 
@@ -59,14 +57,12 @@ public final class TransactionCancelCompensationScenario {
   @ExtendsScenario("init")
   @Times(3)
   public static ScenarioSetup instantiateAndTriggerCompensation() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        // throw compensation by executing the cancel end event;
-        // the compensation handler for userTask should then be active
-        Task beforeCancelTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(beforeCancelTask.getId());
-      }
+    return (engine, scenarioName) -> {
+      // throw compensation by executing the cancel end event;
+      // the compensation handler for userTask should then be active
+      Task beforeCancelTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(beforeCancelTask.getId());
     };
   }
 }

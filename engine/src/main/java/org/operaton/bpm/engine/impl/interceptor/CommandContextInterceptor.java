@@ -90,8 +90,8 @@ public class CommandContextInterceptor extends CommandInterceptor {
 
     // only create a new command context on the current command level (CAM-10002)
     boolean isNew = ProcessEngineContextImpl.consume();
-    boolean isOuterCommand = (context == null);
-    boolean openNew = (isOuterCommand || isNew);
+    boolean isOuterCommand = context == null;
+    boolean openNew = isOuterCommand || isNew;
 
     CommandInvocationContext commandInvocationContext = new CommandInvocationContext(command, processEngineConfiguration, isOuterCommand);
     Context.setCommandInvocationContext(commandInvocationContext);

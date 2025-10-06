@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime;
 
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
-
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -25,6 +23,7 @@ import java.util.Date;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.DecisionService;
@@ -49,6 +48,8 @@ import org.operaton.bpm.engine.test.api.resources.GetByteArrayCommand;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
+
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
 
 /**
  * @author Tassilo Weidner

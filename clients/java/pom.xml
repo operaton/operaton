@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent</relativePath>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-external-task-client-root</artifactId>
   <packaging>pom</packaging>
@@ -40,7 +40,7 @@
     </dependency>
   </dependencies>
   <scm>
-    <url>http://github.com/operaton/operaton-external-task-client-java</url>
+    <url>https://github.com/operaton/operaton-external-task-client-java</url>
     <connection>scm:git:git@github.com:operaton/operaton-external-task-client-java.git</connection>
     <developerConnection>scm:git:git@github.com:operaton/operaton-external-task-client-java.git</developerConnection>
     <tag>HEAD</tag>

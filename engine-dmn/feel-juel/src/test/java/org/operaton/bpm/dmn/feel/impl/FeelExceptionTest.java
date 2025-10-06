@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.dmn.feel.impl;
 
-import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.context.VariableContext;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -28,6 +23,11 @@ import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.context.VariableContext;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

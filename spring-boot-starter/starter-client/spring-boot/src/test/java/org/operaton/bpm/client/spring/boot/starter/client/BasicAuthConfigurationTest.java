@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.client;
 
-import org.operaton.bpm.client.ExternalTaskClientBuilder;
-import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
-import org.operaton.bpm.client.spring.boot.starter.MockHelper;
-import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
-import org.operaton.bpm.client.spring.boot.starter.client.configuration.SimpleSubscriptionConfiguration;
-import org.operaton.bpm.client.spring.boot.starter.impl.ClientAutoConfiguration;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -33,17 +26,24 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import org.operaton.bpm.client.ExternalTaskClientBuilder;
+import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
+import org.operaton.bpm.client.spring.boot.starter.MockHelper;
+import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
+import org.operaton.bpm.client.spring.boot.starter.client.configuration.SimpleSubscriptionConfiguration;
+import org.operaton.bpm.client.spring.boot.starter.impl.ClientAutoConfiguration;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 @TestPropertySource(properties = {
-    "operaton.bpm.client.basic-auth.username=my-username",
-    "operaton.bpm.client.basic-auth.password=my-password",
+  "operaton.bpm.client.basic-auth.username=my-username",
+  "operaton.bpm.client.basic-auth.password=my-password",
 })
 @ContextConfiguration(classes = {
-    ParsePropertiesHelper.TestConfig.class,
-    ClientAutoConfiguration.class,
-    SimpleSubscriptionConfiguration.class
+  ParsePropertiesHelper.TestConfig.class,
+  ClientAutoConfiguration.class,
+  SimpleSubscriptionConfiguration.class
 })
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.cmmn.handler;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
+
 import org.operaton.bpm.engine.impl.cmmn.handler.StageItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.test.cmmn.handler.specification.AbstractExecutionListenerSpec;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.Stage;
 
-import static org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.*;
+import static org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 
 /**
  * @author Thorben Lindhauer

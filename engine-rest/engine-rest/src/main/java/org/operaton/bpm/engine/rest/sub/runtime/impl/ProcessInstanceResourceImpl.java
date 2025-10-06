@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.rest.sub.runtime.impl;
 
 import jakarta.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -37,8 +39,6 @@ import org.operaton.bpm.engine.rest.sub.runtime.ProcessInstanceResource;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceModificationBuilder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
 

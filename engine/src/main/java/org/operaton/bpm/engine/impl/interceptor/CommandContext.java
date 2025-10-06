@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.interceptor;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -55,48 +53,9 @@ import org.operaton.bpm.engine.impl.identity.ReadOnlyIdentityProvider;
 import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
 import org.operaton.bpm.engine.impl.jobexecutor.FailedJobCommandFactory;
 import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
-import org.operaton.bpm.engine.impl.persistence.entity.AttachmentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
-import org.operaton.bpm.engine.impl.persistence.entity.BatchManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayManager;
-import org.operaton.bpm.engine.impl.persistence.entity.CommentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.DeploymentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskManager;
-import org.operaton.bpm.engine.impl.persistence.entity.FilterManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricActivityInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricBatchManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricExternalTaskLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIdentityLinkLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricStatisticsManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IdentityLinkManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IncidentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-import org.operaton.bpm.engine.impl.persistence.entity.MeterLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ReportManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ResourceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.StatisticsManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TableDataManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TaskReportManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TenantManager;
-import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.*;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens

@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.TestTemplate;
+
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -34,6 +33,8 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonExecutionListener;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>

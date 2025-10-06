@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.util.io;
 
 import java.io.InputStream;
+
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;

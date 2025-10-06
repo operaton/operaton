@@ -21,8 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.operaton.bpm.cockpit.impl.plugin.resources.CockpitPluginsRootResource;
 import org.operaton.bpm.cockpit.impl.plugin.resources.BaseRootResource;
+import org.operaton.bpm.cockpit.impl.plugin.resources.CockpitPluginsRootResource;
 import org.operaton.bpm.cockpit.plugin.spi.impl.AbstractCockpitPlugin;
 
 /**

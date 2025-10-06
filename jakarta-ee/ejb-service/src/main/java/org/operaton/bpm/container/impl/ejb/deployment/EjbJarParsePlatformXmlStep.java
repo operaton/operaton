@@ -30,6 +30,7 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
  */
 public class EjbJarParsePlatformXmlStep extends AbstractParseBpmPlatformXmlStep {
 
+  @Override
   public URL getBpmPlatformXmlStream(DeploymentOperation operationContext) {
     return lookupBpmPlatformXml();
   }

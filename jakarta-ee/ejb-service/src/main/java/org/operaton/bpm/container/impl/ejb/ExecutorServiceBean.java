@@ -17,7 +17,6 @@
 package org.operaton.bpm.container.impl.ejb;
 
 import java.util.List;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.annotation.Resource;
@@ -65,10 +64,12 @@ public class ExecutorServiceBean implements ExecutorService {
     }
   }
 
+  @Override
   public boolean schedule(Runnable runnable, boolean isLongRunning) {
     return executorConnection.schedule(runnable, isLongRunning);
   }
 
+  @Override
   public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
     return executorConnection.getExecuteJobsRunnable(jobIds, processEngine);
   }

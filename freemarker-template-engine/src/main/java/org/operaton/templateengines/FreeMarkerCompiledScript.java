@@ -16,9 +16,10 @@
  */
 package org.operaton.templateengines;
 
+import java.io.*;
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import java.io.*;
 import javax.script.*;
 
 /**

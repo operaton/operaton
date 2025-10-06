@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.qa.rolling.update.scenarios.cleanup;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -24,10 +28,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 import org.operaton.bpm.qa.upgrade.Times;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author Tassilo Weidner
@@ -47,52 +47,50 @@ public final class HistoryCleanupScenario {
   @DescribesScenario("initHistoryCleanup")
   @Times(1)
   public static ScenarioSetup initHistoryCleanup() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        for (int i = 0; i < 60; i++) {
-          if (i % 4 == 0) {
-            ClockUtil.setCurrentTime(FIXED_DATE);
+      for (int i = 0; i < 60; i++) {
+        if (i % 4 == 0) {
+          ClockUtil.setCurrentTime(FIXED_DATE);
 
-            engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710", "HistoryCleanupScenario");
+          engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710", "HistoryCleanupScenario");
 
-            String taskId = engine.getTaskService().createTaskQuery()
-              .processInstanceBusinessKey("HistoryCleanupScenario")
-              .singleResult()
-              .getId();
+          String taskId = engine.getTaskService().createTaskQuery()
+            .processInstanceBusinessKey("HistoryCleanupScenario")
+            .singleResult()
+            .getId();
 
 
-            ClockUtil.setCurrentTime(addMinutes(FIXED_DATE, i));
+          ClockUtil.setCurrentTime(addMinutes(FIXED_DATE, i));
 
-            engine.getTaskService().complete(taskId);
-          }
+          engine.getTaskService().complete(taskId);
         }
-
-        ProcessEngineConfigurationImpl configuration =
-          ((ProcessEngineConfigurationImpl) engine.getProcessEngineConfiguration());
-
-        configuration.setHistoryCleanupBatchWindowStartTime("13:00");
-        configuration.setHistoryCleanupBatchWindowEndTime("14:00");
-        configuration.setHistoryCleanupDegreeOfParallelism(3);
-        configuration.initHistoryCleanup();
-
-        engine.getHistoryService().cleanUpHistoryAsync();
-
-        List<Job> jobs = engine.getHistoryService().findHistoryCleanupJobs();
-
-        for (int i = 0; i < 4; i++) {
-          Job jobOne = jobs.get(0);
-          engine.getManagementService().executeJob(jobOne.getId());
-
-          Job jobTwo = jobs.get(1);
-          engine.getManagementService().executeJob(jobTwo.getId());
-
-          Job jobThree = jobs.get(2);
-          engine.getManagementService().executeJob(jobThree.getId());
-        }
-
-        ClockUtil.reset();
       }
+
+      ProcessEngineConfigurationImpl configuration =
+        (ProcessEngineConfigurationImpl) engine.getProcessEngineConfiguration();
+
+      configuration.setHistoryCleanupBatchWindowStartTime("13:00");
+      configuration.setHistoryCleanupBatchWindowEndTime("14:00");
+      configuration.setHistoryCleanupDegreeOfParallelism(3);
+      configuration.initHistoryCleanup();
+
+      engine.getHistoryService().cleanUpHistoryAsync();
+
+      List<Job> jobs = engine.getHistoryService().findHistoryCleanupJobs();
+
+      for (int i = 0; i < 4; i++) {
+        Job jobOne = jobs.get(0);
+        engine.getManagementService().executeJob(jobOne.getId());
+
+        Job jobTwo = jobs.get(1);
+        engine.getManagementService().executeJob(jobTwo.getId());
+
+        Job jobThree = jobs.get(2);
+        engine.getManagementService().executeJob(jobThree.getId());
+      }
+
+      ClockUtil.reset();
     };
   }
 

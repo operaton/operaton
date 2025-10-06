@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.nonpa;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
-import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
-import org.operaton.spin.plugin.impl.SpinProcessEnginePlugin;
-
 import java.util.List;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,6 +23,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
+import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
+import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
+import org.operaton.spin.plugin.impl.SpinProcessEnginePlugin;
 
 @SpringBootApplication
 @EnableTransactionManagement

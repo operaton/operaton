@@ -18,14 +18,15 @@ package org.operaton.bpm.container.impl.jboss.deployment.marker;
 
 import java.util.List;
 
-import org.operaton.bpm.application.AbstractProcessApplication;
-import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
-import org.operaton.bpm.container.impl.jboss.util.ProcessesXmlWrapper;
 import org.jboss.as.ee.component.ComponentDescription;
 import org.jboss.as.server.deployment.AttachmentKey;
 import org.jboss.as.server.deployment.AttachmentList;
 import org.jboss.as.server.deployment.DeploymentUnit;
 import org.jboss.jandex.AnnotationInstance;
+
+import org.operaton.bpm.application.AbstractProcessApplication;
+import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
+import org.operaton.bpm.container.impl.jboss.util.ProcessesXmlWrapper;
 
 
 /**

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,6 +26,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.RepositoryService;
@@ -45,6 +43,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -87,56 +88,31 @@ public class RedeploymentTest {
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResources("not-existing");
-    try {
-      deploymentBuilder.deploy();
-      fail("It should not be able to re-deploy an unexisting deployment");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
 
     var deploymentBuilder1 = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResourceById("not-existing", "an-id");
-    try {
-      deploymentBuilder1.deploy();
-      fail("It should not be able to re-deploy an unexisting deployment");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder1::deploy).isInstanceOf(NotFoundException.class);
 
     var deploymentBuilder2 = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResourcesById("not-existing", Collections.singletonList("an-id"));
-    try {
-      deploymentBuilder2.deploy();
-      fail("It should not be able to re-deploy an unexisting deployment");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder2::deploy).isInstanceOf(NotFoundException.class);
 
     var deploymentBuilder3 = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResourceByName("not-existing", "a-name");
-    try {
-      deploymentBuilder3.deploy();
-      fail("It should not be able to re-deploy an unexisting deployment");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder3::deploy).isInstanceOf(NotFoundException.class);
 
     var deploymentBuilder4 = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME)
       .addDeploymentResourcesByName("not-existing", Collections.singletonList("a-name"));
-    try {
-      deploymentBuilder4.deploy();
-      fail("It should not be able to re-deploy an unexisting deployment");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder4::deploy).isInstanceOf(NotFoundException.class);
   }
 
   @Test
@@ -146,40 +122,15 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME);
     var resourceIdList = Collections.singletonList("a-name");
 
-    try {
-      deploymentBuilder.addDeploymentResources(null);
-      fail("It should not be possible to pass a null deployment id");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResources(null)).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourceById(null, "an-id");
-      fail("It should not be possible to pass a null deployment id");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourceById(null, "an-id")).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourcesById(null, resourceIdList);
-      fail("It should not be possible to pass a null deployment id");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourcesById(null, resourceIdList)).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourceByName(null, "a-name");
-      fail("It should not be possible to pass a null deployment id");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourceByName(null, "a-name")).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourcesByName(null, resourceIdList);
-      fail("It should not be possible to pass a null deployment id");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourcesByName(null, resourceIdList)).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -197,41 +148,13 @@ public class RedeploymentTest {
         .addDeploymentResourcesById(deployment.getId(), Collections.singletonList("not-existing" +
                                                                                       "-resource-id"));
 
-    try {
-      // when
-      deploymentBuilder.deploy();
-      fail("It should not be possible to re-deploy a not existing deployment resource");
-    } catch (NotFoundException e) {
-      // then
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
 
-    try {
-      // when
-      deploymentBuilder.deploy();
-      fail("It should not be possible to re-deploy a not existing deployment resource");
-    } catch (NotFoundException e) {
-      // then
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
 
-    try {
-      // when
-      deploymentBuilder.deploy();
-      fail("It should not be possible to re-deploy a not existing deployment resource");
-    } catch (NotFoundException e) {
-      // then
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
 
-    try {
-      // when
-      deploymentBuilder.deploy();
-      fail("It should not be possible to re-deploy a not existing deployment resource");
-    } catch (NotFoundException e) {
-      // then
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotFoundException.class);
   }
 
   @Test
@@ -241,62 +164,22 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME);
     var listWithNullResourceId = Collections.<String>singletonList(null);
 
-    try {
-      deploymentBuilder.addDeploymentResourceById("an-id", null);
-      fail("It should not be possible to pass a null resource id");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourceById("an-id", null)).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourcesById("an-id", null);
-      fail("It should not be possible to pass a null resource id");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourcesById("an-id", null)).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourcesById("an-id", listWithNullResourceId);
-      fail("It should not be possible to pass a null resource id");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourcesById("an-id", listWithNullResourceId)).isInstanceOf(NotValidException.class);
 
     ArrayList<String> emptyResourceIds = new ArrayList<>();
-    try {
-      deploymentBuilder.addDeploymentResourcesById("an-id", emptyResourceIds);
-      fail("It should not be possible to pass a null resource id");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourcesById("an-id", emptyResourceIds)).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourceByName("an-id", null);
-      fail("It should not be possible to pass a null resource name");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourceByName("an-id", null)).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourcesByName("an-id", null);
-      fail("It should not be possible to pass a null resource name");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourcesByName("an-id", null)).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourcesByName("an-id", listWithNullResourceId);
-      fail("It should not be possible to pass a null resource name");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourcesByName("an-id", listWithNullResourceId)).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder.addDeploymentResourcesByName("an-id", emptyResourceIds);
-      fail("It should not be possible to pass a null resource name");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.addDeploymentResourcesByName("an-id", emptyResourceIds)).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -333,22 +216,12 @@ public class RedeploymentTest {
     var deploymentBuilder = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME);
-    try {
-      deploymentBuilder.nameFromDeployment("a-deployment-id");
-      fail("Cannot set name() and nameFromDeployment().");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder.nameFromDeployment("a-deployment-id")).isInstanceOf(NotValidException.class);
 
     var deploymentBuilder2 = repositoryService
       .createDeployment()
       .nameFromDeployment("a-deployment-id");
-    try {
-      deploymentBuilder2.name(DEPLOYMENT_NAME);
-      fail("Cannot set name() and nameFromDeployment().");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentBuilder2.name(DEPLOYMENT_NAME)).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -1278,12 +1151,7 @@ public class RedeploymentTest {
           .addDeploymentResources(deployment2.getId());
 
     // when
-    try {
-      deploymentBuilder.deploy();
-      fail("It should not be possible to deploy different resources with same name.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -1304,12 +1172,7 @@ public class RedeploymentTest {
         .addModelInstance(RESOURCE_1_NAME, model2)
         .addDeploymentResourceByName(deployment1.getId(), RESOURCE_1_NAME);
 
-    try {
-      deploymentBuilder.deploy();
-      fail("It should not be possible to deploy different resources with same name.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotValidException.class);
   }
 
   @Test

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.Set;
 
@@ -25,13 +23,15 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -62,16 +62,16 @@ public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegratio
     Set<String> processApplicationNames = processApplicationService.getProcessApplicationNames();
 
     // check if the new applications are deployed with allowed names
-    processApplicationNames.retainAll(Arrays.asList(new String [] {"test1", "test2", "/test1", "/test2"}));
+    processApplicationNames.retainAll(Arrays.asList("test1", "test2", "/test1", "/test2"));
 
-    Assertions.assertEquals(2, processApplicationNames.size());
+    assertThat(processApplicationNames).hasSize(2);
 
     for (String appName : processApplicationNames) {
       ProcessApplicationInfo processApplicationInfo = processApplicationService.getProcessApplicationInfo(appName);
 
       assertThat(processApplicationInfo).isNotNull();
       assertThat(processApplicationInfo.getName()).isNotNull();
-      Assertions.assertEquals(1, processApplicationInfo.getDeploymentInfo().size());
+      assertThat(processApplicationInfo.getDeploymentInfo()).hasSize(1);
     }
 
   }

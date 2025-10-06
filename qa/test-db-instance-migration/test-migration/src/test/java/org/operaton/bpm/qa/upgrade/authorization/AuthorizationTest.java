@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.qa.upgrade.authorization;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Collections;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
@@ -29,10 +32,8 @@ import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class AuthorizationTest {
 

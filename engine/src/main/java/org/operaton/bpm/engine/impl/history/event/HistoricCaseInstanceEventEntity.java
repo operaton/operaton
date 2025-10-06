@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
+import java.util.Date;
+
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.CLOSED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.FAILED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
-
-import java.io.Serial;
-import java.util.Date;
 
 /**
  * @author Sebastian Menski

@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.model.xml.test.assertions;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.assertj.core.api.AbstractAssert;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.Reference;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Sebastian Menski

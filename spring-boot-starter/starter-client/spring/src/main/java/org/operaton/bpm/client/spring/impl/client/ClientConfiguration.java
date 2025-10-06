@@ -18,6 +18,7 @@ package org.operaton.bpm.client.spring.impl.client;
 
 import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
 import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
+
 import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.INT_NULL_VALUE;
 import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.LONG_NULL_VALUE;
 

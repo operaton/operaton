@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.client.spring;
 
-import org.operaton.bpm.client.ExternalTaskClient;
-import org.operaton.bpm.client.ExternalTaskClientBuilder;
-import org.operaton.bpm.client.topic.TopicSubscription;
-import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.ExternalTaskClientBuilder;
+import org.operaton.bpm.client.topic.TopicSubscription;
+import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;

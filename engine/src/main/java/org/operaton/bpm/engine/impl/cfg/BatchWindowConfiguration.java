@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
-
 import java.text.ParseException;
 import java.util.Date;
+
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
 
 /**
  * @author Svetlana Dorokhova.
@@ -93,22 +93,24 @@ public class BatchWindowConfiguration {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o)
+    if (this == o) {
       return true;
-    if (o == null || getClass() != o.getClass())
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
+    }
 
     BatchWindowConfiguration that = (BatchWindowConfiguration) o;
 
-    if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null)
+    if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) {
       return false;
+    }
     return endTime != null ? endTime.equals(that.endTime) : that.endTime == null;
   }
 
   @Override
   public int hashCode() {
     int result = startTime != null ? startTime.hashCode() : 0;
-    result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-    return result;
+    return 31 * result + (endTime != null ? endTime.hashCode() : 0);
   }
 }

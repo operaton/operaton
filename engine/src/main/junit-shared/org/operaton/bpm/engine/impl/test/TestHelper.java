@@ -24,10 +24,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngines;
+import org.slf4j.Logger;
+
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
@@ -56,8 +55,7 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 
-import org.slf4j.Logger;
-
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Tom Baeyens
@@ -194,9 +192,9 @@ public abstract class TestHelper {
   private static String createResourceName(Class< ? > type, String name, String suffix) {
     StringBuilder r = new StringBuilder(type.getName().replace('.', '/'));
     if (name != null) {
-      r.append("." + name);
+      r.append(".").append(name);
     }
-    return r.append("." + suffix).toString();
+    return r.append(".").append(suffix).toString();
   }
 
   public static boolean annotationRequiredHistoryLevelCheck(ProcessEngine processEngine, RequiredHistoryLevel annotation, Class<?> testClass, String methodName) {
@@ -559,4 +557,27 @@ public abstract class TestHelper {
     Expression expression = new FixedValue(true);
     return new CaseControlRuleImpl(expression);
   }
+
+  public static void executeJobIgnoringException(ManagementService managementService, String jobId) {
+    try {
+      managementService.executeJob(jobId);
+    } catch (Exception ignored) {
+      // do nothing
+    }
+  }
+
+  public static void executeJobExpectingException(ManagementService managementService, String jobId) {
+    assertThatCode(() -> managementService.executeJob(jobId)).isInstanceOf(ProcessEngineException.class);
+  }
+
+  public static void executeJobExpectingException(ManagementService managementService, String jobId, String exceptionMessage) {
+    assertThatCode(() -> managementService.executeJob(jobId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining(exceptionMessage);
+  }
+
+  public static void executeJobNotExpectingException(ManagementService managementService, String jobId) {
+    assertThatCode(() -> managementService.executeJob(jobId)).doesNotThrowAnyException();
+  }
+
 }

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.dto.converter;
 
-import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
-
 import java.util.List;
+
+import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
 
 /**
  * @author Roman Smirnov

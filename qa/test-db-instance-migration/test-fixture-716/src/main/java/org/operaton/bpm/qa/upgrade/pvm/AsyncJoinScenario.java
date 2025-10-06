@@ -36,21 +36,17 @@ public final class AsyncJoinScenario {
 
   @DescribesScenario("asyncJoinParallel")
   public static ScenarioSetup createJobsForParallelJoin() {
-    return (engine, scenarioName) -> {
-      engine.getRuntimeService().startProcessInstanceByKey("async-join-parallel-716", scenarioName);
-
+    return (engine, scenarioName) ->
       // result: two jobs have been created, one for each concurrent execution
       // reaching the parallel join gateway
-    };
+      engine.getRuntimeService().startProcessInstanceByKey("async-join-parallel-716", scenarioName);
   }
 
   @DescribesScenario("asyncJoinInclusive")
   public static ScenarioSetup createJobsForInclusiveJoin() {
-    return (engine, scenarioName) -> {
-      engine.getRuntimeService().startProcessInstanceByKey("async-join-inclusive-716", scenarioName);
-
+    return (engine, scenarioName) ->
       // result: two jobs have been created, one for each concurrent execution
       // reaching the inclusive join gateway
-    };
+      engine.getRuntimeService().startProcessInstanceByKey("async-join-inclusive-716", scenarioName);
   }
 }

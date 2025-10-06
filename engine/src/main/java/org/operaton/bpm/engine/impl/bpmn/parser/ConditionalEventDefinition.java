@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.bpmn.parser;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
@@ -91,9 +92,9 @@ public class ConditionalEventDefinition extends EventSubscriptionDeclaration imp
 
   public boolean shouldEvaluateForVariableEvent(VariableEvent event) {
     return
-    ((variableName == null || event.getVariableInstance().getName().equals(variableName))
+    (variableName == null || event.getVariableInstance().getName().equals(variableName))
                                           &&
-    ((variableEvents == null || variableEvents.isEmpty()) || variableEvents.contains(event.getEventName())));
+    ((variableEvents == null || variableEvents.isEmpty()) || variableEvents.contains(event.getEventName()));
   }
 
   public boolean evaluate(DelegateExecution execution) {

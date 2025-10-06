@@ -15,8 +15,6 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,6 +24,7 @@ import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.opentest4j.AssertionFailedError;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -55,6 +54,8 @@ import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * JUnit 5 Extension for managing a ProcessEngine during tests.
  * <p>
@@ -69,7 +70,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * </p>
  */
 public class ProcessEngineTestExtension
-		implements BeforeEachCallback, AfterEachCallback {
+  implements BeforeEachCallback, AfterEachCallback {
 
   public static final String DEFAULT_BPMN_RESOURCE_NAME = "process.bpmn20.xml";
 
@@ -89,7 +90,7 @@ public class ProcessEngineTestExtension
   }
 
   @Override
-  public void beforeEach(ExtensionContext context) throws Exception {
+  public void beforeEach(ExtensionContext context) {
     if (processEngineExtension != null) {
       this.processEngine = processEngineExtension.getProcessEngine();
     } else {
@@ -98,7 +99,7 @@ public class ProcessEngineTestExtension
   }
 
   @Override
-  public void afterEach(ExtensionContext context) throws Exception {
+  public void afterEach(ExtensionContext context) {
     this.processEngine = null;
   }
 
@@ -276,7 +277,7 @@ public class ProcessEngineTestExtension
 
     assertThat(jobsExecuted).describedAs("executed more jobs than expected.").isLessThanOrEqualTo(expectedExecutions);
 
-    if (recursive) {
+    if (Boolean.TRUE.equals(recursive)) {
       executeAvailableJobs(jobsExecuted, expectedExecutions, recursive);
     }
   }

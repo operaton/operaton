@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
+import java.util.Date;
+
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
@@ -23,9 +26,6 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DIS
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENABLED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
-
-import java.io.Serial;
-import java.util.Date;
 
 
 /**

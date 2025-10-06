@@ -18,9 +18,10 @@ package org.operaton.bpm.engine.spring.application;
 
 import jakarta.servlet.ServletContext;
 
+import org.springframework.web.context.ServletContextAware;
+
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInfo;
-import org.springframework.web.context.ServletContextAware;
 
 /**
  * <p>Process Application to be used in a Spring Web Application.</p>

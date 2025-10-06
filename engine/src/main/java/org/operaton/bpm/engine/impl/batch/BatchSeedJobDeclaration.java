@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.batch;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.impl.batch.BatchSeedJobHandler.BatchSeedJobConfiguration;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ConstantValueProvider;

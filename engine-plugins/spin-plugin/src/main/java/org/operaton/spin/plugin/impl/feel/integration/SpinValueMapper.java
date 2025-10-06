@@ -16,20 +16,21 @@
  */
 package org.operaton.spin.plugin.impl.feel.integration;
 
-import org.camunda.feel.syntaxtree.Val;
-import org.camunda.feel.syntaxtree.ValString;
-import org.camunda.feel.valuemapper.JavaCustomValueMapper;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.xml.SpinXmlAttribute;
-import org.operaton.spin.xml.SpinXmlElement;
-import org.operaton.spin.xml.SpinXmlNode;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+
+import org.camunda.feel.syntaxtree.Val;
+import org.camunda.feel.syntaxtree.ValString;
+import org.camunda.feel.valuemapper.JavaCustomValueMapper;
+
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.xml.SpinXmlAttribute;
+import org.operaton.spin.xml.SpinXmlElement;
+import org.operaton.spin.xml.SpinXmlNode;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.groupingBy;
@@ -141,7 +142,7 @@ public class SpinValueMapper extends JavaCustomValueMapper {
   protected String nodeName(SpinXmlNode<?> n) {
     String prefix = n.prefix();
     String name = n.name();
-    return (prefix != null && !prefix.isEmpty())? prefix + "$" + name : name;
+    return prefix != null && !prefix.isEmpty()? prefix + "$" + name : name;
   }
 }
 

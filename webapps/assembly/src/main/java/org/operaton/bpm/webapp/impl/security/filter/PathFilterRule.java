@@ -19,10 +19,11 @@ package org.operaton.bpm.webapp.impl.security.filter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.PathMatcher;
+
 import org.operaton.bpm.webapp.impl.security.auth.Authentication;
 import org.operaton.bpm.webapp.impl.security.filter.RequestMatcher.Match;
 import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
-import org.springframework.util.PathMatcher;
 
 /**
  * <p>A {@link SecurityFilterRule} that deleagates to a set of {@link PathMatcher}s</p>

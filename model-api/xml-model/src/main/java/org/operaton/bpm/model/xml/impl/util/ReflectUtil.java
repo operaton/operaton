@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
-import org.operaton.bpm.model.xml.ModelException;
-
 import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.net.URISyntaxException;
 import java.net.URL;
+
+import org.operaton.bpm.model.xml.ModelException;
 
 
 /**

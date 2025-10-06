@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.cmmn.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  * @author Roman Smirnov
@@ -44,11 +44,11 @@ public class DecisionTaskTest extends CmmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
         new AttributeAssumption("decisionRef"),
-        new AttributeAssumption(CAMUNDA_NS, "resultVariable"),
-        new AttributeAssumption(CAMUNDA_NS, "decisionBinding"),
-        new AttributeAssumption(CAMUNDA_NS, "decisionVersion"),
-        new AttributeAssumption(CAMUNDA_NS, "mapDecisionResult"),
-        new AttributeAssumption(CAMUNDA_NS, "decisionTenantId")
+        new AttributeAssumption(OPERATON_NS, "resultVariable"),
+        new AttributeAssumption(OPERATON_NS, "decisionBinding"),
+        new AttributeAssumption(OPERATON_NS, "decisionVersion"),
+        new AttributeAssumption(OPERATON_NS, "mapDecisionResult"),
+        new AttributeAssumption(OPERATON_NS, "decisionTenantId")
       );
   }
 

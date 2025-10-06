@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.impl.context;
 
+import jakarta.inject.Inject;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.cdi.ProcessEngineCdiException;
@@ -24,8 +26,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import jakarta.inject.Inject;
 
 public class ScopedAssociation {
 

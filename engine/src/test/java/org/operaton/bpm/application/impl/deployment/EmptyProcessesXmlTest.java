@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.application.impl.deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.engine.repository.ResumePreviousBy;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Testcase verifying the default properties in the empty processes.xml</p>

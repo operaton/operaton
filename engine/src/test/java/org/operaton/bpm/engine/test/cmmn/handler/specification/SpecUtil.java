@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.cmmn.handler.specification;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstance;
 
-public class SpecUtil {
+public final class SpecUtil {
 
   public static <T extends CmmnModelElementInstance> T createElement(CmmnModelInstance modelInstance,
       CmmnModelElementInstance parentElement, String id, Class<T> elementClass) {
@@ -27,5 +27,8 @@ public class SpecUtil {
     element.setAttributeValue("id", id, true);
     parentElement.addChildElement(element);
     return element;
+  }
+
+  private SpecUtil() {
   }
 }

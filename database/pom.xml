@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-database-settings</artifactId>
@@ -17,21 +17,21 @@
   <properties>
 
     <!-- database driver versions -->
-    <version.h2>2.3.232</version.h2>
+    <version.h2>2.4.240</version.h2>
     <version.h2-v1>1.4.200</version.h2-v1><!-- used for instance migration qa -->
-    <version.oracle>23.5.0.24.07</version.oracle>
-    <version.mariadb>1.7.6</version.mariadb>
+    <version.oracle>23.9.0.25.07</version.oracle>
+    <version.mariadb>1.8.0</version.mariadb>
     <version.mariadb-v1>1.1.8</version.mariadb-v1>
-    <version.mysql>9.3.0</version.mysql>
-    <version.sqlserver>12.10.0.jre8</version.sqlserver>
+    <version.mysql>9.4.0</version.mysql>
+    <version.sqlserver>12.10.1.jre11</version.sqlserver>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
     <version.db2>12.1.2.0</version.db2>
-    <version.postgresql>42.7.7</version.postgresql>
-    <operaton.dbscheme.current.version>7.23.0</operaton.dbscheme.current.version>
+    <version.postgresql>42.7.8</version.postgresql>
+    <operaton.dbscheme.current.version>7.24.0</operaton.dbscheme.current.version>
 
     <!-- needed for sql script and backward compatibility checks -->
-    <operaton.dbscheme.previous.artifactVersion>1.0.0-beta-2</operaton.dbscheme.previous.artifactVersion>
-    <operaton.dbscheme.previous.version>7.22.0</operaton.dbscheme.previous.version>
+    <operaton.dbscheme.previous.artifactVersion>1.0.0-beta-5</operaton.dbscheme.previous.artifactVersion>
+    <operaton.dbscheme.previous.version>7.23.1</operaton.dbscheme.previous.version>
 
     <!-- Testcontainers JDBC URL parameters. By default, an empty string -->
     <database.tc.params>TC_DAEMON=true</database.tc.params>

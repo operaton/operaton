@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import jakarta.inject.Inject;
+
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.context.VariableContext;
@@ -141,6 +142,7 @@ abstract class AbstractVariableMap implements VariableMap {
     throw new UnsupportedOperationException(getClass().getName()+".entrySet() is not supported.");
   }
 
+  @Override
   public VariableContext asVariableContext() {
     throw new UnsupportedOperationException(getClass().getName()+".asVariableContext() is not supported.");
   }

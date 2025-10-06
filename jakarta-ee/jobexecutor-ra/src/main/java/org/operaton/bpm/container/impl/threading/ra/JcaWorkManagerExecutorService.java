@@ -19,17 +19,16 @@ package org.operaton.bpm.container.impl.threading.ra;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.naming.Reference;
 import jakarta.resource.Referenceable;
 import jakarta.resource.spi.work.WorkException;
 import jakarta.resource.spi.work.WorkManager;
 import jakarta.resource.spi.work.WorkRejectedException;
 
+import javax.naming.Reference;
+
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.threading.ra.inflow.JcaInflowExecuteJobsRunnable;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-
 
 
 /**
@@ -52,6 +51,7 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
     this.ra = connector;
   }
 
+  @Override
   public boolean schedule(Runnable runnable, boolean isLongRunning) {
     if(isLongRunning) {
       return scheduleLongRunning(runnable);
@@ -90,6 +90,7 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
     return false;
   }
 
+  @Override
   public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
     return new JcaInflowExecuteJobsRunnable(jobIds, processEngine, ra);
   }
@@ -98,10 +99,12 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
 
   protected Reference reference;
 
+  @Override
   public Reference getReference() {
     return reference;
   }
 
+  @Override
   public void setReference(Reference reference) {
     this.reference = reference;
   }

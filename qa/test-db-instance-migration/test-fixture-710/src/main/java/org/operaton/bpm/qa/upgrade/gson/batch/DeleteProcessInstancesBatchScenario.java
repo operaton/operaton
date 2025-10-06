@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.qa.upgrade.gson.batch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Tassilo Weidner
@@ -41,26 +41,24 @@ public final class DeleteProcessInstancesBatchScenario {
 
   @DescribesScenario("initDeleteProcessBatch")
   public static ScenarioSetup initDeleteProcessBatch() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        for (int i = 0; i < 10; i++) {
-          engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710", "DeleteProcessInstancesBatchScenario");
-        }
-
-        List<String> processInstanceIds = new ArrayList<>();
-
-        List<ProcessInstance> processInstances = engine.getRuntimeService().createProcessInstanceQuery()
-          .processDefinitionKey("oneTaskProcess_710")
-          .list();
-
-        for (ProcessInstance processInstance : processInstances) {
-          processInstanceIds.add(processInstance.getId());
-        }
-
-        Batch batch = engine.getRuntimeService().deleteProcessInstancesAsync(processInstanceIds, null);
-        engine.getManagementService().setProperty("DeleteProcessInstancesBatchScenario.batchId", batch.getId());
+      for (int i = 0; i < 10; i++) {
+        engine.getRuntimeService().startProcessInstanceByKey("oneTaskProcess_710", "DeleteProcessInstancesBatchScenario");
       }
+
+      List<String> processInstanceIds = new ArrayList<>();
+
+      List<ProcessInstance> processInstances = engine.getRuntimeService().createProcessInstanceQuery()
+        .processDefinitionKey("oneTaskProcess_710")
+        .list();
+
+      for (ProcessInstance processInstance : processInstances) {
+        processInstanceIds.add(processInstance.getId());
+      }
+
+      Batch batch = engine.getRuntimeService().deleteProcessInstancesAsync(processInstanceIds, null);
+      engine.getManagementService().setProperty("DeleteProcessInstancesBatchScenario.batchId", batch.getId());
     };
   }
 }

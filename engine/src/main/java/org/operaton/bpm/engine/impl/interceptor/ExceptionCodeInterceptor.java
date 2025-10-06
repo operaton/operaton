@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.interceptor;
 
+import java.sql.SQLException;
+import java.util.function.Supplier;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -23,9 +26,6 @@ import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode;
 import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
-
-import java.sql.SQLException;
-import java.util.function.Supplier;
 
 /**
  * <p>A command interceptor to catch {@link ProcessEngineException} errors and assign error codes.

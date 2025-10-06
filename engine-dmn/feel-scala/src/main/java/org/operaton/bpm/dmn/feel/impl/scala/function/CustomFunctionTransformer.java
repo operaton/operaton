@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala.function;
 
-import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
-import org.camunda.feel.context.JavaFunction;
-import org.camunda.feel.context.JavaFunctionProvider;
-import org.camunda.feel.syntaxtree.Val;
-import org.camunda.feel.valuemapper.ValueMapper;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+
+import org.camunda.feel.context.JavaFunction;
+import org.camunda.feel.context.JavaFunctionProvider;
+import org.camunda.feel.syntaxtree.Val;
+import org.camunda.feel.valuemapper.ValueMapper;
+
+import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
 
 public class CustomFunctionTransformer extends JavaFunctionProvider {
 

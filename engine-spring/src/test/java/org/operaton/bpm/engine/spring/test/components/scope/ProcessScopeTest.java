@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.spring.test.components.scope;
 
-import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
-
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
@@ -27,6 +24,8 @@ import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
 
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProcessScopeTest {
 
   @Test
-  void shouldLogExceptionStacktrace() throws IOException {
+  void shouldLogExceptionStacktrace() throws Exception {
     Logger logger = Logger.getLogger(ProcessScope.class.getName());
     try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
       Handler handler = new StreamHandler(out, new SimpleFormatter());

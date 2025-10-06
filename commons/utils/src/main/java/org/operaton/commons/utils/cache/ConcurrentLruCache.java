@@ -122,6 +122,7 @@ public class ConcurrentLruCache<K, V> implements Cache<K, V> {
    */
   protected void removeAll(K key) {
     while (keys.remove(key)) {
+      continue;
     }
   }
 

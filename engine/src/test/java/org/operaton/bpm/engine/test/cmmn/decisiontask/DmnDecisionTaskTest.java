@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.exception.dmn.DecisionDefinitionNotFoundException;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

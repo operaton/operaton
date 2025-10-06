@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.util;
 
 import java.util.List;
+
 import org.operaton.bpm.engine.query.Query;
 
 public final class QueryUtil {

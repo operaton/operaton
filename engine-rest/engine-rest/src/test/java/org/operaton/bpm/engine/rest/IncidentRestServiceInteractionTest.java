@@ -16,31 +16,29 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.IncidentQuery;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
+
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION;
+import static io.restassured.RestAssured.given;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest {
@@ -57,12 +55,10 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
 
   @BeforeEach
   void setUpRuntimeData() {
-    List<Incident> incidents = MockProvider.createMockIncidents();
-
-    mockedQuery = setupMockIncidentQuery(incidents);
+    mockedQuery = setupMockIncidentQuery();
   }
 
-  private IncidentQuery setupMockIncidentQuery(List<Incident> incidents) {
+  private IncidentQuery setupMockIncidentQuery() {
     IncidentQuery sampleQuery = mock(IncidentQuery.class);
 
     when(sampleQuery.incidentId(anyString())).thenReturn(sampleQuery);

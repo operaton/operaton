@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.List;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Produces;

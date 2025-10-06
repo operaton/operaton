@@ -170,7 +170,7 @@ public class ProcessInstanceSuspensionStateDto extends SuspensionStateDto {
   protected int parameterCount(Object... o) {
     int count = 0;
     for (Object o1 : o) {
-      count += (o1 != null ? 1 : 0);
+      count += o1 != null ? 1 : 0;
     }
     return count;
   }

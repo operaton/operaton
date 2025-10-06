@@ -32,6 +32,7 @@ public interface JsonValue extends SpinValue {
   @Override
   DataFormat<SpinJsonNode> getDataFormat();
 
+  @Override
   JsonValueType getType();
 
 }

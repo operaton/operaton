@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest.util.container;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 
 public abstract class AbstractServerBootstrap {

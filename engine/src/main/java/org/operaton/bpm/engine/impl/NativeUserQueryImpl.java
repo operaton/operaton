@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl;
 import java.io.Serial;
 import java.util.List;
 import java.util.Map;
+
 import org.operaton.bpm.engine.identity.NativeUserQuery;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.identity.db.DbReadOnlyIdentityServiceProvider;

@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.variable;
 
+import java.io.File;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Map;
+import jakarta.activation.FileTypeMap;
+import jakarta.activation.MimetypesFileTypeMap;
+
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.impl.context.EmptyVariableContext;
@@ -33,13 +40,6 @@ import org.operaton.bpm.engine.variable.value.builder.FileValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.ObjectValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.TypedValueBuilder;
-
-import jakarta.activation.FileTypeMap;
-import jakarta.activation.MimetypesFileTypeMap;
-import java.io.File;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * <p>This class is the entry point to the process engine's typed variables API.

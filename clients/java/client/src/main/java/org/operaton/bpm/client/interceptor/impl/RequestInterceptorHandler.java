@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.client.interceptor.impl;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.hc.core5.http.EntityDetails;
 import org.apache.hc.core5.http.HttpException;
 import org.apache.hc.core5.http.HttpRequest;
 import org.apache.hc.core5.http.HttpRequestInterceptor;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.http.protocol.HttpContext;
+
 import org.operaton.bpm.client.impl.EngineClientLogger;
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Tassilo Weidner
@@ -50,7 +51,7 @@ public class RequestInterceptorHandler implements HttpRequestInterceptor {
       try {
         requestInterceptor.intercept(interceptedRequest);
       }
-      catch (Throwable e) {
+      catch (RuntimeException e) {
         LOG.requestInterceptorException(e);
       }
     });

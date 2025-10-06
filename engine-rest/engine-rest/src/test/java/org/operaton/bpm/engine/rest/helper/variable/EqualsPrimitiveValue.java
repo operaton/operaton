@@ -19,9 +19,10 @@ package org.operaton.bpm.engine.rest.helper.variable;
 import java.util.Arrays;
 import java.util.Date;
 
+import org.hamcrest.Description;
+
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.PrimitiveValue;
-import org.hamcrest.Description;
 
 
 /**

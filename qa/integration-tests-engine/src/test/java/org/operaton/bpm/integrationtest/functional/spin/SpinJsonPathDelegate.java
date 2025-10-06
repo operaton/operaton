@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import static org.operaton.spin.Spin.JSON;
-
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.spin.json.SpinJsonNode;
+
+import static org.operaton.spin.Spin.JSON;
 
 /**
  * Created by hawky4s on 04.05.15.

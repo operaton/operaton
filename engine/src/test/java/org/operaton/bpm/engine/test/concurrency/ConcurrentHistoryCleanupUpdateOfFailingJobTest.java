@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -27,10 +30,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyTestHelper {
@@ -59,7 +60,7 @@ class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyTestHelp
   }
 
   @Test
-  void testFailedHistoryCleanupJobUpdate() throws InterruptedException {
+  void testFailedHistoryCleanupJobUpdate() throws Exception {
     // given configured History cleanup
 
     String cleanUpJobId;

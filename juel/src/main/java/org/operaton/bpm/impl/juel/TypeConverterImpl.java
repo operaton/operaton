@@ -15,12 +15,12 @@
  */
 package org.operaton.bpm.impl.juel;
 
-import jakarta.el.ELException;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import jakarta.el.ELException;
 
 /**
  * Type Conversions as described in EL 2.1 specification (section 1.17).
@@ -80,7 +80,7 @@ public class TypeConverterImpl implements TypeConverter {
       }
     }
     if (value instanceof Character character) {
-      return new BigDecimal((short) character.charValue());
+      return BigDecimal.valueOf((short) character.charValue());
     }
     throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), BigDecimal.class));
   }

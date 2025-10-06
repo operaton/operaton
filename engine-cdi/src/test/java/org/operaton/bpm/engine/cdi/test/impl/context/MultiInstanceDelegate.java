@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 
-import jakarta.enterprise.context.Dependent;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Named
 @Dependent

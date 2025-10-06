@@ -28,6 +28,8 @@ import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 import org.operaton.bpm.qa.upgrade.Times;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+
 /**
  * @author Nikola Koevski
  */
@@ -46,22 +48,19 @@ public class IncidentTimestampScenario extends AbstractTimestampMigrationScenari
   @DescribesScenario("initIncidentTimestamp")
   @Times(1)
   public static ScenarioSetup initIncidentTimestamp() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine processEngine, String scenarioName) {
+    return (processEngine, scenarioName) -> {
 
-        ClockUtil.setCurrentTime(TIMESTAMP);
+      ClockUtil.setCurrentTime(TIMESTAMP);
 
-        deployModel(processEngine, PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY, FAILING_SERVICE_TASK_MODEL);
+      deployModel(processEngine, PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY, FAILING_SERVICE_TASK_MODEL);
 
-        String processInstanceId = processEngine.getRuntimeService()
-          .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, scenarioName)
-          .getId();
+      String processInstanceId = processEngine.getRuntimeService()
+        .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, scenarioName)
+        .getId();
 
-        causeIncident(processEngine, processInstanceId);
+      causeIncident(processEngine, processInstanceId);
 
-        ClockUtil.reset();
-      }
+      ClockUtil.reset();
     };
   }
 
@@ -77,11 +76,7 @@ public class IncidentTimestampScenario extends AbstractTimestampMigrationScenari
       return;
     }
 
-    try {
-      processEngine.getManagementService().executeJob(job.getId());
-    } catch (Exception ex) {
-      // noop
-    }
+    executeJobIgnoringException(processEngine.getManagementService(), job.getId());
 
     causeIncident(processEngine, processInstanceId);
   }
@@ -95,7 +90,7 @@ public class IncidentTimestampScenario extends AbstractTimestampMigrationScenari
 
       Boolean fail = (Boolean) execution.getVariable("fail");
 
-      if (fail == null || fail == true) {
+      if (fail == null || fail) {
         throw new ProcessEngineException(EXCEPTION_MESSAGE);
       }
 

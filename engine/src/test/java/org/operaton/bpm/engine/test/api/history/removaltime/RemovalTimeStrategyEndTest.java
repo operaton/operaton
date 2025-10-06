@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
-
 import java.io.ByteArrayInputStream;
 import java.util.Calendar;
 import java.util.Collections;
@@ -34,6 +29,7 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -76,6 +72,12 @@ import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.tuple;
 
 /**
  * @author Tassilo Weidner
@@ -923,9 +925,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
@@ -974,9 +974,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     String taskId = historyService.createHistoricTaskInstanceQuery().singleResult().getId();
 
@@ -1119,9 +1117,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricJobLog> jobLog = historyService.createHistoricJobLogQuery().list();
 
@@ -1166,9 +1162,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
 
@@ -1908,9 +1902,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity) historyService.createHistoricJobLogQuery()
       .failureLog()
@@ -1925,10 +1917,8 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     Date removalTime = addDays(END_DATE, 5);
 
@@ -2222,9 +2212,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
     List<Job> jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
-      try {
-        managementService.executeJob(job.getId());
-      } catch (RuntimeException ignored) { }
+      executeJobIgnoringException(managementService, job.getId());
     }
 
     jobs = managementService.createJobQuery().list();

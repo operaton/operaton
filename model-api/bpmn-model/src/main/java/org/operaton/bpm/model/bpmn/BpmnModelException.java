@@ -18,7 +18,6 @@ package org.operaton.bpm.model.bpmn;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.model.xml.ModelException;
 
 /**

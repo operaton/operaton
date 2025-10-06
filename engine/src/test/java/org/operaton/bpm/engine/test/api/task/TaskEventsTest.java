@@ -16,7 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.impl.persistence.entity.CommentEntity;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.task.Attachment;
+import org.operaton.bpm.engine.task.Event;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.history.useroperationlog.AbstractUserOperationLogTest;
+
 import static org.operaton.bpm.engine.task.Event.ACTION_ADD_ATTACHMENT;
 import static org.operaton.bpm.engine.task.Event.ACTION_ADD_GROUP_LINK;
 import static org.operaton.bpm.engine.task.Event.ACTION_ADD_USER_LINK;
@@ -24,19 +37,7 @@ import static org.operaton.bpm.engine.task.Event.ACTION_DELETE_ATTACHMENT;
 import static org.operaton.bpm.engine.task.Event.ACTION_DELETE_GROUP_LINK;
 import static org.operaton.bpm.engine.task.Event.ACTION_DELETE_USER_LINK;
 import static org.operaton.bpm.engine.task.IdentityLinkType.CANDIDATE;
-
-import java.util.Date;
-import java.util.List;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.impl.persistence.entity.CommentEntity;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.task.Attachment;
-import org.operaton.bpm.engine.task.Event;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.history.useroperationlog.AbstractUserOperationLogTest;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

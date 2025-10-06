@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.run.qa;
 
-import static io.restassured.RestAssured.when;
-import static org.hamcrest.CoreMatchers.is;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
-import io.restassured.response.Response;
+import static io.restassured.RestAssured.when;
+import static org.hamcrest.CoreMatchers.is;
 
 class ExampleDisabledIT {
 

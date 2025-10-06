@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.bpmn.EventBasedGatewayType;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.model.bpmn.EventBasedGatewayType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

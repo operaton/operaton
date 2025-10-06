@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 import java.io.Serial;
 import java.util.Iterator;
 import java.util.Set;
-
 import jakarta.resource.ResourceException;
 import jakarta.resource.spi.ConnectionDefinition;
 import jakarta.resource.spi.ConnectionManager;
@@ -29,15 +28,16 @@ import jakarta.resource.spi.ManagedConnection;
 import jakarta.resource.spi.ManagedConnectionFactory;
 import jakarta.resource.spi.ResourceAdapter;
 import jakarta.resource.spi.ResourceAdapterAssociation;
+
 import javax.security.auth.Subject;
 
 
 @ConnectionDefinition(
-    connectionFactory = JcaExecutorServiceConnectionFactory.class,
-    connectionFactoryImpl = JcaExecutorServiceConnectionFactoryImpl.class,
-    connection = JcaExecutorServiceConnection.class,
-    connectionImpl = JcaExecutorServiceConnectionImpl.class
-  )
+  connectionFactory = JcaExecutorServiceConnectionFactory.class,
+  connectionFactoryImpl = JcaExecutorServiceConnectionFactoryImpl.class,
+  connection = JcaExecutorServiceConnection.class,
+  connectionImpl = JcaExecutorServiceConnectionImpl.class
+)
 public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnectionFactory, ResourceAdapterAssociation {
 
   @Serial private static final long serialVersionUID = 1L;
@@ -45,18 +45,22 @@ public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnec
   protected transient ResourceAdapter ra;
   protected transient PrintWriter logwriter;
 
+  @Override
   public Object createConnectionFactory(ConnectionManager cxManager) throws ResourceException {
     return new JcaExecutorServiceConnectionFactoryImpl(this, cxManager);
   }
 
+  @Override
   public Object createConnectionFactory() throws ResourceException {
     throw new ResourceException("This resource adapter doesn't support non-managed environments");
   }
 
+  @Override
   public ManagedConnection createManagedConnection(Subject subject, ConnectionRequestInfo cxRequestInfo) throws ResourceException {
     return new JcaExecutorServiceManagedConnection(this);
   }
 
+  @Override
   @SuppressWarnings("rawtypes")
   public ManagedConnection matchManagedConnections(Set connectionSet, Subject subject, ConnectionRequestInfo cxRequestInfo) throws ResourceException {
     ManagedConnection result = null;
@@ -71,18 +75,22 @@ public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnec
     return result;
   }
 
+  @Override
   public PrintWriter getLogWriter() throws ResourceException {
     return logwriter;
   }
 
+  @Override
   public void setLogWriter(PrintWriter out) throws ResourceException {
     logwriter = out;
   }
 
+  @Override
   public ResourceAdapter getResourceAdapter() {
     return ra;
   }
 
+  @Override
   public void setResourceAdapter(ResourceAdapter ra) {
     this.ra = ra;
   }
@@ -94,13 +102,13 @@ public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnec
 
   @Override
   public boolean equals(Object other) {
-    if (other == null)
+    if (other == null) {
       return false;
-    if (other == this)
+    }
+    if (other == this) {
       return true;
-    if (!(other instanceof JcaExecutorServiceManagedConnectionFactory))
-      return false;
-    return true;
+    }
+    return other instanceof JcaExecutorServiceManagedConnectionFactory;
   }
 
 }

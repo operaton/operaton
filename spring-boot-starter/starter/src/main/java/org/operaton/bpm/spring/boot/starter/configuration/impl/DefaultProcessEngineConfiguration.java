@@ -16,20 +16,26 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import java.util.Optional;
+
+import org.springframework.util.StringUtils;
+
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.configuration.OperatonProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 
-import java.util.Optional;
+public class DefaultProcessEngineConfiguration extends AbstractOperatonConfiguration
+    implements OperatonProcessEngineConfiguration {
 
-public class DefaultProcessEngineConfiguration extends AbstractOperatonConfiguration implements OperatonProcessEngineConfiguration {
+  private final Optional<IdGenerator> idGenerator;
 
-  @Autowired
-  private Optional<IdGenerator> idGenerator;
+  public DefaultProcessEngineConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                           Optional<IdGenerator> idGenerator) {
+    super(operatonBpmProperties);
+    this.idGenerator = idGenerator;
+  }
 
   @Override
   public void preInit(SpringProcessEngineConfiguration configuration) {
@@ -55,29 +61,30 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
 
   private void setProcessEngineName(SpringProcessEngineConfiguration configuration) {
     String processEngineName = StringUtils.trimAllWhitespace(operatonBpmProperties.getProcessEngineName());
-    if (!StringUtils.isEmpty(processEngineName) && !processEngineName.contains("-")) {
+    if (StringUtils.hasText(processEngineName) && !processEngineName.contains("-")) {
 
-      if (operatonBpmProperties.getGenerateUniqueProcessEngineName()) {
+      if (Boolean.TRUE.equals(operatonBpmProperties.getGenerateUniqueProcessEngineName())) {
         if (!ProcessEngines.NAME_DEFAULT.equals(processEngineName)) {
           throw new RuntimeException(("A unique processEngineName cannot be generated "
-            + "if a custom processEngineName is already set: %s").formatted(processEngineName));
+              + "if a custom processEngineName is already set: %s").formatted(processEngineName));
         }
-        processEngineName = OperatonBpmProperties.getUniqueName(operatonBpmProperties.UNIQUE_ENGINE_NAME_PREFIX);
+        processEngineName = OperatonBpmProperties.getUniqueName(OperatonBpmProperties.UNIQUE_ENGINE_NAME_PREFIX);
       }
 
       configuration.setProcessEngineName(processEngineName);
     } else {
-      logger.warn("Ignoring invalid processEngineName='{}' - must not be null, blank or contain hyphen", operatonBpmProperties.getProcessEngineName());
+      logger.warn("Ignoring invalid processEngineName='{}' - must not be null, blank or contain hyphen",
+          operatonBpmProperties.getProcessEngineName());
     }
   }
 
   private void setJobExecutorAcquireByPriority(SpringProcessEngineConfiguration configuration) {
     Optional.ofNullable(operatonBpmProperties.getJobExecutorAcquireByPriority())
-      .ifPresent(configuration::setJobExecutorAcquireByPriority);
+        .ifPresent(configuration::setJobExecutorAcquireByPriority);
   }
 
   private void setDefaultNumberOfRetries(SpringProcessEngineConfiguration configuration) {
     Optional.ofNullable(operatonBpmProperties.getDefaultNumberOfRetries())
-      .ifPresent(configuration::setDefaultNumberOfRetries);
+        .ifPresent(configuration::setDefaultNumberOfRetries);
   }
 }

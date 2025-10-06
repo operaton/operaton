@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
 import org.operaton.bpm.engine.impl.history.event.HistoricCaseActivityInstanceEventEntity;
 

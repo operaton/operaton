@@ -17,7 +17,6 @@
 package org.operaton.bpm.container.impl.threading.ra.outbound;
 
 import java.io.Serializable;
-
 import jakarta.resource.Referenceable;
 import jakarta.resource.ResourceException;
 

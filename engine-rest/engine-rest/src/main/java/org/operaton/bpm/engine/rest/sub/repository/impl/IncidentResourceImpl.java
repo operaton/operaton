@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.rest.sub.repository.impl;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -27,8 +29,6 @@ import org.operaton.bpm.engine.rest.dto.runtime.IncidentDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.sub.runtime.IncidentResource;
 import org.operaton.bpm.engine.runtime.Incident;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class IncidentResourceImpl implements IncidentResource {
 

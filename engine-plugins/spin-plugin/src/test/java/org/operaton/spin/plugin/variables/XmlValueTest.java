@@ -16,6 +16,14 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -31,28 +39,16 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.SpinRuntimeException;
-import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.XmlValue;
 import org.operaton.spin.plugin.variable.value.builder.XmlValueBuilder;
 import org.operaton.spin.xml.SpinXmlElement;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.spin.DataFormats.xml;
 import static org.operaton.spin.plugin.variable.SpinValues.xmlValue;
 import static org.operaton.spin.plugin.variable.type.SpinValueType.XML;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.RegisterExtension;
-
 import static org.assertj.core.api.Assertions.assertThat;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -90,10 +86,10 @@ class XmlValueTest {
     SpinXmlElement value = (SpinXmlElement) runtimeService.getVariable(processInstanceId, variableName);
 
     // then
-    assertTrue(value.hasAttr("attrName"));
-    assertEquals("attrValue", value.attr("attrName").value());
-    assertTrue(value.childElements().isEmpty());
-    assertEquals(xml().getName(), value.getDataFormatName());
+    assertThat(value.hasAttr("attrName")).isTrue();
+    assertThat(value.attr("attrName").value()).isEqualTo("attrValue");
+    assertThat(value.childElements()).isEmpty();
+    assertThat(value.getDataFormatName()).isEqualTo(xml().getName());
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -110,14 +106,14 @@ class XmlValueTest {
 
     // then
     SpinXmlElement value = typedValue.getValue();
-    assertTrue(value.hasAttr("attrName"));
-    assertEquals("attrValue", value.attr("attrName").value());
-    assertTrue(value.childElements().isEmpty());
+    assertThat(value.hasAttr("attrName")).isTrue();
+    assertThat(value.attr("attrName").value()).isEqualTo("attrValue");
+    assertThat(value.childElements()).isEmpty();
 
-    assertTrue(typedValue.isDeserialized());
-    assertEquals(XML, typedValue.getType());
-    assertEquals(XML_FORMAT_NAME, typedValue.getSerializationDataFormat());
-    assertEquals(xmlString, typedValue.getValueSerialized());
+    assertThat(typedValue.isDeserialized()).isTrue();
+    assertThat(typedValue.getType()).isEqualTo(XML);
+    assertThat(typedValue.getSerializationDataFormat()).isEqualTo(XML_FORMAT_NAME);
+    assertThat(typedValue.getValueSerialized()).isEqualTo(xmlString);
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -152,8 +148,8 @@ class XmlValueTest {
 
     // However, I can access the serialized value
     XmlValue xmlValue = runtimeService.getVariableTyped(processInstanceId, variableName, false);
-    assertFalse(xmlValue.isDeserialized());
-    assertEquals(brokenXmlString, xmlValue.getValueSerialized());
+    assertThat(xmlValue.isDeserialized()).isFalse();
+    assertThat(xmlValue.getValueSerialized()).isEqualTo(brokenXmlString);
 
     // but not the deserialized properties
     assertThatThrownBy(xmlValue::getValue)
@@ -191,7 +187,7 @@ class XmlValueTest {
 
     // then
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("task1", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("task1");
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -206,7 +202,7 @@ class XmlValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+    assertThat(variableInstances).isEmpty();
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -221,7 +217,7 @@ class XmlValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+    assertThat(variableInstances).isEmpty();
   }
 
   /**
@@ -254,12 +250,12 @@ class XmlValueTest {
     valueInfo.put(ValueType.VALUE_INFO_TRANSIENT, true);
 
     // when
-    XmlValue xmlValue = (XmlValue) SpinValueType.XML.createValueFromSerialized(xmlString, valueInfo);
+    XmlValue xmlValue = (XmlValue) XML.createValueFromSerialized(xmlString, valueInfo);
 
     // then
-    assertTrue(xmlValue.isTransient());
-    Map<String, Object> returnedValueInfo = SpinValueType.XML.getValueInfo(xmlValue);
-    assertEquals(true, returnedValueInfo.get(ValueType.VALUE_INFO_TRANSIENT));
+    assertThat(xmlValue.isTransient()).isTrue();
+    Map<String, Object> returnedValueInfo = XML.getValueInfo(xmlValue);
+    assertThat(returnedValueInfo).containsEntry(ValueType.VALUE_INFO_TRANSIENT, true);
   }
 
   @Test
@@ -288,10 +284,10 @@ class XmlValueTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+    assertThat(variableInstances).isEmpty();
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("userTask1", task.getTaskDefinitionKey());
+    assertThat(task).isNotNull();
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("userTask1");
   }
 }

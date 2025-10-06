@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 
-import org.junit.jupiter.api.Test;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 
 public class CaseInstanceAssertIsActiveTest extends ProcessAssertTestCase {
 
@@ -51,12 +51,7 @@ public class CaseInstanceAssertIsActiveTest extends ProcessAssertTestCase {
     // When
     complete(caseExecution(TASK_B, caseInstanceB));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).isActive();
-      }
-    });
+    expect(() -> assertThat(caseInstance).isActive());
   }
 
   private CaseInstance givenCaseIsCreated() {

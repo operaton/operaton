@@ -42,18 +42,16 @@ public final class NestedNonInterruptingEventSubprocessNestedSubprocessScenario 
   @DescribesScenario("init")
   @Times(6)
   public static ScenarioSetup initNestedSubProcess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NestedNonInterruptingMessageEventSubprocessScenarioNestedSubprocess",
-              scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NestedNonInterruptingMessageEventSubprocessScenarioNestedSubprocess",
+          scenarioName);
 
-        engine.getRuntimeService()
-          .createMessageCorrelation("Message")
-          .processInstanceBusinessKey(scenarioName)
-          .correlate();
-      }
+      engine.getRuntimeService()
+        .createMessageCorrelation("Message")
+        .processInstanceBusinessKey(scenarioName)
+        .correlate();
     };
   }
 
@@ -61,16 +59,14 @@ public final class NestedNonInterruptingEventSubprocessNestedSubprocessScenario 
   @ExtendsScenario("init")
   @Times(6)
   public static ScenarioSetup initNestedSubProcessEnterSubprocess() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        Task eventSubProcessTask = engine.getTaskService()
-          .createTaskQuery()
-          .processInstanceBusinessKey(scenarioName)
-          .taskDefinitionKey("eventSubProcessTask")
-          .singleResult();
+    return (engine, scenarioName) -> {
+      Task eventSubProcessTask = engine.getTaskService()
+        .createTaskQuery()
+        .processInstanceBusinessKey(scenarioName)
+        .taskDefinitionKey("eventSubProcessTask")
+        .singleResult();
 
-        engine.getTaskService().complete(eventSubProcessTask.getId());
-      }
+      engine.getTaskService().complete(eventSubProcessTask.getId());
     };
   }
 }

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.RejectedExecutionException;
@@ -27,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.CallerRunsRejectedJobsHandler;
@@ -37,6 +36,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestHelper.ThreadControl;
 import org.operaton.bpm.engine.test.jobexecutor.ControllableJobExecutor;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

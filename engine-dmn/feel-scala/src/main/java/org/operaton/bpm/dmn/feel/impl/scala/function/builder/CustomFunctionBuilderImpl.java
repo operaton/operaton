@@ -19,6 +19,7 @@ package org.operaton.bpm.dmn.feel.impl.scala.function.builder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
 import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunction;
 

@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.cmmn.handler.CasePlanModelHandler;
 import org.operaton.bpm.engine.impl.cmmn.handler.SentryHandler;
@@ -27,11 +32,6 @@ import org.operaton.bpm.model.cmmn.VariableTransition;
 import org.operaton.bpm.model.cmmn.instance.*;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableOnPart;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableTransitionEvent;
-
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

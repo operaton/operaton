@@ -16,19 +16,19 @@
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
 
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.NEWER_NAMESPACE;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.TYPE_NAME_WINGS;
-
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
+import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.NEWER_NAMESPACE;
+import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.TYPE_NAME_WINGS;
+
 /**
  * @author Ronny Bräunlich
  *
  */
-public class Wings extends ModelElementInstanceImpl{
+public class Wings extends ModelElementInstanceImpl {
 
   /**
    * @param instanceContext

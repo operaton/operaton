@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,16 +23,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.Resource;
 
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 class DefaultDeploymentConfigurationTest {
 
-  private final DefaultDeploymentConfiguration defaultDeploymentConfiguration = new DefaultDeploymentConfiguration();
+  private DefaultDeploymentConfiguration defaultDeploymentConfiguration;
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
   private final SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
 
   @BeforeEach
   void before() {
-    defaultDeploymentConfiguration.operatonBpmProperties = operatonBpmProperties;
+    defaultDeploymentConfiguration = new DefaultDeploymentConfiguration(operatonBpmProperties);
   }
 
   @Test
@@ -54,10 +55,9 @@ class DefaultDeploymentConfigurationTest {
     final Resource[] resources = configuration.getDeploymentResources();
     assertThat(resources).hasSize(11);
 
-    assertThat(filenames(resources)).containsOnly("async-service-task.bpmn", "test.cmmn10.xml",
-      "test.bpmn", "test.cmmn", "test.bpmn20.xml", "check-order.dmn", "eventing.bpmn",
-      "spin-java8-model.bpmn", "eventingWithTaskAssignee.bpmn","eventingWithBoundary.bpmn",
-      "eventingWithIntermediateCatch.bpmn");
+    assertThat(filenames(resources)).containsOnly("async-service-task.bpmn", "test.cmmn10.xml", "test.bpmn",
+        "test.cmmn", "test.bpmn20.xml", "check-order.dmn", "eventing.bpmn", "spin-java8-model.bpmn",
+        "eventingWithTaskAssignee.bpmn", "eventingWithBoundary.bpmn", "eventingWithIntermediateCatch.bpmn");
   }
 
   private Set<String> filenames(Resource[] resources) {

@@ -17,11 +17,12 @@
 package org.operaton.bpm.run.test.config.deploy;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.TestPropertySource;
+
 import org.operaton.bpm.run.OperatonBpmRunProcessEngineConfiguration;
 import org.operaton.bpm.run.property.OperatonBpmRunDeploymentProperties;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -28,6 +28,7 @@ public class StringValueMapper extends PrimitiveValueMapper<StringValue> {
     super(ValueType.STRING);
   }
 
+  @Override
   public StringValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.stringValue((String) untypedValue.getValue());
   }

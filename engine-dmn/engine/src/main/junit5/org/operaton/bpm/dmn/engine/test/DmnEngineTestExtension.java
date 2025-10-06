@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.dmn.engine.test;
 
-import org.operaton.bpm.dmn.engine.DmnDecision;
-import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
-import org.operaton.commons.utils.IoUtil;
-
 import java.io.InputStream;
 import java.util.List;
 
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
+import org.operaton.bpm.dmn.engine.DmnDecision;
+import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
+import org.operaton.commons.utils.IoUtil;
 
 /**
  * JUnit 5 test extension for internal unit tests. Uses The

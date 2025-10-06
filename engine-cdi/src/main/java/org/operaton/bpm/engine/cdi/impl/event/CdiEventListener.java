@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.cdi.impl.event;
 
-import jakarta.enterprise.inject.spi.BeanManager;
-
 import java.io.Serial;
 import java.lang.annotation.Annotation;
+import jakarta.enterprise.inject.spi.BeanManager;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;

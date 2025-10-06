@@ -17,10 +17,11 @@
 package org.operaton.bpm.spring.boot.starter.property;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.operaton.bpm.engine.identity.User;
 
-import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties.joinOn;
+import static java.util.Objects.requireNonNull;
 
 
 public class AdminUserProperty implements User {

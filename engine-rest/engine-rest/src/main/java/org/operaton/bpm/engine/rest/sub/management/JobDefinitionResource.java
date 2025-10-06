@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.sub.management;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+
 import org.operaton.bpm.engine.rest.dto.management.JobDefinitionDto;
 import org.operaton.bpm.engine.rest.dto.management.JobDefinitionSuspensionStateDto;
 import org.operaton.bpm.engine.rest.dto.runtime.JobDefinitionPriorityDto;
 import org.operaton.bpm.engine.rest.dto.runtime.RetriesDto;
-
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 
 /**
  * @author roman.smirnov

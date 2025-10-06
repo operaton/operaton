@@ -16,12 +16,17 @@
  */
 package org.operaton.bpm.cockpit.plugin.test;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.ibatis.logging.LogFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.db.CommandExecutor;
 import org.operaton.bpm.cockpit.db.QueryService;
@@ -40,9 +45,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 /**
  *
@@ -113,11 +116,7 @@ public abstract class AbstractCockpitPluginTest {
     }
 
     for (Job job : jobs) {
-      try {
-        managementService.executeJob(job.getId());
-      } catch (Exception ignored) {
-        // ignore
-      }
+      executeJobIgnoringException(managementService, job.getId());
     }
 
     executeAvailableJobs();

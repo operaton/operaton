@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.cdi;
 
+import java.util.Date;
+
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-
-import java.util.Date;
 
 /**
  * Signifies an event that is happening / has happened during the execution of a

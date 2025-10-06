@@ -17,8 +17,9 @@
 package org.operaton.bpm.engine.impl.delegate;
 
 import jakarta.el.ELContext;
-import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import jakarta.el.ValueExpression;
+
+import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 
 /**
  * Class responsible for handling Expression.getValue invocations

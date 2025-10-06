@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+
 public final class SetVariablesScenario {
 
   private SetVariablesScenario() {
@@ -37,32 +39,25 @@ public final class SetVariablesScenario {
 
   @DescribesScenario("setVariablesScenario")
   public static ScenarioSetup createUserOperationLogEntries() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine engine, String scenarioName) {
-        RuntimeService runtimeService = engine.getRuntimeService();
-        ProcessInstance processInstanceWithInitialVariables = runtimeService.createProcessInstanceQuery()
-            .processDefinitionKey("asyncBeforeStartProcess_712")
-            .processInstanceBusinessKey("712_ProcessIntanceExecuted")
-            .singleResult();
-        ManagementService managementService = engine.getManagementService();
-        Job firstJob = managementService.createJobQuery()
-            .processDefinitionKey("asyncBeforeStartProcess_712")
-            .processInstanceId(processInstanceWithInitialVariables.getId())
-            .singleResult();
-        try {
-          managementService.executeJob(firstJob.getId());
-        } catch (Exception e) {
-          // ignore
-        }
+    return (engine, scenarioName) -> {
+      RuntimeService runtimeService = engine.getRuntimeService();
+      ProcessInstance processInstanceWithInitialVariables = runtimeService.createProcessInstanceQuery()
+        .processDefinitionKey("asyncBeforeStartProcess_712")
+        .processInstanceBusinessKey("712_ProcessIntanceExecuted")
+        .singleResult();
+      ManagementService managementService = engine.getManagementService();
+      Job firstJob = managementService.createJobQuery()
+        .processDefinitionKey("asyncBeforeStartProcess_712")
+        .processInstanceId(processInstanceWithInitialVariables.getId())
+        .singleResult();
+      executeJobIgnoringException(managementService, firstJob.getId());
 
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
-            .processDefinitionKey("asyncBeforeStartProcess_712")
-            .processInstanceBusinessKey("7120_ProcessIntanceWithoutExecute")
-            .singleResult();
-        runtimeService.setVariable(processInstance.getId(), "foo", "value");
-        runtimeService.setVariableLocal(processInstance.getId(), "local", "foo1");
-      }
+      ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+        .processDefinitionKey("asyncBeforeStartProcess_712")
+        .processInstanceBusinessKey("7120_ProcessIntanceWithoutExecute")
+        .singleResult();
+      runtimeService.setVariable(processInstance.getId(), "foo", "value");
+      runtimeService.setVariableLocal(processInstance.getId(), "local", "foo1");
     };
   }
 }

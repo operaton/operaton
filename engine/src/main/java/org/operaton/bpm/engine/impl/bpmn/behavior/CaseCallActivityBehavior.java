@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import static org.operaton.bpm.engine.impl.util.CallableElementUtil.getCaseDefinitionToCall;
-
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnCaseInstance;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
@@ -30,6 +28,8 @@ import org.operaton.bpm.engine.impl.pvm.delegate.MigrationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
+
+import static org.operaton.bpm.engine.impl.util.CallableElementUtil.getCaseDefinitionToCall;
 
 /**
  * Implementation to create a new {@link CaseInstance} using the BPMN 2.0 call activity

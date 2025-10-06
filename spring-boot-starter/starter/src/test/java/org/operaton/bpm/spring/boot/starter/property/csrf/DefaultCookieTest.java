@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.spring.boot.starter.property.csrf;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.spring.boot.starter.property.CsrfProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
 
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
 class DefaultCookieTest extends ParsePropertiesHelper {
 
   @Test

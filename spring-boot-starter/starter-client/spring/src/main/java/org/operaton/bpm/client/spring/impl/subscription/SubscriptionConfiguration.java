@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.client.spring.impl.subscription;
 
-import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
-import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.LONG_NULL_VALUE;
-import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.ProcessVariable;
-import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.STRING_NULL_VALUE;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
+
+import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.LONG_NULL_VALUE;
+import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.ProcessVariable;
+import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.STRING_NULL_VALUE;
 
 public class SubscriptionConfiguration {
 

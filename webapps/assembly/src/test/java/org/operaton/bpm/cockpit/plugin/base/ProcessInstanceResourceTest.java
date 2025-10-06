@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.CalledProcessInstanceDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentStatisticsDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessInstanceDto;
@@ -30,9 +32,8 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -251,7 +252,8 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
     var calledProcessInstanceQueryDto = new CalledProcessInstanceQueryDto();
 
     // when + then
-    Assertions.assertDoesNotThrow(() -> resource.queryCalledProcessInstances(calledProcessInstanceQueryDto), "No exception expected");
+    assertThatCode(() -> resource.queryCalledProcessInstances(calledProcessInstanceQueryDto))
+      .doesNotThrowAnyException();
   }
 
 }

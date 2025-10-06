@@ -29,9 +29,9 @@ import jakarta.ws.rs.core.MediaType;
 
 import org.operaton.bpm.engine.rest.dto.runtime.JobDto;
 import org.operaton.bpm.engine.rest.dto.runtime.JobDuedateDto;
+import org.operaton.bpm.engine.rest.dto.runtime.JobSuspensionStateDto;
 import org.operaton.bpm.engine.rest.dto.runtime.PriorityDto;
 import org.operaton.bpm.engine.rest.dto.runtime.RetriesDto;
-import org.operaton.bpm.engine.rest.dto.runtime.JobSuspensionStateDto;
 
 public interface JobResource {
 

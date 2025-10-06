@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import java.io.Serial;
+import java.util.Date;
+
 import org.operaton.bpm.engine.history.ExternalTaskState;
 import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -24,9 +27,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
-
-import java.io.Serial;
-import java.util.Date;
 
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createExceptionByteArray;
 import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;

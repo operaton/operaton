@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7130.restart;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.List;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -33,9 +32,12 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class RestartProcessIntanceWithInitialVariablesTest {
 
@@ -115,11 +117,7 @@ public class RestartProcessIntanceWithInitialVariablesTest {
         .processDefinitionKey("asyncBeforeStartProcess_712")
         .processInstanceId(processInstanceWithInitialVariables.getId())
         .singleResult();
-    try {
-      managementService.executeJob(asyncJob.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, asyncJob.getId());
 
     runtimeService.deleteProcessInstance(processInstanceWithInitialVariables.getId(), "test");
     // when
@@ -181,12 +179,7 @@ public class RestartProcessIntanceWithInitialVariablesTest {
         .processDefinitionKey("asyncBeforeStartProcess_712")
         .processInstanceId(processInstanceWithInitialVariables.getId())
         .singleResult();
-    try {
-      managementService.executeJob(asyncJob.getId());
-    } catch (Exception e) {
-      // ignore
-    }
-
+    executeJobIgnoringException(managementService, asyncJob.getId());
     // assume
     HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historyService
         .createHistoricDetailQuery()

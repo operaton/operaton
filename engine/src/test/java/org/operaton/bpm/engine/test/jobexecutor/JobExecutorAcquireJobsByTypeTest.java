@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
-
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
+
+import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquireJobsTest {
 

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.sub.runtime;
 
-import org.operaton.bpm.engine.rest.dto.runtime.EventSubscriptionDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ExecutionTriggerDto;
-
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+
+import org.operaton.bpm.engine.rest.dto.runtime.EventSubscriptionDto;
+import org.operaton.bpm.engine.rest.dto.runtime.ExecutionTriggerDto;
 
 public interface EventSubscriptionResource {
 

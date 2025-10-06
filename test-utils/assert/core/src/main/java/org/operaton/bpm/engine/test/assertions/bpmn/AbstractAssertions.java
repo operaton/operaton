@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
+import java.util.Map;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngines;
-
-import java.util.Map;
 
 public abstract class AbstractAssertions {
 

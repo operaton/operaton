@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.qa.performance.engine.util;
 
+import java.io.File;
+import java.nio.file.Files;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 
-import java.io.File;
-import java.nio.file.Files;
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 
 
 /**
@@ -45,7 +46,10 @@ public final class JsonUtil {
       if (resultFile.exists()) {
         Files.delete(resultFile.toPath());
       }
-      resultFile.createNewFile();
+      boolean created = resultFile.createNewFile();
+      if (!created) {
+        throw new PerfTestException("Cannot create file " + filename);
+      }
 
       mapper.writerWithDefaultPrettyPrinter().writeValue(resultFile, object);
 

@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.qa.performance.engine.bpmn;
 
-import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.PROCESS_INSTANCE_ID;
-
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.steps.SignalExecutionStep;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceStep;
+
+import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.PROCESS_INSTANCE_ID;
 
 /**
  * @author Daniel Meyer

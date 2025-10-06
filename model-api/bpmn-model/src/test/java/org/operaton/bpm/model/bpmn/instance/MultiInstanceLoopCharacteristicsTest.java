@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.bpmn.MultiInstanceFlowCondition;
 import org.operaton.bpm.model.bpmn.impl.instance.LoopDataInputRef;
 import org.operaton.bpm.model.bpmn.impl.instance.LoopDataOutputRef;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 /**
  * @author Filip Hrisafov

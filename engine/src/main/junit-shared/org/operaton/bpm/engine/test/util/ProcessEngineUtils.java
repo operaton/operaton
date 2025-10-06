@@ -15,11 +15,11 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import org.operaton.bpm.engine.ProcessEngines;
-
 import java.util.Random;
 
-public class ProcessEngineUtils {
+import org.operaton.bpm.engine.ProcessEngines;
+
+public final class ProcessEngineUtils {
     private static final Random RANDOM = new Random();
 
     /**
@@ -30,4 +30,7 @@ public class ProcessEngineUtils {
         String result = "processEngine-rnd" + RANDOM.nextLong();
         return ProcessEngines.isRegisteredProcessEngine(result) ? newRandomProcessEngineName() : result;
     }
+
+  private ProcessEngineUtils() {
+  }
 }

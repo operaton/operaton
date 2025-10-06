@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.actuator;
 
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.spring.boot.starter.actuator.JobExecutorHealthIndicator.Details;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +27,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
+import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.spring.boot.starter.actuator.JobExecutorHealthIndicator.Details;
+
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.*;
-import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 @ExtendWith(MockitoExtension.class)
 class JobExecutorHealthIndicatorTest {

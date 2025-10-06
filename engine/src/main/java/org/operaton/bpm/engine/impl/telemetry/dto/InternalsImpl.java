@@ -22,11 +22,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.operaton.bpm.engine.telemetry.Command;
 import org.operaton.bpm.engine.telemetry.Internals;
 import org.operaton.bpm.engine.telemetry.Metric;
-
-import com.google.gson.annotations.SerializedName;
 
 public class InternalsImpl implements Internals {
 

@@ -16,12 +16,12 @@
  */
 package org.operaton.spin.json;
 
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.spin.Spin;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.spi.SpinDataFormatException;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * A json node.

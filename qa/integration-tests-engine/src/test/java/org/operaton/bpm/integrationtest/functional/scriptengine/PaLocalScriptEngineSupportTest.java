@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.AbstractScriptEngineFactory;
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.DummyScriptEngineFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -47,8 +47,9 @@ public class PaLocalScriptEngineSupportTest extends AbstractPaLocalScriptEngineT
   void shouldSetVariable() {
     String processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_ID).getId();
     Object scriptValue = runtimeService.getVariable(processInstanceId, "scriptValue");
-    assertThat(scriptValue).isNotNull();
-    assertEquals(SCRIPT_TEXT, scriptValue);
+    assertThat(scriptValue)
+            .isNotNull()
+            .isEqualTo(SCRIPT_TEXT);
   }
 
 }

@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.container.impl.deployment.scanning;
 
+import java.net.URL;
+import java.util.Map;
+
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.container.impl.deployment.scanning.spi.ProcessApplicationScanner;
 import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
 import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
-import static org.operaton.bpm.engine.impl.AbstractDefinitionDeployer.DIAGRAM_SUFFIXES;
 
-import java.net.URL;
-import java.util.Map;
+import static org.operaton.bpm.engine.impl.AbstractDefinitionDeployer.DIAGRAM_SUFFIXES;
 
 public final class ProcessApplicationScanningUtil {
 

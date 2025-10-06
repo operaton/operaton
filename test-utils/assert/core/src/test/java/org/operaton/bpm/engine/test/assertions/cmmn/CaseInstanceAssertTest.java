@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 
 public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 
@@ -48,7 +49,7 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
   void returnsHumanTaskAssertForGivenActivityId() {
 		// Given
 		CaseInstance caseInstance = aStartedCase();
-		CaseExecution pi_taskA = caseService()
+		CaseExecution taskAId = caseService()
 				.createCaseExecutionQuery()
 				.activityId(TASK_A).singleResult();
 		// Then
@@ -61,8 +62,8 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 				.assertThat(actual)
 				.overridingErrorMessage(
 						"Expected case execution " + toString(actual)
-								+ " to be equal to " + toString(pi_taskA))
-				.isEqualToComparingOnlyGivenFields(pi_taskA, "id");
+								+ " to be equal to " + toString(taskAId))
+				.isEqualToComparingOnlyGivenFields(taskAId, "id");
 	}
 
   @Test

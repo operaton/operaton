@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.rest.beans;
 
+import java.util.Set;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
-
-import java.util.Set;
 
 public class CustomProcessEngineProvider implements ProcessEngineProvider {
 

@@ -16,12 +16,12 @@
  */
 package org.operaton.spin.spi;
 
-import org.operaton.spin.impl.logging.SpinCoreLogger;
-import org.operaton.spin.impl.logging.SpinLogger;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.regex.Pattern;
+
+import org.operaton.spin.impl.logging.SpinCoreLogger;
+import org.operaton.spin.impl.logging.SpinLogger;
 
 /**
  * Can be used as a base class to determine whether an input reader

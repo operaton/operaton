@@ -16,24 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
-
 import java.lang.reflect.Field;
+import jakarta.servlet.Filter;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.AuthorizeTokenFilter;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
-import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -49,7 +37,19 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import jakarta.servlet.Filter;
+import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.AuthorizeTokenFilter;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
+import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 
 @AutoConfigureMockMvc
 @TestPropertySource("/oauth2-mock.properties")
@@ -76,10 +76,8 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
 
   private OAuth2AuthenticationProvider spiedAuthenticationProvider;
 
-  @Override
   @BeforeEach
-  public void setup() throws Exception {
-    super.setup();
+  void init() throws Exception {
     spyAuthenticationProvider();
   }
 

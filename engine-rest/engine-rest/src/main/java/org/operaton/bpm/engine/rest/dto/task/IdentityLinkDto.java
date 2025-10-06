@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.dto.task;
 
+import jakarta.ws.rs.core.Response.Status;
+
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.task.IdentityLink;
-
-import jakarta.ws.rs.core.Response.Status;
 
 public class IdentityLinkDto {
 

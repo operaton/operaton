@@ -16,29 +16,28 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import jakarta.ws.rs.core.Response;
+import static jakarta.ws.rs.core.Response.Status.OK;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExceptionLoggerIT extends AbstractWebIntegrationTest {
+@SuppressWarnings("java:S5960")
+class ExceptionLoggerIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() {
     createClient(getWebappCtxPath());
   }
 
   @Test
-  public void shouldNotFailForUndefinedUser() {
-    // given
-    target = client.target(appBasePath + "app/admin/default/#/users/undefined?tab=profile");
-
+  void shouldNotFailForUndefinedUser() {
     // when
-    response = target.request().get();
+    HttpResponse<String> response = Unirest.get(appBasePath + "app/admin/default/#/users/undefined?tab=profile").asString();
 
     // then
-    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
   }
 }

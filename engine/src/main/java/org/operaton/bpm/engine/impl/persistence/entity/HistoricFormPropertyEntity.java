@@ -17,8 +17,8 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.io.Serial;
-
 import java.util.Optional;
+
 import org.operaton.bpm.engine.history.HistoricFormField;
 import org.operaton.bpm.engine.history.HistoricFormProperty;
 import org.operaton.bpm.engine.impl.history.event.HistoricFormPropertyEventEntity;

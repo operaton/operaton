@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
-import static org.assertj.core.api.Assertions.fail;
-
 import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
@@ -26,7 +24,10 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -59,12 +60,7 @@ public class TestWarDeploymentWithBrokenBpmnXml {
 
   @Test
   void testXmlInvalid() {
-    try {
-      deployer.deploy(DEPLOYMENT);
-      fail("exception expected");
-    }catch (Exception e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deployer.deploy(DEPLOYMENT)).isInstanceOf(Exception.class);
   }
 
 }

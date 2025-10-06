@@ -16,16 +16,9 @@
  */
 package org.operaton.bpm.engine.test.variables;
 
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
-import org.operaton.bpm.engine.variable.value.FileValue;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.operaton.commons.utils.IoUtil;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.Collections;
@@ -36,11 +29,17 @@ import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
+import org.operaton.bpm.engine.variable.value.FileValue;
+import org.operaton.bpm.engine.variable.value.TypedValue;
+import org.operaton.commons.utils.IoUtil;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Ronny Bräunlich
@@ -89,7 +88,7 @@ class FileValueTypeImplTest {
   }
 
   @Test
-  void createValueFromFile() throws URISyntaxException {
+  void createValueFromFile() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/variables/simpleFile.txt").toURI());
     TypedValue value = type.createValue(file, Collections.singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
     assertThat(value).isInstanceOf(FileValue.class);
@@ -119,7 +118,7 @@ class FileValueTypeImplTest {
   void createValueFromObject() {
     Object value = new Object();
     Map<String, Object> valueInfo = Collections.singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt");
-    assertThrows(IllegalArgumentException.class, () -> type.createValue(value, valueInfo));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> type.createValue(value, valueInfo));
   }
 
   @Test

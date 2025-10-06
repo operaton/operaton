@@ -27,6 +27,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -114,7 +115,7 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
 
     try {
       processBuilder.redirectErrorStream(redirectErrorFlag);
-      if (cleanEnvBoolan) {
+      if (Boolean.TRUE.equals(cleanEnvBoolan)) {
         Map<String, String> env = processBuilder.environment();
         env.clear();
       }
@@ -124,7 +125,7 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
 
       Process process = processBuilder.start();
 
-      if (waitFlag) {
+      if (Boolean.TRUE.equals(waitFlag)) {
         int errorCode = process.waitFor();
 
         if (resultVariableStr != null) {

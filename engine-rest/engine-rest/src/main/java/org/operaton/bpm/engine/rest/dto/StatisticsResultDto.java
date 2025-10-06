@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.engine.rest.dto;
 
-import org.operaton.bpm.engine.rest.dto.repository.ActivityStatisticsResultDto;
-import org.operaton.bpm.engine.rest.dto.repository.IncidentStatisticsResultDto;
-import org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import java.util.List;
+import org.operaton.bpm.engine.rest.dto.repository.ActivityStatisticsResultDto;
+import org.operaton.bpm.engine.rest.dto.repository.IncidentStatisticsResultDto;
+import org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto;
 
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.CLASS
+  use = JsonTypeInfo.Id.CLASS
 )
 @JsonSubTypes({
-    @JsonSubTypes.Type(ActivityStatisticsResultDto.class),
-    @JsonSubTypes.Type(ProcessDefinitionStatisticsResultDto.class)
+  @JsonSubTypes.Type(ActivityStatisticsResultDto.class),
+  @JsonSubTypes.Type(ProcessDefinitionStatisticsResultDto.class)
 })
 public abstract class StatisticsResultDto {
 

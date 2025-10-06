@@ -18,7 +18,6 @@ package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
 import java.io.Serial;
 import java.io.Serializable;
-
 import jakarta.ejb.Stateless;
 import jakarta.inject.Named;
 

@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7110.timestamp;
 
-import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.history.HistoricJobLog;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;

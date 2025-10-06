@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.helper;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -142,6 +135,13 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 /**
  * Provides mocks for the basic engine entities, such as
  * {@link ProcessDefinition}, {@link User}, etc., that are reused across the
@@ -248,6 +248,7 @@ public abstract class MockProvider {
   public static final String EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY_LIKE = "aKeyLike";
   public static final String EXAMPLE_PROCESS_INSTANCE_ID = "aProcInstId";
   public static final String EXAMPLE_ROOT_HISTORIC_PROCESS_INSTANCE_ID = "aRootProcInstId";
+  public static final String EXAMPLE_ROOT_PROCESS_INSTANCE_ID = "aRootProcessInstanceId";
   public static final String ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID = "anotherId";
   public static final boolean EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED = false;
   public static final boolean EXAMPLE_PROCESS_INSTANCE_IS_ENDED = false;
@@ -514,6 +515,7 @@ public abstract class MockProvider {
   public static final Boolean EXAMPLE_WITH_EXCEPTION = true;
   public static final Boolean EXAMPLE_NO_RETRIES_LEFT = true;
   public static final Boolean EXAMPLE_JOB_IS_SUSPENDED = true;
+  public static final Boolean EXAMPLE_ACQUIRED = true;
   public static final long EXAMPLE_JOB_PRIORITY = Integer.MAX_VALUE + 42l;
 
   public static final String EXAMPLE_RESOURCE_TYPE_NAME = "exampleResource";
@@ -537,7 +539,7 @@ public abstract class MockProvider {
 
   // Historic Process Instance
   public static final String EXAMPLE_HISTORIC_PROCESS_INSTANCE_DELETE_REASON = "aDeleteReason";
-  public static final long EXAMPLE_HISTORIC_PROCESS_INSTANCE_DURATION_MILLIS = 2000l;
+  public static final long EXAMPLE_HISTORIC_PROCESS_INSTANCE_DURATION_MILLIS = 2000L;
   public static final String EXAMPLE_HISTORIC_PROCESS_INSTANCE_START_TIME = withTimezone("2013-04-23T13:42:43");
   public static final String EXAMPLE_HISTORIC_PROCESS_INSTANCE_END_TIME = withTimezone("2013-04-23T13:42:43");
   public static final String EXAMPLE_HISTORIC_PROCESS_INSTANCE_REMOVAL_TIME = withTimezone("2013-04-26T13:42:43");
@@ -563,7 +565,7 @@ public abstract class MockProvider {
   public static final int EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD = 1;
 
   // Historic Case Instance
-  public static final long EXAMPLE_HISTORIC_CASE_INSTANCE_DURATION_MILLIS = 2000l;
+  public static final long EXAMPLE_HISTORIC_CASE_INSTANCE_DURATION_MILLIS = 2000L;
   public static final String EXAMPLE_HISTORIC_CASE_INSTANCE_CREATE_TIME = withTimezone("2013-04-23T13:42:43");
   public static final String EXAMPLE_HISTORIC_CASE_INSTANCE_CLOSE_TIME = withTimezone("2013-04-23T13:42:43");
   public static final String EXAMPLE_HISTORIC_CASE_INSTANCE_CREATE_USER_ID = "aCreateUserId";
@@ -590,7 +592,7 @@ public abstract class MockProvider {
   public static final String EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_START_TIME = withTimezone("2013-04-23T13:42:43");
   public static final String EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_END_TIME = withTimezone("2013-04-23T18:42:43");
   public static final String EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_REMOVAL_TIME = withTimezone("2013-04-23T13:42:43");
-  public static final long EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_DURATION = 2000l;
+  public static final long EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_DURATION = 2000L;
   public static final String EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_STARTED_AFTER = withTimezone("2013-04-23T13:42:43");
   public static final String EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_STARTED_BEFORE = withTimezone("2013-01-23T13:42:43");
   public static final String EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_FINISHED_AFTER = withTimezone("2013-01-23T13:42:43");
@@ -612,7 +614,7 @@ public abstract class MockProvider {
   public static final String EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_CALLED_CASE_INSTANCE_ID = "aCalledCaseInstanceId";
   public static final String EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_CREATE_TIME = withTimezone("2014-04-23T18:42:42");
   public static final String EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_END_TIME = withTimezone("2014-04-23T18:42:43");
-  public static final long EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_DURATION = 2000l;
+  public static final long EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_DURATION = 2000L;
   public static final boolean EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_IS_REQUIRED = true;
   public static final boolean EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_IS_AVAILABLE = true;
   public static final boolean EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_IS_ENABLED = true;
@@ -918,6 +920,7 @@ public abstract class MockProvider {
   public static final String EXTERNAL_TASK_ID_LIST = EXTERNAL_TASK_ID + "," + EXTERNAL_TASK_ANOTHER_ID;
   public static final String EXTERNAL_TASK_ERROR_MESSAGE = "some error";
   public static final String EXTERNAL_TASK_LOCK_EXPIRATION_TIME = withTimezone("2015-10-05T13:25:00");
+  public static final String EXTERNAL_TASK_CREATE_TIME = withTimezone("2015-10-05T12:25:00");
   public static final Integer EXTERNAL_TASK_RETRIES = 5;
   public static final boolean EXTERNAL_TASK_SUSPENDED = true;
   public static final String EXTERNAL_TASK_TOPIC_NAME = "aTopic";
@@ -1035,6 +1038,7 @@ public abstract class MockProvider {
     EXAMPLE_TELEMETRY_INTERNALS.setWebapps(Collections.singleton("cockpit"));
     EXAMPLE_TELEMETRY_INTERNALS.setDataCollectionStartDate(DateTimeUtil.parseDate(EXAMPLE_TELEMETRY_DATA_COLLECTION_START_DATE));
   }
+
   public static final ProductImpl EXAMPLE_TELEMETRY_PRODUCT = new ProductImpl(EXAMPLE_TELEMETRY_PRODUCT_NAME,
       EXAMPLE_TELEMETRY_PRODUCT_VERSION, EXAMPLE_TELEMETRY_PRODUCT_EDITION, EXAMPLE_TELEMETRY_INTERNALS);
   public static final TelemetryDataImpl EXAMPLE_TELEMETRY_DATA = new TelemetryDataImpl(EXAMPLE_TELEMETRY_INSTALLATION_ID, EXAMPLE_TELEMETRY_PRODUCT);
@@ -1065,7 +1069,6 @@ public abstract class MockProvider {
       .operatonFormRef(EXAMPLE_FORM_KEY, EXAMPLE_FORM_REF_BINDING, EXAMPLE_FORM_REF_VERSION)
       .tenantId(EXAMPLE_TENANT_ID)
       .taskState(EXAMPLE_HISTORIC_TASK_STATE)
-      .tenantId(EXAMPLE_TENANT_ID)
       .hasAttachment(EXAMPLE_TASK_ATTACHMENT_STATE)
       .hasComment(EXAMPLE_TASK_COMMENT_STATE);
   }
@@ -3133,6 +3136,7 @@ public abstract class MockProvider {
       .errorMessage(EXTERNAL_TASK_ERROR_MESSAGE)
       .executionId(EXAMPLE_EXECUTION_ID)
       .lockExpirationTime(DateTimeUtil.parseDate(EXTERNAL_TASK_LOCK_EXPIRATION_TIME))
+      .createTime(DateTimeUtil.parseDate(EXTERNAL_TASK_CREATE_TIME))
       .processDefinitionId(EXAMPLE_PROCESS_DEFINITION_ID)
       .processDefinitionKey(EXAMPLE_PROCESS_DEFINITION_KEY)
       .processDefinitionVersionTag(EXAMPLE_PROCESS_DEFINITION_VERSION_TAG)

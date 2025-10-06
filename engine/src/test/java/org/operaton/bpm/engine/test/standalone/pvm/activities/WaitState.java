@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm.activities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Tom Baeyens

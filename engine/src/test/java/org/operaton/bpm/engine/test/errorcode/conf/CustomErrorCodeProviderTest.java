@@ -16,16 +16,14 @@
  */
 package org.operaton.bpm.engine.test.errorcode.conf;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.catchThrowable;
-
 import java.sql.SQLException;
 
+import ch.qos.logback.classic.Level;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -41,7 +39,9 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import ch.qos.logback.classic.Level;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class CustomErrorCodeProviderTest {
 
@@ -50,7 +50,7 @@ class CustomErrorCodeProviderTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .randomEngineName().closeEngineAfterAllTests()
-    .configurator(c -> {
+    .configurator(c ->
       c.setCustomExceptionCodeProvider(new ExceptionCodeProvider() {
         
         @Override
@@ -63,8 +63,7 @@ class CustomErrorCodeProviderTest {
           return PROVIDED_CUSTOM_CODE;
         }
         
-      });
-    })
+      }))
     .build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

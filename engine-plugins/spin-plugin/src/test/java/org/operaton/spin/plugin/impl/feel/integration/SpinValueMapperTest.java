@@ -16,14 +16,6 @@
  */
 package org.operaton.spin.plugin.impl.feel.integration;
 
-import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
-import org.operaton.bpm.dmn.feel.impl.scala.spin.SpinValueMapperFactory;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
-import org.operaton.bpm.engine.test.junit5.WatchLogger;
-import org.operaton.spin.Spin;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.xml.SpinXmlElement;
-
 import java.util.*;
 
 import org.camunda.feel.impl.DefaultValueMapper;
@@ -36,6 +28,14 @@ import org.camunda.feel.valuemapper.ValueMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
+import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
+import org.operaton.bpm.dmn.feel.impl.scala.spin.SpinValueMapperFactory;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.WatchLogger;
+import org.operaton.spin.Spin;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.xml.SpinXmlElement;
 
 import static camundajar.impl.scala.jdk.CollectionConverters.ListHasAsScala;
 import static org.assertj.core.api.Assertions.assertThat;

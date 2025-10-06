@@ -18,9 +18,6 @@ package org.operaton.bpm.webapp.impl.db;
 
 import java.util.List;
 
-import org.operaton.bpm.webapp.db.CommandExecutor;
-import org.operaton.bpm.webapp.db.QueryParameters;
-import org.operaton.bpm.webapp.db.QueryService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.AuthorizationCheck;
@@ -28,6 +25,9 @@ import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.util.QueryMaxResultsLimitUtil;
+import org.operaton.bpm.webapp.db.CommandExecutor;
+import org.operaton.bpm.webapp.db.QueryParameters;
+import org.operaton.bpm.webapp.db.QueryService;
 
 public class QueryServiceImpl implements QueryService {
 
@@ -43,9 +43,10 @@ public class QueryServiceImpl implements QueryService {
   }
 
   public <T> T executeQuery(String statement, Object parameter, Class<T> clazz) {
-    return commandExecutor.executeCommand(new ExecuteSingleQueryCmd<T>(statement, parameter, clazz));
+    return commandExecutor.executeCommand(new ExecuteSingleQueryCmd<>(statement, parameter, clazz));
   }
 
+  @Override
   public Long executeQueryRowCount(String statement, ListQueryParameterObject parameter) {
     return commandExecutor.executeCommand(new QueryServiceRowCountCmd(statement, parameter));
   }
@@ -67,7 +68,7 @@ public class QueryServiceImpl implements QueryService {
     return processEngineConfiguration;
   }
 
-  protected  <T> void configureAuthCheck(ListQueryParameterObject parameter,
+  protected void configureAuthCheck(ListQueryParameterObject parameter,
                                          ProcessEngineConfigurationImpl engineConfig,
                                          CommandContext commandContext) {
     AuthorizationCheck authCheck = parameter.getAuthCheck();
@@ -127,9 +128,9 @@ public class QueryServiceImpl implements QueryService {
 
     protected String statement;
     protected Object parameter;
-    protected Class clazz;
+    protected Class<T> clazz;
 
-    public <T> ExecuteSingleQueryCmd(String statement, Object parameter, Class<T> clazz) {
+    public ExecuteSingleQueryCmd(String statement, Object parameter, Class<T> clazz) {
       this.statement = statement;
       this.parameter = parameter;
       this.clazz = clazz;

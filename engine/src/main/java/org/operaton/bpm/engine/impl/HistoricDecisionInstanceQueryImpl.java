@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +26,8 @@ import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  *  @author Philipp Ossler
@@ -242,6 +242,12 @@ public class HistoricDecisionInstanceQueryImpl extends AbstractQuery<HistoricDec
   @Override
   public HistoricDecisionInstanceQuery orderByEvaluationTime() {
     orderBy(HistoricDecisionInstanceQueryProperty.EVALUATION_TIME);
+    return this;
+  }
+
+  @Override
+  public HistoricDecisionInstanceQuery orderByDecisionInstanceId(){
+    orderBy(HistoricDecisionInstanceQueryProperty.DECISION_INSTANCE_ID);
     return this;
   }
 

@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collections;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.management.MetricsQuery;
 import org.operaton.bpm.engine.variable.VariableMap;
@@ -29,6 +28,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.CallActivity;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
 
@@ -88,7 +89,7 @@ public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
   @Test
   void shouldCountRootProcessInstanceWithCallActivities() {
     // given
-    BpmnModelInstance callingInstance = getCallingInstance(BASE_INSTANCE_KEY, Collections.EMPTY_MAP);
+    BpmnModelInstance callingInstance = getCallingInstance(BASE_INSTANCE_KEY, Collections.emptyMap());
     testRule.deploy(BASE_INSTANCE, callingInstance);
 
     // when

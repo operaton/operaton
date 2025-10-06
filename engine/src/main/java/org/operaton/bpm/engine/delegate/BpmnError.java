@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import java.io.Serial;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.bpmn.parser.Error;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-
-import java.io.Serial;
 
 
 /**

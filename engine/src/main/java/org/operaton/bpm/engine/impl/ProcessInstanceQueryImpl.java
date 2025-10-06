@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,6 +33,9 @@ import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 
 /**
  * @author Tom Baeyens
@@ -49,6 +49,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
   @Serial
   private static final long serialVersionUID = 1L;
   protected String processInstanceId;
+  protected String rootProcessInstanceId;
   protected String businessKey;
   protected String businessKeyLike;
   protected String processDefinitionId;
@@ -92,6 +93,13 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     ensureNotNull("Process instance id", processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
+  }
+
+  @Override
+  public ProcessInstanceQueryImpl rootProcessInstanceId(String rootProcessInstanceId) {
+      ensureNotNull("Root process instance id", rootProcessInstanceId);
+      this.rootProcessInstanceId = rootProcessInstanceId;
+      return this;
   }
 
   @Override
@@ -403,6 +411,10 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
 
   public String getProcessInstanceId() {
     return processInstanceId;
+  }
+
+  public String getRootProcessInstanceId() {
+    return rootProcessInstanceId;
   }
 
   public Set<String> getProcessInstanceIds() {

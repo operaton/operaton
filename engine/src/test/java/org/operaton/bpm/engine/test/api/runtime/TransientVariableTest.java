@@ -16,16 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITIONAL_PROCESS_KEY;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITION_ID;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.USER_TASK_ID;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VARIABLE_NAME;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VAR_CONDITION;
-
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,6 +25,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -60,6 +52,14 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITIONAL_PROCESS_KEY;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITION_ID;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.USER_TASK_ID;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VARIABLE_NAME;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VAR_CONDITION;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
 class TransientVariableTest {
 
@@ -75,7 +75,7 @@ class TransientVariableTest {
   TaskService taskService;
 
   @Test
-  void createTransientTypedVariablesUsingVariableMap() throws URISyntaxException {
+  void createTransientTypedVariablesUsingVariableMap() throws Exception {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -112,7 +112,7 @@ class TransientVariableTest {
   }
 
   @Test
-  void createTransientVariablesUsingVariableMap() throws URISyntaxException {
+  void createTransientVariablesUsingVariableMap() throws Exception {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()

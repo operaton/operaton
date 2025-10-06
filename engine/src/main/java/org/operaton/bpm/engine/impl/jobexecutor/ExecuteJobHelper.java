@@ -38,24 +38,24 @@ public final class ExecuteJobHelper {
 
     JobFailureCollector jobFailureCollector = new JobFailureCollector(jobId);
 
-    executeJob(jobId, commandExecutor, jobFailureCollector, new ExecuteJobsCmd(jobId, jobFailureCollector));
+    executeJob(commandExecutor, jobFailureCollector, new ExecuteJobsCmd(jobId, jobFailureCollector));
 
   }
 
-  public static void executeJob(String nextJobId, CommandExecutor commandExecutor, JobFailureCollector jobFailureCollector, Command<Void> cmd) {
-    executeJob(nextJobId, commandExecutor, jobFailureCollector, cmd, null);
+  public static void executeJob(CommandExecutor commandExecutor, JobFailureCollector jobFailureCollector, Command<Void> cmd) {
+    executeJob(commandExecutor, jobFailureCollector, cmd, null);
   }
 
-  public static void executeJob(String nextJobId, CommandExecutor commandExecutor, JobFailureCollector jobFailureCollector, Command<Void> cmd,
+  public static void executeJob(CommandExecutor commandExecutor, JobFailureCollector jobFailureCollector, Command<Void> cmd,
       ProcessEngineConfigurationImpl configuration) {
     try {
       commandExecutor.execute(cmd);
     } catch (RuntimeException exception) {
-      handleJobFailure(nextJobId, jobFailureCollector, exception);
+      handleJobFailure(jobFailureCollector, exception);
       // throw the original exception to indicate the ExecuteJobCmd failed
       throw exception;
     } catch (Throwable exception) {
-      handleJobFailure(nextJobId, jobFailureCollector, exception);
+      handleJobFailure(jobFailureCollector, exception);
       // wrap the exception and throw it to indicate the ExecuteJobCmd failed
       throw LOG.wrapJobExecutionFailure(jobFailureCollector, exception);
     } finally {
@@ -91,7 +91,7 @@ public final class ExecuteJobHelper {
         }
 
       } else {
-        SuccessfulJobListener successListener = createSuccessfulJobListener(commandExecutor);
+        SuccessfulJobListener successListener = createSuccessfulJobListener();
         commandExecutor.execute(successListener);
       }
     }
@@ -115,7 +115,7 @@ public final class ExecuteJobHelper {
     }
   }
 
-  protected static void handleJobFailure(final String nextJobId, final JobFailureCollector jobFailureCollector, Throwable exception) {
+  protected static void handleJobFailure(final JobFailureCollector jobFailureCollector, Throwable exception) {
     jobFailureCollector.setFailure(exception);
   }
 
@@ -124,7 +124,7 @@ public final class ExecuteJobHelper {
     return new FailedJobListener(commandExecutor, jobFailureCollector);
   }
 
-  protected static SuccessfulJobListener createSuccessfulJobListener(CommandExecutor commandExecutor) {
+  protected static SuccessfulJobListener createSuccessfulJobListener() {
     return new SuccessfulJobListener();
   }
 

@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.webapp.impl.engine;
 
-import static org.assertj.core.api.Assertions.fail;
-
 import java.io.File;
-
-import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -28,6 +24,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.fail;
 
 public class WebappsDatabaseNamingConsistencyTest {
 
@@ -57,9 +57,13 @@ public class WebappsDatabaseNamingConsistencyTest {
               lineNumber.getAndIncrement();
               Matcher matcher = pattern.matcher(line);
               while (matcher.find()) {
-                errorMessageBuilder.append(
-                    "Found illegal lowercase column name " + matcher.group(1) + " in SQL " + file + " at line "
-                        + lineNumber + ". All SQL column names should be uppercase.\n");
+                errorMessageBuilder.append("Found illegal lowercase column name ")
+                  .append(matcher.group(1))
+                  .append(" in SQL ")
+                  .append(file)
+                  .append(" at line ")
+                  .append(lineNumber)
+                  .append(". All SQL column names should be uppercase.\n");
               }
             });
           }

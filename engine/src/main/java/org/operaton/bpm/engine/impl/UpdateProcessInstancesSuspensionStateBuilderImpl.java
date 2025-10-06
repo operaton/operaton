@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.cmd.UpdateProcessInstancesSuspendStateBatchCmd;

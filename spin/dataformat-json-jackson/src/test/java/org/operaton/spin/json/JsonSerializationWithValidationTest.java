@@ -16,11 +16,11 @@
  */
 package org.operaton.spin.json;
 
-import org.operaton.spin.DeserializationTypeValidator;
-import org.operaton.spin.spi.DataFormatMapper;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
+
+import org.operaton.spin.DeserializationTypeValidator;
+import org.operaton.spin.spi.DataFormatMapper;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;

@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension;
 
-import org.jboss.as.controller.AttributeDefinition;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.jboss.as.controller.AttributeDefinition;
 
 /**
  * An Element.
@@ -77,7 +76,7 @@ public enum Element {
 
   Element(final List<AttributeDefinition> definitions) {
     this.definition = null;
-    this.definitions = new HashMap<String, AttributeDefinition>();
+    this.definitions = new HashMap<>();
     String ourName = null;
     for (AttributeDefinition def : definitions) {
       if (ourName == null) {
@@ -97,7 +96,7 @@ public enum Element {
 
   Element(final Map<String, AttributeDefinition> definitions) {
     this.definition = null;
-    this.definitions = new HashMap<String, AttributeDefinition>();
+    this.definitions = new HashMap<>();
     String ourName = null;
     for (Map.Entry<String, AttributeDefinition> def : definitions.entrySet()) {
       String xmlName = def.getValue().getXmlName();
@@ -132,7 +131,7 @@ public enum Element {
   private static final Map<String, Element> MAP;
 
   static {
-    final Map<String, Element> map = new HashMap<String, Element>();
+    final Map<String, Element> map = new HashMap<>();
     for (Element element : values()) {
       final String name = element.getLocalName();
       if (name != null) {

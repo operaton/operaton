@@ -1,0 +1,42 @@
+<differences>
+  <difference>
+    <!-- It is okay to add classes to the set of superclasses -->
+    <differenceType>5000</differenceType>
+    <className>**</className>
+    <to>**</to>
+  </difference>
+  <difference>
+    <!-- It is okay to add methods to an interface-->
+    <differenceType>7012</differenceType>
+    <className>**</className>
+    <method>*</method>
+  </difference>
+
+  <!-- Operaton 1/0 -->
+  <!-- 3003: Utility classes are final -->
+  <difference>
+    <differenceType>3003</differenceType>
+    <className>org/operaton/spin/scripting/SpinScriptEnv</className>
+  </difference>
+  <!-- 7009: Constructor visibility reduced (utility class) -->
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/spin/scripting/SpinScriptEnv</className>
+    <method>**SpinScriptEnv**</method>
+  </difference>
+  <!-- 6006: Field made final -->
+  <!-- see #1378 -->
+  <difference>
+    <differenceType>6006</differenceType>
+    <className>org/operaton/spin/SpinFactory</className>
+    <field>INSTANCE</field>
+  </difference>
+  <!-- String constants -->
+  <difference>
+    <differenceType>6006</differenceType>
+    <className>org/operaton/spin/DataFormats</className>
+    <field>*_DATAFORMAT_NAME</field>
+  </difference>
+
+
+</differences>

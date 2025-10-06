@@ -19,8 +19,9 @@ package org.operaton.bpm.engine.rest.dto.history.batch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
@@ -28,8 +29,6 @@ import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HistoricBatchQueryDto extends AbstractQueryDto<HistoricBatchQuery> {
 

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
   <groupId>org.operaton.spin</groupId>
@@ -14,7 +14,7 @@
   <description>${project.name}</description>
   <properties>
     <json-unit.version>4.1.1</json-unit.version>
-    <spin.version.old>7.22.0</spin.version.old>
+    <spin.version.old>1.0.0-beta-5</spin.version.old>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
@@ -62,6 +62,7 @@
       <dependency>
         <groupId>com.jayway.jsonpath</groupId>
         <artifactId>json-path</artifactId>
+        <version>${version.json-path}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

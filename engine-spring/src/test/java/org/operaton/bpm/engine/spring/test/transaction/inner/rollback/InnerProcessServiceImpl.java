@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction.inner.rollback;
 
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-import org.operaton.bpm.engine.context.ProcessEngineContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.operaton.bpm.engine.context.ProcessEngineContext;
+import org.operaton.bpm.engine.delegate.DelegateExecution;
 
 @Service
 public class InnerProcessServiceImpl implements InnerProcessService {

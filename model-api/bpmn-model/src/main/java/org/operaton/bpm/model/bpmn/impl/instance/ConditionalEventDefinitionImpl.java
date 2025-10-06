@@ -17,22 +17,23 @@
 package org.operaton.bpm.model.bpmn.impl.instance;
 
 import java.util.List;
+
 import org.operaton.bpm.model.bpmn.instance.Condition;
 import org.operaton.bpm.model.bpmn.instance.ConditionalEventDefinition;
 import org.operaton.bpm.model.bpmn.instance.EventDefinition;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
+import org.operaton.bpm.model.xml.impl.util.StringUtil;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CONDITIONAL_EVENT_DEFINITION;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_EVENTS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_NAME;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import org.operaton.bpm.model.xml.impl.util.StringUtil;
-import org.operaton.bpm.model.xml.type.attribute.Attribute;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_EVENTS;
 
 /**
  * The BPMN conditionalEventDefinition element

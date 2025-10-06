@@ -19,7 +19,14 @@ package org.operaton.bpm.spring.boot.starter;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
+import org.springframework.boot.devtools.restart.ConditionalOnInitializedRestarter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+import java.util.Optional;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.spring.boot.starter.plugin.ApplicationContextClassloaderSwitchPlugin;
 import org.operaton.bpm.spring.boot.starter.spin.OperatonJacksonFormatConfiguratorJSR310;
@@ -29,12 +36,6 @@ import org.operaton.bpm.spring.boot.starter.spin.SpringBootSpinProcessEnginePlug
 import org.operaton.connect.plugin.impl.ConnectProcessEnginePlugin;
 import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.operaton.spin.plugin.impl.SpinProcessEnginePlugin;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
-import org.springframework.boot.devtools.restart.ConditionalOnInitializedRestarter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OperatonBpmPluginConfiguration {
@@ -47,7 +48,7 @@ public class OperatonBpmPluginConfiguration {
      which breaks auto-configuration for Jackson Java 8 modules.
   */
 
-  @ConditionalOnClass({JacksonJsonDataFormat.class, JavaTimeModule.class})
+  @ConditionalOnClass({ JacksonJsonDataFormat.class, JavaTimeModule.class })
   @ConditionalOnMissingClass("spinjar.com.fasterxml.jackson.databind.ObjectMapper")
   @Configuration
   static class SpinDataFormatConfigurationJSR310 {
@@ -60,7 +61,7 @@ public class OperatonBpmPluginConfiguration {
 
   }
 
-  @ConditionalOnClass({JacksonJsonDataFormat.class, ParameterNamesModule.class})
+  @ConditionalOnClass({ JacksonJsonDataFormat.class, ParameterNamesModule.class })
   @ConditionalOnMissingClass("spinjar.com.fasterxml.jackson.databind.ObjectMapper")
   @Configuration
   static class SpinDataFormatConfigurationParameterNames {
@@ -73,7 +74,7 @@ public class OperatonBpmPluginConfiguration {
 
   }
 
-  @ConditionalOnClass({JacksonJsonDataFormat.class, Jdk8Module.class})
+  @ConditionalOnClass({ JacksonJsonDataFormat.class, Jdk8Module.class })
   @ConditionalOnMissingClass("spinjar.com.fasterxml.jackson.databind.ObjectMapper")
   @Configuration
   static class SpinDataFormatConfigurationJdk8 {
@@ -92,8 +93,11 @@ public class OperatonBpmPluginConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(name = "spinProcessEnginePlugin")
-    public static ProcessEnginePlugin spinProcessEnginePlugin() {
-      return new SpringBootSpinProcessEnginePlugin();
+    public static ProcessEnginePlugin spinProcessEnginePlugin(Optional<OperatonJacksonFormatConfiguratorJSR310> dataFormatConfiguratorJsr310,
+                                                              Optional<OperatonJacksonFormatConfiguratorParameterNames> dataFormatConfiguratorParameterNames,
+                                                              Optional<OperatonJacksonFormatConfiguratorJdk8> dataFormatConfiguratorJdk8) {
+      return new SpringBootSpinProcessEnginePlugin(dataFormatConfiguratorJsr310, dataFormatConfiguratorParameterNames,
+          dataFormatConfiguratorJdk8);
     }
 
   }
@@ -108,7 +112,6 @@ public class OperatonBpmPluginConfiguration {
       return new ConnectProcessEnginePlugin();
     }
   }
-
 
   /*
     Provide option to apply application context classloader switch when Spring
@@ -125,6 +128,5 @@ public class OperatonBpmPluginConfiguration {
       return new ApplicationContextClassloaderSwitchPlugin();
     }
   }
-
 
 }

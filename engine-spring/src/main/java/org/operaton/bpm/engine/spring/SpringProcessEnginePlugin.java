@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.engine.spring;
 
-import org.operaton.bpm.engine.impl.cfg.AbstractProcessEnginePlugin;
 import org.springframework.beans.factory.BeanNameAware;
+
+import org.operaton.bpm.engine.impl.cfg.AbstractProcessEnginePlugin;
 
 /**
  * This is bean-name-aware extension of the {@link AbstractProcessEnginePlugin} allowing anonymous

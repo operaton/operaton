@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.id;
 
-import org.operaton.bpm.engine.impl.cfg.IdGenerator;
-import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+
+import org.operaton.bpm.engine.impl.cfg.IdGenerator;
+import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 @SuppressWarnings("unused")
 public class IdGeneratorConfiguration {

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.migration;
 
+import java.util.Map;
+
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
-
-import java.util.Map;
 
 /**
  * @author Thorben Lindhauer

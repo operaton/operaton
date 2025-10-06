@@ -19,7 +19,6 @@ package org.operaton.bpm.webapp.impl.security.filter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;

@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -32,10 +36,6 @@ import org.operaton.bpm.engine.impl.management.UpdateJobSuspensionStateBuilderIm
 import org.operaton.bpm.engine.impl.persistence.entity.*;
 import org.operaton.bpm.engine.impl.runtime.UpdateProcessInstanceSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Daniel Meyer

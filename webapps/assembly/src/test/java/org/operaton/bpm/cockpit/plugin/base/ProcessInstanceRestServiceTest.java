@@ -16,11 +16,19 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentStatisticsDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessInstanceDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessInstanceQueryDto;
@@ -39,17 +47,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME;
@@ -57,6 +54,10 @@ import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LESS_T
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQUALS_OPERATOR_NAME;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author roman.smirnov
@@ -3225,11 +3226,9 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     identityService.setAuthenticatedUserId("foo");
 
-    Assertions.assertDoesNotThrow(() -> {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), 0, 10);
-      // then: no exception expected
-    }, "No exception expected");
+    //when + then
+    assertThatCode(() -> resource.queryProcessInstances(new ProcessInstanceQueryDto(), 0, 10))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -3237,11 +3236,9 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
-    Assertions.assertDoesNotThrow(() -> {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
-      // then: no exception expected
-    }, "No exception expected");
+    //when + then
+    assertThatCode(() -> resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null))
+        .doesNotThrowAnyException();
   }
 
   @Test
@@ -3249,11 +3246,9 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     // given
     identityService.setAuthenticatedUserId("foo");
 
-    Assertions.assertDoesNotThrow(() -> {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
-      // then: no exception expected
-    }, "No exception expected");
+    //when + then
+    assertThatCode(() -> resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null))
+      .doesNotThrowAnyException();
   }
 
   @Test

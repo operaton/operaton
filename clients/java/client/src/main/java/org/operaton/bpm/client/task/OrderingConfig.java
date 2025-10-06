@@ -19,6 +19,7 @@ package org.operaton.bpm.client.task;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 
 /**
@@ -109,7 +110,7 @@ public class OrderingConfig {
    * Returns the last configured field in this {@link OrderingConfig}.
    */
   protected OrderingProperty getLastConfiguredProperty() {
-    return !orderingProperties.isEmpty() ? orderingProperties.get(orderingProperties.size() - 1) : null;
+    return orderingProperties.isEmpty() ? null : orderingProperties.get(orderingProperties.size() - 1);
   }
 
   /**

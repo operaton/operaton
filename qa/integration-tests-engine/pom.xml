@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-qa-integration-tests-engine</artifactId>
   <name>Operaton - QA Integration Tests - Engine</name>
@@ -269,6 +269,14 @@
           <exclude>**/*.xml</exclude>
           <exclude>**/*.properties</exclude>
         </excludes>
+      </testResource>
+      <testResource>
+        <directory>src/test/resources-wildfly</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.xml</include>
+          <include>**/*.properties</include>
+        </includes>
       </testResource>
     </testResources>
     <plugins>

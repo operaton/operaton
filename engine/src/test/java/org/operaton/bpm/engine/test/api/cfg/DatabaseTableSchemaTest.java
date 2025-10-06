@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -26,17 +34,9 @@ import org.operaton.bpm.engine.impl.db.sql.DbSqlSession;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 /**
  * @author Ronny Bräunlich
@@ -87,15 +87,19 @@ class DatabaseTableSchemaTest {
     // session should tell us that the tables are already present and
     // databaseSchemaUpdate is set to noop
     final Connection connection3 = pooledDataSource.getConnection();
-    assertAll(() -> {
-      connection3.createStatement().execute("set schema " + SCHEMA_NAME);
-      engine1.getManagementService().databaseSchemaUpgrade(connection3, "", SCHEMA_NAME);
+
+    final boolean schemaSet = connection3.createStatement().execute("set schema " + SCHEMA_NAME);
+    assertSoftly(softly -> {
+      softly.assertThat(schemaSet).isFalse();
+      softly.assertThatCode(() ->
+              engine1.getManagementService().databaseSchemaUpgrade(connection3, "", SCHEMA_NAME)
+      ).doesNotThrowAnyException();
     });
     engine1.close();
   }
 
   @Test
-  void testTablePresentWithSchemaAndPrefix() throws SQLException {
+  void testTablePresentWithSchemaAndPrefix() throws Exception {
 
     Connection connection = pooledDataSource.getConnection();
     connection.createStatement().execute("drop schema if exists " + SCHEMA_NAME + " cascade");

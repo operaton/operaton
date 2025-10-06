@@ -17,9 +17,6 @@
 package org.operaton.bpm.sql.test;
 
 import java.io.FileNotFoundException;
-import liquibase.resource.DirectoryResourceAccessor;
-import org.operaton.commons.utils.IoUtil;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -49,6 +46,7 @@ import liquibase.diff.output.changelog.DiffToChangeLog;
 import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
+import liquibase.resource.DirectoryResourceAccessor;
 import liquibase.snapshot.DatabaseSnapshot;
 import liquibase.snapshot.SnapshotControl;
 import liquibase.snapshot.SnapshotGeneratorFactory;
@@ -58,6 +56,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
+
+import org.operaton.commons.utils.IoUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.model.cmmn.impl;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_10_SCHEMA_LOCATION;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_11_SCHEMA_LOCATION;
-
 import java.io.InputStream;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.validation.SchemaFactory;
 
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelException;
@@ -31,8 +29,10 @@ import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.validation.SchemaFactory;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_10_SCHEMA_LOCATION;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_11_SCHEMA_LOCATION;
 
 /**
  * @author Roman Smirnov

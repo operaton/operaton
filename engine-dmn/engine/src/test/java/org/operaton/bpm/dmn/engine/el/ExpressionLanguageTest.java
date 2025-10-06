@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
@@ -29,15 +36,8 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+
 import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.mockito.Mockito.*;
@@ -221,8 +221,9 @@ class ExpressionLanguageTest extends DmnEngineTest {
       failBecauseExceptionWasNotThrown(FeelException.class);
     }
     catch (FeelException e) {
-      assertThat(e).hasMessageStartingWith("FEEL-01017");
-      assertThat(e).hasMessageContaining("'10'");
+      assertThat(e)
+              .hasMessageStartingWith("FEEL-01017")
+              .hasMessageContaining("'10'");
       assertThat(e.getMessage()).doesNotContain("cellInput");
     }
   }

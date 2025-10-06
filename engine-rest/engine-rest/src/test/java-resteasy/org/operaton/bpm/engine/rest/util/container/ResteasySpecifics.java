@@ -18,7 +18,11 @@ package org.operaton.bpm.engine.rest.util.container;
 
 import java.util.HashMap;
 import java.util.Map;
+import jakarta.servlet.DispatcherType;
+import jakarta.ws.rs.core.Application;
 
+import io.undertow.servlet.Servlets;
+import io.undertow.servlet.api.DeploymentInfo;
 import org.jboss.resteasy.plugins.server.servlet.FilterDispatcher;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 import org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap;
@@ -26,6 +30,7 @@ import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.Extension;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
 import org.operaton.bpm.engine.rest.CustomJacksonDateFormatTest;
 import org.operaton.bpm.engine.rest.ExceptionHandlerTest;
 import org.operaton.bpm.engine.rest.application.TestCustomResourceApplication;
@@ -34,11 +39,6 @@ import org.operaton.bpm.engine.rest.standalone.NoServletAuthenticationFilterTest
 import org.operaton.bpm.engine.rest.standalone.NoServletEmptyBodyFilterTest;
 import org.operaton.bpm.engine.rest.standalone.ServletAuthenticationFilterTest;
 import org.operaton.bpm.engine.rest.standalone.ServletEmptyBodyFilterTest;
-
-import io.undertow.servlet.Servlets;
-import io.undertow.servlet.api.DeploymentInfo;
-import jakarta.servlet.DispatcherType;
-import jakarta.ws.rs.core.Application;
 
 /**
  * @author Thorben Lindhauer
@@ -175,12 +175,12 @@ public class ResteasySpecifics implements ContainerSpecifics {
     }
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
       bootstrap.start();
     }
 
     @Override
-    public void afterAll(ExtensionContext context) throws Exception {
+    public void afterAll(ExtensionContext context) {
       bootstrap.stop();
     }
   }

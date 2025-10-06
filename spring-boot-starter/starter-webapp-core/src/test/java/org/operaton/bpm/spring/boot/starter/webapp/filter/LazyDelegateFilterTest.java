@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.InitHook;
-
 import jakarta.servlet.*;
 
 import org.junit.jupiter.api.Test;
@@ -27,6 +25,8 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.InitHook;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

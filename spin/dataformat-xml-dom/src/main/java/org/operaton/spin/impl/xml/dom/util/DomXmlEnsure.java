@@ -16,13 +16,14 @@
  */
 package org.operaton.spin.impl.xml.dom.util;
 
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import org.operaton.commons.utils.EnsureUtil;
 import org.operaton.spin.impl.xml.dom.DomXmlElement;
 import org.operaton.spin.impl.xml.dom.DomXmlLogger;
 import org.operaton.spin.xml.SpinXPathException;
 import org.operaton.spin.xml.SpinXmlElementException;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * A list of generally useful source code assertions provided as static helpers.

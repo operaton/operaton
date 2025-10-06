@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.client.spring.annotation;
 
-import org.operaton.bpm.client.ExternalTaskClient;
-import org.operaton.bpm.client.backoff.BackoffStrategy;
-import org.operaton.bpm.client.spring.impl.PostProcessorConfiguration;
-import org.springframework.context.annotation.Import;
-import org.springframework.core.annotation.AliasFor;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
+import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.AliasFor;
+
+import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.backoff.BackoffStrategy;
+import org.operaton.bpm.client.spring.impl.PostProcessorConfiguration;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

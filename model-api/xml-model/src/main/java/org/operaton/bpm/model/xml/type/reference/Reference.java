@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.xml.type.reference;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
-
-import java.util.Collection;
 
 /**
  *

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.operation;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.cmmn.behavior.MilestoneActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionImpl;
@@ -27,7 +27,8 @@ import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnOnPartDeclaration;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov

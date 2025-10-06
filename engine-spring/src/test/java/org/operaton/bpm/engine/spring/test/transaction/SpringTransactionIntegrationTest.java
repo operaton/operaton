@@ -16,20 +16,19 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
-import org.operaton.bpm.engine.test.Deployment;
-import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
-
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 
+import org.operaton.bpm.engine.runtime.Incident;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
+import org.operaton.bpm.engine.test.Deployment;
+
+import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

@@ -38,6 +38,7 @@ public class DateValueMapper extends PrimitiveValueMapper<DateValue> {
     this.dateFormat = dateFormat;
   }
 
+  @Override
   public DateValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.dateValue((Date) untypedValue.getValue());
   }

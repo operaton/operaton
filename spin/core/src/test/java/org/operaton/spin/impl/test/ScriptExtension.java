@@ -16,9 +16,6 @@
  */
 package org.operaton.spin.impl.test;
 
-import org.operaton.spin.impl.util.SpinIoUtil;
-import org.operaton.spin.scripting.SpinScriptEnv;
-
 import java.io.File;
 import java.io.Reader;
 import java.util.HashMap;
@@ -28,11 +25,13 @@ import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
-
 import org.graalvm.polyglot.Value;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
+import org.operaton.spin.impl.util.SpinIoUtil;
+import org.operaton.spin.scripting.SpinScriptEnv;
 
 /**
  * A JUnit5 {@link org.junit.jupiter.api.extension.Extension} to load and execute a script.
@@ -169,13 +168,13 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
     }
   }
 
-  public ScriptExtension execute(Map<String, Object> scriptVariables) throws Throwable {
+  public ScriptExtension execute(Map<String, Object> scriptVariables) throws Exception {
     variables.putAll(scriptVariables);
     executeScript();
     return this;
   }
 
-  public ScriptExtension execute() throws Throwable {
+  public ScriptExtension execute() throws Exception {
     executeScript();
     return this;
   }

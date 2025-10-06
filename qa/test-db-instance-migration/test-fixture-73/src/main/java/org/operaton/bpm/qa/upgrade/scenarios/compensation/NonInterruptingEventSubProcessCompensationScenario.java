@@ -40,23 +40,21 @@ public final class NonInterruptingEventSubProcessCompensationScenario {
   @DescribesScenario("init.throwCompensate")
   @Times(6)
   public static ScenarioSetup instantiateThrowCompensate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NonInterruptingEventSubProcessCompensationScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NonInterruptingEventSubProcessCompensationScenario", scenarioName);
 
-        // trigger the event subprocess
-        engine.getRuntimeService()
-          .correlateMessage("EventSubProcessMessage", scenarioName);
+      // trigger the event subprocess
+      engine.getRuntimeService()
+        .correlateMessage("EventSubProcessMessage", scenarioName);
 
-        // complete the task to compensate and then throw compensation
-        Task eventSubProcessTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName)
-            .taskDefinitionKey("eventSubProcessTask")
-            .singleResult();
-        engine.getTaskService().complete(eventSubProcessTask.getId());
-      }
+      // complete the task to compensate and then throw compensation
+      Task eventSubProcessTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName)
+        .taskDefinitionKey("eventSubProcessTask")
+        .singleResult();
+      engine.getTaskService().complete(eventSubProcessTask.getId());
     };
   }
 }

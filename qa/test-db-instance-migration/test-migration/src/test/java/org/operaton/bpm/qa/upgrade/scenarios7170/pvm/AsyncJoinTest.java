@@ -19,12 +19,13 @@ package org.operaton.bpm.qa.upgrade.scenarios7170.pvm;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.assertj.core.api.Assertions;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.runtime.JobQuery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
+import org.operaton.bpm.engine.runtime.JobQuery;
 
 @ScenarioUnderTest("AsyncJoinScenario")
 @Origin("7.16.0")

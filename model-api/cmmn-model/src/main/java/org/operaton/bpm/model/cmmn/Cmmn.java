@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.model.cmmn;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
-
 import java.io.*;
+import java.util.ServiceLoader;
 
 import org.operaton.bpm.model.cmmn.impl.CmmnParser;
 import org.operaton.bpm.model.cmmn.impl.instance.ApplicabilityRuleImpl;
@@ -127,18 +125,41 @@ import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
 
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.*;
+
 /**
+ * <p>Provides access to the operaton CMMN model api.</p>
+ *
  * @author Roman Smirnov
  *
  */
 public class Cmmn {
 
-  /** the singleton instance of {@link Cmmn}. If you want to customize the behavior of Cmmn,
-   * replace this instance with an instance of a custom subclass of {@link Cmmn}. */
-  public static final Cmmn INSTANCE = new Cmmn();
+  /** The singleton instance of {@link Cmmn} created by the first {@link CmmnFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior of Cmmn, add the fully qualified class name of the custom implementation to the file:
+   * {@code META-INF/services/org.operaton.bpm.model.cmmn.CmmnFactory}</p>. */
+  public static final Cmmn INSTANCE;
 
-  /** the parser used by the Cmmn implementation. */
-  private final CmmnParser cmmnParser = new CmmnParser();
+  /** {@link CmmnParser} created by the first {@link CmmnParserFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior, provide a custom {@link CmmnParserFactory} implementation and declare it in:
+   * {@code META-INF/services/org.operaton.bpm.model.cmmn.CmmnParserFactory}.</p>
+   */
+  private static final CmmnParser CMMN_PARSER;
+
+  static {
+    CmmnFactory cmmnFactory = ServiceLoader.load(CmmnFactory.class).findFirst().orElse(
+      ServiceLoader.load(CmmnFactory.class, Cmmn.class.getClassLoader()).findFirst()
+        .orElseThrow(() -> new IllegalStateException("No CmmnFactory found"))
+    );
+    CmmnParserFactory cmmnParserFactory = ServiceLoader.load(CmmnParserFactory.class).findFirst().orElse(
+      ServiceLoader.load(CmmnParserFactory.class, Cmmn.class.getClassLoader()).findFirst()
+        .orElseThrow(() -> new IllegalStateException("No CmmnParserFactory found"))
+    );
+
+    INSTANCE = cmmnFactory.newInstance();
+    CMMN_PARSER = cmmnParserFactory.newInstance();
+  }
+
   private final ModelBuilder cmmnModelBuilder;
 
   /** The {@link Model}
@@ -226,9 +247,10 @@ public class Cmmn {
   /**
    * Register known types of the Cmmn model
    */
-  protected Cmmn() {
-    cmmnModelBuilder = ModelBuilder.createInstance("CMMN Model");
-    cmmnModelBuilder.alternativeNamespace(CMMN10_NS, CMMN11_NS);
+  public Cmmn() {
+    cmmnModelBuilder = ModelBuilder.createInstance("CMMN Model")
+            .alternativeNamespace(CAMUNDA_NS, OPERATON_NS)
+            .alternativeNamespace(CMMN10_NS, CMMN11_NS);
     doRegisterTypes(cmmnModelBuilder);
     cmmnModel = cmmnModelBuilder.build();
   }
@@ -246,7 +268,7 @@ public class Cmmn {
   }
 
   protected CmmnModelInstance doReadModelFromInputStream(InputStream is) {
-    return cmmnParser.parseModelFromStream(is);
+    return CMMN_PARSER.parseModelFromStream(is);
   }
 
   protected void doWriteModelToFile(File file, CmmnModelInstance modelInstance) {
@@ -274,11 +296,11 @@ public class Cmmn {
   }
 
   protected void doValidateModel(CmmnModelInstance modelInstance) {
-    cmmnParser.validateModel(modelInstance.getDocument());
+    CMMN_PARSER.validateModel(modelInstance.getDocument());
   }
 
   protected CmmnModelInstance doCreateEmptyModel() {
-    return cmmnParser.getEmptyModel();
+    return CMMN_PARSER.getEmptyModel();
   }
 
   protected void doRegisterTypes(ModelBuilder modelBuilder) {

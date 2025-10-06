@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.activitylog;
 
+import java.util.*;
+
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestConfiguration;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResult;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
@@ -23,8 +25,6 @@ import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultA
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
 import org.operaton.bpm.qa.performance.engine.framework.report.SectionedHtmlReportBuilder;
 import org.operaton.bpm.qa.performance.engine.framework.report.SectionedHtmlReportBuilder.TableCell;
-
-import java.util.*;
 
 public class ActivityCountAggregator extends TabularResultAggregator {
 

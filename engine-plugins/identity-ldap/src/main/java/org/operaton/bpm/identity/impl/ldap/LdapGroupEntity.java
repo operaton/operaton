@@ -18,7 +18,6 @@ package org.operaton.bpm.identity.impl.ldap;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 
 /**

@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.client.task;
 
-import org.operaton.bpm.client.exception.ConnectionLostException;
+import java.util.Map;
+
 import org.operaton.bpm.client.exception.BadRequestException;
-import org.operaton.bpm.client.exception.NotFoundException;
+import org.operaton.bpm.client.exception.ConnectionLostException;
 import org.operaton.bpm.client.exception.EngineException;
+import org.operaton.bpm.client.exception.NotFoundException;
 import org.operaton.bpm.client.exception.UnknownHttpErrorException;
 import org.operaton.bpm.client.exception.ValueMapperException;
-
-import java.util.Map;
 
 /**
  * <p>Service that provides possibilities to interact with fetched and locked tasks.</p>

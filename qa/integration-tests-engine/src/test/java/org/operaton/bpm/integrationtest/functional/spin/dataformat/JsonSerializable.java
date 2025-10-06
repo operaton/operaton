@@ -75,24 +75,28 @@ public class JsonSerializable {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((dateProperty == null) ? 0 : dateProperty.hashCode());
-    return result;
+    return prime * result + (dateProperty == null ? 0 : dateProperty.hashCode());
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     JsonSerializable other = (JsonSerializable) obj;
     if (dateProperty == null) {
-      if (other.dateProperty != null)
+      if (other.dateProperty != null) {
         return false;
-    } else if (!dateProperty.equals(other.dateProperty))
+      }
+    } else if (!dateProperty.equals(other.dateProperty)) {
       return false;
+    }
     return true;
   }
 }

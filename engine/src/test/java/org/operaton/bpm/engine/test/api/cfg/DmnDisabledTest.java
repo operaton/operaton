@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -25,9 +28,6 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguratio
 import org.operaton.bpm.engine.impl.test.TestHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov

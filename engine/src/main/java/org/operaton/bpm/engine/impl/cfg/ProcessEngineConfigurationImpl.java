@@ -17,10 +17,6 @@
 package org.operaton.bpm.engine.impl.cfg;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd.MAX_THREADS_NUMBER;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -44,7 +40,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.mapping.Environment;
@@ -55,6 +50,7 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
+
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
@@ -225,26 +221,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.DelegateInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.ExceptionCodeInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
-import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.DefaultFailedJobCommandFactory;
-import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
-import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobPriorityProvider;
-import org.operaton.bpm.engine.impl.jobexecutor.FailedJobCommandFactory;
-import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.NotifyAcquisitionRejectedJobsHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.ProcessEventJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.RejectedJobsHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateJobDefinitionHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateProcessDefinitionHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerCatchIntermediateEventJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerExecuteNestedActivityJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventSubprocessJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendJobDefinitionHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendProcessDefinitionHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.TimerTaskListenerJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.*;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.BatchWindowManager;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.DefaultBatchWindowManager;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupBatch;
@@ -294,47 +271,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.Deployer;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.CacheFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DefaultCacheFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
-import org.operaton.bpm.engine.impl.persistence.entity.AttachmentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
-import org.operaton.bpm.engine.impl.persistence.entity.BatchManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayManager;
-import org.operaton.bpm.engine.impl.persistence.entity.CommentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.DeploymentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskManager;
-import org.operaton.bpm.engine.impl.persistence.entity.FilterManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricActivityInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricBatchManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricExternalTaskLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIdentityLinkLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricStatisticsManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IdentityLinkManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IncidentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-import org.operaton.bpm.engine.impl.persistence.entity.MeterLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ReportManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ResourceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.StatisticsManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TableDataManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TaskReportManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TenantManager;
-import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.*;
 import org.operaton.bpm.engine.impl.repository.DefaultDeploymentHandlerFactory;
 import org.operaton.bpm.engine.impl.runtime.ConditionHandler;
 import org.operaton.bpm.engine.impl.runtime.CorrelationHandler;
@@ -362,21 +299,7 @@ import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.impl.variable.ValueTypeResolverImpl;
-import org.operaton.bpm.engine.impl.variable.serializer.BooleanValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.ByteArrayValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.DateValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.DefaultVariableSerializers;
-import org.operaton.bpm.engine.impl.variable.serializer.DoubleValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.FileValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.IntegerValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.JavaObjectSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.LongValueSerlializer;
-import org.operaton.bpm.engine.impl.variable.serializer.NullValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.ShortValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.StringValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
-import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializerFactory;
-import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
+import org.operaton.bpm.engine.impl.variable.serializer.*;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
@@ -387,6 +310,10 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd.MAX_THREADS_NUMBER;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @author Tom Baeyens
@@ -1065,6 +992,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * Size of batch in which removal time data will be updated. {@link ProcessSetRemovalTimeJobHandler#MAX_CHUNK_SIZE} must be respected.
    */
   protected volatile int removalTimeUpdateChunkSize = 500;
+
+  /**
+   * This legacy behavior sets the retry counter to 3 in the context when running a job for the first time.
+   * This has been patched up to fetch the correct counter value.
+   */
+  protected boolean legacyJobRetryBehaviorEnabled;
 
   /**
    * @return {@code true} if the exception code feature is disabled and vice-versa.
@@ -2902,7 +2835,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (adminGroups == null) {
       adminGroups = new ArrayList<>();
     }
-    if (adminGroups.isEmpty() || !(adminGroups.contains(Groups.OPERATON_ADMIN))) {
+    if (adminGroups.isEmpty() || !adminGroups.contains(Groups.OPERATON_ADMIN)) {
       adminGroups.add(Groups.OPERATON_ADMIN);
     }
   }
@@ -5325,6 +5258,15 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public ProcessEngineConfigurationImpl setRemovalTimeUpdateChunkSize(int removalTimeUpdateChunkSize) {
     this.removalTimeUpdateChunkSize = removalTimeUpdateChunkSize;
+    return this;
+  }
+
+  public boolean isLegacyJobRetryBehaviorEnabled() {
+    return legacyJobRetryBehaviorEnabled;
+  }
+  
+  public ProcessEngineConfiguration setLegacyJobRetryBehaviorEnabled(boolean legacyJobRetryBehaviorEnabled) {
+    this.legacyJobRetryBehaviorEnabled = legacyJobRetryBehaviorEnabled;
     return this;
   }
 

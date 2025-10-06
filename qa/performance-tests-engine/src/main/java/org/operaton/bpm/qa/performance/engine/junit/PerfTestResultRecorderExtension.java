@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.qa.performance.engine.junit;
 
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
-import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.util.logging.Level;
@@ -27,6 +23,10 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
+
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
+import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
 
 /**
  * JUnit 5 extension recording the performance test result.

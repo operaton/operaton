@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.client.spring.event;
 
-import org.operaton.bpm.client.spring.SpringTopicSubscription;
 import org.springframework.context.ApplicationEvent;
+
+import org.operaton.bpm.client.spring.SpringTopicSubscription;
 
 /**
  * <p>

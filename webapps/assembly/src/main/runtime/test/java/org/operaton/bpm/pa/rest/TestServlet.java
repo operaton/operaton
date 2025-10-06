@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -58,7 +57,7 @@ import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
  * @author Daniel Meyer
  *
  */
-@WebServlet(urlPatterns= {"/ensureCleanDb/*"})
+@WebServlet(urlPatterns = {"/ensureCleanDb/*"})
 public class TestServlet extends HttpServlet {
 
   public static final Logger log = Logger.getLogger(TestServlet.class.getName());
@@ -109,7 +108,11 @@ public class TestServlet extends HttpServlet {
       if (!TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK.contains(tableNameWithoutPrefix)) {
         Long count = tableCounts.get(tableName);
         if (count != 0L) {
-          outputMessage.append("  " + tableName + ": " + count + " record(s)\n");
+          outputMessage.append("  ")
+            .append(tableName)
+            .append(": ")
+            .append(count)
+            .append(" record(s)\n");
         }
       }
     }

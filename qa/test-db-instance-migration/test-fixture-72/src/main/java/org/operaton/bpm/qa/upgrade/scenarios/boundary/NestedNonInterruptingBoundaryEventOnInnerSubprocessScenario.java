@@ -46,30 +46,26 @@ public final class NestedNonInterruptingBoundaryEventOnInnerSubprocessScenario {
   @DescribesScenario("initMessage")
   @Times(7)
   public static ScenarioSetup initMessage() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NestedNonInterruptingMessageBoundaryEventOnInnerSubprocessScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NestedNonInterruptingMessageBoundaryEventOnInnerSubprocessScenario", scenarioName);
 
-        engine.getRuntimeService().correlateMessage("BoundaryEventMessage", scenarioName);
-      }
+      engine.getRuntimeService().correlateMessage("BoundaryEventMessage", scenarioName);
     };
   }
 
   @DescribesScenario("initTimer")
   @Times(7)
   public static ScenarioSetup initTimer() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        ProcessInstance instance = engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NestedNonInterruptingTimerBoundaryEventOnInnerSubprocessScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      ProcessInstance instance = engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NestedNonInterruptingTimerBoundaryEventOnInnerSubprocessScenario", scenarioName);
 
-        Job job = engine.getManagementService()
-          .createJobQuery().processInstanceId(instance.getId()).singleResult();
-        engine.getManagementService().executeJob(job.getId());
-      }
+      Job job = engine.getManagementService()
+        .createJobQuery().processInstanceId(instance.getId()).singleResult();
+      engine.getManagementService().executeJob(job.getId());
     };
   }
 }

@@ -16,38 +16,23 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PRIMITIVE_VARIABLE_VALUE;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-
-import io.restassured.http.ContentType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import jakarta.servlet.ServletContextEvent;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ExternalTaskService;
@@ -82,13 +67,17 @@ import org.operaton.bpm.engine.rest.util.VariablesBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
+
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PRIMITIVE_VARIABLE_VALUE;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.Mockito.*;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 /**
  * @author Thorben Lindhauer
@@ -155,13 +144,13 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
     when(fetchTopicBuilder.topic(any(), anyLong())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.businessKey(any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processDefinitionId(any())).thenReturn(fetchTopicBuilder);
-    when(fetchTopicBuilder.processDefinitionIdIn(Mockito.<String>any())).thenReturn(fetchTopicBuilder);
+    when(fetchTopicBuilder.processDefinitionIdIn(Mockito.any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processDefinitionKey(any())).thenReturn(fetchTopicBuilder);
-    when(fetchTopicBuilder.processDefinitionKeyIn(Mockito.<String>any())).thenReturn(fetchTopicBuilder);
+    when(fetchTopicBuilder.processDefinitionKeyIn(Mockito.any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processInstanceVariableEquals(any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.processDefinitionVersionTag(any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.withoutTenantId()).thenReturn(fetchTopicBuilder);
-    when(fetchTopicBuilder.tenantIdIn(Mockito.<String>any())).thenReturn(fetchTopicBuilder);
+    when(fetchTopicBuilder.tenantIdIn(Mockito.any())).thenReturn(fetchTopicBuilder);
     when(fetchTopicBuilder.includeExtensionProperties()).thenReturn(fetchTopicBuilder);
 
     fetchAndLockBuilder = mock(FetchAndLockBuilderImpl.class);
@@ -1593,6 +1582,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
       .body("executionId", equalTo(MockProvider.EXAMPLE_EXECUTION_ID))
       .body("id", equalTo(MockProvider.EXTERNAL_TASK_ID))
       .body("lockExpirationTime", equalTo(MockProvider.EXTERNAL_TASK_LOCK_EXPIRATION_TIME))
+      .body("createTime", equalTo(MockProvider.EXTERNAL_TASK_CREATE_TIME))
       .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
       .body("processDefinitionKey", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY))
       .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
@@ -2209,6 +2199,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
         .body("[0].topicName", equalTo(MockProvider.EXTERNAL_TASK_TOPIC_NAME))
         .body("[0].workerId", equalTo(MockProvider.EXTERNAL_TASK_WORKER_ID))
         .body("[0].lockExpirationTime", equalTo(MockProvider.EXTERNAL_TASK_LOCK_EXPIRATION_TIME))
+        .body("[0].createTime", equalTo(MockProvider.EXTERNAL_TASK_CREATE_TIME))
         .body("[0].processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
         .body("[0].executionId", equalTo(MockProvider.EXAMPLE_EXECUTION_ID))
         .body("[0].activityId", equalTo(MockProvider.EXAMPLE_ACTIVITY_ID))

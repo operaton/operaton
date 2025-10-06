@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.engine.impl.application.ProcessApplicationManager;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Roman Smirnov
@@ -61,16 +60,13 @@ public abstract class AbstractPaLocalScriptEngineTest extends AbstractFoxPlatfor
   }
 
   protected ProcessApplicationInterface getProcessApplication() {
-    ProcessApplicationReference reference = processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<ProcessApplicationReference>() {
-      @Override
-      public ProcessApplicationReference execute(CommandContext commandContext) {
-        ProcessDefinitionEntity definition = commandContext
-            .getProcessDefinitionManager()
-            .findLatestProcessDefinitionByKey(PROCESS_ID);
-        String deploymentId = definition.getDeploymentId();
-        ProcessApplicationManager processApplicationManager = processEngineConfiguration.getProcessApplicationManager();
-        return processApplicationManager.getProcessApplicationForDeployment(deploymentId);
-      }
+    ProcessApplicationReference reference = processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      ProcessDefinitionEntity definition = commandContext
+        .getProcessDefinitionManager()
+        .findLatestProcessDefinitionByKey(PROCESS_ID);
+      String deploymentId = definition.getDeploymentId();
+      ProcessApplicationManager processApplicationManager = processEngineConfiguration.getProcessApplicationManager();
+      return processApplicationManager.getProcessApplicationForDeployment(deploymentId);
     });
 
     assertThat(reference).isNotNull();

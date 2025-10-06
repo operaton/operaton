@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jakarta.enterprise.context.ContextNotActiveException;
 import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.inject.Inject;
@@ -204,6 +203,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
     return getScopedAssociation().getTask();
   }
 
+  @Override
   public void setTask(Task task) {
     ensureCommandContextNotActive();
     getScopedAssociation().setTask(task);

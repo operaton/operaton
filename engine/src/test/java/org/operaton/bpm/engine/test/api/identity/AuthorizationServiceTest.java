@@ -16,22 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVOKE;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.NONE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Resources.DASHBOARD;
-import static org.operaton.bpm.engine.authorization.Resources.REPORT;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -43,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.IdentityService;
@@ -60,6 +45,22 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVOKE;
+import static org.operaton.bpm.engine.authorization.Permissions.ALL;
+import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
+import static org.operaton.bpm.engine.authorization.Permissions.NONE;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Resources.DASHBOARD;
+import static org.operaton.bpm.engine.authorization.Resources.REPORT;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer
@@ -292,12 +293,7 @@ class AuthorizationServiceTest {
     authorizationService.saveAuthorization(authorization1);
 
     // the second one cannot
-    try {
-      authorizationService.saveAuthorization(authorization2);
-      fail("exception expected");
-    } catch(ProcessEngineException e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2)).isInstanceOf(ProcessEngineException.class);
 
     // but I can add a AUTH_TYPE_REVOKE auth
 
@@ -317,12 +313,7 @@ class AuthorizationServiceTest {
     authorization4.setResourceId("someId");
     authorization4.setUserId("someUser");
 
-    try {
-      authorizationService.saveAuthorization(authorization4);
-      fail("exception expected");
-    } catch(Exception e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization4)).isInstanceOf(Exception.class);
   }
 
   @Test
@@ -345,12 +336,7 @@ class AuthorizationServiceTest {
     authorizationService.saveAuthorization(authorization1);
 
     // the second one cannot
-    try {
-      authorizationService.saveAuthorization(authorization2);
-      fail("exception expected");
-    } catch(Exception e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2)).isInstanceOf(Exception.class);
 
     // but I can add a AUTH_TYPE_REVOKE auth
 
@@ -370,12 +356,7 @@ class AuthorizationServiceTest {
     authorization4.setResourceId("someId");
     authorization4.setGroupId("someGroup");
 
-    try {
-      authorizationService.saveAuthorization(authorization4);
-      fail("exception expected");
-    } catch(Exception e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization4)).isInstanceOf(Exception.class);
 
   }
 
@@ -397,12 +378,7 @@ class AuthorizationServiceTest {
     authorizationService.saveAuthorization(authorization1);
 
     // the second one cannot
-    try {
-      authorizationService.saveAuthorization(authorization2);
-      fail("exception expected");
-    } catch(Exception e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2)).isInstanceOf(Exception.class);
   }
 
   @Test

@@ -17,12 +17,12 @@
 package org.operaton.bpm.engine.impl.cfg;
 
 
-import org.operaton.bpm.engine.ProcessEngine;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * {@link ProcessEnginePlugin} that provides composite behavior. When registered on an engine configuration,

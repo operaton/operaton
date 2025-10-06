@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter;
 
 import java.io.Serial;
 
-
 import org.springframework.core.NestedRuntimeException;
 
 /**

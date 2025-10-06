@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.application.impl.web;
 
+import java.util.Objects;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 
-import java.util.Objects;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 

@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.client.variable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -32,6 +30,9 @@ import org.operaton.bpm.client.util.RecordingExternalTaskHandler;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LocalVariableIT {
 

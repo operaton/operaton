@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
-import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
-import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
+import java.util.List;
+
 import org.springframework.context.ApplicationEventPublisher;
 
-import java.util.List;
+import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
+import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 
 /**
  * Event handler publishing history events as Spring Events.

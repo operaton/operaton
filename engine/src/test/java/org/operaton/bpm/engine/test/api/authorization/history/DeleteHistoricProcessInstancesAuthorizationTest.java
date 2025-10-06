@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -28,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -47,6 +44,10 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
+
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Askar Akhmerov
@@ -109,8 +110,7 @@ public class DeleteHistoricProcessInstancesAuthorizationTest {
     processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
     processInstance2 = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
 
-    List<String> processInstanceIds = Arrays.asList(
-        new String[]{processInstance.getId(), processInstance2.getId()});
+    List<String> processInstanceIds = Arrays.asList(processInstance.getId(), processInstance2.getId());
     runtimeService.deleteProcessInstances(processInstanceIds, null, false, false);
 
     historicProcessInstance = historyService.createHistoricProcessInstanceQuery()

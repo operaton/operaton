@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7110.gson.batch;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author Tassilo Weidner

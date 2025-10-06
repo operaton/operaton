@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
 
-import java.util.Date;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

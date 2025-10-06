@@ -16,16 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
-
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -34,6 +31,9 @@ import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+import static org.assertj.core.api.Assertions.*;
 
 
 /**
@@ -108,12 +108,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
 
-    try {
-      userQuery.userId(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> userQuery.userId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -131,12 +126,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery().userFirstName(null);
 
-    try {
-      userQuery.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(userQuery::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -157,12 +147,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
 
-    try {
-      userQuery.userFirstNameLike(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> userQuery.userFirstNameLike(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -180,12 +165,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery().userLastName(null);
 
-    try {
-      userQuery.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(userQuery::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -203,12 +183,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
 
-    try {
-      userQuery.userLastNameLike(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> userQuery.userLastNameLike(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -223,12 +198,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery().userEmail(null);
 
-    try {
-      userQuery.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(userQuery::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -246,12 +216,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
 
-    try {
-      userQuery.userEmailLike(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> userQuery.userEmailLike(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -279,20 +244,10 @@ class UserQueryTest {
   @Test
   void testQueryInvalidSortingUsage() {
     var userQuery1 = identityService.createUserQuery().orderByUserId();
-    try {
-      userQuery1.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(userQuery1::list).isInstanceOf(ProcessEngineException.class);
 
     var userQuery2 = identityService.createUserQuery().orderByUserId().orderByUserEmail();
-    try {
-      userQuery2.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(userQuery2::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -313,12 +268,7 @@ class UserQueryTest {
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
 
-    try {
-      userQuery.memberOfGroup(null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> userQuery.memberOfGroup(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import org.operaton.bpm.engine.rest.dto.CountResultDto;
-import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
-import org.operaton.bpm.engine.rest.dto.runtime.FilterDto;
-import org.operaton.bpm.engine.rest.sub.runtime.FilterResource;
-
+import java.util.List;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
-import java.util.List;
+
+import org.operaton.bpm.engine.rest.dto.CountResultDto;
+import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
+import org.operaton.bpm.engine.rest.dto.runtime.FilterDto;
+import org.operaton.bpm.engine.rest.sub.runtime.FilterResource;
 
 @Produces(MediaType.APPLICATION_JSON)
 public interface FilterRestService {

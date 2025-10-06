@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
-import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +26,13 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-    classes = { WebappTestApp.class },
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+  classes = {WebappTestApp.class},
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RequestTrailingSlashIT {
 
   public static final List<String> REDIRECT_PATHS = List.of("/app", "/app/cockpit", "/app/admin", "/app/tasklist", "/app/welcome");

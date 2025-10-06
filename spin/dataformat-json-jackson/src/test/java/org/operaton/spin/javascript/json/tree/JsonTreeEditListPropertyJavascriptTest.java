@@ -16,11 +16,11 @@
  */
 package org.operaton.spin.javascript.json.tree;
 
-import org.operaton.spin.impl.test.ScriptEngine;
-import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.spin.impl.test.ScriptEngine;
+import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
 
 /**
  * @author Stefan Hentschel

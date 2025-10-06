@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +40,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Command to delete process definitions by ids.
@@ -223,30 +223,36 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
     public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + ((key == null) ? 0 : key.hashCode());
-      result = prime * result + ((tenant == null) ? 0 : tenant.hashCode());
-      return result;
+      result = prime * result + (key == null ? 0 : key.hashCode());
+      return prime * result + (tenant == null ? 0 : tenant.hashCode());
     }
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
+      }
       ProcessDefinitionGroup other = (ProcessDefinitionGroup) obj;
       if (key == null) {
-        if (other.key != null)
+        if (other.key != null) {
           return false;
-      } else if (!key.equals(other.key))
+        }
+      } else if (!key.equals(other.key)) {
         return false;
+      }
       if (tenant == null) {
-        if (other.tenant != null)
+        if (other.tenant != null) {
           return false;
-      } else if (!tenant.equals(other.tenant))
+        }
+      } else if (!tenant.equals(other.tenant)) {
         return false;
+      }
       return true;
     }
 

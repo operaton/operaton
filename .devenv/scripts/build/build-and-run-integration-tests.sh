@@ -5,10 +5,11 @@ EXECUTE_TEST=true
 TEST_SUITE="engine"
 DATABASE="h2"
 DISTRO="tomcat"
+RUNNER="./mvnw"
 VALID_TEST_SUITES=("engine" "webapps" "db-rolling-update")
 VALID_DISTROS=("operaton" "tomcat" "wildfly")
 VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb" "oracle" "db2" "sqlserver")
-
+VALID_RUNNERS=("mvn" "./mvnw" "mvnd")
 ##########################################################################
 check_valid_values() {
   local param_name=$1
@@ -43,13 +44,24 @@ parse_args() {
       --no-test)
         EXECUTE_TEST=false
         ;;
+      --runner=*)
+        runner_param="${1#*=}"
+        case "$runner_param" in
+          mvn|mvnd)
+            RUNNER="$runner_param"
+            ;;
+          mvnw)
+            RUNNER="./mvnw"
+            ;;
+        esac
+        ;;
     esac
     shift
   done
-
   check_valid_values "testsuite" "$TEST_SUITE" "${VALID_TEST_SUITES[@]}"
   check_valid_values "distro" "$DISTRO" "${VALID_DISTROS[@]}"
   check_valid_values "db" "$DATABASE" "${VALID_DATABASES[@]}"
+  check_valid_values "runner" "$RUNNER" "${VALID_RUNNERS[@]}"
 }
 
 run_build () {
@@ -72,8 +84,8 @@ run_build () {
   fi
 
   echo "ℹ️ Building $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
-  echo "./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install"
-  ./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install
+  echo "$RUNNER -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install"
+  $RUNNER -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
     popd > /dev/null
@@ -113,8 +125,8 @@ run_tests () {
   PROFILES+=($DATABASE)
 
   echo "ℹ️ Running $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
-  echo "./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
-  ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")
+  echo "$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
+  $RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
     popd > /dev/null
@@ -127,6 +139,12 @@ run_tests () {
 ##########################################################################
 # main script
 parse_args "$@"
+
+# Check if RUNNER exists, fallback if not
+if ! command -v ${RUNNER} &> /dev/null; then
+  echo "⚠️  Warning: Runner '${RUNNER}' not found. Falling back to './mvnw'."
+  RUNNER="./mvnw"
+fi
 
 pushd $(pwd) > /dev/null
 cd $(git rev-parse --show-toplevel) || exit 1

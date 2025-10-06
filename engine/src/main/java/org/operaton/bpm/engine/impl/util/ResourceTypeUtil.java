@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.authorization.*;
-import static org.operaton.bpm.engine.authorization.Resources.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.authorization.*;
+
+import static org.operaton.bpm.engine.authorization.Resources.*;
 
 public final class ResourceTypeUtil {
 
@@ -89,7 +90,7 @@ public final class ResourceTypeUtil {
     if (clazz == null) {
       return Permissions.values();
     }
-    return ((Permission[]) clazz.getEnumConstants());
+    return (Permission[]) clazz.getEnumConstants();
   }
 
   /**

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test.components.scope;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -26,6 +24,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
+
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 /**
  * dumb object to demonstrate holding scoped state for the duration of a business process
@@ -67,20 +67,25 @@ public class StatefulObject implements Serializable, InitializingBean {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
 
         StatefulObject that = (StatefulObject) o;
 
-        if (visitedCount != that.visitedCount) return false;
+      if (visitedCount != that.visitedCount) {
+        return false;
+      }
         return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + visitedCount;
-        return result;
+        return 31 * result + visitedCount;
     }
 
     @Override

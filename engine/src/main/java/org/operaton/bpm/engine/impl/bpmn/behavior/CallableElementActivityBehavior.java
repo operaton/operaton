@@ -22,11 +22,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateVariableMapping;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableScope;
-
-import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_ACTIVE_INSTANCES;
-import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_COMPLETED_INSTANCES;
-import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_INSTANCES;
-
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
 import org.operaton.bpm.engine.impl.core.model.BaseCallableElement.CallableElementBinding;
@@ -37,6 +32,10 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.util.ClassDelegateUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
+
+import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_ACTIVE_INSTANCES;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_COMPLETED_INSTANCES;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_INSTANCES;
 
 /**
  * @author Roman Smirnov

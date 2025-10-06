@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.cdi.test;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import io.quarkus.arquillian.QuarkusDeployableContainer;
-import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.Before;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import org.operaton.bpm.engine.test.Deployment;
 
 public class ProcessEngineDeployment {
 

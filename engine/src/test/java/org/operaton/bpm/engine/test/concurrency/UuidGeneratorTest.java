@@ -21,11 +21,11 @@ import java.util.List;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import com.fasterxml.uuid.EthernetAddress;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -37,7 +37,7 @@ class UuidGeneratorTest {
   private static final int LOOP_COUNT = 10000;
 
   @Test
-  void testMultithreaded() throws InterruptedException {
+  void testMultithreaded() throws Exception {
     final List<Thread> threads = new ArrayList<>();
 
     final TimeBasedGenerator timeBasedGenerator = Generators.timeBasedGenerator(EthernetAddress.fromInterface());

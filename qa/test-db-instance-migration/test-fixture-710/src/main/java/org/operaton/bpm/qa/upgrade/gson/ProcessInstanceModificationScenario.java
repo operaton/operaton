@@ -37,29 +37,27 @@ public final class ProcessInstanceModificationScenario {
 
   @DescribesScenario("ProcessInstanceModificationScenario")
   public static ScenarioSetup initProcessInstanceModification() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
+    return (engine, scenarioName) -> {
 
-        String processDefinitionId = engine.getRepositoryService().createProcessDefinitionQuery()
-          .processDefinitionKey("oneTaskProcessInstanceModification_710")
-          .singleResult()
-          .getId();
+      String processDefinitionId = engine.getRepositoryService().createProcessDefinitionQuery()
+        .processDefinitionKey("oneTaskProcessInstanceModification_710")
+        .singleResult()
+        .getId();
 
-        String processInstanceId = engine.getRuntimeService()
-          .startProcessInstanceById(processDefinitionId, "ProcessInstanceModificationScenario").getId();
+      String processInstanceId = engine.getRuntimeService()
+        .startProcessInstanceById(processDefinitionId, "ProcessInstanceModificationScenario").getId();
 
-        engine.getRuntimeService().createModification(processDefinitionId)
-          .processInstanceIds(processInstanceId)
-          .startBeforeActivity("userTask2")
-          .execute();
+      engine.getRuntimeService().createModification(processDefinitionId)
+        .processInstanceIds(processInstanceId)
+        .startBeforeActivity("userTask2")
+        .execute();
 
-        ActivityInstance tree = engine.getRuntimeService().getActivityInstance(processInstanceId);
+      ActivityInstance tree = engine.getRuntimeService().getActivityInstance(processInstanceId);
 
-        engine.getRuntimeService().createProcessInstanceModification(processInstanceId)
-          .cancelActivityInstance(tree.getActivityInstances("userTask1")[0].getId())
-          .cancelTransitionInstance(tree.getTransitionInstances("userTask2")[0].getId())
-          .executeAsync();
-      }
+      engine.getRuntimeService().createProcessInstanceModification(processInstanceId)
+        .cancelActivityInstance(tree.getActivityInstances("userTask1")[0].getId())
+        .cancelTransitionInstance(tree.getTransitionInstances("userTask2")[0].getId())
+        .executeAsync();
     };
   }
 }

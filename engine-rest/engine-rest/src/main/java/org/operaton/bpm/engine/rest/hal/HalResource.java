@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.hal;
 
-import org.operaton.bpm.engine.ProcessEngine;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * Base class for implementing a HAL resource as defined in
@@ -39,16 +39,32 @@ public abstract class HalResource<T extends HalResource<?>> {
   protected Map<String, Object> embedded;
 
   // the linker used by this resource
-  protected transient HalLinker linker;
+  protected HalLinker linker;
 
   protected HalResource() {
     this.linker = Hal.getInstance().createLinker(this);
   }
 
+  public Map<String, HalLink> getLinks() {
+    return links;
+  }
+
+  /**
+   * @deprecated use {@link #getLinks()} instead.
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, HalLink> get_links() {
     return links;
   }
 
+  public Map<String, Object> getEmbedded() {
+    return embedded;
+  }
+
+  /**
+   * @deprecated use {@link #getLinks()} instead.
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> get_embedded() {
     return embedded;
   }

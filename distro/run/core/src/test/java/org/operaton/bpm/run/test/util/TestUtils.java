@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.run.test.util;
 
-import javax.net.ssl.*;
 import java.io.InputStream;
 import java.security.KeyStore;
 
+import javax.net.ssl.*;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
@@ -28,7 +28,7 @@ import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
-public class TestUtils {
+public final class TestUtils {
 
   public static ClientHttpRequestFactory createClientHttpRequestFactory() throws Exception {
     SSLContext sslContext = trustSelfSignedSSL();
@@ -70,5 +70,8 @@ public class TestUtils {
 
       return sc;
     }
+  }
+
+  private TestUtils() {
   }
 }

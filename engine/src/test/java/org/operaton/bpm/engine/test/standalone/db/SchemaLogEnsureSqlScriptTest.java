@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.test.standalone.db;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.test.util.TestconfigProperties;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Miklas Boskamp
@@ -94,13 +95,13 @@ class SchemaLogEnsureSqlScriptTest extends SchemaLogTestCase {
   }
 
   protected boolean isLaterVersionThan(String v1, String v2) {
-    String[] v1_ = v1.split("\\.|_");
-    String[] v2_ = v2.split("\\.|_");
+    String[] v1Parts = v1.split("\\.|_");
+    String[] v2Parts = v2.split("\\.|_");
 
-    int length = Math.max(v1_.length, v2_.length);
+    int length = Math.max(v1Parts.length, v2Parts.length);
     for (int i = 0; i < length; i++) {
-      int v1Part = i < v1_.length ? Integer.parseInt(v1_[i]) : 0;
-      int v2Part = i < v2_.length ? Integer.parseInt(v2_[i]) : 0;
+      int v1Part = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
+      int v2Part = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
       if(v1Part != v2Part) {
         return v1Part > v2Part;
       }

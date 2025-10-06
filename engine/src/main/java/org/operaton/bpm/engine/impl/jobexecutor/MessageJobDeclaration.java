@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.impl.interceptor.AtomicOperationInvocation;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;

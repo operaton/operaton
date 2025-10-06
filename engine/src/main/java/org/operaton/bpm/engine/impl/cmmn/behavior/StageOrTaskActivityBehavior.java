@@ -180,7 +180,7 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
     }
 
     if (execution.isCompleted() || execution.isTerminated()) {
-      throw LOG.wrongCaseStateException(TRANSITION_PARENT_SUSPEND, id, TRANSITION_SUSPEND, "[available|enabled|disabled|active]",
+      throw LOG.wrongCaseStateException(TRANSITION_PARENT_SUSPEND, id, "[available|enabled|disabled|active]",
         execution.getCurrentState().toString());
     }
 
@@ -210,7 +210,7 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
     String id = execution.getId();
 
     if (!execution.isSuspended()) {
-      throw LOG.wrongCaseStateException(TRANSITION_PARENT_RESUME, id, TRANSITION_RESUME, "suspended", execution.getCurrentState().toString());
+      throw LOG.wrongCaseStateException(TRANSITION_PARENT_RESUME, id, "suspended", execution.getCurrentState().toString());
     }
 
     CmmnActivityExecution parent = execution.getParent();

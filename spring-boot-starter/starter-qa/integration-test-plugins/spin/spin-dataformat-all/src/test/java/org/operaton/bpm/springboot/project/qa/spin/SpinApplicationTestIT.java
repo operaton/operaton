@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.springboot.project.qa.spin;
 
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.RuntimeService;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.RuntimeService;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 @SpringBootTest(classes = {SpinApplication.class},
-    webEnvironment = SpringBootTest.WebEnvironment.NONE)
+  webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SpinApplicationTestIT {
 
   @Autowired
@@ -49,10 +48,10 @@ class SpinApplicationTestIT {
 
   @Test
   void shouldFailWithSpinException() {
-    Throwable exception = assertThrows(Exception.class, () ->
+    Throwable exception = assertThatExceptionOfType(Exception.class).isThrownBy(() ->
 
       // when
-      runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"));
-    assertTrue(exception.getMessage().contains("SPIN/JACKSON-JSON-01006 Cannot deserialize"));
+      runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess")).actual();
+    assertThat(exception.getMessage()).contains("SPIN/JACKSON-JSON-01006 Cannot deserialize");
   }
 }

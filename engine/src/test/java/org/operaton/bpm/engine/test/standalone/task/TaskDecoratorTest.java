@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.standalone.task;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +25,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
@@ -41,6 +39,9 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Roman Smirnov

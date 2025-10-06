@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,6 +34,8 @@ import org.operaton.bpm.engine.impl.cmd.TransitionInstantiationCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.runtime.ModificationBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class ModificationBuilderImpl implements ModificationBuilder {
 

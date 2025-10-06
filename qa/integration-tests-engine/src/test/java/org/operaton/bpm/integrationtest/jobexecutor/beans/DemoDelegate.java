@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
@@ -27,6 +25,8 @@ import java.util.logging.Logger;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class DemoDelegate implements JavaDelegate {
 
@@ -68,14 +68,14 @@ public class DemoDelegate implements JavaDelegate {
 
     String byteString = "mycooltextcontentasbyteyesyes!!!";
     insertVariable("byteArrayVar", byteString.getBytes(UTF_8));
-    Byte[] ByteArray = new Byte[byteString.length()];
+    Byte[] byteArray = new Byte[byteString.length()];
     byte[] bytes = byteString.getBytes(UTF_8);
 
     for (int i = 0; i < bytes.length; i++) {
       byte b = bytes[i];
-      ByteArray[i] = Byte.valueOf(b);
+      byteArray[i] = Byte.valueOf(b);
     }
-    insertVariable("ByteArrayVariable", ByteArray);
+    insertVariable("ByteArrayVariable", byteArray);
 
     DemoVariableClass demoVariableClass = new DemoVariableClass();
 

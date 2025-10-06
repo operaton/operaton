@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type;
 
+import java.util.*;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -31,8 +33,6 @@ import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
-
-import java.util.*;
 
 /**
  * @author Daniel Meyer
@@ -332,10 +332,9 @@ public class ModelElementTypeImpl implements ModelElementType {
   public int hashCode() {
     int prime = 31;
     int result = 1;
-    result = prime * result + ((model == null) ? 0 : model.hashCode());
-    result = prime * result + ((typeName == null) ? 0 : typeName.hashCode());
-    result = prime * result + ((typeNamespace == null) ? 0 : typeNamespace.hashCode());
-    return result;
+    result = prime * result + (model == null ? 0 : model.hashCode());
+    result = prime * result + (typeName == null ? 0 : typeName.hashCode());
+    return prime * result + (typeNamespace == null ? 0 : typeNamespace.hashCode());
   }
 
   @Override

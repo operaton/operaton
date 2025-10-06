@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
+import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
+import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
+
 import static org.operaton.bpm.engine.delegate.CaseExecutionListener.CREATE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
-
-import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
-import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 
 /**
  * @author Roman Smirnov

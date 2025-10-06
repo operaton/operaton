@@ -50,22 +50,22 @@ public interface IncidentState {
     public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + stateCode;
-      return result;
+      return prime * result + stateCode;
     }
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
+      }
       IncidentStateImpl other = (IncidentStateImpl) obj;
-      if (stateCode != other.stateCode)
-        return false;
-      return true;
+      return stateCode == other.stateCode;
     }
 
     @Override

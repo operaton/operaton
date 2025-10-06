@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -27,11 +23,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.FilterService;
@@ -69,7 +67,9 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import com.google.gson.JsonObject;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Sebastian Menski
@@ -223,6 +223,7 @@ class FilterTaskQueryTest {
     query.taskUpdatedAfterExpression(testString);
     query.taskDefinitionKey(testString);
     query.taskDefinitionKeyIn(testKeys);
+    query.taskDefinitionKeyNotIn(testKeys);
     query.taskDefinitionKeyLike(testString);
     query.processDefinitionKey(testString);
     query.processDefinitionKeyIn(testKeys);
@@ -337,6 +338,10 @@ class FilterTaskQueryTest {
     assertThat(query.getKeys()).hasSameSizeAs(testKeys);
     for (int i = 0; i < query.getKeys().length; i++) {
       assertThat(query.getKeys()[i]).isEqualTo(testKeys[i]);
+    }
+    assertThat(query.getKeyNotIn()).hasSameSizeAs(testKeys);
+    for (int i = 0; i < query.getKeyNotIn().length; i++) {
+      assertThat(query.getKeyNotIn()[i]).isEqualTo(testKeys[i]);
     }
     assertThat(query.getKeyLike()).isEqualTo(testString);
     assertThat(query.getProcessDefinitionKey()).isEqualTo(testString);

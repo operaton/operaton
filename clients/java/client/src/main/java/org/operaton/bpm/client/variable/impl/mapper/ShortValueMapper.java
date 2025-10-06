@@ -28,6 +28,7 @@ public class ShortValueMapper extends NumberValueMapper<ShortValue> {
     super(ValueType.SHORT);
   }
 
+  @Override
   public ShortValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.shortValue((Short) untypedValue.getValue());
   }

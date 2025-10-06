@@ -19,9 +19,10 @@ package org.operaton.bpm.engine.rest.standalone;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.engine.rest.helper.EqualsMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.rest.helper.EqualsMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.spin.impl.json.jackson.format;
 
-import org.operaton.spin.DeserializationTypeValidator;
-import org.operaton.spin.SpinRuntimeException;
-
 import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.JavaType;
@@ -30,6 +27,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
+
+import org.operaton.spin.DeserializationTypeValidator;
+import org.operaton.spin.SpinRuntimeException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;

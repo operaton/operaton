@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.dto.converter;
 
-import org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto;
-import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-
-import jakarta.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.ws.rs.core.Response.Status;
+
+import org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
 public class ConditionListConverter extends JacksonAwareStringToTypeConverter<List<ConditionQueryParameterDto>> {
 

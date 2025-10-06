@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.link;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -34,6 +32,9 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -58,13 +59,13 @@ class LinkEventTest {
 
     List<String> activeActivities = runtimeService.getActiveActivityIds(pi.getId());
     // assert that now the first receive task is active
-    assertThat(activeActivities).isEqualTo(Arrays.asList(new String []{"waitAfterLink1"}));
+    assertThat(activeActivities).isEqualTo(List.of("waitAfterLink1"));
 
     runtimeService.signal(pi.getId());
 
     activeActivities = runtimeService.getActiveActivityIds(pi.getId());
     // assert that now the second receive task is active
-    assertThat(activeActivities).isEqualTo(Arrays.asList(new String []{"waitAfterLink2"}));
+    assertThat(activeActivities).isEqualTo(List.of("waitAfterLink2"));
 
     runtimeService.signal(pi.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -88,7 +89,7 @@ class LinkEventTest {
     List<String> activeActivities = runtimeService.getActiveActivityIds(pi.getId());
 
     // assert that the link event was triggered and that we are
-    assertThat(activeActivities).isEqualTo(Arrays.asList(new String []{"WaitAfterLink", "WaitAfterLink"}));
+    assertThat(activeActivities).isEqualTo(Arrays.asList("WaitAfterLink", "WaitAfterLink"));
 
     runtimeService.deleteProcessInstance(pi.getId(), "test done");
 

@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.management.Metrics.ACTIVTY_INSTANCE_START;
-
 import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.metrics.MetricsQueryImpl;
@@ -30,8 +28,11 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.MetricIntervalValue;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.management.MetricsQuery;
-import org.joda.time.DateTime;
-import org.junit.jupiter.api.Test;
+
+import static org.operaton.bpm.engine.management.Metrics.ACTIVTY_INSTANCE_START;
+import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *

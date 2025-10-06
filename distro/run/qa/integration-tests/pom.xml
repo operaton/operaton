@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-qa</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-bpm-run-qa-integration-tests</artifactId>
   <name>Operaton - Run - QA - Integration Tests</name>
@@ -52,12 +52,6 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- SpringBoot BOM excludes commons-logging, so we need to add it explicitly -->
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <scope>test</scope>
-    </dependency>
     <!-- Webapps -->
     <dependency>
       <groupId>org.operaton.bpm.qa</groupId>
@@ -81,8 +75,15 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.konghq</groupId>
+      <artifactId>unirest-java</artifactId>
+      <version>${version.unirest-java}</version>
+      <classifier>standalone</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -102,6 +103,13 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
+      <scope>test</scope>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
   <build>

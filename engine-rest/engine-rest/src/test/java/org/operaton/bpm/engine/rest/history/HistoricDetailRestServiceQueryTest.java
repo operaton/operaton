@@ -16,24 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import static io.restassured.RestAssured.expect;
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -42,6 +24,15 @@ import java.util.List;
 import java.util.Map;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+
 import org.operaton.bpm.engine.history.HistoricDetail;
 import org.operaton.bpm.engine.history.HistoricDetailQuery;
 import org.operaton.bpm.engine.history.HistoricFormField;
@@ -58,12 +49,15 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
+
+import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Roman Smirnov
@@ -561,7 +555,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
   private void verifySimpleHistoricActivityQueryResponse(Response response) {
     String content = response.asString();
     List<Map<String, Object>> details = from(content).getList("");
-    Assertions.assertEquals(2, details.size(), "There should be two activity instance returned.");
+    assertThat(details).as("There should be two activity instance returned.").hasSize(2);
     assertThat(details.get(0)).as("The returned details should not be null.").isNotNull();
     assertThat(details.get(1)).as("The returned details should not be null.").isNotNull();
 
@@ -587,26 +581,26 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
     String returnedOperationId2 = from(content).getString("[1].userOperationId");
     String returnedRootProcessInstanceId = from(content).getString("[1].rootProcessInstanceId");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_ID, returnedId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_PROC_DEF_KEY, returnedProcessDefinitionKey2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_PROC_DEF_ID, returnedProcessDefinitionId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_PROC_INST_ID, returnedProcessInstanceId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_ACT_INST_ID, returnedActivityInstanceId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_EXEC_ID, returnedExecutionId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_TASK_ID, returnedTaskId2);
-    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_TIME), returnedTime2);
-    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_TIME), returnedRemovalTime);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_FIELD_ID, returnedFieldId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_VALUE, returnedFieldValue);
-    Assertions.assertEquals("formField", returnedType);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_CASE_DEF_ID, returnedCaseDefinitionId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_CASE_DEF_KEY, returnedCaseDefinitionKey2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_CASE_INST_ID, returnedCaseInstanceId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_CASE_EXEC_ID, returnedCaseExecutionId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_EXEC_ID, returnedExecutionId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_OPERATION_ID, returnedOperationId2);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HISTORIC_FORM_ROOT_PROCESS_INSTANCE_ID, returnedRootProcessInstanceId);
+    assertThat(returnedId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_ID);
+    assertThat(returnedProcessDefinitionKey2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_PROC_DEF_KEY);
+    assertThat(returnedProcessDefinitionId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_PROC_DEF_ID);
+    assertThat(returnedProcessInstanceId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_PROC_INST_ID);
+    assertThat(returnedActivityInstanceId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_ACT_INST_ID);
+    assertThat(returnedExecutionId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_EXEC_ID);
+    assertThat(returnedTaskId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_TASK_ID);
+    assertThat(returnedTime2).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_TIME));
+    assertThat(returnedRemovalTime).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_TIME));
+    assertThat(returnedFieldId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_FIELD_ID);
+    assertThat(returnedFieldValue).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_VALUE);
+    assertThat(returnedType).isEqualTo("formField");
+    assertThat(returnedCaseDefinitionId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_CASE_DEF_ID);
+    assertThat(returnedCaseDefinitionKey2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_CASE_DEF_KEY);
+    assertThat(returnedCaseInstanceId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_CASE_INST_ID);
+    assertThat(returnedCaseExecutionId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_CASE_EXEC_ID);
+    assertThat(returnedTenantId2).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(returnedExecutionId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_EXEC_ID);
+    assertThat(returnedOperationId2).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_FIELD_OPERATION_ID);
+    assertThat(returnedRootProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_FORM_ROOT_PROCESS_INSTANCE_ID);
   }
 
   @Test

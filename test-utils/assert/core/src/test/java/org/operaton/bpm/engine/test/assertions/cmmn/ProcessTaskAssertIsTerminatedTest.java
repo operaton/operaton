@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processInstanceQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
-
-import org.junit.jupiter.api.Test;
 
 public class ProcessTaskAssertIsTerminatedTest extends ProcessAssertTestCase {
 
@@ -56,12 +56,7 @@ public class ProcessTaskAssertIsTerminatedTest extends ProcessAssertTestCase {
     // When
     final CaseInstance caseInstance = givenCaseIsCreated();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).processTask(TASK_B).isTerminated();
-      }
-    });
+    expect(() -> assertThat(caseInstance).processTask(TASK_B).isTerminated());
   }
 
   private ProcessInstance calledProcessInstance(CaseInstance caseInstance) {

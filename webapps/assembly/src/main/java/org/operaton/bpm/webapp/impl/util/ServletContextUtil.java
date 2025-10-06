@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.webapp.impl.util;
 
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter;
-import org.operaton.bpm.webapp.impl.security.auth.UserAuthenticationResource;
-
+import java.util.Date;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import java.util.Date;
+
+import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter;
+import org.operaton.bpm.webapp.impl.security.auth.UserAuthenticationResource;
 
 /**
  * With Operaton.13 we introduced the application path prefix /operaton to Spring Boot.

@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.tasklist;
 
+import java.util.Set;
+
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.SsoLogoutPluginConstants;
 import org.operaton.bpm.tasklist.plugin.spi.impl.AbstractTasklistPlugin;
-
-import java.util.Set;
 
 public class SsoLogoutTasklistPlugin extends AbstractTasklistPlugin {
 

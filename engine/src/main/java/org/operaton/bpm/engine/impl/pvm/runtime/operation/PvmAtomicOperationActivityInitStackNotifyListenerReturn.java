@@ -19,9 +19,9 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.pvm.runtime.ScopeInstantiationContext;
 import org.operaton.bpm.engine.impl.pvm.runtime.InstantiationStack;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+import org.operaton.bpm.engine.impl.pvm.runtime.ScopeInstantiationContext;
 
 /**
  * @author Thorben Lindhauer

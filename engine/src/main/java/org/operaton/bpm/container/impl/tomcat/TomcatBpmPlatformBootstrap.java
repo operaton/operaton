@@ -20,6 +20,7 @@ import org.apache.catalina.Lifecycle;
 import org.apache.catalina.LifecycleEvent;
 import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.core.StandardServer;
+
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
@@ -51,6 +52,7 @@ public class TomcatBpmPlatformBootstrap implements LifecycleListener {
 
   protected RuntimeContainerDelegateImpl containerDelegate;
 
+  @Override
   public void lifecycleEvent(LifecycleEvent event) {
 
     if (Lifecycle.START_EVENT.equals(event.getType())) {

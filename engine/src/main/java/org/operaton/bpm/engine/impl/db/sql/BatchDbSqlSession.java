@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.db.sql;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -29,15 +27,18 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.BatchExecutorException;
 import org.apache.ibatis.executor.BatchResult;
 import org.apache.ibatis.session.ExecutorType;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.FlushResult;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbBulkOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbEntityOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * For mybatis {@link ExecutorType#BATCH}
@@ -55,16 +56,8 @@ public class BatchDbSqlSession extends DbSqlSession {
   @Override
   public FlushResult executeDbOperations(List<DbOperation> operations) {
     for (DbOperation operation : operations) {
-
-      try {
-        // stage operation
-        executeDbOperation(operation);
-
-      } catch (Exception ex) {
-        // exception is wrapped later
-        throw ex;
-
-      }
+      // stage operation
+      executeDbOperation(operation);
     }
 
     List<BatchResult> batchResults;

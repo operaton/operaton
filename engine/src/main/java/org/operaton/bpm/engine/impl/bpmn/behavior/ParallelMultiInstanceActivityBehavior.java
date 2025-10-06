@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.impl.migration.instance.parser.MigratingInstanceParseContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -26,10 +30,6 @@ import org.operaton.bpm.engine.impl.pvm.delegate.MigrationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.Callback;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Daniel Meyer
@@ -55,7 +55,7 @@ public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivity
     // start the concurrent child executions
     // start executions in reverse order (order will be reversed again in command context with the effect that they are
     // actually be started in correct order :) )
-    for (int i = (nrOfInstances - 1); i >= 0; i--) {
+    for (int i = nrOfInstances - 1; i >= 0; i--) {
       ActivityExecution activityExecution = concurrentExecutions.get(i);
       performInstance(activityExecution, innerActivity, i, collection);
     }

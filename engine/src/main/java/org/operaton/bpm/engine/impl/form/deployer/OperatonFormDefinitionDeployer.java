@@ -20,18 +20,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.AbstractDefinitionDeployer;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.model.Properties;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
-import org.operaton.bpm.engine.impl.persistence.entity.OperatonFormDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.OperatonFormDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 public class OperatonFormDefinitionDeployer extends AbstractDefinitionDeployer<OperatonFormDefinitionEntity> {
 

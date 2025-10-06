@@ -16,95 +16,87 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.Assertions;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
+import static jakarta.ws.rs.core.Response.Status.OK;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
+@SuppressWarnings("java:S5960")
 public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
 
   public static final String CSP_VALUE = "base-uri 'self';script-src 'nonce-([-_a-zA-Z\\d]*)' 'strict-dynamic' 'unsafe-eval' https: 'self' 'unsafe-inline';style-src 'unsafe-inline' 'self';default-src 'self';img-src 'self' data:;block-all-mixed-content;form-action 'self';frame-ancestors 'none';object-src 'none';sandbox allow-forms allow-scripts allow-same-origin allow-popups allow-downloads";
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfXssProtectionHeader() {
-    // given
-    target = client.target(appBasePath + TASKLIST_PATH);
-
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfXssProtectionHeader() {
     // when
-    response = target.request().get();
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
 
     // then
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
     assertHeaderPresent("X-XSS-Protection", "1; mode=block", response);
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfContentSecurityPolicyHeader() {
-    // given
-    target = client.target(appBasePath + TASKLIST_PATH);
-
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfContentSecurityPolicyHeader() {
     // when
-    response = target.request().get();
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
 
     // then
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
     assertHeaderPresent("Content-Security-Policy", CSP_VALUE, response);
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfContentTypeOptions() {
-    // given
-    target = client.target(appBasePath + TASKLIST_PATH);
-
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfContentTypeOptions() {
     // when
-    response = target.request().get();
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
 
     // then
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
     assertHeaderPresent("X-Content-Type-Options", "nosniff", response);
   }
 
-  @Test @Timeout(value=10000, unit=TimeUnit.MILLISECONDS)
-  public void shouldCheckAbsenceOfHsts() {
-    // given
-    target = client.target(appBasePath + TASKLIST_PATH);
-
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckAbsenceOfHsts() {
     // when
-    response = target.request().get();
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
 
     // then
-    assertEquals(200, response.getStatus());
-    MultivaluedMap<String, Object> headers = response.getHeaders();
-    List<Object> values = headers.get("Strict-Transport-Security");
-    assertNull(values);
+    assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
+    List<String> values = response.getHeaders().get("Strict-Transport-Security");
+    assertThat(values).isEmpty();
   }
 
-  protected void assertHeaderPresent(String expectedName, String expectedValue, Response response) {
-    MultivaluedMap<String, Object> headers = response.getHeaders();
+  protected void assertHeaderPresent(String expectedName, String expectedValue, HttpResponse<String> response) {
+    List<String> values = response.getHeaders().get(expectedName);
 
-    List<Object> values = headers.get(expectedName);
-    for (Object value : values) {
-      if (value.toString().matches(expectedValue)) {
-        return;
+    if (values != null) {
+      for (String value : values) {
+        if (value.matches(expectedValue)) {
+          return;
+        }
       }
     }
 
-    Assertions.fail("Header '%s' didn't match.\nExpected:\t%s \nActual:\t%s".formatted(expectedName, expectedValue, values));
+    fail("Header '%s' didn't match.%nExpected:\t%s %nActual:\t%s".formatted(expectedName, expectedValue, values));
   }
 
 }

@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class CreateTenantCmd extends AbstractWritableIdentityServiceCmd<Tenant> implements Command<Tenant>, Serializable {
 

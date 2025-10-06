@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -26,11 +24,13 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 
 /**
  * @author Frederik Heremans
  */
-public class GetJobExceptionStacktraceCmd implements Command<String>, Serializable{
+public class GetJobExceptionStacktraceCmd implements Command<String>, Serializable {
 
   @Serial private static final long serialVersionUID = 1L;
   private final String jobId;

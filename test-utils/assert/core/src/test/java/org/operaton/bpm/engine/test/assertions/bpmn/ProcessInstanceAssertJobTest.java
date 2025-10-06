@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.mock.Mocks;
 import org.operaton.bpm.engine.runtime.JobQuery;
@@ -27,9 +29,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.execute;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.jobQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {

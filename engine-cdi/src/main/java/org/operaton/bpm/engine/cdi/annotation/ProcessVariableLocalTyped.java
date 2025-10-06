@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.cdi.annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
 import jakarta.enterprise.util.Nonbinding;
 import jakarta.inject.Qualifier;
 

@@ -23,9 +23,9 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
@@ -36,6 +36,8 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 public class CdiBeanResolutionTwoEnginesTest extends AbstractFoxPlatformIntegrationTest {
@@ -55,7 +57,7 @@ public class CdiBeanResolutionTwoEnginesTest extends AbstractFoxPlatformIntegrat
   void testResolveBean() {
     //given
     final ProcessEngine processEngine1 = processEngineService.getProcessEngine("engine1");
-    Assertions.assertEquals("engine1", processEngine1.getName());
+    assertThat(processEngine1.getName()).isEqualTo("engine1");
     createAuthorizations(processEngine1);
 
     //when we operate the process under authenticated user
@@ -63,15 +65,15 @@ public class CdiBeanResolutionTwoEnginesTest extends AbstractFoxPlatformIntegrat
 
     processEngine1.getRuntimeService().startProcessInstanceByKey("testProcess");
     final List<Task> tasks = processEngine1.getTaskService().createTaskQuery().list();
-    Assertions.assertEquals(1, tasks.size());
+    assertThat(tasks).hasSize(1);
     processEngine1.getTaskService().complete(tasks.get(0).getId());
 
     //then
     //identityService resolution respects the engine, on which the process is being executed
     final List<VariableInstance> variableInstances = processEngine1.getRuntimeService().createVariableInstanceQuery().variableName("changeInitiatorUsername")
       .list();
-    Assertions.assertEquals(1, variableInstances.size());
-    Assertions.assertEquals("user1", variableInstances.get(0).getValue());
+    assertThat(variableInstances).hasSize(1);
+    assertThat(variableInstances.get(0).getValue()).isEqualTo("user1");
   }
 
   private void createAuthorizations(ProcessEngine processEngine1) {

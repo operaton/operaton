@@ -17,11 +17,11 @@
 package org.operaton.bpm.engine.cdi.impl.el;
 
 import jakarta.el.ELContext;
+import jakarta.el.ELResolver;
+import jakarta.enterprise.inject.spi.BeanManager;
+
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
-import jakarta.el.ELResolver;
-
-import jakarta.enterprise.inject.spi.BeanManager;
 
 
 /**

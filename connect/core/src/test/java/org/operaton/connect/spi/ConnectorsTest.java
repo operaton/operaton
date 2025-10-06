@@ -16,11 +16,12 @@
  */
 package org.operaton.connect.spi;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
+
 import org.operaton.connect.Connectors;
 import org.operaton.connect.dummy.DummyConnector;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ConnectorsTest {
 

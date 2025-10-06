@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.impl.UpdateProcessInstancesSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;

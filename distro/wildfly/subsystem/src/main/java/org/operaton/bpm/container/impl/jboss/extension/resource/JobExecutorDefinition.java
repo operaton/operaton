@@ -21,13 +21,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.jboss.as.controller.AttributeDefinition;
+import org.jboss.as.controller.PersistentResourceDefinition;
+
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobExecutorAdd;
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobExecutorRemove;
-import org.jboss.as.controller.AttributeDefinition;
-import org.jboss.as.controller.PersistentResourceDefinition;
 
 public final class JobExecutorDefinition extends PersistentResourceDefinition {
 

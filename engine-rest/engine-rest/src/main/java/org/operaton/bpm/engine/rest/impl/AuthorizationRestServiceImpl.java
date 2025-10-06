@@ -17,11 +17,6 @@
 package org.operaton.bpm.engine.rest.impl;
 
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
-import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +24,9 @@ import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -51,6 +49,10 @@ import org.operaton.bpm.engine.rest.sub.authorization.AuthorizationResource;
 import org.operaton.bpm.engine.rest.sub.authorization.impl.AuthorizationResourceImpl;
 import org.operaton.bpm.engine.rest.util.QueryUtil;
 import org.operaton.bpm.engine.rest.util.ResourceUtil;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
+import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
 
 /**
  * @author Daniel Meyer

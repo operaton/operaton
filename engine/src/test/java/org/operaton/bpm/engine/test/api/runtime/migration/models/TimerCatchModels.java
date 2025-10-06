@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Thorben Lindhauer
  *
  */
-public class TimerCatchModels {
+public final class TimerCatchModels {
 
   public static final BpmnModelInstance ONE_TIMER_CATCH_PROCESS = ProcessModels.newModel()
     .startEvent()
@@ -44,4 +44,7 @@ public class TimerCatchModels {
       .subProcessDone()
       .endEvent()
       .done();
+
+  private TimerCatchModels() {
+  }
 }

@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import org.operaton.bpm.dmn.engine.DmnDecisionResult;
-import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.operaton.bpm.dmn.engine.test.DecisionResource;
-import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
-import org.operaton.bpm.engine.variable.Variables;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import org.operaton.bpm.dmn.engine.DmnDecisionResult;
+import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
+import org.operaton.bpm.dmn.engine.test.DecisionResource;
+import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
+import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;

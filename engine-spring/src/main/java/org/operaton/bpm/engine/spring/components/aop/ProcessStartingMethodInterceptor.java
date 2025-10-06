@@ -24,16 +24,17 @@ import java.util.logging.Logger;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.annotations.BusinessKey;
 import org.operaton.bpm.engine.spring.annotations.ProcessVariable;
 import org.operaton.bpm.engine.spring.annotations.StartProcess;
-import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 /**
  * {@link org.aopalliance.intercept.MethodInterceptor} that starts a business process
@@ -57,8 +58,8 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
         this.processEngine = processEngine;
     }
 
-    boolean shouldReturnProcessInstance(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
-        return (result instanceof ProcessInstance || methodInvocation.getMethod().getReturnType().isAssignableFrom(ProcessInstance.class));
+    boolean shouldReturnProcessInstance(MethodInvocation methodInvocation, Object result) {
+        return result instanceof ProcessInstance || methodInvocation.getMethod().getReturnType().isAssignableFrom(ProcessInstance.class);
     }
 
     boolean shouldReturnProcessInstanceId(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
@@ -67,7 +68,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
 
     @SuppressWarnings("unused")
     boolean shouldReturnAsyncResultWithProcessInstance(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
-        return (result instanceof Future || methodInvocation.getMethod().getReturnType().isAssignableFrom(Future.class));
+        return result instanceof Future || methodInvocation.getMethod().getReturnType().isAssignableFrom(Future.class);
     }
 
   @Override
@@ -105,7 +106,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
             return null;
           }
 
-          if (shouldReturnProcessInstance(startProcess, invocation, result)) {
+          if (shouldReturnProcessInstance(invocation, result)) {
             return pi;
           }
 

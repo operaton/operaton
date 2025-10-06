@@ -16,14 +16,20 @@
  */
 package org.operaton.spin.impl.json.jackson;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.jayway.jsonpath.InvalidPathException;
+import com.jayway.jsonpath.JsonPath;
 
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.SpinListImpl;
@@ -36,13 +42,7 @@ import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPathQuery;
 import org.operaton.spin.spi.DataFormatMapper;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeType;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.jayway.jsonpath.InvalidPathException;
-import com.jayway.jsonpath.JsonPath;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 /**
  * Wrapper for a Jackson Json Tree Node.
@@ -116,7 +116,7 @@ public class JacksonJsonNode extends SpinJsonNode {
   }
 
   protected int lookupArray(JsonNode searchNode, int direction) {
-    if(!this.isArray()) {
+    if(Boolean.FALSE.equals(this.isArray())) {
       throw LOG.unableToGetIndex(jsonNode.getNodeType().name());
     }
     int i = direction>0 ? 0 : jsonNode.size() - 1;
@@ -332,7 +332,7 @@ public class JacksonJsonNode extends SpinJsonNode {
   public SpinJsonNode insertBefore(Object searchObject, Object insertObject) {
     ensureNotNull("searchObject", searchObject);
     ensureNotNull("insertObject", insertObject);
-    if(this.isArray()) {
+    if(Boolean.TRUE.equals(this.isArray())) {
       Integer i = indexOf(searchObject);
 
       return insertAt(i, insertObject);
@@ -346,7 +346,7 @@ public class JacksonJsonNode extends SpinJsonNode {
   public SpinJsonNode insertAfter(Object searchObject, Object insertObject) {
     ensureNotNull("searchObject", searchObject);
     ensureNotNull("insertObject", insertObject);
-    if(this.isArray()) {
+    if(Boolean.TRUE.equals(this.isArray())) {
       Integer i = indexOf(searchObject);
 
       return insertAt(i + 1, insertObject);
@@ -368,7 +368,7 @@ public class JacksonJsonNode extends SpinJsonNode {
 
   @Override
   public SpinJsonNode removeAt(int index) {
-    if(this.isArray()) {
+    if(Boolean.TRUE.equals(this.isArray())) {
       ArrayNode node = (ArrayNode) jsonNode;
 
       node.remove(getCorrectIndex(index));

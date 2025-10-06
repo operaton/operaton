@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import org.operaton.bpm.engine.rest.dto.CountResultDto;
-import org.operaton.bpm.engine.rest.dto.runtime.IncidentDto;
-import org.operaton.bpm.engine.rest.sub.runtime.IncidentResource;
-import org.operaton.bpm.engine.runtime.IncidentQuery;
-
+import java.util.List;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -29,7 +25,11 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
-import java.util.List;
+
+import org.operaton.bpm.engine.rest.dto.CountResultDto;
+import org.operaton.bpm.engine.rest.dto.runtime.IncidentDto;
+import org.operaton.bpm.engine.rest.sub.runtime.IncidentResource;
+import org.operaton.bpm.engine.runtime.IncidentQuery;
 
 /**
  * @author Roman Smirnov

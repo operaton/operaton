@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assumptions.assumeFalse;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -31,6 +29,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assumptions.assumeThat;
 
 /**
  * @author Svetlana Dorokhova.
@@ -52,7 +53,7 @@ class PersistenceExceptionTest {
 
   @Test
   void testPersistenceExceptionContainsRealCause() {
-    assumeFalse(DbSqlSessionFactory.MARIADB.equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
+    assumeThat(DbSqlSessionFactory.MARIADB.equals(engineRule.getProcessEngineConfiguration().getDatabaseType())).isFalse();
     StringBuffer longString = new StringBuffer();
     for (int i = 0; i < 100; i++) {
       longString.append("tensymbols");

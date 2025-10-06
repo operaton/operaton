@@ -19,7 +19,6 @@ package org.operaton.bpm.client.variable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -40,7 +39,7 @@ public class XmlSerializables {
     StringBuilder xmlBuilder = new StringBuilder();
 
     xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmlSerializables>");
-    serializables.forEach((s) -> {
+    serializables.forEach(s -> {
       xmlBuilder.append("<serializable>");
       xmlBuilder.append(String.format("<booleanProperty>%s</booleanProperty>", s.getBooleanProperty()));
       xmlBuilder.append(String.format("<intProperty>%s</intProperty>", s.getIntProperty()));
@@ -73,24 +72,28 @@ public class XmlSerializables {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((serializables == null) ? 0 : serializables.hashCode());
-    return result;
+    return prime * result + (serializables == null ? 0 : serializables.hashCode());
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     XmlSerializables other = (XmlSerializables) obj;
     if (serializables == null) {
-      if (other.serializables != null)
+      if (other.serializables != null) {
         return false;
-    } else if (!serializables.equals(other.serializables))
+      }
+    } else if (!serializables.equals(other.serializables)) {
       return false;
+    }
     return true;
   }
 

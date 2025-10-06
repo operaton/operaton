@@ -16,11 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
-import static org.mockito.Mockito.*;
-
-import java.io.IOException;
 import java.net.URL;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +25,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.Resource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class FaviconResourceResolverTest {
@@ -39,7 +39,7 @@ class FaviconResourceResolverTest {
   FaviconResourceResolver resolver;
 
   @Test
-  void shouldStripPathExceptLastSegment() throws IOException {
+  void shouldStripPathExceptLastSegment() throws Exception {
     // given
     String resourcePath = "/operaton/favicon.ico";
     String lastSegment = "/favicon.ico";
@@ -54,11 +54,11 @@ class FaviconResourceResolverTest {
     Resource resource = resolver.getResource(resourcePath, location);
 
     // then
-    Assertions.assertEquals(expectedFavicon, resource);
+    assertThat(resource).isEqualTo(expectedFavicon);
   }
 
   @Test
-  void shouldStripPathExceptLastSegmentWithCustomPath() throws IOException {
+  void shouldStripPathExceptLastSegmentWithCustomPath() throws Exception {
     // given
     String resourcePath = "/custom-path/favicon.ico";
     String lastSegment = "/favicon.ico";
@@ -73,7 +73,7 @@ class FaviconResourceResolverTest {
     Resource resource = resolver.getResource(resourcePath, location);
 
     // then
-    Assertions.assertEquals(expectedFavicon, resource);
+    assertThat(resource).isEqualTo(expectedFavicon);
   }
 
 }

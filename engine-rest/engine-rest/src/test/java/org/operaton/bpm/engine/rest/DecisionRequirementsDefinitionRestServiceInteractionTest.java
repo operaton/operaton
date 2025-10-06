@@ -17,24 +17,19 @@
 package org.operaton.bpm.engine.rest;
 
 
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Collections;
-
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -46,12 +41,16 @@ import org.operaton.bpm.engine.repository.DecisionRequirementsDefinitionQuery;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -168,7 +167,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   }
 
   @Test
-  void decisionRequirementsDefinitionRetrievalByKeyAndTenantId() throws FileNotFoundException, URISyntaxException {
+  void decisionRequirementsDefinitionRetrievalByKeyAndTenantId() throws Exception {
     DecisionRequirementsDefinition mockDefinition = MockProvider.mockDecisionRequirementsDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build();
     setUpRuntimeData(mockDefinition);
 
@@ -232,7 +231,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
 
   // DRD retrieval
   @Test
-  void decisionRequirementsDiagramRetrieval() throws FileNotFoundException, URISyntaxException {
+  void decisionRequirementsDiagramRetrieval() throws Exception {
     byte[] actual = given().pathParam("id", MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
       .expect()
         .statusCode(Status.OK.getStatusCode())

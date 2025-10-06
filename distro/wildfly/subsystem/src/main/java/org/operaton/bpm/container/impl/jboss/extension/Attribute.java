@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension;
 
-import org.jboss.as.controller.AttributeDefinition;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.jboss.as.controller.AttributeDefinition;
 
 /**
  * An attribute.
@@ -64,7 +64,7 @@ public enum Attribute {
   private static final Map<String, Attribute> MAP;
 
   static {
-    final Map<String, Attribute> map = new HashMap<String, Attribute>();
+    final Map<String, Attribute> map = new HashMap<>();
     for (Attribute element : values()) {
       final String name = element.getLocalName();
       if (name != null) {

@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -38,6 +33,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -64,6 +60,12 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameteri
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Joram Barrez
@@ -890,6 +892,31 @@ public class JobQueryTest {
     }
   }
 
+  @TestTemplate
+  void testQueryByAcquired() {
+    Calendar lockExpDate = Calendar.getInstance();
+    //given - lock expiration date in future
+    lockExpDate.add(Calendar.MILLISECOND, 30000000);
+
+    createJobWithLockExpiration(lockExpDate.getTime());
+
+    Job job = managementService.createJobQuery().jobId(timerEntity.getId()).singleResult();
+    assertThat(job).isNotNull();
+
+    List<Job> list = managementService.createJobQuery().acquired().list();
+    assertThat(list).hasSize(1);
+    deleteJobInDatabase();
+
+    //given - lock expiration date in the past
+    lockExpDate.add(Calendar.MILLISECOND, -60000000);
+    createJobWithLockExpiration(lockExpDate.getTime());
+
+    list = managementService.createJobQuery().acquired().list();
+    assertThat(list).hasSize(0);
+
+    deleteJobInDatabase();
+  }
+
   //helper ////////////////////////////////////////////////////////////
 
   private void setRetries(final String processInstanceId, final int retries) {
@@ -898,6 +925,25 @@ public class JobQueryTest {
       JobEntity timer = commandContext.getDbEntityManager().selectById(JobEntity.class, job.getId());
       timer.setRetries(retries);
       return null;
+    });
+  }
+
+  private void createJobWithLockExpiration(Date lockDate) {
+    CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
+    commandExecutor.execute(commandContext -> {
+      JobManager jobManager = commandContext.getJobManager();
+      timerEntity = new TimerEntity();
+      timerEntity.setLockOwner(UUID.randomUUID().toString());
+      timerEntity.setDuedate(new Date());
+      timerEntity.setRetries(0);
+      timerEntity.setLockExpirationTime(lockDate);
+
+      jobManager.insert(timerEntity);
+
+      assertThat(timerEntity.getId()).isNotNull();
+
+      return null;
+
     });
   }
 
@@ -914,12 +960,7 @@ public class JobQueryTest {
     assertThat(timerJob).as("No job found for process instance").isNotNull();
     String timerJobId = timerJob.getId();
 
-    try {
-      managementService.executeJob(timerJobId);
-      fail("RuntimeException from within the script task expected");
-    } catch(RuntimeException re) {
-      assertThat(re.getMessage()).contains(EXCEPTION_MESSAGE);
-    }
+    executeJobExpectingException(managementService, timerJobId, EXCEPTION_MESSAGE);
     return processInstance;
   }
 

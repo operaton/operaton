@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.instance.di;
 
-import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
-import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
+import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DC_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DI_NS;

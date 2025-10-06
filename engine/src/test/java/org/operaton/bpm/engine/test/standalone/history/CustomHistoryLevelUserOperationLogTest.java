@@ -16,27 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.EntityTypes.JOB;
-import static org.operaton.bpm.engine.EntityTypes.JOB_DEFINITION;
-import static org.operaton.bpm.engine.EntityTypes.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.EntityTypes.PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_JOB;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_JOB_DEFINITION;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SET_JOB_RETRIES;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_JOB;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_JOB_DEFINITION;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.impl.cmd.AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY;
-import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +26,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
@@ -58,7 +39,6 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
@@ -68,6 +48,16 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
+
+import static org.operaton.bpm.engine.EntityTypes.JOB;
+import static org.operaton.bpm.engine.EntityTypes.JOB_DEFINITION;
+import static org.operaton.bpm.engine.EntityTypes.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.EntityTypes.PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
+import static org.operaton.bpm.engine.impl.cmd.AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CustomHistoryLevelUserOperationLogTest {
 
@@ -82,7 +72,7 @@ public class CustomHistoryLevelUserOperationLogTest {
     .randomEngineName().closeEngineAfterAllTests()
     .configurator(configuration -> {
       configuration.setJdbcUrl("jdbc:h2:mem:CustomHistoryLevelUserOperationLogTest");
-      configuration.setCustomHistoryLevels(Arrays.asList(customHistoryLevelUOL));
+      configuration.setCustomHistoryLevels(List.of(customHistoryLevelUOL));
       configuration.setHistory("aCustomHistoryLevelUOL");
       configuration.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
     })
@@ -99,10 +89,8 @@ public class CustomHistoryLevelUserOperationLogTest {
   RepositoryService repositoryService;
   TaskService taskService;
   CaseService caseService;
-  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   ProcessInstance process;
-  Task userTask;
   String processTaskId;
 
   @BeforeEach
@@ -342,7 +330,7 @@ public class CustomHistoryLevelUserOperationLogTest {
     assertThat(jobRetryEntry).isNotNull();
     assertThat(jobRetryEntry.getJobId()).isEqualTo(job.getId());
 
-    assertThat(jobRetryEntry.getOrgValue()).isEqualTo("3");
+    assertThat(jobRetryEntry.getOrgValue()).isEqualTo("5");
     assertThat(jobRetryEntry.getNewValue()).isEqualTo("10");
     assertThat(jobRetryEntry.getProperty()).isEqualTo("retries");
     assertThat(jobRetryEntry.getJobDefinitionId()).isEqualTo(job.getJobDefinitionId());

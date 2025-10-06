@@ -16,7 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.sub.repository.impl;
 
+import java.io.InputStream;
+import java.net.URI;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.UriInfo;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -39,13 +47,6 @@ import org.operaton.bpm.engine.rest.sub.repository.CaseDefinitionResource;
 import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
-
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.core.UriInfo;
-import java.io.InputStream;
-import java.net.URI;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 

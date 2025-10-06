@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.util.container;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 

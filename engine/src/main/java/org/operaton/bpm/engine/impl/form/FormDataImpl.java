@@ -21,10 +21,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.FormProperty;
+import org.operaton.bpm.engine.form.OperatonFormRef;
 
 /**
  * @author Tom Baeyens

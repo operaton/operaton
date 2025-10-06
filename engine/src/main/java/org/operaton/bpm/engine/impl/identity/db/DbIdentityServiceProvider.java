@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.identity.db;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +39,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.TenantEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TenantMembershipEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * <p>{@link WritableIdentityProvider} implementation backed by a

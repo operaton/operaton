@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.test.standalone.calendar;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.calendar.DurationHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+
+import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DurationHelperTest {
 
@@ -102,11 +103,21 @@ class DurationHelperTest {
   void shouldParseAllSupportedISO8601DurationPatterns() throws Exception {
     // given
     // when
-    DurationHelper PnYnMnDTnHnMnS = new DurationHelper("P1Y5M21DT19H47M55S", parse("19700101-00:00:00"));
-    DurationHelper PnW = new DurationHelper("P2W", parse("19700101-00:00:00"));
+    DurationHelper dh = new DurationHelper("P1Y5M21DT19H47M55S", parse("19700101-00:00:00"));
+
     // then
-    assertThat(PnYnMnDTnHnMnS.getDateAfter()).isEqualTo(parse("19710622-19:47:55"));
-    assertThat(PnW.getDateAfter()).isEqualTo(parse("19700115-00:00:00"));
+    assertThat(dh.getDateAfter()).isEqualTo(parse("19710622-19:47:55"));
+  }
+
+  @Test
+  void shouldParseP2W() throws Exception {
+    // given
+
+    // when
+    DurationHelper dh = new DurationHelper("P2W", parse("19700101-00:00:00"));
+
+    // then
+    assertThat(dh.getDateAfter()).isEqualTo(parse("19700115-00:00:00"));
   }
 
   @Test
@@ -114,10 +125,10 @@ class DurationHelperTest {
     // given
 
     // when
-    DurationHelper PnW = new DurationHelper("P4W", parse("19700101-00:00:00"));
+    DurationHelper dh = new DurationHelper("P4W", parse("19700101-00:00:00"));
 
     // then
-    assertThat(PnW.getDateAfter()).isEqualTo(parse("19700129-00:00:00"));
+    assertThat(dh.getDateAfter()).isEqualTo(parse("19700129-00:00:00"));
   }
 
   @Test
@@ -125,10 +136,10 @@ class DurationHelperTest {
     // given
 
     // when
-    DurationHelper PnW = new DurationHelper("P5W", parse("19700101-00:00:00"));
+    DurationHelper dh = new DurationHelper("P5W", parse("19700101-00:00:00"));
 
     // then
-    assertThat(PnW.getDateAfter()).isEqualTo(parse("19700205-00:00:00"));
+    assertThat(dh.getDateAfter()).isEqualTo(parse("19700205-00:00:00"));
   }
 
   @Test
@@ -136,16 +147,14 @@ class DurationHelperTest {
     // given
 
     // when
-    DurationHelper PnW = new DurationHelper("P22W", parse("19700101-00:00:00"));
+    DurationHelper dh = new DurationHelper("P22W", parse("19700101-00:00:00"));
 
     // then
-    assertThat(PnW.getDateAfter()).isEqualTo(parse("19700604-00:00:00"));
+    assertThat(dh.getDateAfter()).isEqualTo(parse("19700604-00:00:00"));
   }
 
   private Date parse(String str) throws Exception {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
     return simpleDateFormat.parse(str);
   }
-
-
 }

@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.impl.HistoricCaseInstanceQueryImpl;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
 class HistoricCaseInstanceQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<HistoricCaseInstanceQueryImpl, HistoricCaseInstance> {

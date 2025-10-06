@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.builtin;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.engine.test.junit5.WatchLogger;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BuiltinTaskListenerTest {
 

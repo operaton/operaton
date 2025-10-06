@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.model.cmmn10;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
@@ -45,6 +43,9 @@ import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.TimerEvent;
 import org.operaton.bpm.model.cmmn.instance.UserEvent;
 import org.operaton.bpm.model.xml.ModelValidationException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -159,12 +160,12 @@ class Cmmn10Test {
   @Test
   void shouldGetCaseRoles() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
-    Case _case = modelInstance.getModelElementsByType(Case.class).iterator().next();
+    Case caseElement = modelInstance.getModelElementsByType(Case.class).iterator().next();
 
-    Collection<CaseRole> roles = _case.getCaseRoles();
+    Collection<CaseRole> roles = caseElement.getCaseRoles();
     assertThat(roles).hasSize(2);
 
-    CaseRoles caseRole = _case.getRoles();
+    CaseRoles caseRole = caseElement.getRoles();
     assertThat(caseRole).isNull();
   }
 

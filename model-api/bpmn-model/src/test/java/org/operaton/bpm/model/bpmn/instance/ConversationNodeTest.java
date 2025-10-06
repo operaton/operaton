@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.operaton.bpm.model.bpmn.impl.instance.MessageFlowRef;
-import org.operaton.bpm.model.bpmn.impl.instance.ParticipantRef;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.impl.instance.MessageFlowRef;
+import org.operaton.bpm.model.bpmn.impl.instance.ParticipantRef;
 
 /**
  * @author Sebastian Menski

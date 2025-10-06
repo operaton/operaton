@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Thorben Lindhauer
  *
  */
-public class ServiceTaskModels {
+public final class ServiceTaskModels {
 
 
   public static BpmnModelInstance oneClassDelegateServiceTask(String className) {
@@ -32,5 +32,8 @@ public class ServiceTaskModels {
         .operatonClass(className)
       .endEvent()
       .done();
+  }
+
+  private ServiceTaskModels() {
   }
 }

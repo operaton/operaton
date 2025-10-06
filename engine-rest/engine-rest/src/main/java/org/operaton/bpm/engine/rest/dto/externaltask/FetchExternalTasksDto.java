@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.engine.rest.dto.externaltask;
 
-import static java.lang.Boolean.TRUE;
-import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
-
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQueryTopicBuilder;
 import org.operaton.bpm.engine.externaltask.FetchAndLockBuilder;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.rest.dto.SortingDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
+import static java.lang.Boolean.TRUE;
 
 /**
  * @author Thorben Lindhauer
@@ -104,7 +104,7 @@ public class FetchExternalTasksDto {
     protected String processDefinitionVersionTag;
     protected long lockDuration;
     protected List<String> variables;
-    protected HashMap<String, Object> processVariables;
+    protected Map<String, Object> processVariables;
     protected boolean deserializeValues;
     protected boolean localVariables;
     protected boolean includeExtensionProperties;
@@ -166,10 +166,10 @@ public class FetchExternalTasksDto {
     public void setVariables(List<String> variables) {
       this.variables = variables;
     }
-    public HashMap<String, Object> getProcessVariables() {
+    public Map<String, Object> getProcessVariables() {
       return processVariables;
     }
-    public void setProcessVariables(HashMap<String, Object> processVariables) {
+    public void setProcessVariables(Map<String, Object> processVariables) {
       this.processVariables = processVariables;
     }
     public boolean isDeserializeValues() {
@@ -310,7 +310,7 @@ public class FetchExternalTasksDto {
     protected final FetchAndLockBuilder builder;
 
     protected SortMapper(List<SortingDto> sorting, FetchAndLockBuilder builder) {
-      this.sorting = (sorting == null) ? Collections.emptyList() : sorting;
+      this.sorting = sorting == null ? Collections.emptyList() : sorting;
       this.builder = builder;
     }
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -26,13 +23,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
-    "operaton.bpm.webapp.headerSecurity.hstsDisabled=false",
-    "operaton.bpm.webapp.headerSecurity.hstsMaxAge=8",
-    "operaton.bpm.webapp.headerSecurity.hstsIncludeSubdomainsDisabled=false"
+  "operaton.bpm.webapp.headerSecurity.hstsDisabled=false",
+  "operaton.bpm.webapp.headerSecurity.hstsMaxAge=8",
+  "operaton.bpm.webapp.headerSecurity.hstsIncludeSubdomainsDisabled=false"
 })
 class HstsIT {
 

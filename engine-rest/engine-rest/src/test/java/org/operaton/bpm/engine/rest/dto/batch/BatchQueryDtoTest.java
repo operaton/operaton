@@ -15,15 +15,16 @@
  */
 package org.operaton.bpm.engine.rest.dto.batch;
 
+import java.util.List;
 import jakarta.ws.rs.core.MultivaluedMap;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.operaton.bpm.engine.batch.BatchQuery;
 
-import java.util.List;
+import org.operaton.bpm.engine.batch.BatchQuery;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;

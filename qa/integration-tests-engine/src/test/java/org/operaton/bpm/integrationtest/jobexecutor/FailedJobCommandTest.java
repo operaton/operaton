@@ -21,12 +21,14 @@ import java.util.function.Supplier;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.FailingSLSB;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @ExtendWith(ArquillianExtension.class)
@@ -45,14 +47,14 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
     runtimeService.startProcessInstanceByKey("theProcess");
     Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
-    Assertions.assertEquals(1, createQuery.get().withRetriesLeft().count());
+    assertThat(createQuery.get().withRetriesLeft().count()).isEqualTo(1);
 
     waitForJobExecutorToProcessAllJobs();
 
     // now the retries = 0
 
-    Assertions.assertEquals(0, createQuery.get().withRetriesLeft().count());
-    Assertions.assertEquals(1, createQuery.get().noRetriesLeft().count());
+    assertThat(createQuery.get().withRetriesLeft().count()).isZero();
+    assertThat(createQuery.get().noRetriesLeft().count()).isEqualTo(1);
 
   }
 
@@ -64,14 +66,14 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
     }
     Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
-    Assertions.assertEquals(50, createQuery.get().withRetriesLeft().count());
+    assertThat(createQuery.get().withRetriesLeft().count()).isEqualTo(50);
 
     waitForJobExecutorToProcessAllJobs(6 * 60 * 1000);
 
     // now the retries = 0
 
-    Assertions.assertEquals(0, createQuery.get().withRetriesLeft().count());
-    Assertions.assertEquals(51, createQuery.get().noRetriesLeft().count());
+    assertThat(createQuery.get().withRetriesLeft().count()).isZero();
+    assertThat(createQuery.get().noRetriesLeft().count()).isEqualTo(51);
 
   }
 

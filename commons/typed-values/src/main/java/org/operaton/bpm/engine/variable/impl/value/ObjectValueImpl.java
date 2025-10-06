@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.variable.impl.value;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;

@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.BackoffJobAcquisitionStrategy;
 import org.operaton.bpm.engine.impl.jobexecutor.JobAcquisitionContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobAcquisitionStrategy;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -35,11 +36,11 @@ class BackoffJobAcquisitionStrategyTest {
 
   // strategy configuration
   protected static final long BASE_IDLE_WAIT_TIME = 50;
-  protected static final float IDLE_INCREASE_FACTOR = 1.5f;
+  protected static final float IDLE_INCREASE_FACTOR = 1.5F;
   protected static final long MAX_IDLE_TIME = 500;
 
   protected static final long BASE_BACKOFF_WAIT_TIME = 80;
-  protected static final float BACKOFF_INCREASE_FACTOR = 2.0f;
+  protected static final float BACKOFF_INCREASE_FACTOR = 2.0F;
   protected static final long MAX_BACKOFF_TIME = 1000;
 
   protected static final int DECREASE_THRESHOLD = 3;

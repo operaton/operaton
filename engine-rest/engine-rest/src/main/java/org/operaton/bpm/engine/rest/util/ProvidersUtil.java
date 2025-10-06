@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
-import org.operaton.bpm.engine.rest.exception.RestException;
-
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.ContextResolver;
 import jakarta.ws.rs.ext.Providers;
+
+import org.operaton.bpm.engine.rest.exception.RestException;
 
 /**
  * @author Thorben Lindhauer

@@ -16,6 +16,16 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Map;
+import jakarta.servlet.*;
+
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+
 import org.operaton.bpm.admin.impl.web.AdminApplication;
 import org.operaton.bpm.admin.impl.web.bootstrap.AdminContainerBootstrap;
 import org.operaton.bpm.cockpit.impl.web.CockpitApplication;
@@ -38,17 +48,6 @@ import org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListene
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 import org.operaton.bpm.welcome.impl.web.WelcomeApplication;
 import org.operaton.bpm.welcome.impl.web.bootstrap.WelcomeContainerBootstrap;
-
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Map;
-
-import jakarta.servlet.*;
-
-import org.glassfish.jersey.servlet.ServletContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.servlet.ServletContextInitializer;
 
 import static java.util.Collections.singletonMap;
 import static org.glassfish.jersey.servlet.ServletProperties.JAXRS_APPLICATION_CLASS;

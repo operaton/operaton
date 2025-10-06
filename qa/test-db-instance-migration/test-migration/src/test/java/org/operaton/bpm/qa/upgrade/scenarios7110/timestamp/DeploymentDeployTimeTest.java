@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7110.timestamp;
 
-import org.operaton.bpm.engine.repository.Deployment;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.repository.Deployment;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

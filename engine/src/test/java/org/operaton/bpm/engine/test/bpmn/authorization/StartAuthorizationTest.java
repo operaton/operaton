@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.engine.test.bpmn.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
@@ -35,6 +33,9 @@ import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -204,17 +205,10 @@ class StartAuthorizationTest {
   }
 
   private boolean containsUserOrGroup(String userId, String groupId, List<IdentityLink> links) {
-    boolean found = false;
-    for (IdentityLink identityLink : links) {
-      if(userId != null && userId.equals(identityLink.getUserId())) {
-        found = true;
-        break;
-      } else if(groupId != null && groupId.equals(identityLink.getGroupId())) {
-        found = true;
-        break;
-      }
-    }
-    return found;
+    return links.stream().anyMatch(identityLink ->
+      (userId != null && userId.equals(identityLink.getUserId())) ||
+      (groupId != null && groupId.equals(identityLink.getGroupId()))
+    );
   }
 
   @Deployment

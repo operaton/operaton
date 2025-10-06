@@ -18,6 +18,7 @@ package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.webapp.impl.util.HeaderRule;
 
 import static org.assertj.core.api.Assertions.assertThat;

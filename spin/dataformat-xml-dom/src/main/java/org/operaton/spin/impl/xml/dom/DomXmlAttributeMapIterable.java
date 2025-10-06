@@ -16,13 +16,14 @@
  */
 package org.operaton.spin.impl.xml.dom;
 
-import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
-import org.operaton.spin.xml.SpinXmlAttribute;
+import java.util.Iterator;
+
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
-import java.util.Iterator;
+import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
+import org.operaton.spin.xml.SpinXmlAttribute;
 
 /**
  * @author Sebastian Menski

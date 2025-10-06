@@ -19,6 +19,9 @@ package org.operaton.bpm.engine.test.concurrency;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -28,8 +31,6 @@ import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEn
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 
 /**
  * @author Daniel Meyer

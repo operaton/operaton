@@ -16,15 +16,14 @@
  */
 package org.operaton.bpm.client.spring.boot.starter;
 
-import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
-
 import java.util.Map;
-
 import jakarta.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.test.context.ContextConfiguration;
+
+import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
 
 @ContextConfiguration(classes = ParsePropertiesHelper.TestConfig.class)
 public abstract class ParsePropertiesHelper {

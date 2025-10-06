@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.Serializable;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -69,7 +70,7 @@ class ServiceTaskVariablesTest {
       Variable v = (Variable) execution.getVariable("variable");
       synchronized (ServiceTaskVariablesTest.class) {
         // we expect this to be 'true'
-        isNullInDelegate2 = ("delegate1".equals(v.value));
+        isNullInDelegate2 = "delegate1".equals(v.value);
       }
       v.value = "delegate2";
     }
@@ -83,7 +84,7 @@ class ServiceTaskVariablesTest {
       Variable v = (Variable) execution.getVariable("variable");
       synchronized (ServiceTaskVariablesTest.class) {
         // we expect this to be 'true' as well
-        isNullInDelegate3 = ("delegate2".equals(v.value));
+        isNullInDelegate3 = "delegate2".equals(v.value);
       }
     }
 

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.migration;
 
-import org.operaton.bpm.engine.variable.VariableMap;
-
 import java.util.List;
+
+import org.operaton.bpm.engine.variable.VariableMap;
 
 /**
  * <p>Specifies how process instances from one process definition (the <i>source process definition</i>)

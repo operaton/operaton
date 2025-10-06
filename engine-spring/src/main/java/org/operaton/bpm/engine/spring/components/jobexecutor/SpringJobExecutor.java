@@ -19,10 +19,11 @@ package org.operaton.bpm.engine.spring.components.jobexecutor;
 import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 
 /**
  *

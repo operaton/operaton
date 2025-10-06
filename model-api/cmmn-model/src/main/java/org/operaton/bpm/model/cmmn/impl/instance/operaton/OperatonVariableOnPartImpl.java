@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_NAME;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_VARIABLE_ON_PART;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
-
 import org.operaton.bpm.model.cmmn.VariableTransition;
 import org.operaton.bpm.model.cmmn.impl.instance.CmmnModelElementInstanceImpl;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableOnPart;
@@ -30,6 +26,10 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_NAME;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_VARIABLE_ON_PART;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 public class OperatonVariableOnPartImpl extends CmmnModelElementInstanceImpl implements OperatonVariableOnPart {
 
@@ -43,11 +43,11 @@ public class OperatonVariableOnPartImpl extends CmmnModelElementInstanceImpl imp
   public static void registerType(ModelBuilder modelBuilder) {
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableOnPart.class, OPERATON_ELEMENT_VARIABLE_ON_PART)
-      .namespaceUri(CAMUNDA_NS)
+      .namespaceUri(OPERATON_NS)
       .instanceProvider(OperatonVariableOnPartImpl::new);
 
     operatonVariableNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE_NAME)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

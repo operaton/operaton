@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-cmmn-model</artifactId>
   <name>Operaton - CMMN Model API</name>
@@ -57,16 +57,12 @@
   <profiles>
     <profile>
       <id>check-api-compatibility</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <build>
         <plugins>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>clirr-maven-plugin</artifactId>
             <configuration>
-              <comparisonVersion>${operaton.version.old}</comparisonVersion>
               <logResults>true</logResults>
               <excludes>
                 <exclude>org/operaton/bpm/model/cmmn/impl/**</exclude>
@@ -74,27 +70,9 @@
             </configuration>
             <executions>
               <execution>
-                <id>all</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>check-no-fork</goal>
-                </goals>
-                <configuration>
-                  <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
-                  <failOnWarning>false</failOnWarning>
-                  <failOnError>false</failOnError>
-                </configuration>
-              </execution>
-              <execution>
                 <id>restrictive</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>check-no-fork</goal>
-                </goals>
                 <configuration>
-                  <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
-                  <failOnWarning>true</failOnWarning>
-                  <ignoredDifferencesFile>.clirr-jenkins-ignore.xml</ignoredDifferencesFile>
+                  <ignoredDifferencesFile>../.clirr-ignore.xml</ignoredDifferencesFile>
                 </configuration>
               </execution>
             </executions>

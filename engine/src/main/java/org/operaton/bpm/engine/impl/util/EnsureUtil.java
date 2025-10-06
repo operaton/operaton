@@ -147,6 +147,14 @@ public final class EnsureUtil {
   }
 
   @SuppressWarnings("rawtypes")
+  public static void ensureEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, Collection collection) {
+    if (collection != null && !collection.isEmpty()) {
+      String variableName = collection.iterator().next().toString();
+      throw generateException(exceptionClass, message, variableName, "is not empty");
+    }
+  }
+
+  @SuppressWarnings("rawtypes")
   public static void ensureNotEmpty(String variableName, Map map) {
     ensureNotEmpty("", variableName, map);
   }
@@ -384,9 +392,9 @@ public final class EnsureUtil {
 
   public static void ensureWhitelistedResourceId(CommandContext commandContext, String resourceType, String resourceId) {
     String resourcePattern = determineResourceWhitelistPattern(commandContext.getProcessEngineConfiguration(), resourceType);
-    Pattern PATTERN = Pattern.compile(resourcePattern);
+    Pattern pattern = Pattern.compile(resourcePattern);
 
-    if (!PATTERN.matcher(resourceId).matches()) {
+    if (!pattern.matcher(resourceId).matches()) {
       throw generateException(ProcessEngineException.class, resourceType + " has an invalid id", "'" + resourceId + "'", "is not a valid resource identifier.");
     }
   }

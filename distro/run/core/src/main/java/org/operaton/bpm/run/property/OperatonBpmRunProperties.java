@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.run.property;
 
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 @ConfigurationProperties(OperatonBpmRunProperties.PREFIX)
 public class OperatonBpmRunProperties {

@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.spring.boot.starter.runlistener;
 
-import org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.context.ApplicationListener;
+
+import org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion;
 
 /**
  * Adds operaton.bpm.version properties to environment.

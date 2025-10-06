@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.impl;
 
+import java.io.IOException;
+import java.io.Reader;
+
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.Spin;
 import org.operaton.spin.SpinFactory;
@@ -27,10 +30,8 @@ import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.spi.DataFormatReader;
 import org.operaton.spin.spi.SpinDataFormatException;
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
-import java.io.IOException;
-import java.io.Reader;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 /**
  * @author Daniel Meyer
@@ -75,7 +76,7 @@ public class SpinFactoryImpl extends SpinFactory {
       return createSpinFromReader(reader, format);
 
     } else if (parameter instanceof Spin) {
-      return createSpinFromSpin((T) parameter, format);
+      return createSpinFromSpin((T) parameter);
 
     } else {
       return createSpinFromObject(parameter, format);
@@ -135,17 +136,6 @@ public class SpinFactoryImpl extends SpinFactory {
     }
 
     return createSpin(rewindableReader, matchingDataFormat);
-  }
-
-  /**
-   *
-   * @throws SpinDataFormatException in case the parameter cannot be read using this data format
-   * @throws IllegalArgumentException in case the parameter is null or dd:
-   */
-  public <T extends Spin<?>> T createSpinFromSpin(T parameter, DataFormat<T> format) {
-    ensureNotNull("parameter", parameter);
-
-    return parameter;
   }
 
   public <T extends Spin<?>> T createSpinFromString(String parameter, DataFormat<T> format) {

@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.variable.listener;
 
-import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDelegate;
-
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
+import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.delegate.ClassDelegate;
+
+import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDelegate;
 
 /**
  * @author Thorben Lindhauer

@@ -16,23 +16,23 @@
  */
 package org.operaton.spin.xml.dom;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.xml.XmlTestUtil;
 import org.operaton.spin.xml.mapping.Order;
+
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.createExampleOrder;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
-public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest{
+public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest {
 
   @Test
   @Script(execute = false)
-  public void shouldMapJavaToXml() throws Throwable {
+  public void shouldMapJavaToXml() throws Exception {
     Order order = createExampleOrder();
 
     script.setVariable("input", order);
@@ -49,6 +49,6 @@ public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest{
   @Test
   @Script(execute = false)
   public void shouldFailWithNull() {
-    assertThrows(IllegalArgumentException.class, this::failingWithException);
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(this::failingWithException);
   }
 }

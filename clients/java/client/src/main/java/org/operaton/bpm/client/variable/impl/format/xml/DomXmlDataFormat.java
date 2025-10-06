@@ -16,21 +16,18 @@
  */
 package org.operaton.bpm.client.variable.impl.format.xml;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import java.beans.Introspector;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,14 +40,17 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
-import org.operaton.bpm.client.spi.DataFormat;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
+import org.operaton.bpm.client.spi.DataFormat;
+
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class DomXmlDataFormat implements DataFormat {
 

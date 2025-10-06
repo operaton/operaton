@@ -16,13 +16,21 @@
  */
 package org.operaton.connect.httpclient;
 
-import org.apache.http.client.methods.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.operaton.connect.Connectors;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.hc.client5.http.classic.methods.HttpDelete;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpHead;
+import org.apache.hc.client5.http.classic.methods.HttpOptions;
+import org.apache.hc.client5.http.classic.methods.HttpPatch;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.client5.http.classic.methods.HttpTrace;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import org.operaton.connect.Connectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -159,7 +167,7 @@ public class HttpRequestTest {
     HttpRequest request = connector.createRequest()
         .configOption("object-field", value)
         .configOption("int-field", 15)
-        .configOption("long-field", 15l)
+        .configOption("long-field", 15L)
         .configOption("boolean-field", true)
         .configOption("string-field", "string-value");
 

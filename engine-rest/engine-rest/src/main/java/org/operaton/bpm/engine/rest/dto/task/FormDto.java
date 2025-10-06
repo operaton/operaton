@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.dto.task;
 
-import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.form.FormData;
+import org.operaton.bpm.engine.form.OperatonFormRef;
 
 /**
  *

@@ -16,9 +16,16 @@
  */
 package org.operaton.bpm.client.variable;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -33,25 +40,11 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
 import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.engine.variable.type.ValueType.BOOLEAN;
-import static org.operaton.bpm.engine.variable.type.ValueType.BYTES;
-import static org.operaton.bpm.engine.variable.type.ValueType.DATE;
-import static org.operaton.bpm.engine.variable.type.ValueType.DOUBLE;
-import static org.operaton.bpm.engine.variable.type.ValueType.INTEGER;
-import static org.operaton.bpm.engine.variable.type.ValueType.LONG;
-import static org.operaton.bpm.engine.variable.type.ValueType.NULL;
-import static org.operaton.bpm.engine.variable.type.ValueType.SHORT;
-import static org.operaton.bpm.engine.variable.type.ValueType.STRING;
+import static org.operaton.bpm.engine.variable.type.ValueType.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PrimitiveVariableIT {
 
@@ -68,7 +61,7 @@ public class PrimitiveVariableIT {
   protected static final String VARIABLE_NAME_NULL = "nullValue";
 
   protected static final int VARIABLE_VALUE_INT = 123;
-  protected static final long VARIABLE_VALUE_LONG = 123l;
+  protected static final long VARIABLE_VALUE_LONG = 123L;
   protected static final short VARIABLE_VALUE_SHORT = (short) 123;
   protected static final double VARIABLE_VALUE_DOUBLE = 12.34;
   protected static final String VARIABLE_VALUE_STRING = "bar";

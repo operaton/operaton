@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.core.instance;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;

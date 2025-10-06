@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static junit.framework.TestCase.fail;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
@@ -36,6 +34,9 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.EndEvent;
 import org.operaton.bpm.model.bpmn.instance.TerminateEventDefinition;
+
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Askar Akhmerov
@@ -200,12 +201,7 @@ public class HistoricProcessInstanceStateTest {
     var jobId = processEngineRule.getManagementService().createJobQuery().executable().singleResult().getId();
     var managementService = processEngineRule.getManagementService();
 
-    try {
-      managementService.executeJob(jobId);
-      fail("exception expected");
-    } catch (Exception e) {
-      assertThat(e.getMessage()).contains("Unable to evaluate script while executing activity");
-    }
+    executeJobExpectingException(managementService, jobId, "Unable to evaluate script while executing activity");
 
     assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list()).hasSize(1);
     HistoricProcessInstance entity = getHistoricProcessInstanceWithAssertion(processDefinition);

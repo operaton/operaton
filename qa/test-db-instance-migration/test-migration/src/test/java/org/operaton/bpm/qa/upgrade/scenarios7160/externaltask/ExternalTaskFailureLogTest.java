@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7160.externaltask;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ScenarioUnderTest("ExternalTaskFailureLogScenario")
 @Origin("7.16.0")

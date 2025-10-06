@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.spring;
 
+import org.springframework.transaction.PlatformTransactionManager;
+
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
 import org.operaton.bpm.engine.impl.cfg.TransactionContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.springframework.transaction.PlatformTransactionManager;
 
 
 /**

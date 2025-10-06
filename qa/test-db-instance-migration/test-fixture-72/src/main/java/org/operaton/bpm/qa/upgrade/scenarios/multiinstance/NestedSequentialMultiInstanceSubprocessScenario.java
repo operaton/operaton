@@ -39,12 +39,9 @@ public final class NestedSequentialMultiInstanceSubprocessScenario {
   @DescribesScenario("init")
   @Times(5)
   public static ScenarioSetup instantiate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("NestedSequentialMultiInstanceSubprocess", scenarioName);
-      }
-    };
+    return (engine, scenarioName) ->
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("NestedSequentialMultiInstanceSubprocess", scenarioName);
   }
 }

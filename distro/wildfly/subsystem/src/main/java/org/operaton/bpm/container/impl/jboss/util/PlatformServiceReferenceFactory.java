@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.container.impl.jboss.util;
 
-import org.operaton.bpm.container.impl.jboss.service.MscRuntimeContainerDelegate;
 import org.jboss.as.naming.ManagedReference;
 import org.jboss.as.naming.ManagedReferenceFactory;
 
+import org.operaton.bpm.container.impl.jboss.service.MscRuntimeContainerDelegate;
 
 
 /**
@@ -35,12 +35,15 @@ public class PlatformServiceReferenceFactory implements ManagedReferenceFactory 
     this.service = service;
   }
 
+  @Override
   public ManagedReference getReference() {
     return new ManagedReference() {
 
+      @Override
       public void release() {
       }
 
+      @Override
       public Object getInstance() {
         return service;
       }

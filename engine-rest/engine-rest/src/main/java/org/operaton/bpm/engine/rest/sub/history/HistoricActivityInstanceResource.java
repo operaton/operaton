@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.sub.history;
 
-import org.operaton.bpm.engine.rest.dto.history.HistoricActivityInstanceDto;
-
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+
+import org.operaton.bpm.engine.rest.dto.history.HistoricActivityInstanceDto;
 
 public interface HistoricActivityInstanceResource {
 

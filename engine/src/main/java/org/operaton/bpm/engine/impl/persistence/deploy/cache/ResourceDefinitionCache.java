@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import java.util.concurrent.Callable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,8 +25,6 @@ import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManage
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.commons.utils.cache.Cache;
-
-import java.util.concurrent.Callable;
 
 
 /**
@@ -53,8 +53,7 @@ public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity
     }
 
     checkDefinitionFound(definitionId, definition);
-    definition = resolveDefinition(definition);
-    return definition;
+    return resolveDefinition(definition);
   }
 
   /**
@@ -65,39 +64,34 @@ public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity
     T definition = getManager()
         .findLatestDefinitionByKey(definitionKey);
     checkInvalidDefinitionByKey(definitionKey, definition);
-    definition = resolveDefinition(definition);
-    return definition;
+    return resolveDefinition(definition);
   }
 
   public T findDeployedLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
     T definition = getManager()
         .findLatestDefinitionByKeyAndTenantId(definitionKey, tenantId);
     checkInvalidDefinitionByKeyAndTenantId(definitionKey, tenantId, definition);
-    definition = resolveDefinition(definition);
-    return definition;
+    return resolveDefinition(definition);
   }
 
   public T findDeployedDefinitionByKeyVersionAndTenantId(final String definitionKey, final Integer definitionVersion, final String tenantId) {
     final CommandContext commandContext = Context.getCommandContext();
     T definition = commandContext.runWithoutAuthorization((Callable<T>) () -> getManager().findDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId));
     checkInvalidDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId, definition);
-    definition = resolveDefinition(definition);
-    return definition;
+    return resolveDefinition(definition);
   }
 
   public T findDeployedDefinitionByKeyVersionTagAndTenantId(final String definitionKey, final String definitionVersionTag, final String tenantId) {
     final CommandContext commandContext = Context.getCommandContext();
     T definition = commandContext.runWithoutAuthorization((Callable<T>) () -> getManager().findDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId));
     checkInvalidDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId, definition);
-    definition = resolveDefinition(definition);
-    return definition;
+    return resolveDefinition(definition);
   }
 
   public T findDeployedDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     T definition = getManager().findDefinitionByDeploymentAndKey(deploymentId, definitionKey);
     checkInvalidDefinitionByDeploymentAndKey(deploymentId, definitionKey, definition);
-    definition = resolveDefinition(definition);
-    return definition;
+    return resolveDefinition(definition);
   }
 
   public T resolveDefinition(T definition) {

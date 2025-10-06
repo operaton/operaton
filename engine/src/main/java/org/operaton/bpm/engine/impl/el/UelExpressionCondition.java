@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import jakarta.el.PropertyNotFoundException;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.Condition;
-import jakarta.el.PropertyNotFoundException;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**

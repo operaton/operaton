@@ -22,10 +22,10 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance;
+import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance.SimpleVariableInstanceFactory;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceFactory;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore;
-import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance.SimpleVariableInstanceFactory;
 
 /**
  * Simple standalone variable scope which can be used in testcases.
@@ -35,12 +35,13 @@ import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance.S
  */
 public class TestVariableScope extends AbstractVariableScope {
 
-  protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<SimpleVariableInstance>();
+  protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
 
   protected VariableStore<CoreVariableInstance> getVariableStore() {
     return (VariableStore) variableStore;
   }
 
+  @Override
   public AbstractVariableScope getParentVariableScope() {
     return null;
   }

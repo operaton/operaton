@@ -16,23 +16,24 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author Daniel Meyer
  *
  */
-public class TypedValueAssert {
+public final class TypedValueAssert {
 
   public static void assertObjectValueDeserializedNull(ObjectValue typedValue) {
     assertThat(typedValue).isNotNull();
@@ -84,6 +85,9 @@ public class TypedValueAssert {
     assertThat(nullValue).isNotNull();
     assertThat(nullValue.getValue()).isNull();
     assertThat(nullValue.getType()).isEqualTo(ValueType.NULL);
+  }
+
+  private TypedValueAssert() {
   }
 
 

@@ -16,26 +16,25 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import org.operaton.bpm.engine.AuthorizationException;
+import java.util.List;
 import java.util.Map;
+import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
+import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.rest.dto.converter.TaskReportResultToCsvConverter;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
 import org.operaton.bpm.engine.task.TaskReport;
+
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_GROUP_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockTaskCountByCandidateGroupReport;
-
-import jakarta.ws.rs.core.Response.Status;
-import java.util.List;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -117,14 +116,14 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> reports = from(content).getList("");
-    Assertions.assertEquals(1, reports.size(), "There should be one report returned.");
+    assertThat(reports).as("There should be one report returned.").hasSize(1);
     assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     String returnedGroup = from(content).getString("[0].groupName");
     int returnedCount = from(content).getInt("[0].taskCount");
 
-    Assertions.assertEquals(EXAMPLE_GROUP_ID, returnedGroup);
-    Assertions.assertEquals(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP, returnedCount);
+    assertThat(returnedGroup).isEqualTo(EXAMPLE_GROUP_ID);
+    assertThat(returnedCount).isEqualTo(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP);
   }
 
 

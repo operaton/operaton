@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.id;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.DbIdGenerator;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
+
 import static org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration.SIMPLE;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = {TestApplication.class}, properties = "operaton.bpm.id-generator=" + SIMPLE)

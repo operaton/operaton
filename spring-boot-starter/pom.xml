@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <groupId>org.operaton.bpm.springboot.project</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
@@ -37,6 +37,7 @@
         <module>starter-rest</module>
         <module>starter-security</module>
         <module>starter-test</module>
+        <module>starter-test-junit5</module>
         <module>starter-client/spring</module>
         <module>starter-client/spring-boot</module>
         <module>starter-webapp-core</module>

@@ -18,8 +18,8 @@ package org.operaton.connect.impl;
 
 import java.util.List;
 
-import org.operaton.connect.spi.ConnectorRequest;
 import org.operaton.connect.spi.ConnectorInvocation;
+import org.operaton.connect.spi.ConnectorRequest;
 import org.operaton.connect.spi.ConnectorRequestInterceptor;
 
 /**

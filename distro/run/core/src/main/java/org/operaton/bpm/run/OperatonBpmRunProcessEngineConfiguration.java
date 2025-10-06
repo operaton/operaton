@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.run;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.core.io.Resource;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
@@ -23,11 +29,6 @@ import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
 import org.operaton.bpm.run.utils.OperatonBpmRunProcessEnginePluginHelper;
-import org.springframework.core.io.Resource;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Set;
 
 public class OperatonBpmRunProcessEngineConfiguration extends SpringProcessEngineConfiguration {
 
@@ -60,7 +61,7 @@ public class OperatonBpmRunProcessEngineConfiguration extends SpringProcessEngin
   protected void initTelemetryData() {
     super.initTelemetryData();
     Set<String> operatonIntegration = telemetryData.getProduct().getInternals().getOperatonIntegration();
-    operatonIntegration.add(OperatonIntegration.CAMUNDA_BPM_RUN);
+    operatonIntegration.add(OperatonIntegration.OPERATON_BPM_RUN);
   }
 
   protected void configureProcessEnginePlugins(List<ProcessEnginePlugin> processEnginePluginsFromContext,

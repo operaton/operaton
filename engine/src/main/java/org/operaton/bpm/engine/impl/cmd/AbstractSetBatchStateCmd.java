@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -27,6 +25,8 @@ import org.operaton.bpm.engine.impl.management.UpdateJobDefinitionSuspensionStat
 import org.operaton.bpm.engine.impl.persistence.entity.BatchManager;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public abstract class AbstractSetBatchStateCmd implements Command<Void> {
 

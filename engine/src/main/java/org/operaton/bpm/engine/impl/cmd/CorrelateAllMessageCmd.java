@@ -17,13 +17,12 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.MessageCorrelationBuilderImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -36,6 +35,8 @@ import org.operaton.bpm.engine.impl.runtime.CorrelationHandlerResult;
 import org.operaton.bpm.engine.impl.runtime.CorrelationSet;
 import org.operaton.bpm.engine.impl.runtime.MessageCorrelationResultImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
 
 /**
  * @author Thorben Lindhauer

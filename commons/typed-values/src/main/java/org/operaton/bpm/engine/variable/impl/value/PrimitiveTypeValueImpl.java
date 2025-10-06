@@ -53,35 +53,38 @@ public class PrimitiveTypeValueImpl<T> extends AbstractTypedValue<T> implements 
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((type == null) ? 0 : type.hashCode());
-    result = prime * result + ((value == null) ? 0 : value.hashCode());
-    result = prime * result + (isTransient ? 1 : 0);
-    return result;
+    result = prime * result + (type == null ? 0 : type.hashCode());
+    result = prime * result + (value == null ? 0 : value.hashCode());
+    return prime * result + (isTransient ? 1 : 0);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    PrimitiveTypeValueImpl<?> other = (PrimitiveTypeValueImpl<?>) obj;
-    if (type == null) {
-      if (other.type != null)
-        return false;
-    } else if (!type.equals(other.type))
-      return false;
-    if (value == null) {
-      if (other.value != null)
-        return false;
-    } else if (!value.equals(other.value))
-      return false;
-    if (isTransient != other.isTransient()) {
+    }
+    if (obj == null) {
       return false;
     }
-    return true;
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    PrimitiveTypeValueImpl<?> other = (PrimitiveTypeValueImpl<?>) obj;
+    if (type == null) {
+      if (other.type != null) {
+        return false;
+      }
+    } else if (!type.equals(other.type)) {
+      return false;
+    }
+    if (value == null) {
+      if (other.value != null) {
+        return false;
+      }
+    } else if (!value.equals(other.value)) {
+      return false;
+    }
+    return isTransient == other.isTransient();
   }
 
 

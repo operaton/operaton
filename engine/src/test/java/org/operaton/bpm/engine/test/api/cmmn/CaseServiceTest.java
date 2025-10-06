@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.variable.Variables.booleanValue;
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-import static org.operaton.bpm.engine.variable.Variables.integerValue;
-import static org.operaton.bpm.engine.variable.Variables.stringValue;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,6 +24,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -51,6 +44,14 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
+
+import static org.operaton.bpm.engine.variable.Variables.booleanValue;
+import static org.operaton.bpm.engine.variable.Variables.createVariables;
+import static org.operaton.bpm.engine.variable.Variables.integerValue;
+import static org.operaton.bpm.engine.variable.Variables.stringValue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Roman Smirnov
@@ -1810,19 +1811,9 @@ class CaseServiceTest {
 
   @Test
   void testGetVariableInvalidCaseExecutionId() {
-    try {
-      caseService.getVariable("invalid", "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariable("invalid", "aVariableName")).isInstanceOf(NotFoundException.class);
 
-    try {
-      caseService.getVariable(null, "aVariableName");
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> caseService.getVariable(null, "aVariableName")).isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

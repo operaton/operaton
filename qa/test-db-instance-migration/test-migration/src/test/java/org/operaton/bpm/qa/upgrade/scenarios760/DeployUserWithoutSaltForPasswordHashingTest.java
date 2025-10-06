@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios760;
 
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

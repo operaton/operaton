@@ -16,23 +16,27 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
+import org.operaton.bpm.engine.impl.bpmn.parser.FailedJobRetryConfiguration;
+import org.operaton.bpm.engine.impl.cmd.DefaultJobRetryCmd;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
+import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+
 import static org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity.DEFAULT_EXCLUSIVE;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>A job declaration is associated with an activity in the process definition graph.
@@ -110,7 +114,32 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
     job.setJobHandlerConfiguration(resolveJobHandlerConfiguration(context));
     job.setJobHandlerType(resolveJobHandlerType(context));
     job.setExclusive(resolveExclusive(context));
-    job.setRetries(resolveRetries(context));
+
+    Integer retries = null;
+    CommandContext commandContext = Context.getCommandContext();
+
+    // use legacy behavior if it is enabled
+    // the legacy behavior sets the retries left value to 3 in the context regardless data in the database
+    if (Context.getProcessEngineConfiguration().isLegacyJobRetryBehaviorEnabled()) {
+      job.setRetries(resolveRetries(context));
+    } else {
+      DefaultJobRetryCmd defaultJobRetryCmd = new DefaultJobRetryCmd(job.getId(), null);
+      ActivityImpl currentActivity = defaultJobRetryCmd.getCurrentActivity(commandContext, job);
+      if (currentActivity != null) {
+        FailedJobRetryConfiguration retryConfiguration =
+            defaultJobRetryCmd.getFailedJobRetryConfiguration(job, currentActivity);
+        if (retryConfiguration != null) {
+          retries = retryConfiguration.getRetries();
+        }
+      }
+      // When expression has 0 retries, set initial retries to 1 to avoid immediately raising an incident
+      if (retries != null && retries == 0) {
+        retries = 1;
+      }
+
+      job.setRetries(retries == null ? resolveRetries(context) : retries);
+    }
+
     job.setDuedate(resolveDueDate(context));
 
 

@@ -18,13 +18,15 @@ package org.operaton.bpm.qa.rolling.update;
 
 import java.util.Arrays;
 import java.util.Collection;
-import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 /**
  * The abstract rolling update test case, which should be used as base class from all

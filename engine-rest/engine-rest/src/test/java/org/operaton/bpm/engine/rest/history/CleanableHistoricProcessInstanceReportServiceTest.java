@@ -16,6 +16,27 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReport;
+import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
+import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -28,37 +49,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import jakarta.ws.rs.core.Response.Status;
-
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReport;
-import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
-import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
-import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-
 public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractRestServiceTest {
 
   private static final String EXAMPLE_PD_NAME = "aName";
   private static final String EXAMPLE_PD_KEY = "aKey";
   private static final int EXAMPLE_PD_VERSION = 42;
   private static final int EXAMPLE_TTL = 5;
-  private static final long EXAMPLE_FINISHED_PI_COUNT = 10l;
-  private static final long EXAMPLE_CLEANABLE_PI_COUNT = 5l;
+  private static final long EXAMPLE_FINISHED_PI_COUNT = 10L;
+  private static final long EXAMPLE_CLEANABLE_PI_COUNT = 5L;
   private static final String EXAMPLE_TENANT_ID = "aTenantId";
 
   protected static final String ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID = "anotherDefId";
@@ -145,7 +143,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
 
     String content = response.asString();
     List<Map<String, Object>> reportResults = from(content).getList("");
-    Assertions.assertEquals(2, reportResults.size(), "There should be two report results returned.");
+    assertThat(reportResults).as("There should be two report results returned.").hasSize(2);
     assertThat(reportResults.get(0)).isNotNull();
 
     String returnedDefinitionId = from(content).getString("[0].processDefinitionId");
@@ -157,14 +155,14 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
     long returnedCleanableCount = from(content).getLong("[0].cleanableProcessInstanceCount");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    Assertions.assertEquals(EXAMPLE_PROCESS_DEFINITION_ID, returnedDefinitionId);
-    Assertions.assertEquals(EXAMPLE_PD_KEY, returnedDefinitionKey);
-    Assertions.assertEquals(EXAMPLE_PD_NAME, returnedDefinitionName);
-    Assertions.assertEquals(EXAMPLE_PD_VERSION, returnedDefinitionVersion);
-    Assertions.assertEquals(EXAMPLE_TTL, returnedTTL);
-    Assertions.assertEquals(EXAMPLE_FINISHED_PI_COUNT, returnedFinishedCount);
-    Assertions.assertEquals(EXAMPLE_CLEANABLE_PI_COUNT, returnedCleanableCount);
-    Assertions.assertEquals(EXAMPLE_TENANT_ID, returnedTenantId);
+    assertThat(returnedDefinitionId).isEqualTo(EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedDefinitionKey).isEqualTo(EXAMPLE_PD_KEY);
+    assertThat(returnedDefinitionName).isEqualTo(EXAMPLE_PD_NAME);
+    assertThat(returnedDefinitionVersion).isEqualTo(EXAMPLE_PD_VERSION);
+    assertThat(returnedTTL).isEqualTo(EXAMPLE_TTL);
+    assertThat(returnedFinishedCount).isEqualTo(EXAMPLE_FINISHED_PI_COUNT);
+    assertThat(returnedCleanableCount).isEqualTo(EXAMPLE_CLEANABLE_PI_COUNT);
+    assertThat(returnedTenantId).isEqualTo(EXAMPLE_TENANT_ID);
   }
 
   @Test

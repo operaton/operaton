@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.instance.bpmndi;
 
-import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
-import org.operaton.bpm.model.bpmn.instance.di.LabeledEdge;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
+import org.operaton.bpm.model.bpmn.instance.di.LabeledEdge;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;
 

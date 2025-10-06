@@ -16,31 +16,42 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import javax.sql.DataSource;
+import java.util.Optional;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.configuration.OperatonDatasourceConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.DatabaseProperty;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.util.StringUtils;
 
-public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguration implements OperatonDatasourceConfiguration {
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.configuration.OperatonDatasourceConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.DatabaseProperty;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
-  @Autowired
+public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguration
+  implements OperatonDatasourceConfiguration {
+
   protected PlatformTransactionManager transactionManager;
 
-  @Autowired(required = false)
   @Qualifier("operatonBpmTransactionManager")
   protected PlatformTransactionManager operatonTransactionManager;
 
-  @Autowired
   protected DataSource dataSource;
 
-  @Autowired(required = false)
   @Qualifier("operatonBpmDataSource")
   protected DataSource operatonDataSource;
+
+  public DefaultDatasourceConfiguration(OperatonBpmProperties operatonBpmProperties,
+                                        PlatformTransactionManager transactionManager,
+                                        Optional<PlatformTransactionManager> operatonTransactionManager,
+                                        DataSource dataSource,
+                                        Optional<DataSource> operatonDataSource) {
+    super(operatonBpmProperties);
+    this.transactionManager = transactionManager;
+    this.operatonTransactionManager = operatonTransactionManager.orElse(null);
+    this.dataSource = dataSource;
+    this.operatonDataSource = operatonDataSource.orElse(null);
+  }
 
   @Override
   public void preInit(SpringProcessEngineConfiguration configuration) {
@@ -61,11 +72,11 @@ public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguratio
     configuration.setDatabaseType(database.getType());
     configuration.setDatabaseSchemaUpdate(database.getSchemaUpdate());
 
-    if (!StringUtils.isEmpty(database.getTablePrefix())) {
+    if (StringUtils.hasText(database.getTablePrefix())) {
       configuration.setDatabaseTablePrefix(database.getTablePrefix());
     }
 
-    if(!StringUtils.isEmpty(database.getSchemaName())) {
+    if(StringUtils.hasText(database.getSchemaName())) {
       configuration.setDatabaseSchema(database.getSchemaName());
     }
 

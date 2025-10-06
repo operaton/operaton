@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.helper.variable;
 
-import org.operaton.bpm.engine.variable.type.ValueType;
-import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+
+import org.operaton.bpm.engine.variable.type.ValueType;
+import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
  * @author Thorben Lindhauer
@@ -43,12 +44,8 @@ public class EqualsTypedValue<S extends EqualsTypedValue<S>> extends BaseMatcher
 
     TypedValue typedValue = (TypedValue) argument;
 
-    if (type != null &&
-        !type.equals(typedValue.getType())) {
-      return false;
-    }
-
-    return true;
+    return !(type != null &&
+      !type.equals(typedValue.getType()));
   }
 
   @Override

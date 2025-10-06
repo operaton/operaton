@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
+import java.util.*;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricCaseInstanceQuery;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
@@ -23,14 +29,8 @@ import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
 import org.operaton.bpm.engine.rest.dto.converter.*;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response.Status;
-import java.util.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static java.lang.Boolean.TRUE;
 
 public class HistoricCaseInstanceQueryDto extends AbstractQueryDto<HistoricCaseInstanceQuery> {

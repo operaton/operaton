@@ -32,10 +32,9 @@ import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;

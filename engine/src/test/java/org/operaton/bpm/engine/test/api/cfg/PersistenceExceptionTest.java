@@ -31,7 +31,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assumptions.assumeFalse;
+import static org.assertj.core.api.Assumptions.assumeThat;
 
 /**
  * @author Svetlana Dorokhova.
@@ -53,7 +53,7 @@ class PersistenceExceptionTest {
 
   @Test
   void testPersistenceExceptionContainsRealCause() {
-    assumeFalse(DbSqlSessionFactory.MARIADB.equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
+    assumeThat(DbSqlSessionFactory.MARIADB.equals(engineRule.getProcessEngineConfiguration().getDatabaseType())).isFalse();
     StringBuffer longString = new StringBuffer();
     for (int i = 0; i < 100; i++) {
       longString.append("tensymbols");

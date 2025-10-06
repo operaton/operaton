@@ -20,10 +20,8 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import org.operaton.bpm.engine.ProcessEngines;
-import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
@@ -111,7 +109,4 @@ class DefaultProcessEngineConfigurationTest {
     assertThat(configuration.getDefaultNumberOfRetries()).isEqualTo(1);
   }
 
-  private void initIdGenerator(IdGenerator idGenerator) {
-    ReflectionTestUtils.setField(instance, "idGenerator", Optional.ofNullable(idGenerator));
-  }
 }

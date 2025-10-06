@@ -65,7 +65,6 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 /**
  * @author Tom Baeyens
@@ -909,7 +908,7 @@ class FullHistoryTest {
             .hasSize(2);
 
     // Should have 2 different historic activity instance ID's, with the same activityId
-    assertNotSame(details.get(0).getActivityInstanceId(), details.get(1).getActivityInstanceId());
+    assertThat(details.get(0).getActivityInstanceId()).isNotSameAs(details.get(1).getActivityInstanceId());
 
     HistoricActivityInstance historicActInst1 = historyService.createHistoricActivityInstanceQuery()
       .activityInstanceId(details.get(0).getActivityInstanceId())

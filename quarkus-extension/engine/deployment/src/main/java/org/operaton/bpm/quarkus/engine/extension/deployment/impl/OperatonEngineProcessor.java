@@ -50,11 +50,11 @@ import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
 
 public class OperatonEngineProcessor {
 
-  protected static final String FEATURE = "operaton-platform-engine";
+  protected static final String FEATURE_NAME = "operaton-platform-engine";
 
   @BuildStep
   protected FeatureBuildItem feature() {
-    return new FeatureBuildItem(FEATURE);
+    return new FeatureBuildItem(FEATURE_NAME);
   }
 
   @BuildStep

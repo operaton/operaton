@@ -722,7 +722,7 @@ class ExternalTaskQueryTest {
     variables.put("nullVar", null);
 
     // Start process-instance with all types of variables
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
+    runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
 
     // Test query matches
     assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("longVar", 928374L).count()).isEqualTo(1);

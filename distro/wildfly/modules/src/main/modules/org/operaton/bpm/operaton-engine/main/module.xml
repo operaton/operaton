@@ -27,7 +27,7 @@
 
     <module name="org.apache.groovy.groovy-all" services="import"/>
     <module name="org.graalvm.polyglot.polyglot" services="import"/>
-    <module name="org.graalvm.js.js-scriptengine" services="import"/>
+    <module name="org.graalvm.js.js-all" services="import"/>
 
     <module name="sun.jdk" services="import"/>
 

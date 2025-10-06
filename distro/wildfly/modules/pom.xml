@@ -244,12 +244,21 @@
                     </chainedmapper>
                   </mapper>
                 </copy>
+                <!-- copy Graal JS dependencies to single dir -->
+                <delete dir="target/modules/org/graalvm" />
+                <copy todir="target/modules" flatten="false">
+                  <fileset refid="maven.project.dependencies"/>
+                  <mapper>
+                    <chainedmapper>
+                      <regexpmapper from="^org/graalvm.*/([^/]*)$$" to="org/graalvm/js/js-all/main/\1" handledirsep="yes"/>
+                    </chainedmapper>
+                  </mapper>
+                </copy>
+                <delete dir="target/modules/org/graalvm/polglot"/>
+                <!-- copy module.xml -->
                 <copy todir="target/modules" flatten="false">
                   <fileset dir="src/main/modules"/>
                 </copy>
-                <replace dir="target/modules" token="@project.version@" value="${project.version}">
-                  <include name="**/module.xml"/>
-                </replace>
                 <replace dir="target/modules" token="@project.version@" value="${project.version}">
                   <include name="**/module.xml"/>
                 </replace>

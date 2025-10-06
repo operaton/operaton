@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
 import org.operaton.bpm.engine.impl.digest.DatabasePrefixHandler;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DatabasePrefixHandlerTest {
 

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.dmn.engine.impl.transform;
 
-import static org.operaton.bpm.dmn.engine.impl.transform.DmnExpressionTransformHelper.createTypeDefinition;
-
 import org.operaton.bpm.dmn.engine.impl.DmnVariableImpl;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformContext;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandler;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnTypeDefinition;
 import org.operaton.bpm.model.dmn.instance.Variable;
+
+import static org.operaton.bpm.dmn.engine.impl.transform.DmnExpressionTransformHelper.createTypeDefinition;
 
 public class DmnVariableTransformHandler implements DmnElementTransformHandler<Variable, DmnVariableImpl> {
 

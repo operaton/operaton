@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.el;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
+
+import org.jboss.arquillian.junit.Arquillian;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.MessageBean;
 import org.operaton.bpm.engine.cdi.test.impl.el.beans.DependentScopedBean;
 import org.operaton.bpm.engine.test.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

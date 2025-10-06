@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,6 +25,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -64,6 +60,12 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+
 
 /**
  * @author Frederik Heremans
@@ -87,7 +89,8 @@ class ManagementServiceTest {
 
   protected boolean tearDownEnsureJobDueDateNotNull;
 
-  static final Date TEST_DUE_DATE = new Date(1675752840000L);
+  private static final Date TEST_DUE_DATE = new Date(1675752840000L);
+  private static final int SECOND = 1000;
 
   @AfterEach
   void tearDown() {
@@ -114,22 +117,12 @@ class ManagementServiceTest {
 
   @Test
   void testExecuteJobNullJobId() {
-    try {
-      managementService.executeJob(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("jobId is null", re.getMessage());
-    }
+    executeJobExpectingException(managementService, null, "jobId is null");
   }
 
   @Test
   void testExecuteJobUnexistingJob() {
-    try {
-      managementService.executeJob("unexistingjob");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("No job found with id", ae.getMessage());
-    }
+    executeJobExpectingException(managementService, "unexistingjob", "No job found with id");
   }
 
 
@@ -147,12 +140,7 @@ class ManagementServiceTest {
     assertThat(timerJob).as("No job found for process instance").isNotNull();
     var timerJobId = timerJob.getId();
 
-    try {
-      managementService.executeJob(timerJobId);
-      fail("RuntimeException from within the script task expected");
-    } catch (RuntimeException re) {
-      testRule.assertTextPresent("This is an exception thrown from scriptTask", re.getMessage());
-    }
+    executeJobExpectingException(managementService, timerJobId, "This is an exception thrown from scriptTask");
 
     // Fetch the task to see that the exception that occurred is persisted
     timerJob = managementService.createJobQuery()
@@ -395,14 +383,7 @@ class ManagementServiceTest {
 
     List<String> allJobIds = getAllJobIds();
     allJobIds.add("aFake");
-    try {
-      //when
-      managementService.setJobRetries(allJobIds, 5);
-      fail("exception expected");
-      //then
-    } catch (ProcessEngineException e) {
-      //expected
-    }
+    assertThatThrownBy(() -> managementService.setJobRetries(allJobIds, 5)).isInstanceOf(ProcessEngineException.class);
 
     assertRetries(getAllJobIds(), JobEntity.DEFAULT_RETRIES);
   }
@@ -693,12 +674,7 @@ class ManagementServiceTest {
     commandExecutor.execute(acquireJobsCmd);
 
     // Try to delete the job. This should fail.
-    try {
-      managementService.deleteJob(timerJobId);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // Exception is expected
-    }
+    assertThatThrownBy(() -> managementService.deleteJob(timerJobId)).isInstanceOf(ProcessEngineException.class);
 
     // Clean up
     managementService.executeJob(timerJob.getId());
@@ -728,7 +704,6 @@ class ManagementServiceTest {
         .singleResult();
 
     // normalize date for mysql dropping fractional seconds in time values
-    int SECOND = 1000;
     assertThat((newTimerJob.getDuedate().getTime() / SECOND) * SECOND).isEqualTo((cal.getTime().getTime() / SECOND) * SECOND);
   }
 

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.impl.el;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +23,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 import org.operaton.bpm.dmn.engine.impl.spi.el.DmnScriptEngineResolver;
+
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 public class DefaultScriptEngineResolver implements DmnScriptEngineResolver {
 

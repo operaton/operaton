@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -290,12 +291,12 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   void testStageLocalScope() {
     caseService.createCaseInstanceByKey("Case_1").getId();
 
-    String stageExecution1_Id = queryCaseExecutionByActivityId("Stage_1").getId();
+    String stage1ExecutionId = queryCaseExecutionByActivityId("Stage_1").getId();
 
-    String stageExecution2_Id = queryCaseExecutionByActivityId("Stage_2").getId();
+    String stage2ExecutionId = queryCaseExecutionByActivityId("Stage_2").getId();
 
     // variable set to stage 1 scope, so that sentries in stage 2 and in case model should not be triggered
-    caseService.setVariableLocal(stageExecution1_Id, "variable_1", "aVariable");
+    caseService.setVariableLocal(stage1ExecutionId, "variable_1", "aVariable");
 
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isEnabled()).isTrue();
@@ -307,7 +308,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     assertThat(humanTask3.isEnabled()).isFalse();
 
     // variable set to stage 2 scope, so that sentries in the scope of case model should not be triggered
-    caseService.setVariableLocal(stageExecution2_Id, "variable_1", "aVariable");
+    caseService.setVariableLocal(stage2ExecutionId, "variable_1", "aVariable");
     humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
     assertThat(humanTask2.isEnabled()).isTrue();
 
@@ -392,9 +393,9 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   void testNotAffectedSentriesInMultipleStageScopes() {
     caseService.createCaseInstanceByKey("Case_1").getId();
 
-    String stageExecution1_Id = queryCaseExecutionByActivityId("Stage_1").getId();
+    String stage1ExecutionId = queryCaseExecutionByActivityId("Stage_1").getId();
 
-    caseService.setVariable(stageExecution1_Id, "value", 99);
+    caseService.setVariable(stage1ExecutionId, "value", 99);
 
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     // if part is not satisfied
@@ -405,7 +406,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     assertThat(humanTask2.isEnabled()).isFalse();
 
     // Evaluates the sentry's IfPart alone
-    caseService.setVariable(stageExecution1_Id, "value", 101);
+    caseService.setVariable(stage1ExecutionId, "value", 101);
     humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isEnabled()).isTrue();
 
@@ -419,16 +420,16 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   void testSameVariableNameInDifferentScopes() {
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
-    String stageExecution1_Id = queryCaseExecutionByActivityId("Stage_1").getId();
+    String stage1ExecutionId = queryCaseExecutionByActivityId("Stage_1").getId();
 
     // inner stage
-    String stageExecution2_Id = queryCaseExecutionByActivityId("Stage_2").getId();
+    String stage2ExecutionId = queryCaseExecutionByActivityId("Stage_2").getId();
 
     // set the same variable 'value' in the scope of case model
     caseService.setVariable(caseInstanceId, "value", 102);
 
     // set the variable 'value' in the scope of stage 1
-    caseService.setVariableLocal(stageExecution1_Id, "value", 99);
+    caseService.setVariableLocal(stage1ExecutionId, "value", 99);
 
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isAvailable()).isTrue();
@@ -445,7 +446,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     assertThat(humanTask2.isEnabled()).isFalse();
 
     // update the variable 'value' in the stage 2/stage 1 scope to evaluate the sentry inside stage 2
-    caseService.setVariable(stageExecution2_Id, "value", 103);
+    caseService.setVariable(stage2ExecutionId, "value", 103);
     humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
     assertThat(humanTask2.isEnabled()).isTrue();
   }
@@ -455,10 +456,10 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   void testNestedScopes() {
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
-    String stageExecution1_Id = queryCaseExecutionByActivityId("Stage_1").getId();
+    String stage1ExecutionId = queryCaseExecutionByActivityId("Stage_1").getId();
 
     // set the variable 'value' in the scope of the case model
-    caseService.setVariable(stageExecution1_Id, "value", 99);
+    caseService.setVariable(stage1ExecutionId, "value", 99);
 
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isAvailable()).isTrue();
@@ -481,13 +482,13 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   void testNestedScopesWithNullVariableValue() {
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
-    String stageExecution1_Id = queryCaseExecutionByActivityId("Stage_1").getId();
+    String stage1ExecutionId = queryCaseExecutionByActivityId("Stage_1").getId();
 
     // set the variable 'value' in the scope of the case model
     caseService.setVariable(caseInstanceId, "value", 99);
 
     // set the variable 'value' in the scope of the stage 1 with null value
-    caseService.setVariableLocal(stageExecution1_Id, "value", null);
+    caseService.setVariableLocal(stage1ExecutionId, "value", null);
 
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isAvailable()).isTrue();
@@ -511,17 +512,17 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   void testNestedScopesOfDifferentVariableNames() {
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
-    String stageExecution1_Id = queryCaseExecutionByActivityId("Stage_1").getId();
+    String stage1ExecutionId = queryCaseExecutionByActivityId("Stage_1").getId();
 
     // inner stage
-    String stageExecution2_Id = queryCaseExecutionByActivityId("Stage_2").getId();
+    String stage2ExecutionId = queryCaseExecutionByActivityId("Stage_2").getId();
 
     // set the variable 'value_1' in the scope of the case model
     caseService.setVariable(caseInstanceId, "value_1", 99);
     // set the variable 'value_1' in the scope of the stage 1
-    caseService.setVariableLocal(stageExecution1_Id, "value_1", 99);
+    caseService.setVariableLocal(stage1ExecutionId, "value_1", 99);
     // set the variable 'value_2' in the scope of the stage 1
-    caseService.setVariableLocal(stageExecution1_Id, "value_2", 99);
+    caseService.setVariableLocal(stage1ExecutionId, "value_2", 99);
 
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isAvailable()).isTrue();
@@ -530,7 +531,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
 
     // update the variable 'value_1' in the case model scope and stage scope
     caseService.setVariable(caseInstanceId, "value_1", 102);
-    caseService.setVariableLocal(stageExecution1_Id, "value_1", 102);
+    caseService.setVariableLocal(stage1ExecutionId, "value_1", 102);
 
     // then sentry of HumanTask 1 gets evaluated and sentry of HumanTask 2 does not gets evaluated.
     humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
@@ -538,7 +539,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
     assertThat(humanTask2.isEnabled()).isFalse();
 
-    caseService.setVariable(stageExecution2_Id, "value_2", 102);
+    caseService.setVariable(stage2ExecutionId, "value_2", 102);
     humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
     assertThat(humanTask2.isEnabled()).isTrue();
 

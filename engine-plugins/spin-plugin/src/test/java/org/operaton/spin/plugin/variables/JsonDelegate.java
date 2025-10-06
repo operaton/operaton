@@ -16,19 +16,20 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
-
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner
  */
 public class JsonDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) {
     execution.setVariable("jsonVariable", Variables.untypedValue(jsonValue("{}"),true));
 

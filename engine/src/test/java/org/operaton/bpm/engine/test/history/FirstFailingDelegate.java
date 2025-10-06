@@ -32,7 +32,7 @@ public class FirstFailingDelegate implements JavaDelegate {
   public void execute(DelegateExecution execution) throws Exception {
     Boolean fail = (Boolean) execution.getVariable("firstFail");
 
-    if (fail == null || fail == true) {
+    if (fail == null || fail) {
       throw new ProcessEngineException(FIRST_EXCEPTION_MESSAGE);
     }
   }

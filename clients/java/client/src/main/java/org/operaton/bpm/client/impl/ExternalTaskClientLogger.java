@@ -19,11 +19,11 @@ package org.operaton.bpm.client.impl;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.operaton.bpm.client.exception.ConnectionLostException;
-import org.operaton.bpm.client.exception.ExternalTaskClientException;
 import org.operaton.bpm.client.exception.BadRequestException;
-import org.operaton.bpm.client.exception.NotFoundException;
+import org.operaton.bpm.client.exception.ConnectionLostException;
 import org.operaton.bpm.client.exception.EngineException;
+import org.operaton.bpm.client.exception.ExternalTaskClientException;
+import org.operaton.bpm.client.exception.NotFoundException;
 import org.operaton.bpm.client.exception.RestException;
 import org.operaton.bpm.client.exception.UnknownHttpErrorException;
 import org.operaton.bpm.client.exception.ValueMapperException;

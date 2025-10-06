@@ -16,15 +16,6 @@
  */
 package org.operaton.spin.xml.dom;
 
-import org.operaton.spin.SpinList;
-import org.operaton.spin.xml.SpinXmlAttribute;
-import org.operaton.spin.xml.SpinXmlAttributeException;
-import org.operaton.spin.xml.SpinXmlElement;
-import org.operaton.spin.xml.SpinXmlElementException;
-import static org.operaton.spin.Spin.S;
-import static org.operaton.spin.Spin.XML;
-import static org.operaton.spin.xml.XmlTestConstants.*;
-
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,8 +24,17 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.spin.SpinList;
+import org.operaton.spin.xml.SpinXmlAttribute;
+import org.operaton.spin.xml.SpinXmlAttributeException;
+import org.operaton.spin.xml.SpinXmlElement;
+import org.operaton.spin.xml.SpinXmlElementException;
+
+import static org.operaton.spin.Spin.S;
+import static org.operaton.spin.Spin.XML;
+import static org.operaton.spin.xml.XmlTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Sebastian Menski
@@ -64,7 +64,7 @@ class XmlDomElementTest {
 
   @Test
   void cannotCheckAttributeByNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.hasAttr(null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.hasAttr(null));
   }
 
   @Test
@@ -81,7 +81,7 @@ class XmlDomElementTest {
 
   @Test
   void canCheckAttributeByNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.hasAttrNs(EXAMPLE_NAMESPACE, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.hasAttrNs(EXAMPLE_NAMESPACE, null));
   }
 
   @Test
@@ -107,12 +107,12 @@ class XmlDomElementTest {
 
   @Test
   void cannotReadAttributeByNonExistingName() {
-    assertThrows(SpinXmlAttributeException.class, () -> element.attr(NON_EXISTING));
+    assertThatExceptionOfType(SpinXmlAttributeException.class).isThrownBy(() -> element.attr(NON_EXISTING));
   }
 
   @Test
   void cannotReadAttributeByNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.attr(null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.attr(null));
   }
 
   @Test
@@ -131,27 +131,27 @@ class XmlDomElementTest {
 
   @Test
   void cannotReadAttributeByNonExistingNamespaceAndName() {
-    assertThrows(SpinXmlAttributeException.class, () -> element.attrNs(NON_EXISTING, "order"));
+    assertThatExceptionOfType(SpinXmlAttributeException.class).isThrownBy(() -> element.attrNs(NON_EXISTING, "order"));
   }
 
   @Test
   void cannotReadAttributeByNamespaceAndNonExistingName() {
-    assertThrows(SpinXmlAttributeException.class, () -> element.attrNs(EXAMPLE_NAMESPACE, NON_EXISTING));
+    assertThatExceptionOfType(SpinXmlAttributeException.class).isThrownBy(() -> element.attrNs(EXAMPLE_NAMESPACE, NON_EXISTING));
   }
 
   @Test
   void cannotReadAttributeByNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.attrNs(EXAMPLE_NAMESPACE, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.attrNs(EXAMPLE_NAMESPACE, null));
   }
 
   @Test
   void cannotReadAttributeByNonExistingNamespaceAndNonExistingName() {
-    assertThrows(SpinXmlAttributeException.class, () -> element.attrNs(NON_EXISTING, NON_EXISTING));
+    assertThatExceptionOfType(SpinXmlAttributeException.class).isThrownBy(() -> element.attrNs(NON_EXISTING, NON_EXISTING));
   }
 
   @Test
   void cannotReadAttributeByNullNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.attrNs(null, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.attrNs(null, null));
   }
 
   // write attribute
@@ -170,12 +170,12 @@ class XmlDomElementTest {
 
   @Test
   void cannotWriteAttributeByNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.attr(null, NON_EXISTING));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.attr(null, NON_EXISTING));
   }
 
   @Test
   void canWriteAttributeByNameWithNullValue() {
-    assertThrows(IllegalArgumentException.class, () -> element.attr("order", null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.attr("order", null));
   }
 
   @Test
@@ -194,12 +194,12 @@ class XmlDomElementTest {
 
   @Test
   void cannotWriteAttributeByNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.attrNs(EXAMPLE_NAMESPACE, null, "newValue"));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.attrNs(EXAMPLE_NAMESPACE, null, "newValue"));
   }
 
   @Test
   void cannotWriteAttributeByNamespaceAndNameWithNullValue() {
-    assertThrows(IllegalArgumentException.class, () -> element.attrNs(EXAMPLE_NAMESPACE, "order", null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.attrNs(EXAMPLE_NAMESPACE, "order", null));
   }
 
   @Test
@@ -230,7 +230,7 @@ class XmlDomElementTest {
 
   @Test
   void cannotRemoveAttributeByNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.removeAttr(null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.removeAttr(null));
   }
 
   @Test
@@ -247,7 +247,7 @@ class XmlDomElementTest {
 
   @Test
   void cannotRemoveAttributeByNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.removeAttrNs(EXAMPLE_NAMESPACE, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.removeAttrNs(EXAMPLE_NAMESPACE, null));
   }
 
   @Test
@@ -330,12 +330,12 @@ class XmlDomElementTest {
 
   @Test
   void cannotGetSingleChildElementByNonExistingName() {
-    assertThrows(SpinXmlElementException.class, () -> element.childElement(NON_EXISTING));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElement(NON_EXISTING));
   }
 
   @Test
   void cannotGetSingleChildElementByNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.childElement(null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.childElement(null));
   }
 
   @Test
@@ -353,27 +353,27 @@ class XmlDomElementTest {
 
   @Test
   void cannotGetChildElementByNamespaceAndNonExistingName() {
-    assertThrows(SpinXmlElementException.class, () -> element.childElement(EXAMPLE_NAMESPACE, NON_EXISTING));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElement(EXAMPLE_NAMESPACE, NON_EXISTING));
   }
 
   @Test
   void cannotGetChildElementByNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.childElement(EXAMPLE_NAMESPACE, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.childElement(EXAMPLE_NAMESPACE, null));
   }
 
   @Test
   void cannotGetChildElementByNonExistingNamespaceAndName() {
-    assertThrows(SpinXmlElementException.class, () -> element.childElement(NON_EXISTING, "date"));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElement(NON_EXISTING, "date"));
   }
 
   @Test
   void cannotGetChildElementByNonExistingNamespaceAndNonExistingName() {
-    assertThrows(SpinXmlElementException.class, () -> element.childElement(NON_EXISTING, NON_EXISTING));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElement(NON_EXISTING, NON_EXISTING));
   }
 
   @Test
   void cannotGetChildElementByNullNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.childElement(null, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.childElement(null, null));
   }
 
   // append child element
@@ -438,13 +438,13 @@ class XmlDomElementTest {
 
   @Test
   void cannotAppendNullChildElements() {
-    assertThrows(IllegalArgumentException.class, () -> element.append((SpinXmlElement[]) null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.append((SpinXmlElement[]) null));
   }
 
   @Test
   void cannotAppendNullChildElement() {
     SpinXmlElement child = XML("<child/>");
-    assertThrows(IllegalArgumentException.class, () -> element.append(child, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.append(child, null));
   }
 
   @Test
@@ -459,7 +459,7 @@ class XmlDomElementTest {
   @Test
   void cannotAppendChildElementBeforeNonChildElement() {
     SpinXmlElement child = XML("<child/>");
-    assertThrows(SpinXmlElementException.class, () -> element.appendBefore(child, child));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.appendBefore(child, child));
   }
 
   @Test
@@ -484,7 +484,7 @@ class XmlDomElementTest {
   @Test
   void cannotAppendChildElementAfterNonChildElement() {
     SpinXmlElement child = XML("<child/>");
-    assertThrows(SpinXmlElementException.class, () -> element.appendAfter(child, child));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.appendAfter(child, child));
   }
 
   // remove child elements
@@ -498,14 +498,14 @@ class XmlDomElementTest {
 
     element.remove(child);
 
-    assertThrows(SpinXmlElementException.class, () -> element.childElement(null, "child"));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElement(null, "child"));
   }
 
   @Test
   void cannotRemoveANullChildElement() {
     SpinXmlElement child = XML("<child/>");
     element.append(child);
-    assertThrows(IllegalArgumentException.class, () -> element.remove(child, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.remove(child, null));
   }
 
   @Test
@@ -513,7 +513,7 @@ class XmlDomElementTest {
     SpinXmlElement child1 = XML("<child/>");
     SpinXmlElement child2 = XML("<child/>");
     element.append(child1);
-    assertThrows(SpinXmlElementException.class, () -> element.remove(child1, child2));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.remove(child1, child2));
   }
 
   @Test
@@ -527,7 +527,7 @@ class XmlDomElementTest {
 
     element.remove(child1, child2, child3);
 
-    assertThrows(SpinXmlElementException.class, () -> element.childElements(null, "child"));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElements(null, "child"));
   }
 
   @Test
@@ -541,12 +541,12 @@ class XmlDomElementTest {
 
     element.remove(element.childElements(null, "child"));
 
-    assertThrows(SpinXmlElementException.class, () -> element.childElements(null, "child"));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElements(null, "child"));
   }
 
   @Test
   void cannotRemoveNullChildElements() {
-    assertThrows(IllegalArgumentException.class, () -> element.remove((SpinXmlElement[]) null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.remove((SpinXmlElement[]) null));
   }
 
   // get child elements
@@ -565,12 +565,12 @@ class XmlDomElementTest {
 
   @Test
   void cannotGetAllChildElementsByNonExistingName() {
-    assertThrows(SpinXmlElementException.class, () -> element.childElements(NON_EXISTING));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElements(NON_EXISTING));
   }
 
   @Test
   void cannotGetAllChildElementsByNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.childElements(null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.childElements(null));
   }
 
   @Test
@@ -587,27 +587,27 @@ class XmlDomElementTest {
 
   @Test
   void cannotGetAllChildElementsByNonExistingNamespaceAndName() {
-    assertThrows(SpinXmlElementException.class, () -> element.childElements(NON_EXISTING, "customer"));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElements(NON_EXISTING, "customer"));
   }
 
   @Test
   void cannotGetAllChildElementsByNamespaceAndNonExistingName() {
-    assertThrows(SpinXmlElementException.class, () -> element.childElements(EXAMPLE_NAMESPACE, NON_EXISTING));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElements(EXAMPLE_NAMESPACE, NON_EXISTING));
   }
 
   @Test
   void cannotGetAllChildElementsByNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.childElements(EXAMPLE_NAMESPACE, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.childElements(EXAMPLE_NAMESPACE, null));
   }
 
   @Test
   void cannotGetAllChildElementsByNonExistingNamespaceAndNonExistingName() {
-    assertThrows(SpinXmlElementException.class, () -> element.childElements(NON_EXISTING, NON_EXISTING));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElements(NON_EXISTING, NON_EXISTING));
   }
 
   @Test
   void cannotGetAllChildElementsByNullNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () -> element.childElements(null, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.childElements(null, null));
   }
 
   // replace child element
@@ -621,26 +621,26 @@ class XmlDomElementTest {
     element.replaceChild(date, child);
 
     assertThat(element.childElement(null, "child")).isNotNull();
-    assertThrows(SpinXmlElementException.class, () -> element.childElement("date"));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElement("date"));
   }
 
   @Test
   void cannotReplaceANullChildElement() {
     SpinXmlElement child = XML("<child/>");
-    assertThrows(IllegalArgumentException.class, () -> element.replaceChild(null, child));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.replaceChild(null, child));
   }
 
   @Test
   void cannotReplaceByANullChildElement() {
     SpinXmlElement date = element.childElement("date");
-    assertThrows(IllegalArgumentException.class, () -> element.replaceChild(date, null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.replaceChild(date, null));
   }
 
   @Test
   void cannotReplaceANonChildElement() {
     SpinXmlElement child = XML("<child/>");
     SpinXmlElement nonChild = XML("<child/>");
-    assertThrows(SpinXmlElementException.class, () -> element.replaceChild(nonChild, child));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.replaceChild(nonChild, child));
   }
 
   // replace element
@@ -654,7 +654,7 @@ class XmlDomElementTest {
     date.replace(child);
 
     assertThat(element.childElement(null, "child")).isNotNull();
-    assertThrows(SpinXmlElementException.class, () -> element.childElement("date"));
+    assertThatExceptionOfType(SpinXmlElementException.class).isThrownBy(() -> element.childElement("date"));
   }
 
   @Test
@@ -669,7 +669,7 @@ class XmlDomElementTest {
 
   @Test
   void cannotReplaceByNullElement() {
-    assertThrows(IllegalArgumentException.class, () -> element.replace(null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> element.replace(null));
   }
 
   // test io
@@ -712,7 +712,7 @@ class XmlDomElementTest {
   @Test
   void cannotWriteNullTextContent() {
     SpinXmlElement xml = XML("<customer/>");
-    assertThrows(IllegalArgumentException.class, () -> xml.textContent(null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> xml.textContent(null));
   }
 
 }

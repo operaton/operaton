@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.test.bpmn.shell;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotSame;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ProcessEngineExtension.class)
 class ShellTaskTest {
@@ -60,7 +60,7 @@ class ShellTaskTest {
 
   @Test
   void testOsDetection() {
-    assertNotSame(OsType.UNKNOWN, osType);
+    assertThat(osType).isNotSameAs(OsType.UNKNOWN);
   }
 
   @Deployment
@@ -71,7 +71,6 @@ class ShellTaskTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellWindows");
 
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
-      assertThat(st).isNotNull();
       assertThat(st).startsWith("EchoTest");
     }
   }
@@ -84,7 +83,6 @@ class ShellTaskTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellLinux");
 
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
-      assertThat(st).isNotNull();
       assertThat(st).startsWith("EchoTest");
     }
   }
@@ -97,7 +95,6 @@ class ShellTaskTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellMac");
 
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
-      assertThat(st).isNotNull();
       assertThat(st).startsWith("EchoTest");
     }
   }

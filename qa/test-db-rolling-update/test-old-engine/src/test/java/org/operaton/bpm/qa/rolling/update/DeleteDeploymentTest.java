@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.qa.rolling.update;
 
+import org.junit.Test;
+
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.Test;
 
 /**
  * This test ensures that the old engine can delete an

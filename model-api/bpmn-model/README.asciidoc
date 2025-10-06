@@ -7,11 +7,11 @@ The operaton BPMN model API is a simple, lightweight Java library for parsing, c
 operaton BPMN model can be used standalone, independenly of Operaton / process engine.
 ====
 
-* Web Site: https://operaton.com/
+* Web Site: https://operaton.org/
 * User Guide: link:https://docs.operaton.org/latest/guides/user-guide/#bpmn-model-api[https://docs.operaton.org]
 * Examples: link:https://github.com/operaton/operaton-bpm-examples/tree/master/bpmn-model-api[https://github.com/operaton/operaton-bpm-examples]
 * Issue Tracker: https://app.camunda.com/jira/
-* Contribution Guidelines: https://operaton.com/learn/community/#contribute
+* Contribution Guidelines: https://operaton.org/learn/community/#contribute
 
 == Features
 
@@ -108,7 +108,7 @@ Bpmn.writeModelToFile(file, modelInstance);
 
 === What is BPMN 2.0?
 
-Read the https://operaton.com/bpmn/[BPMN 2.0 Tutorial on operaton.com].
+Read the https://operaton.org/bpmn/[BPMN 2.0 Tutorial on operaton.org].
 
 === Which Java (JRE) Version is required?
 

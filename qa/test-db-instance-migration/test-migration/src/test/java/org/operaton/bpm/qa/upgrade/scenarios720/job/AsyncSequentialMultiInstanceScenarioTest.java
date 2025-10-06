@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios720.job;
 
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 @ScenarioUnderTest("AsyncSequentialMultiInstanceScenario")
 @Origin("7.2.0")

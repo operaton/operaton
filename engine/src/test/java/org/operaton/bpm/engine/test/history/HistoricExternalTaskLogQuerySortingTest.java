@@ -16,29 +16,13 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskByTimestamp;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByActivityId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByActivityInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByExecutionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByExternalTaskId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByPriority;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByProcessDefinitionKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByRetries;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByTopicName;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicExternalTaskLogByWorkerId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
-
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -57,6 +41,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class HistoricExternalTaskLogQuerySortingTest {

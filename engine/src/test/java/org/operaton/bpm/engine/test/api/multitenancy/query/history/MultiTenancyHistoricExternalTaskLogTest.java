@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_PROCESS_KEY;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +23,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -45,6 +40,11 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_PROCESS_KEY;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
+import static org.assertj.core.api.Assertions.*;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class MultiTenancyHistoricExternalTaskLogTest {
@@ -155,16 +155,7 @@ class MultiTenancyHistoricExternalTaskLogTest {
   @Test
   void shouldFailQueryByTenantIdNull() {
     var historicExternalTaskLogQuery = historyService.createHistoricExternalTaskLogQuery();
-    try {
-      // when
-      historicExternalTaskLogQuery.tenantIdIn((String) null);
-
-      fail("expected exception");
-
-      // then
-    } catch (NullValueException e) {
-      // test passed
-    }
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.tenantIdIn((String) null)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -173,18 +164,18 @@ class MultiTenancyHistoricExternalTaskLogTest {
     //given two process with different tenants
 
     // when
-    List<HistoricExternalTaskLog> HistoricExternalTaskLogs = historyService.createHistoricExternalTaskLogQuery()
+    List<HistoricExternalTaskLog> historicExternalTaskLogs = historyService.createHistoricExternalTaskLogQuery()
       .orderByTenantId()
       .asc()
       .list();
 
     // then
-    assertThat(HistoricExternalTaskLogs).hasSize(5);
-    assertThat(HistoricExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(HistoricExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(HistoricExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(3).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(4).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs).hasSize(5);
+    assertThat(historicExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_ONE);
+    assertThat(historicExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_ONE);
+    assertThat(historicExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(3).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(4).getTenantId()).isEqualTo(TENANT_TWO);
   }
 
   @Test
@@ -193,18 +184,18 @@ class MultiTenancyHistoricExternalTaskLogTest {
     //given two process with different tenants
 
     // when
-    List<HistoricExternalTaskLog> HistoricExternalTaskLogs = historyService.createHistoricExternalTaskLogQuery()
+    List<HistoricExternalTaskLog> historicExternalTaskLogs = historyService.createHistoricExternalTaskLogQuery()
       .orderByTenantId()
       .desc()
       .list();
 
     // then
-    assertThat(HistoricExternalTaskLogs).hasSize(5);
-    assertThat(HistoricExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(3).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(HistoricExternalTaskLogs.get(4).getTenantId()).isEqualTo(TENANT_ONE);
+    assertThat(historicExternalTaskLogs).hasSize(5);
+    assertThat(historicExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(3).getTenantId()).isEqualTo(TENANT_ONE);
+    assertThat(historicExternalTaskLogs.get(4).getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test
@@ -284,9 +275,10 @@ class MultiTenancyHistoricExternalTaskLogTest {
     } catch (ProcessEngineException e) {
       // then
       String errorMessage = e.getMessage();
-      assertThat(errorMessage).contains("Cannot get the historic external task log ");
-      assertThat(errorMessage).contains(failedHistoricExternalTaskLogId);
-      assertThat(errorMessage).contains("because it belongs to no authenticated tenant.");
+      assertThat(errorMessage)
+              .contains("Cannot get the historic external task log ")
+              .contains(failedHistoricExternalTaskLogId)
+              .contains("because it belongs to no authenticated tenant.");
     }
   }
 

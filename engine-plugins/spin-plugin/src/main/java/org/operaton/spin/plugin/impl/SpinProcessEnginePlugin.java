@@ -16,9 +16,6 @@
  */
 package org.operaton.spin.plugin.impl;
 
-import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
-import static org.operaton.spin.plugin.variable.type.SpinValueType.XML;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +30,9 @@ import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.Spin;
+
+import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
+import static org.operaton.spin.plugin.variable.type.SpinValueType.XML;
 
 /**
  * @author Thorben Lindhauer

@@ -19,7 +19,6 @@ package org.operaton.bpm.model.xml.instance;
 import java.util.List;
 
 import javax.xml.transform.dom.DOMSource;
-
 import org.w3c.dom.Document;
 
 /**

@@ -20,28 +20,27 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
+import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.rest.IdentityRestService;
 import org.operaton.bpm.engine.rest.dto.identity.BasicUserCredentialsDto;
 import org.operaton.bpm.engine.rest.dto.identity.CheckPasswordPolicyResultDto;
-import org.operaton.bpm.engine.rest.dto.identity.PasswordPolicyRequestDto;
 import org.operaton.bpm.engine.rest.dto.identity.PasswordPolicyDto;
+import org.operaton.bpm.engine.rest.dto.identity.PasswordPolicyRequestDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
 import org.operaton.bpm.engine.rest.dto.task.GroupDto;
 import org.operaton.bpm.engine.rest.dto.task.GroupInfoDto;
 import org.operaton.bpm.engine.rest.dto.task.UserDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class IdentityRestServiceImpl extends AbstractRestProcessEngineAware implements IdentityRestService {
 

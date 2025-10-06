@@ -16,6 +16,28 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import org.assertj.core.util.Arrays;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+
+import org.operaton.bpm.engine.identity.Group;
+import org.operaton.bpm.engine.identity.GroupQuery;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+import org.operaton.bpm.engine.rest.helper.MockProvider;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -26,30 +48,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;
-
-import org.assertj.core.util.Arrays;
-import org.operaton.bpm.engine.identity.Group;
-import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -126,14 +124,14 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    Assertions.assertEquals(1, instances.size(), "There should be one group returned.");
+    assertThat(instances).as("There should be one group returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned group should not be null.").isNotNull();
 
     String returendName = from(content).getString("[0].name");
     String returendType = from(content).getString("[0].type");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_GROUP_NAME, returendName);
-    Assertions.assertEquals(MockProvider.EXAMPLE_GROUP_TYPE, returendType);
+    assertThat(returendName).isEqualTo(MockProvider.EXAMPLE_GROUP_NAME);
+    assertThat(returendType).isEqualTo(MockProvider.EXAMPLE_GROUP_TYPE);
 
   }
 

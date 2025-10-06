@@ -16,15 +16,13 @@
  */
 package org.operaton.bpm.engine.test.errorcode;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-
 import java.util.List;
 
+import ch.qos.logback.classic.Level;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.OptimisticLockingException;
@@ -45,7 +43,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import ch.qos.logback.classic.Level;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ExceptionBuiltinCodesTest {
 
@@ -158,16 +158,16 @@ class ExceptionBuiltinCodesTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("calling").getId();
 
     List<Execution> executions = runtimeService.createExecutionQuery().list();
-    executions.forEach((execution -> {
+    executions.forEach(execution -> {
       ((ExecutionEntity) execution).setCachedEntityState(0);
 
       engineRule.getProcessEngineConfiguration()
           .getCommandExecutorTxRequired()
           .execute((Command<Void>) commandContext -> {
-            commandContext.getDbEntityManager().merge(((ExecutionEntity) execution));
+            commandContext.getDbEntityManager().merge((ExecutionEntity) execution);
             return null;
           });
-    }));
+    });
 
     assertThatThrownBy(() -> runtimeService.deleteProcessInstance(processInstanceId, ""))
         .isInstanceOf(ProcessEngineException.class)

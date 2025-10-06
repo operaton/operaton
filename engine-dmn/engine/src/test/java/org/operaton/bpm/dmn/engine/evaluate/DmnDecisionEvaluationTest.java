@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.dmn.engine.evaluate;
 
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.*;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DmnEvaluationException;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.commons.utils.IoUtil;
+
 import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
-
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DmnDecisionEvaluationTest extends DmnEngineTest {

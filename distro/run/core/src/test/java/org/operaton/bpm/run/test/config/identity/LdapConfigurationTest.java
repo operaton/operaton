@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.run.test.config.identity;
 
-import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
-import org.operaton.bpm.run.OperatonApp;
-import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+
+import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
+import org.operaton.bpm.run.OperatonApp;
+import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

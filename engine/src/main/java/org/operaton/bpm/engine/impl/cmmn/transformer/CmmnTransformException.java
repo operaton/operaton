@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cmmn.transformer;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**

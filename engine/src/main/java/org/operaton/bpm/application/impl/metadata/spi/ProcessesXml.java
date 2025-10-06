@@ -61,7 +61,7 @@ public interface ProcessesXml {
       ProcessArchiveXmlImpl pa = new ProcessArchiveXmlImpl();
       processArchives.add(pa);
 
-      pa.setProcessResourceNames(Collections.<String>emptyList());
+      pa.setProcessResourceNames(Collections.emptyList());
 
       // with default properties
       HashMap<String, String> properties = new HashMap<>();

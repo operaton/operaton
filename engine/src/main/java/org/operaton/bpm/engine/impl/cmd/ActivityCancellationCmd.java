@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.util.*;
+
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
-
-import java.util.*;
 
 /**
  * @author Thorben Lindhauer

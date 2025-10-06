@@ -18,12 +18,12 @@ package org.operaton.commons.utils;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.commons.utils.StringUtil.defaultString;
+import static org.operaton.commons.utils.StringUtil.getStackTrace;
 import static org.operaton.commons.utils.StringUtil.isExpression;
 import static org.operaton.commons.utils.StringUtil.join;
 import static org.operaton.commons.utils.StringUtil.split;
-import static org.operaton.commons.utils.StringUtil.defaultString;
-import static org.operaton.commons.utils.StringUtil.getStackTrace;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski

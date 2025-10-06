@@ -16,15 +16,13 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.*;
-
 import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.instance.Case;
 import org.operaton.bpm.model.cmmn.instance.CaseFileModel;
 import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
-import org.operaton.bpm.model.cmmn.instance.CaseRoles;
 import org.operaton.bpm.model.cmmn.instance.CaseRole;
+import org.operaton.bpm.model.cmmn.instance.CaseRoles;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.cmmn.instance.InputCaseParameter;
 import org.operaton.bpm.model.cmmn.instance.OutputCaseParameter;
@@ -35,6 +33,8 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.*;
 
 /**
  * @author Roman Smirnov
@@ -140,7 +140,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
         .build();
 
     operatonHistoryTimeToLive = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
-        .namespace(CAMUNDA_NS)
+        .namespace(OPERATON_NS)
         .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

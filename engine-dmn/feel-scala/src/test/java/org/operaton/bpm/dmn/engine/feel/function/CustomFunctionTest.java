@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.feel.function;
 
-import org.operaton.bpm.dmn.engine.feel.function.helper.FunctionProvider;
-import org.operaton.bpm.dmn.engine.feel.function.helper.MyPojo;
-import org.operaton.bpm.dmn.engine.feel.helper.FeelExtension;
-import org.operaton.bpm.dmn.feel.impl.FeelException;
-import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunction;
-import org.operaton.bpm.dmn.feel.impl.scala.function.builder.CustomFunctionBuilder;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
@@ -30,6 +23,13 @@ import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
+import org.operaton.bpm.dmn.engine.feel.function.helper.FunctionProvider;
+import org.operaton.bpm.dmn.engine.feel.function.helper.MyPojo;
+import org.operaton.bpm.dmn.engine.feel.helper.FeelExtension;
+import org.operaton.bpm.dmn.feel.impl.FeelException;
+import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunction;
+import org.operaton.bpm.dmn.feel.impl.scala.function.builder.CustomFunctionBuilder;
 
 import static org.assertj.core.api.Assertions.*;
 

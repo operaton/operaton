@@ -19,15 +19,9 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
+
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.spring.components.aop.util.Scopifier;
-import org.operaton.commons.utils.StringUtil;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.BeansException;
@@ -41,6 +35,14 @@ import org.springframework.beans.factory.config.Scope;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.spring.components.aop.util.Scopifier;
+import org.operaton.commons.utils.StringUtil;
 
 /**
  * binds variables to a currently executing Activiti business process (a {@link org.operaton.bpm.engine.runtime.ProcessInstance}).
@@ -149,22 +151,19 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
      * @return shareable {@link ProcessInstance}
      */
     private Object createSharedProcessInstance() {
-        ProxyFactory proxyFactoryBean = new ProxyFactory(ProcessInstance.class, new MethodInterceptor() {
-          @Override
-          public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-                String methodName = methodInvocation.getMethod().getName();
+        ProxyFactory proxyFactoryBean = new ProxyFactory(ProcessInstance.class, (MethodInterceptor) methodInvocation -> {
+          String methodName = methodInvocation.getMethod().getName();
 
-                logger.info(() -> "method invocation for " + methodName + ".");
-            if ("toString".equals(methodName)) {
-              return "SharedProcessInstance";
-            }
+          logger.info(() -> "method invocation for " + methodName + ".");
+          if ("toString".equals(methodName)) {
+            return "SharedProcessInstance";
+          }
 
 
-                ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
-                Method method = methodInvocation.getMethod();
-                Object[] args = methodInvocation.getArguments();
-                return method.invoke(processInstance, args);
-            }
+          ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
+          Method method = methodInvocation.getMethod();
+          Object[] args = methodInvocation.getArguments();
+          return method.invoke(processInstance, args);
         });
         return proxyFactoryBean.getProxy(this.classLoader);
     }
@@ -229,13 +228,10 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
     private Object createDirtyCheckingProxy(final String name, final Object scopedObject) throws Throwable {
         ProxyFactory proxyFactoryBean = new ProxyFactory(scopedObject);
         proxyFactoryBean.setProxyTargetClass(true);
-        proxyFactoryBean.addAdvice(new MethodInterceptor() {
-          @Override
-          public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-                Object result = methodInvocation.proceed();
-                persistVariable(name, scopedObject);
-                return result;
-            }
+        proxyFactoryBean.addAdvice((MethodInterceptor) methodInvocation -> {
+          Object result = methodInvocation.proceed();
+          persistVariable(name, scopedObject);
+          return result;
         });
         return proxyFactoryBean.getProxy(this.classLoader);
     }

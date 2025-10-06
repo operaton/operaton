@@ -86,7 +86,7 @@ public class ExpectedActivityInstance {
 
     for (int i = 0; i < childActivityInstances.size(); i++) {
       ExpectedActivityInstance child = childActivityInstances.get(i);
-      child.writeTree(writer, prefix + (isTail ? "    " : "│   "), (i == (childActivityInstances.size() - 1)));
+      child.writeTree(writer, prefix + (isTail ? "    " : "│   "), i == (childActivityInstances.size() - 1));
     }
   }
 

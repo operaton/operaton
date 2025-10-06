@@ -16,15 +16,6 @@
  */
 package org.operaton.spin.json.tree;
 
-import org.operaton.spin.impl.test.Script;
-import org.operaton.spin.impl.test.ScriptTest;
-import org.operaton.spin.impl.test.ScriptVariable;
-import org.operaton.spin.json.SpinJsonDataFormatException;
-import org.operaton.spin.json.SpinJsonException;
-import org.operaton.spin.json.mapping.Order;
-import org.operaton.spin.json.mapping.RegularCustomer;
-import static org.operaton.spin.json.JsonTestConstants.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +23,17 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.spin.impl.test.Script;
+import org.operaton.spin.impl.test.ScriptTest;
+import org.operaton.spin.impl.test.ScriptVariable;
+import org.operaton.spin.json.SpinJsonDataFormatException;
+import org.operaton.spin.json.SpinJsonException;
+import org.operaton.spin.json.mapping.Order;
+import org.operaton.spin.json.mapping.RegularCustomer;
+
+import static org.operaton.spin.json.JsonTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
 
@@ -43,7 +43,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     execute = false
   )
   @ScriptVariable(name = "input", file=EXAMPLE_JSON_FILE_NAME)
-  public void shouldMapJsonObjectToJavaObject() throws Throwable {
+  public void shouldMapJsonObjectToJavaObject() throws Exception {
     Map<String, Object> variables = newMap("mapToType", Order.class);
     Order order = script.execute(variables).getVariable("result");
     assertIsExampleOrder(order);
@@ -57,7 +57,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
   @ScriptVariable(name = "input", file=EXAMPLE_JSON_FILE_NAME)
   public void shouldFailMappingToMismatchingClass() {
     Map<String, Object> variables = newMap("mapToType", RegularCustomer.class);
-    assertThrows(SpinJsonException.class, () ->
+    assertThatExceptionOfType(SpinJsonException.class).isThrownBy(() ->
       failingWithException(variables));
   }
 
@@ -67,7 +67,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     execute = false
   )
   @ScriptVariable(name = "input", file=EXAMPLE_JSON_FILE_NAME)
-  public void shouldMapByCanonicalString() throws Throwable {
+  public void shouldMapByCanonicalString() throws Exception {
     Map<String, Object> variables = newMap("mapToType", Order.class.getCanonicalName());
     Order order = script.execute(variables).getVariable("result");
     assertIsExampleOrder(order);
@@ -78,7 +78,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     name = "JsonTreeMapJsonToJavaScriptTest.mapToCollection",
     execute = false
   )
-  public void shouldMapListByCanonicalString() throws Throwable {
+  public void shouldMapListByCanonicalString() throws Exception {
     Map<String, Object> variables = new HashMap<>();
     variables.put("input", EXAMPLE_JSON_COLLECTION);
     variables.put("collectionType", ArrayList.class);
@@ -100,7 +100,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     execute = false
   )
   public void shouldFailForMalformedTypeString() {
-    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(this::failingWithException);
   }
 
   protected Map<String, Object> newMap(String key, Object value) {

@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.model.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.instance.DataStore;
 import org.operaton.bpm.model.bpmn.instance.DataStoreReference;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Falko Menge

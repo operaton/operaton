@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +28,8 @@ import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstance;
 import org.operaton.bpm.model.cmmn.instance.ExtensionElements;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonCaseExecutionListener;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractExecutionListenerSpec {
 

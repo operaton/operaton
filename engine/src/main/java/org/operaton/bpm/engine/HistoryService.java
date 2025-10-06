@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine;
 
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
 import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
@@ -26,6 +29,10 @@ import org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
 import org.operaton.bpm.engine.exception.NotValidException;
+import org.operaton.bpm.engine.history.CleanableHistoricBatchReport;
+import org.operaton.bpm.engine.history.CleanableHistoricCaseInstanceReport;
+import org.operaton.bpm.engine.history.CleanableHistoricDecisionInstanceReport;
+import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReport;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricActivityStatisticsQuery;
@@ -36,14 +43,11 @@ import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.history.HistoricCaseInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
+import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatisticsQuery;
 import org.operaton.bpm.engine.history.HistoricDetail;
 import org.operaton.bpm.engine.history.HistoricDetailQuery;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLogQuery;
-import org.operaton.bpm.engine.history.CleanableHistoricBatchReport;
-import org.operaton.bpm.engine.history.CleanableHistoricCaseInstanceReport;
-import org.operaton.bpm.engine.history.CleanableHistoricDecisionInstanceReport;
-import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReport;
 import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
+import org.operaton.bpm.engine.history.HistoricExternalTaskLogQuery;
 import org.operaton.bpm.engine.history.HistoricIdentityLinkLog;
 import org.operaton.bpm.engine.history.HistoricIdentityLinkLogQuery;
 import org.operaton.bpm.engine.history.HistoricIncident;
@@ -70,16 +74,12 @@ import org.operaton.bpm.engine.history.SetRemovalTimeSelectModeForHistoricDecisi
 import org.operaton.bpm.engine.history.SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder;
 import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricBatchesBuilder;
 import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricDecisionInstancesBuilder;
+import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricProcessInstancesBuilder;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
-import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatisticsQuery;
-import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricProcessInstancesBuilder;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * Service exposing information about ongoing and past process instances.  This is different

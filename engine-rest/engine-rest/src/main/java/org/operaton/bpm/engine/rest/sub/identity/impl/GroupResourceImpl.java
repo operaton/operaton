@@ -16,7 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.sub.identity.impl;
 
+import java.net.URI;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.UriInfo;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.rest.GroupRestService;
@@ -25,11 +31,6 @@ import org.operaton.bpm.engine.rest.dto.identity.GroupDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.sub.identity.GroupMembersResource;
 import org.operaton.bpm.engine.rest.sub.identity.GroupResource;
-
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.core.UriInfo;
-import java.net.URI;
 
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
-import jakarta.inject.Qualifier;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import jakarta.inject.Qualifier;
 
 /**
  * Can be used to qualify events fired when a task is created.

@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.integrationtest.functional.bpmnmodelapi;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.functional.bpmnmodelapi.beans.BpmnElementRetrievalDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -63,6 +63,6 @@ public class DelegationCodeBpmnModelRetrievalTest extends AbstractFoxPlatformInt
 
     assertThat(delegate.getBpmnModelElementInstance()).isNotNull();
     assertThat(delegate.getBpmnModelInstance()).isNotNull();
-    Assertions.assertEquals(TEST_PROCESS, delegate.getBpmnModelInstance().getDefinitions().getRootElements().iterator().next().getId());
+    assertThat(delegate.getBpmnModelInstance().getDefinitions().getRootElements().iterator().next().getId()).isEqualTo(TEST_PROCESS);
   }
 }

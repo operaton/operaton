@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityCache;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 

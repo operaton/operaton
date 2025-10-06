@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.property.webapppath;
 
-import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 class WebAppPathPropertyDefaultTest extends ParsePropertiesHelper {
 
   @Test

@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -24,13 +27,10 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.json.SpinJsonException;
+
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -89,7 +89,7 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
     Object value = engineRulePositive.getRuntimeService().getVariable(instance.getId(), "simpleBean");
 
     // then
-    assertEquals(bean, value);
+    assertThat(value).isEqualTo(bean);
   }
 
   @Test
@@ -108,7 +108,7 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
         objectValue(bean).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create());
 
     // when
-    Assertions.assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
+    assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
         .isExactlyInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Cannot deserialize")
         .hasCauseExactlyInstanceOf(SpinJsonException.class);

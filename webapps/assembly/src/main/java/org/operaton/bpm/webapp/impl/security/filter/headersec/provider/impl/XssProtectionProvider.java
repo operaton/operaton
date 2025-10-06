@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl;
 
+import java.util.Map;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.HeaderSecurityProvider;
 import org.operaton.bpm.webapp.impl.util.ServletFilterUtil;
-
-import java.util.Map;
 
 /**
  * @author Tassilo Weidner

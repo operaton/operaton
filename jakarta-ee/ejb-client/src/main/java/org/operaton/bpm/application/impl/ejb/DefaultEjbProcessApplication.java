@@ -18,7 +18,6 @@ package org.operaton.bpm.application.impl.ejb;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.ejb.*;

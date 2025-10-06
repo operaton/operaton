@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer
@@ -88,11 +88,7 @@ public class ExecutionTreeStructureAssertion implements ExecutionTreeAssertion {
       }
     }
 
-    if (!unmatchedChildAssertions.isEmpty()) {
-      return false;
-    }
-
-    return true;
+    return unmatchedChildAssertions.isEmpty();
   }
 
   @Override

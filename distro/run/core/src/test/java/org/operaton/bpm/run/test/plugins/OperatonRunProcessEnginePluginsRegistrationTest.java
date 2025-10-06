@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.run.test.plugins;
 
-import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-import org.operaton.bpm.run.OperatonApp;
-import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
-import org.operaton.bpm.run.property.OperatonBpmRunProperties;
-
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +25,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+
+import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
+import org.operaton.bpm.run.OperatonApp;
+import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
+import org.operaton.bpm.run.property.OperatonBpmRunProperties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;

@@ -16,10 +16,9 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
@@ -32,6 +31,8 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 import org.operaton.bpm.engine.impl.variable.serializer.AbstractTypedValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Christian Lipphardt (Camunda)
@@ -69,12 +70,29 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
 
   protected boolean isByteArrayFetchingEnabled = true;
   protected boolean isCustomObjectDeserializationEnabled = true;
+  protected String variableIdAfter;
+  protected Date createdAfter;
 
   public HistoricVariableInstanceQueryImpl() {
   }
 
   public HistoricVariableInstanceQueryImpl(CommandExecutor commandExecutor) {
     super(commandExecutor);
+  }
+
+  public HistoricVariableInstanceQuery idAfter(String id) {
+    variableIdAfter = id;
+    return this;
+  }
+
+  public String getVariableIdAfter() {
+    return variableIdAfter;
+  }
+
+  @Override
+  public HistoricVariableInstanceQuery createdAfter(Date date) {
+    createdAfter = date;
+    return this;
   }
 
   @Override
@@ -312,6 +330,18 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
     return this;
   }
 
+  @Override
+  public HistoricVariableInstanceQuery orderByVariableId() {
+    orderBy(HistoricVariableInstanceQueryProperty.VARIABLE_ID);
+    return this;
+  }
+
+  @Override
+  public HistoricVariableInstanceQuery orderByCreationTime() {
+    orderBy(HistoricVariableInstanceQueryProperty.CREATE_TIME);
+    return this;
+  }
+
   // getters and setters //////////////////////////////////////////////////////
 
   public String getProcessInstanceId() {
@@ -386,6 +416,10 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
 
   public List<String> getVariableNameIn() {
     return variableNameIn;
+  }
+
+  public Date getCreatedAfter() {
+    return createdAfter;
   }
 
 }

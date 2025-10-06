@@ -16,14 +16,17 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
+import java.util.Arrays;
+import java.util.List;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
+
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatisticsDto;
 import org.operaton.bpm.cockpit.impl.plugin.resources.ProcessDefinitionRestService;
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
@@ -36,10 +39,8 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.fail;
 
 class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
@@ -146,7 +147,8 @@ class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
     // when + then
-    Assertions.assertDoesNotThrow(() -> resource.queryStatistics(uriInfo, null, null), "No exception expected");
+    assertThatCode(() -> resource.queryStatistics(uriInfo, null, null))
+      .doesNotThrowAnyException();
   }
 
   protected void assertProcessDefinitionStatisticsDto(ProcessDefinitionStatisticsDto actual,

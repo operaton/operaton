@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.model.dmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import org.operaton.bpm.model.dmn.instance.BusinessContextElement;
 import org.operaton.bpm.model.dmn.instance.Decision;
 import org.operaton.bpm.model.dmn.instance.DecisionTable;
@@ -42,6 +42,8 @@ import org.operaton.bpm.model.dmn.instance.OutputEntry;
 import org.operaton.bpm.model.dmn.instance.OutputValues;
 import org.operaton.bpm.model.dmn.instance.Rule;
 import org.operaton.bpm.model.dmn.instance.Text;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ExampleCompatibilityTest extends DmnModelTest {
 

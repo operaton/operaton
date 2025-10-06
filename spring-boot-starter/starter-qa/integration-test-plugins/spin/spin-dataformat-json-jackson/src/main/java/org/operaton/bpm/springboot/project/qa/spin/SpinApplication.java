@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.springboot.project.qa.spin;
 
-import static org.operaton.spin.Spin.S;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.json.SpinJsonNode;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+
+import static org.operaton.spin.Spin.S;
 
 @SpringBootApplication
 public class SpinApplication {

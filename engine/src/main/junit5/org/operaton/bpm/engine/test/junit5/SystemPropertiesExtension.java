@@ -37,13 +37,13 @@ public final class SystemPropertiesExtension implements BeforeEachCallback, Afte
   }
 
   @Override
-  public void beforeEach(ExtensionContext context) throws Exception {
+  public void beforeEach(ExtensionContext context) {
     properties = System.getProperties();
     System.setProperties(new Properties(properties));
   }
 
   @Override
-  public void afterEach(ExtensionContext context) throws Exception {
+  public void afterEach(ExtensionContext context) {
     System.setProperties(properties);
   }
 

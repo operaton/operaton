@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.operaton.bpm.spring.boot.starter.property.EventingProperty;
-import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEnginePlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
+
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.EventingProperty;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEnginePlugin;
 
 /**
  * Engine Plugin forwarding Operaton task, execution and history events as Spring Events.
@@ -46,7 +47,7 @@ public class EventPublisherPlugin extends SpringBootProcessEnginePlugin {
   @Override
   public void preInit(SpringProcessEngineConfiguration processEngineConfiguration) {
 
-    if (!property.isTask() && !property.isExecution() && !property.isHistory()) {
+    if (Boolean.FALSE.equals(property.isTask()) && !property.isExecution() && Boolean.FALSE.equals(property.isHistory())) {
       logger.info("EVENTING-002: Operaton Spring Boot Eventing Plugin is found, but disabled via property.");
       return;
     }
@@ -54,7 +55,7 @@ public class EventPublisherPlugin extends SpringBootProcessEnginePlugin {
     if (property.isTask() || property.isExecution()) {
 
       logger.info("EVENTING-001: Initialized Operaton Spring Boot Eventing Engine Plugin.");
-      if (property.isTask()) {
+      if (Boolean.TRUE.equals(property.isTask())) {
         logger.info("EVENTING-003: Task events will be published as Spring Events.");
       } else {
         logger.info("EVENTING-004: Task eventing is disabled via property.");
@@ -74,7 +75,7 @@ public class EventPublisherPlugin extends SpringBootProcessEnginePlugin {
       processEngineConfiguration.getCustomPostBPMNParseListeners().add(new PublishDelegateParseListener(this.publisher, property));
     }
 
-    if (property.isHistory()) {
+    if (Boolean.TRUE.equals(property.isHistory())) {
       logger.info("EVENTING-007: History events will be published as Spring events.");
       // register composite DB event handler.
       processEngineConfiguration.getCustomHistoryEventHandlers()

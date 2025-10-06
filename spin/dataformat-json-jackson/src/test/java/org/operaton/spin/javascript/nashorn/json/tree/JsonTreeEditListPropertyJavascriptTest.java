@@ -16,11 +16,11 @@
  */
 package org.operaton.spin.javascript.nashorn.json.tree;
 
-import org.operaton.spin.impl.test.ScriptEngine;
-import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.spin.impl.test.ScriptEngine;
+import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
 
 @ScriptEngine("nashorn")
 class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScriptTest {

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.model.bpmn.builder;
 
-import static org.operaton.bpm.model.bpmn.builder.AbstractBaseElementBuilder.SPACE;
-
 import org.operaton.bpm.model.bpmn.instance.StartEvent;
 import org.operaton.bpm.model.bpmn.instance.SubProcess;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
+
+import static org.operaton.bpm.model.bpmn.builder.AbstractBaseElementBuilder.SPACE;
 
 /**
  * @author Sebastian Menski

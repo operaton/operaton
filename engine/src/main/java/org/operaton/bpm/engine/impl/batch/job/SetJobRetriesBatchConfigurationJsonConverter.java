@@ -19,19 +19,19 @@ package org.operaton.bpm.engine.impl.batch.job;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
 import org.operaton.bpm.engine.impl.batch.SetJobRetriesBatchConfiguration;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-import com.google.gson.JsonObject;
-
 /**
  * @author Askar Akhmerov
  */
 public class SetJobRetriesBatchConfigurationJsonConverter
-    extends AbstractBatchConfigurationObjectConverter<SetJobRetriesBatchConfiguration> {
+  extends AbstractBatchConfigurationObjectConverter<SetJobRetriesBatchConfiguration> {
 
   public static final SetJobRetriesBatchConfigurationJsonConverter INSTANCE = new SetJobRetriesBatchConfigurationJsonConverter();
 

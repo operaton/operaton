@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.authorization;
 
+import java.util.Date;
+
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
-
-import java.util.Date;
 
 /**
  * <p>An {@link Authorization} assigns a set of {@link Permission Permissions}

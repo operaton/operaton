@@ -19,8 +19,9 @@ package org.operaton.bpm.engine.impl.json;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 /**

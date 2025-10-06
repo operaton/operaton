@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.helper.variable;
 
+import org.hamcrest.Description;
+
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.hamcrest.Description;
 
 
 /**

@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.instance.operaton;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstance;
 import org.operaton.bpm.model.bpmn.instance.TimerEventDefinition;
-import java.util.Collection;
 
 /**
  * The BPMN taskListener operaton extension element

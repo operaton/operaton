@@ -1,10 +1,11 @@
 /*
  * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
- * under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright
- * ownership. Camunda licenses this file to you under the Apache License,
- * Version 2.0; you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * under one or more contributor license agreements.
+ * Modifications Copyright 2025 the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
  *
  *     https://www.apache.org/licenses/LICENSE-2.0
  *
@@ -103,33 +104,39 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
 
   public void initElDefaults() {
     if (enableFeelLegacyBehavior) {
-      if (defaultInputExpressionExpressionLanguage == null) {
-        defaultInputExpressionExpressionLanguage(JUEL_EXPRESSION_LANGUAGE);
-      }
-      if (defaultInputEntryExpressionLanguage == null) {
-        defaultInputEntryExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
-      }
-      if (defaultOutputEntryExpressionLanguage == null) {
-        defaultOutputEntryExpressionLanguage(JUEL_EXPRESSION_LANGUAGE);
-      }
-      if (defaultLiteralExpressionLanguage == null) {
-        defaultLiteralExpressionLanguage(JUEL_EXPRESSION_LANGUAGE);
-      }
-
+      initFeelLegacyBehavior();
     } else {
-      if (defaultInputExpressionExpressionLanguage == null) {
-        defaultInputExpressionExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
-      }
-      if (defaultInputEntryExpressionLanguage == null) {
-        defaultInputEntryExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
-      }
-      if (defaultOutputEntryExpressionLanguage == null) {
-        defaultOutputEntryExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
-      }
-      if (defaultLiteralExpressionLanguage == null) {
-        defaultLiteralExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
-      }
+      initFeelDefaultBehavior();
+    }
+  }
 
+  private void initFeelDefaultBehavior() {
+    if (defaultInputExpressionExpressionLanguage == null) {
+      defaultInputExpressionExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
+    }
+    if (defaultInputEntryExpressionLanguage == null) {
+      defaultInputEntryExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
+    }
+    if (defaultOutputEntryExpressionLanguage == null) {
+      defaultOutputEntryExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
+    }
+    if (defaultLiteralExpressionLanguage == null) {
+      defaultLiteralExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
+    }
+  }
+
+  private void initFeelLegacyBehavior() {
+    if (defaultInputExpressionExpressionLanguage == null) {
+      defaultInputExpressionExpressionLanguage(JUEL_EXPRESSION_LANGUAGE);
+    }
+    if (defaultInputEntryExpressionLanguage == null) {
+      defaultInputEntryExpressionLanguage(FEEL_EXPRESSION_LANGUAGE);
+    }
+    if (defaultOutputEntryExpressionLanguage == null) {
+      defaultOutputEntryExpressionLanguage(JUEL_EXPRESSION_LANGUAGE);
+    }
+    if (defaultLiteralExpressionLanguage == null) {
+      defaultLiteralExpressionLanguage(JUEL_EXPRESSION_LANGUAGE);
     }
   }
 
@@ -165,7 +172,7 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
     decisionEvaluationListeners = listeners;
   }
 
-  protected Collection<? extends DmnDecisionEvaluationListener> getDefaultDmnDecisionEvaluationListeners() {
+  protected Collection<DmnDecisionEvaluationListener> getDefaultDmnDecisionEvaluationListeners() {
     List<DmnDecisionEvaluationListener> defaultListeners = new ArrayList<>();
 
     if (engineMetricCollector instanceof DmnDecisionEvaluationListener listener) {

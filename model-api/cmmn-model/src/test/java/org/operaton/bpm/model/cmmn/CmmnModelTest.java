@@ -18,6 +18,7 @@ package org.operaton.bpm.model.cmmn;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.model.cmmn.util.ParseCmmnModelRule;
 
 /**

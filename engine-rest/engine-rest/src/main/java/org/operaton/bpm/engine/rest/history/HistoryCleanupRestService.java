@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.history;
 
 import java.util.List;
-
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.repository;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
-
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -29,6 +26,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.repository.UpdateProcessDefinitionSuspensionStateBuilder;
 import org.operaton.bpm.engine.repository.UpdateProcessDefinitionSuspensionStateSelectBuilder;
 import org.operaton.bpm.engine.repository.UpdateProcessDefinitionSuspensionStateTenantBuilder;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
 public class UpdateProcessDefinitionSuspensionStateBuilderImpl implements UpdateProcessDefinitionSuspensionStateBuilder,
     UpdateProcessDefinitionSuspensionStateSelectBuilder, UpdateProcessDefinitionSuspensionStateTenantBuilder {

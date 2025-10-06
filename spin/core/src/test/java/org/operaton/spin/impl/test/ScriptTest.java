@@ -16,11 +16,11 @@
  */
 package org.operaton.spin.impl.test;
 
-import org.operaton.spin.SpinScriptException;
-
 import java.util.Map;
 
 import org.junit.jupiter.api.extension.RegisterExtension;
+
+import org.operaton.spin.SpinScriptException;
 
 /**
  * Base script test which loads an engine and provides the

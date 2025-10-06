@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import jakarta.ws.rs.core.Response.Status;
-import org.operaton.bpm.engine.AuthorizationException;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.TaskService;
@@ -72,8 +72,6 @@ public class ProcessInstanceCommentResourceImpl implements ProcessInstanceCommen
     TaskService taskService = engine.getTaskService();
     try {
       taskService.deleteProcessInstanceComment(processInstanceId, commentId);
-    } catch (AuthorizationException e) {
-      throw e;
     } catch (NullValueException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     }
@@ -90,8 +88,6 @@ public class ProcessInstanceCommentResourceImpl implements ProcessInstanceCommen
     TaskService taskService = engine.getTaskService();
     try {
       taskService.updateProcessInstanceComment(processInstanceId, comment.getId(), comment.getMessage());
-    } catch (AuthorizationException e) {
-      throw e;
     } catch (NullValueException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     }
@@ -108,8 +104,6 @@ public class ProcessInstanceCommentResourceImpl implements ProcessInstanceCommen
 
     try {
       taskService.deleteProcessInstanceComments(processInstanceId);
-    } catch (AuthorizationException e) {
-      throw e;
     } catch (NullValueException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     }

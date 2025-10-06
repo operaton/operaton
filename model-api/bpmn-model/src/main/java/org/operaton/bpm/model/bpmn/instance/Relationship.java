@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.RelationshipDirection;
 import org.operaton.bpm.model.bpmn.impl.instance.Source;
 import org.operaton.bpm.model.bpmn.impl.instance.Target;
-
-import java.util.Collection;
 
 /**
  * The BPMN relationship element

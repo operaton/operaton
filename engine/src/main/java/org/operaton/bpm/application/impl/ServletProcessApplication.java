@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.application.impl;
 
+import java.lang.ref.WeakReference;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -23,8 +24,6 @@ import jakarta.servlet.ServletContextListener;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
-
-import java.lang.ref.WeakReference;
 
 /**
  * <p>

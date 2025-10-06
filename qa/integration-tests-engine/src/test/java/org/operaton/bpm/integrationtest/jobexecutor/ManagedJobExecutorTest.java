@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -26,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
@@ -35,6 +34,8 @@ import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.ManagedJobExecutorBean;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 public class ManagedJobExecutorTest {
@@ -61,7 +62,7 @@ public class ManagedJobExecutorTest {
 
   @BeforeEach
   void setUpCdiProcessEngineTestCase() {
-    processEngine = (ProgrammaticBeanLookup.lookup(ManagedJobExecutorBean.class)).getProcessEngine();
+    processEngine = ProgrammaticBeanLookup.lookup(ManagedJobExecutorBean.class).getProcessEngine();
     managementService = processEngine.getManagementService();
     runtimeService = processEngine.getRuntimeService();
   }
@@ -82,13 +83,13 @@ public class ManagedJobExecutorTest {
     try {
       String pid = runtimeService.startProcessInstanceByKey("testBusinessProcessScopedWithJobExecutor").getId();
 
-      assertEquals(1L, managementService.createJobQuery().processInstanceId(pid).count());
+      assertThat(managementService.createJobQuery().processInstanceId(pid).count()).isEqualTo(1L);
 
       executeJobs(pid);
 
-      assertEquals(0L, managementService.createJobQuery().processInstanceId(pid).count());
+      assertThat(managementService.createJobQuery().processInstanceId(pid).count()).isZero();
 
-      assertEquals("bar", runtimeService.createVariableInstanceQuery().processInstanceIdIn(pid).variableName("foo").singleResult().getValue());
+      assertThat(runtimeService.createVariableInstanceQuery().processInstanceIdIn(pid).variableName("foo").singleResult().getValue()).isEqualTo("bar");
     } finally {
       processEngine.getRepositoryService().deleteDeployment(deployment.getId(), true);
     }

@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
-import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
-import org.operaton.bpm.webapp.impl.security.filter.SecurityFilter;
-import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+
+import org.operaton.bpm.engine.impl.util.IoUtil;
+import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
+import org.operaton.bpm.webapp.impl.security.filter.SecurityFilter;
+import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
 
 @SuppressWarnings("unused")
 class ResourceLoadingSecurityFilter extends SecurityFilter implements ResourceLoaderDependingFilter {

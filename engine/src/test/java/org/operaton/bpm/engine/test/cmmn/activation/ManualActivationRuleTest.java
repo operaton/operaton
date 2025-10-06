@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.test.cmmn.activation;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer

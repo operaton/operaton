@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
 import org.assertj.core.api.Assertions;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseInstanceEntity;

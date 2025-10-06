@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.repository.CandidateDeployment;
 import org.operaton.bpm.engine.repository.Resource;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CandidateDeploymentImpl implements CandidateDeployment {
 

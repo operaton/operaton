@@ -17,28 +17,19 @@
 package org.operaton.bpm.engine.rest;
 
 
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.any;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -61,13 +52,18 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.CaseInstanceBuilder;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 /**
  * @author Roman Smirnov
@@ -554,7 +550,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  void testCaseDiagramRetrieval() throws FileNotFoundException, URISyntaxException {
+  void testCaseDiagramRetrieval() throws Exception {
     // setup additional mock behavior
     File file = getFile("/processes/todo-process.png");
     when(repositoryServiceMock.getCaseDiagram(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
@@ -580,7 +576,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   }
 
   @Test
-  void testCaseDiagramNullFilename() throws FileNotFoundException, URISyntaxException {
+  void testCaseDiagramNullFilename() throws Exception {
     // setup additional mock behavior
     File file = getFile("/processes/todo-process.png");
     when(repositoryServiceMock.getCaseDefinition(MockProvider.EXAMPLE_CASE_DEFINITION_ID).getDiagramResourceName())
@@ -623,14 +619,14 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   @Test
   void testProcessDiagramMediaType() {
-    Assertions.assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.png"));
-    Assertions.assertEquals("image/png", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.PNG"));
-    Assertions.assertEquals("image/svg+xml", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.svg"));
-    Assertions.assertEquals("image/jpeg", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpeg"));
-    Assertions.assertEquals("image/jpeg", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpg"));
-    Assertions.assertEquals("image/gif", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.gif"));
-    Assertions.assertEquals("image/bmp", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.bmp"));
-    Assertions.assertEquals("application/octet-stream", ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.UNKNOWN"));
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.png")).isEqualTo("image/png");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.PNG")).isEqualTo("image/png");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.svg")).isEqualTo("image/svg+xml");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpeg")).isEqualTo("image/jpeg");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.jpg")).isEqualTo("image/jpeg");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.gif")).isEqualTo("image/gif");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.bmp")).isEqualTo("image/bmp");
+    assertThat(ProcessDefinitionResourceImpl.getMediaTypeForFileSuffix("process.UNKNOWN")).isEqualTo("application/octet-stream");
   }
 
   @Test

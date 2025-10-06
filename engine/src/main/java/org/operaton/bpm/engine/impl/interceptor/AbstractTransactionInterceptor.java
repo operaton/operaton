@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.interceptor;
 
 import java.lang.reflect.UndeclaredThrowableException;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 /**

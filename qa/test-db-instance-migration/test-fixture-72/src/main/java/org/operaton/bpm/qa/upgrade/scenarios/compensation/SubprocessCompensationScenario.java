@@ -46,17 +46,15 @@ public final class SubprocessCompensationScenario {
   @DescribesScenario("init")
   @Times(3)
   public static ScenarioSetup instantiate() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("SubprocessCompensationScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("SubprocessCompensationScenario", scenarioName);
 
-        // create the compensation event subscription and wait before throwing compensation
-        Task userTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(userTask.getId());
-      }
+      // create the compensation event subscription and wait before throwing compensation
+      Task userTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(userTask.getId());
     };
   }
 
@@ -64,34 +62,30 @@ public final class SubprocessCompensationScenario {
   @ExtendsScenario("init")
   @Times(3)
   public static ScenarioSetup instantiateAndTriggerCompensation() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        // throw compensation; the compensation handler for userTask should then be active
-        Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(beforeCompensateTask.getId());
-      }
+    return (engine, scenarioName) -> {
+      // throw compensation; the compensation handler for userTask should then be active
+      Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(beforeCompensateTask.getId());
     };
   }
 
   @DescribesScenario("init.concurrent")
   @Times(3)
   public static ScenarioSetup instantiateConcurrent() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("SubprocessConcurrentCompensationScenario", scenarioName);
+    return (engine, scenarioName) -> {
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("SubprocessConcurrentCompensationScenario", scenarioName);
 
-        // create the compensation event subscriptions and wait before throwing compensation
-        Task userTask1 = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(userTask1.getId());
+      // create the compensation event subscriptions and wait before throwing compensation
+      Task userTask1 = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(userTask1.getId());
 
-        Task userTask2 = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(userTask2.getId());
-      }
+      Task userTask2 = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(userTask2.getId());
     };
   }
 
@@ -99,13 +93,11 @@ public final class SubprocessCompensationScenario {
   @ExtendsScenario("init.concurrent")
   @Times(3)
   public static ScenarioSetup instantiateConcurrentAndTriggerCompensation() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        // throw compensation; the compensation handler for userTask should then be active
-        Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
-            .processInstanceBusinessKey(scenarioName).singleResult();
-        engine.getTaskService().complete(beforeCompensateTask.getId());
-      }
+    return (engine, scenarioName) -> {
+      // throw compensation; the compensation handler for userTask should then be active
+      Task beforeCompensateTask = engine.getTaskService().createTaskQuery()
+        .processInstanceBusinessKey(scenarioName).singleResult();
+      engine.getTaskService().complete(beforeCompensateTask.getId());
     };
   }
 }

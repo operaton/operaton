@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.dto.runtime;
 
 import java.util.List;
-
 import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -105,7 +104,7 @@ public class ProcessInstanceSuspensionStateAsyncDto extends SuspensionStateDto {
   protected int parameterCount(Object... o) {
     int count = 0;
     for (Object o1 : o) {
-      count += (o1 != null ? 1 : 0);
+      count += o1 != null ? 1 : 0;
     }
     return count;
   }

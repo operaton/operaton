@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import org.operaton.bpm.engine.migration.MigratingActivityInstanceValidationReport;
-import org.operaton.bpm.engine.migration.MigratingProcessInstanceValidationReport;
-import org.operaton.bpm.engine.migration.MigratingTransitionInstanceValidationReport;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-
 import java.util.Arrays;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
+
+import org.operaton.bpm.engine.migration.MigratingActivityInstanceValidationReport;
+import org.operaton.bpm.engine.migration.MigratingProcessInstanceValidationReport;
+import org.operaton.bpm.engine.migration.MigratingTransitionInstanceValidationReport;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 public class MigratingProcessInstanceValidationReportAssert {
 

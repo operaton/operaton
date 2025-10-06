@@ -19,14 +19,13 @@ package org.operaton.bpm.engine.rest.dto.history.batch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.CleanableHistoricBatchReport;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CleanableHistoricBatchReportDto extends AbstractQueryDto<CleanableHistoricBatchReport> {
 

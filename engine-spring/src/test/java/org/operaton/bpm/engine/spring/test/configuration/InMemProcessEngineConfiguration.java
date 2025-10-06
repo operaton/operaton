@@ -17,15 +17,15 @@
 package org.operaton.bpm.engine.spring.test.configuration;
 
 import javax.sql.DataSource;
-
-import org.operaton.bpm.engine.spring.ProcessEngineFactoryBean;
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import org.operaton.bpm.engine.spring.ProcessEngineFactoryBean;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 
 /**
  * Base Java Config for the process engine that uses In-Memory database.

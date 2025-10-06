@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.run.test.config.cors;
 
-import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
-import org.operaton.bpm.run.test.AbstractRestTest;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -29,6 +26,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
+import org.operaton.bpm.run.test.AbstractRestTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /*
@@ -36,11 +36,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The CORS behavior is tested elsewhere.
  */
 @ActiveProfiles(profiles = {
-    "test-cors-enabled",
-    "test-changed-rest-context-path"
+  "test-cors-enabled",
+  "test-changed-rest-context-path"
 })
 @TestPropertySource(properties = {
-    OperatonBpmRunCorsProperty.PREFIX + ".allowed-origins=http://other.origin:8081"
+  OperatonBpmRunCorsProperty.PREFIX + ".allowed-origins=http://other.origin:8081"
 })
 class CorsWithChangedContextPathTest extends AbstractRestTest {
 

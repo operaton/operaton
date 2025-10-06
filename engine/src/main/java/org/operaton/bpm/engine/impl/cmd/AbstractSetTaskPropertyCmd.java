@@ -17,9 +17,8 @@
 
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serializable;
+
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -27,6 +26,8 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Abstract command class, meant to encapsulate boilerplate logic for concrete commands that wish to set a property
@@ -136,11 +137,11 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void>, Se
    * Ensures the value is not null and returns the value.
    *
    * @param value the value
-   * @param <T>   the type of the value
+   * @param <S>   the type of the value
    * @return the value
    * @throws NullValueException in case the given value is null
    */
-  protected <T> T ensureNotNullAndGet(String variableName, T value) {
+  protected <S> S ensureNotNullAndGet(String variableName, S value) {
     ensureNotNull(variableName, value);
     return value;
   }

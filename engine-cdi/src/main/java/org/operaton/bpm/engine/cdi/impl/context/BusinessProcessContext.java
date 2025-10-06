@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.cdi.impl.context;
 
 import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
-
 import jakarta.enterprise.context.spi.Context;
 import jakarta.enterprise.context.spi.Contextual;
 import jakarta.enterprise.context.spi.CreationalContext;

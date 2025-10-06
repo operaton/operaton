@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
@@ -26,8 +28,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReference;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.*;
-
-import java.util.Collection;
 
 /**
  * @author Sebastian Menski

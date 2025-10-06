@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine;
 
-import org.operaton.bpm.engine.authorization.MissingAuthorization;
-
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.operaton.bpm.engine.authorization.MissingAuthorization;
 
 /**
  * <p>Exception thrown by the process engine in case a user tries to
@@ -189,7 +189,7 @@ public class AuthorizationException extends ProcessEngineException {
     builder.append("'");
     builder.append(permissionName);
     builder.append("' permission on resource '");
-    builder.append((resourceId != null ? (resourceId+"' of type '") : "" ));
+    builder.append(resourceId != null ? (resourceId+"' of type '") : "");
     builder.append(resourceType);
     builder.append("'");
 

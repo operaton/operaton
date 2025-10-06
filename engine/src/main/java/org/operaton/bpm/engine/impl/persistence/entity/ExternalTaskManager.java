@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.impl.ExternalTaskQueryImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -28,12 +34,6 @@ import org.operaton.bpm.engine.impl.externaltask.TopicFetchInstruction;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.CREATE_TIME;
 import static org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory.POSTGRES;

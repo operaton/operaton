@@ -4,18 +4,14 @@
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-root</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-bpm-run-qa</artifactId>
   <packaging>pom</packaging>
   <name>Operaton - Run - QA</name>
   <description>${project.name}</description>
   <properties>
-    <!-- default os -->
-    <os.type>linux64</os.type>
-    <version.jersey-apache-client>1.15</version.jersey-apache-client>
     <version.httpcomponents>4.5.10</version.httpcomponents>
-    <version.chromedriver>112.0.5615.49</version.chromedriver>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -27,7 +23,7 @@
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
-        <version>4.31.0</version>
+        <version>4.35.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

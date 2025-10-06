@@ -19,18 +19,18 @@ package org.operaton.bpm.engine.rest.dto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.management.SchemaLogQuery;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Miklas Boskamp
  *
  */
-public class SchemaLogQueryDto extends AbstractQueryDto<SchemaLogQuery>{
+public class SchemaLogQueryDto extends AbstractQueryDto<SchemaLogQuery> {
 
   private static final String SORT_BY_TIMESTAMP_VALUE = "timestamp";
 

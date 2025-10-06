@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import org.operaton.bpm.engine.history.UserOperationLogEntry;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
 /**
  * @author Danny Gräf

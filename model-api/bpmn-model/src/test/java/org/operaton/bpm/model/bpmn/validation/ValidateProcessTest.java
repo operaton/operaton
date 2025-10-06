@@ -21,14 +21,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.validation.ModelElementValidator;
 import org.operaton.bpm.model.xml.validation.ValidationResult;
 import org.operaton.bpm.model.xml.validation.ValidationResultType;
 import org.operaton.bpm.model.xml.validation.ValidationResults;
-import org.operaton.bpm.model.bpmn.instance.Process;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

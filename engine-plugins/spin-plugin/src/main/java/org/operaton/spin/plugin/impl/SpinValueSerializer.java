@@ -48,6 +48,7 @@ public abstract class SpinValueSerializer extends AbstractSerializableValueSeria
     this.name = name;
   }
 
+  @Override
   public String getName() {
     return name;
   }

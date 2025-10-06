@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.qa.performance.engine.benchmark;
 
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestResult;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
-import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultAggregator;
-import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestResult;
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
+import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultAggregator;
+import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
 
 /**
  * The default benchmark aggregator records the duration

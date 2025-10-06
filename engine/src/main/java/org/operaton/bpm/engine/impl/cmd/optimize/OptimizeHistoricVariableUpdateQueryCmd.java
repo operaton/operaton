@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.cmd.optimize;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
@@ -24,10 +28,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailVariableInstanceUpdateEntity;
 import org.operaton.bpm.engine.impl.variable.serializer.AbstractTypedValueSerializer;
 import org.operaton.bpm.engine.variable.type.ValueType;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import org.operaton.commons.utils.CollectionUtil;
 
 public class OptimizeHistoricVariableUpdateQueryCmd implements Command<List<HistoricVariableUpdate>> {

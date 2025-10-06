@@ -16,15 +16,14 @@
  */
 package org.operaton.spin.impl.xml.dom.query;
 
-import static org.operaton.spin.impl.xml.dom.util.DomXmlEnsure.ensureNotDocumentRootExpression;
-import static org.operaton.spin.impl.xml.dom.util.DomXmlEnsure.ensureXPathNotEmpty;
-import static org.operaton.spin.impl.xml.dom.util.DomXmlEnsure.ensureXPathNotNull;
-
 import java.util.Map;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.SpinListImpl;
@@ -36,9 +35,10 @@ import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
 import org.operaton.spin.xml.SpinXPathQuery;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+
+import static org.operaton.spin.impl.xml.dom.util.DomXmlEnsure.ensureNotDocumentRootExpression;
+import static org.operaton.spin.impl.xml.dom.util.DomXmlEnsure.ensureXPathNotEmpty;
+import static org.operaton.spin.impl.xml.dom.util.DomXmlEnsure.ensureXPathNotNull;
 
 /**
  * @author Sebastian Menski

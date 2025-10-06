@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil;
 
+import org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
+import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
-import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 
 /**
  * Ensures that event subscriptions are visited in a top-down fashion, i.e.

@@ -16,19 +16,19 @@
  */
 package org.operaton.bpm.integrationtest.functional.el;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.functional.el.beans.ResolveFormDataBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Stefan Hentschel.
@@ -51,8 +51,9 @@ public class ElResolveTaskFormDataTest extends AbstractFoxPlatformIntegrationTes
     TaskFormData formData = formService.getTaskFormData(task.getId());
     Object defaultValue = formData.getFormFields().get(0).getValue().getValue();
 
-    assertThat(defaultValue).isNotNull();
-    Assertions.assertEquals("testString123", defaultValue);
+    assertThat(defaultValue)
+            .isNotNull()
+            .isEqualTo("testString123");
   }
 
   @Test
@@ -63,8 +64,9 @@ public class ElResolveTaskFormDataTest extends AbstractFoxPlatformIntegrationTes
     TaskFormData formData = formService.getTaskFormData(task.getId());
 
     String label = formData.getFormFields().get(0).getLabel();
-    assertThat(label).isNotNull();
-    Assertions.assertEquals("testString123", label);
+    assertThat(label)
+            .isNotNull()
+            .isEqualTo("testString123");
   }
 
 }

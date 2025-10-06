@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.gateway;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,13 +23,13 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.Problem;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
@@ -41,6 +37,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.commons.utils.CollectionUtil;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Joram Barrez
@@ -335,12 +334,7 @@ class ExclusiveGatewayTest {
 
     // Test with input == 4
     variables.put("input", 4);
-    try {
-      runtimeService.startProcessInstanceByKey("exclusiveGateway", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // Exception is expected since no outgoing sequence flow matches
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("exclusiveGateway", variables)).isInstanceOf(ProcessEngineException.class);
 
   }
 }

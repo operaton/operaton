@@ -19,6 +19,10 @@ package org.operaton.bpm.qa.largedata.util;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -29,14 +33,12 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.operaton.commons.utils.CollectionUtil;
 
 import static org.operaton.bpm.qa.largedata.util.DmnHelper.createSimpleDmnModel;
 

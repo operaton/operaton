@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.model.bpmn.builder;
 
-import org.operaton.bpm.model.bpmn.*;
-import org.operaton.bpm.model.bpmn.instance.Error;
-import org.operaton.bpm.model.bpmn.instance.Process;
-import org.operaton.bpm.model.bpmn.instance.*;
-import org.operaton.bpm.model.bpmn.instance.operaton.*;
-import org.operaton.bpm.model.xml.Model;
-import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.operaton.bpm.model.xml.type.ModelElementType;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,9 +24,19 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.model.bpmn.*;
+import org.operaton.bpm.model.bpmn.instance.*;
+import org.operaton.bpm.model.bpmn.instance.Error;
+import org.operaton.bpm.model.bpmn.instance.Process;
+import org.operaton.bpm.model.bpmn.instance.operaton.*;
+import org.operaton.bpm.model.xml.Model;
+import org.operaton.bpm.model.xml.instance.ModelElementInstance;
+import org.operaton.bpm.model.xml.type.ModelElementType;
+
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -3518,11 +3517,11 @@ public class ProcessBuilderTest {
         .done();
 
     String startName = ((FlowElement) instance.getModelElementById("start")).getName();
-    assertEquals("start", startName);
+    assertThat(startName).isEqualTo("start");
     String userName = ((FlowElement) instance.getModelElementById("user")).getName();
-    assertEquals("user", userName);
+    assertThat(userName).isEqualTo("user");
     String endName = ((FlowElement) instance.getModelElementById("end")).getName();
-    assertEquals("name", endName);
+    assertThat(endName).isEqualTo("name");
   }
 
 }

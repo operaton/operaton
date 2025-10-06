@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence;
 
+import java.util.concurrent.Callable;
+
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.impl.AbstractQuery;
@@ -33,41 +35,7 @@ import org.operaton.bpm.engine.impl.history.event.HistoricDecisionInstanceManage
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.Session;
-import org.operaton.bpm.engine.impl.persistence.entity.AttachmentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
-import org.operaton.bpm.engine.impl.persistence.entity.BatchManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayManager;
-import org.operaton.bpm.engine.impl.persistence.entity.DeploymentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricActivityInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricBatchManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricExternalTaskLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIdentityLinkLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoManager;
-import org.operaton.bpm.engine.impl.persistence.entity.IdentityLinkManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ReportManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ResourceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TaskReportManager;
-import org.operaton.bpm.engine.impl.persistence.entity.TenantManager;
-import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceManager;
-
-import java.util.concurrent.Callable;
-
+import org.operaton.bpm.engine.impl.persistence.entity.*;
 
 
 /**

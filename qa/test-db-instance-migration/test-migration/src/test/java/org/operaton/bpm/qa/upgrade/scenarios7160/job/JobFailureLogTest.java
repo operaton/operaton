@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7160.job;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ScenarioUnderTest("JobFailureLogScenario")
 @Origin("7.16.0")

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
+
+import org.apache.commons.lang3.StringUtils;
 
 import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties.joinOn;
 

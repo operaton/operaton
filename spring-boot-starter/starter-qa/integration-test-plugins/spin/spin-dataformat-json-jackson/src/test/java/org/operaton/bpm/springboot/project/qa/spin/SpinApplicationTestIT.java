@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.springboot.project.qa.spin;
 
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.RuntimeService;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.RuntimeService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

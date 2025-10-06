@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
+import java.util.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.Group;
@@ -24,13 +28,10 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.webapp.impl.WebappLogger;
 import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
+
 import static org.operaton.bpm.engine.authorization.Permissions.ACCESS;
 import static org.operaton.bpm.engine.authorization.Resources.APPLICATION;
 import static org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener.AUTH_TIME_SESSION_MUTEX;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import java.util.*;
 
 public final class AuthenticationUtil {
 

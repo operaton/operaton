@@ -18,7 +18,6 @@ package org.operaton.bpm.webapp.db;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 
 /**

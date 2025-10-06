@@ -19,11 +19,14 @@ package org.operaton.bpm.engine.test.util;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class ExecutableProcessUtil {
+public final class ExecutableProcessUtil {
 
   public static final BpmnModelInstance USER_TASK_PROCESS = Bpmn.createExecutableProcess("process")
       .startEvent()
       .userTask("task1")
       .endEvent()
       .done();
+
+  private ExecutableProcessUtil() {
+  }
 }

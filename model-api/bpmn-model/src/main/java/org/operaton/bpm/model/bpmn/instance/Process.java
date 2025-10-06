@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.operaton.bpm.model.bpmn.ProcessType;
-import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
-
 import java.util.Collection;
 import java.util.List;
+
+import org.operaton.bpm.model.bpmn.ProcessType;
+import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 
 
 /**

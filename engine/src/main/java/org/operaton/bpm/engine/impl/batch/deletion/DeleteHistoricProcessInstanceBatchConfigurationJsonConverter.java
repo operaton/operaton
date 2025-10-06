@@ -18,19 +18,19 @@ package org.operaton.bpm.engine.impl.batch.deletion;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-import com.google.gson.JsonObject;
-
 /**
  * @author Askar Akhmerov
  */
 public class DeleteHistoricProcessInstanceBatchConfigurationJsonConverter
-    extends AbstractBatchConfigurationObjectConverter<BatchConfiguration> {
+  extends AbstractBatchConfigurationObjectConverter<BatchConfiguration> {
 
   public static final DeleteHistoricProcessInstanceBatchConfigurationJsonConverter INSTANCE = new DeleteHistoricProcessInstanceBatchConfigurationJsonConverter();
 

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.context;
 
-import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
-
 import java.util.concurrent.Callable;
+
+import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
 
 /**
  * <p>When a Process Engine API call is performed, the engine

@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.operaton.bpm.model.bpmn.impl.instance.SupportedInterfaceRef;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.impl.instance.SupportedInterfaceRef;
 
 /**
  * @author Sebastian Menski

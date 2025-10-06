@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.engine.test.errorcode.conf;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.sql.SQLException;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -36,6 +35,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
 

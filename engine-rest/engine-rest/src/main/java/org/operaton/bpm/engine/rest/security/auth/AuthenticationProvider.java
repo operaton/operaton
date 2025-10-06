@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.security.auth;
 
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * A provider to handle the authentication of {@link HttpServletRequest}s.

@@ -16,9 +16,9 @@
  */
 package org.operaton.spin.impl.json.jackson.format;
 
-import org.operaton.spin.spi.TypeDetector;
-
 import java.util.Map;
+
+import org.operaton.spin.spi.TypeDetector;
 
 import static org.operaton.spin.impl.json.jackson.format.TypeHelper.constructType;
 

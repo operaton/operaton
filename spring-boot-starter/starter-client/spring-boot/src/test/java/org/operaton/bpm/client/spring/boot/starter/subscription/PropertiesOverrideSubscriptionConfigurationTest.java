@@ -16,39 +16,39 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.subscription;
 
-import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
-import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.FullSubscriptionConfiguration;
-import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
+import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.FullSubscriptionConfiguration;
+import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
 @TestPropertySource(properties = {
-    "operaton.bpm.client.subscriptions.topic-one.auto-open=false",
-    "operaton.bpm.client.subscriptions.topic-one.lock-duration=555",
-    "operaton.bpm.client.subscriptions.topic-one.variable-names=var-one,var-two",
-    "operaton.bpm.client.subscriptions.topic-one.local-variables=true",
-    "operaton.bpm.client.subscriptions.topic-one.business-key=business-key",
-    "operaton.bpm.client.subscriptions.topic-one.process-definition-id=definition-id",
-    "operaton.bpm.client.subscriptions.topic-one.process-definition-id-in=id-one,id-two",
-    "operaton.bpm.client.subscriptions.topic-one.process-definition-key=key",
-    "operaton.bpm.client.subscriptions.topic-one.process-definition-key-in=key-one,key-two",
-    "operaton.bpm.client.subscriptions.topic-one.process-definition-version-tag=version-tag",
-    "operaton.bpm.client.subscriptions.topic-one.process-variables.var-name-foo=var-val-foo",
-    "operaton.bpm.client.subscriptions.topic-one.process-variables.var-name-bar=var-val-bar",
-    "operaton.bpm.client.subscriptions.topic-one.without-tenant-id=true",
-    "operaton.bpm.client.subscriptions.topic-one.tenant-id-in=tenant-id-one,tenant-id-two",
-    "operaton.bpm.client.subscriptions.topic-one.include-extension-properties=true",
+  "operaton.bpm.client.subscriptions.topic-one.auto-open=false",
+  "operaton.bpm.client.subscriptions.topic-one.lock-duration=555",
+  "operaton.bpm.client.subscriptions.topic-one.variable-names=var-one,var-two",
+  "operaton.bpm.client.subscriptions.topic-one.local-variables=true",
+  "operaton.bpm.client.subscriptions.topic-one.business-key=business-key",
+  "operaton.bpm.client.subscriptions.topic-one.process-definition-id=definition-id",
+  "operaton.bpm.client.subscriptions.topic-one.process-definition-id-in=id-one,id-two",
+  "operaton.bpm.client.subscriptions.topic-one.process-definition-key=key",
+  "operaton.bpm.client.subscriptions.topic-one.process-definition-key-in=key-one,key-two",
+  "operaton.bpm.client.subscriptions.topic-one.process-definition-version-tag=version-tag",
+  "operaton.bpm.client.subscriptions.topic-one.process-variables.var-name-foo=var-val-foo",
+  "operaton.bpm.client.subscriptions.topic-one.process-variables.var-name-bar=var-val-bar",
+  "operaton.bpm.client.subscriptions.topic-one.without-tenant-id=true",
+  "operaton.bpm.client.subscriptions.topic-one.tenant-id-in=tenant-id-one,tenant-id-two",
+  "operaton.bpm.client.subscriptions.topic-one.include-extension-properties=true",
 })
 @ContextConfiguration(classes = {
-    ParsePropertiesHelper.TestConfig.class,
-    FullSubscriptionConfiguration.class
+  ParsePropertiesHelper.TestConfig.class,
+  FullSubscriptionConfiguration.class
 })
 @ExtendWith(SpringExtension.class)
 class PropertiesOverrideSubscriptionConfigurationTest extends ParsePropertiesHelper {

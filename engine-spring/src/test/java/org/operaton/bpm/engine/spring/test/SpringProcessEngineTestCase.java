@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test;
 
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
-import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-
 import java.util.ServiceLoader;
 
 import org.junit.jupiter.api.AfterEach;
@@ -40,6 +31,15 @@ import org.springframework.test.context.TestContextManager;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
+import org.operaton.bpm.engine.impl.test.TestHelper;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
 
 
 /**

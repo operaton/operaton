@@ -17,14 +17,16 @@
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
-import org.operaton.bpm.engine.rest.security.auth.impl.ContainerBasedAuthenticationProvider;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
+import org.operaton.bpm.engine.rest.security.auth.impl.ContainerBasedAuthenticationProvider;
 
 public class OAuth2AuthenticationProvider extends ContainerBasedAuthenticationProvider {
 

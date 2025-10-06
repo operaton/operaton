@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.model.cmmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.cmmn.instance.Case;
 import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
 import org.operaton.bpm.model.cmmn.instance.Definitions;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GenerateIdTest {
 

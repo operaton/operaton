@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.task.impl.dto;
 
+import java.util.Map;
+
 import org.operaton.bpm.client.impl.RequestDto;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
-
-import java.util.Map;
 
 /**
  * @author Tassilo Weidner

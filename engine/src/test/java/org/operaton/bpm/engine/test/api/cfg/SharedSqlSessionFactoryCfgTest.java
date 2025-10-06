@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotSame;
-import static org.mockito.Mockito.mock;
-
 import javax.sql.DataSource;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Daniel Meyer
@@ -103,7 +102,7 @@ class SharedSqlSessionFactoryCfgTest {
 
     // then
     assertThat(ProcessEngineConfigurationImpl.cachedSqlSessionFactory).isSameAs(existingSessionFactory);
-    assertNotSame(existingSessionFactory, cfg.getSqlSessionFactory());
+    assertThat(cfg.getSqlSessionFactory()).isNotSameAs(existingSessionFactory);
   }
 
   static class TestEngineCfg extends StandaloneInMemProcessEngineConfiguration {

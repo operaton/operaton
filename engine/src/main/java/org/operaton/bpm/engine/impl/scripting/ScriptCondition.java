@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.scripting;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -26,6 +23,9 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.delegate.ScriptInvocation;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * A {@link Condition} which invokes a {@link ExecutableScript} when evaluated.

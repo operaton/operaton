@@ -17,19 +17,21 @@
 package org.operaton.bpm.engine.spring;
 
 import java.util.Map;
-import org.operaton.bpm.engine.impl.el.ExpressionManager;
-import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
-import org.operaton.bpm.engine.impl.el.ReadOnlyMapELResolver;
-import org.operaton.bpm.engine.impl.el.VariableContextElResolver;
-import org.operaton.bpm.engine.impl.el.VariableScopeElResolver;
-import org.operaton.bpm.engine.impl.mock.MockElResolver;
 import jakarta.el.ArrayELResolver;
 import jakarta.el.BeanELResolver;
 import jakarta.el.CompositeELResolver;
 import jakarta.el.ELResolver;
 import jakarta.el.ListELResolver;
 import jakarta.el.MapELResolver;
+
 import org.springframework.context.ApplicationContext;
+
+import org.operaton.bpm.engine.impl.el.ExpressionManager;
+import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
+import org.operaton.bpm.engine.impl.el.ReadOnlyMapELResolver;
+import org.operaton.bpm.engine.impl.el.VariableContextElResolver;
+import org.operaton.bpm.engine.impl.el.VariableScopeElResolver;
+import org.operaton.bpm.engine.impl.mock.MockElResolver;
 
 
 /**

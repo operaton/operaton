@@ -41,6 +41,7 @@ public class XmlValueSerializer extends SpinValueSerializer {
     this(DataFormats.xml());
   }
 
+  @Override
   public SpinValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return SpinValues.xmlValue((SpinXmlElement) untypedValue.getValue()).create();
   }

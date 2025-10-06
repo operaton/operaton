@@ -16,16 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
@@ -39,6 +33,7 @@ import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -48,8 +43,12 @@ import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
 import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;
 
-import jakarta.ws.rs.core.HttpHeaders;
-import jakarta.ws.rs.core.MediaType;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Tassilo Weidner
@@ -69,7 +68,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
   @BeforeEach
   public void setUpHttpClientAndRuntimeData() {
-    client = HttpClients.createDefault();
+    client = HttpClients.createSystem();
     reqConfig = RequestConfig.custom().setConnectTimeout(3 * 60 * 1000).setSocketTimeout(10 * 60 * 1000).build();
 
     ProcessDefinition mockDefinition = MockProvider.createMockDefinition();
@@ -103,27 +102,27 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testBodyIsEmpty() throws IOException {
+  public void testBodyIsEmpty() throws Exception {
     evaluatePostRequest(new ByteArrayEntity("".getBytes(UTF_8)), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 
   @Test
-  public void testBodyIsNull() throws IOException {
+  public void testBodyIsNull() throws Exception {
     evaluatePostRequest(null, ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 
   @Test
-  public void testBodyIsNullAndContentTypeIsNull() throws IOException {
+  public void testBodyIsNullAndContentTypeIsNull() throws Exception {
     evaluatePostRequest(null, null, 415, false);
   }
 
   @Test
-  public void testBodyIsNullAndContentTypeHasISOCharset() throws IOException {
+  public void testBodyIsNullAndContentTypeHasISOCharset() throws Exception {
     evaluatePostRequest(null, ContentType.create(MediaType.APPLICATION_JSON, StandardCharsets.ISO_8859_1).toString(), 200, true);
   }
 
   @Test
-  public void testBodyIsEmptyJSONObject() throws IOException {
+  public void testBodyIsEmptyJSONObject() throws Exception {
     evaluatePostRequest(new ByteArrayEntity(EMPTY_JSON_OBJECT.getBytes(UTF_8)), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 
@@ -139,7 +138,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
     CloseableHttpResponse response = client.execute(post);
 
-    assertEquals(expectedStatusCode, response.getStatusLine().getStatusCode());
+    assertThat(response.getStatusLine().getStatusCode()).isEqualTo(expectedStatusCode);
 
     if(assertResponseBody) {
       assertThat(EntityUtils.toString(response.getEntity(), UTF_8)).contains(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);

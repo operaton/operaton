@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateTask;
@@ -29,6 +28,8 @@ import org.operaton.bpm.engine.test.api.delegate.AssertingTaskListener;
 import org.operaton.bpm.engine.test.api.delegate.AssertingTaskListener.DelegateTaskAsserter;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests if a {@link DelegateTask} has the correct tenant-id. The

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.cfg;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
@@ -78,9 +79,12 @@ class CustomExpressionManagerFunctionsTest {
      assertThat(runtimeService.getVariable(processInstanceId, "baz")).isEqualTo("foobar");
   }
 
-  public static class TestFunctions {
+  public static final class TestFunctions {
     public static String foobar() {
       return "foobar";
+    }
+
+    private TestFunctions() {
     }
   }
 }

@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
@@ -31,6 +30,8 @@ import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.EmbeddedSubProcess;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.EventScopeCreatingSubprocess;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
-import static org.operaton.bpm.engine.delegate.CaseExecutionListener.ENABLE;
-import static org.operaton.bpm.engine.delegate.CaseExecutionListener.OCCUR;
-import static org.operaton.bpm.engine.delegate.CaseExecutionListener.START;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.NEW;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REPETITION_RULE;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +28,15 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
+
+import static org.operaton.bpm.engine.delegate.CaseExecutionListener.ENABLE;
+import static org.operaton.bpm.engine.delegate.CaseExecutionListener.OCCUR;
+import static org.operaton.bpm.engine.delegate.CaseExecutionListener.START;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.NEW;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REPETITION_RULE;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**

@@ -18,7 +18,6 @@ package org.operaton.bpm.impl.juel;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
 import jakarta.el.PropertyNotFoundException;

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.util.Date;
 import java.util.List;
@@ -30,11 +28,13 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
 
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  * @author Tom Baeyens
  */
 public class HistoricActivityInstanceQueryImpl extends AbstractQuery<HistoricActivityInstanceQuery, HistoricActivityInstance>
-    implements HistoricActivityInstanceQuery {
+  implements HistoricActivityInstanceQuery {
 
   @Serial private static final long serialVersionUID = 1L;
   protected String activityInstanceId;

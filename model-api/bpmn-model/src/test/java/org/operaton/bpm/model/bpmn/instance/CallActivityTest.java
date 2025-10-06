@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-
 import java.util.Arrays;
 import java.util.Collection;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 /**
  * @author Sebastian Menski

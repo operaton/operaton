@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.el;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,6 +24,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -46,6 +44,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Frederik Heremans
@@ -111,7 +112,6 @@ class ExpressionManagerTest {
 
       // Check if the variable that has been set in service-task is the authenticated user
       String value = (String) runtimeService.getVariable(processInstance.getId(), "theUser");
-      assertThat(value).isNotNull();
       assertThat(value).isEqualTo("frederik");
     } finally {
       // Cleanup
@@ -196,8 +196,8 @@ class ExpressionManagerTest {
     // when
     runtimeService.startProcessInstanceByKey("testProcess",
         Variables.createVariables()
-            .putValue("total", new BigDecimal(123))
-            .putValue("myValue", new BigDecimal(0)));
+            .putValue("total", BigDecimal.valueOf(123))
+            .putValue("myValue", BigDecimal.valueOf(0)));
 
     // then
     HistoricActivityInstance userTask = historyService.createHistoricActivityInstanceQuery()

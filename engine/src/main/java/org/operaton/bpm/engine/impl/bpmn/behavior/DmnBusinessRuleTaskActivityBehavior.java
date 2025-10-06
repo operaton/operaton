@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateDecision;
-
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
 import org.operaton.bpm.engine.impl.dmn.result.DecisionResultMapper;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
+
+import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateDecision;
 
 /**
  * Implementation of a Bpmn BusinessRuleTask executing a DMN Decision.

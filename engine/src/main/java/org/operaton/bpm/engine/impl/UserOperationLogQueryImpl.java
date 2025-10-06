@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl;
 import java.io.Serial;
 import java.util.Date;
 import java.util.List;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;

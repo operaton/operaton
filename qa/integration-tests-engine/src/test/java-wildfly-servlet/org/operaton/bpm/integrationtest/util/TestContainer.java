@@ -19,12 +19,11 @@ package org.operaton.bpm.integrationtest.util;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 
-
 /**
  *
  * @author christian.lipphardt
  */
-public class TestContainer {
+public final class TestContainer {
 
   public static void addContainerSpecificResourcesEmbedCdiLib(WebArchive webArchive) {
     addContainerSpecificResources(webArchive);
@@ -68,6 +67,9 @@ public class TestContainer {
 
   public static void addCommonLoggingDependency(WebArchive webArchive) {
     webArchive.addAsManifestResource("jboss-deployment-structure-with-commons-logging.xml", "jboss-deployment-structure.xml");
+  }
+
+  private TestContainer() {
   }
 
 }

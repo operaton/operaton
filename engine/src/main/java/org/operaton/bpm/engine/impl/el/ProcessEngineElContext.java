@@ -44,14 +44,17 @@ public class ProcessEngineElContext extends ELContext {
     this.functionMapper = functionMapper;
   }
 
+  @Override
   public ELResolver getELResolver() {
     return elResolver;
   }
 
+  @Override
   public FunctionMapper getFunctionMapper() {
     return functionMapper;
   }
 
+  @Override
   public VariableMapper getVariableMapper() {
     return null;
   }

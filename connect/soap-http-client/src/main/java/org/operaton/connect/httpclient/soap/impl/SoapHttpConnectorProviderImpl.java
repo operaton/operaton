@@ -17,9 +17,9 @@
 package org.operaton.connect.httpclient.soap.impl;
 
 import org.operaton.connect.httpclient.soap.SoapHttpConnector;
-import org.operaton.connect.spi.ConnectorProvider;
+import org.operaton.connect.httpclient.soap.SoapHttpConnectorProvider;
 
-public class SoapHttpConnectorProviderImpl implements ConnectorProvider {
+public class SoapHttpConnectorProviderImpl implements SoapHttpConnectorProvider {
 
   @Override
   public String getConnectorId() {

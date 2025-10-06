@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,11 +31,13 @@ import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
-import org.operaton.bpm.engine.impl.db.DbEntity;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Daniel Meyer
@@ -152,20 +152,12 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
 
   @Override
   public Permission[] getPermissions(Permission[] permissions) {
-
     List<Permission> result = new ArrayList<>();
-
     for (Permission permission : permissions) {
-      if((AUTH_TYPE_GLOBAL == authorizationType || AUTH_TYPE_GRANT == authorizationType)
-          && isPermissionGranted(permission)) {
-
+      boolean granted = (AUTH_TYPE_GLOBAL == authorizationType || AUTH_TYPE_GRANT == authorizationType) && isPermissionGranted(permission);
+      boolean revoked = AUTH_TYPE_REVOKE == authorizationType && isPermissionRevoked(permission);
+      if (granted || revoked) {
         result.add(permission);
-
-      } else if(AUTH_TYPE_REVOKE == authorizationType
-          && isPermissionRevoked(permission)) {
-
-        result.add(permission);
-
       }
     }
     return result.toArray(new Permission[ result.size() ]);

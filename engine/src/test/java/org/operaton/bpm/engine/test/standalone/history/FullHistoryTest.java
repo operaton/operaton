@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,9 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.HistoryService;
@@ -66,6 +63,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Tom Baeyens
@@ -716,59 +715,24 @@ class FullHistoryTest {
   @Test
   void testHistoricDetailQueryInvalidSorting() {
     var historicDetailQuery = historyService.createHistoricDetailQuery();
-    try {
-      historicDetailQuery.asc();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(historicDetailQuery::asc).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicDetailQuery.desc();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(historicDetailQuery::desc).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByProcessInstanceId = historicDetailQuery.orderByProcessInstanceId();
-    try {
-      queryOrderByProcessInstanceId.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryOrderByProcessInstanceId::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByTime = historicDetailQuery.orderByTime();
-    try {
-      queryOrderByTime.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryOrderByTime::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByVariableName = historicDetailQuery.orderByVariableName();
-    try {
-      queryOrderByVariableName.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryOrderByVariableName::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryOrderByVariableRevision = historicDetailQuery.orderByVariableRevision();
-    try {
-      queryOrderByVariableRevision.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryOrderByVariableRevision::list).isInstanceOf(ProcessEngineException.class);
 
     HistoricDetailQuery queryByVariableType = historicDetailQuery.orderByVariableType();
-    try {
-      queryByVariableType.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(queryByVariableType::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -944,7 +908,7 @@ class FullHistoryTest {
             .hasSize(2);
 
     // Should have 2 different historic activity instance ID's, with the same activityId
-    Assertions.assertNotSame(details.get(0).getActivityInstanceId(), details.get(1).getActivityInstanceId());
+    assertThat(details.get(0).getActivityInstanceId()).isNotSameAs(details.get(1).getActivityInstanceId());
 
     HistoricActivityInstance historicActInst1 = historyService.createHistoricActivityInstanceQuery()
       .activityInstanceId(details.get(0).getActivityInstanceId())
@@ -1296,19 +1260,9 @@ class FullHistoryTest {
     query.variableInstanceId("invalid");
     assertThat(query.count()).isZero();
 
-    try {
-      query.variableInstanceId(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.variableInstanceId(null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.variableInstanceId((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.variableInstanceId((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

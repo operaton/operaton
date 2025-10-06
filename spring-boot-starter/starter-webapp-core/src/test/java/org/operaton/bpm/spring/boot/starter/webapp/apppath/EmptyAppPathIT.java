@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
-import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -28,13 +25,16 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-    classes = { WebappTestApp.class },
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+  classes = {WebappTestApp.class},
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
-    "operaton.bpm.webapp.applicationPath=" + EmptyAppPathIT.MY_APP_PATH
+  "operaton.bpm.webapp.applicationPath=" + EmptyAppPathIT.MY_APP_PATH
 })
 class EmptyAppPathIT {
 

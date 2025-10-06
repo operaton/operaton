@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.client.interceptor.auth;
 
+import java.nio.charset.Charset;
+import java.util.Base64;
+
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.interceptor.ClientRequestContext;
 import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
-
-import java.nio.charset.Charset;
-import java.util.Base64;
 
 import static org.apache.hc.core5.http.HttpHeaders.AUTHORIZATION;
 

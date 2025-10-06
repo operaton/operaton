@@ -16,24 +16,25 @@
  */
 package org.operaton.bpm.engine.rest.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Date;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.JobQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.RetriesDto;
 import org.operaton.bpm.engine.rest.dto.runtime.SetJobRetriesByProcessDto;
 import org.operaton.bpm.engine.rest.dto.runtime.SetJobRetriesDto;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RetriesDtoObjectMapperTest {
 
   @Test
-  void shouldExcludeDueDateSetPropertyRetriesDto() throws JsonProcessingException {
+  void shouldExcludeDueDateSetPropertyRetriesDto() throws Exception {
     // given
     RetriesDto dto = new RetriesDto();
     dto.setRetries(4);
@@ -49,7 +50,7 @@ class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  void shouldIncludeDueDateSetPropertyRetriesDto() throws JsonProcessingException {
+  void shouldIncludeDueDateSetPropertyRetriesDto() throws Exception {
     // given
     String json = "{"
         + "\"retries\":4,"
@@ -66,7 +67,7 @@ class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  void shouldIgnoreDueDateSetPropertyRetriesDto() throws JsonProcessingException {
+  void shouldIgnoreDueDateSetPropertyRetriesDto() throws Exception {
     // given
     String json = "{"
         + "\"retries\":4"
@@ -82,7 +83,7 @@ class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  void shouldExcludeDueDateSetPropertySetJobRetriesDto() throws JsonProcessingException {
+  void shouldExcludeDueDateSetPropertySetJobRetriesDto() throws Exception {
     // given
     SetJobRetriesDto dto = new SetJobRetriesDto();
     dto.setRetries(4);
@@ -100,7 +101,7 @@ class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  void shouldIncludeDueDateSetPropertySetJobRetriesDto() throws JsonProcessingException {
+  void shouldIncludeDueDateSetPropertySetJobRetriesDto() throws Exception {
     // given
     String json = "{"
         + "\"retries\":4,"
@@ -119,7 +120,7 @@ class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  void shouldIgnoreDueDateSetPropertySetJobRetriesDto() throws JsonProcessingException {
+  void shouldIgnoreDueDateSetPropertySetJobRetriesDto() throws Exception {
     // given
     String json = "{"
         + "\"retries\":4,"
@@ -137,7 +138,7 @@ class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  void shouldExcludeDueDateSetPropertySetJobRetriesByProcessDto() throws JsonProcessingException {
+  void shouldExcludeDueDateSetPropertySetJobRetriesByProcessDto() throws Exception {
     // given
     SetJobRetriesByProcessDto dto = new SetJobRetriesByProcessDto();
     dto.setRetries(4);
@@ -156,7 +157,7 @@ class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  void shouldIncludeDueDateSetPropertySetJobRetriesByProcessDto() throws JsonProcessingException {
+  void shouldIncludeDueDateSetPropertySetJobRetriesByProcessDto() throws Exception {
     // given
     String json = "{"
         + "\"retries\":4,"
@@ -177,7 +178,7 @@ class RetriesDtoObjectMapperTest {
   }
 
   @Test
-  void shouldIgnoreDueDateSetPropertySetJobRetriesByProcessDto() throws JsonProcessingException {
+  void shouldIgnoreDueDateSetPropertySetJobRetriesByProcessDto() throws Exception {
     // given
     String json = "{\"retries\":4,\"jobIds\":null,\"jobQuery\":null,\"processInstances\":[],\"processInstanceQuery\":{\"deploymentId\":null,\"processDefinitionKey\":null,\"processDefinitionKeys\":null,\"processDefinitionKeyNotIn\":null,\"businessKey\":null,\"businessKeyLike\":null,\"caseInstanceId\":null,\"processDefinitionId\":null,\"superProcessInstance\":null,\"subProcessInstance\":null,\"superCaseInstance\":null,\"subCaseInstance\":null,\"active\":null,\"suspended\":null,\"processInstanceIds\":null,\"withIncident\":null,\"incidentId\":null,\"incidentType\":null,\"incidentMessage\":null,\"incidentMessageLike\":null,\"withoutTenantId\":null,\"activityIds\":null,\"rootProcessInstances\":null,\"leafProcessInstances\":null,\"variableNamesIgnoreCase\":null,\"variableValuesIgnoreCase\":null,\"variables\":null,\"orQueries\":null,\"processDefinitionWithoutTenantId\":null,\"tenantIdIn\":null,\"sorting\":null},\"historicProcessInstanceQuery\":{\"processDefinitionId\":null,\"incidentType\":null,\"orQueries\":null,\"sorting\":null}}";
 

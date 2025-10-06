@@ -132,8 +132,7 @@ public final class TestMdcFacade {
    * Asserts all test inserted properties in the MDC are still there.
    */
   public void assertAllInsertedPropertiesAreInMdc() {
-    this.keyValuePairs.forEach((k, v) -> {
-      assertThat(MdcAccess.get(k)).isNotNull();
-    });
+    this.keyValuePairs.forEach((k, v) ->
+      assertThat(MdcAccess.get(k)).isNotNull());
   }
 }

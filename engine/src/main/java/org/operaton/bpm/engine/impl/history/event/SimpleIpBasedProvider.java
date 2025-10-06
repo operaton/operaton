@@ -43,7 +43,7 @@ public class SimpleIpBasedProvider implements HostnameProvider {
     return createId(localIp, processEngineConfiguration.getProcessEngineName());
   }
 
-  public static final String createId(String ip, String engineName) {
+  public static String createId(String ip, String engineName) {
     return ip + "$" + engineName;
   }
 }

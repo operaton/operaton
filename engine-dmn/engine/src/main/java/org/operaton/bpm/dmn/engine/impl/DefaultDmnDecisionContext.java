@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.dmn.engine.impl;
 
+import java.util.*;
+
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionLogic;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
@@ -30,8 +32,6 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.model.dmn.HitPolicy;
-
-import java.util.*;
 
 /**
  * Context which evaluates a decision on a given input

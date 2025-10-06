@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.batch;
 
-import org.operaton.bpm.engine.query.Query;
-
 import java.util.Date;
+
+import org.operaton.bpm.engine.query.Query;
 
 public interface BatchStatisticsQuery extends Query<BatchStatisticsQuery, BatchStatistics> {
 

@@ -34,7 +34,7 @@ class RewindableReaderTest {
   protected RewindableReader reader;
 
   @Test
-  void shouldRead() throws IOException {
+  void shouldRead() throws Exception {
     // read(char[])
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
     assertThat(reader.getRewindBufferSize()).isEqualTo(DEFAULT_BUFFER_SIZE);
@@ -76,7 +76,7 @@ class RewindableReaderTest {
   }
 
   @Test
-  void shouldRewind() throws IOException {
+  void shouldRewind() throws Exception {
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];
@@ -89,7 +89,7 @@ class RewindableReaderTest {
   }
 
   @Test
-  void shouldRewindAfterRepeatedRead() throws IOException {
+  void shouldRewindAfterRepeatedRead() throws Exception {
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];
@@ -102,7 +102,7 @@ class RewindableReaderTest {
   }
 
   @Test
-  void shouldReadAndRewindWhenEndOfInputIsReached() throws IOException {
+  void shouldReadAndRewindWhenEndOfInputIsReached() throws Exception {
     String input = EXAMPLE_INPUT_STRING.substring(0, 5);
 
     reader = newReaderInstance(input, DEFAULT_BUFFER_SIZE);
@@ -129,7 +129,7 @@ class RewindableReaderTest {
   }
 
   @Test
-  void shouldReadRemainder() throws IOException {
+  void shouldReadRemainder() throws Exception {
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];
@@ -143,7 +143,7 @@ class RewindableReaderTest {
    * When reading more characters than fits into the reader's buffer
    */
   @Test
-  void shouldFailWhenRewindLimitExceeded() throws IOException {
+  void shouldFailWhenRewindLimitExceeded() throws Exception {
     // exceeding with read(char[])
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
@@ -175,7 +175,7 @@ class RewindableReaderTest {
   }
 
   @Test
-  void shouldRewindWhenNothingWasRead() throws IOException {
+  void shouldRewindWhenNothingWasRead() throws Exception {
     reader = newReaderInstance("", DEFAULT_BUFFER_SIZE);
 
     int charRead = reader.read();

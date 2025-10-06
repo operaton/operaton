@@ -16,16 +16,17 @@
  */
 package org.operaton.connect.soap.httpclient;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.apache.http.client.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.connect.Connectors;
 import org.operaton.connect.httpclient.soap.SoapHttpConnector;
 import org.operaton.connect.httpclient.soap.impl.SoapHttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 import org.operaton.connect.spi.Connector;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SoapHttpConnectorTest {
 

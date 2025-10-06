@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.hal;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import jakarta.ws.rs.core.MediaType;
 
 import org.operaton.bpm.engine.rest.CaseDefinitionRestService;

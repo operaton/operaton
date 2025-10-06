@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.json;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.impl.QueryOperator;
 import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
-import com.google.gson.JsonObject;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 /**

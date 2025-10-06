@@ -16,7 +16,7 @@
  */
 package org.operaton.spin.xml;
 
-public class XmlTestUtil {
+public final class XmlTestUtil {
   /**
    * Example input <ns2:date>2015-04-04T00:00:00+02:00</ns2:date> -> <ns2:date>2015-04-04</ns2:date>
    *
@@ -42,5 +42,8 @@ public class XmlTestUtil {
     }
 
     return input.substring(0, indexOfTimezone) + input.substring(indexOfClosingBracket);
+  }
+
+  private XmlTestUtil() {
   }
 }

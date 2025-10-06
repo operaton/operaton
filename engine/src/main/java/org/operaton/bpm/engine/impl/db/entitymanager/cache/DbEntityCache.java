@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.db.entitymanager.cache;
 
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_MERGED;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_PERSISTENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_TRANSIENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.MERGED;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.PERSISTENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.TRANSIENT;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,6 +26,13 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
+
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_MERGED;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_PERSISTENT;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_TRANSIENT;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.MERGED;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.PERSISTENT;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.TRANSIENT;
 
 
 /**

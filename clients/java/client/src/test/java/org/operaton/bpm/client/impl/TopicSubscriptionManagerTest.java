@@ -15,23 +15,15 @@
  */
 package org.operaton.bpm.client.impl;
 
-import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
@@ -41,9 +33,15 @@ import org.operaton.bpm.client.topic.TopicSubscription;
 import org.operaton.bpm.client.topic.impl.TopicSubscriptionBuilderImpl;
 import org.operaton.bpm.client.topic.impl.TopicSubscriptionManager;
 import org.operaton.bpm.client.variable.impl.DefaultValueMappers;
-import org.operaton.bpm.client.variable.impl.TypedValueField;
 import org.operaton.bpm.client.variable.impl.TypedValues;
 import org.operaton.bpm.engine.variable.value.PrimitiveValue;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.awaitility.Awaitility.await;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class TopicSubscriptionManagerTest {
 
@@ -66,15 +64,15 @@ class TopicSubscriptionManagerTest {
 		topicSubscriptionManager = new TopicSubscriptionManagerForTesting(engineClient, typedValues, 0L);
 		topicSubscriptionManager.setBackoffStrategy(new OneSecondBackOffStrategy());
 		t0Handler = new RecordingExternalTaskHandler();
-		taskList = new ArrayList<ExternalTask>();
+		taskList = new ArrayList<>();
 		ExternalTaskImpl externalt0Task = new ExternalTaskImpl();
 		externalt0Task.setTopicName(T0);
-		externalt0Task.setVariables(new HashMap<String, TypedValueField>());
+		externalt0Task.setVariables(new HashMap<>());
 		taskList.add(externalt0Task);
 		t1Handler = new RecordingExternalTaskHandler();
 		ExternalTaskImpl externalt1Task = new ExternalTaskImpl();
 		externalt1Task.setTopicName(T1);
-		externalt1Task.setVariables(new HashMap<String, TypedValueField>());
+		externalt1Task.setVariables(new HashMap<>());
 		taskList.add(externalt1Task);
 		when(engineClient.fetchAndLock(anyList())).thenReturn(taskList);
 	}
@@ -86,16 +84,16 @@ class TopicSubscriptionManagerTest {
 
 	@Test
 	void startStopFinishes() {
-		assertDoesNotThrow(() -> {
+		assertThatCode(() -> {
 			topicSubscriptionManager.start();
 			topicSubscriptionManager.stop();
-		});
+		}).doesNotThrowAnyException();
 	}
 
 	@Test
 	void isRunningAfterStart() {
 		topicSubscriptionManager.start();
-		assertTrue(topicSubscriptionManager.isRunning());
+		assertThat(topicSubscriptionManager.isRunning()).isTrue();
 
 		topicSubscriptionManager.stop();
 	}
@@ -104,7 +102,7 @@ class TopicSubscriptionManagerTest {
 	void isNotRunningAfterStop() {
 		topicSubscriptionManager.start();
 		topicSubscriptionManager.stop();
-		assertFalse(topicSubscriptionManager.isRunning());
+		assertThat(topicSubscriptionManager.isRunning()).isFalse();
 	}
 
 	@Test
@@ -114,7 +112,7 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(1, t0Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -124,7 +122,7 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(1, t0Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -134,7 +132,7 @@ class TopicSubscriptionManagerTest {
 		waitMillies(1500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
 	}
 
 	@Test
@@ -145,8 +143,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(1, t0Handler.getExecuteCount());
-		assertEquals(1, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(1);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -157,8 +155,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(1500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
-		assertEquals(2, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(2);
 	}
 
 	@Test
@@ -171,8 +169,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500); // 3000 ... t0 executed second time, t1 executed once
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
-		assertEquals(1, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -185,8 +183,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(1000); // t0 executed second time
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
-		assertEquals(1, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -199,8 +197,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(500);
 		topicSubscriptionManager.stop();
 
-		assertEquals(0, t0Handler.getExecuteCount());
-		assertEquals(0, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isZero();
+		assertThat(t1Handler.getExecuteCount()).isZero();
 	}
 
 	@Test
@@ -213,8 +211,8 @@ class TopicSubscriptionManagerTest {
 		waitMillies(250); // t0 and t1 executed second time because timer restart
 		topicSubscriptionManager.stop();
 
-		assertEquals(2, t0Handler.getExecuteCount());
-		assertEquals(2, t1Handler.getExecuteCount());
+		assertThat(t0Handler.getExecuteCount()).isEqualTo(2);
+		assertThat(t1Handler.getExecuteCount()).isEqualTo(2);
 	}
 
 	private void waitMillies(int millies) {
@@ -222,11 +220,8 @@ class TopicSubscriptionManagerTest {
 	}
 
 	private void waitForTopicSubscriptionManagerToFinish() {
-		try {
-			topicSubscriptionManager.getThread().join();
-		} catch (InterruptedException e) {
-			fail(e);
-		}
+    assertThatCode(() -> topicSubscriptionManager.getThread().join())
+				.doesNotThrowAnyException();
 	}
 
 	private void subscribeTopicT0() {

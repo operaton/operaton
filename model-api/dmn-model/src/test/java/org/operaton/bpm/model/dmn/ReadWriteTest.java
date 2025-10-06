@@ -16,7 +16,14 @@
  */
 package org.operaton.bpm.model.dmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Collection;
+
+import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.model.dmn.impl.instance.InputDataImpl;
+import org.operaton.bpm.model.dmn.instance.*;
+import org.operaton.bpm.model.dmn.util.DmnModelResource;
+
 import static org.operaton.bpm.model.dmn.DecisionTableOrientation.CrossTable;
 import static org.operaton.bpm.model.dmn.DecisionTableOrientation.Rule_as_Column;
 import static org.operaton.bpm.model.dmn.DecisionTableOrientation.Rule_as_Row;
@@ -27,13 +34,7 @@ import static org.operaton.bpm.model.dmn.HitPolicy.OUTPUT_ORDER;
 import static org.operaton.bpm.model.dmn.HitPolicy.PRIORITY;
 import static org.operaton.bpm.model.dmn.HitPolicy.RULE_ORDER;
 import static org.operaton.bpm.model.dmn.HitPolicy.UNIQUE;
-
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.dmn.impl.instance.InputDataImpl;
-import org.operaton.bpm.model.dmn.instance.*;
-import org.operaton.bpm.model.dmn.util.DmnModelResource;
-
-import java.util.Collection;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReadWriteTest extends DmnModelTest {
 

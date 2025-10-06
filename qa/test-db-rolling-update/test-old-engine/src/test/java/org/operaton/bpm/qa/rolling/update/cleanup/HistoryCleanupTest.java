@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.qa.rolling.update.cleanup;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Test;
+
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -23,12 +30,6 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.rolling.update.RollingUpdateConstants;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.After;
-import org.junit.Test;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

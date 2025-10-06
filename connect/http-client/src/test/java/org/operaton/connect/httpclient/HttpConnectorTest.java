@@ -16,22 +16,19 @@
  */
 package org.operaton.connect.httpclient;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.IOException;
-
-import org.apache.http.Header;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpOptions;
-import org.apache.http.client.methods.HttpPatch;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.methods.HttpTrace;
+import org.apache.hc.client5.http.classic.methods.HttpDelete;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpHead;
+import org.apache.hc.client5.http.classic.methods.HttpOptions;
+import org.apache.hc.client5.http.classic.methods.HttpPatch;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.client5.http.classic.methods.HttpTrace;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.message.BasicClassicHttpRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.Connectors;
@@ -39,6 +36,7 @@ import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 import org.operaton.connect.spi.Connector;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class HttpConnectorTest {
@@ -126,10 +124,10 @@ public class HttpConnectorTest {
   }
 
   @Test
-  void shouldSetUrlOnHttpRequest() {
+  void shouldSetUrlOnHttpRequest() throws Exception {
     connector.createRequest().url(EXAMPLE_URL).get().execute();
     HttpGet request = interceptor.getTarget();
-    assertThat(request.getURI().toASCIIString()).isEqualTo(EXAMPLE_URL);
+    assertThat(request.getUri().toASCIIString()).isEqualTo(EXAMPLE_URL);
   }
 
   @Test
@@ -146,12 +144,12 @@ public class HttpConnectorTest {
   void shouldSetHeadersOnHttpRequest() {
     connector.createRequest().url(EXAMPLE_URL).header("foo", "bar").header("hello", "world").get().execute();
     HttpGet request = interceptor.getTarget();
-    Header[] headers = request.getAllHeaders();
+    Header[] headers = request.getHeaders();
     assertThat(headers).hasSize(2);
   }
 
   @Test
-  void shouldSetPayloadOnHttpRequest() throws IOException {
+  void shouldSetPayloadOnHttpRequest() throws Exception {
     connector.createRequest().url(EXAMPLE_URL).payload(EXAMPLE_PAYLOAD).post().execute();
     HttpPost request = interceptor.getTarget();
     String content = IoUtil.inputStreamAsString(request.getEntity().getContent());
@@ -167,12 +165,12 @@ public class HttpConnectorTest {
     assertThat(contentLength).isEqualTo(EXAMPLE_PAYLOAD.length());
   }
 
-  protected void verifyHttpRequest(Class<? extends HttpRequestBase> requestClass) {
+  protected void verifyHttpRequest(Class<? extends BasicClassicHttpRequest> requestClass) {
     Object target = interceptor.getTarget();
     assertThat(target).isInstanceOf(requestClass);
 
     HttpRequest request = interceptor.getRequest();
-    HttpRequestBase requestBase = (HttpRequestBase) target;
+    BasicClassicHttpRequest requestBase = (BasicClassicHttpRequest) target;
     assertThat(requestBase.getMethod()).isEqualTo(request.getMethod());
   }
 

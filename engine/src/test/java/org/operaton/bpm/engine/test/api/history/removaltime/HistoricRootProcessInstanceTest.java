@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.ByteArrayInputStream;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
@@ -60,6 +59,9 @@ import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner
@@ -403,10 +405,8 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
@@ -431,10 +431,8 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
     managementService.setJobRetries(jobId, 0);
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
 
@@ -466,13 +464,13 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
     // when
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callingProcess");
 
-    HistoricExternalTaskLog ExternalTaskLog = historyService.createHistoricExternalTaskLogQuery().singleResult();
+    HistoricExternalTaskLog externalTaskLog = historyService.createHistoricExternalTaskLogQuery().singleResult();
 
     // assume
-    assertThat(ExternalTaskLog).isNotNull();
+    assertThat(externalTaskLog).isNotNull();
 
     // then
-    assertThat(ExternalTaskLog.getRootProcessInstanceId()).isEqualTo(processInstance.getRootProcessInstanceId());
+    assertThat(externalTaskLog.getRootProcessInstanceId()).isEqualTo(processInstance.getRootProcessInstanceId());
   }
 
   @Test
@@ -489,10 +487,8 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     List<HistoricJobLog> jobLog = historyService.createHistoricJobLogQuery().list();
 
@@ -1047,10 +1043,8 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
       .singleResult()
       .getId();
 
-    try {
-      // when
-      managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    // when
+    executeJobIgnoringException(managementService, jobId);
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity) historyService.createHistoricJobLogQuery()
       .jobExceptionMessage("I'm supposed to fail!")

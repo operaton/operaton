@@ -17,6 +17,7 @@
 package org.operaton.bpm.dmn.engine.test.asserts;
 
 import org.assertj.core.api.AbstractMapAssert;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 

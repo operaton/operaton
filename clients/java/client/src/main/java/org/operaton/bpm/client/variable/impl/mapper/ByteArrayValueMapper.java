@@ -19,6 +19,7 @@ package org.operaton.bpm.client.variable.impl.mapper;
 import java.io.InputStream;
 
 import org.apache.hc.client5.http.utils.Base64;
+
 import org.operaton.bpm.client.variable.impl.TypedValueField;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
@@ -37,6 +38,7 @@ public class ByteArrayValueMapper extends PrimitiveValueMapper<BytesValue> {
     super(ValueType.BYTES);
   }
 
+  @Override
   public BytesValue convertToTypedValue(UntypedValueImpl untypedValue) {
     byte[] byteArr;
 

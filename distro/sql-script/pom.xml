@@ -5,11 +5,11 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../../database</relativePath>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <groupId>org.operaton.bpm.distro</groupId>
   <artifactId>operaton-sql-scripts</artifactId>
-  <version>${operaton.dbscheme.current.version}</version>
+  <version>7.24.0</version>
   <name>Operaton - SQL scripts</name>
   <description>${project.name}</description>
   <properties>

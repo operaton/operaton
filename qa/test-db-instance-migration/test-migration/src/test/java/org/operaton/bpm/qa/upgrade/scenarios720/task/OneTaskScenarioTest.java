@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios720.task;
 
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
-
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+
+import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 /**
  * @author Thorben Lindhauer

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +23,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -42,6 +40,9 @@ import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author roman.smirnov
@@ -68,61 +69,26 @@ class SuspendJobDefinitionTest {
 
   @Test
   void testSuspensionById_shouldThrowProcessEngineException() {
-    try {
-      managementService.suspendJobDefinitionById(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testSuspensionByIdAndSuspendJobsFlag_shouldThrowProcessEngineException() {
-    try {
-      managementService.suspendJobDefinitionById(null, false);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(null, false)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionById(null, true);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(null, true)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testSuspensionByIdAndSuspendJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
-    try {
-      managementService.suspendJobDefinitionById(null, false, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(null, false, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionById(null, true, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(null, true, null)).isInstanceOf(ProcessEngineException.class);
 
     Date suspensionDate = new Date();
-    try {
-      managementService.suspendJobDefinitionById(null, false, suspensionDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(null, false, suspensionDate)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionById(null, true, suspensionDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionById(null, true, suspensionDate)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -462,62 +428,27 @@ class SuspendJobDefinitionTest {
 
   @Test
   void testSuspensionByProcessDefinitionId_shouldThrowProcessEngineException() {
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionId(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testSuspensionByProcessDefinitionIdAndSuspendJobsFlag_shouldThrowProcessEngineException() {
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionId(null, false);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(null, false)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionId(null, true);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(null, true)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testSuspensionByProcessDefinitionIdAndSuspendJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
     Date suspensionDate = new Date();
 
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionId(null, false, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(null, false, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionId(null, true, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(null, true, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionId(null, false, suspensionDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(null, false, suspensionDate)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionId(null, true, suspensionDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionId(null, true, suspensionDate)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -855,61 +786,26 @@ class SuspendJobDefinitionTest {
 
   @Test
   void testSuspensionByProcessDefinitionKey_shouldThrowProcessEngineException() {
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionKey(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldThrowProcessEngineException() {
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionKey(null, false);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(null, false)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionKey(null, true);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(null, true)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
     Date suspensionDate = new Date();
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionKey(null, false, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(null, false, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionKey(null, true, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(null, true, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionKey(null, false, suspensionDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(null, false, suspensionDate)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.suspendJobDefinitionByProcessDefinitionKey(null, true, suspensionDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.suspendJobDefinitionByProcessDefinitionKey(null, true, suspensionDate)).isInstanceOf(ProcessEngineException.class);
 
   }
 

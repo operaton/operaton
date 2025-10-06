@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assume.assumeNotNull;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.ManagementService;
@@ -51,6 +48,10 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assume.assumeNotNull;
 
 /**
  * @author Daniel Meyer
@@ -99,19 +100,9 @@ class ProcessApplicationDeploymentTest {
   void testEmptyDeployment() {
     var deploymentBuilder = repositoryService.createDeployment(processApplication.getReference());
     var deploymentBuilder2 = repositoryService.createDeployment();
-    try {
-      deploymentBuilder.deploy();
-      fail("it should not be possible to deploy without deployment resources");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(NotValidException.class);
 
-    try {
-      deploymentBuilder2.deploy();
-      fail("it should not be possible to deploy without deployment resources");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(deploymentBuilder2::deploy).isInstanceOf(NotValidException.class);
   }
 
   @Test

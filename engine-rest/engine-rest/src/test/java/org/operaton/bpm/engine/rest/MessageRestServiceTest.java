@@ -16,32 +16,21 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import jakarta.ws.rs.core.Response.Status;
 
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.Mockito;
+
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -61,9 +50,19 @@ import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResultWithVariables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import jakarta.ws.rs.core.Response.Status;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class MessageRestServiceTest extends AbstractRestServiceTest {
 
@@ -214,10 +213,10 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   protected void checkExecutionResult(String content, int idx) {
     //resultType should be execution
     String resultType = from(content).get("[" + idx + "].resultType").toString();
-    assertEquals(MessageCorrelationResultType.Execution.name(), resultType);
+    assertThat(resultType).isEqualTo(MessageCorrelationResultType.Execution.name());
     //execution should be filled and process instance should be null
-    assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, from(content).get("[" + idx + "].execution.id"));
-    assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, from(content).get("[" + idx + "].execution.processInstanceId"));
+    assertThat(from(content).<String>get("[" + idx + "].execution.id")).isEqualTo(MockProvider.EXAMPLE_EXECUTION_ID);
+    assertThat(from(content).<String>get("[" + idx + "].execution.processInstanceId")).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     assertThat(from(content).<String>get("[" + idx + "].processInstance")).isNull();
   }
 
@@ -356,7 +355,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap> results = from(content).getList("");
-    assertEquals(2, results.size());
+    assertThat(results).hasSize(2);
     for (int i = 0; i < 2; i++) {
       checkExecutionResult(content, i);
     }
@@ -390,7 +389,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
    assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap> results = from(content).getList("");
-    assertEquals(2, results.size());
+    assertThat(results).hasSize(2);
     for (int i = 0; i < 2; i++) {
       checkProcessInstanceResult(content, i);
     }
@@ -424,7 +423,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap> results = from(content).getList("");
-    assertEquals(4, results.size());
+    assertThat(results).hasSize(4);
     for (int i = 0; i < 2; i++) {
       String resultType = from(content).get("[" + i + "].resultType");
       assertThat(resultType).isNotNull();
@@ -1288,7 +1287,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap<Object, Object>> results = from(content).getList("");
-    assertEquals(1, results.size());
+    assertThat(results).hasSize(1);
     checkVariablesInResult(content, 0);
 
     verify(runtimeServiceMock).createMessageCorrelation(messageName);
@@ -1342,15 +1341,13 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
 
     for (String variableName : variableNames) {
       String variablePath = "[" + idx + "].variables." + variableName;
-      assertEquals(MockProvider.FORMAT_APPLICATION_JSON, from(content).getMap(variablePath + ".valueInfo").get("serializationDataFormat"));
-      assertEquals(MockProvider.EXAMPLE_VARIABLE_INSTANCE_SERIALIZED_VALUE, from(content).get(variablePath + ".value"));
-      assertEquals(VariableTypeHelper.toExpectedValueTypeName(ValueType.OBJECT), from(content).get(variablePath + ".type"));
+      assertThat(from(content).getMap(variablePath + ".valueInfo")).containsEntry("serializationDataFormat", MockProvider.FORMAT_APPLICATION_JSON);
+      assertThat(from(content).<String>get(variablePath + ".value")).isEqualTo(MockProvider.EXAMPLE_VARIABLE_INSTANCE_SERIALIZED_VALUE);
+      assertThat(from(content).<String>get(variablePath + ".type")).isEqualTo(VariableTypeHelper.toExpectedValueTypeName(ValueType.OBJECT));
     }
 
-    assertEquals(ArrayList.class.getName(),
-        from(content).getMap("[" + idx + "].variables." + MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME + ".valueInfo").get("objectTypeName"));
-    assertEquals(Object.class.getName(),
-        from(content).getMap("[" + idx + "].variables." + MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME + ".valueInfo").get("objectTypeName"));
+    assertThat(from(content).getMap("[" + idx + "].variables." + MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME + ".valueInfo")).containsEntry("objectTypeName", ArrayList.class.getName());
+    assertThat(from(content).getMap("[" + idx + "].variables." + MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME + ".valueInfo")).containsEntry("objectTypeName", Object.class.getName());
   }
 
 }

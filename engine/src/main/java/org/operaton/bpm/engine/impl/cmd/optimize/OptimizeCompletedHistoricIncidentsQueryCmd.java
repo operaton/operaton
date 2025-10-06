@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cmd.optimize;
 
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentEntity;
-
-import java.util.Date;
-import java.util.List;
 
 public class OptimizeCompletedHistoricIncidentsQueryCmd implements Command<List<HistoricIncidentEntity>> {
 

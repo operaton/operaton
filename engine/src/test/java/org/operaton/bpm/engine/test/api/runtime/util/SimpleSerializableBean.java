@@ -45,21 +45,21 @@ public class SimpleSerializableBean implements Serializable {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + intProperty;
-    return result;
+    return prime * result + intProperty;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     SimpleSerializableBean other = (SimpleSerializableBean) obj;
-    if (intProperty != other.intProperty)
-      return false;
-    return true;
+    return intProperty == other.intProperty;
   }
 }

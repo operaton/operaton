@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.testmodel.TestModelConstants;
@@ -26,8 +28,6 @@ import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.ElementReference;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
-
-import java.util.Collection;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ELEMENT_NAME_BIRD;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;

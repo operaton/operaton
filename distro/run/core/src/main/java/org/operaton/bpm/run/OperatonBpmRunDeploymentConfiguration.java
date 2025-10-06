@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.run;
 
-import org.apache.commons.lang3.StringUtils;
-import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultDeploymentConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,13 +25,23 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+
+import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultDeploymentConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 public class OperatonBpmRunDeploymentConfiguration extends DefaultDeploymentConfiguration {
 
   private final String deploymentDir;
 
   private static final Logger log = LoggerFactory.getLogger(OperatonBpmRunDeploymentConfiguration.class);
 
-  public OperatonBpmRunDeploymentConfiguration(String deploymentDir) {
+  public OperatonBpmRunDeploymentConfiguration(String deploymentDir, OperatonBpmProperties operatonBpmProperties) {
+    super(operatonBpmProperties);
     this.deploymentDir = deploymentDir;
   }
 
@@ -59,7 +62,7 @@ public class OperatonBpmRunDeploymentConfiguration extends DefaultDeploymentConf
   protected String getNormalizedDeploymentDir() {
     String result = deploymentDir;
 
-    if(result != null && "\\".equals(File.separator)) {
+    if (result != null && "\\".equals(File.separator)) {
       result = result.replace("\\", "/");
     }
     return result;

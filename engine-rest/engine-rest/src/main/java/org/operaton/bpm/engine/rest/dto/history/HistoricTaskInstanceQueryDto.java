@@ -16,6 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
 import org.operaton.bpm.engine.impl.HistoricTaskInstanceQueryImpl;
@@ -24,24 +33,15 @@ import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
 import org.operaton.bpm.engine.rest.dto.converter.*;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response.Status;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static java.lang.Boolean.TRUE;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class HistoricTaskInstanceQueryDto extends AbstractQueryDto<HistoricTaskInstanceQuery>{
+public class HistoricTaskInstanceQueryDto extends AbstractQueryDto<HistoricTaskInstanceQuery> {
 
   private static final String SORT_BY_TASK_ID= "taskId";
   private static final String SORT_BY_ACT_INSTANCE_ID = "activityInstanceId";

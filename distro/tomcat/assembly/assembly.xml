@@ -138,5 +138,17 @@
       <source>src/tomcat/setenv.sh</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/bin/</outputDirectory>
     </file>
+    <file>
+      <source>src/tomcat/security.txt.example</source>
+      <filtered>true</filtered>
+      <lineEnding>crlf</lineEnding>
+      <outputDirectory />
+    </file>
+    <file>
+      <source>src/tomcat/SECURITY-BEST-PRACTICES.md</source>
+      <filtered>true</filtered>
+      <lineEnding>crlf</lineEnding>
+      <outputDirectory />
+    </file>
   </files>
 </assembly>

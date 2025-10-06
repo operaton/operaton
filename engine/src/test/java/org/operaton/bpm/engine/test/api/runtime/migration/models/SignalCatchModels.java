@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Thorben Lindhauer
  *
  */
-public class SignalCatchModels {
+public final class SignalCatchModels {
 
   public static final String SIGNAL_NAME = "Signal";
 
@@ -46,4 +46,7 @@ public class SignalCatchModels {
       .subProcessDone()
       .endEvent()
       .done();
+
+  private SignalCatchModels() {
+  }
 }

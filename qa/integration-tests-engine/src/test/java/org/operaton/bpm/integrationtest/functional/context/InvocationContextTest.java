@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.context;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Date;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -28,6 +26,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.EventSubscription;
@@ -39,6 +38,8 @@ import org.operaton.bpm.integrationtest.functional.context.beans.NoOpJavaDelegat
 import org.operaton.bpm.integrationtest.functional.context.beans.SignalableTask;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Checks if the process application is invoked with an invocation context.

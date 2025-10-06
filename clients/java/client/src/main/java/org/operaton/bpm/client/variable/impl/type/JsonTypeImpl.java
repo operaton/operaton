@@ -33,6 +33,7 @@ public class JsonTypeImpl extends PrimitiveValueTypeImpl {
     super(JSON_TYPE_NAME, String.class);
   }
 
+  @Override
   public JsonValue createValue(Object value, Map<String, Object> valueInfo) {
     return ClientValues.jsonValue((String) value, isTransient(valueInfo));
   }

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.dto.history;
 
 import java.util.Date;
+
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 
 public class HistoricProcessInstanceDto {

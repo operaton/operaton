@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriInfo;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.batch.Batch;
@@ -42,7 +44,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 
 public class JobRestServiceImpl extends AbstractRestProcessEngineAware
-    implements JobRestService {
+  implements JobRestService {
 
   public JobRestServiceImpl(String engineName, ObjectMapper objectMapper) {
     super(engineName, objectMapper);

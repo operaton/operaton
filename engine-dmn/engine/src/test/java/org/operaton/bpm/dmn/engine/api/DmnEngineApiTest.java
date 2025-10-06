@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
+import java.io.InputStream;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.*;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
@@ -28,16 +33,10 @@ import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.commons.utils.IoUtil;
+
 import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.emptyVariableContext;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 
@@ -76,7 +75,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailParsingIfInputStreamIsInvalid() throws IOException {
+  void shouldFailParsingIfInputStreamIsInvalid() throws Exception {
     try (var is = createInvalidInputStream()) {
       assertThatThrownBy(() -> dmnEngine.parseDecisions(is))
         .isInstanceOf(DmnTransformException.class)
@@ -102,7 +101,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailParsingIfDecisionKeyIsNull() throws IOException {
+  void shouldFailParsingIfDecisionKeyIsNull() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.parseDecision(null, is))
         .isInstanceOf(IllegalArgumentException.class)
@@ -115,7 +114,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailParsingIfDecisionKeyIsUnknown() throws IOException {
+  void shouldFailParsingIfDecisionKeyIsUnknown() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.parseDecision("unknown", is))
         .isInstanceOf(DmnTransformException.class)
@@ -137,7 +136,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailParsingDrgIfInputStreamIsInvalid() throws IOException {
+  void shouldFailParsingDrgIfInputStreamIsInvalid() throws Exception {
     try (var is = createInvalidInputStream()) {
       assertThatThrownBy(() -> dmnEngine.parseDecisionRequirementsGraph(is))
         .isInstanceOf(DmnTransformException.class)
@@ -164,7 +163,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailEvaluatingDecisionTableIfInputStreamIsInvalid() throws IOException {
+  void shouldFailEvaluatingDecisionTableIfInputStreamIsInvalid() throws Exception {
     try (var is = createInvalidInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(DECISION_KEY, is, variableMap))
         .isInstanceOf(DmnTransformException.class)
@@ -190,7 +189,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailEvaluatingDecisionTableIfDecisionKeyIsNull() throws IOException {
+  void shouldFailEvaluatingDecisionTableIfDecisionKeyIsNull() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(null, is, variableMap))
         .isInstanceOf(IllegalArgumentException.class)
@@ -213,7 +212,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailEvaluatingDecisionTableIfDecisionKeyIsUnknown() throws IOException {
+  void shouldFailEvaluatingDecisionTableIfDecisionKeyIsUnknown() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable("unknown", is, variableMap))
         .isInstanceOf(DmnTransformException.class)
@@ -252,7 +251,7 @@ class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  void shouldFailEvaluatingDecisionTableIfVariablesIsNull() throws IOException {
+  void shouldFailEvaluatingDecisionTableIfVariablesIsNull() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(DECISION_KEY, is, (Map<String, Object>) null))
         .isInstanceOf(IllegalArgumentException.class)
@@ -270,7 +269,7 @@ class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  void shouldFailEvaluatingDecisionTableIfVariableContextIsNull() throws IOException {
+  void shouldFailEvaluatingDecisionTableIfVariableContextIsNull() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(DECISION_KEY, is, (VariableContext) null))
         .isInstanceOf(IllegalArgumentException.class)
@@ -314,7 +313,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailEvaluatingIfInputStreamIsInvalid() throws IOException {
+  void shouldFailEvaluatingIfInputStreamIsInvalid() throws Exception {
     try (var is = createInvalidInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecision(DECISION_KEY, is, variableMap))
         .isInstanceOf(DmnTransformException.class)
@@ -341,7 +340,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailEvaluatingIfDecisionKeyIsNull() throws IOException {
+  void shouldFailEvaluatingIfDecisionKeyIsNull() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecision(null, is, variableMap))
         .isInstanceOf(IllegalArgumentException.class)
@@ -364,7 +363,7 @@ class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  void shouldFailEvaluatingIfDecisionKeyIsUnknown() throws IOException {
+  void shouldFailEvaluatingIfDecisionKeyIsUnknown() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecision("unknown", is, variableMap))
         .isInstanceOf(DmnTransformException.class)
@@ -404,7 +403,7 @@ class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  void shouldFailEvaluatingIfVariablesIsNull() throws IOException {
+  void shouldFailEvaluatingIfVariablesIsNull() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecision(DECISION_KEY, is, (Map<String, Object>) null))
         .isInstanceOf(IllegalArgumentException.class)
@@ -422,7 +421,7 @@ class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  void shouldFailEvaluatingIfVariableContextIsNull() throws IOException {
+  void shouldFailEvaluatingIfVariableContextIsNull() throws Exception {
     try (var is = createInputStream()) {
       assertThatThrownBy(() -> dmnEngine.evaluateDecision(DECISION_KEY, is, (VariableContext) null))
         .isInstanceOf(IllegalArgumentException.class)

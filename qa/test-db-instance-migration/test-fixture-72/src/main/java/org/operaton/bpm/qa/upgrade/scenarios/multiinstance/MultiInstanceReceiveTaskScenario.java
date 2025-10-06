@@ -44,24 +44,18 @@ public final class MultiInstanceReceiveTaskScenario {
   @DescribesScenario("initParallel")
   @Times(4)
   public static ScenarioSetup instantiateParallel() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("ParallelMultiInstanceReceiveTask", scenarioName);
-      }
-    };
+    return (engine, scenarioName) ->
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("ParallelMultiInstanceReceiveTask", scenarioName);
   }
 
   @DescribesScenario("initSequential")
   @Times(4)
   public static ScenarioSetup instantiateSequential() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        engine
-          .getRuntimeService()
-          .startProcessInstanceByKey("SequentialMultiInstanceReceiveTask", scenarioName);
-      }
-    };
+    return (engine, scenarioName) ->
+      engine
+        .getRuntimeService()
+        .startProcessInstanceByKey("SequentialMultiInstanceReceiveTask", scenarioName);
   }
 }

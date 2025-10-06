@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.identity.User;
@@ -40,6 +38,9 @@ import org.operaton.bpm.engine.test.api.identity.util.MyConstantSaltGenerator;
 import org.operaton.bpm.engine.test.api.identity.util.MyCustomPasswordEncryptor;
 import org.operaton.bpm.engine.test.api.identity.util.MyCustomPasswordEncryptorCreatingPrefixThatCannotBeResolved;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(ProcessEngineExtension.class)
 class PasswordHashingTest {
@@ -178,7 +179,7 @@ class PasswordHashingTest {
   @Test
   void plugInCustomPasswordEncryptor() {
     // given
-    setEncryptors(new MyCustomPasswordEncryptor(PASSWORD, ALGORITHM_NAME), Collections.<PasswordEncryptor>emptyList());
+    setEncryptors(new MyCustomPasswordEncryptor(PASSWORD, ALGORITHM_NAME), Collections.emptyList());
     User user = identityService.newUser(USER_NAME);
     user.setPassword(PASSWORD);
     identityService.saveUser(user);
@@ -224,14 +225,14 @@ class PasswordHashingTest {
   }
 
   protected void createUserWithEncryptor(String userName, PasswordEncryptor encryptor) {
-    setEncryptors(encryptor, Collections.<PasswordEncryptor>emptyList());
+    setEncryptors(encryptor, Collections.emptyList());
     User user = identityService.newUser(userName);
     user.setPassword(PASSWORD);
     identityService.saveUser(user);
   }
 
   protected void setDefaultEncryptor(PasswordEncryptor defaultEncryptor) {
-    setEncryptors(defaultEncryptor, Collections.<PasswordEncryptor>emptyList());
+    setEncryptors(defaultEncryptor, Collections.emptyList());
   }
 
   protected void setEncryptors(PasswordEncryptor defaultEncryptor, List<PasswordEncryptor> additionalEncryptorsForPasswordChecking) {

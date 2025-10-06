@@ -17,10 +17,10 @@
 package org.operaton.bpm.container.impl.threading.ra.outbound;
 
 import java.io.Serial;
-
-import javax.naming.Reference;
 import jakarta.resource.ResourceException;
 import jakarta.resource.spi.ConnectionManager;
+
+import javax.naming.Reference;
 
 
 /**
@@ -49,10 +49,12 @@ public class JcaExecutorServiceConnectionFactoryImpl implements JcaExecutorServi
     return (JcaExecutorServiceConnection) connectionManager.allocateConnection(mcf, null);
   }
 
+  @Override
   public Reference getReference() {
     return reference;
   }
 
+  @Override
   public void setReference(Reference reference) {
     this.reference = reference;
   }

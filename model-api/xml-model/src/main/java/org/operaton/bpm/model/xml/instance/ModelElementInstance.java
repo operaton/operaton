@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.model.xml.instance;
 
+import java.util.Collection;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-
-import java.util.Collection;
 
 /**
  * An instance of a {@link ModelElementType}

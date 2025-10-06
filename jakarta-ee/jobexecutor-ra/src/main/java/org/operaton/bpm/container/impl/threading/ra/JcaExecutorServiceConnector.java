@@ -17,10 +17,8 @@
 package org.operaton.bpm.container.impl.threading.ra;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jakarta.resource.ResourceException;
 import jakarta.resource.spi.ActivationSpec;
 import jakarta.resource.spi.BootstrapContext;
@@ -30,6 +28,7 @@ import jakarta.resource.spi.ResourceAdapter;
 import jakarta.resource.spi.ResourceAdapterInternalException;
 import jakarta.resource.spi.TransactionSupport;
 import jakarta.resource.spi.endpoint.MessageEndpointFactory;
+
 import javax.transaction.xa.XAResource;
 
 import org.operaton.bpm.container.impl.threading.ra.commonj.CommonJWorkManagerExecutorService;
@@ -44,9 +43,9 @@ import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandlerAc
  * @author Daniel Meyer
  */
 @Connector(
-    reauthenticationSupport = false,
-    transactionSupport = TransactionSupport.TransactionSupportLevel.NoTransaction
-  )
+  reauthenticationSupport = false,
+  transactionSupport = TransactionSupport.TransactionSupportLevel.NoTransaction
+)
 public class JcaExecutorServiceConnector implements ResourceAdapter {
 
   public static final String ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE = "org.operaton.bpm.engine.ProcessEngine";
@@ -110,6 +109,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
 
   // RA-Lifecycle ///////////////////////////////////////////////////
 
+  @Override
   public void start(BootstrapContext ctx) throws ResourceAdapterInternalException {
 
     try {
@@ -134,6 +134,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
     LOG.log(Level.INFO, "Operaton executor service started.");
   }
 
+  @Override
   public void stop() {
     try {
       Class.forName(ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE);
@@ -147,6 +148,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
 
   // JobHandler activation / deactivation ///////////////////////////
 
+  @Override
   public void endpointActivation(MessageEndpointFactory endpointFactory, ActivationSpec spec) throws ResourceException {
     if(jobHandlerActivation != null) {
       throw new ResourceException("The Operaton job executor can only service a single MessageEndpoint for job execution. " +
@@ -157,6 +159,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
     jobHandlerActivation = activation;
   }
 
+  @Override
   public void endpointDeactivation(MessageEndpointFactory endpointFactory, ActivationSpec spec) {
     try {
       if(jobHandlerActivation != null) {
@@ -169,6 +172,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
 
   // unsupported (No TX Support) ////////////////////////////////////////////
 
+  @Override
   public XAResource[] getXAResources(ActivationSpec[] specs) {
     LOG.finest("getXAResources()");
     return null;

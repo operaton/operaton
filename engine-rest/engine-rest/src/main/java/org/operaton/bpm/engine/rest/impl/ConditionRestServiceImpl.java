@@ -18,8 +18,9 @@ package org.operaton.bpm.engine.rest.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.rest.ConditionRestService;
@@ -30,8 +31,6 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.runtime.ConditionEvaluationBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConditionRestServiceImpl extends AbstractRestProcessEngineAware implements ConditionRestService {
 

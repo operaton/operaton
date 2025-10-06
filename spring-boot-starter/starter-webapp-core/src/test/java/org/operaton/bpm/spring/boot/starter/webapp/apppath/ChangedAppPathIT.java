@@ -16,17 +16,13 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
-import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
-
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -35,13 +31,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-    classes = { WebappTestApp.class },
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+  classes = {WebappTestApp.class},
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
-    "operaton.bpm.webapp.applicationPath=" + ChangedAppPathIT.MY_APP_PATH
+  "operaton.bpm.webapp.applicationPath=" + ChangedAppPathIT.MY_APP_PATH
 })
 class ChangedAppPathIT {
 
@@ -148,7 +148,7 @@ class ChangedAppPathIT {
   }
 
   @ParameterizedTest(name = "{index} => path={0}")
-  @CsvSource({
+  @ValueSource(strings = {
       "/lib/deps.js",
       "/app/admin/styles/user-styles.css",
       "/api/admin/plugin/adminPlugins/static/app/plugin.css"

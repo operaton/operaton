@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios770;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
 
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 @ScenarioUnderTest("CreateProcessInstanceWithVariableScenario")
 @Origin("7.7.0")

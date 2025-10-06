@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.bpmn.instance.operaton;
 
-import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstance;
-
 import java.util.Collection;
+
+import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstance;
 
 /**
  * The BPMN formProperty operaton extension element

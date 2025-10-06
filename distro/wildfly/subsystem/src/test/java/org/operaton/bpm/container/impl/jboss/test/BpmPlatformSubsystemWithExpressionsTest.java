@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.container.impl.jboss.test;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
-import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 import org.jboss.as.subsystem.test.AbstractSubsystemBaseTest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+
+import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
+import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 
 /**
  *
@@ -32,7 +32,7 @@ import org.junit.BeforeClass;
  */
 public class BpmPlatformSubsystemWithExpressionsTest extends AbstractSubsystemBaseTest {
 
-  private static Map<String, String> PROPERTIES = new HashMap<>();
+  private static final Map<String, String> PROPERTIES = new HashMap<>();
 
   static {
     PROPERTIES.put("org.operaton.bpm.jboss.process-engine.test.isDefault", "true");
@@ -60,7 +60,7 @@ public class BpmPlatformSubsystemWithExpressionsTest extends AbstractSubsystemBa
   }
 
   @Override
-  protected String getSubsystemXml() throws IOException {
+  protected String getSubsystemXml() {
     try {
       return FileUtils.readFile(JBossSubsystemXMLTest.SUBSYSTEM_WITH_ALL_OPTIONS_WITH_EXPRESSIONS);
     } catch (Exception e) {

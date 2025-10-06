@@ -16,28 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static java.util.Collections.emptyList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertThrows;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByAssignee;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCaseExecutionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCaseInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCreateTime;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByDescription;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByDueDate;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByExecutionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByFollowUpDate;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskById;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByName;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByPriority;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
-import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +34,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FilterService;
@@ -91,6 +70,13 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Joram Barrez
@@ -161,12 +147,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     assertThat(query.count()).isEqualTo(12);
     assertThat(query.list()).hasSize(12);
-    try {
-      query.singleResult();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -201,12 +182,7 @@ class TaskQueryTest {
     assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.taskId(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> taskQuery.taskId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -215,12 +191,7 @@ class TaskQueryTest {
     assertThat(query.list()).hasSize(6);
     assertThat(query.count()).isEqualTo(6);
 
-    try {
-      query.singleResult();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -231,12 +202,7 @@ class TaskQueryTest {
     assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery().taskName(null);
 
-    try {
-      taskQuery.singleResult();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(taskQuery::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -255,12 +221,7 @@ class TaskQueryTest {
     assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery().taskName(null);
 
-    try {
-      taskQuery.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -269,12 +230,7 @@ class TaskQueryTest {
     assertThat(query.list()).hasSize(6);
     assertThat(query.count()).isEqualTo(6);
 
-    try {
-      query.singleResult();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -285,12 +241,7 @@ class TaskQueryTest {
     assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.taskDescription(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.taskDescription(null)).isInstanceOf(ProcessEngineException.class);
   }
 
 
@@ -362,12 +313,7 @@ class TaskQueryTest {
     assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.taskDescriptionLike(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.taskDescriptionLike(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -376,12 +322,7 @@ class TaskQueryTest {
     assertThat(query.list()).hasSize(2);
     assertThat(query.count()).isEqualTo(2);
 
-    try {
-      query.singleResult();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     query = taskService.createTaskQuery().taskPriority(100);
     assertThat(query.singleResult()).isNull();
@@ -416,12 +357,7 @@ class TaskQueryTest {
   @Test
   void testQueryByInvalidPriority() {
     var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.taskPriority(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> taskQuery.taskPriority(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -453,12 +389,7 @@ class TaskQueryTest {
   @Test
   void testQueryByNullAssignee() {
     var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.taskAssignee(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> taskQuery.taskAssignee(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -597,12 +528,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskCandidateUser("kermit");
     assertThat(query.count()).isEqualTo(10);
     assertThat(query.list()).hasSize(10);
-    try {
-      query.singleResult();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateUser("kermit").includeAssignedTasks();
@@ -613,12 +539,7 @@ class TaskQueryTest {
     query = taskService.createTaskQuery().taskCandidateUser("fozzie");
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    try {
-      query.singleResult();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateUser("fozzie").includeAssignedTasks();
@@ -639,23 +560,13 @@ class TaskQueryTest {
   @Test
   void testQueryByNullCandidateUser() {
     var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.taskCandidateUser(null);
-      fail("");
-    } catch(ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.taskCandidateUser(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testQueryByIncludeAssignedTasksWithMissingCandidateUserOrGroup() {
     var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.includeAssignedTasks();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(taskQuery::includeAssignedTasks).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -728,12 +639,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroup("management");
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    try {
-      query.singleResult();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroup("management").includeAssignedTasks();
@@ -768,50 +674,50 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupLike("management");
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test with "shortened" group name for like query
     query = taskService.createTaskQuery().taskCandidateGroupLike("mana%");
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test with "shortened" group name for like query (different part)
     query = taskService.createTaskQuery().taskCandidateGroupLike("%ment");
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test management candidates group with assigned tasks included
     query = taskService.createTaskQuery().taskCandidateGroupLike("management").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
     assertThat(query.list()).hasSize(3);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test with "shortened" group name for like query (assigned tasks included)
     query = taskService.createTaskQuery().taskCandidateGroupLike("mana%").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
     assertThat(query.list()).hasSize(3);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test with "shortened" group name for like query (different part, assigned tasks included)
     query = taskService.createTaskQuery().taskCandidateGroupLike("%ment").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
     assertThat(query.list()).hasSize(3);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test query that matches tasks with the "management" the "accountancy" candidate groups
     // accountancy group is candidate for 3 tasks, one of them is already assigned
     query = taskService.createTaskQuery().taskCandidateGroupLike("%an%");
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test query that matches tasks with the "management" the "accountancy" candidate groups (assigned tasks included)
     query = taskService.createTaskQuery().taskCandidateGroupLike("%an%").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(5);
     assertThat(query.list()).hasSize(5);
-    assertThrows(ProcessEngineException.class, query::singleResult);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -855,12 +761,7 @@ class TaskQueryTest {
   @Test
   void testQueryByNullCandidateGroup() {
     var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.taskCandidateGroup(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> taskQuery.taskCandidateGroup(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -869,12 +770,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups);
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
-    try {
-      query.singleResult();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).includeAssignedTasks();
@@ -900,12 +796,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    try {
-      query.singleResult();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup).includeAssignedTasks();
@@ -917,12 +808,7 @@ class TaskQueryTest {
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
-    try {
-      query.singleResult();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup).includeAssignedTasks();
@@ -952,19 +838,9 @@ class TaskQueryTest {
   @Test
   void testQueryByNullCandidateGroupIn() {
     var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.taskCandidateGroupIn(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> taskQuery.taskCandidateGroupIn(null)).isInstanceOf(ProcessEngineException.class);
     List<String> emptyGroupIds = emptyList();
-    try {
-      taskQuery.taskCandidateGroupIn(emptyGroupIds);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> taskQuery.taskCandidateGroupIn(emptyGroupIds)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1052,7 +928,7 @@ class TaskQueryTest {
   }
 
   @Test
-  void testCreateTimeCombinations() throws ParseException {
+  void testCreateTimeCombinations() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
 
     // Exact matching of createTime, should result in 6 tasks
@@ -1168,6 +1044,89 @@ class TaskQueryTest {
 
     count = taskService.createTaskQuery().taskDefinitionKey("unexistingKey").taskDefinitionKeyIn("taskKey1").count();
     assertThat(count).isZero();
+  }
+
+  @Test
+  @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
+  void testTaskDefinitionKeyNotInNoKeysProvided() {
+
+    // Given
+    // Start process instance, 2 tasks will be available with:
+    // - process definition key "taskDefinitionKeyProcess"
+    // - task definition keys "taskKey_1" & "taskKey_123"
+    runtimeService.startProcessInstanceByKey("taskDefinitionKeyProcess");
+
+    // When
+    var tasks = taskService.createTaskQuery()
+            .processDefinitionKey("taskDefinitionKeyProcess")
+            .taskDefinitionKeyNotIn()
+            .list();
+    // Then
+    assertThat(tasks)
+            .extracting(Task::getTaskDefinitionKey)
+            .containsExactly("taskKey_1", "taskKey_123");
+  }
+
+  @Test
+  @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
+  void testTaskDefinitionKeyNotInOneKeyProvided() {
+
+    // Given
+    // Start process instance, 2 tasks will be available with:
+    // - process definition key "taskDefinitionKeyProcess"
+    // - task definition keys "taskKey_1" & "taskKey_123"
+    runtimeService.startProcessInstanceByKey("taskDefinitionKeyProcess");
+
+    // When
+    var tasks = taskService.createTaskQuery()
+            .processDefinitionKey("taskDefinitionKeyProcess")
+            .taskDefinitionKeyNotIn("taskKey_1")
+            .list();
+    // Then
+    assertThat(tasks)
+            .extracting(Task::getTaskDefinitionKey)
+            .containsExactly("taskKey_123");
+  }
+
+  @Test
+  @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
+  void testTaskDefinitionKeyNotInAllKeysProvided() {
+
+    // Given
+    // Start process instance, 2 tasks will be available with:
+    // - process definition key "taskDefinitionKeyProcess"
+    // - task definition keys "taskKey_1" & "taskKey_123"
+    runtimeService.startProcessInstanceByKey("taskDefinitionKeyProcess");
+
+    // When
+    var tasks = taskService.createTaskQuery()
+            .processDefinitionKey("taskDefinitionKeyProcess")
+            .taskDefinitionKeyNotIn("taskKey_1", "taskKey_123")
+            .list();
+    // Then
+    assertThat(tasks)
+            .isEmpty();
+  }
+
+  @Test
+  @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
+  void testTaskDefinitionKeyNotInInvalidKeyProvided() {
+
+    // Given
+    // Start process instance, 2 tasks will be available with:
+    // - process definition key "taskDefinitionKeyProcess"
+    // - task definition keys "taskKey_1" & "taskKey_123"
+    runtimeService.startProcessInstanceByKey("taskDefinitionKeyProcess");
+
+    // When
+    var tasks = taskService.createTaskQuery()
+            .processDefinitionKey("taskDefinitionKeyProcess")
+            .taskDefinitionKeyNotIn("I do not exist", "I don't exist either")
+            .list();
+    // Then
+    assertThat(tasks)
+            .extracting(Task::getTaskDefinitionKey)
+            .containsExactly("taskKey_1", "taskKey_123");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1316,10 +1275,7 @@ class TaskQueryTest {
     var taskQuery = taskService.createTaskQuery();
 
     // test with null value
-    try {
-      taskQuery.taskVariableValueLike("stringVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
+    assertThatThrownBy(() -> taskQuery.taskVariableValueLike("stringVar", null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
@@ -1348,10 +1304,7 @@ class TaskQueryTest {
     var taskQuery = taskService.createTaskQuery();
 
     // test with null value
-    try {
-      taskQuery.taskVariableValueLike("stringVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
+    assertThatThrownBy(() -> taskQuery.taskVariableValueLike("stringVar", null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
@@ -1436,42 +1389,18 @@ class TaskQueryTest {
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "aa").count()).isZero();
 
-    taskQuery = taskService.createTaskQuery();
+    var taskQuery2 = taskService.createTaskQuery();
     // test with null value
-    try {
-      taskQuery.taskVariableValueGreaterThan("nullVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-      taskQuery.taskVariableValueGreaterThanOrEquals("nullVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.taskVariableValueLessThan("nullVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.taskVariableValueLessThanOrEquals("nullVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
+    assertThatThrownBy(() -> taskQuery2.taskVariableValueGreaterThan("nullVar", null)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.taskVariableValueGreaterThanOrEquals("nullVar", null)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.taskVariableValueLessThan("nullVar", null)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.taskVariableValueLessThanOrEquals("nullVar", null)).isInstanceOf(ProcessEngineException.class);
 
     // test with boolean value
-    try {
-      taskQuery.taskVariableValueGreaterThan("nullVar", true);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.taskVariableValueGreaterThanOrEquals("nullVar", false);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.taskVariableValueLessThan("nullVar", true);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.taskVariableValueLessThanOrEquals("nullVar", false);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
+    assertThatThrownBy(() -> taskQuery2.taskVariableValueGreaterThan("nullVar", true)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.taskVariableValueGreaterThanOrEquals("nullVar", false)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.taskVariableValueLessThan("nullVar", true)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.taskVariableValueLessThanOrEquals("nullVar", false)).isInstanceOf(ProcessEngineException.class);
 
     // test non existing variable
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("nonExisting", 123).count()).isZero();
@@ -1618,10 +1547,7 @@ class TaskQueryTest {
     var taskQuery = taskService.createTaskQuery();
 
     // test with null value
-    try {
-      taskQuery.processVariableValueLike("stringVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
+    assertThatThrownBy(() -> taskQuery.processVariableValueLike("stringVar", null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
@@ -1646,10 +1572,7 @@ class TaskQueryTest {
     var taskQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase();
 
     // test with null value
-    try {
-      taskQuery.processVariableValueLike("stringVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
+    assertThatThrownBy(() -> taskQuery.processVariableValueLike("stringVar", null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
@@ -1785,42 +1708,18 @@ class TaskQueryTest {
     assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
     assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "aa").count()).isZero();
 
-    taskQuery = taskService.createTaskQuery();
+    var taskQuery2 = taskService.createTaskQuery();
     // test with null value
-    try {
-      taskQuery.processVariableValueGreaterThan("nullVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.processVariableValueGreaterThanOrEquals("nullVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.processVariableValueLessThan("nullVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.processVariableValueLessThanOrEquals("nullVar", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
+    assertThatThrownBy(() -> taskQuery2.processVariableValueGreaterThan("nullVar", null)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.processVariableValueGreaterThanOrEquals("nullVar", null)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.processVariableValueLessThan("nullVar", null)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.processVariableValueLessThanOrEquals("nullVar", null)).isInstanceOf(ProcessEngineException.class);
 
     // test with boolean value
-    try {
-      taskQuery.processVariableValueGreaterThan("nullVar", true);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.processVariableValueGreaterThanOrEquals("nullVar", false);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.processVariableValueLessThan("nullVar", true);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
-    try {
-  	  taskQuery.processVariableValueLessThanOrEquals("nullVar", false);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
+    assertThatThrownBy(() -> taskQuery2.processVariableValueGreaterThan("nullVar", true)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.processVariableValueGreaterThanOrEquals("nullVar", false)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.processVariableValueLessThan("nullVar", true)).isInstanceOf(ProcessEngineException.class);
+    assertThatThrownBy(() -> taskQuery2.processVariableValueLessThanOrEquals("nullVar", false)).isInstanceOf(ProcessEngineException.class);
 
     // test non existing variable
     assertThat(taskQuery.processVariableValueLessThanOrEquals("nonExisting", 123).count()).isZero();
@@ -2233,7 +2132,7 @@ class TaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  void testTaskDueDateCombinations() throws ParseException {
+  void testTaskDueDateCombinations() throws Exception {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -2362,7 +2261,7 @@ class TaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  void testFollowUpDateCombinations() throws ParseException {
+  void testFollowUpDateCombinations() throws Exception {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -2642,12 +2541,7 @@ class TaskQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseDefinitionId(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> query.caseDefinitionId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2677,12 +2571,7 @@ class TaskQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseDefinitionKey(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> query.caseDefinitionKey(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2714,12 +2603,7 @@ class TaskQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseDefinitionName(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> query.caseDefinitionName(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn", "org/operaton/bpm/engine/test/api/repository/three_.cmmn"})
@@ -2755,12 +2639,7 @@ class TaskQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseDefinitionNameLike(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> query.caseDefinitionNameLike(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2829,12 +2708,7 @@ class TaskQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseInstanceId(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> query.caseInstanceId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2864,12 +2738,7 @@ class TaskQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseInstanceBusinessKey(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> query.caseInstanceBusinessKey(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2907,12 +2776,7 @@ class TaskQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseInstanceBusinessKeyLike(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> query.caseInstanceBusinessKeyLike(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -2941,12 +2805,7 @@ class TaskQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseExecutionId(null);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // OK
-    }
+    assertThatThrownBy(() -> query.caseExecutionId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3156,12 +3015,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueEquals("aByteArrayValue", bytes);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3182,12 +3036,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueEquals("aSerializableValue", serializable);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3430,12 +3279,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueNotEquals("aSerializableValue", serializable);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3453,12 +3297,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueNotEquals("aByteArrayValue", bytes);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3473,12 +3312,7 @@ class TaskQueryTest {
 
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueGreaterThan("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueGreaterThan("aNullValue", null)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -3512,12 +3346,7 @@ class TaskQueryTest {
 
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueGreaterThan("aBooleanValue", false);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueGreaterThan("aBooleanValue", false)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -3630,12 +3459,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueGreaterThan("aByteArrayValue", bytes);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3656,12 +3480,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueGreaterThan("aSerializableValue", serializable);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -3695,12 +3514,7 @@ class TaskQueryTest {
 
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueGreaterThanOrEquals("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueGreaterThanOrEquals("aNullValue", null)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -3740,12 +3554,7 @@ class TaskQueryTest {
 
     TaskQuery taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueGreaterThanOrEquals("aBooleanValue", false);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueGreaterThanOrEquals("aBooleanValue", false)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -3888,12 +3697,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueGreaterThanOrEquals("aByteArrayValue", bytes);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3914,12 +3718,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueGreaterThanOrEquals("aSerializableValue", serializable);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3952,12 +3751,7 @@ class TaskQueryTest {
 
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueLessThan("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueLessThan("aNullValue", null)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -3991,12 +3785,7 @@ class TaskQueryTest {
 
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueLessThan("aBooleanValue", false);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueLessThan("aBooleanValue", false)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -4109,12 +3898,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueLessThan("aByteArrayValue", bytes);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -4135,12 +3919,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueLessThan("aSerializableValue", serializable);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -4172,12 +3951,7 @@ class TaskQueryTest {
 
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueLessThanOrEquals("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueLessThanOrEquals("aNullValue", null)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -4217,12 +3991,7 @@ class TaskQueryTest {
 
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueLessThanOrEquals("aBooleanValue", false);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueLessThanOrEquals("aBooleanValue", false)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -4365,12 +4134,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueLessThanOrEquals("aByteArrayValue", bytes);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -4391,12 +4155,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueLessThanOrEquals("aSerializableValue", serializable);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -4428,12 +4187,7 @@ class TaskQueryTest {
 
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueLike("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueLike("aNullValue", null)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -4449,12 +4203,7 @@ class TaskQueryTest {
 
     var taskQuery = taskService.createTaskQuery();
 
-    try {
-      taskQuery.caseInstanceVariableValueNotLike("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.caseInstanceVariableValueNotLike("aNullValue", null)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -5184,75 +4933,25 @@ class TaskQueryTest {
   @Test
   void testQueryResultOrderingWithInvalidParameters() {
     var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.orderByProcessVariable(null, ValueType.STRING);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByProcessVariable(null, ValueType.STRING)).isInstanceOf(NullValueException.class);
 
-    try {
-      taskQuery.orderByProcessVariable("var", null);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByProcessVariable("var", null)).isInstanceOf(NullValueException.class);
 
-    try {
-      taskQuery.orderByExecutionVariable(null, ValueType.STRING);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByExecutionVariable(null, ValueType.STRING)).isInstanceOf(NullValueException.class);
 
-    try {
-      taskQuery.orderByExecutionVariable("var", null);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByExecutionVariable("var", null)).isInstanceOf(NullValueException.class);
 
-    try {
-      taskQuery.orderByTaskVariable(null, ValueType.STRING);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByTaskVariable(null, ValueType.STRING)).isInstanceOf(NullValueException.class);
 
-    try {
-      taskQuery.orderByTaskVariable("var", null);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByTaskVariable("var", null)).isInstanceOf(NullValueException.class);
 
-    try {
-      taskQuery.orderByCaseInstanceVariable(null, ValueType.STRING);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByCaseInstanceVariable(null, ValueType.STRING)).isInstanceOf(NullValueException.class);
 
-    try {
-      taskQuery.orderByCaseInstanceVariable("var", null);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByCaseInstanceVariable("var", null)).isInstanceOf(NullValueException.class);
 
-    try {
-      taskQuery.orderByCaseExecutionVariable(null, ValueType.STRING);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByCaseExecutionVariable(null, ValueType.STRING)).isInstanceOf(NullValueException.class);
 
-    try {
-      taskQuery.orderByCaseExecutionVariable("var", null);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> taskQuery.orderByCaseExecutionVariable("var", null)).isInstanceOf(NullValueException.class);
   }
 
   protected void verifyTasksSortedByProcessInstanceId(List<ProcessInstance> expectedProcessInstances,
@@ -5510,6 +5209,41 @@ class TaskQueryTest {
   }
 
   @Test
+  void testExtendTaskQueryList_TaskDefinitionKeyNotIn() {
+    // given
+    var taskDefinitionKey = "someKey";
+    var query = taskService.createTaskQuery()
+        .taskDefinitionKeyNotIn(taskDefinitionKey);
+
+    var extendingQuery = taskService.createTaskQuery();
+
+    // when
+    var result = ((TaskQueryImpl)query).extend(extendingQuery);
+
+    // then
+    assertThat(((TaskQueryImpl) result).getKeyNotIn())
+            .containsExactly(taskDefinitionKey);
+  }
+
+  @Test
+  void testExtendingTaskQueryList_TaskDefinitionKeyNotIn() {
+    // given
+    var taskDefinitionKey = "someKey";
+    var query = taskService.createTaskQuery();
+
+    var extendingQuery = taskService
+        .createTaskQuery()
+        .taskDefinitionKeyNotIn(taskDefinitionKey);
+
+    // when
+    var result = ((TaskQueryImpl)query).extend(extendingQuery);
+
+    // then
+    assertThat(((TaskQueryImpl) result).getKeyNotIn())
+            .containsExactly(taskDefinitionKey);
+  }
+
+  @Test
   void testQueryWithCandidateUsers() {
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -5567,12 +5301,7 @@ class TaskQueryTest {
     var taskQuery = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId());
 
-    try{
-      taskQuery.includeAssignedTasks();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::includeAssignedTasks).isInstanceOf(ProcessEngineException.class);
   }
 
 
@@ -5592,12 +5321,7 @@ class TaskQueryTest {
     var taskQuery = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId());
 
-    try{
-       taskQuery.includeAssignedTasks();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(taskQuery::includeAssignedTasks).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

@@ -17,15 +17,15 @@
 package org.operaton.bpm.engine.rest.security.auth.impl;
 
 import java.util.Base64;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.core.HttpHeaders;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.impl.AuthLogger;
 import org.operaton.bpm.engine.rest.impl.RestLogger;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationProvider;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.ws.rs.core.HttpHeaders;
 
 /**
  * Implementation of the {@link AuthenticationProvider} interface that performs

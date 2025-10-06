@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import com.google.gson.JsonObject;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cmd.AbstractSetJobDefinitionStateCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,7 +25,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.TimerChangeJobDefinitionSuspensi
 import org.operaton.bpm.engine.impl.management.UpdateJobDefinitionSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
-import com.google.gson.JsonObject;
 
 /**
  * @author roman.smirnov

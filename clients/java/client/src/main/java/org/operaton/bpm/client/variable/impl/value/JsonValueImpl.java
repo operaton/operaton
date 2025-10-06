@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.client.variable.impl.value;
 
-import static org.operaton.bpm.client.variable.ClientValues.JSON;
+import java.io.Serial;
 
 import org.operaton.bpm.client.variable.value.JsonValue;
-
-import java.io.Serial;
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl;
+
+import static org.operaton.bpm.client.variable.ClientValues.JSON;
 
 public class JsonValueImpl extends PrimitiveTypeValueImpl<String> implements JsonValue {
 

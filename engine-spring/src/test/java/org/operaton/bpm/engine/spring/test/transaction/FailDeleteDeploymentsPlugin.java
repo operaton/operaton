@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-
-import java.util.List;
 
 /**
  * @author Svetlana Dorokhova

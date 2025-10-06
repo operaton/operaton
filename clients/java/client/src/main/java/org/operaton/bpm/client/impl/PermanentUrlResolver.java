@@ -33,6 +33,7 @@ public class PermanentUrlResolver implements UrlResolver {
     this.baseUrl = baseUrl;
   }
 
+  @Override
   public String getBaseUrl() {
     return this.baseUrl;
   }

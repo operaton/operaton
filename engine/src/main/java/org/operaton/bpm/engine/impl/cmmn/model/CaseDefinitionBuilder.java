@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.model;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.StageActivityBehavior;

@@ -19,11 +19,6 @@ package org.operaton.bpm.container.impl.jboss.extension.handler;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
-import org.operaton.bpm.container.impl.jboss.service.MscRuntimeContainerJobExecutor;
-import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
-import org.operaton.bpm.container.impl.metadata.PropertyHelper;
-import org.operaton.bpm.engine.impl.jobexecutor.RuntimeContainerJobExecutor;
 import org.jboss.as.controller.AbstractAddStepHandler;
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
@@ -34,6 +29,12 @@ import org.jboss.dmr.Property;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController.Mode;
 import org.jboss.msc.service.ServiceName;
+
+import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
+import org.operaton.bpm.container.impl.jboss.service.MscRuntimeContainerJobExecutor;
+import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
+import org.operaton.bpm.container.impl.metadata.PropertyHelper;
+import org.operaton.bpm.engine.impl.jobexecutor.RuntimeContainerJobExecutor;
 
 
 /**

@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.models;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MultiInstanceProcessModels {
+public final class MultiInstanceProcessModels {
 
   public static final BpmnModelInstance PAR_MI_ONE_TASK_PROCESS =
       modify(ProcessModels.ONE_TASK_PROCESS)
@@ -65,5 +65,8 @@ public class MultiInstanceProcessModels {
         .sequential()
         .cardinality("3")
         .done();
+
+  private MultiInstanceProcessModels() {
+  }
 
 }

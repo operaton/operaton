@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.engine.rest.application;
 
+import java.util.HashSet;
+import java.util.Set;
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
+
 import com.fasterxml.jackson.jakarta.rs.base.JsonMappingExceptionMapper;
 import com.fasterxml.jackson.jakarta.rs.base.JsonParseExceptionMapper;
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
+
 import org.operaton.bpm.engine.rest.exception.ExceptionHandler;
 import org.operaton.bpm.engine.rest.exception.ProcessEngineExceptionHandler;
 import org.operaton.bpm.engine.rest.exception.RestExceptionHandler;
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
-
-import jakarta.ws.rs.ApplicationPath;
-import jakarta.ws.rs.core.Application;
-import java.util.HashSet;
-import java.util.Set;
 
 @ApplicationPath("/")
 public class TestCustomResourceApplication extends Application {

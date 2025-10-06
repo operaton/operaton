@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.client.spring.impl.subscription.util;
 
+import org.springframework.beans.factory.config.BeanDefinition;
+
 import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.operaton.bpm.client.spring.exception.NotInitializedException;
 import org.operaton.bpm.client.spring.exception.NotOpenedException;
 import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
-import org.springframework.beans.factory.config.BeanDefinition;
 
 public class SubscriptionLoggerUtil extends LoggerUtil {
 

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.qa.upgrade.gson.batch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Tassilo Weidner
@@ -39,24 +39,22 @@ public final class SetExternalTaskRetriesBatchScenario {
 
   @DescribesScenario("initSetExternalTaskRetriesBatch")
   public static ScenarioSetup initSetExternalTaskRetriesBatch() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        List<String> externalTaskIds = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-          String processInstanceId = engine.getRuntimeService()
-            .startProcessInstanceByKey("externalTaskProcess_710")
-            .getId();
+    return (engine, scenarioName) -> {
+      List<String> externalTaskIds = new ArrayList<>();
+      for (int i = 0; i < 10; i++) {
+        String processInstanceId = engine.getRuntimeService()
+          .startProcessInstanceByKey("externalTaskProcess_710")
+          .getId();
 
-          String externalTaskId = engine.getExternalTaskService().createExternalTaskQuery()
-            .processInstanceId(processInstanceId)
-            .singleResult()
-            .getId();
+        String externalTaskId = engine.getExternalTaskService().createExternalTaskQuery()
+          .processInstanceId(processInstanceId)
+          .singleResult()
+          .getId();
 
-          externalTaskIds.add(externalTaskId);
-        }
-
-        engine.getExternalTaskService().setRetriesAsync(externalTaskIds, null, 22);
+        externalTaskIds.add(externalTaskId);
       }
+
+      engine.getExternalTaskService().setRetriesAsync(externalTaskIds, null, 22);
     };
   }
 }

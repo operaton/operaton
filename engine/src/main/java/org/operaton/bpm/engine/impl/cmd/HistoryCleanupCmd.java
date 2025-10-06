@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -94,7 +95,7 @@ public class HistoryCleanupCmd implements Command<Job> {
 
     writeUserOperationLog(context);
 
-    return !historyCleanupJobs.isEmpty() ? historyCleanupJobs.get(0) : null;
+    return historyCleanupJobs.isEmpty() ? null : historyCleanupJobs.get(0);
   }
 
   protected List<Job> getHistoryCleanupJobs() {

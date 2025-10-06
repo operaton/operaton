@@ -30,30 +30,36 @@ public class TransformExpressionCacheKey {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((expression == null) ? 0 : expression.hashCode());
-    result = prime * result + ((inputName == null) ? 0 : inputName.hashCode());
-    return result;
+    result = prime * result + (expression == null ? 0 : expression.hashCode());
+    return prime * result + (inputName == null ? 0 : inputName.hashCode());
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     TransformExpressionCacheKey other = (TransformExpressionCacheKey) obj;
     if (expression == null) {
-      if (other.expression != null)
+      if (other.expression != null) {
         return false;
-    } else if (!expression.equals(other.expression))
+      }
+    } else if (!expression.equals(other.expression)) {
       return false;
+    }
     if (inputName == null) {
-      if (other.inputName != null)
+      if (other.inputName != null) {
         return false;
-    } else if (!inputName.equals(other.inputName))
+      }
+    } else if (!inputName.equals(other.inputName)) {
       return false;
+    }
     return true;
   }
 

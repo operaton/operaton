@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.engine.rest.dto.task;
 
+import java.util.*;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.*;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
@@ -29,16 +37,8 @@ import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
+
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response.Status;
-import java.util.*;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static java.lang.Boolean.TRUE;
 
 @JsonInclude(Include.NON_NULL)
@@ -117,6 +117,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
   private Boolean includeAssignedTasks;
   private String taskDefinitionKey;
   private String[] taskDefinitionKeyIn;
+  private String[] taskDefinitionKeyNotIn;
   private String taskDefinitionKeyLike;
   private String taskId;
   private String[] taskIdIn;
@@ -194,6 +195,10 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
   private List<TaskQueryDto> orQueries;
 
   private Boolean withCommentAttachmentInfo;
+
+  private Boolean withTaskVariablesInReturn;
+
+  private Boolean withTaskLocalVariablesInReturn;
 
   public TaskQueryDto() {
 
@@ -386,6 +391,11 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
   @OperatonQueryParam(value = "taskDefinitionKeyIn", converter= StringArrayConverter.class)
   public void setTaskDefinitionKeyIn(String[] taskDefinitionKeyIn) {
     this.taskDefinitionKeyIn = taskDefinitionKeyIn;
+  }
+
+  @OperatonQueryParam(value = "taskDefinitionKeyNotIn", converter= StringArrayConverter.class)
+  public void setTaskDefinitionKeyNotIn(String[] taskDefinitionKeyNotIn) {
+    this.taskDefinitionKeyNotIn = taskDefinitionKeyNotIn;
   }
 
   @OperatonQueryParam("taskDefinitionKeyLike")
@@ -707,6 +717,16 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.withCommentAttachmentInfo = withCommentAttachmentInfo;
   }
 
+  @OperatonQueryParam(value = "withTaskVariablesInReturn", converter = BooleanConverter.class)
+  public void setWithTaskVariablesInReturn(Boolean withTaskVariablesInReturn) {
+    this.withTaskVariablesInReturn = withTaskVariablesInReturn;
+  }
+
+  @OperatonQueryParam(value = "withTaskLocalVariablesInReturn", converter = BooleanConverter.class)
+  public void setWithTaskLocalVariablesInReturn(Boolean withTaskLocalVariablesInReturn) {
+    this.withTaskLocalVariablesInReturn = withTaskLocalVariablesInReturn;
+  }
+
   @Override
   protected boolean isValidSortByValue(String value) {
     return VALID_SORT_BY_VALUES.contains(value);
@@ -839,6 +859,10 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
 
   public String[] getTaskDefinitionKeyIn() {
     return taskDefinitionKeyIn;
+  }
+
+  public String[] getTaskDefinitionKeyNotIn() {
+    return taskDefinitionKeyNotIn;
   }
 
   public String getTaskDefinitionKey() {
@@ -1083,6 +1107,14 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
 
   public Boolean getWithCommentAttachmentInfo() { return withCommentAttachmentInfo;}
 
+  public Boolean getWithTaskVariablesInReturn() {
+    return withTaskVariablesInReturn;
+  }
+
+  public Boolean getWithTaskLocalVariablesInReturn() {
+    return withTaskLocalVariablesInReturn;
+  }
+
   @Override
   protected void applyFilters(TaskQuery query) {
     if (orQueries != null) {
@@ -1194,6 +1226,9 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     }
     if (taskDefinitionKeyIn != null && taskDefinitionKeyIn.length > 0) {
       query.taskDefinitionKeyIn(taskDefinitionKeyIn);
+    }
+    if (taskDefinitionKeyNotIn != null && taskDefinitionKeyNotIn.length > 0) {
+      query.taskDefinitionKeyNotIn(taskDefinitionKeyNotIn);
     }
     if (taskDefinitionKey != null) {
       query.taskDefinitionKey(taskDefinitionKey);
@@ -1601,6 +1636,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     dto.assigneeLike = taskQuery.getAssigneeLike();
     dto.taskDefinitionKey = taskQuery.getKey();
     dto.taskDefinitionKeyIn = taskQuery.getKeys();
+    dto.taskDefinitionKeyNotIn = taskQuery.getKeyNotIn();
     dto.taskDefinitionKeyLike = taskQuery.getKeyLike();
     dto.description = taskQuery.getDescription();
     dto.descriptionLike = taskQuery.getDescriptionLike();

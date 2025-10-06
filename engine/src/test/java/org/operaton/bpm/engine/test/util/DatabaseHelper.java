@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-
 import java.sql.SQLException;
 
-public class DatabaseHelper {
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+
+public final class DatabaseHelper {
 
   public static Integer getTransactionIsolationLevel(ProcessEngineConfigurationImpl processEngineConfiguration) {
     final Integer[] transactionIsolation = new Integer[1];
@@ -37,6 +37,9 @@ public class DatabaseHelper {
 
   public static String getDatabaseType(ProcessEngineConfigurationImpl processEngineConfiguration) {
     return processEngineConfiguration.getDbSqlSessionFactory().getDatabaseType();
+  }
+
+  private DatabaseHelper() {
   }
 
 }

@@ -19,11 +19,12 @@ package org.operaton.bpm.engine.test.standalone.pvm;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
-import org.slf4j.Logger;
 
 
 /**
@@ -38,7 +39,7 @@ public class EventCollector implements ExecutionListener {
   @Override
   public void notify(DelegateExecution execution) throws Exception {
     PvmExecutionImpl executionImpl = (PvmExecutionImpl) execution;
-    LOG.debug("collecting event: "+execution.getEventName()+" on "+executionImpl.getEventSource());
+    LOG.debug("collecting event: {} on {}", execution.getEventName(), executionImpl.getEventSource());
     events.add(execution.getEventName()+" on "+executionImpl.getEventSource());
   }
 

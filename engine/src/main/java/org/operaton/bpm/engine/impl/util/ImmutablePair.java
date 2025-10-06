@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.util;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map.Entry;
-
 import java.util.Objects;
 
 /**

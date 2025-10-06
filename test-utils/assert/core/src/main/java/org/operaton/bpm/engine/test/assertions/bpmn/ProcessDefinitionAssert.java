@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import org.assertj.core.api.Assertions;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.dto.task;
 
-import org.operaton.bpm.engine.rest.dto.VariableValueDto;
-
 import java.util.Map;
+
+import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 
 public class CompleteTaskDto {
 

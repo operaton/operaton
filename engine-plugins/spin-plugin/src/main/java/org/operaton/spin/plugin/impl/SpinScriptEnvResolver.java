@@ -27,6 +27,7 @@ import org.operaton.spin.scripting.SpinScriptEnv;
  */
 public class SpinScriptEnvResolver implements ScriptEnvResolver {
 
+  @Override
   public String[] resolve(String language) {
     String envScript = SpinScriptEnv.get(language);
     if(envScript != null) {

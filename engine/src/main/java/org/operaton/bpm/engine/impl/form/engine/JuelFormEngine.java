@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.form.engine;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.form.FormData;
@@ -32,6 +29,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 /**

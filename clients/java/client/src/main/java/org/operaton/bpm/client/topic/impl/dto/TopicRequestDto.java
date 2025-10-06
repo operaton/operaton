@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.topic.impl.dto;
 
-import org.operaton.bpm.client.topic.TopicSubscription;
-
 import java.util.List;
 import java.util.Map;
+
+import org.operaton.bpm.client.topic.TopicSubscription;
 
 /**
  * @author Tassilo Weidner

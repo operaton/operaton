@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import org.operaton.bpm.webapp.impl.engine.ProcessEnginesFilter;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.StringUtils;
+
+import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
+import org.operaton.bpm.webapp.impl.engine.ProcessEnginesFilter;
 
 public class ResourceLoadingProcessEnginesFilter extends ProcessEnginesFilter implements ResourceLoaderDependingFilter {
 
@@ -110,8 +111,6 @@ public class ResourceLoadingProcessEnginesFilter extends ProcessEnginesFilter im
    */
   protected String trimChar(String input, char charachter) {
     input = StringUtils.trimLeadingCharacter(input, charachter);
-    input = StringUtils.trimTrailingCharacter(input, charachter);
-
-    return input;
+    return StringUtils.trimTrailingCharacter(input, charachter);
   }
 }

@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.cdi.impl.ManagedJobExecutor;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.annotation.Resource;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.enterprise.concurrent.ManagedExecutorService;
+
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.cdi.impl.ManagedJobExecutor;
 
 @Startup
 @Singleton

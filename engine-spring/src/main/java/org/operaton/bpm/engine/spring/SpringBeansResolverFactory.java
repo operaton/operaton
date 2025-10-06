@@ -21,11 +21,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.context.ApplicationContext;
+
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.scripting.engine.Resolver;
 import org.operaton.bpm.engine.impl.scripting.engine.ResolverFactory;
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.context.ApplicationContext;
 
 /**
  * <p>

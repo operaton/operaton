@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+import java.util.Optional;
 
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +28,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -37,12 +38,15 @@ import static org.mockito.Mockito.mock;
 class DefaultDatasourceConfigurationTest {
 
   @Mock
-  private PlatformTransactionManager platformTransactionManager;
+  PlatformTransactionManager platformTransactionManager;
+
+  @Mock
+  Optional<PlatformTransactionManager> operatonTransactionManager;
 
   @InjectMocks
-  private DefaultDatasourceConfiguration defaultDatasourceConfiguration;
+  DefaultDatasourceConfiguration defaultDatasourceConfiguration;
 
-  private SpringProcessEngineConfiguration configuration;
+  SpringProcessEngineConfiguration configuration;
 
   @BeforeEach
   void before() {

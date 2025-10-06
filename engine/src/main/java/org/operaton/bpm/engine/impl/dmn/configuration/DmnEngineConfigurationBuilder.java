@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.dmn.configuration;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.List;
 
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationListener;
@@ -33,6 +31,8 @@ import org.operaton.bpm.engine.impl.history.producer.DmnHistoryEventProducer;
 import org.operaton.bpm.engine.impl.metrics.dmn.MetricsDecisionEvaluationListener;
 import org.operaton.bpm.model.dmn.instance.Decision;
 import org.operaton.bpm.model.dmn.instance.Definitions;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Modify the given DMN engine configuration so that the DMN engine can be used

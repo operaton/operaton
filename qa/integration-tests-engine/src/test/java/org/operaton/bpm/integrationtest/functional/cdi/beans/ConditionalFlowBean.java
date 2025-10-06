@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi.beans;
 
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 /**
  * @author Thorben Lindhauer

@@ -26,6 +26,6 @@ public enum VariableTransition {
 
   update,
 
-  delete;
+  delete
 
 }

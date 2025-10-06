@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.impl;
 
+import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
@@ -35,8 +36,6 @@ import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-
-import java.util.List;
 
 /**
  * Makes the managed process engine and the provided services available for injection

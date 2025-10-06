@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.core;
 
+import java.text.MessageFormat;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
 import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
-import static org.operaton.bpm.engine.impl.core.variable.VariableUtil.ERROR_MSG;
 
-import java.text.MessageFormat;
+import static org.operaton.bpm.engine.impl.core.variable.VariableUtil.ERROR_MSG;
 
 /**
  * @author Daniel Meyer
@@ -42,7 +43,7 @@ public class CoreLogger extends ProcessEngineLogger {
   /**
    * @deprecated Use {@link #debugMappingValueFromInnerScopeToOuterScope(Object, AbstractVariableScope, String, AbstractVariableScope)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-4")
+  @Deprecated(forRemoval = true, since = "1.0")
   public void debugMappingValuefromInnerScopeToOuterScope(Object value, AbstractVariableScope innerScope, String name, AbstractVariableScope outerScope) {
     debugMappingValueFromInnerScopeToOuterScope(value, innerScope, name, outerScope);
   }

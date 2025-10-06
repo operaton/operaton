@@ -18,11 +18,12 @@ package org.operaton.bpm.engine.rest.sub.repository.impl;
 
 import java.net.URI;
 import java.util.List;
-
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriInfo;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -39,8 +40,6 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.impl.AbstractRestProcessEngineAware;
 import org.operaton.bpm.engine.rest.sub.repository.DeploymentResource;
 import org.operaton.bpm.engine.rest.sub.repository.DeploymentResourcesResource;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DeploymentResourceImpl extends AbstractRestProcessEngineAware implements DeploymentResource {
 

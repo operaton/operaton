@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.dto.task;
 
+import java.util.Date;
+
 import org.operaton.bpm.engine.rest.dto.LinkableDto;
 import org.operaton.bpm.engine.task.Comment;
-
-import java.util.Date;
 
 public class CommentDto extends LinkableDto {
 

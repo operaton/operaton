@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.cmmn.listener;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 

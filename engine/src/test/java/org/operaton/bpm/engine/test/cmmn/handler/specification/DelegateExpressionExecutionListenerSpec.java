@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
@@ -26,6 +24,8 @@ import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.cmmn.listener.DelegateExpressionCaseExecutionListener;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonCaseExecutionListener;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DelegateExpressionExecutionListenerSpec extends AbstractExecutionListenerSpec {
 

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.Serial;
 
-
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;

@@ -76,9 +76,8 @@ public class QName {
   public int hashCode() {
     int prime = 31;
     int result = 1;
-    result = prime * result + ((localName == null) ? 0 : localName.hashCode());
-    result = prime * result + ((qualifier == null) ? 0 : qualifier.hashCode());
-    return result;
+    result = prime * result + (localName == null ? 0 : localName.hashCode());
+    return prime * result + (qualifier == null ? 0 : qualifier.hashCode());
   }
 
   @Override

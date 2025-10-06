@@ -17,10 +17,9 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
-
 import java.util.List;
 import java.util.concurrent.Callable;
+
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.impl.MessageCorrelationBuilderImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -31,6 +30,8 @@ import org.operaton.bpm.engine.impl.runtime.CorrelationHandler;
 import org.operaton.bpm.engine.impl.runtime.CorrelationHandlerResult;
 import org.operaton.bpm.engine.impl.runtime.CorrelationSet;
 import org.operaton.bpm.engine.impl.runtime.MessageCorrelationResultImpl;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
 
 /**
  * @author Thorben Lindhauer

@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.SampleTaskListenerBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 public class TimeoutTaskListenerExecutionTest extends AbstractFoxPlatformIntegrationTest {
@@ -49,7 +49,7 @@ public class TimeoutTaskListenerExecutionTest extends AbstractFoxPlatformIntegra
     waitForJobExecutorToProcessAllJobs();
 
     List<ProcessInstance> finallyRunningInstances = runtimeService.createProcessInstanceQuery().processInstanceId(instance.getId()).list();
-    Assertions.assertEquals(1, finallyRunningInstances.size());
+    assertThat(finallyRunningInstances).hasSize(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(instance.getId()).singleResult();
     assertThat(task).isNotNull();

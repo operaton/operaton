@@ -18,10 +18,12 @@ package org.operaton.bpm.engine.impl.xml;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.xml.sax.SAXParseException;
+
 import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.Problem;
 import org.operaton.bpm.engine.impl.util.xml.Element;
-import org.xml.sax.SAXParseException;
 
 /**
  * @author Tom Baeyens

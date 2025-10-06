@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history.dmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.DecisionService;
@@ -51,6 +49,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.propertyComparator;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Philipp Ossler
@@ -125,12 +128,7 @@ class HistoricDecisionInstanceQueryTest {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     var historicDecisionInstance = query.singleResult();
 
-    try {
-      historicDecisionInstance.getOutputs();
-      fail("expected exception: output not fetched");
-    } catch (ProcessEngineException e) {
-      // should throw exception if output is not fetched
-    }
+    assertThatThrownBy(historicDecisionInstance::getOutputs).isInstanceOf(ProcessEngineException.class);
 
     assertThat(query.includeOutputs().singleResult().getOutputs()).hasSize(1);
   }
@@ -194,6 +192,28 @@ class HistoricDecisionInstanceQueryTest {
 
     List<HistoricDecisionInstance> orderDesc = historyService.createHistoricDecisionInstanceQuery().orderByEvaluationTime().desc().list();
     assertThat(orderDesc.get(0).getEvaluationTime().after(orderDesc.get(1).getEvaluationTime())).isTrue();
+  }
+
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
+  @Test
+  void testQuerySortByDecisionInstanceId() {
+    for (int i = 0; i < 5; i++) {
+      startProcessInstanceAndEvaluateDecision();
+    }
+
+    List<HistoricDecisionInstance> orderAsc = historyService.createHistoricDecisionInstanceQuery()
+        .orderByDecisionInstanceId()
+        .asc()
+        .list();
+    assertThat(orderAsc).hasSize(5);
+    verifySorting(orderAsc, propertyComparator(HistoricDecisionInstance::getId));
+
+    List<HistoricDecisionInstance> orderDesc = historyService.createHistoricDecisionInstanceQuery()
+        .orderByDecisionInstanceId()
+        .desc()
+        .list();
+    assertThat(orderDesc).hasSize(5);
+    verifySorting(orderDesc, inverted(propertyComparator(HistoricDecisionInstance::getId)));
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
@@ -352,12 +372,7 @@ class HistoricDecisionInstanceQueryTest {
 
     assertThat(query.decisionDefinitionNameLike("%invalid%").count()).isZero();
 
-    try {
-      query.decisionDefinitionNameLike(null);
-      fail("");
-    } catch (NotValidException e) {
-      // Expected exception
-    }
+    assertThatThrownBy(() -> query.decisionDefinitionNameLike(null)).isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
@@ -479,11 +494,7 @@ class HistoricDecisionInstanceQueryTest {
 
     assertThat(query.caseDefinitionKey("invalid").count()).isZero();
 
-    try {
-      query.caseDefinitionKey(null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-    }
+    assertThatThrownBy(() -> query.caseDefinitionKey(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {DECISION_CASE, DECISION_SINGLE_OUTPUT_DMN})
@@ -502,11 +513,7 @@ class HistoricDecisionInstanceQueryTest {
 
     assertThat(query.caseDefinitionId("invalid").count()).isZero();
 
-    try {
-      query.caseDefinitionId(null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-    }
+    assertThatThrownBy(() -> query.caseDefinitionId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {DECISION_CASE, DECISION_SINGLE_OUTPUT_DMN})
@@ -525,11 +532,7 @@ class HistoricDecisionInstanceQueryTest {
 
     assertThat(query.caseInstanceId("invalid").count()).isZero();
 
-    try {
-      query.caseInstanceId(null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-    }
+    assertThatThrownBy(() -> query.caseInstanceId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {DECISION_SINGLE_OUTPUT_DMN})
@@ -551,11 +554,7 @@ class HistoricDecisionInstanceQueryTest {
 
     assertThat(query.userId("dem1").count()).isZero();
 
-    try {
-      query.userId(null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-    }
+    assertThatThrownBy(() -> query.userId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {DRG_DMN})

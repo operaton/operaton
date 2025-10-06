@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
 
-import org.operaton.bpm.model.xml.ModelException;
-import org.operaton.bpm.model.xml.ModelInstance;
-import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
-import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
-import org.operaton.bpm.model.xml.instance.DomDocument;
-import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.operaton.bpm.model.xml.testmodel.TestModelParser;
-import org.operaton.bpm.model.xml.type.ModelElementType;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +24,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.model.xml.ModelException;
+import org.operaton.bpm.model.xml.ModelInstance;
+import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
+import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
+import org.operaton.bpm.model.xml.instance.DomDocument;
+import org.operaton.bpm.model.xml.instance.ModelElementInstance;
+import org.operaton.bpm.model.xml.testmodel.TestModelParser;
+import org.operaton.bpm.model.xml.type.ModelElementType;
+
+import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Sebastian Menski

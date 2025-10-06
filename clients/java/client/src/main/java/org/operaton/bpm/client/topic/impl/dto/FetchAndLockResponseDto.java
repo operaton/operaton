@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.client.topic.impl.dto;
 
-import org.operaton.bpm.client.exception.ExternalTaskClientException;
-import org.operaton.bpm.client.task.ExternalTask;
-
 import java.util.Collections;
 import java.util.List;
+
+import org.operaton.bpm.client.exception.ExternalTaskClientException;
+import org.operaton.bpm.client.task.ExternalTask;
 
 public class FetchAndLockResponseDto {
 

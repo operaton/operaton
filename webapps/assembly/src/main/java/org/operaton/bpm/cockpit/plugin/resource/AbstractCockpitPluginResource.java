@@ -17,6 +17,7 @@
 package org.operaton.bpm.cockpit.plugin.resource;
 
 import java.util.List;
+
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.db.CommandExecutor;
 import org.operaton.bpm.cockpit.db.QueryParameters;

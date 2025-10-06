@@ -15,9 +15,6 @@
  */
 package org.operaton.bpm.impl.juel;
 
-import jakarta.el.ELContext;
-import jakarta.el.ELException;
-import jakarta.el.ExpressionFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,6 +22,9 @@ import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.util.EnumSet;
 import java.util.Properties;
+import jakarta.el.ELContext;
+import jakarta.el.ELException;
+import jakarta.el.ExpressionFactory;
 
 /**
  * Expression factory implementation.

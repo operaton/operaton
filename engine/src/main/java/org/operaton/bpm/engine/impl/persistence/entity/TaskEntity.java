@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineServices;
@@ -1711,8 +1712,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (id == null ? 0 : id.hashCode());
-    return result;
+    return prime * result + (id == null ? 0 : id.hashCode());
   }
 
   @Override

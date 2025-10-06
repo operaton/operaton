@@ -27,6 +27,7 @@ public class XmlValueMapper extends PrimitiveValueMapper<XmlValue> {
     super(ClientValues.XML);
   }
 
+  @Override
   public XmlValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return ClientValues.xmlValue((String) untypedValue.getValue());
   }

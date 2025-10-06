@@ -16,17 +16,15 @@
  */
 package org.operaton.bpm.engine.test.bpmn.parse;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -39,6 +37,9 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.assertj.core.api.Assertions.assertThat;
+
 class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
   private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -49,10 +50,10 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .closeEngineAfterAllTests()
       .randomEngineName()
-      .configurator((configuration -> {
+      .configurator(configuration -> {
         configuration.setFailedJobRetryTimeCycle("PT5M,PT20M, PT3M");
         configuration.setEnableExceptionsAfterUnhandledBpmnError(true);
-      })).build();
+      }).build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
@@ -63,7 +64,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testRetryGlobalConfiguration() throws ParseException {
+  void testRetryGlobalConfiguration() throws Exception {
     // given global retry conf. ("PT5M,PT20M, PT3M")
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTask();
     testRule.deploy(bpmnModelInstance);
@@ -100,7 +101,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testRetryGlobalConfigurationWithExecutionListener() throws ParseException {
+  void testRetryGlobalConfigurationWithExecutionListener() throws Exception {
     // given
     engineRule.getProcessEngineConfiguration().setFailedJobRetryTimeCycle("PT5M");
 
@@ -134,7 +135,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testRetryMixConfiguration() throws ParseException {
+  void testRetryMixConfiguration() throws Exception {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("R3/PT1M");
 
@@ -162,7 +163,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testRetryIntervals() throws ParseException {
+  void testRetryIntervals() throws Exception {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT3M, PT10M,PT8M");
     testRule.deploy(bpmnModelInstance);
@@ -200,7 +201,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testSingleRetryInterval() throws ParseException {
+  void testSingleRetryInterval() throws Exception {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT8M ");
     testRule.deploy(bpmnModelInstance);
@@ -236,11 +237,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -248,7 +245,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testIntervalsAfterUpdateRetries() throws ParseException {
+  void testIntervalsAfterUpdateRetries() throws Exception {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT3M, PT10M,PT8M");
     testRule.deploy(bpmnModelInstance);
@@ -270,7 +267,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     ClockUtil.setCurrentTime(currentTime);
 
     Job job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
-    managementService.setJobRetries(Arrays.asList(job.getId()), 5);
+    managementService.setJobRetries(List.of(job.getId()), 5);
 
     jobRetries = executeJob(processInstanceId);
     assertThat(jobRetries).isEqualTo(4);
@@ -301,7 +298,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testMixConfigurationWithinOneProcess() throws ParseException {
+  void testMixConfigurationWithinOneProcess() throws Exception {
     // given
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
@@ -337,7 +334,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
     // finish the first service task
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(3);
+    assertThat(jobRetries).isEqualTo(4);
 
     // try to execute the second service task without success
     jobRetries = executeJob(processInstanceId);
@@ -349,7 +346,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testlocalConfigurationWithNestedChangingExpression() throws ParseException {
+  void testlocalConfigurationWithNestedChangingExpression() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -408,11 +405,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   private int executeJob(String processInstanceId) {
     Job job = fetchJob(processInstanceId);
 
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     job = fetchJob(processInstanceId);
 

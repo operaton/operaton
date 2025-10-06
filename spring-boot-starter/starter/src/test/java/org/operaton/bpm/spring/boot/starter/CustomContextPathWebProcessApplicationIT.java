@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import org.operaton.bpm.application.ProcessApplicationInfo;
-import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
-import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
+import org.operaton.bpm.application.ProcessApplicationInfo;
+import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
+import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-  classes = { TestProcessApplication.class },
+  classes = {TestProcessApplication.class},
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)

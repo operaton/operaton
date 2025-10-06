@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.impl.instance.DataInputRefs;
 import org.operaton.bpm.model.bpmn.impl.instance.OptionalInputRefs;
 import org.operaton.bpm.model.bpmn.impl.instance.OutputSetRefs;
 import org.operaton.bpm.model.bpmn.impl.instance.WhileExecutingInputRefs;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * @author Sebastian Menski

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.listener;
 
-import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.applyFieldDeclaration;
-
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -30,6 +28,8 @@ import org.operaton.bpm.engine.impl.bpmn.delegate.ExecutionListenerInvocation;
 import org.operaton.bpm.engine.impl.bpmn.delegate.JavaDelegateInvocation;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.context.Context;
+
+import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.applyFieldDeclaration;
 
 
 /**

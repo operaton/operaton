@@ -21,12 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import org.operaton.bpm.application.PostDeploy;
-import org.operaton.bpm.application.PreUndeploy;
-import org.operaton.bpm.application.ProcessApplication;
-import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
-import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
+
 import org.jboss.as.ee.component.Attachments;
 import org.jboss.as.ee.component.ComponentDescription;
 import org.jboss.as.ee.component.EEApplicationClasses;
@@ -45,6 +40,12 @@ import org.jboss.jandex.ClassInfo;
 import org.jboss.jandex.DotName;
 import org.jboss.metadata.web.jboss.JBossWebMetaData;
 import org.jboss.metadata.web.spec.ListenerMetaData;
+
+import org.operaton.bpm.application.PostDeploy;
+import org.operaton.bpm.application.PreUndeploy;
+import org.operaton.bpm.application.ProcessApplication;
+import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
+import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
 
 
 /**
@@ -145,7 +146,7 @@ public class ProcessApplicationProcessor implements DeploymentUnitProcessor {
         JBossWebMetaData mergedJBossWebMetaData = warMetaData.getMergedJBossWebMetaData();
         List<ListenerMetaData> listeners = mergedJBossWebMetaData.getListeners();
         if(listeners == null) {
-          listeners = new ArrayList<ListenerMetaData>();
+          listeners = new ArrayList<>();
           mergedJBossWebMetaData.setListeners(listeners);
         }
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.ant;
 
-import org.operaton.bpm.engine.*;
-import org.operaton.bpm.engine.impl.util.LogUtil;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -30,6 +27,9 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
+
+import org.operaton.bpm.engine.*;
+import org.operaton.bpm.engine.impl.util.LogUtil;
 
 
 /**
@@ -113,7 +113,7 @@ public class DeployBarTask extends Task {
     StringBuilder builder = new StringBuilder("Could not find a process engine with name ");
     builder.append(name).append(", engines loaded:\n");
     for (ProcessEngineInfo engineInfo : processEngineInfos) {
-      String engineName = (engineInfo.getName() != null) ? engineInfo.getName() : "unknown";
+      String engineName = engineInfo.getName() != null ? engineInfo.getName() : "unknown";
       builder.append("Process engine name: ").append(engineName);
       builder.append(" - resource: ").append(engineInfo.getResourceUrl());
       builder.append(" - status: ");

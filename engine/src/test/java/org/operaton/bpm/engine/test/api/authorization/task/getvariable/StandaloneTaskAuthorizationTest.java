@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.task.getvariable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.Map;
 
@@ -25,6 +23,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -36,6 +35,8 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Yana.Vasileva

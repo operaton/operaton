@@ -17,6 +17,7 @@
 package org.operaton.bpm.qa.rolling.update.scenarios.batch;
 
 import java.util.Date;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.runtime.Job;
@@ -40,32 +41,26 @@ public final class SetRemovalTimeToProcessInstanceScenario {
   @DescribesScenario("createSetRemovalTimeToProcessInstanceBatch")
   @Times(1)
   public static ScenarioSetup createBatch() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine engine, String scenarioName) {
-        Date removalTime = new Date(1363609000000L);
-        String processInstanceId = engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, "SetRemovalTimeToProcessInstance.batch").getId();
-        Batch batch = engine.getHistoryService().setRemovalTimeToHistoricProcessInstances().absoluteRemovalTime(removalTime).byIds(processInstanceId).executeAsync();
-        engine.getManagementService().setProperty("SetRemovalTimeToProcessInstance.batch.batchId", batch.getId());
-      }
+    return (engine, scenarioName) -> {
+      Date removalTime = new Date(1363609000000L);
+      String processInstanceId = engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, "SetRemovalTimeToProcessInstance.batch").getId();
+      Batch batch = engine.getHistoryService().setRemovalTimeToHistoricProcessInstances().absoluteRemovalTime(removalTime).byIds(processInstanceId).executeAsync();
+      engine.getManagementService().setProperty("SetRemovalTimeToProcessInstance.batch.batchId", batch.getId());
     };
   }
 
   @DescribesScenario("createSetRemovalTimeToProcessInstanceBatchJob")
   @Times(1)
   public static ScenarioSetup createBatchJob() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine engine, String scenarioName) {
-        Date removalTime = new Date(1363609000000L);
-        String processInstanceId = engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, "SetRemovalTimeToProcessInstance.batchJob").getId();
-        Batch batch = engine.getHistoryService().setRemovalTimeToHistoricProcessInstances().absoluteRemovalTime(removalTime).byIds(processInstanceId).executeAsync();
-        String seedJobDefinitionId = batch.getSeedJobDefinitionId();
-        Job seedJob = engine.getManagementService().createJobQuery().jobDefinitionId(seedJobDefinitionId).singleResult();
+    return (engine, scenarioName) -> {
+      Date removalTime = new Date(1363609000000L);
+      String processInstanceId = engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, "SetRemovalTimeToProcessInstance.batchJob").getId();
+      Batch batch = engine.getHistoryService().setRemovalTimeToHistoricProcessInstances().absoluteRemovalTime(removalTime).byIds(processInstanceId).executeAsync();
+      String seedJobDefinitionId = batch.getSeedJobDefinitionId();
+      Job seedJob = engine.getManagementService().createJobQuery().jobDefinitionId(seedJobDefinitionId).singleResult();
 
-        engine.getManagementService().executeJob(seedJob.getId());
-        engine.getManagementService().setProperty("SetRemovalTimeToProcessInstance.batchJob.batchId", batch.getId());
-      }
+      engine.getManagementService().executeJob(seedJob.getId());
+      engine.getManagementService().setProperty("SetRemovalTimeToProcessInstance.batchJob.batchId", batch.getId());
     };
   }
 }

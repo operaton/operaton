@@ -16,15 +16,16 @@
  */
 package org.operaton.spin.json.tree;
 
-import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
-
 import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.json.SpinJsonNode;
+
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class JsonTreeMapObjectToJsonScriptTest extends ScriptTest {
 

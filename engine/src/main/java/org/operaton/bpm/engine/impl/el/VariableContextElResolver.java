@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.el;
 
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
+
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -59,11 +60,13 @@ public class VariableContextElResolver extends ELResolver {
     return true;
   }
 
-  public Class< ? > getCommonPropertyType(ELContext arg0, Object arg1) {
+  @Override
+  public Class<?> getCommonPropertyType(ELContext arg0, Object arg1) {
     return Object.class;
   }
 
-  public Class< ? > getType(ELContext arg0, Object arg1, Object arg2) {
+  @Override
+  public Class<?> getType(ELContext arg0, Object arg1, Object arg2) {
     return Object.class;
   }
 

@@ -16,13 +16,14 @@
  */
 package org.operaton.spin.impl.xml.dom;
 
-import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
-import org.operaton.spin.xml.SpinXmlElement;
+import java.util.Iterator;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.Iterator;
+import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
+import org.operaton.spin.xml.SpinXmlElement;
 
 import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
@@ -77,7 +78,7 @@ public class DomXmlElementIterable implements Iterable<SpinXmlElement> {
       protected SpinXmlElement getCurrent() {
         if (childs != null) {
           Node item = childs.item(index);
-          if (item != null && item instanceof Element element) {
+          if (item instanceof Element element) {
             SpinXmlElement current = dataFormat.createElementWrapper(element);
             if (!validating || (current.hasNamespace(namespace) && name.equals(current.name()))) {
                 return current;

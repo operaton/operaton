@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.cdi.test.impl.beans;
 
 import java.io.Serial;
 import java.io.Serializable;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 

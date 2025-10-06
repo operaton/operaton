@@ -18,7 +18,6 @@ package org.operaton.bpm.webapp.impl.util;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
-
 import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;

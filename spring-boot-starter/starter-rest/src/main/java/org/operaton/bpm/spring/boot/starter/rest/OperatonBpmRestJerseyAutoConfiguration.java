@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.rest;
 
-import org.operaton.bpm.engine.rest.impl.FetchAndLockContextListener;
-import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,8 +23,12 @@ import org.springframework.boot.autoconfigure.jersey.JerseyAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.JerseyApplicationPath;
 import org.springframework.context.annotation.Bean;
 
-@AutoConfigureBefore({ JerseyAutoConfiguration.class })
-@AutoConfigureAfter({ OperatonBpmAutoConfiguration.class })
+import org.operaton.bpm.engine.rest.impl.FetchAndLockContextListener;
+import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
+@AutoConfigureBefore({JerseyAutoConfiguration.class})
+@AutoConfigureAfter({OperatonBpmAutoConfiguration.class})
 public class OperatonBpmRestJerseyAutoConfiguration {
 
   @Bean
@@ -41,7 +43,7 @@ public class OperatonBpmRestJerseyAutoConfiguration {
   }
 
   @Bean
-  public OperatonBpmRestInitializer operatonBpmRestInitializer(JerseyApplicationPath applicationPath) {
-    return new OperatonBpmRestInitializer(applicationPath);
+  public OperatonBpmRestInitializer operatonBpmRestInitializer(JerseyApplicationPath applicationPath, OperatonBpmProperties props) {
+    return new OperatonBpmRestInitializer(applicationPath, props);
   }
 }

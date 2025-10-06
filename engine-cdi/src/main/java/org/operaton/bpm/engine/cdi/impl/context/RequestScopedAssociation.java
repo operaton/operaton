@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.impl.context;
 
-import jakarta.enterprise.context.RequestScoped;
 import java.io.Serializable;
+import jakarta.enterprise.context.RequestScoped;
 
 @RequestScoped
 public class RequestScopedAssociation extends ScopedAssociation implements Serializable {

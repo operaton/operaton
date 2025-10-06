@@ -16,15 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +32,9 @@ import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
@@ -85,6 +81,11 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Frederik Heremans
@@ -237,12 +238,7 @@ class TaskServiceTest {
     task.setParentTaskId("non-existing");
 
     // then
-    try {
-      taskService.saveTask(task);
-      fail("It should not be possible to save a task with a non existing parent task.");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.saveTask(task)).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -813,13 +809,7 @@ class TaskServiceTest {
   void testAddTaskNullComment() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      try {
-        taskService.createComment(null, null, "test");
-        fail("Expected process engine exception");
-      }
-      catch (ProcessEngineException e){
-        // expected
-      }
+      assertThatThrownBy(() -> taskService.createComment(null, null, "test")).isInstanceOf(ProcessEngineException.class);
     }
   }
 
@@ -1037,12 +1027,7 @@ class TaskServiceTest {
 
   @Test
   void testDeleteTaskNullTaskId() {
-    try {
-      taskService.deleteTask(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // Expected exception
-    }
+    assertThatThrownBy(() -> taskService.deleteTask(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1054,12 +1039,7 @@ class TaskServiceTest {
 
   @Test
   void testDeleteTasksNullTaskIds() {
-    try {
-      taskService.deleteTasks(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // Expected exception
-    }
+    assertThatThrownBy(() -> taskService.deleteTasks(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1141,7 +1121,10 @@ class TaskServiceTest {
 
     // Claim the task again with the same user. No exception should be thrown
     Task finalTask = task;
-    assertDoesNotThrow(() -> taskService.claim(finalTask.getId(), user.getId()));
+    var taskId = finalTask.getId();
+    var userId = user.getId();
+    assertThatCode(() -> taskService.claim(taskId, userId))
+        .doesNotThrowAnyException();
 
     taskService.deleteTask(task.getId(), true);
     identityService.deleteUser(user.getId());
@@ -1239,7 +1222,7 @@ class TaskServiceTest {
     taskService.saveTask(task);
 
     String taskId = task.getId();
-    taskService.complete(taskId, Collections.EMPTY_MAP);
+    taskService.complete(taskId, Collections.emptyMap());
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
       historyService.deleteHistoricTaskInstance(taskId);
@@ -1580,7 +1563,7 @@ class TaskServiceTest {
     taskService.saveTask(task);
 
     String taskId = task.getId();
-    taskService.resolveTask(taskId, Collections.EMPTY_MAP);
+    taskService.resolveTask(taskId, Collections.emptyMap());
 
     if (processEngineConfiguration.getHistoryLevel().getId()>= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       historyService.deleteHistoricTaskInstance(taskId);
@@ -1719,8 +1702,10 @@ class TaskServiceTest {
 
     taskService.addCandidateUser(task.getId(), user.getId());
 
+    var taskId = task.getId();
+    var userId = user.getId();
     // Add as candidate the second time
-    assertDoesNotThrow(() -> taskService.addCandidateUser(task.getId(), user.getId()));
+    assertThatCode(() -> taskService.addCandidateUser(taskId, userId)).doesNotThrowAnyException();
 
     identityService.deleteUser(user.getId());
     taskService.deleteTask(task.getId(), true);
@@ -2302,12 +2287,10 @@ class TaskServiceTest {
   @SuppressWarnings("unchecked")
   @Test
   void testRemoveVariablesNullTaskId() {
-    try {
-      taskService.removeVariables(null, Collections.EMPTY_LIST);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    List<String> variableNames = Collections.emptyList();
+    assertThatThrownBy(() -> taskService.removeVariables(null, variableNames))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Deployment(resources = {
@@ -2378,12 +2361,10 @@ class TaskServiceTest {
   @SuppressWarnings("unchecked")
   @Test
   void testRemoveVariablesLocalNullTaskId() {
-    try {
-      taskService.removeVariablesLocal(null, Collections.EMPTY_LIST);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    List<String> variableNames = Collections.emptyList();
+    assertThatThrownBy(() -> taskService.removeVariablesLocal(null, variableNames))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2398,13 +2379,7 @@ class TaskServiceTest {
     taskService.saveTask(task1);
     task2.setDescription("test description two");
 
-    try {
-      taskService.saveTask(task2);
-
-      fail("Expecting exception");
-    } catch(OptimisticLockingException e) {
-      // Expected exception
-    }
+    assertThatThrownBy(() -> taskService.saveTask(task2)).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Test
@@ -2576,7 +2551,7 @@ class TaskServiceTest {
   }
 
   @Test
-  void testTaskAttachmentByTaskIdAndAttachmentId() throws ParseException {
+  void testTaskAttachmentByTaskIdAndAttachmentId() throws Exception {
     Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
 
@@ -2660,19 +2635,14 @@ class TaskServiceTest {
   @Test
   void testCreateTaskAttachmentWithNullTaskAndProcessInstance() {
     var content = new ByteArrayInputStream("someContent".getBytes());
-    try {
-      taskService.createAttachment("web page", null, null, "weatherforcast", "temperatures and more", content);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.createAttachment("web page", null, null, "weatherforcast", "temperatures and more", content)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
-  void testCreateTaskAttachmentWithNullTaskId() throws ParseException {
+  void testCreateTaskAttachmentWithNullTaskId() throws Exception {
     Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -2689,12 +2659,7 @@ class TaskServiceTest {
   void testDeleteTaskAttachmentWithNullParameter() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      try {
-        taskService.deleteAttachment(null);
-        fail("expected process engine exception");
-      } catch (ProcessEngineException e) {
-        // expected
-      }
+      assertThatThrownBy(() -> taskService.deleteAttachment(null)).isInstanceOf(ProcessEngineException.class);
     }
   }
 
@@ -2721,12 +2686,7 @@ class TaskServiceTest {
   void testDeleteTaskAttachmentWithNullParameters() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      try {
-        taskService.deleteTaskAttachment(null, null);
-        fail("expected process engine exception");
-      } catch (ProcessEngineException e) {
-        // expected
-      }
+      assertThatThrownBy(() -> taskService.deleteTaskAttachment(null, null)).isInstanceOf(ProcessEngineException.class);
     }
   }
 
@@ -2734,12 +2694,7 @@ class TaskServiceTest {
   void testDeleteTaskAttachmentWithTaskIdNull() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      try {
-        taskService.deleteTaskAttachment(null, "myAttachmentId");
-        fail("expected process engine exception");
-      } catch(ProcessEngineException e) {
-        // expected
-      }
+      assertThatThrownBy(() -> taskService.deleteTaskAttachment(null, "myAttachmentId")).isInstanceOf(ProcessEngineException.class);
     }
   }
 
@@ -2794,12 +2749,7 @@ class TaskServiceTest {
     deletions.add("variable3");
     deletions.add("variable4");
 
-    try {
-      ((TaskServiceImpl) taskService).updateVariablesLocal("nonExistingId", modifications, deletions);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> ((TaskServiceImpl) taskService).updateVariablesLocal("nonExistingId", modifications, deletions)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -2813,12 +2763,7 @@ class TaskServiceTest {
     deletions.add("variable3");
     deletions.add("variable4");
 
-    try {
-      ((TaskServiceImpl) taskService).updateVariablesLocal(null, modifications, deletions);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> ((TaskServiceImpl) taskService).updateVariablesLocal(null, modifications, deletions)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {
@@ -2864,12 +2809,7 @@ class TaskServiceTest {
     deletions.add("variable3");
     deletions.add("variable4");
 
-    try {
-      ((TaskServiceImpl) taskService).updateVariables("nonExistingId", modifications, deletions);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> ((TaskServiceImpl) taskService).updateVariables("nonExistingId", modifications, deletions)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -2883,12 +2823,7 @@ class TaskServiceTest {
     deletions.add("variable3");
     deletions.add("variable4");
 
-    try {
-      ((TaskServiceImpl) taskService).updateVariables(null, modifications, deletions);
-      fail("expected process engine exception");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> ((TaskServiceImpl) taskService).updateVariables(null, modifications, deletions)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -3450,62 +3385,33 @@ class TaskServiceTest {
     assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
   }
 
-  @Test
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "InterruptWithVariables, 302, 1",
+      "NonInterruptEventSubprocess, 303, 2",
+      "InterruptInEventSubprocess, 304, 1"
+  })
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
-  void testHandleEscalationInterruptWithVariables() {
+  void testHandleEscalation(String testCase, String escalationCode, int expectedNumberOfTasks) {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(task.getTaskDefinitionKey()).isEqualTo(USER_TASK_THROW_ESCALATION);
 
     // when
-    taskService.handleEscalation(task.getId(), "302", Variables.createVariables().putValue("foo", "bar"));
+    taskService.handleEscalation(task.getId(), escalationCode, Variables.createVariables().putValue("foo", "bar"));
 
     // then
-    Task taskAfterThrow = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertThat(taskAfterThrow.getTaskDefinitionKey()).isEqualTo("after-302");
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
-  }
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
-  void testHandleEscalationNonInterruptEventSubprocess() {
-    // given
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
-    Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertThat(task.getTaskDefinitionKey()).isEqualTo(USER_TASK_THROW_ESCALATION);
-
-    // when
-    taskService.handleEscalation(task.getId(), "303");
-
-    // then
-    List<Task> list = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(list).hasSize(2);
-    for (Task taskAfterThrow : list) {
-      if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !"after-303".equals(taskAfterThrow.getTaskDefinitionKey())) {
-        fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
-            + "after-303");
-      }
+    List<Task> tasksAfterThrow = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
+    assertThat(tasksAfterThrow)
+            .hasSize(expectedNumberOfTasks)
+            .anySatisfy(taskAfterThrow -> assertThat(taskAfterThrow.getTaskDefinitionKey()).isEqualTo("after-" + escalationCode));
+    if (expectedNumberOfTasks == 2) {
+      assertThat(tasksAfterThrow)
+              .anySatisfy(taskAfterThrow -> assertThat(taskAfterThrow.getTaskDefinitionKey()).isEqualTo(USER_TASK_THROW_ESCALATION));
     }
-  }
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
-  void testHandleEscalationInterruptInEventSubprocess() {
-    // given
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
-    Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertThat(task.getTaskDefinitionKey()).isEqualTo(USER_TASK_THROW_ESCALATION);
-
-    // when
-    taskService.handleEscalation(task.getId(), "304", Variables.createVariables().putValue("foo", "bar"));
-
-    // then
-    Task taskAfterThrow = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertThat(taskAfterThrow.getTaskDefinitionKey()).isEqualTo("after-304");
     assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
   }
-
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})

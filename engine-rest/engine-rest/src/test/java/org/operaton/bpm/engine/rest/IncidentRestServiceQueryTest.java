@@ -16,13 +16,33 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.expect;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
+import jakarta.ws.rs.core.Response.Status;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+
+import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+import org.operaton.bpm.engine.rest.helper.MockProvider;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.operaton.bpm.engine.runtime.Incident;
+import org.operaton.bpm.engine.runtime.IncidentQuery;
+
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_JOB_DEFINITION_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TENANT_ID_LIST;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_JOB_DEFINITION_ID;
+import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -31,28 +51,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import jakarta.ws.rs.core.Response.Status;
-
-import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
-import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.IncidentQuery;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 
 
 /**
@@ -338,7 +336,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> incidents = from(content).getList("");
-    Assertions.assertEquals(1, incidents.size(), "There should be one incident returned.");
+    assertThat(incidents).as("There should be one incident returned.").hasSize(1);
     assertThat(incidents.get(0)).as("The returned incident should not be null.").isNotNull();
 
     String returnedId = from(content).getString("[0].id");
@@ -357,21 +355,21 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
     String returnedJobDefinitionId = from(content).getString("[0].jobDefinitionId");
     String returnedAnnotation = from(content).getString("[0].annotation");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_ID, returnedId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_PROC_INST_ID, returnedProcessInstanceId);
-    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_INCIDENT_TIMESTAMP), returnedIncidentTimestamp);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_EXECUTION_ID, returnedExecutionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_PROC_DEF_ID, returnedProcessDefinitionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_TYPE, returnedIncidentType);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_ACTIVITY_ID, returnedActivityId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_FAILED_ACTIVITY_ID, returnedFailedActivityId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_CAUSE_INCIDENT_ID, returnedCauseIncidentId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_ROOT_CAUSE_INCIDENT_ID, returnedRootCauseIncidentId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_CONFIGURATION, returnedConfiguration);
-    Assertions.assertEquals(MockProvider.EXAMPLE_INCIDENT_MESSAGE, returnedIncidentMessage);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_JOB_DEFINITION_ID, returnedJobDefinitionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION, returnedAnnotation);
+    assertThat(returnedId).isEqualTo(MockProvider.EXAMPLE_INCIDENT_ID);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_INCIDENT_PROC_INST_ID);
+    assertThat(returnedIncidentTimestamp).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_INCIDENT_TIMESTAMP));
+    assertThat(returnedExecutionId).isEqualTo(MockProvider.EXAMPLE_INCIDENT_EXECUTION_ID);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_INCIDENT_PROC_DEF_ID);
+    assertThat(returnedIncidentType).isEqualTo(MockProvider.EXAMPLE_INCIDENT_TYPE);
+    assertThat(returnedActivityId).isEqualTo(MockProvider.EXAMPLE_INCIDENT_ACTIVITY_ID);
+    assertThat(returnedFailedActivityId).isEqualTo(MockProvider.EXAMPLE_INCIDENT_FAILED_ACTIVITY_ID);
+    assertThat(returnedCauseIncidentId).isEqualTo(MockProvider.EXAMPLE_INCIDENT_CAUSE_INCIDENT_ID);
+    assertThat(returnedRootCauseIncidentId).isEqualTo(MockProvider.EXAMPLE_INCIDENT_ROOT_CAUSE_INCIDENT_ID);
+    assertThat(returnedConfiguration).isEqualTo(MockProvider.EXAMPLE_INCIDENT_CONFIGURATION);
+    assertThat(returnedIncidentMessage).isEqualTo(MockProvider.EXAMPLE_INCIDENT_MESSAGE);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(returnedJobDefinitionId).isEqualTo(MockProvider.EXAMPLE_JOB_DEFINITION_ID);
+    assertThat(returnedAnnotation).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION);
   }
 
   @Test

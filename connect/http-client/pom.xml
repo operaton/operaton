@@ -4,7 +4,7 @@
   <parent>
     <artifactId>operaton-connect-root</artifactId>
     <groupId>org.operaton.connect</groupId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-connect-http-client</artifactId>
   <name>Operaton - Connect - HTTP Client</name>
@@ -15,15 +15,8 @@
       <artifactId>operaton-connect-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-    </dependency>
-    <!-- commons-codec is a transitive dependency of httpclient;
-      we override its version here in order to update the default commons-codec
-      version which has known vulnerabilities, see https://jira.camunda.com/browse/CAM-12774 -->
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
@@ -72,47 +65,16 @@
   <profiles>
     <profile>
       <id>check-api-compatibility</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <build>
         <plugins>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>clirr-maven-plugin</artifactId>
             <configuration>
-              <comparisonVersion>${connect.version.old}</comparisonVersion>
-              <logResults>true</logResults>
               <excludes>
                 <exclude>org/operaton/connect/httpclient/impl/**</exclude>
               </excludes>
             </configuration>
-            <executions>
-              <execution>
-                <id>all</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>check-no-fork</goal>
-                </goals>
-                <configuration>
-                  <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
-                  <failOnWarning>false</failOnWarning>
-                  <failOnError>false</failOnError>
-                </configuration>
-              </execution>
-              <execution>
-                <id>restrictive</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>check-no-fork</goal>
-                </goals>
-                <configuration>
-                  <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
-                  <failOnWarning>true</failOnWarning>
-                  <ignoredDifferencesFile>../.clirr-jenkins-ignore.xml</ignoredDifferencesFile>
-                </configuration>
-              </execution>
-            </executions>
           </plugin>
         </plugins>
       </build>

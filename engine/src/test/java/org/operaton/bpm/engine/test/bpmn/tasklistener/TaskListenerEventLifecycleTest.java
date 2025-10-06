@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_ASSIGNMENT;
-import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_COMPLETE;
-import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_CREATE;
-import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_UPDATE;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -41,6 +35,13 @@ import org.operaton.bpm.engine.test.bpmn.tasklistener.util.CompletingTaskListene
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_ASSIGNMENT;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_COMPLETE;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_CREATE;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_UPDATE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest {
   /*

@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.client.rule;
 
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.operaton.bpm.client.ExternalTaskClient;
-import org.operaton.bpm.client.ExternalTaskClientBuilder;
-import org.operaton.bpm.client.util.PropertyUtil;
-
 import java.util.Properties;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
+
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+
+import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.ExternalTaskClientBuilder;
+import org.operaton.bpm.client.util.PropertyUtil;
 
 import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_NAME;
 import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_REST;

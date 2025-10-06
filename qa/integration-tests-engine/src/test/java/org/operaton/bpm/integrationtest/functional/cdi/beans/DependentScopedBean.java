@@ -17,7 +17,6 @@
 package org.operaton.bpm.integrationtest.functional.cdi.beans;
 
 import java.util.ArrayList;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.Dependent;

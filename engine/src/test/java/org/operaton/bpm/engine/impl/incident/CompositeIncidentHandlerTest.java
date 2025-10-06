@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.incident;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.exception.NullValueException;
-import org.operaton.bpm.engine.runtime.Incident;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.verification.Times;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.exception.NullValueException;
+import org.operaton.bpm.engine.runtime.Incident;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

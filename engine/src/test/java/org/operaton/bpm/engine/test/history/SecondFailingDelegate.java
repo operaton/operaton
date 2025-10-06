@@ -32,7 +32,7 @@ public class SecondFailingDelegate implements JavaDelegate {
   public void execute(DelegateExecution execution) throws Exception {
     Boolean fail = (Boolean) execution.getVariable("secondFail");
 
-    if (fail == null || fail == true) {
+    if (fail == null || fail) {
       throw new ProcessEngineException(SECOND_EXCEPTION_MESSAGE);
     }
   }

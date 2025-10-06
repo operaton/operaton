@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.deployment.processor;
 
-import static org.jboss.as.server.deployment.Attachments.MODULE;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -25,13 +23,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.operaton.bpm.application.ProcessApplication;
-import org.operaton.bpm.application.impl.metadata.ProcessesXmlParser;
-import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
-import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
-import org.operaton.bpm.container.impl.jboss.util.ProcessesXmlWrapper;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.jboss.as.ee.component.ComponentDescription;
 import org.jboss.as.server.deployment.DeploymentPhaseContext;
 import org.jboss.as.server.deployment.DeploymentUnit;
@@ -40,6 +31,16 @@ import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.modules.Module;
 import org.jboss.vfs.VFS;
 import org.jboss.vfs.VirtualFile;
+
+import org.operaton.bpm.application.ProcessApplication;
+import org.operaton.bpm.application.impl.metadata.ProcessesXmlParser;
+import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
+import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
+import org.operaton.bpm.container.impl.jboss.util.ProcessesXmlWrapper;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.util.IoUtil;
+
+import static org.jboss.as.server.deployment.Attachments.MODULE;
 
 
 /**
@@ -92,7 +93,7 @@ public class ProcessesXmlProcessor implements DeploymentUnitProcessor {
   }
 
   protected List<URL> getDeploymentDescriptorUrls(final Module module, String[] deploymentDescriptors) throws DeploymentUnitProcessingException {
-    List<URL> deploymentDescriptorURLs = new ArrayList<URL>();
+    List<URL> deploymentDescriptorURLs = new ArrayList<>();
     for (String deploymentDescriptor : deploymentDescriptors) {
       Enumeration<URL> resources = null;
       try {

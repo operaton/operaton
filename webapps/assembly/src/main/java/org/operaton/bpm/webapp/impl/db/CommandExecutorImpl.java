@@ -18,9 +18,9 @@ package org.operaton.bpm.webapp.impl.db;
 
 import java.util.List;
 
-import org.operaton.bpm.webapp.db.CommandExecutor;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
+import org.operaton.bpm.webapp.db.CommandExecutor;
 
 public class CommandExecutorImpl implements CommandExecutor {
 

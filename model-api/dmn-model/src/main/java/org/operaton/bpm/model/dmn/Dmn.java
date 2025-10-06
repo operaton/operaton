@@ -16,104 +16,11 @@
  */
 package org.operaton.bpm.model.dmn;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.CAMUNDA_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN11_ALTERNATIVE_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN11_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN12_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN13_ALTERNATIVE_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN13_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN14_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN15_NS;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_NS;
-
 import java.io.*;
+import java.util.ServiceLoader;
 
 import org.operaton.bpm.model.dmn.impl.DmnParser;
-import org.operaton.bpm.model.dmn.impl.instance.AllowedAnswersImpl;
-import org.operaton.bpm.model.dmn.impl.instance.AllowedValuesImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ArtifactImpl;
-import org.operaton.bpm.model.dmn.impl.instance.AssociationImpl;
-import org.operaton.bpm.model.dmn.impl.instance.AuthorityRequirementImpl;
-import org.operaton.bpm.model.dmn.impl.instance.BindingImpl;
-import org.operaton.bpm.model.dmn.impl.instance.BusinessContextElementImpl;
-import org.operaton.bpm.model.dmn.impl.instance.BusinessKnowledgeModelImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ColumnImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ContextEntryImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ContextImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DecisionImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DecisionMadeReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DecisionMakerReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DecisionOwnedReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DecisionOwnerReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DecisionRuleImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DecisionServiceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DecisionTableImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DefaultOutputEntryImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DefinitionsImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DescriptionImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DmnElementImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DmnElementReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DrgElementImpl;
-import org.operaton.bpm.model.dmn.impl.instance.DrgElementReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ElementCollectionImpl;
-import org.operaton.bpm.model.dmn.impl.instance.EncapsulatedDecisionReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.EncapsulatedLogicImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ExpressionImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ExtensionElementsImpl;
-import org.operaton.bpm.model.dmn.impl.instance.FormalParameterImpl;
-import org.operaton.bpm.model.dmn.impl.instance.FunctionDefinitionImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ImpactedPerformanceIndicatorReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ImpactingDecisionReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ImportImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ImportedElementImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ImportedValuesImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InformationItemImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InformationRequirementImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InputClauseImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InputDataImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InputDataReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InputDecisionReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InputEntryImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InputExpressionImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InputImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InputValuesImpl;
-import org.operaton.bpm.model.dmn.impl.instance.InvocationImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ItemComponentImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ItemDefinitionImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ItemDefinitionReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.KnowledgeRequirementImpl;
-import org.operaton.bpm.model.dmn.impl.instance.KnowledgeSourceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ListImpl;
-import org.operaton.bpm.model.dmn.impl.instance.LiteralExpressionImpl;
-import org.operaton.bpm.model.dmn.impl.instance.NamedElementImpl;
-import org.operaton.bpm.model.dmn.impl.instance.OrganizationUnitImpl;
-import org.operaton.bpm.model.dmn.impl.instance.OutputClauseImpl;
-import org.operaton.bpm.model.dmn.impl.instance.OutputDecisionReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.OutputEntryImpl;
-import org.operaton.bpm.model.dmn.impl.instance.OutputImpl;
-import org.operaton.bpm.model.dmn.impl.instance.OutputValuesImpl;
-import org.operaton.bpm.model.dmn.impl.instance.OwnerReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.ParameterImpl;
-import org.operaton.bpm.model.dmn.impl.instance.PerformanceIndicatorImpl;
-import org.operaton.bpm.model.dmn.impl.instance.QuestionImpl;
-import org.operaton.bpm.model.dmn.impl.instance.RelationImpl;
-import org.operaton.bpm.model.dmn.impl.instance.RequiredAuthorityReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.RequiredDecisionReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.RequiredInputReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.RequiredKnowledgeReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.RowImpl;
-import org.operaton.bpm.model.dmn.impl.instance.RuleImpl;
-import org.operaton.bpm.model.dmn.impl.instance.SourceRefImpl;
-import org.operaton.bpm.model.dmn.impl.instance.SupportedObjectiveReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.TargetRefImpl;
-import org.operaton.bpm.model.dmn.impl.instance.TextAnnotationImpl;
-import org.operaton.bpm.model.dmn.impl.instance.TextImpl;
-import org.operaton.bpm.model.dmn.impl.instance.TypeImpl;
-import org.operaton.bpm.model.dmn.impl.instance.TypeRefImpl;
-import org.operaton.bpm.model.dmn.impl.instance.UnaryTestsImpl;
-import org.operaton.bpm.model.dmn.impl.instance.UsingProcessReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.UsingTaskReferenceImpl;
-import org.operaton.bpm.model.dmn.impl.instance.VariableImpl;
+import org.operaton.bpm.model.dmn.impl.instance.*;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.ModelException;
@@ -122,14 +29,38 @@ import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
 
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.*;
+
+/**
+ * <p>Provides access to the operaton DMN model api.</p>
+ */
 public class Dmn {
 
-  /** the singleton instance of {@link Dmn}. If you want to customize the behavior of Dmn,
-   * replace this instance with an instance of a custom subclass of {@link Dmn}. */
-  public static final Dmn INSTANCE = new Dmn();
+  /** The singleton instance of {@link Dmn} created by the first {@link DmnFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior of Dmn, add the fully qualified class name of the custom implementation to the file:
+   * {@code META-INF/services/org.operaton.bpm.model.dmn.DmnFactory}</p>. */
+  public static final Dmn INSTANCE;
 
-  /** the parser used by the Dmn implementation. */
-  private final DmnParser dmnParser = new DmnParser();
+  /** {@link DmnParser} created by the first {@link DmnParserFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior, provide a custom {@link DmnParserFactory} implementation and declare it in:
+   * {@code META-INF/services/org.operaton.bpm.model.dmn.DmnParserFactory}.</p>
+   */
+  private static final DmnParser DMN_PARSER;
+
+  static {
+    DmnFactory dmnFactory = ServiceLoader.load(DmnFactory.class).findFirst().orElse(
+      ServiceLoader.load(DmnFactory.class, Dmn.class.getClassLoader()).findFirst()
+        .orElseThrow(() -> new IllegalStateException("No DmnFactory found"))
+    );
+    DmnParserFactory dmnParserFactory = ServiceLoader.load(DmnParserFactory.class).findFirst().orElse(
+      ServiceLoader.load(DmnParserFactory.class, Dmn.class.getClassLoader()).findFirst()
+        .orElseThrow(() -> new IllegalStateException("No DmnParserFactory found"))
+    );
+
+    INSTANCE = dmnFactory.newInstance();
+    DMN_PARSER = dmnParserFactory.newInstance();
+  }
+
   private final ModelBuilder dmnModelBuilder;
 
   /** The {@link Model}
@@ -217,7 +148,7 @@ public class Dmn {
   /**
    * Register known types of the Dmn model
    */
-  protected Dmn() {
+  public Dmn() {
     dmnModelBuilder = ModelBuilder.createInstance("DMN Model")
             .alternativeNamespace(CAMUNDA_NS, OPERATON_NS)
             .alternativeNamespace(DMN15_NS, DMN13_NS)
@@ -244,7 +175,7 @@ public class Dmn {
   }
 
   protected DmnModelInstance doReadModelFromInputStream(InputStream is) {
-    return dmnParser.parseModelFromStream(is);
+    return DMN_PARSER.parseModelFromStream(is);
   }
 
   protected void doWriteModelToFile(File file, DmnModelInstance modelInstance) {
@@ -272,11 +203,11 @@ public class Dmn {
   }
 
   protected void doValidateModel(DmnModelInstance modelInstance) {
-    dmnParser.validateModel(modelInstance.getDocument());
+    DMN_PARSER.validateModel(modelInstance.getDocument());
   }
 
   protected DmnModelInstance doCreateEmptyModel() {
-    return dmnParser.getEmptyModel();
+    return DMN_PARSER.getEmptyModel();
   }
 
   protected void doRegisterTypes(ModelBuilder modelBuilder) {
@@ -383,7 +314,7 @@ public class Dmn {
   }
 
   /**
-   * @param dmnModel the cmmnModel to set
+   * @param dmnModel the dmnModel to set
    */
   public void setDmnModel(Model dmnModel) {
     this.dmnModel = dmnModel;

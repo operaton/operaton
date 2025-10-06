@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.hal.cache;
 
-import org.operaton.bpm.engine.rest.cache.Cache;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +24,8 @@ import java.util.Map.Entry;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.operaton.bpm.engine.rest.cache.Cache;
 
 public class HalRelationCacheConfiguration {
 

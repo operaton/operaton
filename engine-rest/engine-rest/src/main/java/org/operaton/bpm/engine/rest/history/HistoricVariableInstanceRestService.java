@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
+import java.util.List;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.UriInfo;
+
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
 import org.operaton.bpm.engine.rest.dto.history.HistoricVariableInstanceDto;
 import org.operaton.bpm.engine.rest.dto.history.HistoricVariableInstanceQueryDto;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 import org.operaton.bpm.engine.rest.sub.history.HistoricVariableInstanceResource;
-
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.UriInfo;
-import java.util.List;
 
 @Path(HistoricVariableInstanceRestService.PATH)
 @Produces(MediaType.APPLICATION_JSON)

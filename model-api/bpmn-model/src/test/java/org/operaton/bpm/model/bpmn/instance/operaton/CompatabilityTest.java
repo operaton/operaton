@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.instance.operaton;
 
+import java.util.Collection;
+
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.OperatonExtensionsTest;
@@ -24,10 +27,8 @@ import org.operaton.bpm.model.bpmn.impl.BpmnModelConstants;
 import org.operaton.bpm.model.bpmn.impl.instance.ProcessImpl;
 import org.operaton.bpm.model.bpmn.instance.ExtensionElements;
 
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.PROCESS_ID;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test to check the interoperability when changing elements and attributes with

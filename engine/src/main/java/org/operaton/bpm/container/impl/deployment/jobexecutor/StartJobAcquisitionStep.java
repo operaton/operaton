@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
-import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_APPLICATION;
-
 import java.util.Map;
 
 import org.operaton.bpm.application.AbstractProcessApplication;
@@ -25,14 +23,16 @@ import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedJobExecutor;
 import org.operaton.bpm.container.impl.metadata.PropertyHelper;
 import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
-import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
+import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.RuntimeContainerJobExecutor;
+
+import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_APPLICATION;
 
 /**
  * <p>Deployment operation step responsible for starting a JobEexecutor</p>

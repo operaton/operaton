@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-
 import java.util.Date;
 
 import org.joda.time.DateTime;
+
+import org.operaton.bpm.engine.impl.util.ClockUtil;
 
 /**
  * @author Sebastian Menski

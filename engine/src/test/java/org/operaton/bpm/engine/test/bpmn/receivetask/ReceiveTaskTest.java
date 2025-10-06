@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.engine.test.bpmn.receivetask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -34,6 +32,9 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * see https://app.camunda.com/jira/browse/CAM-1612
@@ -355,12 +356,7 @@ class ReceiveTaskTest {
     var eventSubscription = subscriptions.get(0).getEventName();
 
     // then: we can not correlate an event
-    try {
-      runtimeService.correlateMessage(eventSubscription);
-      fail("should throw a mismatch");
-    } catch (MismatchingMessageCorrelationException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> runtimeService.correlateMessage(eventSubscription)).isInstanceOf(MismatchingMessageCorrelationException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTaskCompensate.bpmn20.xml")

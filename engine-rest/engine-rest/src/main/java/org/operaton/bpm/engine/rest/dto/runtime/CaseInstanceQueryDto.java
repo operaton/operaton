@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.engine.rest.dto.runtime;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
@@ -25,16 +33,8 @@ import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
 import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
+
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response.Status;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static java.lang.Boolean.TRUE;
 
 /**
@@ -259,6 +259,7 @@ public class CaseInstanceQueryDto extends AbstractQueryDto<CaseInstanceQuery> {
     case SORT_BY_DEFINITION_KEY_VALUE -> query.orderByCaseDefinitionKey();
     case SORT_BY_DEFINITION_ID_VALUE -> query.orderByCaseDefinitionId();
     case SORT_BY_TENANT_ID -> query.orderByTenantId();
+    default -> throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid sort operator specified: " + sortBy);
     }
   }
 

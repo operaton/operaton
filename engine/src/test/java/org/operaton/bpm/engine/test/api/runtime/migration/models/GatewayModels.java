@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Thorben Lindhauer
  *
  */
-public class GatewayModels {
+public final class GatewayModels {
 
   public static final BpmnModelInstance PARALLEL_GW = ProcessModels.newModel()
       .startEvent()
@@ -95,4 +95,7 @@ public class GatewayModels {
       .subProcessDone()
       .endEvent()
       .done();
+
+  private GatewayModels() {
+  }
 }

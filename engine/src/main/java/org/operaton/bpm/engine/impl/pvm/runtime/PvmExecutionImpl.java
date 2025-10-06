@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
+import java.io.Serial;
+import java.util.*;
+
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -49,11 +52,9 @@ import org.operaton.bpm.engine.impl.tree.*;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.variable.VariableMap;
+
 import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
 import static org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState.ENDING;
-
-import java.io.Serial;
-import java.util.*;
 
 /**
  * @author Daniel Meyer
@@ -1005,14 +1006,15 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   @Override
   public void leaveActivityViaTransition(PvmTransition outgoingTransition) {
-    leaveActivityViaTransitions(Arrays.asList(outgoingTransition), Collections.<ActivityExecution>emptyList());
+    leaveActivityViaTransitions(Arrays.asList(outgoingTransition), Collections.emptyList());
   }
 
   @Override
-  public void leaveActivityViaTransitions(List<PvmTransition> _transitions, List<? extends ActivityExecution> _recyclableExecutions) {
-    List<? extends ActivityExecution> recyclableExecutions = Collections.emptyList();
-    if (_recyclableExecutions != null) {
-      recyclableExecutions = new ArrayList<>(_recyclableExecutions);
+  public void leaveActivityViaTransitions(List<PvmTransition> transitions, List<? extends ActivityExecution> recyclableExecutions) {
+    if (recyclableExecutions != null) {
+      recyclableExecutions = new ArrayList<>(recyclableExecutions);
+    } else {
+      recyclableExecutions = new ArrayList<>();
     }
 
     // if recyclable executions size is greater
@@ -1058,7 +1060,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     // executions first.
     for (ActivityExecution execution : recyclableExecutions) {
       execution.setIgnoreAsync(true);
-      execution.end(_transitions.isEmpty());
+      execution.end(transitions.isEmpty());
     }
 
     PvmExecutionImpl propagatingExecution = this;
@@ -1069,10 +1071,10 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     propagatingExecution.isActive = true;
     propagatingExecution.isEnded = false;
 
-    if (_transitions.isEmpty()) {
+    if (transitions.isEmpty()) {
       propagatingExecution.end(!propagatingExecution.isConcurrent());
     } else {
-      propagatingExecution.setTransitionsToTake(_transitions);
+      propagatingExecution.setTransitionsToTake(transitions);
       propagatingExecution.performOperation(PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_END);
     }
   }
@@ -1536,9 +1538,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
     // finally extend the mapping for the current execution
     // (note that the current execution need not be a leaf itself)
-    mapping = this.createActivityExecutionMapping(currentScope, mapping);
-
-    return mapping;
+    return this.createActivityExecutionMapping(currentScope, mapping);
   }
 
   @Override
@@ -2192,10 +2192,10 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
                                    String currentActivityInstanceId, String currentActivityId) {
     return
       //activityInstanceId's can be null on transitions, so the activityId must be equal
-      ((lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && lastActivityId.equals(currentActivityId))
+      (lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && lastActivityId.equals(currentActivityId))
         //if activityInstanceId's are not null they must be equal -> otherwise execution changed
         || (lastActivityInstanceId != null && lastActivityInstanceId.equals(currentActivityInstanceId)
-        && (lastActivityId == null || lastActivityId.equals(currentActivityId))));
+        && (lastActivityId == null || lastActivityId.equals(currentActivityId)));
 
   }
 
@@ -2210,7 +2210,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       return targetScope.getActivityInstanceId();
     } else {
       ActivityImpl targetActivity = targetScope.getActivity();
-      if ((targetActivity != null && targetActivity.getActivities().isEmpty())) {
+      if (targetActivity != null && targetActivity.getActivities().isEmpty()) {
         return targetScope.getActivityInstanceId();
       } else {
         return targetScope.getParentActivityInstanceId();

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.security.auth.impl;
 
 import java.security.Principal;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

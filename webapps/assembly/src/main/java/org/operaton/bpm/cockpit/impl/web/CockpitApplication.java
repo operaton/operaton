@@ -19,9 +19,10 @@ package org.operaton.bpm.cockpit.impl.web;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import jakarta.ws.rs.core.Application;
 
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
-import jakarta.ws.rs.core.Application;
+
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.plugin.spi.CockpitPlugin;
 import org.operaton.bpm.engine.rest.exception.ExceptionHandler;

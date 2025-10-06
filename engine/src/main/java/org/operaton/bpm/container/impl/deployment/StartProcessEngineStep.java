@@ -163,7 +163,7 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
   @SuppressWarnings("unchecked")
   protected <T> Class<? extends T> loadClass(String className, ClassLoader customClassloader, Class<T> clazz) {
     try {
-      return ReflectUtil.loadClass(className, customClassloader, clazz);
+      return ReflectUtil.loadClass(className, customClassloader);
     }
     catch (ClassNotFoundException e) {
       throw LOG.cannotLoadConfigurationClass(className, e);

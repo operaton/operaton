@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.qa.performance.engine.junit;
 
-import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestConfiguration;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
@@ -27,6 +23,10 @@ import java.util.Properties;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
+
+import org.operaton.bpm.engine.impl.util.IoUtil;
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestConfiguration;
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 
 /**
  * JUnit 5 extension allowing to load the performance test configuration from a file.

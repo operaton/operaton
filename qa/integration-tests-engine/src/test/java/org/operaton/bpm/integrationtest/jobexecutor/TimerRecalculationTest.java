@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,12 +26,15 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.TimerExpressionBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -60,8 +60,8 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
 
     ProcessInstanceQuery instancesQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId);
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(processInstanceId);
-    assertEquals(1, instancesQuery.count());
-    assertEquals(1, jobQuery.count());
+    assertThat(instancesQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isEqualTo(1);
 
     Job job = jobQuery.singleResult();
     Date oldDueDate = job.getDuedate();
@@ -71,7 +71,7 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
     managementService.recalculateJobDuedate(job.getId(), true);
 
     // then
-    assertEquals(1, jobQuery.count());
+    assertThat(jobQuery.count()).isEqualTo(1);
     Job jobRecalculated = jobQuery.singleResult();
     assertThat(jobRecalculated.getDuedate()).isNotEqualTo(oldDueDate);
 
@@ -79,10 +79,10 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
     calendar.setTime(jobRecalculated.getCreateTime());
     calendar.add(Calendar.SECOND, 1);
     Date expectedDate = calendar.getTime();
-    assertEquals(expectedDate, jobRecalculated.getDuedate());
+    assertThat(jobRecalculated.getDuedate()).isEqualTo(expectedDate);
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertEquals(0, instancesQuery.count());
+    assertThat(instancesQuery.count()).isZero();
   }
 }

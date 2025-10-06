@@ -18,6 +18,7 @@ package org.operaton.bpm.model.dmn.instance;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.model.dmn.impl.DmnModelConstants;
 import org.operaton.bpm.model.dmn.util.GetDmnModelElementTypeRule;
 import org.operaton.bpm.model.xml.test.AbstractModelElementInstanceTest;

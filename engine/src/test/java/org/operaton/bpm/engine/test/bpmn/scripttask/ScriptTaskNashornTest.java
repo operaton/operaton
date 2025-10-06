@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.test.bpmn.scripttask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ScriptTaskNashornTest extends AbstractScriptTaskTest {
 

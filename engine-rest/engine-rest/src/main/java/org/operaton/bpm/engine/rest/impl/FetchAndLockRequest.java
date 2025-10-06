@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
+import java.util.Date;
+import jakarta.ws.rs.container.AsyncResponse;
+
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.rest.dto.externaltask.FetchExternalTasksExtendedDto;
-
-import jakarta.ws.rs.container.AsyncResponse;
-import java.util.Date;
 
 /**
  * @author Tassilo Weidner

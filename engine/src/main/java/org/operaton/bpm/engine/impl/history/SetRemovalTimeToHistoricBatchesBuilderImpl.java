@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
@@ -23,10 +27,6 @@ import org.operaton.bpm.engine.history.SetRemovalTimeSelectModeForHistoricBatche
 import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricBatchesBuilder;
 import org.operaton.bpm.engine.impl.cmd.batch.removaltime.SetRemovalTimeToHistoricBatchesCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
@@ -109,7 +109,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
   {
     CALCULATED_REMOVAL_TIME,
     ABSOLUTE_REMOVAL_TIME,
-    CLEARED_REMOVAL_TIME;
+    CLEARED_REMOVAL_TIME
   }
 
 }

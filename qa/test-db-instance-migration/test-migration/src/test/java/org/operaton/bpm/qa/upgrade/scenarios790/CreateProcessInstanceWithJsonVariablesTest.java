@@ -18,17 +18,19 @@ package org.operaton.bpm.qa.upgrade.scenarios790;
 
 import java.util.HashMap;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.qa.upgrade.json.beans.ObjectList;
 import org.operaton.bpm.qa.upgrade.json.beans.Order;
-
 import org.operaton.bpm.qa.upgrade.json.beans.RegularCustomer;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

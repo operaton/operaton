@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.hitpolicy;
 
-import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
-import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
-import org.operaton.bpm.dmn.engine.impl.hitpolicy.DmnHitPolicyException;
-import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
-import org.operaton.bpm.dmn.engine.test.DecisionResource;
-import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
-import org.operaton.bpm.dmn.engine.test.asserts.DmnDecisionTableResultAssert;
-import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +23,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
+import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
+import org.operaton.bpm.dmn.engine.impl.hitpolicy.DmnHitPolicyException;
+import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
+import org.operaton.bpm.dmn.engine.test.DecisionResource;
+import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
+import org.operaton.bpm.dmn.engine.test.asserts.DmnDecisionTableResultAssert;
+
+import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

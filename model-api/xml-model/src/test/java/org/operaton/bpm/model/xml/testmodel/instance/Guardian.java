@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
 
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ELEMENT_NAME_GUARDIAN;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+
+import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ELEMENT_NAME_GUARDIAN;
+import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
 
 public class Guardian extends AnimalReference {
 

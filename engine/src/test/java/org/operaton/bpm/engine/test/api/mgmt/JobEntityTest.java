@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -38,6 +36,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
+
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner
@@ -168,12 +169,7 @@ class JobEntityTest {
     var jobId = job.getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // exception expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then
     job = (JobEntity) managementService.createJobQuery().jobId(job.getId()).singleResult();
@@ -199,12 +195,7 @@ class JobEntityTest {
     var jobId = job.getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // exception expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then
     job = (JobEntity) managementService.createJobQuery().jobId(job.getId()).singleResult();
@@ -232,12 +223,7 @@ class JobEntityTest {
     var jobId = job.getId();
 
     // when
-    try {
-      managementService.executeJob(jobId);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // exception expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     // then
     job = (JobEntity) managementService.createJobQuery().jobId(job.getId()).singleResult();

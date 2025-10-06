@@ -19,13 +19,14 @@ package org.operaton.bpm.engine.test.bpmn.mail;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.slf4j.Logger;
+import org.subethamail.wiser.Wiser;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.test.TestLogger;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
-import org.slf4j.Logger;
-import org.subethamail.wiser.Wiser;
 
 
 /**
@@ -55,10 +56,10 @@ public abstract class EmailTestCase {
       wiser.setPort(port);
 
       try {
-        LOG.info("Starting Wiser mail server on port: " + port);
+        LOG.info("Starting Wiser mail server on port: {}", port);
         wiser.start();
         serverUpAndRunning = true;
-        LOG.info("Wiser mail server listening on port: " + port);
+        LOG.info("Wiser mail server listening on port: {}", port);
       } catch (RuntimeException e) { // Fix for slow port-closing Jenkins
         if (e.getMessage().toLowerCase().contains("BindException")) {
           Thread.sleep(250L);

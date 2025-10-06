@@ -25,8 +25,8 @@ import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.batch.BatchElementConfiguration;
 import org.operaton.bpm.engine.impl.cmd.AbstractSetJobsRetriesBatchCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * @author Askar Akhmerov

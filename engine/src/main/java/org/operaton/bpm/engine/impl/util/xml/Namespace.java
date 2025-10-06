@@ -62,24 +62,28 @@ public class Namespace {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((namespaceUri == null) ? 0 : namespaceUri.hashCode());
-    return result;
+    return prime * result + (namespaceUri == null ? 0 : namespaceUri.hashCode());
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Namespace other = (Namespace) obj;
     if (namespaceUri == null) {
-      if (other.namespaceUri != null)
+      if (other.namespaceUri != null) {
         return false;
-    } else if (!namespaceUri.equals(other.namespaceUri))
+      }
+    } else if (!namespaceUri.equals(other.namespaceUri)) {
       return false;
+    }
     return true;
   }
 

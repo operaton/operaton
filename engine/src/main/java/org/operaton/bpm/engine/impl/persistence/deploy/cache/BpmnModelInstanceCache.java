@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import java.io.InputStream;
+import java.util.List;
+
 import org.operaton.bpm.engine.impl.ProcessDefinitionQueryImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,9 +26,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * @author: Johannes Heinemann

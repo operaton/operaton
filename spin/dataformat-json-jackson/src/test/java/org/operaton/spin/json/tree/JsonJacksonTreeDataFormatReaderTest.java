@@ -16,12 +16,6 @@
  */
 package org.operaton.spin.json.tree;
 
-import org.operaton.spin.DataFormats;
-import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
-import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormatReader;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_COLLECTION;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -30,6 +24,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.spin.DataFormats;
+import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
+import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormatReader;
+
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_COLLECTION;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JsonJacksonTreeDataFormatReaderTest {
@@ -45,7 +45,7 @@ class JsonJacksonTreeDataFormatReaderTest {
   }
 
   @Test
-  void shouldMatchJsonInput() throws IOException {
+  void shouldMatchJsonInput() throws Exception {
     inputReader = stringToReader(EXAMPLE_JSON);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();
@@ -55,7 +55,7 @@ class JsonJacksonTreeDataFormatReaderTest {
   }
 
   @Test
-  void shouldMatchJsonInputWithWhitespace() throws IOException {
+  void shouldMatchJsonInputWithWhitespace() throws Exception {
     inputReader = stringToReader("   " + EXAMPLE_JSON);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();

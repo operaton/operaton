@@ -19,10 +19,11 @@ package org.operaton.bpm.engine.rest.helper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.engine.variable.VariableMap;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+
+import org.operaton.bpm.engine.variable.VariableMap;
 
 public class EqualsVariableMap extends BaseMatcher<Map<String, Object>> {
 

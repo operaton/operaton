@@ -16,23 +16,22 @@
  */
 package org.operaton.bpm.engine.rest.converter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class DateConverterTest {
   private DateConverter converter;
@@ -45,17 +44,17 @@ class DateConverterTest {
   @Test
   void shouldFailForDoubleQuotedValue() {
     //when
-    assertThrows(InvalidRequestException.class, () -> converter.convertQueryParameterToType("\"pizza\""));
+    assertThatExceptionOfType(InvalidRequestException.class).isThrownBy(() -> converter.convertQueryParameterToType("\"pizza\""));
   }
 
   @Test
   void shouldFailForSingleDoubleQuotedValue() {
     //when
-    assertThrows(InvalidRequestException.class, () -> converter.convertQueryParameterToType("2014-01-01T00:00:00+0200\""));
+    assertThatExceptionOfType(InvalidRequestException.class).isThrownBy(() -> converter.convertQueryParameterToType("2014-01-01T00:00:00+0200\""));
   }
 
   @Test
-  void shouldConvertDate() throws JsonProcessingException {
+  void shouldConvertDate() throws Exception {
     //given
     String value = "2014-01-01T00:00:00+0200";
     ObjectMapper mock = mock(ObjectMapper.class);
@@ -66,6 +65,6 @@ class DateConverterTest {
     Date date = converter.convertQueryParameterToType(value);
 
     //then
-    assertEquals(date, DateTimeUtil.parseDate(value));
+    assertThat(DateTimeUtil.parseDate(value)).isEqualTo(date);
   }
 }

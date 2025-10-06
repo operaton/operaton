@@ -20,9 +20,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.repository.ResourceType;
-import org.operaton.bpm.engine.impl.db.DbEntity;
 
 /**
  * @author Tom Baeyens
@@ -74,7 +74,7 @@ public class ByteArrayEntity implements Serializable, DbEntity, HasDbRevision {
 
   @Override
   public Object getPersistentState() {
-    return (bytes != null ? bytes : PERSISTENTSTATE_NULL);
+    return bytes != null ? bytes : PERSISTENTSTATE_NULL;
   }
 
   @Override

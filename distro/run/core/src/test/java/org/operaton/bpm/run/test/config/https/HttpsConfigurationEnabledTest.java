@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.run.test.config.https;
 
-import org.operaton.bpm.run.OperatonApp;
-import org.operaton.bpm.run.test.AbstractRestTest;
-import org.operaton.bpm.run.test.util.TestUtils;
-
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -34,8 +30,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import org.operaton.bpm.run.OperatonApp;
+import org.operaton.bpm.run.test.AbstractRestTest;
+import org.operaton.bpm.run.test.util.TestUtils;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 @SpringBootTest(classes = {OperatonApp.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = {"test-https-enabled"})
@@ -68,8 +68,8 @@ class HttpsConfigurationEnabledTest extends AbstractRestTest {
     String url = "http://localhost:8899" + CONTEXT_PATH + "/task";
     // when
     HttpEntity<Object> requestEntity = new HttpEntity<>(null);
-    Throwable exception = assertThrows(ResourceAccessException.class, () ->
-        restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class));
+    Throwable exception = assertThatExceptionOfType(ResourceAccessException.class).isThrownBy(() ->
+      restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class)).actual();
     assertThat(exception.getMessage()).contains("I/O error on GET request for \"http://localhost:8899/engine-rest/task\":");
   }
 }

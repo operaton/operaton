@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.event;
 
 import java.io.Serial;
 
-
 import org.springframework.context.ApplicationEvent;
 
 public class ProcessApplicationEvent extends ApplicationEvent {

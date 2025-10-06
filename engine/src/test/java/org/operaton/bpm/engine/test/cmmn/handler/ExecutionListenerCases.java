@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.test.cmmn.handler.specification.DelegateExpressio
 import org.operaton.bpm.engine.test.cmmn.handler.specification.ExpressionExecutionListenerSpec;
 import org.operaton.bpm.engine.test.cmmn.handler.specification.ScriptExecutionListenerSpec;
 
-public class ExecutionListenerCases {
+public final class ExecutionListenerCases {
 
   public static final Iterable<Object[]> TASK_OR_STAGE_CASES =
       Arrays.asList(new Object[][] {
@@ -263,6 +263,9 @@ public class ExecutionListenerCases {
           {new ExpressionExecutionListenerSpec(AbstractExecutionListenerSpec.ANY_EVENT)
               .expectRegistrationFor(ItemHandler.CASE_PLAN_MODEL_EVENTS)}
       });
+
+  private ExecutionListenerCases() {
+  }
 
 
 }

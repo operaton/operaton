@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.history;
 
 import java.util.Date;
+
 import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;

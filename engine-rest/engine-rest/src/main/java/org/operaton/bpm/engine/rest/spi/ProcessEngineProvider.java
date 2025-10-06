@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.spi;
 
-import org.operaton.bpm.engine.ProcessEngine;
-
 import java.util.Set;
+
+import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * A simple provider SPI used to locate a process engine object.

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb.beans;
 
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-import org.operaton.bpm.engine.delegate.JavaDelegate;
-
 import jakarta.ejb.Stateless;
 import jakarta.inject.Named;
+
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 
 @Named("SFSBDelegate")

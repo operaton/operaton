@@ -50,7 +50,7 @@ public final class ModificationUtil {
     PvmExecutionImpl executionInParentScope = removedExecution.isConcurrent() ? removedExecution : removedExecution.getParent();
 
     CoreActivityBehavior<? extends BaseDelegateExecution> activityBehavior = flowScope.getActivityBehavior();
-    if (activityBehavior != null && activityBehavior instanceof ModificationObserverBehavior modificationObserverBehavior) {
+    if (activityBehavior instanceof ModificationObserverBehavior modificationObserverBehavior) {
       // let child removal be handled by the scope itself
       modificationObserverBehavior.destroyInnerInstance(executionInParentScope);
     }

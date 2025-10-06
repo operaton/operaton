@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios7110.gson;
 
+import java.util.Date;
+
+import org.junit.After;
+import org.junit.Rule;
+import org.junit.Test;
+
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.Test;
-
-import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

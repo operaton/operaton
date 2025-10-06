@@ -21,9 +21,9 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.ejb.local.bean.BusinessInterface;
@@ -32,6 +32,8 @@ import org.operaton.bpm.integrationtest.functional.ejb.local.bean.LocalSFSBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -79,7 +81,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInvokeBean");
 
-    Assertions.assertEquals(true, runtimeService.getVariable(pi.getId(), "result"));
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(true);
 
     runtimeService.setVariable(pi.getId(), "result", false);
 
@@ -87,7 +89,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assertions.assertEquals(true, runtimeService.getVariable(pi.getId(), "result"));
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(true);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }
@@ -101,7 +103,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
 
     for(int i=0; i<instances; i++) {
       ids[i] = runtimeService.startProcessInstanceByKey("testInvokeBean").getId();
-      Assertions.assertEquals(true, runtimeService.getVariable(ids[i], "result"));
+      assertThat(runtimeService.getVariable(ids[i], "result")).isEqualTo(true);
       runtimeService.setVariable(ids[i], "result", false);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -109,7 +111,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
     waitForJobExecutorToProcessAllJobs(60*1000);
 
     for(int i=0; i<instances; i++) {
-      Assertions.assertEquals(true, runtimeService.getVariable(ids[i], "result"));
+      assertThat(runtimeService.getVariable(ids[i], "result")).isEqualTo(true);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
 

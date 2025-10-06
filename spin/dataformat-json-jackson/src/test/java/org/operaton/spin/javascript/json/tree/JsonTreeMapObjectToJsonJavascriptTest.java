@@ -16,10 +16,10 @@
  */
 package org.operaton.spin.javascript.json.tree;
 
+import org.junit.jupiter.api.Disabled;
+
 import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.json.tree.JsonTreeMapObjectToJsonScriptTest;
-
-import org.junit.jupiter.api.Disabled;
 
 /**
  * Note: Jackson is apparently not able to map graal.js's internal representations

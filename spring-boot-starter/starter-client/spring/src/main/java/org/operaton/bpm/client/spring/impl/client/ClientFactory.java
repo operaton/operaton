@@ -16,16 +16,6 @@
  */
 package org.operaton.bpm.client.spring.impl.client;
 
-import org.operaton.bpm.client.ExternalTaskClient;
-import org.operaton.bpm.client.ExternalTaskClientBuilder;
-import org.operaton.bpm.client.backoff.BackoffStrategy;
-import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
-import org.operaton.bpm.client.spring.exception.SpringExternalTaskClientException;
-import org.operaton.bpm.client.spring.impl.client.util.ClientLoggerUtil;
-import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
-import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_ASC_VALUE;
-import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_DESC_VALUE;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +27,19 @@ import org.springframework.core.env.PropertyResolver;
 import org.springframework.core.env.PropertySources;
 import org.springframework.core.env.PropertySourcesPropertyResolver;
 
+import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.ExternalTaskClientBuilder;
+import org.operaton.bpm.client.backoff.BackoffStrategy;
+import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
+import org.operaton.bpm.client.spring.exception.SpringExternalTaskClientException;
+import org.operaton.bpm.client.spring.impl.client.util.ClientLoggerUtil;
+import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
+
+import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_ASC_VALUE;
+import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_DESC_VALUE;
+
 public class ClientFactory
-    implements FactoryBean<ExternalTaskClient>, InitializingBean {
+  implements FactoryBean<ExternalTaskClient>, InitializingBean {
 
   protected static final ClientLoggerUtil LOG = LoggerUtil.CLIENT_LOGGER;
 
@@ -67,7 +68,7 @@ public class ClientFactory
       if (clientConfiguration.getMaxTasks() != null) {
         clientBuilder.maxTasks(clientConfiguration.getMaxTasks());
       }
-      if (clientConfiguration.getUsePriority() != null && !clientConfiguration.getUsePriority()) {
+      if (clientConfiguration.getUsePriority() != null && Boolean.FALSE.equals(clientConfiguration.getUsePriority())) {
         clientBuilder.usePriority(false);
       }
       if (clientConfiguration.getDefaultSerializationFormat() != null) {

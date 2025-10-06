@@ -18,10 +18,10 @@ package org.operaton.bpm.model.xml.impl.util;
 
 import java.io.Serial;
 
+import org.w3c.dom.Node;
 
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.instance.DomDocument;
-import org.w3c.dom.Node;
 
 /**
  * <p>Thrown when a Model Element is added to the wrong document</p>

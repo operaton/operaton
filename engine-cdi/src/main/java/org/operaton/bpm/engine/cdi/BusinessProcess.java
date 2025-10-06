@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.cdi;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
-
 import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Instance;
@@ -720,7 +719,7 @@ public class BusinessProcess implements Serializable {
    */
   public ProcessInstance getProcessInstance() {
     Execution execution = getExecution();
-    if(execution != null && !(execution.getProcessInstanceId().equals(execution.getId()))){
+    if(execution != null && !execution.getProcessInstanceId().equals(execution.getId())){
       return processEngine
             .getRuntimeService()
             .createProcessInstanceQuery()

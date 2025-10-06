@@ -32,15 +32,12 @@ public class TaskCreateTimeScenario extends AbstractTimestampMigrationScenario {
   @DescribesScenario("initCreateTime")
   @Times(1)
   public static ScenarioSetup initCreateTime() {
-    return new ScenarioSetup() {
-      @Override
-      public void execute(ProcessEngine processEngine, String s) {
+    return (processEngine, s) -> {
 
-        TaskEntity task = TaskEntity.create();
-        task.setName(TASK_NAME);
-        task.setCreateTime(TIMESTAMP);
-        processEngine.getTaskService().saveTask(task);
-      }
+      TaskEntity task = TaskEntity.create();
+      task.setName(TASK_NAME);
+      task.setCreateTime(TIMESTAMP);
+      processEngine.getTaskService().saveTask(task);
     };
   }
 }

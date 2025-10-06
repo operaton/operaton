@@ -19,10 +19,10 @@ package org.operaton.bpm.engine.impl.diagnostics;
 public final class OperatonIntegration {
 
   public static final String SPRING_BOOT_STARTER = "spring-boot-starter";
-  public static final String CAMUNDA_BPM_RUN = "operaton-bpm-run";
+  public static final String OPERATON_BPM_RUN = "operaton-bpm-run";
   public static final String WILDFLY_SUBSYSTEM = "wildfly-subsystem";
   public static final String JBOSS_SUBSYSTEM = "jboss-subsystem";
-  public static final String CAMUNDA_EJB_SERVICE = "operaton-ejb-service";
+  public static final String OPERATON_EJB_SERVICE = "operaton-ejb-service";
 
   private OperatonIntegration() {
   }

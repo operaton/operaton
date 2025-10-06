@@ -15,8 +15,6 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import static java.util.Arrays.asList;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -44,6 +42,8 @@ import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.junit.jupiter.api.extension.TestInstantiationException;
 import org.junit.jupiter.api.extension.TestTemplateInvocationContext;
 import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider;
+
+import static java.util.Arrays.asList;
 
 /**
  * This JUnit 5 extension is intended to make the conversion from JUnit 4 Tests

@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.test.dmn.feel;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -30,6 +29,8 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.dmn.feel.helper.CustomFunctionProvider;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class FeelCustomFunctionConfigTest {
 

@@ -20,15 +20,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.operaton.spin.DeserializationTypeValidator;
-import org.operaton.spin.SpinRuntimeException;
-import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
-import org.operaton.spin.spi.DataFormatMapper;
-
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+
+import org.operaton.spin.DeserializationTypeValidator;
+import org.operaton.spin.SpinRuntimeException;
+import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
+import org.operaton.spin.spi.DataFormatMapper;
 
 public class JacksonJsonDataFormatMapper implements DataFormatMapper {
 

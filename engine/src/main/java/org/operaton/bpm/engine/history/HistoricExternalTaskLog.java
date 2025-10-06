@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.history;
 
+import java.util.Date;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
-
-import java.util.Date;
 
 /**
  * <p>The {@link HistoricExternalTaskLog} is used to have a log containing

@@ -16,6 +16,20 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -141,20 +155,6 @@ import org.operaton.bpm.engine.impl.util.xml.Parse;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.findOperatonExtensionElement;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseInputOutput;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseOperatonExtensionProperties;
@@ -184,6 +184,7 @@ import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDel
  * @author Deivarayan Azhagappan
  * @author Ingo Richtsmeier
  */
+@SuppressWarnings({"java:S3776", "java:S6541"}) // this class is complex by its nature
 public class BpmnParse extends Parse {
 
   public static final String MULTI_INSTANCE_BODY_ID_SUFFIX = "#multiInstanceBody";
@@ -235,7 +236,7 @@ public class BpmnParse extends Parse {
   public static final String CONDITION_EXPRESSION = "conditionExpression";
   public static final String CONDITION = "condition";
 
-  public static final List<String> VARIABLE_EVENTS = Arrays.asList(
+  private static final List<String> VARIABLE_EVENTS = Arrays.asList(
       VariableListener.CREATE,
       VariableListener.DELETE,
       VariableListener.UPDATE
@@ -1673,8 +1674,7 @@ public class BpmnParse extends Parse {
             nestedActivityImpl,
             ActivityTypes.INTERMEDIATE_EVENT_MESSAGE_THROW,
             messageEventDefinitionElement,
-            intermediateEventElement,
-            scopeElement);
+            intermediateEventElement);
       } else {
         // default to non behavior if no service task
         // properties have been specified
@@ -1799,7 +1799,7 @@ public class BpmnParse extends Parse {
     // find all cancel end events
     for (ActivityImpl childActivity : transaction.getActivities()) {
       ActivityBehavior activityBehavior = childActivity.getActivityBehavior();
-      if (activityBehavior != null && activityBehavior instanceof CancelEndEventActivityBehavior cancelEndEventBehavior) {
+      if (activityBehavior instanceof CancelEndEventActivityBehavior cancelEndEventBehavior) {
         cancelEndEventBehavior.setCancelBoundaryEvent(activity);
       }
     }
@@ -2248,7 +2248,7 @@ public class BpmnParse extends Parse {
     parseAsynchronousContinuationForActivity(serviceTaskElement, activity);
 
     String elementName = "serviceTask";
-    parseServiceTaskLike(activity, elementName, serviceTaskElement, serviceTaskElement, scope);
+    parseServiceTaskLike(activity, elementName, serviceTaskElement, serviceTaskElement);
 
     parseExecutionListenersOnScope(serviceTaskElement, activity);
 
@@ -2269,15 +2269,13 @@ public class BpmnParse extends Parse {
    *   (e.g. operaton:class attributes)
    * @param operatonPropertiesElement the element that contains the operaton:properties extension elements
    *   that apply to this service task. Usually, but not always, this is the same as serviceTaskElement
-   * @param scope
    * @return
    */
   public void parseServiceTaskLike(
       ActivityImpl activity,
       String elementName,
       Element serviceTaskElement,
-      Element operatonPropertiesElement,
-      ScopeImpl scope) {
+      Element operatonPropertiesElement) {
 
     String type = serviceTaskElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, TYPE);
     String className = serviceTaskElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, PROPERTYNAME_CLASS);
@@ -2321,7 +2319,7 @@ public class BpmnParse extends Parse {
       ) {
     if (activity.getActivityBehavior() == null) {
       addError("One of the attributes 'class', 'delegateExpression', 'type', "
-          + "or 'expression' is mandatory on " + elementName + ". If you are using a connector, make sure the"
+          + "or 'expression' is mandatory on " + elementName + ". If you are using a connector, make sure the "
           + "connect process engine plugin is registered with the process engine.", serviceTaskElement);
     }
   }
@@ -2343,8 +2341,7 @@ public class BpmnParse extends Parse {
           activity,
           elementName,
           businessRuleTaskElement,
-          businessRuleTaskElement,
-          scope);
+          businessRuleTaskElement);
 
       parseExecutionListenersOnScope(businessRuleTaskElement, activity);
 
@@ -2518,7 +2515,7 @@ public class BpmnParse extends Parse {
       String elementName = "sendTask";
       parseAsynchronousContinuationForActivity(sendTaskElement, activity);
 
-      parseServiceTaskLike(activity, elementName, sendTaskElement, sendTaskElement, scope);
+      parseServiceTaskLike(activity, elementName, sendTaskElement, sendTaskElement);
 
       parseExecutionListenersOnScope(sendTaskElement, activity);
 
@@ -3030,7 +3027,7 @@ public class BpmnParse extends Parse {
           stringBuilder.delete(0, stringBuilder.length());
         }
 
-        if (character != ',' || (insideExpression)) {
+        if (character != ',' || insideExpression) {
           stringBuilder.append(character);
         }
 
@@ -3187,8 +3184,7 @@ public class BpmnParse extends Parse {
               activity,
               ActivityTypes.END_EVENT_MESSAGE,
               messageEventDefinitionElement,
-              endEventElement,
-              scope);
+              endEventElement);
           activity.getProperties().set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_MESSAGE);
         } else {
           // default to non behavior if no service task
@@ -3890,10 +3886,10 @@ public class BpmnParse extends Parse {
 
     Boolean isTriggeredByEvent = parseBooleanAttribute(subProcessElement.attribute("triggeredByEvent"), false);
     subProcessActivity.getProperties().set(BpmnProperties.TRIGGERED_BY_EVENT, isTriggeredByEvent);
-    subProcessActivity.setProperty(PROPERTYNAME_CONSUMES_COMPENSATION, !isTriggeredByEvent);
+    subProcessActivity.setProperty(PROPERTYNAME_CONSUMES_COMPENSATION, Boolean.FALSE.equals(isTriggeredByEvent));
 
     subProcessActivity.setScope(true);
-    if (isTriggeredByEvent) {
+    if (Boolean.TRUE.equals(isTriggeredByEvent)) {
       subProcessActivity.setActivityBehavior(new EventSubProcessActivityBehavior());
       subProcessActivity.setEventScope(scope);
     } else {
@@ -4001,7 +3997,7 @@ public class BpmnParse extends Parse {
     parseInputParameter(callActivityElement, callableElement);
 
     // parse output parameter
-    parseOutputParameter(callActivityElement, activity, callableElement);
+    parseOutputParameter(callActivityElement, callableElement);
 
     if (!isMultiInstance) {
       // turn activity into a scope unless it is a multi instance activity, in
@@ -4107,7 +4103,7 @@ public class BpmnParse extends Parse {
     }
   }
 
-  protected void parseOutputParameter(Element callActivityElement, ActivityImpl activity, CallableElement callableElement) {
+  protected void parseOutputParameter(Element callActivityElement, CallableElement callableElement) {
     Element extensionsElement = callActivityElement.element(EXTENSION_ELEMENTS_TAG);
 
     if (extensionsElement != null) {

@@ -16,6 +16,18 @@
  */
 package org.operaton.bpm.engine.rest.sub.repository.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.UriInfo;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.AuthorizationException;
@@ -37,8 +49,8 @@ import org.operaton.bpm.engine.management.ActivityStatistics;
 import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.rest.ProcessInstanceRestService;
-import org.operaton.bpm.engine.rest.dto.StatisticsResultDto;
 import org.operaton.bpm.engine.rest.dto.HistoryTimeToLiveDto;
+import org.operaton.bpm.engine.rest.dto.StatisticsResultDto;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
 import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
@@ -65,18 +77,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
 import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;
 import org.operaton.bpm.engine.runtime.RestartProcessInstanceBuilder;
 import org.operaton.bpm.engine.variable.VariableMap;
-
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.core.UriInfo;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -255,8 +255,6 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       processModelIn = engine.getRepositoryService().getProcessModel(processDefinitionId);
       byte[] processModel = IoUtil.readInputStream(processModelIn, "processModelBpmn20Xml");
       return ProcessDefinitionDiagramDto.create(processDefinitionId, new String(processModel, UTF_8));
-    } catch (AuthorizationException e) {
-      throw e;
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, "No matching definition with id " + processDefinitionId);
     } finally {

@@ -71,15 +71,11 @@ public class FooDataFormat implements DataFormat<FooSpin> {
 
   @Override
   public DataFormatWriter getWriter() {
-    return new DataFormatWriter() {
-
-      @Override
-      public void writeToWriter(Writer writer, Object input) {
-        try {
-          writer.write("foo");
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        }
+    return (writer, input) -> {
+      try {
+        writer.write("foo");
+      } catch (IOException e) {
+        throw new RuntimeException(e);
       }
     };
   }

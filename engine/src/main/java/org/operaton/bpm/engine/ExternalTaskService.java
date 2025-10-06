@@ -18,6 +18,7 @@ package org.operaton.bpm.engine;
 
 import java.util.List;
 import java.util.Map;
+
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;

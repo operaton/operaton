@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.welcome;
 
+import java.util.Set;
+
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.plugin.SsoLogoutPluginConstants;
 import org.operaton.bpm.welcome.plugin.spi.impl.AbstractWelcomePlugin;
-
-import java.util.Set;
 
 public class SsoLogoutWelcomePlugin extends AbstractWelcomePlugin {
 

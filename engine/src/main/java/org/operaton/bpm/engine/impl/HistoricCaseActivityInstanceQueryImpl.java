@@ -16,16 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DISABLED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENABLED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
-
 import java.io.Serial;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +26,16 @@ import org.operaton.bpm.engine.history.HistoricCaseActivityInstanceQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
+
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DISABLED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENABLED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 
 /**
  * @author Sebastian Menski

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,8 +23,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -50,10 +49,17 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.MessageEventDefinition;
 
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 class FoxJobRetryCmdTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+          .randomEngineName()
+          .build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
@@ -201,6 +207,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().list().get(0);
     assertThat(job).isNotNull();
     String jobId = job.getId();
+    assertThat(job.getRetries()).isEqualTo(5);
 
     waitForExecutedJobWithRetriesLeft(4, jobId);
     stillOneJobWithExceptionAndRetriesLeft(jobId);
@@ -239,7 +246,9 @@ class FoxJobRetryCmdTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedIntermediateThrowingSignalEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.failingSignalStart.bpmn20.xml" })
-  public void FAILING_testFailedIntermediateThrowingSignalEvent() {
+  @Test
+  @Disabled
+  void testFailedIntermediateThrowingSignalEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedIntermediateThrowingSignalEvent");
 
     assertJobRetriesForActivity(pi, "failingSignalEvent");
@@ -252,15 +261,10 @@ class FoxJobRetryCmdTest {
 
     Job job = managementService.createJobQuery().singleResult();
 
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
     var jobId = job.getId();
 
-    try {
-      managementService.executeJob(jobId);
-      fail("");
-    } catch (Exception e) {
-      // expected
-    }
+    executeJobExpectingException(managementService, jobId);
 
     job = managementService.createJobQuery().singleResult();
 
@@ -291,11 +295,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -303,7 +303,9 @@ class FoxJobRetryCmdTest {
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
-  public void FAILING_testFailedRetryWithTimeShift() throws ParseException {
+  @Test
+  @Disabled
+  void testFailedRetryWithTimeShift() throws Exception {
     // set date to hour before time shift (2015-10-25T03:00:00 CEST =>
     // 2015-10-25T02:00:00 CET)
     Date tenMinutesBeforeTimeShift = createDateFromLocalString("2015-10-25T02:50:00 CEST");
@@ -370,11 +372,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -399,11 +397,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -411,7 +405,7 @@ class FoxJobRetryCmdTest {
   }
 
   @Test
-  void testFailedJobRetryTimeCycleWithChangingExpression() throws ParseException {
+  void testFailedJobRetryTimeCycleWithChangingExpression() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -434,11 +428,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     job = managementService.createJobQuery().singleResult();
     assertThat(job.getRetries()).isEqualTo(9);
@@ -448,15 +438,11 @@ class FoxJobRetryCmdTest {
 
     runtimeService.setVariable(pi.getProcessInstanceId(), "var", "R10/PT10M");
 
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     //then
     Date expectedDate = simpleDateFormat.parse("2017-01-01T10:15:00");
-    Date duedateTime = (managementService.createJobQuery().singleResult()).getDuedate();
+    Date duedateTime = managementService.createJobQuery().singleResult().getDuedate();
     assertThat(duedateTime).isEqualTo(expectedDate);
   }
 
@@ -476,11 +462,7 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -507,14 +489,10 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -545,14 +523,10 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -581,14 +555,10 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -618,14 +588,10 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -655,14 +621,10 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -694,14 +656,10 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -731,14 +689,10 @@ class FoxJobRetryCmdTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // assume
-    assertThat(job.getRetries()).isEqualTo(3);
+    assertThat(job.getRetries()).isEqualTo(5);
 
     // when job fails
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // then
     job = managementService.createJobQuery().singleResult();
@@ -749,7 +703,7 @@ class FoxJobRetryCmdTest {
   }
 
   @Test
-  void testFailingIntermediateBoundaryTimerJobWithCustomRetries() throws ParseException {
+  void testFailingIntermediateBoundaryTimerJobWithCustomRetries() throws Exception {
     try {
       // given
       BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
@@ -775,11 +729,7 @@ class FoxJobRetryCmdTest {
 
       // when the first timer is triggered
       Job firstJob = managementService.createJobQuery().singleResult();
-      try {
-        managementService.executeJob(firstJob.getId());
-      } catch (Exception e) {
-        // ignore
-      }
+      executeJobIgnoringException(managementService, firstJob.getId());
 
       // then a second job will be created for the second timer
       List<Job> jobs = managementService.createJobQuery().list();
@@ -789,7 +739,7 @@ class FoxJobRetryCmdTest {
           Date expectedDate = simpleDateFormat.parse("2019-01-01T10:11:01");
           assertThat(job.getDuedate()).isEqualTo(expectedDate);
           assertThat(((JobEntity) job).getLockExpirationTime()).isNull();
-        } else if (job.getRetries() == 3) { // the second job is not triggered yet
+        } else if (job.getRetries() == 2) { // the second job is not triggered yet
           Date expectedDate = simpleDateFormat.parse("2019-01-01T10:02:00");
           assertThat(job.getDuedate()).isEqualTo(expectedDate);
           assertThat(((JobEntity) job).getLockExpirationTime()).isNull();
@@ -825,11 +775,7 @@ class FoxJobRetryCmdTest {
     runtimeService.startProcessInstanceByKey("process");
 
     Job job = managementService.createJobQuery().singleResult();
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     Task task = taskService.createTaskQuery().taskDefinitionKey("beforePassing").singleResult();
     taskService.complete(task.getId());
@@ -910,11 +856,7 @@ class FoxJobRetryCmdTest {
 
     Job job = jobQuery.singleResult();
 
-    try {
-      managementService.executeJob(job.getId());
-    } catch (Exception e) {
-      // ignore
-    }
+    executeJobIgnoringException(managementService, job.getId());
 
     // update job
     job = jobQuery.singleResult();

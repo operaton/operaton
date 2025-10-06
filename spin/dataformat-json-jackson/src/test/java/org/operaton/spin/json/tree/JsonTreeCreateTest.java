@@ -16,8 +16,14 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import java.io.Reader;
+
+import org.junit.jupiter.api.Test;
+
+import org.operaton.spin.DataFormats;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.spi.SpinDataFormatException;
+
 import static org.operaton.spin.DataFormats.json;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.Spin.S;
@@ -25,14 +31,8 @@ import static org.operaton.spin.impl.util.SpinIoUtil.stringAsReader;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_EMPTY_STRING;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_INVALID_JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
-
-import java.io.IOException;
-import java.io.Reader;
-
-import org.junit.jupiter.api.Test;
-import org.operaton.spin.DataFormats;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.spi.SpinDataFormatException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -124,7 +124,7 @@ class JsonTreeCreateTest {
   }
 
   @Test
-  void shouldFailForEmptyReader() throws IOException {
+  void shouldFailForEmptyReader() throws Exception {
     var json = json();
 
     try (Reader input1 = stringAsReader(EXAMPLE_EMPTY_STRING)) {

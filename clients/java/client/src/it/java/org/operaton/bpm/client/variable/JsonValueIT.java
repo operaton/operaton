@@ -16,10 +16,16 @@
  */
 package org.operaton.bpm.client.variable;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.skyscreamer.jsonassert.JSONAssert;
+
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -36,13 +42,7 @@ import org.operaton.bpm.client.variable.value.JsonValue;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.skyscreamer.jsonassert.JSONAssert;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
 import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY_2;
@@ -50,6 +50,7 @@ import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCE
 import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_ID;
 import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclusiveGateway;
 import static org.operaton.bpm.client.variable.ClientValues.JSON;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JsonValueIT {
 

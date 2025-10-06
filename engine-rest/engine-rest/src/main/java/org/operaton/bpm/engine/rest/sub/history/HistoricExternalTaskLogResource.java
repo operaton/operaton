@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.sub.history;
 
-import org.operaton.bpm.engine.rest.dto.history.HistoricExternalTaskLogDto;
-
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+
+import org.operaton.bpm.engine.rest.dto.history.HistoricExternalTaskLogDto;
 
 /**
  * @since 7.7

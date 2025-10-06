@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.client.backoff;
 
-import org.operaton.bpm.client.task.ExternalTask;
-
 import java.util.List;
+
+import org.operaton.bpm.client.task.ExternalTask;
 
 /**
  * <p>Provides an exponential backoff strategy.

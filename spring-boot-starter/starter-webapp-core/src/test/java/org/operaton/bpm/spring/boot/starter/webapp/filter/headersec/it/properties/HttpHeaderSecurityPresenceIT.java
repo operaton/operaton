@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it.properties;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.headerSecurity.xssProtectionDisabled=false",
   "operaton.bpm.webapp.headerSecurity.contentSecurityPolicyDisabled=false",
@@ -52,7 +52,7 @@ class HttpHeaderSecurityPresenceIT {
   }
 
   @ParameterizedTest(name = "{index} => header={0}")
-  @CsvSource({
+  @ValueSource(strings = {
       "X-XSS-Protection",
       "Content-Security-Policy",
       "X-Content-Type-Options",

@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.client.backoff;
 
+import java.util.List;
+
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.client.exception.ExternalTaskClientException;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

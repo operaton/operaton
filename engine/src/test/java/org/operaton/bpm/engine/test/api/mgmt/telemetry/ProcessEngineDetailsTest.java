@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
+import org.operaton.bpm.engine.test.util.TestconfigProperties;
+
 import static org.operaton.bpm.engine.impl.util.ParseUtil.parseProcessEngineVersion;
 import static org.operaton.bpm.engine.impl.util.ProcessEngineDetails.EDITION_COMMUNITY;
 import static org.operaton.bpm.engine.impl.util.ProcessEngineDetails.EDITION_ENTERPRISE;
-
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
-import org.operaton.bpm.engine.test.util.TestconfigProperties;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ProcessEngineDetailsTest {
 

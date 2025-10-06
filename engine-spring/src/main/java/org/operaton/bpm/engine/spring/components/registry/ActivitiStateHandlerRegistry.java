@@ -15,10 +15,11 @@
  */
 package org.operaton.bpm.engine.spring.components.registry;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.bpmn.behavior.ReceiveTaskActivityBehavior;
-import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
-import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -26,10 +27,10 @@ import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ReceiveTaskActivityBehavior;
+import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
+import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 
 /**

@@ -26,6 +26,7 @@ import org.operaton.spin.spi.DataFormat;
  */
 public interface SpinValue extends SerializableValue {
 
+  @Override
   Spin<?> getValue();
 
   DataFormat<? extends Spin<?>> getDataFormat();

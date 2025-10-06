@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
+import java.io.Serial;
+import java.util.List;
+
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.UserQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-
-import java.io.Serial;
-import java.util.List;
 
 /**
  * @author Daniel Meyer
@@ -47,11 +47,13 @@ public class LdapUserQueryImpl extends UserQueryImpl {
 
   // execute queries /////////////////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     final LdapIdentityProviderSession provider = getLdapIdentityProvider(commandContext);
     return provider.findUserCountByQueryCriteria(this);
   }
 
+  @Override
   public List<User> executeList(CommandContext commandContext, Page page) {
     final LdapIdentityProviderSession provider = getLdapIdentityProvider(commandContext);
     return provider.findUserByQueryCriteria(this);

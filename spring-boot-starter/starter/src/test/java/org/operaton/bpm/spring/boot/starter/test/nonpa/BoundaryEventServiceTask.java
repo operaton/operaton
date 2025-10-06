@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.nonpa;
 
-import org.operaton.bpm.engine.delegate.BpmnError;
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-import org.operaton.bpm.engine.delegate.JavaDelegate;
-
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+
+import org.operaton.bpm.engine.delegate.BpmnError;
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 @Component("boundaryEventServiceTask")
 public class BoundaryEventServiceTask implements JavaDelegate {

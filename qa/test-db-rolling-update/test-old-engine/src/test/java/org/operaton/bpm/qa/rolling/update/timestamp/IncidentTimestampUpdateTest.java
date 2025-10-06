@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.qa.rolling.update.timestamp;
 
+import org.junit.Test;
+
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.qa.upgrade.Origin;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

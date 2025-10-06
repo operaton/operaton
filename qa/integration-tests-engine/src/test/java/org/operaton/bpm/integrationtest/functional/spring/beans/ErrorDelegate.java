@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.functional.spring.beans;
 
+import org.springframework.stereotype.Component;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.springframework.stereotype.Component;
 
 @Component
 public class ErrorDelegate implements JavaDelegate {

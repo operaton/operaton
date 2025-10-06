@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
+import java.util.Map;
 import jakarta.el.ELContext;
-import org.operaton.bpm.engine.ProcessEngineException;
 import jakarta.el.ELResolver;
 
-import java.util.Map;
+import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
  * An {@link ELResolver} that exposed object values in the map, under the name of the entry's key.
@@ -37,6 +37,7 @@ public class ReadOnlyMapELResolver extends ELResolver {
     this.wrappedMap = map;
   }
 
+  @Override
   public Object getValue(ELContext context, Object base, Object property) {
     if (base == null && wrappedMap.containsKey(property)) {
       context.setPropertyResolved(true);
@@ -45,21 +46,25 @@ public class ReadOnlyMapELResolver extends ELResolver {
     return null;
   }
 
+  @Override
   public boolean isReadOnly(ELContext context, Object base, Object property) {
     return true;
   }
 
+  @Override
   public void setValue(ELContext context, Object base, Object property, Object value) {
     if(base == null && wrappedMap.containsKey(property)) {
       throw new ProcessEngineException("Cannot set value of '" + property + "', it's readonly!");
     }
   }
 
-  public Class< ? > getCommonPropertyType(ELContext context, Object arg) {
+  @Override
+  public Class<?> getCommonPropertyType(ELContext context, Object arg) {
     return Object.class;
   }
 
-  public Class< ? > getType(ELContext context, Object arg1, Object arg2) {
+  @Override
+  public Class<?> getType(ELContext context, Object arg1, Object arg2) {
     return Object.class;
   }
 }

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.standalone.beans;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.ArtifactFactory;
 import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.Test;
 
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>

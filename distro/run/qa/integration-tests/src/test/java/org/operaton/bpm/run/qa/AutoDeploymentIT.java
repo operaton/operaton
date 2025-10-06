@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.run.qa;
 
-import org.operaton.bpm.model.bpmn.Bpmn;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,13 +24,16 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.model.bpmn.Bpmn;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import static io.restassured.RestAssured.when;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -90,7 +89,7 @@ class AutoDeploymentIT {
   }
 
   @Test
-  void shouldAutoDeployProcessDefinition() throws IOException {
+  void shouldAutoDeployProcessDefinition() throws Exception {
     // given
     createBPMNFile("", "process1");
     runStartScript();
@@ -116,7 +115,7 @@ class AutoDeploymentIT {
   }
 
   @Test
-  void shouldAutoDeployScriptAndForms() throws IOException {
+  void shouldAutoDeployScriptAndForms() throws Exception {
     // given
     InputStream formFile = AutoDeploymentIT.class.getClassLoader().getResourceAsStream("deployment/form.html");
     InputStream  scriptFile = AutoDeploymentIT.class.getClassLoader().getResourceAsStream("deployment/script.js");
@@ -142,7 +141,7 @@ class AutoDeploymentIT {
   }
 
   @Test
-  void shouldSetRelativePathAsResourceName() throws IOException {
+  void shouldSetRelativePathAsResourceName() throws Exception {
     // given
     createBPMNFile("", "process1");
     createBPMNFile("nested/", "process2");

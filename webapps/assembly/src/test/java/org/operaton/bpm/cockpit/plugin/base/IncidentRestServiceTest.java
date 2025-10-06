@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.IncidentQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.resources.IncidentRestService;
@@ -28,11 +31,9 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author roman.smirnov
@@ -434,11 +435,9 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
     identityService.setAuthenticatedUserId("foo");
 
-    assertDoesNotThrow(() -> {
-      // when
-      resource.queryIncidents(new IncidentQueryDto(), 0, 10);
-      // then: no exception expected
-    }, "No exception expected");
+    // when + then
+    assertThatCode(() -> resource.queryIncidents(new IncidentQueryDto(), 0, 10))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -446,11 +445,9 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
-    assertDoesNotThrow(() -> {
-      // when
-      resource.queryIncidents(new IncidentQueryDto(), null, null);
-      // then: no exception expected
-    }, "No exception expected");
+    //when + then
+    assertThatCode(() -> resource.queryIncidents(new IncidentQueryDto(), null, null))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -460,7 +457,8 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     var incidentQueryDto = new IncidentQueryDto();
 
     // when + then
-    assertDoesNotThrow(() -> resource.queryIncidents(incidentQueryDto, null, null), "No exception expected");
+    assertThatCode(() -> resource.queryIncidents(incidentQueryDto, null, null))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -502,8 +500,9 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
   protected void verifySorting(String sortBy, String sortOrder, int expectedResult) {
     List<IncidentDto> result = queryIncidents(sortBy, sortOrder);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(expectedResult);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(expectedResult);
   }
 
 }

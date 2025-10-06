@@ -16,7 +16,17 @@
  */
 package org.operaton.bpm.engine.rest.impl.optimize;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricIncident;
@@ -37,15 +47,6 @@ import org.operaton.bpm.engine.rest.dto.history.optimize.OptimizeHistoricActivit
 import org.operaton.bpm.engine.rest.dto.history.optimize.OptimizeHistoricIdentityLinkLogDto;
 import org.operaton.bpm.engine.rest.dto.history.optimize.OptimizeHistoricVariableUpdateDto;
 import org.operaton.bpm.engine.rest.impl.AbstractRestProcessEngineAware;
-
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Produces(MediaType.APPLICATION_JSON)
 public class OptimizeRestService extends AbstractRestProcessEngineAware {

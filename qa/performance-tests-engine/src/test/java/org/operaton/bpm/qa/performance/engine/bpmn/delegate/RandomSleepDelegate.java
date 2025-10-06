@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.qa.performance.engine.bpmn.delegate;
 
+import java.util.Random;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-
-import java.util.Random;
 
 /**
  * @author Johannes Heinemann

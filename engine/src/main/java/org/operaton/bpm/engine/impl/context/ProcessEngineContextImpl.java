@@ -21,12 +21,7 @@ public final class ProcessEngineContextImpl {
   private ProcessEngineContextImpl() {
   }
 
-  protected static ThreadLocal<Boolean> commandContextNew = new ThreadLocal<>() {
-    @Override
-    protected Boolean initialValue() {
-      return Boolean.FALSE;
-    }
-  };
+  protected static ThreadLocal<Boolean> commandContextNew = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
   public static boolean get() {
     return commandContextNew.get();

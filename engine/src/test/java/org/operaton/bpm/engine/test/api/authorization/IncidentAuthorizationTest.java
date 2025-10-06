@@ -16,8 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import java.util.Date;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -30,13 +34,6 @@ import org.operaton.bpm.engine.runtime.IncidentQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
-import java.util.Date;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
@@ -45,6 +42,9 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -393,9 +393,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, UPDATE);
 
-    // when
-    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.setAnnotationForIncidentById(incident.getId(),"my annotation"))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -408,9 +408,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_INSTANCE, instance.getId(), userId, UPDATE);
 
-    // when
-    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -423,9 +423,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE_INSTANCE);
 
-    // when
-    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -438,9 +438,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, UPDATE_INSTANCE);
 
-    // when
-    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -469,9 +469,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, UPDATE);
 
-    // when
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -485,8 +485,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_INSTANCE, instance.getId(), userId, UPDATE);
 
     // when
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -499,9 +500,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE_INSTANCE);
 
-    // when
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -514,9 +515,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, UPDATE_INSTANCE);
 
-    // when
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -527,7 +528,6 @@ class IncidentAuthorizationTest extends AuthorizationTest {
     Incident incident = runtimeService.createIncidentQuery().singleResult();
     enableAuthorization();
 
-    // when
     assertThatCode(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
         .doesNotThrowAnyException();
 
@@ -543,9 +543,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
     Incident incident = runtimeService.createIncidentQuery().singleResult();
     enableAuthorization();
 
-    // when
-    // then no error is thrown
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
 
     // cleanup
     cleanupStandalonIncident(jobId);

@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
+import java.util.List;
+import java.util.Map;
+
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.history.NativeHistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
@@ -23,13 +27,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 
-import java.io.Serial;
-import java.util.List;
-import java.util.Map;
-
 
 public class NativeHistoricVariableInstanceQueryImpl extends AbstractNativeQuery<NativeHistoricVariableInstanceQuery, HistoricVariableInstance>
-        implements NativeHistoricVariableInstanceQuery {
+  implements NativeHistoricVariableInstanceQuery {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 

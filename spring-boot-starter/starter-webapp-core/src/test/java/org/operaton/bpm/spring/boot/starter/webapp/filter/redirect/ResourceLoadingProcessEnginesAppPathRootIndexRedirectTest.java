@@ -16,25 +16,25 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-
 import java.net.HttpURLConnection;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.Test;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
-@SpringBootTest(classes = { FilterTestApp.class},
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    properties = {
-        "operaton.bpm.webapp.application-path=/",
-        "operaton.bpm.webapp.index-redirect-enabled=true",
-        "operaton.bpm.admin-user.id=admin" })
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest(classes = {FilterTestApp.class},
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+  properties = {
+    "operaton.bpm.webapp.application-path=/",
+    "operaton.bpm.webapp.index-redirect-enabled=true",
+    "operaton.bpm.admin-user.id=admin"})
 @DirtiesContext
 class ResourceLoadingProcessEnginesAppPathRootIndexRedirectTest {
 

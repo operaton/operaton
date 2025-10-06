@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
@@ -25,6 +23,8 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonCaseExecutionListen
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonExpression;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonField;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonString;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FieldSpec {
 
@@ -47,8 +47,6 @@ public class FieldSpec {
     assertThat(field.getName()).isEqualTo(fieldName);
 
     Object fieldValue = field.getValue();
-    assertThat(fieldValue).isNotNull();
-
     assertThat(fieldValue).isInstanceOf(Expression.class);
     Expression expressionValue = (Expression) fieldValue;
     assertThat(expressionValue.getExpressionText()).isEqualTo(getExpectedExpression());

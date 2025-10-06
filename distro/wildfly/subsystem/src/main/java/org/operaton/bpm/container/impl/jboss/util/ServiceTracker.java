@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.container.impl.jboss.util;
 
+import java.util.Collection;
+
 import org.jboss.msc.service.LifecycleEvent;
 import org.jboss.msc.service.LifecycleListener;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceName;
-
-import java.util.Collection;
 
 /**
  * <p>Service Listener that adds / removes services to / from a collection as they

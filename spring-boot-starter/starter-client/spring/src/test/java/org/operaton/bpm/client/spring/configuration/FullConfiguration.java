@@ -16,28 +16,29 @@
  */
 package org.operaton.bpm.client.spring.configuration;
 
-import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
-import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
-import org.operaton.bpm.client.task.ExternalTaskHandler;
-import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.ProcessVariable;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
+import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
+import org.operaton.bpm.client.task.ExternalTaskHandler;
+
+import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.ProcessVariable;
+
 @Configuration
 @EnableExternalTaskClient(
-    baseUrl = "url",
-    maxTasks = 1111,
-    workerId = "worker-id",
-    usePriority = false,
-    useCreateTime = false,
-    orderByCreateTime = "asc",
-    asyncResponseTimeout = 5555,
-    disableAutoFetching = true,
-    disableBackoffStrategy = true,
-    lockDuration = 4444,
-    dateFormat = "date-format",
-    defaultSerializationFormat = "default-serialization-format"
+  baseUrl = "url",
+  maxTasks = 1111,
+  workerId = "worker-id",
+  usePriority = false,
+  useCreateTime = false,
+  orderByCreateTime = "asc",
+  asyncResponseTimeout = 5555,
+  disableAutoFetching = true,
+  disableBackoffStrategy = true,
+  lockDuration = 4444,
+  dateFormat = "date-format",
+  defaultSerializationFormat = "default-serialization-format"
 )
 public class FullConfiguration {
 

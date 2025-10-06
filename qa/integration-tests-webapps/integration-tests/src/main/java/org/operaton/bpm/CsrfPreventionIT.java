@@ -16,62 +16,58 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.concurrent.TimeUnit;
+import jakarta.ws.rs.core.MediaType;
 
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class CsrfPreventionIT extends AbstractWebIntegrationTest {
+class CsrfPreventionIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
-  public void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
-  @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
-  public void shouldCheckPresenceOfCsrfPreventionCookie() {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfCsrfPreventionCookie() {
     // given
-    target = client.target(appBasePath + TASKLIST_PATH);
 
     // when
-    response = target.request().get(Response.class);
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH)
+            .asString();
 
     // then
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     String xsrfTokenHeader = getXsrfTokenHeader(response);
     String xsrfCookieValue = getXsrfCookieValue(response);
-    response.close();
 
-    assertNotNull(xsrfTokenHeader);
-    assertEquals(32, xsrfTokenHeader.length());
-    assertNotNull(xsrfCookieValue);
-    assertTrue(xsrfCookieValue.contains(";SameSite=Lax"));
+    assertThat(xsrfTokenHeader).hasSize(32);
+    assertThat(xsrfCookieValue).contains(";SameSite=Lax");
   }
 
-  @Test @Timeout(value=10000, unit = TimeUnit.MILLISECONDS)
-  public void shouldRejectModifyingRequest() {
+  @Test
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldRejectModifyingRequest() {
     // given
     String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
     String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
-    target = client.target(baseUrl + modifyingRequestPath);
 
     // when
-    response = target.request()
+    HttpResponse<String> response = Unirest.post(baseUrl + modifyingRequestPath)
             .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
-            .post(null, Response.class);
+            .asString();
 
     // then
-    assertEquals(403, response.getStatus());
-    assertTrue("Required".equals(getXsrfTokenHeader(response)));
+    assertThat(response.getStatus()).isEqualTo(403);
+    assertThat("Required").isEqualTo(getXsrfTokenHeader(response));
   }
 
 }

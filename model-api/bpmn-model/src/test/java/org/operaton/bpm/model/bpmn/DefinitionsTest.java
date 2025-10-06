@@ -16,23 +16,23 @@
  */
 package org.operaton.bpm.model.bpmn;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.bpmn.instance.Process;
+
 import org.operaton.bpm.model.bpmn.instance.*;
+import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.util.BpmnModelResource;
 import org.operaton.bpm.model.xml.ModelParseException;
 import org.operaton.bpm.model.xml.ModelReferenceException;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.XML_SCHEMA_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.XPATH_NS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -111,7 +111,7 @@ class DefinitionsTest extends BpmnModelTest {
 
   @Test
   @BpmnModelResource
-  void shouldNotAffectComments() throws IOException {
+  void shouldNotAffectComments() throws Exception {
     Definitions definitions = bpmnModelInstance.getDefinitions();
     assertThat(definitions).isNotNull();
 

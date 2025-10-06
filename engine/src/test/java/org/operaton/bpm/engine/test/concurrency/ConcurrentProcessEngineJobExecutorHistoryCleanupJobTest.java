@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -35,9 +36,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandInvocationContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Tests a concurrent attempt of a bootstrapping Process Engine to reconfigure
@@ -120,7 +121,7 @@ class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Concurrenc
   }
 
   @Test
-  void testConcurrentHistoryCleanupJobReconfigurationExecution() throws InterruptedException {
+  void testConcurrentHistoryCleanupJobReconfigurationExecution() throws Exception {
 
     processEngine.getHistoryService().cleanUpHistoryAsync(true);
 

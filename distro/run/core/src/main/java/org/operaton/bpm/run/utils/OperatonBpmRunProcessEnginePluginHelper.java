@@ -55,7 +55,7 @@ public final class OperatonBpmRunProcessEnginePluginHelper {
     try {
       // find class on classpath
       Class<? extends ProcessEnginePlugin> pluginClass = ReflectUtil
-          .loadClass(className, null, ProcessEnginePlugin.class);
+          .loadClass(className, null);
 
       // check if an instance of the process engine plugin is already present
       Optional<ProcessEnginePlugin> plugin = processEnginePlugins.stream()

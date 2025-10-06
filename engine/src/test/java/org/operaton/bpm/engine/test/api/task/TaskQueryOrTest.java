@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +28,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -47,6 +45,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Tassilo Weidner
@@ -1128,7 +1129,7 @@ class TaskQueryOrTest {
   }
 
   @Test
-  void shouldTestDueDateCombinations() throws ParseException {
+  void shouldTestDueDateCombinations() throws Exception {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
     taskService.saveTask(taskService.newTask());
 
@@ -1211,7 +1212,7 @@ class TaskQueryOrTest {
   }
 
   @Test
-  void shouldTestFollowUpDateCombinations() throws ParseException {
+  void shouldTestFollowUpDateCombinations() throws Exception {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
 
     assertThat(taskService.createTaskQuery()
@@ -1358,9 +1359,9 @@ class TaskQueryOrTest {
   }
 
   protected HashMap<String, Date> createFollowUpAndDueDateTasks() throws ParseException {
-    final Date date = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("27/07/2017 01:12:13"),
-      oneHourAgo = new Date(date.getTime() - 60 * 60 * 1000),
-      oneHourLater = new Date(date.getTime() + 60 * 60 * 1000);
+    final Date date = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("27/07/2017 01:12:13");
+    final Date oneHourAgo = new Date(date.getTime() - 60 * 60 * 1000);
+    final Date oneHourLater = new Date(date.getTime() + 60 * 60 * 1000);
 
     Task taskDueBefore = taskService.newTask();
     taskDueBefore.setFollowUpDate(new Date(oneHourAgo.getTime() - 1000));

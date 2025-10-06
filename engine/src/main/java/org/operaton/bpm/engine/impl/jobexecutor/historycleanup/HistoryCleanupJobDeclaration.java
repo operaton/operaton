@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
+import java.util.Date;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ConstantValueProvider;
@@ -25,8 +27,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
 import org.operaton.bpm.engine.impl.persistence.entity.EverLivingJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-
-import java.util.Date;
 
 /**
  * Job declaration for history cleanup.

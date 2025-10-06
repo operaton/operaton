@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.container.impl.jboss.util;
 
-import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.jboss.vfs.VirtualFile;
+
+import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 
 /**
  * @author Daniel Meyer
@@ -25,8 +26,8 @@ import org.jboss.vfs.VirtualFile;
  */
 public class ProcessesXmlWrapper {
 
-  private ProcessesXml processesXml;
-  private VirtualFile processesXmlFile;
+  private final ProcessesXml processesXml;
+  private final VirtualFile processesXmlFile;
 
   /**
    * @param processesXml

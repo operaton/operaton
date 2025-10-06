@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.container.impl.jboss.deployment.processor;
 
+import java.lang.reflect.Field;
 import java.util.function.Consumer;
 
-import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
-import org.operaton.bpm.container.impl.jboss.service.ProcessApplicationModuleService;
-import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
+import org.jboss.as.server.deployment.AttachmentKey;
 import org.jboss.as.server.deployment.AttachmentList;
 import org.jboss.as.server.deployment.Attachments;
 import org.jboss.as.server.deployment.DeploymentPhaseContext;
@@ -30,10 +29,15 @@ import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.as.server.deployment.module.ModuleDependency;
 import org.jboss.as.server.deployment.module.ModuleSpecification;
 import org.jboss.modules.Module;
+import org.jboss.modules.ModuleIdentifier;
 import org.jboss.modules.ModuleLoader;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController.Mode;
 import org.jboss.msc.service.ServiceName;
+
+import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
+import org.operaton.bpm.container.impl.jboss.service.ProcessApplicationModuleService;
+import org.operaton.bpm.container.impl.jboss.service.ServiceNames;
 
 /**
  * <p>This Processor creates implicit module dependencies for process applications</p>
@@ -46,6 +50,8 @@ import org.jboss.msc.service.ServiceName;
  *
  */
 public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
+
+  protected static final String MODULE_IDENTIFIER = "MODULE_IDENTIFIER";
 
   public static final int PRIORITY = 0x2300;
 
@@ -103,7 +109,7 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
     }
 
     // install the pa-module service
-    String moduleName = deploymentUnit.getAttachment(Attachments.MODULE_NAME);
+    String moduleName = getModuleName(phaseContext.getDeploymentUnit());
 
     ServiceName serviceName = ServiceNames.forProcessApplicationModuleService(moduleName);
 
@@ -115,6 +121,23 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
     serviceBuilder.setInstance(processApplicationModuleService);
     serviceBuilder.install();
 
+  }
+
+  /**
+   * {@link Attachments#MODULE_IDENTIFIER} is not available in WildFly 37 and {@link Attachments#MODULE_NAME} is not available in JBoss EAP 8.
+   * We first try to get the module identifier via reflection and if that fails we fallback to the module name.
+   */
+  protected String getModuleName(DeploymentUnit deploymentUnit) {
+    try {
+      // Try to get MODULE_IDENTIFIER first (for JBoss EAP 8 versions)
+      Field moduleIdentifierField = Attachments.class.getDeclaredField(MODULE_IDENTIFIER);
+      ModuleIdentifier identifier = deploymentUnit.getAttachment((AttachmentKey<ModuleIdentifier>) moduleIdentifierField.get(null));
+      return identifier.toString();
+
+    } catch (NoSuchFieldException | IllegalAccessException e) {
+      // Fallback to MODULE_NAME for newer WildFly versions
+      return deploymentUnit.getAttachment(Attachments.MODULE_NAME);
+    }
   }
 
   private void addSystemDependencies(ModuleLoader moduleLoader, final ModuleSpecification moduleSpecification) {

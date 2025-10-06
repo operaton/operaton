@@ -16,8 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.authorization.SystemPermissions;
@@ -28,10 +33,6 @@ import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.management.TableMetaData;
 import org.operaton.bpm.engine.management.TablePage;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -98,10 +99,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotGetTableCountWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getTableCount();
-    })
+      managementService.getTableCount())
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -152,10 +152,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotGetTableNameWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getTableName(ProcessDefinitionEntity.class);
-    })
+      managementService.getTableName(ProcessDefinitionEntity.class))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -204,10 +203,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotGetTableMetaDataWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getTableMetaData("ACT_RE_PROCDEF");
-    })
+      managementService.getTableMetaData("ACT_RE_PROCDEF"))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -218,10 +216,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotPerformTablePageQueryWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.createTablePageQuery().tableName("ACT_RE_PROCDEF").listPage(0, Integer.MAX_VALUE);
-    })
+      managementService.createTablePageQuery().tableName("ACT_RE_PROCDEF").listPage(0, Integer.MAX_VALUE))
         // then
         .hasMessage(REQUIRED_ADMIN_AUTH_EXCEPTION);
   }
@@ -281,10 +278,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   void shouldNotGetHistoryLevelWithoutAuthorization() {
     // given
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getHistoryLevel();
-    })
+      managementService.getHistoryLevel())
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -295,10 +291,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotPerformDataSchemaUpgradeWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.databaseSchemaUpgrade(null, null, null);
-    })
+      managementService.databaseSchemaUpgrade(null, null, null))
         // then
         .hasMessage(REQUIRED_ADMIN_AUTH_EXCEPTION);
   }
@@ -348,10 +343,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
     // given
     createGrantAuthorization(Resources.TASK, "*", userId, TaskPermissions.DELETE);
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getProperties();
-    })
+      managementService.getProperties())
     // then
     .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -360,10 +354,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotGetPropertiesWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getProperties();
-    })
+      managementService.getProperties())
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -414,10 +407,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotSetPropertyWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.setProperty(DUMMY_PROPERTY, DUMMY_VALUE);
-    })
+      managementService.setProperty(DUMMY_PROPERTY, DUMMY_VALUE))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
   }
@@ -473,10 +465,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotDeletePropertyWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.deleteProperty(DUMMY_PROPERTY);
-    })
+      managementService.deleteProperty(DUMMY_PROPERTY))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.DELETE));
   }
@@ -538,10 +529,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotGetTelemetryDataWithoutAdminAndPermission() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.getTelemetryData();
-    })
+      managementService.getTelemetryData())
     // then
       .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
   }
@@ -595,10 +585,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotDeleteMetricsWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.deleteMetrics(null);
-    })
+      managementService.deleteMetrics(null))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.DELETE));
   }
@@ -649,10 +638,9 @@ class ManagementAuthorizationTest extends AuthorizationTest {
   void shouldNotDeleteTaskMetricsWithoutAuthorization() {
     // given
 
-    assertThatThrownBy(() -> {
+    assertThatThrownBy(() ->
       // when
-      managementService.deleteTaskMetrics(null);
-    })
+      managementService.deleteTaskMetrics(null))
         // then
         .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.DELETE));
   }

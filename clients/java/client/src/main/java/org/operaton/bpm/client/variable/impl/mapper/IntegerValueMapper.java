@@ -28,6 +28,7 @@ public class IntegerValueMapper extends NumberValueMapper<IntegerValue> {
     super(ValueType.INTEGER);
   }
 
+  @Override
   public IntegerValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.integerValue((Integer) untypedValue.getValue());
   }

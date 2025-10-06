@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.sub.repository;
 
 import java.util.List;
 import java.util.Map;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;

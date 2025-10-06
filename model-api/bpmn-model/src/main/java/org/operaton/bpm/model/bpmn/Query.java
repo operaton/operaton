@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn;
 
+import java.util.List;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-
-import java.util.List;
 
 /**
  * @author Sebastian Menski

@@ -15,12 +15,13 @@
  */
 package org.operaton.bpm.identity.ldap.util;
 
+import java.nio.charset.StandardCharsets;
+
 import com.unboundid.ldap.sdk.Entry;
 import com.unboundid.ldap.sdk.LDAPConnection;
 import com.unboundid.ldap.sdk.LDAPException;
-import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
 
-import java.nio.charset.StandardCharsets;
+import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
 
 /**
  * Implementation of the {@link LdapTestContext} for testing with posix groups

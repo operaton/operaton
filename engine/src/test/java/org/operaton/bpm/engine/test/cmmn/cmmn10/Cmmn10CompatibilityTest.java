@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.cmmn.cmmn10;
 
+import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
@@ -25,10 +27,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -48,12 +48,7 @@ class Cmmn10CompatibilityTest extends CmmnTest {
     assertThat(taskExecution).isNotNull();
     assertThat(taskExecution.isRequired()).isTrue();
 
-    try {
-      caseService.completeCaseExecution(caseInstanceId);
-      fail("completing the containing stage should not be allowed");
-    } catch (NotAllowedException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> caseService.completeCaseExecution(caseInstanceId)).isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testManualActivationRule.cmmn")

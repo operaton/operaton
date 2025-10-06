@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2;
 
-import static org.mockito.Mockito.when;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
@@ -27,7 +25,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.operaton.bpm.spring.boot.starter.security.SampleApplication;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -45,6 +42,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.context.WebApplicationContext;
 
+import org.operaton.bpm.spring.boot.starter.security.SampleApplication;
+
+import static org.mockito.Mockito.when;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
@@ -60,7 +61,7 @@ public abstract class AbstractSpringSecurityIT {
   protected int port;
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void setup() {
     baseUrl = "http://localhost:%d".formatted(port);
   }
 

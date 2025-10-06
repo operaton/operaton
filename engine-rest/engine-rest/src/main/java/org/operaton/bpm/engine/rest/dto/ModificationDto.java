@@ -18,13 +18,13 @@ package org.operaton.bpm.engine.rest.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.modification.ProcessInstanceModificationInstructionDto;
 import org.operaton.bpm.engine.runtime.ModificationBuilder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ModificationDto {
 

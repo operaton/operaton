@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-rc-1-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
   <packaging>pom</packaging>
@@ -14,13 +14,10 @@
     <cargo.timeout>120000</cargo.timeout>
     <cargo.deploy.timeout>60000</cargo.deploy.timeout>
     <!-- Needs to be adjusted with every WildFly update -->
-    <cargo.wildfly.container.id>wildfly36x</cargo.wildfly.container.id>
+    <cargo.wildfly.container.id>wildfly37x</cargo.wildfly.container.id>
     <redirect.test.output>true</redirect.test.output>
     <http.ctx-path.webapp>operaton/</http.ctx-path.webapp>
     <http.ctx-path.rest>engine-rest/</http.ctx-path.rest>
-    <version.chromedriver>112.0.5615.49</version.chromedriver>
-    <!-- default os -->
-    <os.type>linux64</os.type>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -46,19 +43,8 @@
         <type>pom</type>
       </dependency>
       <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-        <version>4.5.14</version>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.jersey.contribs</groupId>
-        <artifactId>jersey-apache-client4</artifactId>
-        <version>1.19.4</version>
-      </dependency>
-      <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
-        <version>${version.selenium}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -98,12 +84,18 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
+      <version>${version.selenium}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.konghq</groupId>
+      <artifactId>unirest-java</artifactId>
+      <classifier>standalone</classifier>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
@@ -147,49 +139,5 @@
         <module>shared-engine</module>
       </modules>
     </profile>
-    <profile>
-      <id>chromedriver-windows</id>
-      <activation>
-        <os>
-          <family>windows</family>
-        </os>
-      </activation>
-      <properties>
-        <os.type>win32</os.type>
-      </properties>
-    </profile>
-    <profile>
-      <id>chromedriver-osx</id>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-      <properties>
-        <os.type>mac64</os.type>
-      </properties>
-    </profile>
   </profiles>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>com.googlecode.maven-download-plugin</groupId>
-        <artifactId>download-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>wget</goal>
-            </goals>
-            <configuration>
-              <url>https://chromedriver.storage.googleapis.com/${version.chromedriver}/chromedriver_${os.type}.zip</url>
-              <outputFileName>chromedriver.zip</outputFileName>
-              <unpack>true</unpack>
-              <outputDirectory>${project.build.directory}/chromedriver</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>

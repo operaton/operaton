@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.impl.cmmn.listener.ExpressionCaseExecutionListener;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonCaseExecutionListener;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ExpressionExecutionListenerSpec extends AbstractExecutionListenerSpec {
 

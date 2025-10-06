@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +23,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -42,6 +40,9 @@ import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(ProcessEngineExtension.class)
 class ActivateJobDefinitionTest {
@@ -64,61 +65,26 @@ class ActivateJobDefinitionTest {
 
   @Test
   void testActivationById_shouldThrowProcessEngineException() {
-    try {
-      managementService.activateJobDefinitionById(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testActivationByIdAndActivateJobsFlag_shouldThrowProcessEngineException() {
-    try {
-      managementService.activateJobDefinitionById(null, false);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(null, false)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionById(null, true);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(null, true)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testActivationByIdAndActivateJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
     Date activationDate = new Date();
-    try {
-      managementService.activateJobDefinitionById(null, false, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(null, false, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionById(null, true, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(null, true, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionById(null, false, activationDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(null, false, activationDate)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionById(null, true, activationDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionById(null, true, activationDate)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -467,61 +433,26 @@ class ActivateJobDefinitionTest {
 
   @Test
   void testActivationByProcessDefinitionId_shouldThrowProcessEngineException() {
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionId(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testActivationByProcessDefinitionIdAndActivateJobsFlag_shouldThrowProcessEngineException() {
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionId(null, false);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(null, false)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionId(null, true);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(null, true)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testActivationByProcessDefinitionIdAndActivateJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
     Date activationDate = new Date();
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionId(null, false, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(null, false, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionId(null, true, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(null, true, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionId(null, false, activationDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(null, false, activationDate)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionId(null, true, activationDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionId(null, true, activationDate)).isInstanceOf(ProcessEngineException.class);
 
   }
 
@@ -871,61 +802,26 @@ class ActivateJobDefinitionTest {
 
   @Test
   void testActivationByProcessDefinitionKey_shouldThrowProcessEngineException() {
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionKey(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testActivationByProcessDefinitionKeyAndActivateJobsFlag_shouldThrowProcessEngineException() {
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionKey(null, false);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(null, false)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionKey(null, true);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(null, true)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   void testActivationByProcessDefinitionKeyAndActivateJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
     Date activationDate = new Date();
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionKey(null, false, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(null, false, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionKey(null, true, null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(null, true, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionKey(null, false, activationDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(null, false, activationDate)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      managementService.activateJobDefinitionByProcessDefinitionKey(null, true, activationDate);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.activateJobDefinitionByProcessDefinitionKey(null, true, activationDate)).isInstanceOf(ProcessEngineException.class);
 
   }
 

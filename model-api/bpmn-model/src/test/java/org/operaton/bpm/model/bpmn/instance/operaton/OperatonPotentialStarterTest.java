@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.model.bpmn.instance.operaton;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.impl.BpmnModelConstants;
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 import org.operaton.bpm.model.bpmn.instance.ResourceAssignmentExpression;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * @author Sebastian Menski

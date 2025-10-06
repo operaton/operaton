@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.identity;
 
-import org.operaton.bpm.engine.IdentityService;
-
 import java.util.Map;
+
+import org.operaton.bpm.engine.IdentityService;
 
 /**
  * Describes a rule of a {@link PasswordPolicy}. All rules attached to a

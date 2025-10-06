@@ -16,13 +16,7 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin.resources;
 
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-
 import java.util.List;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -37,6 +31,11 @@ import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.IncidentQueryDto;
 import org.operaton.bpm.cockpit.plugin.resource.AbstractPluginResource;
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
+
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 
 /**
  * @author roman.smirnov

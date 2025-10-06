@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.instance.ExclusiveGateway;
 import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
 
-public class ProcessModels {
+public final class ProcessModels {
 
   public static final String PROCESS_KEY = "process";
   public static final String PROCESS_KEY_2 = "process2";
@@ -143,4 +143,7 @@ public class ProcessModels {
       .userTask(USER_TASK_AFTER_BPMN_ERROR)
       .endEvent()
       .done();
+
+  private ProcessModels() {
+  }
 }

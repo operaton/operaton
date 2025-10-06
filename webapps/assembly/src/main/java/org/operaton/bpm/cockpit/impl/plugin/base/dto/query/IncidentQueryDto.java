@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin.base.dto.query;
 
-import jakarta.ws.rs.core.MultivaluedMap;
-
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
 import org.operaton.bpm.cockpit.rest.dto.AbstractRestQueryParametersDto;

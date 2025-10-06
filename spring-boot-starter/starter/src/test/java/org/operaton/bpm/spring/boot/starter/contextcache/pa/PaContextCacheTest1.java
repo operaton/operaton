@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.contextcache.pa;
 
-import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTest;
-import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTest;
+import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
+
+import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 
 /**
  * Tests {@link PaContextCacheTest1}, {@link PaContextCacheTest2}, {@link PaContextCacheTest3}
@@ -34,7 +35,7 @@ import org.springframework.test.context.ActiveProfiles;
  */
 @ActiveProfiles("contextcaching")
 @SpringBootTest(
-  classes = { TestProcessApplication.class },
+  classes = {TestProcessApplication.class},
   properties = {
     "operaton.bpm.process-engine-name=foo",
     "spring.datasource.generate-unique-name=true",

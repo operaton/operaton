@@ -15,12 +15,12 @@
  */
 package org.operaton.bpm.engine.impl.dmn.cmd;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import org.operaton.bpm.engine.impl.dmn.DecisionEvaluationBuilderImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
-
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -28,8 +28,7 @@ import static org.mockito.Mockito.verify;
 class EvaluateDecisionCmdTest {
 
   @ParameterizedTest
-  @CsvSource(
-    value = {
+  @CsvSource({
       "true,true",
       "true,false",
       "false,true",

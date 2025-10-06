@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.operaton.bpm.model.bpmn.instance.BaseElement;
 import org.operaton.bpm.model.bpmn.instance.Documentation;
 import org.operaton.bpm.model.bpmn.instance.ExtensionElements;
@@ -30,9 +33,6 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.Reference;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
 

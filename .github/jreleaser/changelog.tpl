@@ -15,6 +15,8 @@ With this release we focused on:
 
 Operaton requires **Java 17** as the minimum version.
 
+Operaton is tested and supported on **Java 17**, **Java 21**, and **Java 25**.
+
 ### Camunda 7 Compatibility
 
 This release is feature complete and compatible with [**Camunda 7.24.0**](https://docs.camunda.org/enterprise/announcement/#camunda-platform-7-24).

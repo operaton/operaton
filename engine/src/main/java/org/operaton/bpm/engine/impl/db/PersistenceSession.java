@@ -82,6 +82,8 @@ public interface PersistenceSession extends Session {
 
   void dbSchemaUpdate();
 
+  void dbMigrateDataFromCamunda();
+
   List<String> getTableNamesPresent();
 
   // listeners //////////////////////////////////////////

@@ -25,13 +25,13 @@ This release is feature complete and compatible with [**Camunda 7.24.0**](https:
 
 Operaton is based on:
 
-- **Spring Boot 3.5.5** (upgrade from 3.4.4)
-- **Spring Framework 6.2.10** (upgrade from 6.2.5)
+- **Spring Boot 3.5.6** (upgrade from 3.5.5)
+- **Spring Framework 6.2.11** (upgrade from 6.2.10)
 
 ### Quarkus Extension
 
 <!-- /pom.xml -->
-The Operaton Quarkus extension is based on **Quarkus 3.28.0** (upgrade from 3.26.3).
+The Operaton Quarkus extension is based on **Quarkus 3.28.2** (upgrade from 3.28.0).
 
 ### Distributions
 
@@ -48,6 +48,22 @@ Operaton is compliant with the following standards:
 - DMN 1.3
 - CMMN 1.1
 
+### Scripting
+
+Operaton supports the following scripting languages:
+
+| Language   | Engine             | Version  |
+|------------|--------------------|----------|
+| JavaScript | GraalVM JavaScript | 25.0.0   |
+| Groovy     | Groovy             | 5.0.1    |
+| Python     | Jython             | 2.7.4    |
+| Ruby       | GraalVM Ruby       | 9.1.17.0 |
+
+Note: The Nashorn JavaScript engine has been removed in Java 15 and is no longer supported.
+
+**Camunda Migration Note**: If you are migrating from Camunda 7 and are using ECMAScript 5,
+this might not work with the GraalVM JavaScript engine. 
+Please check your JavaScript code and consider migrating them to a more recent version of JavaScript.
 
 ## Testing
 

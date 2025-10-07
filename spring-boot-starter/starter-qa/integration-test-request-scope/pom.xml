@@ -29,10 +29,6 @@
       <artifactId>js</artifactId>
       <type>pom</type>
     </dependency>
-    <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js-scriptengine</artifactId>
-    </dependency>
   </dependencies>
   <profiles>
     <profile>

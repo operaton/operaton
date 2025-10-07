@@ -107,8 +107,13 @@
       <artifactId>groovy-datetime</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.graalvm.js</groupId>
+      <groupId>org.graalvm.polyglot</groupId>
       <artifactId>js</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>polyglot</artifactId>
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
@@ -239,12 +244,21 @@
                     </chainedmapper>
                   </mapper>
                 </copy>
+                <!-- copy Graal JS dependencies to single dir -->
+                <delete dir="target/modules/org/graalvm" />
+                <copy todir="target/modules" flatten="false">
+                  <fileset refid="maven.project.dependencies"/>
+                  <mapper>
+                    <chainedmapper>
+                      <regexpmapper from="^org/graalvm.*/([^/]*)$$" to="org/graalvm/js/js-all/main/\1" handledirsep="yes"/>
+                    </chainedmapper>
+                  </mapper>
+                </copy>
+                <delete dir="target/modules/org/graalvm/polyglot"/>
+                <!-- copy module.xml -->
                 <copy todir="target/modules" flatten="false">
                   <fileset dir="src/main/modules"/>
                 </copy>
-                <replace dir="target/modules" token="@project.version@" value="${project.version}">
-                  <include name="**/module.xml"/>
-                </replace>
                 <replace dir="target/modules" token="@project.version@" value="${project.version}">
                   <include name="**/module.xml"/>
                 </replace>
@@ -294,9 +308,6 @@
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.graal.js@" value="${version.graal.js}">
-                  <include name="**/module.xml"/>
-                </replace>
-                <replace dir="target/modules" token="@version.icu.icu4j@" value="${version.icu.icu4j}">
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.assertj@" value="${version.assertj}">

@@ -63,7 +63,7 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
   public static String MODULE_IDENTIFIER_SPIN = "org.operaton.spin.operaton-spin-core";
   public static String MODULE_IDENTIFIER_CONNECT = "org.operaton.connect.operaton-connect-core";
   public static String MODULE_IDENTIFIER_ENGINE_DMN = "org.operaton.bpm.dmn.operaton-engine-dmn";
-  public static String MODULE_IDENTIFIER_GRAAL_JS = "org.graalvm.js.js-scriptengine";
+  public static String MODULE_IDENTIFIER_GRAAL_JS = "org.graalvm.js.js-all";
   public static String MODULE_IDENTIFIER_JUEL = "org.operaton.bpm.juel.operaton-juel";
 
   @Override

@@ -57,7 +57,7 @@ and `${integration-test-id}` can be either `engine-integration` or `webapps-inte
 
 ### Remote Debugging
 
-To enable remote debugging, modifiy the JVM options in `arquillian.xml`
+To enable remote debugging, modify the JVM options in `arquillian.xml`
 
 - `qa/integration-tests-engine/src/test/resources-tomcat/arquillian.xml`
 - `qa/integration-tests-engine/src/test/resources-wildfly/arquillian.xml`

@@ -254,7 +254,7 @@
                     </chainedmapper>
                   </mapper>
                 </copy>
-                <delete dir="target/modules/org/graalvm/polglot"/>
+                <delete dir="target/modules/org/graalvm/polyglot"/>
                 <!-- copy module.xml -->
                 <copy todir="target/modules" flatten="false">
                   <fileset dir="src/main/modules"/>

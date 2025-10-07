@@ -337,7 +337,7 @@ class ProcessInstanceModificationTest {
 
     ExecutionAssert.assertThat(executionTree).matches(describeExecutionTree("task1").scope().done());
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     // complete the process
     completeTasksInOrder("task1");
@@ -909,7 +909,7 @@ class ProcessInstanceModificationTest {
     testRule.deploy(SIMPLE_TASK_PROCESS_WITH_DELETE_LISTENER);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     //when
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -932,7 +932,7 @@ class ProcessInstanceModificationTest {
     testRule.deploy(SIMPLE_TASK_PROCESS_WITH_DELETE_LISTENER);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     //when
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -955,7 +955,7 @@ class ProcessInstanceModificationTest {
     testRule.deploy(SIMPLE_TASK_PROCESS_WITH_DELETE_LISTENER);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     //when
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -1193,7 +1193,7 @@ class ProcessInstanceModificationTest {
 
     taskService.complete(task.getId());
     // there should be a compensation event subscription for innerTask now
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // when innerTask2 is cancelled
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1224,9 +1224,9 @@ class ProcessInstanceModificationTest {
 
     // then there are two compensation tasks and the afterSubprocessTask:
     assertThat(taskService.createTaskQuery().count()).isEqualTo(3);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("innerAfterBoundaryTask").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerAfterBoundaryTask").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("taskAfterSubprocess").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("innerAfterBoundaryTask").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerAfterBoundaryTask").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("taskAfterSubprocess").count()).isOne();
 
     // complete process
     completeTasksInOrder("taskAfterSubprocess", "innerAfterBoundaryTask", "outerAfterBoundaryTask");

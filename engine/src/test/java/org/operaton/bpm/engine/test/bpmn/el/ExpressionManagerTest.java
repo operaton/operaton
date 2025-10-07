@@ -144,7 +144,7 @@ class ExpressionManagerTest {
     // when
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     // then
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myCounter", 6).count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myCounter", 6).count()).isOne();
   }
 
   @Test

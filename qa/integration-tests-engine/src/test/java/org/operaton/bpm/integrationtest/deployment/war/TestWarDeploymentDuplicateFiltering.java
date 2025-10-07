@@ -56,7 +56,7 @@ public class TestWarDeploymentDuplicateFiltering extends AbstractFoxPlatformInte
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

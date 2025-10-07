@@ -200,7 +200,7 @@ class AuthorizationServiceAuthorizationsTest {
     authorizationService.saveAuthorization(basePerms);
 
     // I can see it
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isOne();
 
     // now enable checks
     processEngineConfiguration.setAuthorizationEnabled(true);

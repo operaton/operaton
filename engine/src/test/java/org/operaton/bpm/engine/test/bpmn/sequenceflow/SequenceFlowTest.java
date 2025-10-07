@@ -55,8 +55,8 @@ class SequenceFlowTest {
 
     // then
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("task3").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task3").count()).isOne();
 
     for (Task followUpTask : taskService.createTaskQuery().list()) {
       taskService.complete(followUpTask.getId());
@@ -78,8 +78,8 @@ class SequenceFlowTest {
 
     // then
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("task3").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task3").count()).isOne();
 
     for (Task followUpTask : taskService.createTaskQuery().list()) {
       taskService.complete(followUpTask.getId());

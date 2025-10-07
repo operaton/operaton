@@ -155,7 +155,7 @@ class TaskQueryTest {
     String taskId = taskIds.get(0);
     TaskQuery query = taskService.createTaskQuery().taskId(taskId);
     assertThat(query.singleResult()).isNotNull();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     List<Task> foundTasks = query.list();
     assertThat(foundTasks).hasSize(1);
     List<String> foundTaskIds = foundTasks.stream().map(Task::getId).toList();
@@ -210,7 +210,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskNameLike("gonzo\\_%");
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -302,7 +302,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskDescriptionLike("%gonzo\\_%");
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -363,7 +363,7 @@ class TaskQueryTest {
   @Test
   void testQueryByAssignee() {
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo_");
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
     assertThat(query.singleResult()).isNotNull();
 
@@ -376,7 +376,7 @@ class TaskQueryTest {
   @Test
   void testQueryByAssigneeLike() {
     TaskQuery query = taskService.createTaskQuery().taskAssigneeLike("gonz%\\_");
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
     assertThat(query.singleResult()).isNotNull();
 
@@ -401,7 +401,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskAssigneeIn(assignees);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
   }
 
@@ -429,7 +429,7 @@ class TaskQueryTest {
       .taskAssignee(assignee).taskAssigneeIn(assignees);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
   }
 
@@ -459,7 +459,7 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery().taskAssigneeNotIn(assignees);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
   }
 
@@ -487,7 +487,7 @@ class TaskQueryTest {
             .taskAssigneeIn(assigneesIn).taskAssigneeNotIn(assigneesNotIn);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
   }
 
@@ -553,7 +553,7 @@ class TaskQueryTest {
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateUser("gonzo").includeAssignedTasks();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
   }
 
@@ -862,7 +862,7 @@ class TaskQueryTest {
     assertThat(query.count()).isEqualTo(11);
     assertThat(query.list()).hasSize(11);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.PENDING);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED);
     assertThat(query.count()).isZero();
@@ -877,7 +877,7 @@ class TaskQueryTest {
     assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
   }
 
@@ -1140,11 +1140,11 @@ class TaskQueryTest {
     taskService.setVariableLocal(task.getId(), variableName, variableValue);
 
     // query for case-insensitive variable name should only return a result if case-insensitive search is used
-    assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().taskVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().taskVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isOne();
     assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isOne();
   }
 
   @Deployment
@@ -1170,13 +1170,13 @@ class TaskQueryTest {
     taskService.setVariablesLocal(task.getId(), variables);
 
     // Test query matches
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("longVar", 928374L).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("shortVar", (short) 123).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("integerVar", 1234).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("stringVar", "stringValue").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("booleanVar", true).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("dateVar", date).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("nullVar", null).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("longVar", 928374L).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("shortVar", (short) 123).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("integerVar", 1234).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("stringVar", "stringValue").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("booleanVar", true).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("dateVar", date).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("nullVar", null).count()).isOne();
 
     // Test query for other values on existing variables
     assertThat(taskService.createTaskQuery().taskVariableValueEquals("longVar", 999L).count()).isZero();
@@ -1190,11 +1190,11 @@ class TaskQueryTest {
     assertThat(taskService.createTaskQuery().taskVariableValueEquals("nullVar", "999").count()).isZero();
 
     // Test query for not equals
-    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("longVar", 999L).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("shortVar", (short) 999).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("integerVar", 999).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("stringVar", "999").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("booleanVar", false).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("longVar", 999L).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("shortVar", (short) 999).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("integerVar", 999).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("stringVar", "999").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("booleanVar", false).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
@@ -1209,8 +1209,8 @@ class TaskQueryTest {
     taskService.setVariableLocal(task.getId(), variableName, variableValue);
 
     // query for existing variable should return one result
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValue).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValue).count()).isOne();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isOne();
 
     // query for non existing variable should return zero results
     assertThat(taskService.createTaskQuery().taskVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isZero();
@@ -1222,14 +1222,14 @@ class TaskQueryTest {
 
     // query for case-insensitive variable value should only return a result when case-insensitive search is used
     assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isZero();
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isOne();
 
     // query for case-insensitive variable with not equals operator should only return a result when case-sensitive search is used
-    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isOne();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValue.toLowerCase()).matchVariableValuesIgnoreCase().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValue.toLowerCase()).matchVariableValuesIgnoreCase().count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1243,11 +1243,11 @@ class TaskQueryTest {
     taskService.setVariableLocal(task.getId(), variableName, variableValue);
 
     // query for case-insensitive variable name should only return a result if case-insensitive search is used
-    assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName.toLowerCase(), variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName.toLowerCase(), variableValue.toLowerCase()).count()).isOne();
     assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
@@ -1262,9 +1262,9 @@ class TaskQueryTest {
 
   	taskService.setVariablesLocal(task.getId(), variables);
 
-    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVal%").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngValue").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngVal%").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVal%").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngValue").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngVal%").count()).isOne();
 
     assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVar%").count()).isZero();
     assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngVar").count()).isZero();
@@ -1291,9 +1291,9 @@ class TaskQueryTest {
     taskService.setVariablesLocal(task.getId(), variables);
 
     assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isZero();
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngValue".toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngVal%".toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isOne();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngValue".toLowerCase()).count()).isOne();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngVal%".toLowerCase()).count()).isOne();
 
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "stringVar%".toLowerCase()).count()).isZero();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngVar".toLowerCase()).count()).isZero();
@@ -1325,23 +1325,23 @@ class TaskQueryTest {
   	taskService.setVariablesLocal(task.getId(), variables);
 
     // test compare methods with numeric values
-    assertThat(taskQuery.taskVariableValueGreaterThan("numericVar", 928373).count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueGreaterThan("numericVar", 928373).count()).isOne();
     assertThat(taskQuery.taskVariableValueGreaterThan("numericVar", 928374).count()).isZero();
     assertThat(taskQuery.taskVariableValueGreaterThan("numericVar", 928375).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("numericVar", 928373).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("numericVar", 928373).count()).isOne();
+    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("numericVar", 928374).count()).isOne();
     assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("numericVar", 928375).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueLessThan("numericVar", 928375).count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueLessThan("numericVar", 928375).count()).isOne();
     assertThat(taskQuery.taskVariableValueLessThan("numericVar", 928374).count()).isZero();
     assertThat(taskQuery.taskVariableValueLessThan("numericVar", 928373).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("numericVar", 928375).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("numericVar", 928375).count()).isOne();
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("numericVar", 928374).count()).isOne();
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("numericVar", 928373).count()).isZero();
 
     // test compare methods with date values
@@ -1349,44 +1349,44 @@ class TaskQueryTest {
     Date after = new GregorianCalendar(2014, 2, 2, 2, 2, 3).getTime();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueGreaterThan("dateVar", before).count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueGreaterThan("dateVar", before).count()).isOne();
     assertThat(taskQuery.taskVariableValueGreaterThan("dateVar", date).count()).isZero();
     assertThat(taskQuery.taskVariableValueGreaterThan("dateVar", after).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("dateVar", before).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("dateVar", date).count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("dateVar", before).count()).isOne();
+    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("dateVar", date).count()).isOne();
     assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("dateVar", after).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueLessThan("dateVar", after).count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueLessThan("dateVar", after).count()).isOne();
     assertThat(taskQuery.taskVariableValueLessThan("dateVar", date).count()).isZero();
     assertThat(taskQuery.taskVariableValueLessThan("dateVar", before).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("dateVar", after).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("dateVar", date).count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("dateVar", after).count()).isOne();
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("dateVar", date).count()).isOne();
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("dateVar", before).count()).isZero();
 
     //test with string values
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueGreaterThan("stringVar", "aa").count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueGreaterThan("stringVar", "aa").count()).isOne();
     assertThat(taskQuery.taskVariableValueGreaterThan("stringVar", "ab").count()).isZero();
     assertThat(taskQuery.taskVariableValueGreaterThan("stringVar", "ba").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("stringVar", "aa").count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("stringVar", "aa").count()).isOne();
+    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("stringVar", "ab").count()).isOne();
     assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("stringVar", "ba").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueLessThan("stringVar", "ba").count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueLessThan("stringVar", "ba").count()).isOne();
     assertThat(taskQuery.taskVariableValueLessThan("stringVar", "ab").count()).isZero();
     assertThat(taskQuery.taskVariableValueLessThan("stringVar", "aa").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "ba").count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "ba").count()).isOne();
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "ab").count()).isOne();
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "aa").count()).isZero();
 
     var taskQuery2 = taskService.createTaskQuery();
@@ -1423,13 +1423,13 @@ class TaskQueryTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
     // Test query matches
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("longVar", 928374L).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("shortVar", (short) 123).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("integerVar", 1234).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("stringVar", "stringValue").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("booleanVar", true).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("dateVar", date).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("nullVar", null).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("longVar", 928374L).count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("shortVar", (short) 123).count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("integerVar", 1234).count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("stringVar", "stringValue").count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("booleanVar", true).count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("dateVar", date).count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("nullVar", null).count()).isOne();
 
     // Test query for other values on existing variables
     assertThat(taskService.createTaskQuery().processVariableValueEquals("longVar", 999L).count()).isZero();
@@ -1452,11 +1452,11 @@ class TaskQueryTest {
     assertThat(taskService.createTaskQuery().taskVariableValueEquals("nullVar", null).count()).isZero();
 
     // Test querying for task variables not equals
-    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("longVar", 999L).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("shortVar", (short) 999).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("integerVar", 999).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("stringVar", "999").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("booleanVar", false).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("longVar", 999L).count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("shortVar", (short) 999).count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("integerVar", 999).count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("stringVar", "999").count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("booleanVar", false).count()).isOne();
 
     // and query for the existing variable with NOT should result in nothing found:
     assertThat(taskService.createTaskQuery().processVariableValueNotEquals("longVar", 928374L).count()).isZero();
@@ -1467,14 +1467,14 @@ class TaskQueryTest {
     taskService.setVariableLocal(task.getId(), "longVar", 928374L);
 
     assertThat(taskService.createTaskQuery()
-        .processVariableValueEquals("longVar", 928374L)
-        .taskVariableValueEquals("taskVar", "theValue")
-        .count()).isEqualTo(1);
+      .processVariableValueEquals("longVar", 928374L)
+      .taskVariableValueEquals("taskVar", "theValue")
+      .count()).isOne();
 
     assertThat(taskService.createTaskQuery()
-        .processVariableValueEquals("longVar", 928374L)
-        .taskVariableValueEquals("longVar", 928374L)
-        .count()).isEqualTo(1);
+      .processVariableValueEquals("longVar", 928374L)
+      .taskVariableValueEquals("longVar", 928374L)
+      .count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1488,11 +1488,11 @@ class TaskQueryTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
     // query for case-insensitive variable name should only return a result if case-insensitive search is used
-    assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isOne();
     assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
-    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
@@ -1506,8 +1506,8 @@ class TaskQueryTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
     // query for existing variable should return one result
-    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName, variableValue).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName, variableValue).count()).isOne();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isOne();
 
     // query for non existing variable should return zero results
     assertThat(taskService.createTaskQuery().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isZero();
@@ -1519,10 +1519,10 @@ class TaskQueryTest {
 
     // query for case-insensitive variable value should only return a result when case-insensitive search is used
     assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isZero();
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isOne();
 
     // query for case-insensitive variable with not equals operator should only return a result when case-sensitive search is used
-    assertThat(taskService.createTaskQuery().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isOne();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isZero();
   }
 
@@ -1534,9 +1534,9 @@ class TaskQueryTest {
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
-    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVal%").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngValue").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngVal%").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVal%").count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngValue").count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngVal%").count()).isOne();
 
     assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVar%").count()).isZero();
     assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngVar").count()).isZero();
@@ -1559,9 +1559,9 @@ class TaskQueryTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
     assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isZero();
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngValue".toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVal%".toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isOne();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngValue".toLowerCase()).count()).isOne();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVal%".toLowerCase()).count()).isOne();
 
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVar%".toLowerCase()).count()).isZero();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVar".toLowerCase()).count()).isZero();
@@ -1589,12 +1589,12 @@ class TaskQueryTest {
     assertThat(taskQuery1.processVariableValueNotLike("stringVar", "%ngVal%").count()).isZero();
 
     var taskQuery2 = taskService.createTaskQuery();
-    assertThat(taskQuery2.processVariableValueNotLike("stringVar", "stringVar%").count()).isEqualTo(1);
-    assertThat(taskQuery2.processVariableValueNotLike("stringVar", "%ngVar").count()).isEqualTo(1);
-    assertThat(taskQuery2.processVariableValueNotLike("stringVar", "%ngVar%").count()).isEqualTo(1);
+    assertThat(taskQuery2.processVariableValueNotLike("stringVar", "stringVar%").count()).isOne();
+    assertThat(taskQuery2.processVariableValueNotLike("stringVar", "%ngVar").count()).isOne();
+    assertThat(taskQuery2.processVariableValueNotLike("stringVar", "%ngVar%").count()).isOne();
 
     var taskQuery3 = taskService.createTaskQuery();
-    assertThat(taskQuery3.processVariableValueNotLike("stringVar", "stringVal").count()).isEqualTo(1);
+    assertThat(taskQuery3.processVariableValueNotLike("stringVar", "stringVal").count()).isOne();
     assertThat(taskQuery3.processVariableValueNotLike("nonExistingVar", "string%").count()).isZero();
 
     // test with null value
@@ -1611,16 +1611,16 @@ class TaskQueryTest {
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
-    assertThat(taskService.createTaskQuery().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isOne();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isZero();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngValue".toLowerCase()).count()).isZero();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVal%".toLowerCase()).count()).isZero();
 
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVar%".toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar".toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar%".toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVar%".toLowerCase()).count()).isOne();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar".toLowerCase()).count()).isOne();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar%".toLowerCase()).count()).isOne();
 
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal".toLowerCase()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal".toLowerCase()).count()).isOne();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isZero();
 
     // test with null value
@@ -1644,23 +1644,23 @@ class TaskQueryTest {
 
     // test compare methods with numeric values
     var taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueGreaterThan("numericVar", 928373).count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueGreaterThan("numericVar", 928373).count()).isOne();
     assertThat(taskQuery.processVariableValueGreaterThan("numericVar", 928374).count()).isZero();
     assertThat(taskQuery.processVariableValueGreaterThan("numericVar", 928375).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("numericVar", 928373).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("numericVar", 928373).count()).isOne();
+    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("numericVar", 928374).count()).isOne();
     assertThat(taskQuery.processVariableValueGreaterThanOrEquals("numericVar", 928375).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueLessThan("numericVar", 928375).count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueLessThan("numericVar", 928375).count()).isOne();
     assertThat(taskQuery.processVariableValueLessThan("numericVar", 928374).count()).isZero();
     assertThat(taskQuery.processVariableValueLessThan("numericVar", 928373).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("numericVar", 928375).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("numericVar", 928375).count()).isOne();
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("numericVar", 928374).count()).isOne();
     assertThat(taskQuery.processVariableValueLessThanOrEquals("numericVar", 928373).count()).isZero();
 
     // test compare methods with date values
@@ -1668,44 +1668,44 @@ class TaskQueryTest {
     Date after = new GregorianCalendar(2014, 2, 2, 2, 2, 3).getTime();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueGreaterThan("dateVar", before).count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueGreaterThan("dateVar", before).count()).isOne();
     assertThat(taskQuery.processVariableValueGreaterThan("dateVar", date).count()).isZero();
     assertThat(taskQuery.processVariableValueGreaterThan("dateVar", after).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("dateVar", before).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("dateVar", date).count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("dateVar", before).count()).isOne();
+    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("dateVar", date).count()).isOne();
     assertThat(taskQuery.processVariableValueGreaterThanOrEquals("dateVar", after).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueLessThan("dateVar", after).count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueLessThan("dateVar", after).count()).isOne();
     assertThat(taskQuery.processVariableValueLessThan("dateVar", date).count()).isZero();
     assertThat(taskQuery.processVariableValueLessThan("dateVar", before).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("dateVar", after).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("dateVar", date).count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("dateVar", after).count()).isOne();
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("dateVar", date).count()).isOne();
     assertThat(taskQuery.processVariableValueLessThanOrEquals("dateVar", before).count()).isZero();
 
     //test with string values
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueGreaterThan("stringVar", "aa").count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueGreaterThan("stringVar", "aa").count()).isOne();
     assertThat(taskQuery.processVariableValueGreaterThan("stringVar", "ab").count()).isZero();
     assertThat(taskQuery.processVariableValueGreaterThan("stringVar", "ba").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("stringVar", "aa").count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("stringVar", "aa").count()).isOne();
+    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("stringVar", "ab").count()).isOne();
     assertThat(taskQuery.processVariableValueGreaterThanOrEquals("stringVar", "ba").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueLessThan("stringVar", "ba").count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueLessThan("stringVar", "ba").count()).isOne();
     assertThat(taskQuery.processVariableValueLessThan("stringVar", "ab").count()).isZero();
     assertThat(taskQuery.processVariableValueLessThan("stringVar", "aa").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "ba").count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "ba").count()).isOne();
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "ab").count()).isOne();
     assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "aa").count()).isZero();
 
     var taskQuery2 = taskService.createTaskQuery();
@@ -1764,7 +1764,7 @@ class TaskQueryTest {
     assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1802,7 +1802,7 @@ class TaskQueryTest {
         Collections.singletonMap("var", "123"));
 
     assertThat(taskService.createTaskQuery().processVariableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
-    assertThat(taskService.createTaskQuery().processVariableValueGreaterThan("var", Variables.numberValue(123)).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueGreaterThan("var", Variables.numberValue(123)).count()).isOne();
     assertThat(taskService.createTaskQuery().processVariableValueGreaterThanOrEquals("var", Variables.numberValue(123)).count()).isEqualTo(5);
     assertThat(taskService.createTaskQuery().processVariableValueLessThan("var", Variables.numberValue(123)).count()).isZero();
     assertThat(taskService.createTaskQuery().processVariableValueLessThanOrEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
@@ -1836,7 +1836,7 @@ class TaskQueryTest {
     assertThat(taskService.createTaskQuery().taskVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(taskService.createTaskQuery().taskVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("var", Variables.numberValue(null)).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1847,8 +1847,8 @@ class TaskQueryTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", Long.MAX_VALUE));
 
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(Long.MAX_VALUE)).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isOne();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(Long.MAX_VALUE)).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1862,7 +1862,7 @@ class TaskQueryTest {
         Collections.singletonMap("var", (long) MAX_DOUBLE_VALUE));
 
     // the query should not find the long variable
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -2052,7 +2052,7 @@ class TaskQueryTest {
     task.setDueDate(dueDate);
     taskService.saveTask(task);
 
-    assertThat(taskService.createTaskQuery().dueDate(dueDate).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().dueDate(dueDate).count()).isOne();
 
     Calendar otherDate = Calendar.getInstance();
     otherDate.add(Calendar.YEAR, 1);
@@ -2062,10 +2062,10 @@ class TaskQueryTest {
     priorDate.setTime(dueDate);
     priorDate.roll(Calendar.YEAR, -1);
     assertThat(taskService.createTaskQuery().dueAfter(priorDate.getTime())
-        .count()).isEqualTo(1);
+      .count()).isOne();
 
     assertThat(taskService.createTaskQuery()
-        .dueBefore(otherDate.getTime()).count()).isEqualTo(1);
+      .dueBefore(otherDate.getTime()).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2087,7 +2087,7 @@ class TaskQueryTest {
     oneHourLater.setTime(dueDateCal.getTime());
     oneHourLater.add(Calendar.HOUR, 1);
 
-    assertThat(taskService.createTaskQuery().dueBefore(oneHourLater.getTime()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().dueBefore(oneHourLater.getTime()).count()).isOne();
     assertThat(taskService.createTaskQuery().dueBefore(oneHourAgo.getTime()).count()).isZero();
 
     // Update due-date to null, shouldn't show up anymore in query that matched before
@@ -2118,7 +2118,7 @@ class TaskQueryTest {
     oneHourLater.setTime(dueDateCal.getTime());
     oneHourLater.add(Calendar.HOUR, 1);
 
-    assertThat(taskService.createTaskQuery().dueAfter(oneHourAgo.getTime()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().dueAfter(oneHourAgo.getTime()).count()).isOne();
     assertThat(taskService.createTaskQuery().dueAfter(oneHourLater.getTime()).count()).isZero();
 
     // Update due-date to null, shouldn't show up anymore in query that matched before
@@ -2145,7 +2145,7 @@ class TaskQueryTest {
     Date oneHourLater = new Date(dueDate.getTime() + 60 * 60 * 1000);
 
     assertThat(taskService.createTaskQuery()
-        .dueAfter(oneHourAgo).dueDate(dueDate).dueBefore(oneHourLater).count()).isEqualTo(1);
+      .dueAfter(oneHourAgo).dueDate(dueDate).dueBefore(oneHourLater).count()).isOne();
     assertThat(taskService.createTaskQuery()
         .dueAfter(oneHourLater).dueDate(dueDate).dueBefore(oneHourAgo).count()).isZero();
     assertThat(taskService.createTaskQuery()
@@ -2228,8 +2228,8 @@ class TaskQueryTest {
     // do not find any task instances with follow up date
     assertThat(taskService.createTaskQuery().followUpDate(otherDate.getTime()).count()).isZero();
     assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId())
-        // we might have tasks from other test cases - so we limit to the current PI
-        .followUpBeforeOrNotExistent(otherDate.getTime()).count()).isEqualTo(1);
+      // we might have tasks from other test cases - so we limit to the current PI
+      .followUpBeforeOrNotExistent(otherDate.getTime()).count()).isOne();
 
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -2239,19 +2239,19 @@ class TaskQueryTest {
     taskService.saveTask(task);
 
     assertThat(taskService.createTaskQuery().taskId(task.getId()).singleResult().getFollowUpDate()).isEqualTo(followUpDate);
-    assertThat(taskService.createTaskQuery().followUpDate(followUpDate).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().followUpDate(followUpDate).count()).isOne();
 
     otherDate.setTime(followUpDate);
 
     otherDate.add(Calendar.YEAR, 1);
     assertThat(taskService.createTaskQuery().followUpDate(otherDate.getTime()).count()).isZero();
-    assertThat(taskService.createTaskQuery().followUpBefore(otherDate.getTime()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().followUpBefore(otherDate.getTime()).count()).isOne();
     assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId()) //
-        .followUpBeforeOrNotExistent(otherDate.getTime()).count()).isEqualTo(1);
+      .followUpBeforeOrNotExistent(otherDate.getTime()).count()).isOne();
     assertThat(taskService.createTaskQuery().followUpAfter(otherDate.getTime()).count()).isZero();
 
     otherDate.add(Calendar.YEAR, -2);
-    assertThat(taskService.createTaskQuery().followUpAfter(otherDate.getTime()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().followUpAfter(otherDate.getTime()).count()).isOne();
     assertThat(taskService.createTaskQuery().followUpBefore(otherDate.getTime()).count()).isZero();
     assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId()) //
         .followUpBeforeOrNotExistent(otherDate.getTime()).count()).isZero();
@@ -2274,7 +2274,7 @@ class TaskQueryTest {
     Date oneHourLater = new Date(dueDate.getTime() + 60 * 60 * 1000);
 
     assertThat(taskService.createTaskQuery()
-        .followUpAfter(oneHourAgo).followUpDate(dueDate).followUpBefore(oneHourLater).count()).isEqualTo(1);
+      .followUpAfter(oneHourAgo).followUpDate(dueDate).followUpBefore(oneHourLater).count()).isOne();
     assertThat(taskService.createTaskQuery()
         .followUpAfter(oneHourLater).followUpDate(dueDate).followUpBefore(oneHourAgo).count()).isZero();
     assertThat(taskService.createTaskQuery()
@@ -2493,7 +2493,7 @@ class TaskQueryTest {
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + tablePrefix + "ACT_RU_TASK T1, " + tablePrefix + "ACT_RU_TASK T2").count()).isEqualTo(144);
 
     // join task and variable instances
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class) + " T1, " + managementService.getTableName(VariableInstanceEntity.class) + " V1 WHERE V1.TASK_ID_ = T1.ID_").count()).isEqualTo(1);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class) + " T1, " + managementService.getTableName(VariableInstanceEntity.class) + " V1 WHERE V1.TASK_ID_ = T1.ID_").count()).isOne();
     List<Task> tasks = taskService.createNativeTaskQuery().sql("SELECT T1.* FROM " + managementService.getTableName(Task.class) + " T1, "+managementService.getTableName(VariableInstanceEntity.class)+" V1 WHERE V1.TASK_ID_ = T1.ID_").list();
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("gonzo_Task");
@@ -2501,11 +2501,11 @@ class TaskQueryTest {
     // select with distinct
     assertThat(taskService.createNativeTaskQuery().sql("SELECT DISTINCT T1.* FROM " + tablePrefix + "ACT_RU_TASK T1").list()).hasSize(12);
 
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class) + " T WHERE T.NAME_ = 'gonzo_Task'").count()).isEqualTo(1);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class) + " T WHERE T.NAME_ = 'gonzo_Task'").count()).isOne();
     assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class) + " T WHERE T.NAME_ = 'gonzo_Task'").list()).hasSize(1);
 
     // use parameters
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class) + " T WHERE T.NAME_ = #{taskName}").parameter("taskName", "gonzo_Task").count()).isEqualTo(1);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class) + " T WHERE T.NAME_ = #{taskName}").parameter("taskName", "gonzo_Task").count()).isOne();
   }
 
   @Test
@@ -2853,11 +2853,11 @@ class TaskQueryTest {
     caseService.withCaseDefinition(caseDefinitionId).setVariable(variableName, variableValue).create();
 
     // query for case-insensitive variable name should only return a result if case-insensitive search is used
-    assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isOne();
     assertThat(taskService.createTaskQuery().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
-    assertThat(taskService.createTaskQuery().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

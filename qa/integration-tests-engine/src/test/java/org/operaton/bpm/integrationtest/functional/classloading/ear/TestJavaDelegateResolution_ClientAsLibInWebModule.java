@@ -87,7 +87,7 @@ public class TestJavaDelegateResolution_ClientAsLibInWebModule extends AbstractF
 
     runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     waitForJobExecutorToProcessAllJobs();
 

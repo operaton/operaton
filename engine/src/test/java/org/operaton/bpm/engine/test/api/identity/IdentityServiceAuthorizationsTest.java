@@ -190,7 +190,7 @@ class IdentityServiceAuthorizationsTest {
 
     // assume
     TenantQuery query = identityService.createTenantQuery().userMember(jonny1Id);
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     // when
     identityService.deleteUser(jonny1Id);
@@ -426,7 +426,7 @@ class IdentityServiceAuthorizationsTest {
 
     // assume
     TenantQuery query = identityService.createTenantQuery().groupMember("group1");
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     // when
     identityService.deleteGroup("group1");
@@ -893,7 +893,7 @@ class IdentityServiceAuthorizationsTest {
 
     // now we can fetch the user
     assertThat(identityService.createUserQuery().singleResult()).isNotNull();
-    assertThat(identityService.createUserQuery().count()).isEqualTo(1);
+    assertThat(identityService.createUserQuery().count()).isOne();
 
     // change the base permission:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -904,7 +904,7 @@ class IdentityServiceAuthorizationsTest {
 
     // we can still fetch the user
     assertThat(identityService.createUserQuery().singleResult()).isNotNull();
-    assertThat(identityService.createUserQuery().count()).isEqualTo(1);
+    assertThat(identityService.createUserQuery().count()).isOne();
 
 
     // revoke permission for jonny2:
@@ -934,7 +934,7 @@ class IdentityServiceAuthorizationsTest {
 
     // now the base permission applies and grants us read access
     assertThat(identityService.createUserQuery().singleResult()).isNotNull();
-    assertThat(identityService.createUserQuery().count()).isEqualTo(1);
+    assertThat(identityService.createUserQuery().count()).isOne();
 
   }
 
@@ -1141,7 +1141,7 @@ class IdentityServiceAuthorizationsTest {
 
     // now we can fetch the group
     assertThat(identityService.createGroupQuery().singleResult()).isNotNull();
-    assertThat(identityService.createGroupQuery().count()).isEqualTo(1);
+    assertThat(identityService.createGroupQuery().count()).isOne();
 
     // change the base permission:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1152,7 +1152,7 @@ class IdentityServiceAuthorizationsTest {
 
     // we can still fetch the group
     assertThat(identityService.createGroupQuery().singleResult()).isNotNull();
-    assertThat(identityService.createGroupQuery().count()).isEqualTo(1);
+    assertThat(identityService.createGroupQuery().count()).isOne();
 
     // revoke permission for jonny2:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1180,7 +1180,7 @@ class IdentityServiceAuthorizationsTest {
 
     // now the base permission applies and grants us read access
     assertThat(identityService.createGroupQuery().singleResult()).isNotNull();
-    assertThat(identityService.createGroupQuery().count()).isEqualTo(1);
+    assertThat(identityService.createGroupQuery().count()).isOne();
 
   }
 
@@ -1220,7 +1220,7 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now we can fetch the tenants
-    assertThat(identityService.createTenantQuery().count()).isEqualTo(1);
+    assertThat(identityService.createTenantQuery().count()).isOne();
 
     // change the base permission:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1230,7 +1230,7 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // we can still fetch the tenants
-    assertThat(identityService.createTenantQuery().count()).isEqualTo(1);
+    assertThat(identityService.createTenantQuery().count()).isOne();
 
     // revoke permission for jonny2:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1256,7 +1256,7 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now the base permission applies and grants us read access
-    assertThat(identityService.createTenantQuery().count()).isEqualTo(1);
+    assertThat(identityService.createTenantQuery().count()).isOne();
   }
 
   @Test

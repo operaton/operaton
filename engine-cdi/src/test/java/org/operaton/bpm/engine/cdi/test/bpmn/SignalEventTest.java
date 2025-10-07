@@ -86,8 +86,8 @@ public class SignalEventTest extends CdiProcessEngineTestCase {
     variables2.put("signalProcessInstanceId", piCatchSignal.getProcessInstanceId());
     ProcessInstance piThrowSignal = runtimeService.startProcessInstanceByKey("throwSignal", variables2);
 
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(piCatchSignal.getProcessInstanceId()).activityId("receiveTask").count()).isEqualTo(1);
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(piThrowSignal.getProcessInstanceId()).activityId("receiveTask").count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(piCatchSignal.getProcessInstanceId()).activityId("receiveTask").count()).isOne();
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(piThrowSignal.getProcessInstanceId()).activityId("receiveTask").count()).isOne();
 
     assertThat(runtimeService.getVariable(piCatchSignal.getId(), "processName")).isEqualTo("catchSignal-visited (was catchSignal)");
     assertThat(runtimeService.getVariable(piThrowSignal.getId(), "processName")).isEqualTo("throwSignal-visited (was throwSignal)");

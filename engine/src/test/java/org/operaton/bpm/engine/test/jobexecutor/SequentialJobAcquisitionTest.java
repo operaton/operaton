@@ -99,7 +99,7 @@ class SequentialJobAcquisitionTest {
 
     engine.getRuntimeService().startProcessInstanceByKey("intermediateTimerEventExample");
 
-    assertThat(engine.getManagementService().createJobQuery().count()).isEqualTo(1);
+    assertThat(engine.getManagementService().createJobQuery().count()).isOne();
 
     Calendar calendar = Calendar.getInstance();
     calendar.add(Field.DAY_OF_YEAR.getCalendarField(), 6);
@@ -150,8 +150,8 @@ class SequentialJobAcquisitionTest {
     engine1.getRuntimeService().startProcessInstanceByKey("intermediateTimerEventExample");
     engine2.getRuntimeService().startProcessInstanceByKey("intermediateTimerEventExample");
 
-    assertThat(engine1.getManagementService().createJobQuery().count()).isEqualTo(1);
-    assertThat(engine2.getManagementService().createJobQuery().count()).isEqualTo(1);
+    assertThat(engine1.getManagementService().createJobQuery().count()).isOne();
+    assertThat(engine2.getManagementService().createJobQuery().count()).isOne();
 
     Calendar calendar = Calendar.getInstance();
     calendar.add(Field.DAY_OF_YEAR.getCalendarField(), 6);
@@ -211,8 +211,8 @@ class SequentialJobAcquisitionTest {
     calendar.add(Field.DAY_OF_YEAR.getCalendarField(), 6);
     ClockUtil.setCurrentTime(calendar.getTime());
 
-    assertThat(engine1.getManagementService().createJobQuery().count()).isEqualTo(1);
-    assertThat(engine2.getManagementService().createJobQuery().count()).isEqualTo(1);
+    assertThat(engine1.getManagementService().createJobQuery().count()).isOne();
+    assertThat(engine2.getManagementService().createJobQuery().count()).isOne();
 
     // assert task completed for the first engine
     jobExecutor.start();

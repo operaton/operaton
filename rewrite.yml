@@ -117,5 +117,6 @@ recipeList:
   # More AssertJ
   - org.openrewrite.java.testing.assertj.AssertJBestPracticesTest
   - org.openrewrite.java.testing.assertj.AssertJShortRulesRecipes
+  - org.openrewrite.java.testing.assertj.AssertJLongRulesRecipes
   # Very slow:
   #- tech.picnic.errorprone.refasterrules.AssertJObjectRulesRecipes

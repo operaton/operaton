@@ -181,7 +181,7 @@ class VariableInstanceQueryTest {
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
     }
 
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("task").variableNameIn("task", "execution").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("task").variableNameIn("task", "execution").count()).isOne();
     assertThat(runtimeService.createVariableInstanceQuery().variableName("task").variableNameIn("process", "execution").count()).isZero();
   }
 
@@ -202,7 +202,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("string%Var");
@@ -500,7 +500,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("intValue");
@@ -529,7 +529,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("intValue");
@@ -718,7 +718,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("longValue");
@@ -747,7 +747,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("longValue");
@@ -936,7 +936,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("doubleValue");
@@ -965,7 +965,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("doubleValue");
@@ -1154,7 +1154,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("shortValue");
@@ -1183,7 +1183,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("shortValue");
@@ -1390,7 +1390,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("date");
@@ -1433,7 +1433,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("nullValue");
@@ -1683,7 +1683,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("taskVariable");
@@ -1838,14 +1838,14 @@ class VariableInstanceQueryTest {
     VariableInstance taskVar = taskVariablesQuery.singleResult();
     assertThat(taskVar).isNotNull();
 
-    assertThat(taskVariablesQuery.count()).isEqualTo(1);
+    assertThat(taskVariablesQuery.count()).isOne();
     assertThat(taskVar.getTypeName()).isEqualTo("string");
     assertThat(taskVar.getName()).isEqualTo("taskVariable");
     assertThat(taskVar.getValue()).isEqualTo("aCustomValue");
 
     VariableInstance processVar = processVariablesQuery.singleResult();
 
-    assertThat(processVariablesQuery.count()).isEqualTo(1);
+    assertThat(processVariablesQuery.count()).isOne();
     assertThat(processVar.getTypeName()).isEqualTo("string");
     assertThat(processVar.getName()).isEqualTo("stringVar");
     assertThat(processVar.getValue()).isEqualTo("test");

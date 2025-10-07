@@ -908,11 +908,11 @@ class ExecutionQueryTest {
     assertThat(executions.get(0).getId()).isEqualTo(processInstance1.getId());
 
     // Test NOT_EQUALS null
-    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVar", null).count()).isEqualTo(1);
-    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarLong", null).count()).isEqualTo(1);
-    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarDouble", null).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVar", null).count()).isOne();
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarLong", null).count()).isOne();
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarDouble", null).count()).isOne();
     // When a byte-array reference is present, the variable is not considered null
-    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarByte", null).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarByte", null).count()).isOne();
     var executionQuery = runtimeService.createExecutionQuery();
 
     // All other variable queries with null should throw exception
@@ -1176,7 +1176,7 @@ class ExecutionQueryTest {
     }
 
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "child").count()).isEqualTo(2);
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "parent").count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "parent").count()).isOne();
 
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).processVariableValueEquals("x", "parent").count()).isEqualTo(3);
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).processVariableValueNotEquals("x", "xxx").count()).isEqualTo(3);
@@ -1543,14 +1543,14 @@ class ExecutionQueryTest {
     assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isOne();
 
     assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
     assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
     assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")

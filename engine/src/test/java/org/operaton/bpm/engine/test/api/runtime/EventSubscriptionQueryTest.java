@@ -67,7 +67,7 @@ class EventSubscriptionQueryTest {
     EventSubscriptionQuery query = runtimeService.createEventSubscriptionQuery()
         .eventSubscriptionId(eventSubscription.getId());
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
     assertThat(query.singleResult()).isNotNull();
     var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();

@@ -2256,7 +2256,7 @@ class CaseServiceTest {
     caseService.removeVariableLocal(caseInstanceId, "aVariableName");
 
     // then the variable should still be there
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isOne();
 
     // when
     caseService.removeVariableLocal(caseExecutionId, "aVariableName");

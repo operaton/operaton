@@ -89,7 +89,7 @@ class MultiTenancyProcessInstantiationTest {
       .processDefinitionTenantId(TENANT_ONE)
       .execute();
 
-    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -99,7 +99,7 @@ class MultiTenancyProcessInstantiationTest {
     runtimeService.createProcessInstanceByKey("testProcess")
       .execute();
 
-    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -112,7 +112,7 @@ class MultiTenancyProcessInstantiationTest {
       .execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
     assertThat(query.singleResult().getTenantId()).isNull();
   }
 
@@ -190,7 +190,7 @@ class MultiTenancyProcessInstantiationTest {
       .startBeforeActivity("userTask")
       .execute();
 
-    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -201,7 +201,7 @@ class MultiTenancyProcessInstantiationTest {
       .startBeforeActivity("userTask")
       .execute();
 
-    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -215,7 +215,7 @@ class MultiTenancyProcessInstantiationTest {
       .execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
     assertThat(query.singleResult().getTenantId()).isNull();
   }
 
@@ -298,7 +298,7 @@ class MultiTenancyProcessInstantiationTest {
       .execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -366,8 +366,8 @@ class MultiTenancyProcessInstantiationTest {
       .execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -384,8 +384,8 @@ class MultiTenancyProcessInstantiationTest {
       .execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -398,8 +398,8 @@ class MultiTenancyProcessInstantiationTest {
     runtimeService.createProcessInstanceByKey("testProcess").execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -414,8 +414,8 @@ class MultiTenancyProcessInstantiationTest {
       .execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)

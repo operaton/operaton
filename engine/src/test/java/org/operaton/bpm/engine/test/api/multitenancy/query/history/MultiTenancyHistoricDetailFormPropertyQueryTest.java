@@ -112,7 +112,7 @@ class MultiTenancyHistoricDetailFormPropertyQueryTest {
         .formFields();
 
     // then
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -129,8 +129,8 @@ class MultiTenancyHistoricDetailFormPropertyQueryTest {
         .tenantIdIn(TENANT_TWO);
 
     // then
-    assertThat(queryTenantOne.count()).isEqualTo(1L);
-    assertThat(queryTenantTwo.count()).isEqualTo(1L);
+    assertThat(queryTenantOne.count()).isOne();
+    assertThat(queryTenantTwo.count()).isOne();
   }
 
   @Test

@@ -2562,11 +2562,11 @@ class CaseExecutionQueryTest {
     assertThat(caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isOne();
 
     // other operators
     assertThat(caseService.createCaseExecutionQuery().variableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
-    assertThat(caseService.createCaseExecutionQuery().variableValueGreaterThan("var", Variables.numberValue(123L)).count()).isEqualTo(1);
+    assertThat(caseService.createCaseExecutionQuery().variableValueGreaterThan("var", Variables.numberValue(123L)).count()).isOne();
     assertThat(caseService.createCaseExecutionQuery().variableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count()).isEqualTo(5);
     assertThat(caseService.createCaseExecutionQuery().variableValueLessThan("var", Variables.numberValue((short) 123)).count()).isZero();
     assertThat(caseService.createCaseExecutionQuery().variableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);

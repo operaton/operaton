@@ -1295,7 +1295,7 @@ class FilterTaskQueryTest {
 
     count = filterService.count(testFilter.getId(), extendingQuery);
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
   @Test
@@ -2079,7 +2079,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2099,7 +2099,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2119,7 +2119,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2139,7 +2139,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2159,7 +2159,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2179,7 +2179,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2207,7 +2207,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Test
@@ -2368,7 +2368,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2389,7 +2389,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2410,7 +2410,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -2431,7 +2431,7 @@ class FilterTaskQueryTest {
     filterService.saveFilter(filter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(1L);
+    assertThat(filterService.count(filter.getId())).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})

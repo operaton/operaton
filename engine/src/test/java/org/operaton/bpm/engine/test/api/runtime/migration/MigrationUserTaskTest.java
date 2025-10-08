@@ -621,15 +621,15 @@ class MigrationUserTaskTest {
 
     ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinitionId);
     assertThat(rule.getManagementService().createJobQuery().count()).isEqualTo(2L);
-    assertThat(rule.getManagementService().createJobQuery().executable().count()).isEqualTo(1L);
+    assertThat(rule.getManagementService().createJobQuery().executable().count()).isOne();
     testHelper.waitForJobExecutorToProcessAllJobs(5000L);
-    assertThat(rule.getManagementService().createJobQuery().count()).isEqualTo(1L);
+    assertThat(rule.getManagementService().createJobQuery().count()).isOne();
 
     // when
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    assertThat(rule.getManagementService().createJobQuery().count()).isEqualTo(1L);
+    assertThat(rule.getManagementService().createJobQuery().count()).isOne();
   }
 
   @Test

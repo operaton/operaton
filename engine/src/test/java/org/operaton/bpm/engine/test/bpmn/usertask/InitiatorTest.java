@@ -48,6 +48,6 @@ class InitiatorTest {
       identityService.setAuthenticatedUserId(null);
     }
 
-    assertThat(taskService.createTaskQuery().taskAssignee("bono").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskAssignee("bono").count()).isOne();
   }
 }

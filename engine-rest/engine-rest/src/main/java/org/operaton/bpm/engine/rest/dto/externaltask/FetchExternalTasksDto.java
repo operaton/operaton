@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.dto.externaltask;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -105,7 +104,7 @@ public class FetchExternalTasksDto {
     protected String processDefinitionVersionTag;
     protected long lockDuration;
     protected List<String> variables;
-    protected HashMap<String, Object> processVariables;
+    protected Map<String, Object> processVariables;
     protected boolean deserializeValues;
     protected boolean localVariables;
     protected boolean includeExtensionProperties;
@@ -167,10 +166,10 @@ public class FetchExternalTasksDto {
     public void setVariables(List<String> variables) {
       this.variables = variables;
     }
-    public HashMap<String, Object> getProcessVariables() {
+    public Map<String, Object> getProcessVariables() {
       return processVariables;
     }
-    public void setProcessVariables(HashMap<String, Object> processVariables) {
+    public void setProcessVariables(Map<String, Object> processVariables) {
       this.processVariables = processVariables;
     }
     public boolean isDeserializeValues() {

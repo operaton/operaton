@@ -63,14 +63,14 @@ class EventBasedGatewayTest {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
     assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
     assertThat(managementService.createJobQuery().count()).isZero();
 
     Task task = taskService.createTaskQuery()
@@ -91,9 +91,9 @@ class EventBasedGatewayTest {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() +10000));
     try {
@@ -101,7 +101,7 @@ class EventBasedGatewayTest {
       testRule.waitForJobExecutorToProcessAllJobs(10000);
 
       assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
-      assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+      assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
       assertThat(managementService.createJobQuery().count()).isZero();
 
       Task task = taskService.createTaskQuery()
@@ -124,10 +124,10 @@ class EventBasedGatewayTest {
 
     assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(2);
     EventSubscriptionQuery messageEventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().eventType("message");
-    assertThat(messageEventSubscriptionQuery.count()).isEqualTo(1);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").count()).isEqualTo(1);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(messageEventSubscriptionQuery.count()).isOne();
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").count()).isOne();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // we can query for an execution with has both a signal AND message subscription
     Execution execution = runtimeService.createExecutionQuery()
@@ -143,7 +143,7 @@ class EventBasedGatewayTest {
       runtimeService.messageEventReceived(messageEventSubscription.getEventName(), messageEventSubscription.getExecutionId());
 
       assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
-      assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+      assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
       assertThat(managementService.createJobQuery().count()).isZero();
 
       Task task = taskService.createTaskQuery()
@@ -194,7 +194,7 @@ class EventBasedGatewayTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     String jobId = jobQuery.singleResult().getId();
     managementService.executeJob(jobId);

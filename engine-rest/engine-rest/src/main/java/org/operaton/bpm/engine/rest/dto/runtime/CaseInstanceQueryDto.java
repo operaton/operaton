@@ -259,6 +259,7 @@ public class CaseInstanceQueryDto extends AbstractQueryDto<CaseInstanceQuery> {
     case SORT_BY_DEFINITION_KEY_VALUE -> query.orderByCaseDefinitionKey();
     case SORT_BY_DEFINITION_ID_VALUE -> query.orderByCaseDefinitionId();
     case SORT_BY_TENANT_ID -> query.orderByTenantId();
+    default -> throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid sort operator specified: " + sortBy);
     }
   }
 

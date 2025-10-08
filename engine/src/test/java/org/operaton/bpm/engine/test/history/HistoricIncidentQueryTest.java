@@ -103,10 +103,10 @@ public class HistoricIncidentQueryTest {
 
     //endTime
     assertThat(query.endTimeBefore(hourAgo.getTime()).count()).isZero();
-    assertThat(query.endTimeBefore(hourFromNow.getTime()).count()).isEqualTo(1);
-    assertThat(query.endTimeAfter(hourAgo.getTime()).count()).isEqualTo(1);
+    assertThat(query.endTimeBefore(hourFromNow.getTime()).count()).isOne();
+    assertThat(query.endTimeAfter(hourAgo.getTime()).count()).isOne();
     assertThat(query.endTimeAfter(hourFromNow.getTime()).count()).isZero();
-    assertThat(query.endTimeBefore(hourFromNow.getTime()).endTimeAfter(hourAgo.getTime()).count()).isEqualTo(1);
+    assertThat(query.endTimeBefore(hourFromNow.getTime()).endTimeAfter(hourAgo.getTime()).count()).isOne();
   }
 
   @Test
@@ -120,7 +120,7 @@ public class HistoricIncidentQueryTest {
         .incidentId(incidentId);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -145,7 +145,7 @@ public class HistoricIncidentQueryTest {
         .incidentType(Incident.FAILED_JOB_HANDLER_TYPE);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -167,7 +167,7 @@ public class HistoricIncidentQueryTest {
         .incidentMessage("exception0");
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -204,7 +204,7 @@ public class HistoricIncidentQueryTest {
         .processDefinitionId(pi.getProcessDefinitionId());
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -281,7 +281,7 @@ public class HistoricIncidentQueryTest {
         .processInstanceId(pi.getId());
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -305,7 +305,7 @@ public class HistoricIncidentQueryTest {
         .executionId(pi.getId());
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -327,7 +327,7 @@ public class HistoricIncidentQueryTest {
         .activityId("theServiceTask");
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -352,7 +352,7 @@ public class HistoricIncidentQueryTest {
         .failedActivityId("theServiceTask");
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -443,7 +443,7 @@ public class HistoricIncidentQueryTest {
         .configuration(configuration);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -472,7 +472,7 @@ public class HistoricIncidentQueryTest {
         .historyConfiguration(latestJobLogId.toString());
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -506,7 +506,7 @@ public class HistoricIncidentQueryTest {
         .open();
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -529,7 +529,7 @@ public class HistoricIncidentQueryTest {
         .resolved();
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -552,7 +552,7 @@ public class HistoricIncidentQueryTest {
         .deleted();
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -589,13 +589,13 @@ public class HistoricIncidentQueryTest {
       .jobDefinitionIdIn(jobDefinitionId1);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     query = historyService.createHistoricIncidentQuery()
       .jobDefinitionIdIn(jobDefinitionId2);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test

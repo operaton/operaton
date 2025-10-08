@@ -285,8 +285,8 @@ class ProcessApplicationDeploymentTest {
 
     // there should still be one version of process 1
     assertThat(repositoryService.createProcessDefinitionQuery()
-        .processDefinitionKey("process1")
-        .count()).isEqualTo(1);
+      .processDefinitionKey("process1")
+      .count()).isOne();
 
     // there should be three versions of process 2
     assertThat(repositoryService.createProcessDefinitionQuery()
@@ -861,8 +861,8 @@ class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -873,8 +873,8 @@ class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
   }
 
   @Test
@@ -903,8 +903,8 @@ class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -914,8 +914,8 @@ class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
   }
 
   @Test
@@ -943,8 +943,8 @@ class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -955,8 +955,8 @@ class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
   }
 
   @Test
@@ -984,8 +984,8 @@ class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -995,8 +995,8 @@ class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
   }
 
   @Test
@@ -1025,8 +1025,8 @@ class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -1037,8 +1037,8 @@ class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
   }
 
   @Test
@@ -1067,8 +1067,8 @@ class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -1109,8 +1109,8 @@ class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -1151,8 +1151,8 @@ class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(deploymentQuery.count()).isOne();
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())

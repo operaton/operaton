@@ -120,7 +120,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
 
     //then only one process definition should remain
     if (authRule.assertScenario(scenario)) {
-      assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+      assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
     }
   }
 

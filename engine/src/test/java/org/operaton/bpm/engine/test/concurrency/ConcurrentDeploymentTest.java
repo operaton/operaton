@@ -72,7 +72,7 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
     // ensure that although both transactions were run concurrently, only one deployment was constructed.
     assertThat(thread1.getException()).isNull();
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
-    assertThat(deploymentQuery.count()).isEqualTo(1L);
+    assertThat(deploymentQuery.count()).isOne();
   }
 
   @Test

@@ -101,7 +101,7 @@ class HistoricDetailQueryTest {
             .userOperationId(userOperationId);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -124,7 +124,7 @@ class HistoricDetailQueryTest {
         .variableUpdates();
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -164,7 +164,7 @@ class HistoricDetailQueryTest {
             .executionId(executionId);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -225,7 +225,7 @@ class HistoricDetailQueryTest {
 
     // then
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     HistoricDetail historicDetail = query.list().get(0);
     if (historicDetail instanceof HistoricVariableUpdate variableUpdate) {
       assertThat(variableUpdate.getVariableName()).isEqualTo("stringVar");
@@ -251,7 +251,7 @@ class HistoricDetailQueryTest {
 
     // then
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     HistoricDetail historicDetail = query.list().get(0);
     if (historicDetail instanceof HistoricVariableUpdate variableUpdate) {
       assertThat(variableUpdate.getVariableName()).isEqualTo("boolVar");
@@ -529,7 +529,7 @@ class HistoricDetailQueryTest {
         .processInstanceIdIn(processInstance.getProcessInstanceId());
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(processInstance.getId()).isEqualTo(query.list().get(0).getProcessInstanceId());
   }
 
@@ -612,7 +612,7 @@ class HistoricDetailQueryTest {
       historyService.createHistoricDetailQuery();
 
     // then
-    assertThat(query.occurredBefore(hourFromNow.getTime()).count()).isEqualTo(1);
+    assertThat(query.occurredBefore(hourFromNow.getTime()).count()).isOne();
     assertThat(query.occurredBefore(hourAgo.getTime()).count()).isZero();
 
   }
@@ -639,7 +639,7 @@ class HistoricDetailQueryTest {
 
     // then
     assertThat(query.occurredAfter(hourFromNow.getTime()).count()).isZero();
-    assertThat(query.occurredAfter(hourAgo.getTime()).count()).isEqualTo(1);
+    assertThat(query.occurredAfter(hourAgo.getTime()).count()).isOne();
   }
 
   @Test
@@ -664,7 +664,7 @@ class HistoricDetailQueryTest {
 
     // then
     assertThat(query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourFromNow.getTime()).count()).isZero();
-    assertThat(query.occurredAfter(hourAgo.getTime()).occurredBefore(hourFromNow.getTime()).count()).isEqualTo(1);
+    assertThat(query.occurredAfter(hourAgo.getTime()).occurredBefore(hourFromNow.getTime()).count()).isOne();
     assertThat(query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourAgo.getTime()).count()).isZero();
     assertThat(query.occurredAfter(hourAgo.getTime()).occurredBefore(hourAgo.getTime()).count()).isZero();
   }

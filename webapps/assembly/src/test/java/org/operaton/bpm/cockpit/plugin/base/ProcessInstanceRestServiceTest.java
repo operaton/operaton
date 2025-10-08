@@ -585,7 +585,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     CountResultDto result = resource.queryProcessInstancesCount(queryParameter);
     assertThat(result).isNotNull();
-    assertThat(result.getCount()).isEqualTo(1);
+    assertThat(result.getCount()).isOne();
   }
 
   @Test
@@ -653,7 +653,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     CountResultDto result = resource.queryProcessInstancesCount(queryParameter);
     assertThat(result).isNotNull();
-    assertThat(result.getCount()).isEqualTo(1);
+    assertThat(result.getCount()).isOne();
   }
 
   @Test
@@ -3320,7 +3320,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     CountResultDto result = resource.queryProcessInstancesCount(queryParameter);
 
-    assertThat(result.getCount()).isEqualTo(1L);
+    assertThat(result.getCount()).isOne();
   }
 
   private VariableQueryParameterDto createVariableParameter(String name, String operator, Object value) {

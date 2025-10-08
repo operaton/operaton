@@ -245,8 +245,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     //then process definition should be deleted
     identityService.clearAuthentication();
-    assertThat(processDefinitionQuery.count()).isEqualTo(1L);
-    assertThat(processDefinitionQuery.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(processDefinitionQuery.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -270,8 +270,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
       assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isZero();
     }
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -290,8 +290,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     //then process definition is deleted
     identityService.clearAuthentication();
-    assertThat(processDefinitionQuery.count()).isEqualTo(1L);
-    assertThat(processDefinitionQuery.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(processDefinitionQuery.count()).isOne();
+    assertThat(processDefinitionQuery.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -316,8 +316,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
       assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isZero();
     }
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -352,8 +352,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
       .delete();
 
     // then
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -373,8 +373,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     // then
     identityService.clearAuthentication();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -398,8 +398,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
     // then
     identityService.clearAuthentication();
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -420,8 +420,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     // then
     identityService.clearAuthentication();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -445,8 +445,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
     // then
     identityService.clearAuthentication();
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -487,8 +487,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     // then
     identityService.clearAuthentication();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -513,8 +513,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
     // then
     identityService.clearAuthentication();
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -536,8 +536,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     // then
     identityService.clearAuthentication();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -562,8 +562,8 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
     // then
     identityService.clearAuthentication();
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
-    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test

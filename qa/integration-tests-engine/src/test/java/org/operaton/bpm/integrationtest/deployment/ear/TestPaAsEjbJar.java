@@ -83,7 +83,7 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
     assertThat(processEngine).isNotNull();
 
     runtimeService.startProcessInstanceByKey("paAsEjbJar-process");
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
     waitForJobExecutorToProcessAllJobs();
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();

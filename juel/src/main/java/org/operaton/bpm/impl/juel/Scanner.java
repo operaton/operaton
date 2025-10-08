@@ -398,6 +398,7 @@ public class Scanner {
 				}
 				return fixed(Symbol.GT);
 			case '"', '\'': return nextString();
+			default: break;
 		}
 
 		if (isDigit(c1) || c1 == '.') {

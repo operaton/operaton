@@ -902,7 +902,7 @@ public class BulkHistoryDeleteTest {
     identityService.clearAuthentication();
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().operationType(OPERATION_TYPE_DELETE_HISTORY).count()).isEqualTo(1);
+    assertThat(historyService.createUserOperationLogQuery().operationType(OPERATION_TYPE_DELETE_HISTORY).count()).isOne();
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery().operationType(OPERATION_TYPE_DELETE_HISTORY).singleResult();
     assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.CASE_INSTANCE);

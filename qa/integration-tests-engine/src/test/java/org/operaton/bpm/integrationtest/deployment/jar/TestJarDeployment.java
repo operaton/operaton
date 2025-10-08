@@ -60,7 +60,7 @@ public class TestJarDeployment extends AbstractFoxPlatformIntegrationTest {
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

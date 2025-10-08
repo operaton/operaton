@@ -321,7 +321,7 @@ class MigrationProcessInstanceTest {
       .build();
 
     ProcessInstanceQuery wrongProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(wrongProcessDefinition.getId());
-    assertThat(wrongProcessInstanceQuery.count()).isEqualTo(1);
+    assertThat(wrongProcessInstanceQuery.count()).isOne();
     var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(wrongProcessInstanceQuery);
 
     try {

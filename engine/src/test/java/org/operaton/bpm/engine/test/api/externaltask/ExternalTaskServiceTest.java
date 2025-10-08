@@ -3110,7 +3110,7 @@ class ExternalTaskServiceTest {
   void testCancelExternalTaskWithBoundaryEvent() {
     // given
     runtimeService.startProcessInstanceByKey("boundaryExternalTaskProcess");
-    assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().count()).isOne();
 
     // when the external task is cancelled by a boundary event
     runtimeService.correlateMessage("Message");

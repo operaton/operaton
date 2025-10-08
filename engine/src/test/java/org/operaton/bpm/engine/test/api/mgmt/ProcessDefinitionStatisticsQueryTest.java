@@ -226,7 +226,7 @@ class ProcessDefinitionStatisticsQueryTest {
         .includeIncidents()
         .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
   @Test

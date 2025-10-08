@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 /**
  * @author Ronny Bräunlich
@@ -87,9 +87,13 @@ class DatabaseTableSchemaTest {
     // session should tell us that the tables are already present and
     // databaseSchemaUpdate is set to noop
     final Connection connection3 = pooledDataSource.getConnection();
-    assertAll(() -> {
-      connection3.createStatement().execute("set schema " + SCHEMA_NAME);
-      engine1.getManagementService().databaseSchemaUpgrade(connection3, "", SCHEMA_NAME);
+
+    final boolean schemaSet = connection3.createStatement().execute("set schema " + SCHEMA_NAME);
+    assertSoftly(softly -> {
+      softly.assertThat(schemaSet).isFalse();
+      softly.assertThatCode(() ->
+              engine1.getManagementService().databaseSchemaUpgrade(connection3, "", SCHEMA_NAME)
+      ).doesNotThrowAnyException();
     });
     engine1.close();
   }

@@ -416,7 +416,7 @@ class RepositoryServiceTest {
             .activateProcessDefinitionsOn(inThreeDays)
             .deploy();
 
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(2);
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
@@ -433,14 +433,14 @@ class RepositoryServiceTest {
     managementService.executeJob(jobs.get(0).getId());
     managementService.executeJob(jobs.get(1).getId());
 
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(2);
 
     // Should be able to start process instance
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     // Cleanup
     repositoryService.deleteDeployment(deployment.getId(), true);
@@ -459,14 +459,14 @@ class RepositoryServiceTest {
             .activateProcessDefinitionsOn(inThreeDays)
             .deploy();
 
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
 
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
 
-    assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().count()).isOne();
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
 
     // Shouldn't be able to start a process instance
@@ -480,19 +480,19 @@ class RepositoryServiceTest {
     Job job = managementService.createJobQuery().singleResult();
     managementService.executeJob(job.getId());
 
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
 
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isOne();
 
-    assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().count()).isOne();
     assertThat(managementService.createJobDefinitionQuery().suspended().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().active().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().active().count()).isOne();
 
     // Should be able to start process instance
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     // Cleanup
     repositoryService.deleteDeployment(deployment.getId(), true);

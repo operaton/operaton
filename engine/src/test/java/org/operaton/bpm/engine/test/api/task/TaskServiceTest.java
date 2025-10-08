@@ -32,6 +32,8 @@ import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.CaseService;
@@ -1703,7 +1705,7 @@ class TaskServiceTest {
     var taskId = task.getId();
     var userId = user.getId();
     // Add as candidate the second time
-    assertThatCode(() -> taskService.addCandidateUser(taskId, userId));
+    assertThatCode(() -> taskService.addCandidateUser(taskId, userId)).doesNotThrowAnyException();
 
     identityService.deleteUser(user.getId());
     taskService.deleteTask(task.getId(), true);
@@ -3383,62 +3385,33 @@ class TaskServiceTest {
     assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
   }
 
-  @Test
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "InterruptWithVariables, 302, 1",
+      "NonInterruptEventSubprocess, 303, 2",
+      "InterruptInEventSubprocess, 304, 1"
+  })
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
-  void testHandleEscalationInterruptWithVariables() {
+  void testHandleEscalation(String testCase, String escalationCode, int expectedNumberOfTasks) {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(task.getTaskDefinitionKey()).isEqualTo(USER_TASK_THROW_ESCALATION);
 
     // when
-    taskService.handleEscalation(task.getId(), "302", Variables.createVariables().putValue("foo", "bar"));
+    taskService.handleEscalation(task.getId(), escalationCode, Variables.createVariables().putValue("foo", "bar"));
 
     // then
-    Task taskAfterThrow = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertThat(taskAfterThrow.getTaskDefinitionKey()).isEqualTo("after-302");
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
-  }
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
-  void testHandleEscalationNonInterruptEventSubprocess() {
-    // given
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
-    Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertThat(task.getTaskDefinitionKey()).isEqualTo(USER_TASK_THROW_ESCALATION);
-
-    // when
-    taskService.handleEscalation(task.getId(), "303");
-
-    // then
-    List<Task> list = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(list).hasSize(2);
-    for (Task taskAfterThrow : list) {
-      if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !"after-303".equals(taskAfterThrow.getTaskDefinitionKey())) {
-        fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
-            + "after-303");
-      }
+    List<Task> tasksAfterThrow = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
+    assertThat(tasksAfterThrow)
+            .hasSize(expectedNumberOfTasks)
+            .anySatisfy(taskAfterThrow -> assertThat(taskAfterThrow.getTaskDefinitionKey()).isEqualTo("after-" + escalationCode));
+    if (expectedNumberOfTasks == 2) {
+      assertThat(tasksAfterThrow)
+              .anySatisfy(taskAfterThrow -> assertThat(taskAfterThrow.getTaskDefinitionKey()).isEqualTo(USER_TASK_THROW_ESCALATION));
     }
-  }
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
-  void testHandleEscalationInterruptInEventSubprocess() {
-    // given
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
-    Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertThat(task.getTaskDefinitionKey()).isEqualTo(USER_TASK_THROW_ESCALATION);
-
-    // when
-    taskService.handleEscalation(task.getId(), "304", Variables.createVariables().putValue("foo", "bar"));
-
-    // then
-    Task taskAfterThrow = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertThat(taskAfterThrow.getTaskDefinitionKey()).isEqualTo("after-304");
     assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
   }
-
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})

@@ -261,7 +261,7 @@ class CleanableHistoricBatchReportTest {
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
     assertThat(historicList).hasSize(20);
 
-    assertThat(historyService.createCleanableHistoricBatchReport().count()).isEqualTo(1);
+    assertThat(historyService.createCleanableHistoricBatchReport().count()).isOne();
     checkResultNumbers(historyService.createCleanableHistoricBatchReport().singleResult(), 0, 18, null);
   }
 

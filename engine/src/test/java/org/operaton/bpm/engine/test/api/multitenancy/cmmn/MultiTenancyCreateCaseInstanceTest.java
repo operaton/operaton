@@ -124,7 +124,7 @@ class MultiTenancyCreateCaseInstanceTest {
         .create();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
     assertThat(query.singleResult().getTenantId()).isNull();
 
   }
@@ -136,7 +136,7 @@ class MultiTenancyCreateCaseInstanceTest {
     caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
         .create();
 
-    assertThat(caseService.createCaseInstanceQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(caseService.createCaseInstanceQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -148,7 +148,7 @@ class MultiTenancyCreateCaseInstanceTest {
         .caseDefinitionTenantId(TENANT_ONE)
         .create();
 
-    assertThat(caseService.createCaseInstanceQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(caseService.createCaseInstanceQuery().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -162,7 +162,7 @@ class MultiTenancyCreateCaseInstanceTest {
       .create();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -230,8 +230,8 @@ class MultiTenancyCreateCaseInstanceTest {
       .create();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -247,8 +247,8 @@ class MultiTenancyCreateCaseInstanceTest {
     caseService.withCaseDefinition(caseDefinition.getId()).create();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -261,8 +261,8 @@ class MultiTenancyCreateCaseInstanceTest {
     caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -278,8 +278,8 @@ class MultiTenancyCreateCaseInstanceTest {
       .create();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
 }

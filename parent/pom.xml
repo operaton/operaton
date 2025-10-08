@@ -21,7 +21,7 @@
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
     <version.groovy>5.0.1</version.groovy>
     <version.jython>2.7.4</version.jython>
-    <version.graal.js>22.3.5</version.graal.js>
+    <version.graal.js>25.0.0</version.graal.js>
     <version.nashorn>15.7</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
@@ -30,9 +30,7 @@
     <version.accessors-smart>2.5.2</version.accessors-smart>
     <version.commons-codec>1.19.0</version.commons-codec>
     <version.gson>2.8.9</version.gson>
-    <version.openjpa>2.4.3</version.openjpa>
     <version.hibernate>6.6.10.Final</version.hibernate>
-    <version.hikaricp>7.0.2</version.hikaricp>
     <version.jackson>2.20.0</version.jackson>
     <version.httpclient>4.5.14</version.httpclient>
     <version.httpclient5>5.5</version.httpclient5>
@@ -41,7 +39,7 @@
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.assertj>3.27.4</version.assertj>
     <version.mockito>5.20.0</version.mockito>
-    <version.jna>5.18.0</version.jna>
+    <version.jna>5.18.1</version.jna>
     <version.testcontainers>1.21.3</version.testcontainers>
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.commonj>1.1.0</version.commonj>

@@ -68,7 +68,7 @@ public class OperatonFormDefinitionDeployerTest {
 
     // there should only be one deployment
     long deploymentCount = repositoryService.createDeploymentQuery().count();
-    assertThat(deploymentCount).isEqualTo(1);
+    assertThat(deploymentCount).isOne();
 
     // there should only be one OperatonFormDefinition
     List<OperatonFormDefinition> definitions = OperatonFormUtils.findAllOperatonFormDefinitionEntities(processEngineConfiguration);

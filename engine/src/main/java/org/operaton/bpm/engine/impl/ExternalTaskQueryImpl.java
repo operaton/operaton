@@ -503,8 +503,8 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     VariableSerializers variableSerializers = processEngineConfiguration.getVariableSerializers();
     String dbType = processEngineConfiguration.getDatabaseType();
-    for(QueryVariableValue var : variables) {
-        var.initialize(variableSerializers, dbType);
+    for(QueryVariableValue queryVariableValue : variables) {
+        queryVariableValue.initialize(variableSerializers, dbType);
     }
   }
 

@@ -98,7 +98,7 @@ class MessageEventSubprocessTest {
         .singleResult();
     assertThat(execution).isNotNull();
     assertThat(createEventSubscriptionQuery().count()).isEqualTo(expectedNumberOfEventSubscriptions);
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().count()).isOne();
 
     // if we trigger the usertask, the process terminates and the event subscription is removed:
     Task task = taskService.createTaskQuery().singleResult();
@@ -144,11 +144,11 @@ class MessageEventSubprocessTest {
     assertThat(collectedEvents.get(7)).isEqualTo("eventSubProcess-end");
 
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").canceled().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("endEventInSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isEqualTo(1);
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").canceled().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("endEventInSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isOne();
     }
 
   }
@@ -181,11 +181,11 @@ class MessageEventSubprocessTest {
     assertThat(collectedEvents.get(7)).isEqualTo("eventSubProcess-end");
 
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("endEventInSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isEqualTo(1);
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("endEventInSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isOne();
     }
   }
 
@@ -213,12 +213,12 @@ class MessageEventSubprocessTest {
     assertThat(collectedEvents.get(7)).isEqualTo("eventSubProcess-end");
 
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").canceled().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("endEventInSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("subProcess").finished().count()).isEqualTo(1);
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").canceled().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("endEventInSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("subProcess").finished().count()).isOne();
     }
 
   }
@@ -251,12 +251,12 @@ class MessageEventSubprocessTest {
     assertThat(collectedEvents.get(7)).isEqualTo("eventSubProcess-end");
 
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("endEventInSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("subProcess").finished().count()).isEqualTo(1);
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("endEventInSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("subProcess").finished().count()).isOne();
     }
 
   }
@@ -286,11 +286,11 @@ class MessageEventSubprocessTest {
     assertThat(collectedEvents.get(7)).isEqualTo("eventSubProcess-end");
 
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").canceled().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").canceled().count()).isEqualTo(1);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isEqualTo(1);
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInMainFlow").canceled().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("startEventInSubProcess").finished().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("taskInEventSubProcess").canceled().count()).isOne();
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("eventSubProcess").finished().count()).isOne();
     }
 
   }
@@ -307,8 +307,8 @@ class MessageEventSubprocessTest {
         .messageEventSubscriptionName("newMessage")
         .singleResult();
     assertThat(execution).isNotNull();
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(1);
+    assertThat(createEventSubscriptionQuery().count()).isOne();
+    assertThat(runtimeService.createExecutionQuery().count()).isOne();
 
     // if we trigger the usertask, the process terminates and the event subscription is removed:
     Task task = taskService.createTaskQuery().singleResult();
@@ -347,7 +347,7 @@ class MessageEventSubprocessTest {
     task = taskService.createTaskQuery().taskDefinitionKey("eventSubProcessTask").singleResult();
     taskService.complete(task.getId());
     // we still have 1 execution:
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().count()).isOne();
 
     task = taskService.createTaskQuery().taskDefinitionKey("task").singleResult();
     taskService.complete(task.getId());
@@ -367,7 +367,7 @@ class MessageEventSubprocessTest {
         .messageEventSubscriptionName("newMessage")
         .singleResult();
     assertThat(execution).isNotNull();
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(createEventSubscriptionQuery().count()).isOne();
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(2);
 
     // if we trigger the usertask, the process terminates and the event subscription is removed:
@@ -383,7 +383,7 @@ class MessageEventSubprocessTest {
     runtimeService.correlateMessage("newMessage");
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(createEventSubscriptionQuery().count()).isOne();
 
     // now let's first complete the task in the main flow:
     task = taskService.createTaskQuery().taskDefinitionKey("task").singleResult();
@@ -428,7 +428,7 @@ class MessageEventSubprocessTest {
         .messageEventSubscriptionName("newMessage")
         .singleResult();
     assertThat(execution).isNotNull();
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(createEventSubscriptionQuery().count()).isOne();
 
     // if we trigger the usertask, the process terminates and the event subscription is removed:
     Task task = taskService.createTaskQuery().singleResult();
@@ -486,7 +486,7 @@ class MessageEventSubprocessTest {
         .messageEventSubscriptionName("newMessage")
         .singleResult();
     assertThat(subProcess).isNotNull();
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(createEventSubscriptionQuery().count()).isOne();
 
     Task subProcessTask = taskService.createTaskQuery().taskDefinitionKey("subProcessTask").singleResult();
     assertThat(subProcessTask).isNotNull();
@@ -576,7 +576,7 @@ class MessageEventSubprocessTest {
     taskService.complete(taskService.createTaskQuery().taskName("Sub User Task").list().get(0).getId());
 
     // expect: only the subscription of the second subprocess instance is left
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // then: trigger the second subprocess again
     runtimeService.messageEventReceived("message",
@@ -607,14 +607,14 @@ class MessageEventSubprocessTest {
     runtimeService.messageEventReceived("message", runtimeService.createEventSubscriptionQuery().singleResult().getExecutionId());
 
     // expect: one subscription is remaining for the first instance
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // then: complete both tasks (subprocess and message subprocess)
     taskService.complete(taskService.createTaskQuery().taskName("Message User Task").singleResult().getId());
     taskService.complete(taskService.createTaskQuery().taskName("Sub User Task").list().get(0).getId());
 
     // expect: the second instance is started
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // then: just complete this
     taskService.complete(taskService.createTaskQuery().taskName("Sub User Task").list().get(0).getId());
@@ -664,7 +664,7 @@ class MessageEventSubprocessTest {
     runtimeService.correlateMessage("firstMessage");
 
     // then (1)
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
@@ -712,7 +712,7 @@ class MessageEventSubprocessTest {
               .child("eventSubProcessTask").scope()
             .done());
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());
@@ -761,7 +761,7 @@ class MessageEventSubprocessTest {
     runtimeService.correlateMessage("firstMessage");
 
     // then (1)
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
@@ -808,7 +808,7 @@ class MessageEventSubprocessTest {
     // both have the same parent (but it is not the process instance)
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(((ExecutionEntity) task1Execution).getParentId());
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());
@@ -854,7 +854,7 @@ class MessageEventSubprocessTest {
     // both have the same parent (but it is not the process instance)
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(((ExecutionEntity) task1Execution).getParentId());
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());
@@ -871,7 +871,7 @@ class MessageEventSubprocessTest {
     runtimeService.correlateMessage("firstMessage");
 
     // then (1)
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
@@ -894,7 +894,7 @@ class MessageEventSubprocessTest {
         .singleResult();
     assertThat(task2).isNotNull();
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());

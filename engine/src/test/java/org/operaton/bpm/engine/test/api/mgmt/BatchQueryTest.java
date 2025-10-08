@@ -253,7 +253,7 @@ class BatchQueryTest {
 
     // then
     BatchQuery query = managementService.createBatchQuery().suspended();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
     assertThat(query.singleResult().getId()).isEqualTo(batch2.getId());
   }

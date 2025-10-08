@@ -160,7 +160,7 @@ class PartitioningTest {
     taskService.complete(taskId);
 
     // then
-    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isOne();
   }
 
   @Test
@@ -183,7 +183,7 @@ class PartitioningTest {
 
     // assume
     assertThat(historyService.createHistoricIncidentQuery().count()).isZero();
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createIncidentQuery().count()).isOne();
 
     // when
     runtimeService.resolveIncident(incidentId);
@@ -201,7 +201,7 @@ class PartitioningTest {
     final Batch batch = runtimeService.deleteProcessInstancesAsync(Collections.singletonList(processInstanceId), "aDeleteReason");
 
     // assume
-    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricBatchQuery().count()).isOne();
 
     commandExecutor.execute(commandContext -> {
 

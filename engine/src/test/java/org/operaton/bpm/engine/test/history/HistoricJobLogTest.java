@@ -640,8 +640,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery failedQuery = historyService.createHistoricJobLogQuery().jobId(jobId).failureLog().orderByJobRetries().desc();
 
     // there exists one historic job log entry
-    assertThat(query.count()).isEqualTo(1);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isZero();
 
     // when (1)
@@ -649,8 +649,8 @@ class HistoricJobLogTest {
 
     // then (1)
     assertThat(query.count()).isEqualTo(2);
-    assertThat(createdQuery.count()).isEqualTo(1);
-    assertThat(failedQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
+    assertThat(failedQuery.count()).isOne();
 
     HistoricJobLog createdJobLogEntry = createdQuery.singleResult();
     assertThat(createdJobLogEntry.getJobRetries()).isEqualTo(3);
@@ -663,7 +663,7 @@ class HistoricJobLogTest {
 
     // then (2)
     assertThat(query.count()).isEqualTo(3);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isEqualTo(2);
 
     createdJobLogEntry = createdQuery.singleResult();
@@ -680,7 +680,7 @@ class HistoricJobLogTest {
 
     // then (3)
     assertThat(query.count()).isEqualTo(4);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isEqualTo(3);
 
     createdJobLogEntry = createdQuery.singleResult();
@@ -700,7 +700,7 @@ class HistoricJobLogTest {
 
     // then (4)
     assertThat(query.count()).isEqualTo(5);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isEqualTo(4);
 
     createdJobLogEntry = createdQuery.singleResult();
@@ -732,8 +732,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery failedQuery = historyService.createHistoricJobLogQuery().jobId(jobId).failureLog().orderByJobRetries().desc();
 
     // there exists one historic job log entry
-    assertThat(query.count()).isEqualTo(1);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isZero();
 
     // when (1)
@@ -741,7 +741,7 @@ class HistoricJobLogTest {
 
     // then (1)
     assertThat(query.count()).isEqualTo(4);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isEqualTo(3);
 
     HistoricJobLog createdJobLogEntry = createdQuery.singleResult();
@@ -761,7 +761,7 @@ class HistoricJobLogTest {
 
     // then (2)
     assertThat(query.count()).isEqualTo(5);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isEqualTo(4);
 
     createdJobLogEntry = createdQuery.singleResult();
@@ -793,8 +793,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery succeededQuery = historyService.createHistoricJobLogQuery().jobId(jobId).successLog();
 
     // there exists one historic job log entry
-    assertThat(query.count()).isEqualTo(1);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
+    assertThat(createdQuery.count()).isOne();
     assertThat(succeededQuery.count()).isZero();
 
     // when
@@ -802,8 +802,8 @@ class HistoricJobLogTest {
 
     // then
     assertThat(query.count()).isEqualTo(2);
-    assertThat(createdQuery.count()).isEqualTo(1);
-    assertThat(succeededQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
+    assertThat(succeededQuery.count()).isOne();
 
     HistoricJobLog createdJobLogEntry = createdQuery.singleResult();
     assertThat(createdJobLogEntry.getJobRetries()).isEqualTo(3);
@@ -825,8 +825,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery succeededQuery = historyService.createHistoricJobLogQuery().jobId(jobId).successLog();
 
     // there exists one historic job log entry
-    assertThat(query.count()).isEqualTo(1);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
+    assertThat(createdQuery.count()).isOne();
     assertThat(succeededQuery.count()).isZero();
 
     // when
@@ -834,8 +834,8 @@ class HistoricJobLogTest {
 
     // then
     assertThat(query.count()).isEqualTo(2);
-    assertThat(createdQuery.count()).isEqualTo(1);
-    assertThat(succeededQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
+    assertThat(succeededQuery.count()).isOne();
 
     HistoricJobLog createdJobLogEntry = createdQuery.singleResult();
     assertThat(createdJobLogEntry.getJobRetries()).isEqualTo(3);
@@ -858,8 +858,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery succeededQuery = historyService.createHistoricJobLogQuery().jobId(jobId).successLog();
 
     // there exists one historic job log entry
-    assertThat(query.count()).isEqualTo(1);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isZero();
     assertThat(succeededQuery.count()).isZero();
 
@@ -868,8 +868,8 @@ class HistoricJobLogTest {
 
     // then (1)
     assertThat(query.count()).isEqualTo(2);
-    assertThat(createdQuery.count()).isEqualTo(1);
-    assertThat(failedQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
+    assertThat(failedQuery.count()).isOne();
     assertThat(succeededQuery.count()).isZero();
 
     HistoricJobLog createdJobLogEntry = createdQuery.singleResult();
@@ -883,7 +883,7 @@ class HistoricJobLogTest {
 
     // then (2)
     assertThat(query.count()).isEqualTo(3);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isEqualTo(2);
     assertThat(succeededQuery.count()).isZero();
 
@@ -902,9 +902,9 @@ class HistoricJobLogTest {
 
     // then (3)
     assertThat(query.count()).isEqualTo(4);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
     assertThat(failedQuery.count()).isEqualTo(2);
-    assertThat(succeededQuery.count()).isEqualTo(1);
+    assertThat(succeededQuery.count()).isOne();
 
     createdJobLogEntry = createdQuery.singleResult();
     assertThat(createdJobLogEntry.getJobRetries()).isEqualTo(3);
@@ -936,8 +936,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery serviceTask1DeletedQuery = historyService.createHistoricJobLogQuery().jobId(serviceTask1JobId).deletionLog();
     HistoricJobLogQuery serviceTask1SuccessfulQuery = historyService.createHistoricJobLogQuery().jobId(serviceTask1JobId).successLog();
 
-    assertThat(serviceTask1Query.count()).isEqualTo(1);
-    assertThat(serviceTask1CreatedQuery.count()).isEqualTo(1);
+    assertThat(serviceTask1Query.count()).isOne();
+    assertThat(serviceTask1CreatedQuery.count()).isOne();
     assertThat(serviceTask1DeletedQuery.count()).isZero();
     assertThat(serviceTask1SuccessfulQuery.count()).isZero();
 
@@ -949,8 +949,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery serviceTask2DeletedQuery = historyService.createHistoricJobLogQuery().jobId(serviceTask2JobId).deletionLog();
     HistoricJobLogQuery serviceTask2SuccessfulQuery = historyService.createHistoricJobLogQuery().jobId(serviceTask2JobId).successLog();
 
-    assertThat(serviceTask2Query.count()).isEqualTo(1);
-    assertThat(serviceTask2CreatedQuery.count()).isEqualTo(1);
+    assertThat(serviceTask2Query.count()).isOne();
+    assertThat(serviceTask2CreatedQuery.count()).isOne();
     assertThat(serviceTask2DeletedQuery.count()).isZero();
     assertThat(serviceTask2SuccessfulQuery.count()).isZero();
 
@@ -962,9 +962,9 @@ class HistoricJobLogTest {
 
     // serviceTas1
     assertThat(serviceTask1Query.count()).isEqualTo(2);
-    assertThat(serviceTask1CreatedQuery.count()).isEqualTo(1);
+    assertThat(serviceTask1CreatedQuery.count()).isOne();
     assertThat(serviceTask1DeletedQuery.count()).isZero();
-    assertThat(serviceTask1SuccessfulQuery.count()).isEqualTo(1);
+    assertThat(serviceTask1SuccessfulQuery.count()).isOne();
 
     HistoricJobLog serviceTask1CreatedJobLogEntry = serviceTask1CreatedQuery.singleResult();
     assertThat(serviceTask1CreatedJobLogEntry.getJobRetries()).isEqualTo(3);
@@ -974,8 +974,8 @@ class HistoricJobLogTest {
 
     // serviceTask2
     assertThat(serviceTask2Query.count()).isEqualTo(2);
-    assertThat(serviceTask2CreatedQuery.count()).isEqualTo(1);
-    assertThat(serviceTask2DeletedQuery.count()).isEqualTo(1);
+    assertThat(serviceTask2CreatedQuery.count()).isOne();
+    assertThat(serviceTask2DeletedQuery.count()).isOne();
     assertThat(serviceTask2SuccessfulQuery.count()).isZero();
 
     HistoricJobLog serviceTask2CreatedJobLogEntry = serviceTask2CreatedQuery.singleResult();
@@ -1005,8 +1005,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery serviceTask1DeletedQuery = historyService.createHistoricJobLogQuery().jobId(serviceTask1JobId).deletionLog();
     HistoricJobLogQuery serviceTask1SuccessfulQuery = historyService.createHistoricJobLogQuery().jobId(serviceTask1JobId).successLog();
 
-    assertThat(serviceTask1Query.count()).isEqualTo(1);
-    assertThat(serviceTask1CreatedQuery.count()).isEqualTo(1);
+    assertThat(serviceTask1Query.count()).isOne();
+    assertThat(serviceTask1CreatedQuery.count()).isOne();
     assertThat(serviceTask1DeletedQuery.count()).isZero();
     assertThat(serviceTask1SuccessfulQuery.count()).isZero();
 
@@ -1018,8 +1018,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery serviceTask2DeletedQuery = historyService.createHistoricJobLogQuery().jobId(serviceTask2JobId).deletionLog();
     HistoricJobLogQuery serviceTask2SuccessfulQuery = historyService.createHistoricJobLogQuery().jobId(serviceTask2JobId).successLog();
 
-    assertThat(serviceTask2Query.count()).isEqualTo(1);
-    assertThat(serviceTask2CreatedQuery.count()).isEqualTo(1);
+    assertThat(serviceTask2Query.count()).isOne();
+    assertThat(serviceTask2CreatedQuery.count()).isOne();
     assertThat(serviceTask2DeletedQuery.count()).isZero();
     assertThat(serviceTask2SuccessfulQuery.count()).isZero();
 
@@ -1031,9 +1031,9 @@ class HistoricJobLogTest {
 
     // serviceTask1
     assertThat(serviceTask1Query.count()).isEqualTo(2);
-    assertThat(serviceTask1CreatedQuery.count()).isEqualTo(1);
+    assertThat(serviceTask1CreatedQuery.count()).isOne();
     assertThat(serviceTask1DeletedQuery.count()).isZero();
-    assertThat(serviceTask1SuccessfulQuery.count()).isEqualTo(1);
+    assertThat(serviceTask1SuccessfulQuery.count()).isOne();
 
     HistoricJobLog serviceTask1CreatedJobLogEntry = serviceTask1CreatedQuery.singleResult();
     assertThat(serviceTask1CreatedJobLogEntry.getJobRetries()).isEqualTo(3);
@@ -1043,8 +1043,8 @@ class HistoricJobLogTest {
 
     // serviceTask2
     assertThat(serviceTask2Query.count()).isEqualTo(2);
-    assertThat(serviceTask2CreatedQuery.count()).isEqualTo(1);
-    assertThat(serviceTask2DeletedQuery.count()).isEqualTo(1);
+    assertThat(serviceTask2CreatedQuery.count()).isOne();
+    assertThat(serviceTask2DeletedQuery.count()).isOne();
     assertThat(serviceTask2SuccessfulQuery.count()).isZero();
 
     HistoricJobLog serviceTask2CreatedJobLogEntry = serviceTask2CreatedQuery.singleResult();
@@ -1054,7 +1054,7 @@ class HistoricJobLogTest {
     assertThat(serviceTask2DeletedJobLogEntry.getJobRetries()).isEqualTo(3);
 
     // there should be one task after the boundary event
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -1070,8 +1070,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery deletedQuery = historyService.createHistoricJobLogQuery().jobId(jobId).deletionLog();
 
     // there exists one historic job log entry
-    assertThat(query.count()).isEqualTo(1);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
+    assertThat(createdQuery.count()).isOne();
     assertThat(deletedQuery.count()).isZero();
 
     // when
@@ -1079,8 +1079,8 @@ class HistoricJobLogTest {
 
     // then
     assertThat(query.count()).isEqualTo(2);
-    assertThat(createdQuery.count()).isEqualTo(1);
-    assertThat(deletedQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
+    assertThat(deletedQuery.count()).isOne();
 
     HistoricJobLog createdJobLogEntry = createdQuery.singleResult();
     assertThat(createdJobLogEntry.getJobRetries()).isEqualTo(3);
@@ -1102,8 +1102,8 @@ class HistoricJobLogTest {
     HistoricJobLogQuery deletedQuery = historyService.createHistoricJobLogQuery().jobId(jobId).deletionLog();
 
     // there exists one historic job log entry
-    assertThat(query.count()).isEqualTo(1);
-    assertThat(createdQuery.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
+    assertThat(createdQuery.count()).isOne();
     assertThat(deletedQuery.count()).isZero();
 
     // when
@@ -1111,8 +1111,8 @@ class HistoricJobLogTest {
 
     // then
     assertThat(query.count()).isEqualTo(2);
-    assertThat(createdQuery.count()).isEqualTo(1);
-    assertThat(deletedQuery.count()).isEqualTo(1);
+    assertThat(createdQuery.count()).isOne();
+    assertThat(deletedQuery.count()).isOne();
 
     HistoricJobLog createdJobLogEntry = createdQuery.singleResult();
     assertThat(createdJobLogEntry.getJobRetries()).isEqualTo(3);

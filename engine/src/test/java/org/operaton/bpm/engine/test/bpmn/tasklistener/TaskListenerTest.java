@@ -821,7 +821,7 @@ class TaskListenerTest extends AbstractTaskListenerTest {
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1L);
+    assertThat(managementService.createJobQuery().count()).isOne();
     assertThat(runtimeService.getVariable(instance.getId(), "timeout-status")).isEqualTo("fired");
   }
 
@@ -834,7 +834,7 @@ class TaskListenerTest extends AbstractTaskListenerTest {
     runtimeService.startProcessInstanceByKey("process");
 
     // assume
-    assertThat(jobQuery.count()).isEqualTo(1L);
+    assertThat(jobQuery.count()).isOne();
 
     // when
     taskService.complete(taskQuery.singleResult().getId());

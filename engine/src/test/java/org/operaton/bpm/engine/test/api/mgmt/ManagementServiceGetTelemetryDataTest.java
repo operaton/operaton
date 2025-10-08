@@ -184,8 +184,7 @@ class ManagementServiceGetTelemetryDataTest {
     TelemetryData telemetryData = managementService.getTelemetryData();
 
     // then count should not reset
-    assertThat(telemetryData.getProduct().getInternals().getCommands().get(IS_TELEMETRY_ENABLED_CMD_NAME).getCount())
-        .isEqualTo(1);
+    assertThat(telemetryData.getProduct().getInternals().getCommands().get(IS_TELEMETRY_ENABLED_CMD_NAME).getCount()).isOne();
   }
 
   @Test
@@ -218,7 +217,7 @@ class ManagementServiceGetTelemetryDataTest {
 
     // then count should not reset
     assertThat(telemetryData.getProduct().getInternals().getMetrics().get(FLOW_NODE_INSTANCES).getCount()).isEqualTo(2);
-    assertThat(telemetryData.getProduct().getInternals().getMetrics().get(PROCESS_INSTANCES).getCount()).isEqualTo(1);
+    assertThat(telemetryData.getProduct().getInternals().getMetrics().get(PROCESS_INSTANCES).getCount()).isOne();
   }
 
   @Test
@@ -232,8 +231,7 @@ class ManagementServiceGetTelemetryDataTest {
     TelemetryData telemetryDataAfterPiStart = managementService.getTelemetryData();
 
     // then
-    assertThat(telemetryDataAfterPiStart.getProduct().getInternals().getMetrics().get(PROCESS_INSTANCES).getCount())
-        .isEqualTo(1);
+    assertThat(telemetryDataAfterPiStart.getProduct().getInternals().getMetrics().get(PROCESS_INSTANCES).getCount()).isOne();
   }
 
   @Test
@@ -250,7 +248,7 @@ class ManagementServiceGetTelemetryDataTest {
 
     // then
     assertThat(telemetryDataAfterPiStart.getProduct().getInternals().getCommands().get(IS_TELEMETRY_ENABLED_CMD_NAME)
-        .getCount()).isEqualTo(1);
+      .getCount()).isOne();
   }
 
   @Test

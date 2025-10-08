@@ -432,20 +432,20 @@ class BpmnParseTest {
   void testParseWithBpmnNamespacePrefix() {
     repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseWithBpmnNamespacePrefix.bpmn20.xml").deploy();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   @Test
   void testParseWithMultipleDocumentation() {
     repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseWithMultipleDocumentation.bpmn20.xml").deploy();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   @Test
   void testParseCollaborationPlane() {
     repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseCollaborationPlane.bpmn").deploy();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   @Test
@@ -637,7 +637,7 @@ class BpmnParseTest {
     repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseSwitchedSourceAndTargetRefsForAssociations.bpmn20.xml").deploy();
 
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.compensationMiActivity.bpmn20.xml")
@@ -1283,7 +1283,7 @@ class BpmnParseTest {
     testRule.deploy(deploymentBuilder);
 
     // then
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   @Test
@@ -1423,7 +1423,7 @@ class BpmnParseTest {
     .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseEmptyExtensionProperty.bpmn").deploy();
 
     // then
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   protected boolean doesJdkSupportExternalSchemaAccessProperty() {

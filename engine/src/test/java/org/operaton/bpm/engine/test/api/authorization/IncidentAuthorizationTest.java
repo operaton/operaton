@@ -45,7 +45,6 @@ import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResul
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * @author Roman Smirnov
@@ -394,9 +393,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, UPDATE);
 
-    // when
-    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.setAnnotationForIncidentById(incident.getId(),"my annotation"))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -409,9 +408,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_INSTANCE, instance.getId(), userId, UPDATE);
 
-    // when
-    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -424,9 +423,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE_INSTANCE);
 
-    // when
-    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -439,9 +438,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, UPDATE_INSTANCE);
 
-    // when
-    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -470,9 +469,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, UPDATE);
 
-    // when
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -486,8 +485,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_INSTANCE, instance.getId(), userId, UPDATE);
 
     // when
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -500,9 +500,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE_INSTANCE);
 
-    // when
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -515,9 +515,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, UPDATE_INSTANCE);
 
-    // when
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
-    // then no error is thrown
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
   }
 
   @Test
@@ -528,7 +528,6 @@ class IncidentAuthorizationTest extends AuthorizationTest {
     Incident incident = runtimeService.createIncidentQuery().singleResult();
     enableAuthorization();
 
-    // when
     assertThatCode(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
         .doesNotThrowAnyException();
 
@@ -544,9 +543,9 @@ class IncidentAuthorizationTest extends AuthorizationTest {
     Incident incident = runtimeService.createIncidentQuery().singleResult();
     enableAuthorization();
 
-    // when
-    // then no error is thrown
-    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
+    assertThatCode(() ->
+            runtimeService.clearAnnotationForIncidentById(incident.getId()))
+            .doesNotThrowAnyException();
 
     // cleanup
     cleanupStandalonIncident(jobId);

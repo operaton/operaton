@@ -1440,6 +1440,24 @@ class FormServiceTest {
     assertThat(fileAsString).isEqualTo(deployedStartFormAsString);
   }
 
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedCamundaFormsProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/form/start.html",
+      "org/operaton/bpm/engine/test/api/form/task.html"})
+  @Test
+  void testGetDeployedCamundaStartForm() {
+    // given
+    String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
+
+    // when
+    InputStream deployedStartForm = formService.getDeployedStartForm(procDefId);
+
+    // then
+    assertThat(deployedStartForm).isNotNull();
+    String fileAsString = IoUtil.fileAsString("org/operaton/bpm/engine/test/api/form/start.html");
+    String deployedStartFormAsString = IoUtil.inputStreamAsString(deployedStartForm);
+    assertThat(fileAsString).isEqualTo(deployedStartFormAsString);
+  }
+
   @Test
   void testGetDeployedStartFormWithNullProcDefId() {
     assertThatThrownBy(() -> formService.getDeployedStartForm(null))

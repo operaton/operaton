@@ -912,7 +912,7 @@ public class JobQueryTest {
     createJobWithLockExpiration(lockExpDate.getTime());
 
     list = managementService.createJobQuery().acquired().list();
-    assertThat(list).hasSize(0);
+    assertThat(list).isEmpty();
 
     deleteJobInDatabase();
   }

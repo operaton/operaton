@@ -48,7 +48,7 @@ import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandlerAc
 )
 public class JcaExecutorServiceConnector implements ResourceAdapter {
 
-  public static final String ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE = "org.operaton.bpm.engine.ProcessEngine";
+  public static final String ORG_OPERATON_BPM_ENGINE_PROCESS_ENGINE = "org.operaton.bpm.engine.ProcessEngine";
 
   /**
    * This class must be free of engine classes to make it possible to install
@@ -113,7 +113,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
   public void start(BootstrapContext ctx) throws ResourceAdapterInternalException {
 
     try {
-      Class.forName(ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE);
+      Class.forName(ORG_OPERATON_BPM_ENGINE_PROCESS_ENGINE);
     } catch (Exception e) {
       LOG.info("ProcessEngine classes not found in shared libraries. Not initializing operaton Platform JobExecutor Resource Adapter.");
       return;
@@ -137,7 +137,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
   @Override
   public void stop() {
     try {
-      Class.forName(ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE);
+      Class.forName(ORG_OPERATON_BPM_ENGINE_PROCESS_ENGINE);
     } catch (Exception e) {
       return;
     }

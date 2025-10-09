@@ -420,7 +420,7 @@ public class BatchSuspensionTest {
     assertThat(query.list()).hasSize(2);
 
     query = historyService.createUserOperationLogQuery().batchId(batch2.getId());
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
   }
 

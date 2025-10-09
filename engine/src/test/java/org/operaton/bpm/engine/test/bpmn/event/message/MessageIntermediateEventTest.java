@@ -138,7 +138,7 @@ class MessageIntermediateEventTest {
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testSingleIntermediateMessageEvent.bpmn20.xml")
         .deploy();
     // now there is one process deployed
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 

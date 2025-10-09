@@ -101,7 +101,7 @@ class DmnEngineMetricCollectorTest extends DmnEngineTest {
   void executedDecisionElementsOfDecisionLiteralExpression() {
     // evaluate one decision with a single literal expression
     dmnEngine.evaluateDecision(parseDecisionFromFile("c", DRG_WITH_LITERAL_EXPRESSIONS), createVariables());
-    assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(1);
+    assertThat(metricCollector.getExecutedDecisionElements()).isOne();
 
     metricCollector.clearExecutedDecisionElements();
 

@@ -254,7 +254,7 @@ class MultiTenancyHistoricDataCmdsTenantCheckTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -437,7 +437,7 @@ class MultiTenancyHistoricDataCmdsTenantCheckTest {
     runtimeService.setVariable(processInstanceId, "myVariable", "testValue");
     HistoricVariableInstanceQuery variableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstanceId);
 
-    assertThat(variableQuery.count()).isEqualTo(1L);
+    assertThat(variableQuery.count()).isOne();
     String variableInstanceId = variableQuery.singleResult().getId();
 
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
@@ -460,8 +460,8 @@ class MultiTenancyHistoricDataCmdsTenantCheckTest {
     HistoricVariableInstanceQuery variableQueryOne = historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstanceIdOne);
     HistoricVariableInstanceQuery variableQueryTwo = historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstanceIdTwo);
 
-    assertThat(variableQueryOne.count()).isEqualTo(1L);
-    assertThat(variableQueryTwo.count()).isEqualTo(1L);
+    assertThat(variableQueryOne.count()).isOne();
+    assertThat(variableQueryTwo.count()).isOne();
     String variableInstanceIdOne = variableQueryOne.singleResult().getId();
     String variableInstanceIdTwo = variableQueryTwo.singleResult().getId();
 
@@ -501,7 +501,7 @@ class MultiTenancyHistoricDataCmdsTenantCheckTest {
     runtimeService.setVariable(processInstanceId, "myVariable", "testValue2");
 
     HistoricVariableInstanceQuery variableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstanceId);
-    assertThat(variableQuery.count()).isEqualTo(1L);
+    assertThat(variableQuery.count()).isOne();
 
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 

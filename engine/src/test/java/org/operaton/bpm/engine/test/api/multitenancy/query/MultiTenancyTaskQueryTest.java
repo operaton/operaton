@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -78,12 +78,12 @@ class MultiTenancyTaskQueryTest {
     TaskQuery query = taskService.createTaskQuery()
       .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = taskService.createTaskQuery()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -96,7 +96,7 @@ class MultiTenancyTaskQueryTest {
     query = taskService.createTaskQuery()
         .tenantIdIn(TENANT_ONE, TENANT_NON_EXISTING);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -104,7 +104,7 @@ class MultiTenancyTaskQueryTest {
     TaskQuery query = taskService.createTaskQuery()
       .withoutTenantId();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -131,14 +131,7 @@ class MultiTenancyTaskQueryTest {
   @Test
   void testQueryByTenantIdNullFails() {
     var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.tenantIdIn((String)null);
-
-      fail("Exception expected");
-    }
-    catch(NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskQuery.tenantIdIn((String) null)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -174,7 +167,7 @@ class MultiTenancyTaskQueryTest {
     identityService.setAuthentication("user", null, null);
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -184,9 +177,9 @@ class MultiTenancyTaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
 
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
-    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -196,9 +189,9 @@ class MultiTenancyTaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
 
     assertThat(query.count()).isEqualTo(3L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
-    assertThat(taskService.createTaskQuery().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
+    assertThat(taskService.createTaskQuery().withoutTenantId().count()).isOne();
   }
 
   @Test

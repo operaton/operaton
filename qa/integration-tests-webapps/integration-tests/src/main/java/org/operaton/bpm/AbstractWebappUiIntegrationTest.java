@@ -17,7 +17,6 @@
 package org.operaton.bpm;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -61,8 +60,8 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
 
     return webDriver -> {
       try {
-        return new URI(webDriver.getCurrentUrl()).equals(pageURI);
-      } catch (URISyntaxException e) {
+        return URI.create(webDriver.getCurrentUrl()).equals(pageURI);
+      } catch (IllegalArgumentException e) {
         return false;
       }
     };
@@ -76,7 +75,7 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
   }
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());

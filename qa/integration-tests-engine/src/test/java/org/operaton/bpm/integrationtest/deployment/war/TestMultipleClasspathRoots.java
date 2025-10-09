@@ -98,7 +98,7 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     long count = query.count();
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

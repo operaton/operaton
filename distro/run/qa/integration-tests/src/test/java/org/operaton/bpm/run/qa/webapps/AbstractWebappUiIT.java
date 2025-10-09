@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import java.io.File;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Locale;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -66,8 +63,8 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
 
     return webDriver -> {
       try {
-        return new URI(webDriver.getCurrentUrl()).equals(pageURI);
-      } catch (URISyntaxException e) {
+        return URI.create(webDriver.getCurrentUrl()).equals(pageURI);
+      } catch (IllegalArgumentException e) {
         return false;
       }
     };
@@ -79,7 +76,7 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
   }
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());

@@ -54,7 +54,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 class IncidentTest {
 
@@ -444,7 +443,7 @@ class IncidentTest {
   void shouldCreateIncidentOnFailedStartTimerEvent() {
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job job = jobQuery.singleResult();
     String jobId = job.getId();
@@ -494,7 +493,7 @@ class IncidentTest {
 
     // the incident still exists and there
     // should be not a new incident
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     tmp = query.singleResult();
     assertThat(tmp.getId()).isEqualTo(incident.getId());
   }
@@ -530,7 +529,7 @@ class IncidentTest {
     Job job = managementService.createJobQuery().singleResult();
     assertThat(job.getRetries()).isZero();
 
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createIncidentQuery().count()).isOne();
 
     // it should not be possible to set negative retries
     final JobEntity jobEntity = (JobEntity) job;
@@ -552,18 +551,12 @@ class IncidentTest {
     assertThat(job.getRetries()).isZero();
 
     // also no new incident was created
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createIncidentQuery().count()).isOne();
 
     // it should not be possible to set the retries to a negative number with the management service
     executeJobExpectingException(managementService, jobId);
 
-    try {
-      managementService.setJobRetriesByJobDefinitionId(jobDefinitionId, -300);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> managementService.setJobRetriesByJobDefinitionId(jobDefinitionId, -300)).isInstanceOf(ProcessEngineException.class);
 
   }
 

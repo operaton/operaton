@@ -38,8 +38,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Roman Smirnov
@@ -145,10 +144,7 @@ class CaseInstanceQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseDefinitionKey(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
+    assertThatThrownBy(() -> query.caseDefinitionKey(null)).isInstanceOf(NotValidException.class);
 
   }
 
@@ -175,10 +171,7 @@ class CaseInstanceQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseDefinitionId(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
+    assertThatThrownBy(() -> query.caseDefinitionId(null)).isInstanceOf(NotValidException.class);
 
   }
 
@@ -273,10 +266,7 @@ class CaseInstanceQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseInstanceBusinessKey(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
+    assertThatThrownBy(() -> query.caseInstanceBusinessKey(null)).isInstanceOf(NotValidException.class);
 
   }
 
@@ -336,10 +326,7 @@ class CaseInstanceQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseInstanceId(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
+    assertThatThrownBy(() -> query.caseInstanceId(null)).isInstanceOf(NotValidException.class);
 
   }
 
@@ -468,10 +455,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueEquals("aByteArrayValue", bytes);
 
-    try {
-      caseInstanceQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -489,10 +473,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueEquals("aSerializableValue", serializable);
 
-    try {
-      caseInstanceQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -609,10 +590,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueNotEquals("aByteArrayValue", bytes);
 
-    try {
-      caseInstanceQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -630,10 +608,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueNotEquals("aSerializableValue", serializable);
 
-    try {
-      caseInstanceQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -776,10 +751,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueGreaterThan("aByteArrayValue", bytes);
 
-    try {
-      caseInstanceQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -797,10 +769,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueGreaterThan("aSerializableValue", serializable);
 
-    try {
-      caseInstanceQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -979,10 +948,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueGreaterThanOrEqual("aByteArrayValue", bytes);
 
-    try {
-      caseInstanceQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1000,10 +966,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueGreaterThanOrEqual("aSerializableValue", serializable);
 
-    try {
-      caseInstanceQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1146,10 +1109,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueLessThan("aByteArrayValue", bytes);
 
-    try {
-      caseInstanceQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1167,10 +1127,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueLessThan("aSerializableValue", serializable);
 
-    try {
-      caseInstanceQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1349,10 +1306,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueLessThanOrEqual("aByteArrayValue", bytes);
 
-    try {
-      caseInstanceQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1370,10 +1324,7 @@ class CaseInstanceQueryTest {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
     var caseInstanceQuery = query.variableValueLessThanOrEqual("aSerializableValue", serializable);
 
-    try {
-      caseInstanceQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseInstanceQuery::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1569,11 +1520,11 @@ class CaseInstanceQueryTest {
     assertThat(caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isOne();
 
     // other operators
     assertThat(caseService.createCaseInstanceQuery().variableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
-    assertThat(caseService.createCaseInstanceQuery().variableValueGreaterThan("var", Variables.numberValue(123L)).count()).isEqualTo(1);
+    assertThat(caseService.createCaseInstanceQuery().variableValueGreaterThan("var", Variables.numberValue(123L)).count()).isOne();
     assertThat(caseService.createCaseInstanceQuery().variableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count()).isEqualTo(5);
     assertThat(caseService.createCaseInstanceQuery().variableValueLessThan("var", Variables.numberValue((short) 123)).count()).isZero();
     assertThat(caseService.createCaseInstanceQuery().variableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
@@ -1611,10 +1562,7 @@ class CaseInstanceQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.superProcessInstanceId(null);
-      fail("");
-    } catch (NotValidException e) {}
+    assertThatThrownBy(() -> query.superProcessInstanceId(null)).isInstanceOf(NotValidException.class);
 
   }
 
@@ -1649,12 +1597,7 @@ class CaseInstanceQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.subProcessInstanceId(null);
-      fail("");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.subProcessInstanceId(null)).isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn"})
@@ -1677,12 +1620,7 @@ class CaseInstanceQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.superCaseInstanceId(null);
-      fail("");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.superCaseInstanceId(null)).isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn"})
@@ -1714,12 +1652,7 @@ class CaseInstanceQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.subCaseInstanceId(null);
-      fail("");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.subCaseInstanceId(null)).isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -1744,12 +1677,7 @@ class CaseInstanceQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.deploymentId(null);
-      fail("");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.deploymentId(null)).isInstanceOf(NotValidException.class);
   }
 
 }

@@ -49,9 +49,7 @@ import org.operaton.commons.utils.CollectionUtil;
 
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.*;
 
 
 /**
@@ -561,12 +559,7 @@ class BoundaryErrorEventTest {
   @Test
   void testCatchExceptionExpressionThrownByFollowUpTask() {
     Map<String, Object> vars = throwException();
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess", vars);
-      fail("should fail and not catch the error on the first task");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", vars)).isInstanceOf(ProcessEngineException.class);
 
     assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
@@ -575,12 +568,7 @@ class BoundaryErrorEventTest {
   @Test
   void testCatchExceptionClassDelegateThrownByFollowUpTask() {
     Map<String, Object> vars = throwException();
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess", vars);
-      fail("should fail");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", vars)).isInstanceOf(ProcessEngineException.class);
 
     assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
@@ -589,12 +577,7 @@ class BoundaryErrorEventTest {
   @Test
   void testCatchExceptionExpressionThrownByFollowUpScopeTask() {
     Map<String, Object> vars = throwException();
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess", vars);
-      fail("should fail and not catch the error on the first task");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", vars)).isInstanceOf(ProcessEngineException.class);
     assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
 
@@ -768,7 +751,7 @@ class BoundaryErrorEventTest {
   private void assertThatErrorHasBeenCaught(String procId) {
     // The service task will throw an error event,
     // which is caught on the service task boundary
-    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isOne();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Escalated Task");
 
@@ -780,7 +763,7 @@ class BoundaryErrorEventTest {
   private void assertThatExceptionHasBeenCaught(String procId) {
     // The service task will throw an error event,
     // which is caught on the service task boundary
-    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isOne();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Escalated Exception Task");
 
@@ -799,7 +782,8 @@ class BoundaryErrorEventTest {
 
     // if the test fails, it produces a constraint violation in db.
 
-    assertDoesNotThrow(() -> runtimeService.startProcessInstanceByKey("process"));
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("process"))
+        .doesNotThrowAnyException();
   }
 
   @Deployment

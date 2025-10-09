@@ -37,7 +37,7 @@ class DateSerializationIT extends AbstractWebIntegrationTest {
   private static final String SCHEMA_LOG_PATH = "api/engine/engine/default/schema/log";
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     getTokens();

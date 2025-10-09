@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.container.impl.jboss.test;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
 
 import javax.xml.stream.XMLStreamException;
 import org.jboss.as.controller.PathAddress;
@@ -53,7 +51,7 @@ import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ADD;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP_ADDR;
@@ -98,7 +96,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     .append("ProcessEngineService!org.operaton.bpm.ProcessEngineService");
 
   public JBossSubsystemXMLTest() {
-    super(ModelConstants.SUBSYSTEM_NAME, new BpmPlatformExtension(), getSubsystemRemoveOrderComparator());
+    super(ModelConstants.SUBSYSTEM_NAME, new BpmPlatformExtension(), new SubsystemRemoveOrderComparator());
   }
 
   private static final Map<String, String> EXPRESSION_PROPERTIES = new HashMap<>();
@@ -125,13 +123,49 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     EXPRESSION_PROPERTIES.put("org.operaton.bpm.jboss.job-executor.job-acquisition.default.property.maxJobsPerAcquisition", "3");
   }
 
+  private static class SubsystemRemoveOrderComparator implements Comparator<PathAddress> {
+    private static final List<PathAddress> REMOVE_ORDER_OF_SUBSYSTEM = List.of(
+            PathAddress.pathAddress(BpmPlatformExtension.SUBSYSTEM_PATH),
+            PathAddress.pathAddress(BpmPlatformExtension.JOB_EXECUTOR_PATH),
+            PathAddress.pathAddress(BpmPlatformExtension.JOB_ACQUISTIONS_PATH),
+            PathAddress.pathAddress(BpmPlatformExtension.PROCESS_ENGINES_PATH)
+    );
+
+    @Override
+    public int compare(PathAddress o1, PathAddress o2) {
+      int orderO1 = getOrder(normalizePathAddress(o1));
+      int orderO2 = getOrder(normalizePathAddress(o2));
+
+      return Integer.compare(orderO1, orderO2);
+    }
+
+    private PathAddress normalizePathAddress(PathAddress pathAddress) {
+      if (pathAddress.size() == 1 && pathAddress.equals(REMOVE_ORDER_OF_SUBSYSTEM.get(0))) {
+        return pathAddress;
+      } else {
+        // strip subsystem parentAddress
+        return pathAddress.subAddress(1, pathAddress.size());
+      }
+    }
+
+    private int getOrder(PathAddress pathAddress) {
+      for (PathAddress orderedAddress : REMOVE_ORDER_OF_SUBSYSTEM) {
+        if (orderedAddress.getLastElement().getKey().equals(pathAddress.getLastElement().getKey())) {
+          return REMOVE_ORDER_OF_SUBSYSTEM.indexOf(orderedAddress);
+        }
+      }
+      throw new IllegalArgumentException("Unable to find a match for path address: " + pathAddress);
+    }
+
+  }
+
   @Test
   public void testParseSubsystemXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_PROCESS_ENGINES_ELEMENT_ONLY);
 
     List<ModelNode> operations = parse(subsystemXml);
 
-    assertThat(operations.size()).isEqualTo(1);
+    assertThat(operations).hasSize(1);
     //The add subsystem operation will happen first
     ModelNode addSubsystem = operations.get(0);
     assertThat(addSubsystem.get(OP).asString()).isEqualTo(ADD);
@@ -147,7 +181,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES);
 
     List<ModelNode> operations = parse(subsystemXml);
-    assertThat(operations.size()).isEqualTo(3);
+    assertThat(operations).hasSize(3);
   }
 
   @Test
@@ -155,7 +189,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES_AND_PROPERTIES);
 
     List<ModelNode> operations = parse(subsystemXml);
-    assertThat(operations.size()).isEqualTo(5);
+    assertThat(operations).hasSize(5);
   }
 
   @Test
@@ -163,7 +197,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES_PROPERTIES_PLUGINS);
 
     List<ModelNode> operations = parse(subsystemXml);
-    assertThat(operations.size()).isEqualTo(3);
+    assertThat(operations).hasSize(3);
   }
 
   @Test
@@ -185,12 +219,13 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
     ManagedProcessEngineMetadata metadata = ((MscManagedProcessEngineController) defaultEngineService.getService()).getProcessEngineMetadata();
     Map<String, String> configurationProperties = metadata.getConfigurationProperties();
-    assertThat(configurationProperties.get("job-name")).isEqualTo("default");
-    assertThat(configurationProperties.get("job-acquisition")).isEqualTo("default");
-    assertThat(configurationProperties.get("job-acquisition-name")).isEqualTo("default");
+    assertThat(configurationProperties)
+            .containsEntry("job-name", "default")
+            .containsEntry("job-acquisition", "default")
+            .containsEntry("job-acquisition-name", "default");
 
     Map<String, String> foxLegacyProperties = metadata.getFoxLegacyProperties();
-    assertThat(foxLegacyProperties.isEmpty()).isTrue();
+    assertThat(foxLegacyProperties).isEmpty();
 
     assertThat(container.getRequiredService(ServiceNames.forManagedProcessEngine("__default"))).withFailMessage("process engine controller for engine __default is installed ").isNotNull();
     assertThat(container.getRequiredService(ServiceNames.forManagedProcessEngine("__test"))).withFailMessage("process engine controller for engine __test is installed ").isNotNull();
@@ -203,31 +238,23 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     ProcessEnginePluginXml processEnginePluginXml = pluginConfigurations.get(0);
     assertThat(processEnginePluginXml.getPluginClass()).isEqualTo("org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin");
     Map<String, String> processEnginePluginXmlProperties = processEnginePluginXml.getProperties();
-    assertThat(processEnginePluginXmlProperties.get("test")).isEqualTo("abc");
-    assertThat(processEnginePluginXmlProperties.get("number")).isEqualTo("123");
-    assertThat(processEnginePluginXmlProperties.get("bool")).isEqualTo("true");
+    assertThat(processEnginePluginXmlProperties)
+            .containsEntry("test", "abc")
+            .containsEntry("number", "123")
+            .containsEntry("bool", "true");
 
     processEnginePluginXml = pluginConfigurations.get(1);
     assertThat(processEnginePluginXml.getPluginClass()).isEqualTo("org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin");
     processEnginePluginXmlProperties = processEnginePluginXml.getProperties();
-    assertThat(processEnginePluginXmlProperties.get("test")).isEqualTo("cba");
-    assertThat(processEnginePluginXmlProperties.get("number")).isEqualTo("321");
-    assertThat(processEnginePluginXmlProperties.get("bool")).isEqualTo("false");
+    assertThat(processEnginePluginXmlProperties)
+            .containsEntry("test", "cba")
+            .containsEntry("number", "321")
+            .containsEntry("bool", "false");
 
     // test correct subsystem removal
     assertRemoveSubsystemResources(services);
-    try {
-      ServiceController<?> service = container.getRequiredService(ServiceNames.forManagedProcessEngine("__default"));
-      fail("Service '" + service.getName() + "' should have been removed.");
-    } catch (Exception expected) {
-      // nop
-    }
-    try {
-      ServiceController<?> service = container.getRequiredService(ServiceNames.forManagedProcessEngine("__test"));
-      fail("Service '" + service.getName() + "' should have been removed.");
-    } catch (Exception expected) {
-      // nop
-    }
+    assertThatThrownBy(() -> container.getRequiredService(ServiceNames.forManagedProcessEngine("__default"))).isInstanceOf(Exception.class);
+    assertThatThrownBy(() -> container.getRequiredService(ServiceNames.forManagedProcessEngine("__test"))).isInstanceOf(Exception.class);
   }
 
   @Test
@@ -260,7 +287,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     assertThat(platformPlugins).isNotNull();
     assertThat(platformPlugins instanceof BpmPlatformPlugins).isTrue();
     List<BpmPlatformPlugin> plugins = ((BpmPlatformPlugins) platformPlugins).getPlugins();
-    assertThat(plugins.size()).isEqualTo(1);
+    assertThat(plugins).hasSize(1);
     assertThat(plugins.get(0) instanceof ExampleBpmPlatformPlugin).isTrue();
   }
 
@@ -300,12 +327,13 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
     ManagedProcessEngineMetadata metadata = ((MscManagedProcessEngineController) defaultEngineService.getService()).getProcessEngineMetadata();
     Map<String, String> configurationProperties = metadata.getConfigurationProperties();
-    assertThat(configurationProperties.get("job-name")).isEqualTo("default");
-    assertThat(configurationProperties.get("job-acquisition")).isEqualTo("default");
-    assertThat(configurationProperties.get("job-acquisition-name")).isEqualTo("default");
+    assertThat(configurationProperties)
+            .containsEntry("job-name", "default")
+            .containsEntry("job-acquisition", "default")
+            .containsEntry("job-acquisition-name", "default");
 
     Map<String, String> foxLegacyProperties = metadata.getFoxLegacyProperties();
-    assertThat(foxLegacyProperties.isEmpty()).isTrue();
+    assertThat(foxLegacyProperties).isEmpty();
 
     assertThat(container.getService(ServiceNames.forManagedProcessEngine("__test"))).withFailMessage("process engine controller for engine __test is installed ").isNotNull();
     assertThat(container.getService(ServiceNames.forManagedProcessEngine("__emptyPropertiesTag"))).withFailMessage("process engine controller for engine __emptyPropertiesTag is installed ").isNotNull();
@@ -353,7 +381,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
     List<ModelNode> operations = parse(subsystemXml);
 //    System.out.println(operations);
-    assertThat(operations.size()).isEqualTo(4);
+    assertThat(operations).hasSize(4);
 
     ModelNode jobExecutor = operations.get(1);
     PathAddress pathAddress = PathAddress.pathAddress(jobExecutor.get(ModelDescriptionConstants.OP_ADDR));
@@ -394,7 +422,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_JOB_EXECUTOR_AND_PROPERTIES);
 
     List<ModelNode> operations = parse(subsystemXml);
-    assertThat(operations.size()).isEqualTo(5);
+    assertThat(operations).hasSize(5);
 
     // "default" job acquisition ///////////////////////////////////////////////////////////
     ModelNode jobAcquisition = operations.get(2);
@@ -408,7 +436,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     assertThat(jobAcquisition.hasDefined(Element.PROPERTIES.getLocalName())).isTrue();
 
     ModelNode properties = jobAcquisition.get(Element.PROPERTIES.getLocalName());
-    assertThat(properties.asPropertyList().size()).isEqualTo(3);
+    assertThat(properties.asPropertyList()).hasSize(3);
 
     assertThat(properties.has(LOCK_TIME_IN_MILLIS)).isTrue();
     assertThat(properties.hasDefined(LOCK_TIME_IN_MILLIS)).isTrue();
@@ -429,7 +457,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     assertThat(jobAcquisition.hasDefined(Element.PROPERTIES.getLocalName())).isTrue();
 
     properties = jobAcquisition.get(Element.PROPERTIES.getLocalName());
-    assertThat(properties.asPropertyList().size()).isEqualTo(1);
+    assertThat(properties.asPropertyList()).hasSize(1);
 
     assertThat(properties.has(LOCK_TIME_IN_MILLIS)).isTrue();
     assertThat(properties.hasDefined(LOCK_TIME_IN_MILLIS)).isTrue();
@@ -532,7 +560,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
     List<ModelNode> operations = parse(subsystemXml);
     System.out.println(operations);
-    assertThat(operations.size()).isEqualTo(6);
+    assertThat(operations).hasSize(6);
   }
 
   @Test
@@ -580,7 +608,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
     List<ModelNode> operations = parse(subsystemXml);
 
-    assertThat(operations.size()).isEqualTo(4);
+    assertThat(operations).hasSize(4);
     // all elements with expression allowed should be an expression now
     assertExpressionType(operations.get(1), "default", "datasource", "history-level", "configuration");
     assertExpressionType(operations.get(1).get("properties"), "job-acquisition-name");
@@ -613,24 +641,25 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
       ManagedProcessEngineMetadata metadata = ((MscManagedProcessEngineController) defaultEngineService.getService()).getProcessEngineMetadata();
       Map<String, String> configurationProperties = metadata.getConfigurationProperties();
-      assertThat(configurationProperties.get("job-acquisition-name")).isEqualTo("default");
+      assertThat(configurationProperties).containsEntry("job-acquisition-name", "default");
 
       Map<String, String> foxLegacyProperties = metadata.getFoxLegacyProperties();
-      assertThat(foxLegacyProperties.isEmpty()).isTrue();
+      assertThat(foxLegacyProperties).isEmpty();
 
       assertThat(container.getRequiredService(ServiceNames.forManagedProcessEngine("__test"))).withFailMessage("process engine controller for engine __test is installed ").isNotNull();
 
       // check we have parsed the plugin configurations
       List<ProcessEnginePluginXml> pluginConfigurations = metadata.getPluginConfigurations();
 
-      assertThat(pluginConfigurations.size()).isEqualTo(1);
+      assertThat(pluginConfigurations).hasSize(1);
 
       ProcessEnginePluginXml processEnginePluginXml = pluginConfigurations.get(0);
       assertThat(processEnginePluginXml.getPluginClass()).isEqualTo("org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin");
       Map<String, String> processEnginePluginXmlProperties = processEnginePluginXml.getProperties();
-      assertThat(processEnginePluginXmlProperties.get("test")).isEqualTo("abc");
-      assertThat(processEnginePluginXmlProperties.get("number")).isEqualTo("123");
-      assertThat(processEnginePluginXmlProperties.get("bool")).isEqualTo("true");
+      assertThat(processEnginePluginXmlProperties)
+              .containsEntry("test", "abc")
+              .containsEntry("number", "123")
+              .containsEntry("bool", "true");
     } finally {
       for (String key : EXPRESSION_PROPERTIES.keySet()) {
         System.clearProperty(key);
@@ -673,48 +702,6 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
     assertThat(container.getService(PLATFORM_BPM_PLATFORM_PLUGINS_SERVICE_NAME)).withFailMessage("bpm platform plugins service should be installed").isNotNull();
   }
 
-  protected static Comparator<PathAddress> getSubsystemRemoveOrderComparator() {
-    final List<PathAddress> REMOVE_ORDER_OF_SUBSYSTEM = Arrays.asList(
-        PathAddress.pathAddress(BpmPlatformExtension.SUBSYSTEM_PATH),
-        PathAddress.pathAddress(BpmPlatformExtension.JOB_EXECUTOR_PATH),
-        PathAddress.pathAddress(BpmPlatformExtension.JOB_ACQUISTIONS_PATH),
-        PathAddress.pathAddress(BpmPlatformExtension.PROCESS_ENGINES_PATH)
-    );
-
-    return new Comparator<PathAddress>() {
-      protected PathAddress normalizePathAddress(PathAddress pathAddress) {
-        if (pathAddress.size() == 1 && pathAddress.equals(REMOVE_ORDER_OF_SUBSYSTEM.get(0))) {
-          return pathAddress;
-        } else {
-          // strip subsystem parentAddress
-          return pathAddress.subAddress(1, pathAddress.size());
-        }
-      }
-
-      protected int getOrder(PathAddress pathAddress) {
-        for (PathAddress orderedAddress : REMOVE_ORDER_OF_SUBSYSTEM) {
-          if (orderedAddress.getLastElement().getKey().equals(pathAddress.getLastElement().getKey())) {
-            return REMOVE_ORDER_OF_SUBSYSTEM.indexOf(orderedAddress);
-          }
-        }
-        throw new IllegalArgumentException("Unable to find a match for path address: " + pathAddress);
-      }
-
-      @Override
-      public int compare(PathAddress o1, PathAddress o2) {
-        int orderO1 = getOrder(normalizePathAddress(o1));
-        int orderO2 = getOrder(normalizePathAddress(o2));
-
-        if (orderO1 < orderO2) {
-          return -1;
-        } else if (orderO1 > orderO2) {
-          return 1;
-        } else {
-          return 0;
-        }
-      }
-    };
-  }
 
   private void assertExpressionType(ModelNode operation, String... elements) {
     assertModelType(ModelType.EXPRESSION, operation, elements);

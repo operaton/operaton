@@ -28,7 +28,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -57,12 +57,7 @@ public class TestDeploymentWithDroolsTaskFails {
   @Test
   @RunAsClient
   void testDeployDroolsFails() {
-    try {
-      deployer.deploy("deployment");
-      fail("exception expected");
-    }catch (Exception e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deployer.deploy("deployment")).isInstanceOf(Exception.class);
   }
 
 }

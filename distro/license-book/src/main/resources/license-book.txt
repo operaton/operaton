@@ -1,7 +1,7 @@
 License Book for Operaton 1.0.0-rc-1-SNAPSHOT
 
 This is a license book. It contains licensing information for third-party libraries which are used in this release of Operaton 1.0.0-rc-1-SNAPSHOT
-(Document generated on: 2024-10-15)
+(Document generated on: 2025-10-09)
 
 Introduction
 This Licensing Information document is a part of the program documentation and is intended to help you understand the license terms and copyright for third-party libraries associated with the Operaton software.
@@ -931,6 +931,12 @@ ch.qos.logback:logback-core:jar:1.4.14
 https://github.com/qos-ch/logback
 Copyright (c) 1999-2015, QOS.ch. All rights reserved
 Licensed under EPL 1.0
+
+===========================================================================================
+com.cronutils:cron-utils:jar:9.2.1
+https://github.com/jmrozanec/cron-utils/tree/9.2.1
+Copyright 2015 jmrozanec
+Licensed under Apache 2.0
 
 ===========================================================================================
 com.fasterxml.jackson.core:jackson-annotations:jar:2.15.2

@@ -60,7 +60,7 @@ class SignalEventExpressionNameTest {
     runtimeService.startProcessInstanceByKey("catchSignal", variables);
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isOne();
   }
 
   @Deployment(resources = {
@@ -92,7 +92,7 @@ class SignalEventExpressionNameTest {
 
     // when
     runtimeService.startProcessInstanceByKey("catchSignal", variables);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isOne();
     runtimeService.startProcessInstanceByKey("throwSignal", variables);
 
     // then
@@ -114,7 +114,7 @@ class SignalEventExpressionNameTest {
 
     // when
     runtimeService.startProcessInstanceByKey("catchSignal", variables);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isOne();
     runtimeService.startProcessInstanceByKey("throwEndSignal", variables);
 
     // then
@@ -134,8 +134,8 @@ class SignalEventExpressionNameTest {
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "TestVar");
     runtimeService.startProcessInstanceByKey("catchSignal", variables);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isEqualTo(1);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isOne();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     // when
     runtimeService.startProcessInstanceByKey("throwSignal", variables);
@@ -151,7 +151,7 @@ class SignalEventExpressionNameTest {
   void testSignalStartEvent() {
 
     // given
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-foo").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-foo").count()).isOne();
     assertThat(taskService.createTaskQuery().count()).isZero();
 
     // when
@@ -159,7 +159,7 @@ class SignalEventExpressionNameTest {
 
     // then
     // the signal should start a new process instance
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Deployment
@@ -170,10 +170,10 @@ class SignalEventExpressionNameTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalStartEventInEventSubProcess");
     // check if execution exists
     ExecutionQuery executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     // when
     runtimeService.signalEventReceived("alert-foo");
@@ -213,7 +213,7 @@ class SignalEventExpressionNameTest {
     assertThat(processInstance.getProcessDefinitionId()).isEqualTo(catchingProcessDefinition.getId());
 
     // and a task
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Deployment(resources = {

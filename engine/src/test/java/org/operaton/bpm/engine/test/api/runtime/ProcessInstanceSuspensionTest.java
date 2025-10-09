@@ -50,8 +50,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static java.util.Collections.emptyMap;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Daniel Meyer
@@ -239,7 +238,7 @@ class ProcessInstanceSuspensionTest {
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(4);
-    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isOne();
 
     assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
@@ -269,7 +268,7 @@ class ProcessInstanceSuspensionTest {
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(4);
-    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isOne();
 
     assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
@@ -299,7 +298,7 @@ class ProcessInstanceSuspensionTest {
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(4);
-    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isOne();
 
     assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
@@ -422,15 +421,15 @@ class ProcessInstanceSuspensionTest {
 
     // Suspend
     runtimeService.suspendProcessInstanceById(processInstance.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
+    assertThat(taskService.createTaskQuery().suspended().count()).isOne();
     assertThat(taskService.createTaskQuery().active().count()).isZero();
 
     // Activate
     runtimeService.activateProcessInstanceById(processInstance.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     assertThat(taskService.createTaskQuery().suspended().count()).isZero();
-    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().active().count()).isOne();
 
     // Completing should end the process instance
     task = taskService.createTaskQuery().singleResult();
@@ -452,15 +451,15 @@ class ProcessInstanceSuspensionTest {
 
     // Suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
+    assertThat(taskService.createTaskQuery().suspended().count()).isOne();
     assertThat(taskService.createTaskQuery().active().count()).isZero();
 
     // Activate
     runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     assertThat(taskService.createTaskQuery().suspended().count()).isZero();
-    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().active().count()).isOne();
 
     // Completing should end the process instance
     task = taskService.createTaskQuery().singleResult();
@@ -482,15 +481,15 @@ class ProcessInstanceSuspensionTest {
 
     // Suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
+    assertThat(taskService.createTaskQuery().suspended().count()).isOne();
     assertThat(taskService.createTaskQuery().active().count()).isZero();
 
     // Activate
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     assertThat(taskService.createTaskQuery().suspended().count()).isZero();
-    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().active().count()).isOne();
 
     // Completing should end the process instance
     task = taskService.createTaskQuery().singleResult();
@@ -757,12 +756,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
-    try {
-      formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail("Exception expected");
-    } catch(SuspendedEntityInteractionException e) {
-      // This is expected
-    }
+    assertThatThrownBy(() -> formService.submitTaskFormData(taskQuery, emptyProperties)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -773,12 +767,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
-    try {
-      formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail("");
-    } catch(SuspendedEntityInteractionException e) {
-      // This is expected
-    }
+    assertThatThrownBy(() -> formService.submitTaskFormData(taskQuery, emptyProperties)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -789,12 +778,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
-    try {
-      formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail("");
-    } catch(SuspendedEntityInteractionException e) {
-      // This is expected
-    }
+    assertThatThrownBy(() -> formService.submitTaskFormData(taskQuery, emptyProperties)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -971,10 +955,10 @@ class ProcessInstanceSuspensionTest {
     processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.suspendProcessInstanceById(processInstance.getId());
     runtimeService.signalEventReceived(signal);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     runtimeService.signalEventReceived(signal, new HashMap<>());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
@@ -1015,10 +999,10 @@ class ProcessInstanceSuspensionTest {
     processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processInstance.getProcessDefinitionId());
     runtimeService.signalEventReceived(signal);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     runtimeService.signalEventReceived(signal, new HashMap<>());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
@@ -1064,10 +1048,10 @@ class ProcessInstanceSuspensionTest {
     processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     runtimeService.signalEventReceived(signal);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     runtimeService.signalEventReceived(signal, new HashMap<>());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
@@ -1108,103 +1092,42 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
     // Completing the task should fail
-    try {
-      taskService.complete(taskId);
-      fail("It is not allowed to complete a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Claiming the task should fail
-    try {
-      taskService.claim(taskId, "jos");
-      fail("It is not allowed to claim a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
-
+    assertThatThrownBy(() -> taskService.claim(taskId, "jos")).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Adding candidate groups on the task should fail
-    try {
-      taskService.addCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to add a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding candidate users on the task should fail
-    try {
-      taskService.addCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding group identity links on the task should fail
-    try {
-      taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding an identity link on the task should fail
-    try {
-      taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to add an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Set an assignee on the task should fail
-    try {
-      taskService.setAssignee(taskId, "mispiggy");
-      fail("It is not allowed to set an assignee on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setAssignee(taskId, "mispiggy")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Set an owner on the task should fail
-    try {
-      taskService.setOwner(taskId, "kermit");
-      fail("It is not allowed to set an owner on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setOwner(taskId, "kermit")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate groups on the task should fail
-    try {
-      taskService.deleteCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to remove a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate users on the task should fail
-    try {
-      taskService.deleteCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing group identity links on the task should fail
-    try {
-      taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing an identity link on the task should fail
-    try {
-      taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to remove an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
   }
 
@@ -1223,103 +1146,42 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
 
     // Completing the task should fail
-    try {
-      taskService.complete(taskId);
-      fail("It is not allowed to complete a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Claiming the task should fail
-    try {
-      taskService.claim(taskId, "jos");
-      fail("It is not allowed to claim a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
-
+    assertThatThrownBy(() -> taskService.claim(taskId, "jos")).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Adding candidate groups on the task should fail
-    try {
-      taskService.addCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to add a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding candidate users on the task should fail
-    try {
-      taskService.addCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding group identity links on the task should fail
-    try {
-      taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding an identity link on the task should fail
-    try {
-      taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to add an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Set an assignee on the task should fail
-    try {
-      taskService.setAssignee(taskId, "mispiggy");
-      fail("It is not allowed to set an assignee on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setAssignee(taskId, "mispiggy")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Set an owner on the task should fail
-    try {
-      taskService.setOwner(taskId, "kermit");
-      fail("It is not allowed to set an owner on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setOwner(taskId, "kermit")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate groups on the task should fail
-    try {
-      taskService.deleteCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to remove a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate users on the task should fail
-    try {
-      taskService.deleteCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing group identity links on the task should fail
-    try {
-      taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing an identity link on the task should fail
-    try {
-      taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to remove an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
   }
 
@@ -1338,103 +1200,42 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
 
     // Completing the task should fail
-    try {
-      taskService.complete(taskId);
-      fail("It is not allowed to complete a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Claiming the task should fail
-    try {
-      taskService.claim(taskId, "jos");
-      fail("It is not allowed to claim a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
-
+    assertThatThrownBy(() -> taskService.claim(taskId, "jos")).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Adding candidate groups on the task should fail
-    try {
-      taskService.addCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to add a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding candidate users on the task should fail
-    try {
-      taskService.addCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding group identity links on the task should fail
-    try {
-      taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to add a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Adding an identity link on the task should fail
-    try {
-      taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to add an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
 
 
     // Set an assignee on the task should fail
-    try {
-      taskService.setAssignee(taskId, "mispiggy");
-      fail("It is not allowed to set an assignee on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setAssignee(taskId, "mispiggy")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Set an owner on the task should fail
-    try {
-      taskService.setOwner(taskId, "kermit");
-      fail("It is not allowed to set an owner on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.setOwner(taskId, "kermit")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate groups on the task should fail
-    try {
-      taskService.deleteCandidateGroup(taskId, "blahGroup");
-      fail("It is not allowed to remove a candidate group on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateGroup(taskId, "blahGroup")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing candidate users on the task should fail
-    try {
-      taskService.deleteCandidateUser(taskId, "blahUser");
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteCandidateUser(taskId, "blahUser")).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing group identity links on the task should fail
-    try {
-      taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE);
-      fail("It is not allowed to remove a candidate user on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteGroupIdentityLink(taskId, "blahGroup", IdentityLinkType.CANDIDATE)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // Removing an identity link on the task should fail
-    try {
-      taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER);
-      fail("It is not allowed to remove an identityLink on a task of a suspended process instance");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is good
-    }
+    assertThatThrownBy(() -> taskService.deleteUserIdentityLink(taskId, "blahUser", IdentityLinkType.OWNER)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1448,12 +1249,7 @@ class ProcessInstanceSuspensionTest {
     Task subTask = taskService.newTask("someTaskId");
     subTask.setParentTaskId(task.getId());
 
-    try {
-      taskService.saveTask(subTask);
-      fail("Creating sub tasks for suspended task should not be possible");
-    } catch (SuspendedEntityInteractionException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.saveTask(subTask)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1467,12 +1263,7 @@ class ProcessInstanceSuspensionTest {
     Task subTask = taskService.newTask("someTaskId");
     subTask.setParentTaskId(task.getId());
 
-    try {
-      taskService.saveTask(subTask);
-      fail("Creating sub tasks for suspended task should not be possible");
-    } catch (SuspendedEntityInteractionException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.saveTask(subTask)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1486,12 +1277,7 @@ class ProcessInstanceSuspensionTest {
     Task subTask = taskService.newTask("someTaskId");
     subTask.setParentTaskId(task.getId());
 
-    try {
-      taskService.saveTask(subTask);
-      fail("Creating sub tasks for suspended task should not be possible");
-    } catch (SuspendedEntityInteractionException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> taskService.saveTask(subTask)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1771,9 +1557,9 @@ class ProcessInstanceSuspensionTest {
     // Suspending the process instance should also stop the execution of jobs for that process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     runtimeService.suspendProcessInstanceById(processInstance.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // The jobs should not be executed now
     ClockUtil.setCurrentTime(new Date(now.getTime() + (60 * 60 * 1000))); // Timer is set to fire on 5 minutes
@@ -1781,7 +1567,7 @@ class ProcessInstanceSuspensionTest {
 
     // Activation of the process instance should now allow for job execution
     runtimeService.activateProcessInstanceById(processInstance.getId());
-    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().executable().count()).isOne();
     managementService.executeJob(managementService.createJobQuery().singleResult().getId());
     assertThat(managementService.createJobQuery().count()).isZero();
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
@@ -1797,9 +1583,9 @@ class ProcessInstanceSuspensionTest {
     // Suspending the process instance should also stop the execution of jobs for that process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // The jobs should not be executed now
     ClockUtil.setCurrentTime(new Date(now.getTime() + (60 * 60 * 1000))); // Timer is set to fire on 5 minutes
@@ -1807,7 +1593,7 @@ class ProcessInstanceSuspensionTest {
 
     // Activation of the process instance should now allow for job execution
     runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().executable().count()).isOne();
     managementService.executeJob(managementService.createJobQuery().singleResult().getId());
     assertThat(managementService.createJobQuery().count()).isZero();
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
@@ -1823,9 +1609,9 @@ class ProcessInstanceSuspensionTest {
     // Suspending the process instance should also stop the execution of jobs for that process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // The jobs should not be executed now
     ClockUtil.setCurrentTime(new Date(now.getTime() + (60 * 60 * 1000))); // Timer is set to fire on 5 minutes
@@ -1833,7 +1619,7 @@ class ProcessInstanceSuspensionTest {
 
     // Activation of the process instance should now allow for job execution
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().executable().count()).isOne();
     managementService.executeJob(managementService.createJobQuery().singleResult().getId());
     assertThat(managementService.createJobQuery().count()).isZero();
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
@@ -1849,18 +1635,13 @@ class ProcessInstanceSuspensionTest {
     Task task = taskService.createTaskQuery().singleResult();
     var taskId = task.getId();
 
-    try {
-      taskService.complete(taskId);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceById(instance.getId());
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
@@ -1873,18 +1654,13 @@ class ProcessInstanceSuspensionTest {
     Task task = taskService.createTaskQuery().singleResult();
     var taskId = task.getId();
 
-    try {
-      taskService.complete(taskId);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceByProcessDefinitionId(instance.getProcessDefinitionId());
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
@@ -1902,18 +1678,13 @@ class ProcessInstanceSuspensionTest {
     Task task = taskService.createTaskQuery().singleResult();
     var taskId = task.getId();
 
-    try {
-      taskService.complete(taskId);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callMISimpleProcess.bpmn20.xml",
@@ -1929,19 +1700,9 @@ class ProcessInstanceSuspensionTest {
     String task1Id = task1.getId();
     String task2Id = task2.getId();
 
-    try {
-      taskService.complete(task1Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task1Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
-    try {
-      taskService.complete(task2Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task2Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceById(instance.getId());
@@ -1964,19 +1725,9 @@ class ProcessInstanceSuspensionTest {
     String task1Id = task1.getId();
     String task2Id = task2.getId();
 
-    try {
-      taskService.complete(task1Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task1Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
-    try {
-      taskService.complete(task2Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task2Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceByProcessDefinitionId(instance.getProcessDefinitionId());
@@ -2003,19 +1754,9 @@ class ProcessInstanceSuspensionTest {
     String task1Id = task1.getId();
     String task2Id = task2.getId();
 
-    try {
-      taskService.complete(task1Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task1Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
-    try {
-      taskService.complete(task2Id);
-      fail("this should not be successful, as the execution of a suspended instance is resumed");
-    } catch (SuspendedEntityInteractionException e) {
-      // this is expected to fail
-    }
+    assertThatThrownBy(() -> taskService.complete(task2Id)).isInstanceOf(SuspendedEntityInteractionException.class);
 
     // should be successful after reactivation
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
@@ -2187,7 +1928,7 @@ class ProcessInstanceSuspensionTest {
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
     assertThat(query.active().count()).isZero();
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
 
     //activate
     runtimeService
@@ -2195,7 +1936,7 @@ class ProcessInstanceSuspensionTest {
       .byProcessInstanceId(processInstance.getId())
       .activate();
 
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
   }
 
@@ -2206,7 +1947,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
 
     //suspend
@@ -2216,7 +1957,7 @@ class ProcessInstanceSuspensionTest {
       .suspend();
 
     assertThat(query.active().count()).isZero();
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
 
     //activate
     runtimeService
@@ -2224,7 +1965,7 @@ class ProcessInstanceSuspensionTest {
       .byProcessDefinitionId(processDefinition.getId())
       .activate();
 
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
   }
 
@@ -2234,7 +1975,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
 
     //suspend
@@ -2244,7 +1985,7 @@ class ProcessInstanceSuspensionTest {
       .suspend();
 
     assertThat(query.active().count()).isZero();
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
 
     //activate
     runtimeService
@@ -2252,7 +1993,7 @@ class ProcessInstanceSuspensionTest {
       .byProcessDefinitionKey("oneTaskProcess")
       .activate();
 
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
   }
 

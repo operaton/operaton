@@ -152,20 +152,12 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
 
   @Override
   public Permission[] getPermissions(Permission[] permissions) {
-
     List<Permission> result = new ArrayList<>();
-
     for (Permission permission : permissions) {
-      if((AUTH_TYPE_GLOBAL == authorizationType || AUTH_TYPE_GRANT == authorizationType)
-          && isPermissionGranted(permission)) {
-
+      boolean granted = (AUTH_TYPE_GLOBAL == authorizationType || AUTH_TYPE_GRANT == authorizationType) && isPermissionGranted(permission);
+      boolean revoked = AUTH_TYPE_REVOKE == authorizationType && isPermissionRevoked(permission);
+      if (granted || revoked) {
         result.add(permission);
-
-      } else if(AUTH_TYPE_REVOKE == authorizationType
-          && isPermissionRevoked(permission)) {
-
-        result.add(permission);
-
       }
     }
     return result.toArray(new Permission[ result.size() ]);

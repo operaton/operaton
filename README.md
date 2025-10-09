@@ -36,6 +36,8 @@ Prerequisites:
 
 JDK 17 or newer - check `java -version`
 
+Operaton is tested and supported on Java 17, 21, and 25.
+
 You can use the Maven Wrapper script to execute the build. The script downloads and installs (if necessary) the required Maven version to `~/.m2/wrapper` and runs it from there.
 
 On Linux and MacOS, run
@@ -114,13 +116,17 @@ To run the tests in this repository, please see our [testing tips and tricks](TE
 
 ## Prerequisites
 
-Java 17 or higher is required.
+Java 17 or higher is required. Operaton is tested and supported on Java 17, 21, and 25.
 
 ## License
 
 The source files in this repository are made available under the [Apache License Version 2.0](./LICENSE).
 
 Operaton uses and includes third-party dependencies published under various licenses. By downloading and using Operaton artifacts, you agree to their terms and conditions. Refer to our [license-book.txt](./distro/license-book/src/main/resources/license-book.txt) for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.
+
+## Security
+
+Please see our [security policy](SECURITY.md) for how to report security vulnerabilities.
 
 ## Project reports
 

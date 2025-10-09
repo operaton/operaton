@@ -19,10 +19,10 @@ jobs:
     if: github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.event.pull_request.head.repo.fork
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Check for first-time PR contributor
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');
@@ -31,6 +31,7 @@ jobs:
             const author = context.actor;
             const { owner, repo } = context.repo;
             const prTitle = context.payload.pull_request.title;
+            const prBody = context.payload.pull_request.body || "";
 
             console.log(`Checking for past PRs from ${author}...`);
             const allIssues = await github.paginate(github.rest.issues.listForRepo, {
@@ -45,7 +46,12 @@ jobs:
 
             console.log(`Found ${prCount} PR(s) from ${author}.`);
 
-            if (prCount === 1 || prTitle.includes('[FORCE GREETING]')) {
+            const alreadyConfirmed =
+              /I\s+confirm/i.test(prBody) &&
+              /Apache\s+License\s*2\.0/i.test(prBody) &&
+              /Code\s+of\s+Conduct/i.test(prBody);
+
+            if ((prCount === 1 || prTitle.includes('[FORCE GREETING]')) && !alreadyConfirmed) {
               let prMessage = fs.readFileSync(
                 path.join(process.env.GITHUB_WORKSPACE, '.github/templates/pr_welcome.md'),
                 'utf8'
@@ -58,6 +64,8 @@ jobs:
                 issue_number: context.issue.number,
                 body: prMessage
               });
+            }else if (alreadyConfirmed) {
+              console.log("Contributor already confirmed license + CoC. Skipping greeting.");
             }
 
   greet-first-time-issue:
@@ -66,10 +74,10 @@ jobs:
     if: github.event_name == 'issues' && github.event.action == 'opened'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Check for first-time Issue creator
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');
@@ -112,8 +120,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'issue_comment' && github.event.action == 'created'
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/github-script@v7
+      - uses: actions/checkout@v5
+      - uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');

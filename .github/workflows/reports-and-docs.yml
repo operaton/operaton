@@ -50,6 +50,7 @@ jobs:
           #./mvnw -Psonatype-oss-release install javadoc:javadoc versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=/workspaces/operaton/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list -DskipTests
           ./mvnw versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report
           .devenv/scripts/build/javadoc.sh
+          .devenv/scripts/build/check-api-compatibility.sh
       - name: Cache build artifacts
         uses: actions/cache/save@v4
         with:

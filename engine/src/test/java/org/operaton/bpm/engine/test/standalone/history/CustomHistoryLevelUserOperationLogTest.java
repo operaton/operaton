@@ -319,7 +319,7 @@ public class CustomHistoryLevelUserOperationLogTest {
     managementService.setJobRetries(job.getId(), 10);
 
     // then
-    assertThat(query().entityType(JOB).operationType(OPERATION_TYPE_SET_JOB_RETRIES).count()).isEqualTo(1);
+    assertThat(query().entityType(JOB).operationType(OPERATION_TYPE_SET_JOB_RETRIES).count()).isOne();
 
     UserOperationLogEntry jobRetryEntry = query()
       .entityType(JOB)
@@ -359,7 +359,7 @@ public class CustomHistoryLevelUserOperationLogTest {
       .entityType(EntityTypes.PROCESS_INSTANCE)
       .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE);
 
-    assertThat(logQuery.count()).isEqualTo(1);
+    assertThat(logQuery.count()).isOne();
     UserOperationLogEntry logEntry = logQuery.singleResult();
 
     assertThat(logEntry.getProcessInstanceId()).isEqualTo(processInstanceId);
@@ -571,7 +571,7 @@ public class CustomHistoryLevelUserOperationLogTest {
     // assume
     verifyVariableOperationAsserts(1, UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE, UserOperationLogEntry.CATEGORY_OPERATOR);
     UserOperationLogQuery query = query().entityType(EntityTypes.VARIABLE).operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // when
     historyService.deleteUserOperationLogEntry(query.singleResult().getId());

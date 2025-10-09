@@ -141,23 +141,23 @@ public class DecisionTaskImpl extends TaskImpl implements DecisionTask {
     /** Operaton extensions */
 
     operatonResultVariableAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_RESULT_VARIABLE)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonDecisionBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DECISION_BINDING)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonDecisionVersionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DECISION_VERSION)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonDecisionTenantIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DECISION_TENANT_ID)
-        .namespace(CAMUNDA_NS)
+        .namespace(OPERATON_NS)
         .build();
 
     operatonMapDecisionResultAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_MAP_DECISION_RESULT)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

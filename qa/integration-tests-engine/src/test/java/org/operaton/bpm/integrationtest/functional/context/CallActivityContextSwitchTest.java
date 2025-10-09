@@ -37,7 +37,7 @@ import org.operaton.bpm.integrationtest.functional.context.beans.DelegateBefore;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -77,17 +77,14 @@ public class CallActivityContextSwitchTest extends AbstractFoxPlatformIntegratio
 
   @Test
   @OperateOnDeployment("mainDeployment")
+  // we cannot refactor to a method reference, this makes the test fail with NoClassDefFoundError without executing the lambda
+  @SuppressWarnings("java:S1612")
   void testNoWaitState() {
 
     // this test makes sure the delegate invoked by the called process can be resolved (context switch necessary).
 
     // we cannot load the class
-    try {
-      new CalledProcessDelegate();
-      fail("exception expected");
-    }catch (NoClassDefFoundError e) {
-      // expected
-    }
+    assertThatThrownBy(() -> new CalledProcessDelegate()).isInstanceOf(NoClassDefFoundError.class);
 
     // our bean manager does not know this bean
     Set<Bean< ? >> beans = beanManager.getBeans("calledProcessDelegate");

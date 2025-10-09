@@ -123,6 +123,18 @@
       <lineEnding>crlf</lineEnding>
       <outputDirectory />
     </file>
+    <file>
+      <source>resources/security.txt.example</source>
+      <filtered>true</filtered>
+      <lineEnding>crlf</lineEnding>
+      <outputDirectory />
+    </file>
+    <file>
+      <source>resources/SECURITY-BEST-PRACTICES.md</source>
+      <filtered>true</filtered>
+      <lineEnding>crlf</lineEnding>
+      <outputDirectory />
+    </file>
   </files>
 
   <fileSets>

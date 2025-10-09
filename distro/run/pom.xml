@@ -22,19 +22,9 @@
         <type>pom</type>
       </dependency>
       <dependency>
-        <groupId>org.graalvm.js</groupId>
-        <artifactId>js</artifactId>
-        <version>${version.graal.js}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.graalvm.js</groupId>
-        <artifactId>js-scriptengine</artifactId>
-        <version>${version.graal.js}</version>
-      </dependency>
-      <dependency>
         <groupId>com.nimbusds</groupId>
         <artifactId>nimbus-jose-jwt</artifactId>
-        <version>9.37.4</version>
+        <version>10.5</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

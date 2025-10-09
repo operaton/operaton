@@ -40,7 +40,7 @@ public interface GroupResource {
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  void updateGroup(GroupDto Group);
+  void updateGroup(GroupDto group);
 
   @Path(GroupMembersResource.PATH)
   GroupMembersResource getGroupMembersResource();

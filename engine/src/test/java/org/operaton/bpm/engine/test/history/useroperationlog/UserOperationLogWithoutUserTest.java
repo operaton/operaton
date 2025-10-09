@@ -345,7 +345,7 @@ class UserOperationLogWithoutUserTest {
     String id = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     runtimeService.setVariable(id, "aVariable", "aValue");
     runtimeService.deleteProcessInstance(id, "none");
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
     String historicVariableId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
 
     // when
@@ -364,7 +364,7 @@ class UserOperationLogWithoutUserTest {
     String id = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     runtimeService.setVariable(id, "aVariable", "aValue");
     runtimeService.deleteProcessInstance(id, "none");
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
 
     // when
     historyService.deleteHistoricVariableInstancesByProcessInstanceId(id);

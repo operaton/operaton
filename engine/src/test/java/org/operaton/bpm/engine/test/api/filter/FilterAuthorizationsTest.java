@@ -204,7 +204,7 @@ class FilterAuthorizationsTest {
     grantReadFilter(filter.getId());
 
     long count = filterService.createFilterQuery().count();
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertThat(returnedFilter).isNotNull();
@@ -233,7 +233,7 @@ class FilterAuthorizationsTest {
     assertThat(resultList.get(0).getId()).isEqualTo(task.getId());
 
     count = filterService.count(filter.getId());
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
 
     // remove Task
     taskService.deleteTask(task.getId(), true);
@@ -286,7 +286,7 @@ class FilterAuthorizationsTest {
     authorizationService.saveAuthorization(authorization);
 
     long count = filterService.createFilterQuery().count();
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertThat(returnedFilter).isNotNull();

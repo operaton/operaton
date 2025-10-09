@@ -184,7 +184,7 @@ class EmbeddedProcessApplicationTest {
     TestApplicationReusingExistingEngine processApplication = new TestApplicationReusingExistingEngine();
     processApplication.deploy();
 
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
 
     processApplication.undeploy();
 

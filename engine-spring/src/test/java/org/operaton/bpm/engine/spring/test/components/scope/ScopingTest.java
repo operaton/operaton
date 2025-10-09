@@ -39,7 +39,6 @@ import org.operaton.bpm.engine.spring.test.components.ProcessInitiatingPojo;
 import org.operaton.bpm.engine.task.Task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 /**
  * tests the scoped beans
@@ -136,7 +135,7 @@ public class ScopingTest {
 		LOGGER.info("Running 'component-waiter' process instance with scoped beans.");
 		StatefulObject one = run();
 		StatefulObject two = run();
-		assertNotSame(one.getName(), two.getName());
+		assertThat(one.getName()).isNotSameAs(two.getName());
     assertThat(two.getVisitedCount()).isEqualTo(one.getVisitedCount());
 	}
 

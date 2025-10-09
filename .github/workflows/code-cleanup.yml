@@ -32,7 +32,9 @@ jobs:
       - name: Build
         run: .devenv/scripts/build/build.sh --profile=max --skip-tests
       - name: Code Cleanup
-        run: .devenv/scripts/maintenance/code-cleanup.sh
+        run: |
+          .devenv/scripts/maintenance/code-cleanup.sh --cleanups=imports,code
+          .devenv/scripts/maintenance/code-cleanup.sh --cleanups=tests
       - name: Verification Build
         run: .devenv/scripts/build/build.sh --profile=max --skip-tests
       - name: Create Pull Request

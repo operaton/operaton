@@ -407,8 +407,8 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances).as("There should be one process instance returned.").hasSize(1);
-    assertThat(instances)
+    assertThat(instances).as("There should be one process instance returned.")
+      .hasSize(1)
       .first()
       .as("The returned process instance should not be null.")
       .isNotNull();
@@ -847,8 +847,10 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances).as("There should be one process instance returned.").hasSize(1);
-    assertThat(instances).first().as("The returned process instance should not be null.").isNotNull();
+    assertThat(instances).as("There should be one process instance returned.")
+      .hasSize(1)
+      .first().as("The returned process instance should not be null.")
+      .isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].id");
     String returnedEndTime = from(content).getString("[0].endTime");
@@ -1356,7 +1358,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     Map<String, List<String>> parameters = getCompleteProcessDefinitionKeyInListQueryParameters();
     List<String> value = parameters.get("processDefinitionKeyIn");
 
-    verify(mockedQuery).processDefinitionKeyIn(value.toArray(new String[value.size()]));
+    verify(mockedQuery).processDefinitionKeyIn(value.toArray(String[]::new));
     verify(mockedQuery).list();
   }
 

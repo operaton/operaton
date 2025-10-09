@@ -36,9 +36,8 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
-      <groupId>${project.groupId}</groupId>
-      <version>${project.version}</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

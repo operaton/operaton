@@ -1,0 +1,51 @@
+<differences>
+  <difference>
+    <!-- It is okay to add classes to the set of superclasses -->
+    <differenceType>5000</differenceType>
+    <className>**</className>
+    <to>**</to>
+  </difference>
+  <difference>
+    <!-- It is okay to add methods to an interface-->
+    <differenceType>7012</differenceType>
+    <className>**</className>
+    <method>*</method>
+  </difference>
+
+
+  <!-- Operaton 1.0 -->
+  <!-- Singletons made final, customize via service loader (#1376) -->
+  <difference>
+    <differenceType>6006</differenceType>
+    <className>org/operaton/bpm/model/bpmn/Bpmn</className>
+    <field>INSTANCE</field>
+  </difference>
+  <difference>
+    <differenceType>6006</differenceType>
+    <className>org/operaton/bpm/model/cmmn/Cmmn</className>
+    <field>INSTANCE</field>
+  </difference>
+  <difference>
+    <differenceType>6006</differenceType>
+    <className>org/operaton/bpm/model/dmn/Dmn</className>
+    <field>INSTANCE</field>
+  </difference>
+  <!-- Constructors of abstract classes can be protected -->
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/model/bpmn/builder/Abstract*EventDefinitionBuilder</className>
+    <method>**Abstract*EventDefinitionBuilder**</method>
+  </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>org/operaton/bpm/model/xml/type/reference/AttributeReferenceCollection</className>
+    <method>**AttributeReferenceCollection**</method>
+  </difference>
+  <!-- Unnecessary overridden methods from superclass removed -->
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>org/operaton/bpm/model/bpmn/builder/Abstract*EventDefinitionBuilder</className>
+    <method>**Abstract*EventDefinitionBuilder id(java.lang.String)</method>
+  </difference>
+
+</differences>

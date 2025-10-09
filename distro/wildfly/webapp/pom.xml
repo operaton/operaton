@@ -36,7 +36,7 @@
           <archive>
             <manifestEntries>
               <!-- module dependencies for deployment on JBoss/WildFly -->
-              <Dependencies>org.operaton.bpm.operaton-engine,org.operaton.bpm.dmn.operaton-engine-dmn,org.operaton.bpm.model.operaton-bpmn-model,org.operaton.bpm.model.operaton-cmmn-model,org.operaton.bpm.model.operaton-dmn-model,org.operaton.bpm.model.operaton-xml-model,org.operaton.commons.operaton-commons-utils,org.operaton.commons.operaton-commons-logging,org.operaton.spin.operaton-spin-core,org.operaton.bpm.juel.operaton-juel services,org.graalvm.js.js-scriptengine services</Dependencies>
+              <Dependencies>org.operaton.bpm.operaton-engine,org.operaton.bpm.dmn.operaton-engine-dmn,org.operaton.bpm.model.operaton-bpmn-model,org.operaton.bpm.model.operaton-cmmn-model,org.operaton.bpm.model.operaton-dmn-model,org.operaton.bpm.model.operaton-xml-model,org.operaton.commons.operaton-commons-utils,org.operaton.commons.operaton-commons-logging,org.operaton.spin.operaton-spin-core,org.operaton.bpm.juel.operaton-juel services,org.graalvm.js.js-all services</Dependencies>
             </manifestEntries>
           </archive>
         </configuration>

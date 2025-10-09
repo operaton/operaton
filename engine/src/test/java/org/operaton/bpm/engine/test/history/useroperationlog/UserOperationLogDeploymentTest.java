@@ -238,13 +238,13 @@ class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
         .createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // when
     repositoryService.deleteDeployment(deployment.getId(), true);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -260,13 +260,13 @@ class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
         .createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // when
     repositoryService.deleteDeployment(deployment.getId(), false);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -286,7 +286,7 @@ class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
     repositoryService.deleteDeployment(deployment.getId(), false);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry log = query.singleResult();
     assertThat(log).isNotNull();
@@ -329,7 +329,7 @@ class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
     repositoryService.deleteDeployment(deployment.getId(), true);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry log = query.singleResult();
     assertThat(log).isNotNull();
@@ -372,13 +372,13 @@ class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
         .createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // when
     repositoryService.deleteProcessDefinition(procDef.getId(), true);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -398,13 +398,13 @@ class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
         .createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // when
     repositoryService.deleteProcessDefinition(procDef.getId());
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -428,7 +428,7 @@ class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
     repositoryService.deleteProcessDefinition(procDef.getId(), false);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry log = query.singleResult();
     assertThat(log).isNotNull();
@@ -475,7 +475,7 @@ class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
     repositoryService.deleteProcessDefinition(procDef.getId(), true);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry log = query.singleResult();
     assertThat(log).isNotNull();

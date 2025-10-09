@@ -1058,9 +1058,9 @@ class CaseServiceCaseInstanceTest {
 
     assertThat(caseInstance.getBusinessKey()).isEqualTo("aBusinessKey");
     assertThat(runtimeService.createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstance.getId())
-        .variableValueEquals("aVariable", "aValue")
-        .count()).isEqualTo(1);
+      .caseInstanceIdIn(caseInstance.getId())
+      .variableValueEquals("aVariable", "aValue")
+      .count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1082,9 +1082,9 @@ class CaseServiceCaseInstanceTest {
 
     assertThat(caseInstance.getBusinessKey()).isEqualTo("aBusinessKey");
     assertThat(runtimeService.createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstance.getId())
-        .variableValueEquals("aVariable", "aValue")
-        .count()).isEqualTo(1);
+      .caseInstanceIdIn(caseInstance.getId())
+      .variableValueEquals("aVariable", "aValue")
+      .count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})

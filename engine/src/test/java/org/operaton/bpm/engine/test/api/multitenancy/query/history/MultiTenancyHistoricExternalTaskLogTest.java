@@ -44,8 +44,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class MultiTenancyHistoricExternalTaskLogTest {
@@ -156,16 +155,7 @@ class MultiTenancyHistoricExternalTaskLogTest {
   @Test
   void shouldFailQueryByTenantIdNull() {
     var historicExternalTaskLogQuery = historyService.createHistoricExternalTaskLogQuery();
-    try {
-      // when
-      historicExternalTaskLogQuery.tenantIdIn((String) null);
-
-      fail("expected exception");
-
-      // then
-    } catch (NullValueException e) {
-      // test passed
-    }
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.tenantIdIn((String) null)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -174,18 +164,18 @@ class MultiTenancyHistoricExternalTaskLogTest {
     //given two process with different tenants
 
     // when
-    List<HistoricExternalTaskLog> HistoricExternalTaskLogs = historyService.createHistoricExternalTaskLogQuery()
+    List<HistoricExternalTaskLog> historicExternalTaskLogs = historyService.createHistoricExternalTaskLogQuery()
       .orderByTenantId()
       .asc()
       .list();
 
     // then
-    assertThat(HistoricExternalTaskLogs).hasSize(5);
-    assertThat(HistoricExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(HistoricExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(HistoricExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(3).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(4).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs).hasSize(5);
+    assertThat(historicExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_ONE);
+    assertThat(historicExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_ONE);
+    assertThat(historicExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(3).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(4).getTenantId()).isEqualTo(TENANT_TWO);
   }
 
   @Test
@@ -194,18 +184,18 @@ class MultiTenancyHistoricExternalTaskLogTest {
     //given two process with different tenants
 
     // when
-    List<HistoricExternalTaskLog> HistoricExternalTaskLogs = historyService.createHistoricExternalTaskLogQuery()
+    List<HistoricExternalTaskLog> historicExternalTaskLogs = historyService.createHistoricExternalTaskLogQuery()
       .orderByTenantId()
       .desc()
       .list();
 
     // then
-    assertThat(HistoricExternalTaskLogs).hasSize(5);
-    assertThat(HistoricExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
-    assertThat(HistoricExternalTaskLogs.get(3).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(HistoricExternalTaskLogs.get(4).getTenantId()).isEqualTo(TENANT_ONE);
+    assertThat(historicExternalTaskLogs).hasSize(5);
+    assertThat(historicExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
+    assertThat(historicExternalTaskLogs.get(3).getTenantId()).isEqualTo(TENANT_ONE);
+    assertThat(historicExternalTaskLogs.get(4).getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test

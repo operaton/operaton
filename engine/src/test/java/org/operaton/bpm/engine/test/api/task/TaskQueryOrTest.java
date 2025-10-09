@@ -1312,7 +1312,7 @@ class TaskQueryOrTest {
 
     // assume
     assertThat(taskService.createTaskQuery().taskDefinitionKey("testQuerySuspensionStateTask").active().count()).isEqualTo(2);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("testQuerySuspensionStateTask").suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("testQuerySuspensionStateTask").suspended().count()).isOne();
 
     // then
     assertThat(taskService.createTaskQuery().or().active().processVariableValueEquals("foo", 0).endOr().list()).hasSize(3);

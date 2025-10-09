@@ -50,7 +50,7 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
 
   public DefaultCockpitRuntimeDelegate() {
     super(CockpitPlugin.class);
-    this.commandExecutors = new ConcurrentHashMap<>();
+    this.commandExecutors = new HashMap<>();
   }
 
   @Override
@@ -61,7 +61,9 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
 
   @Override
   public CommandExecutor getCommandExecutor(String processEngineName) {
-    return commandExecutors.computeIfAbsent(processEngineName, this::createCommandExecutor);
+    synchronized (commandExecutors) {
+      return commandExecutors.computeIfAbsent(processEngineName, this::createCommandExecutor);
+    }
   }
 
   /**

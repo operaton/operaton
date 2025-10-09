@@ -35,7 +35,7 @@ import org.operaton.bpm.rest.beans.CustomRestApplication;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 @ExtendWith(ArquillianExtension.class)
-public class EmbeddedEngineRest_WILDFLY {
+public class EmbeddedEngineRestWildfly {
 
   private static final String EMBEDDED_ENGINE_REST = "embedded-engine-rest";
 

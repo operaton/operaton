@@ -458,9 +458,11 @@ public class Scanner {
 		}
 
 		if (position == length) {
-			return token = fixed(Symbol.EOF);
+			token = fixed(Symbol.EOF);
+			return token;
 		}
 
-		return token = nextToken();
+		token = nextToken();
+		return token;
 	}
 }

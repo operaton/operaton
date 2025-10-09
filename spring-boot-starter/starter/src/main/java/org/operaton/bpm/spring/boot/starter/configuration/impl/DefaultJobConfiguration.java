@@ -84,10 +84,10 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
 
   public static final class JobConfiguration {
 
-    public static final String CAMUNDA_TASK_EXECUTOR_QUALIFIER = "operatonTaskExecutor";
+    public static final String OPERATON_TASK_EXECUTOR_QUALIFIER = "operatonTaskExecutor";
 
-    @Bean(name = CAMUNDA_TASK_EXECUTOR_QUALIFIER)
-    @ConditionalOnMissingBean(name = CAMUNDA_TASK_EXECUTOR_QUALIFIER)
+    @Bean(name = OPERATON_TASK_EXECUTOR_QUALIFIER)
+    @ConditionalOnMissingBean(name = OPERATON_TASK_EXECUTOR_QUALIFIER)
     @ConditionalOnProperty(prefix = "operaton.bpm.job-execution", name = "enabled", havingValue = "true", matchIfMissing = true)
     public static TaskExecutor operatonTaskExecutor(OperatonBpmProperties properties) {
       int corePoolSize = properties.getJobExecution().getCorePoolSize();
@@ -110,7 +110,7 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
     @Bean
     @ConditionalOnMissingBean(JobExecutor.class)
     @ConditionalOnProperty(prefix = "operaton.bpm.job-execution", name = "enabled", havingValue = "true", matchIfMissing = true)
-    public static JobExecutor jobExecutor(@Qualifier(CAMUNDA_TASK_EXECUTOR_QUALIFIER) final TaskExecutor taskExecutor,
+    public static JobExecutor jobExecutor(@Qualifier(OPERATON_TASK_EXECUTOR_QUALIFIER) final TaskExecutor taskExecutor,
                                           OperatonBpmProperties properties) {
       final SpringJobExecutor springJobExecutor = new SpringJobExecutor();
       springJobExecutor.setTaskExecutor(taskExecutor);

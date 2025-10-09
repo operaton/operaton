@@ -232,7 +232,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     if (currentScope != currentScope.getProcessDefinition()) {
       ActivityImpl currentActivity = (ActivityImpl) currentScope;
 
-      if (currentActivity != null && currentActivity.getIoMapping() != null && !skipIoMapping) {
+      if (currentActivity.getIoMapping() != null && !skipIoMapping) {
         currentActivity.getIoMapping().executeInputParameters(this);
       }
     }

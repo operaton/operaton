@@ -721,6 +721,58 @@ class TaskQueryTest {
   }
 
   @Test
+  void testQueryByCandidateGroupLikeInsideAnOr() {
+    // management group is candidate for 3 tasks, one of them is already assigned
+    TaskQuery query = taskService.createTaskQuery().or().taskCandidateGroupLike("management").taskId("non-existing").endOr();
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
+
+    // test with "shortened" group name for like query
+    query = taskService.createTaskQuery().or().taskCandidateGroupLike("mana%").taskId("non-existing").endOr();
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
+
+    // test with "shortened" group name for like query (different part)
+    query = taskService.createTaskQuery().or().taskCandidateGroupLike("%ment").taskId("non-existing").endOr();
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
+
+    // test management candidates group with assigned tasks included
+    query = taskService.createTaskQuery().or().taskCandidateGroupLike("management").includeAssignedTasks().taskId("non-existing").endOr();
+    assertThat(query.count()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
+
+    // test with "shortened" group name for like query (assigned tasks included)
+    query = taskService.createTaskQuery().or().taskCandidateGroupLike("mana%").includeAssignedTasks().taskId("non-existing").endOr();
+    assertThat(query.count()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
+
+    // test with "shortened" group name for like query (different part, assigned tasks included)
+    query = taskService.createTaskQuery().or().taskCandidateGroupLike("%ment").includeAssignedTasks().taskId("non-existing").endOr();
+    assertThat(query.count()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
+
+    // test query that matches tasks with the "management" the "accountancy" candidate groups
+    // accountancy group is candidate for 3 tasks, one of them is already assigned
+    query = taskService.createTaskQuery().or().taskCandidateGroupLike("%an%").taskId("non-existing").endOr();
+    assertThat(query.count()).isEqualTo(4);
+    assertThat(query.list()).hasSize(4);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
+
+    // test query that matches tasks with the "management" the "accountancy" candidate groups (assigned tasks included)
+    query = taskService.createTaskQuery().or().taskCandidateGroupLike("%an%").includeAssignedTasks().taskId("non-existing").endOr();
+    assertThat(query.count()).isEqualTo(5);
+    assertThat(query.list()).hasSize(5);
+    assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class);
+  }
+
+  @Test
   void testQueryWithCandidateGroups() {
     // test withCandidateGroups
     TaskQuery query = taskService.createTaskQuery().withCandidateGroups();

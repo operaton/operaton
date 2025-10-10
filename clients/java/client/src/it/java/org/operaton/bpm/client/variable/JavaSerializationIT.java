@@ -40,8 +40,8 @@ import static org.operaton.bpm.client.rule.ClientRule.LOCK_DURATION;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
 import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_NAME;
-import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_REST;
+import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_NAME;
+import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_REST;
 import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
 import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
 import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.JAVA;
@@ -66,7 +66,7 @@ public class JavaSerializationIT {
   @RegisterExtension
   static ClientRule clientRule = new ClientRule(() -> {
     Properties properties = loadProperties(DEFAULT_PROPERTIES_PATH);
-    String baseUrl = properties.getProperty(CAMUNDA_ENGINE_REST) + ENGINE_NAME;
+    String baseUrl = properties.getProperty(OPERATON_ENGINE_REST) + ENGINE_NAME;
     return ExternalTaskClient.create()
         .baseUrl(baseUrl)
         .disableAutoFetching()
@@ -76,7 +76,7 @@ public class JavaSerializationIT {
   @RegisterExtension
   static EngineRule engineRule = new EngineRule(() -> {
     Properties properties = loadProperties(DEFAULT_PROPERTIES_PATH);
-    properties.put(CAMUNDA_ENGINE_NAME, ENGINE_NAME);
+    properties.put(OPERATON_ENGINE_NAME, ENGINE_NAME);
     return properties;
   });
 

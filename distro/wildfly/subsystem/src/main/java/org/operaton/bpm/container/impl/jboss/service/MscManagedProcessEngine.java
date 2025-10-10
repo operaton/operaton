@@ -17,7 +17,8 @@
 package org.operaton.bpm.container.impl.jboss.service;
 
 import java.util.function.Supplier;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jboss.as.naming.ManagedReferenceFactory;
 import org.jboss.as.naming.deployment.ContextNames;
@@ -48,7 +49,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  */
 public class MscManagedProcessEngine implements Service<ProcessEngine> {
 
-  private static final Logger LOGG = Logger.getLogger(MscManagedProcessEngine.class.getName());
+  private static final Logger LOGG = LoggerFactory.getLogger(MscManagedProcessEngine.class);
 
   protected Supplier<MscRuntimeContainerDelegate> runtimeContainerDelegateSupplier;
 
@@ -96,7 +97,7 @@ public class MscManagedProcessEngine implements Service<ProcessEngine> {
     bindingService = BindingUtil.createJndiBindings(context.getChildTarget(), processEngineServiceBindingServiceName, jndiName, managedReferenceFactory);
 
     // log info message
-    LOGG.info("jndi binding for process engine " + processEngine.getName() + " is " + jndiName);
+    LOGG.info("jndi binding for process engine {} is {}", processEngine.getName(), jndiName);
   }
 
   protected void removeProcessEngineJndiBinding() {

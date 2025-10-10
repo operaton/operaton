@@ -21,7 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
@@ -59,7 +60,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   private static final String SCHEMA_LOG_PATH = ENGINE_DEFAULT_PATH + "/schema/log";
 
-  private static final Logger log = Logger.getLogger(RestIT.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RestIT.class);
 
   @BeforeEach
   void createClient() {
@@ -70,7 +71,7 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void testScenario() throws Exception {
     // get process definitions for default engine
-    log.info("Checking " + appBasePath + PROCESS_DEFINITION_PATH);
+    log.info("Checking {}{}", appBasePath, PROCESS_DEFINITION_PATH);
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + PROCESS_DEFINITION_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
@@ -103,7 +104,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void assertJodaTimePresent() {
-    log.info("Checking " + appBasePath + TASK_PATH);
+    log.info("Checking {}{}", appBasePath, TASK_PATH);
 
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + TASK_PATH)
             .queryString("dueAfter", "2000-01-01T00:00:00.000+0200")
@@ -118,7 +119,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void testDelayedJobDefinitionSuspension() {
-    log.info("Checking " + appBasePath + JOB_DEFINITION_PATH + "/suspended");
+    log.info("Checking {}{}/suspended", appBasePath, JOB_DEFINITION_PATH);
 
     // Create request body as a Map (or you can use a custom DTO if required)
     Map<String, Object> requestBody = new HashMap<>();
@@ -139,7 +140,7 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void testTaskQueryContentType() {
     String resourcePath = appBasePath + TASK_PATH;
-    log.info("Checking " + resourcePath);
+    log.info("Checking {}", resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
 
@@ -149,7 +150,7 @@ class RestIT extends AbstractWebIntegrationTest {
     String taskId = getFirstTask().getString("id");
 
     String resourcePath = appBasePath + TASK_PATH + "/" + taskId;
-    log.info(() -> "Checking {}" + resourcePath);
+    log.info("Checking {}", resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
 
@@ -177,13 +178,13 @@ class RestIT extends AbstractWebIntegrationTest {
 
     // Check the filter resource (list)
     String resourcePathList = appBasePath + FILTER_PATH + "/" + filterId + "/list";
-    log.info(() -> "Checking " + resourcePathList);
+    log.info("Checking {}", resourcePathList);
     assertMediaTypesOfResource(resourcePathList, true);
 
 
     // Check the filter resource (singleResult)
     String resourcePathSingleResult = appBasePath + FILTER_PATH + "/" + filterId + "/singleResult";
-    log.info(() -> "Checking " + resourcePathSingleResult);
+    log.info("Checking {}", resourcePathSingleResult);
     assertMediaTypesOfResource(resourcePathSingleResult, true);
 
     // delete test filter
@@ -282,7 +283,7 @@ class RestIT extends AbstractWebIntegrationTest {
   void testOptionsRequest() {
     // Given
     String resourcePath = appBasePath + FILTER_PATH;
-    log.info("Send OPTIONS request to " + resourcePath);
+    log.info("Send OPTIONS request to {}", resourcePath);
 
     // Send OPTIONS request
     HttpResponse<JsonNode> response = Unirest.options(resourcePath).asJson();

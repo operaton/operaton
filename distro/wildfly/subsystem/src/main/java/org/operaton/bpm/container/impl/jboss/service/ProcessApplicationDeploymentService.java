@@ -18,14 +18,16 @@ package org.operaton.bpm.container.impl.jboss.service;
 
 import java.io.ByteArrayInputStream;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.operaton.commons.utils.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jboss.as.ee.component.ComponentView;
 import org.jboss.as.naming.ManagedReference;
@@ -62,7 +64,7 @@ import org.operaton.bpm.engine.repository.ResumePreviousBy;
  */
 public class ProcessApplicationDeploymentService implements Service<ProcessApplicationDeploymentService> {
 
-  private static final Logger LOGGER = Logger.getLogger(ProcessApplicationDeploymentService.class.getName());
+  private static final Logger LOGGER = LoggerFactory.getLogger(ProcessApplicationDeploymentService.class);
 
   protected final Supplier<ExecutorService> executorSupplier;
   protected final Supplier<ProcessEngine> processEngineSupplier;
@@ -203,7 +205,7 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
         }, module.getClassLoader());
 
       } else {
-        LOGGER.info("Not creating a deployment for process archive '" + processArchive.getName() + "': no resources provided.");
+        LOGGER.info("Not creating a deployment for process archive '{}': no resources provided.", processArchive.getName());
 
       }
 
@@ -244,25 +246,16 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
     return ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME.equals(resumePreviousBy) || ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY.equals(resumePreviousBy);
   }
 
-  /**
-   * @param deploymentMap2
-   * @param deploymentName
-   */
   protected void logDeploymentSummary(Collection<String> resourceNames, String deploymentName, String processApplicationName) {
-    // log a summary of the deployment
-    StringBuilder builder = new StringBuilder();
-    builder.append("Deployment summary for process archive '")
-          .append(deploymentName)
-          .append("' of process application '")
-          .append(processApplicationName)
-          .append("':\n\n");
+    Collection<String> names = (resourceNames == null) ? List.of() : resourceNames;
 
-    for (String resourceName : resourceNames) {
-      builder.append("        ")
-              .append(resourceName)
-              .append("\n");
-    }
-    LOGGER.log(Level.INFO, builder.toString());
+    LOGGER.atInfo()
+        .setMessage("Deployment '{}' of app '{}' with {} resources")
+        .addArgument(StringUtil.sanitize(deploymentName))
+        .addArgument(StringUtil.sanitize(processApplicationName))
+        .addArgument(names.size())
+        .addKeyValue("resources", names.stream().sorted().map(StringUtil::sanitize).toList())
+        .log();
   }
 
   protected void performUndeployment() {
@@ -276,19 +269,19 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
         processEngine.getManagementService().unregisterProcessApplication(deploymentIds, true);
       }
     } catch(Exception e) {
-      LOGGER.log(Level.SEVERE, "Exception while unregistering process application with the process engine.");
+      LOGGER.error("Exception while unregistering process application with the process engine.");
 
     }
 
     // delete the deployment only if requested in metadata
     if(deployment != null && PropertyHelper.getBooleanProperty(processArchive.getProperties(), ProcessArchiveXml.PROP_IS_DELETE_UPON_UNDEPLOY, false)) {
       try {
-        LOGGER.info("Deleting cascade deployment with name '"+deployment.getName()+"/"+deployment.getId()+"'.");
+        LOGGER.info("Deleting cascade deployment with name '{}/{}'.", deployment.getName(), deployment.getId());
         // always cascade & skip custom listeners
         processEngine.getRepositoryService().deleteDeployment(deployment.getId(), true, true);
 
       } catch (Exception e) {
-        LOGGER.log(Level.WARNING, "Exception while deleting process engine deployment", e);
+        LOGGER.warn("Exception while deleting process engine deployment", e);
 
       }
 

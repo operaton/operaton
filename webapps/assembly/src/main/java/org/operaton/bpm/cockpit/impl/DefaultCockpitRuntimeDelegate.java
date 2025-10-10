@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import java.util.concurrent.ConcurrentHashMap;
 import org.operaton.bpm.cockpit.CockpitRuntimeDelegate;
 import org.operaton.bpm.cockpit.db.CommandExecutor;
 import org.operaton.bpm.cockpit.db.QueryService;

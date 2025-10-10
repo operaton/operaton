@@ -16,38 +16,30 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension.resource;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.jboss.as.controller.AttributeDefinition;
+import java.util.stream.Stream;
 import org.jboss.as.controller.SimpleResourceDefinition;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobAcquisitionAdd;
 import org.operaton.bpm.container.impl.jboss.extension.handler.JobAcquisitionRemove;
 
-
 public final class JobAcquisitionDefinition extends SimpleResourceDefinition {
 
-  public static final JobAcquisitionDefinition INSTANCE = new JobAcquisitionDefinition();
+  static final JobAcquisitionDefinition INSTANCE = new JobAcquisitionDefinition();
 
   private JobAcquisitionDefinition() {
     super(new Parameters(BpmPlatformExtension.JOB_ACQUISTIONS_PATH,
-        BpmPlatformExtension.getResourceDescriptionResolver(ModelConstants.JOB_ACQUISITION))
-        .setAddHandler(JobAcquisitionAdd.INSTANCE)
-        .setRemoveHandler(JobAcquisitionRemove.INSTANCE));
-  }
-
-  @Override
-  public Collection<AttributeDefinition> getAttributes() {
-    return Arrays.asList(SubsystemAttributeDefinitons.JOB_ACQUISITION_ATTRIBUTES);
+      BpmPlatformExtension.getResourceDescriptionResolver(ModelConstants.JOB_ACQUISITION)).setAddHandler(
+      JobAcquisitionAdd.INSTANCE).setRemoveHandler(JobAcquisitionRemove.INSTANCE));
   }
 
   @Override
   public void registerAttributes(ManagementResourceRegistration resourceRegistration) {
+    Stream.of(SubsystemAttributeDefinitons.JOB_ACQUISITION_ATTRIBUTES)
+      .forEach(attribute -> resourceRegistration.registerReadOnlyAttribute(attribute, null));
+
     super.registerAttributes(resourceRegistration);
   }
 }

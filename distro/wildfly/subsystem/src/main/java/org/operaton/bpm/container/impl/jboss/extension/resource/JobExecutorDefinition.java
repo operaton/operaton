@@ -22,8 +22,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jboss.as.controller.AttributeDefinition;
-import org.jboss.as.controller.SimpleResourceDefinition;
+import org.jboss.as.controller.PersistentResourceDefinition;
 
+import org.jboss.as.controller.ReloadRequiredWriteAttributeHandler;
+import org.jboss.as.controller.SimpleResourceDefinition;
+import org.jboss.as.controller.registry.AttributeAccess;
+import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
@@ -32,23 +36,28 @@ import org.operaton.bpm.container.impl.jboss.extension.handler.JobExecutorRemove
 
 public final class JobExecutorDefinition extends SimpleResourceDefinition {
 
-  public static final JobExecutorDefinition INSTANCE = new JobExecutorDefinition();
+  static final JobExecutorDefinition INSTANCE = new JobExecutorDefinition();
 
   private JobExecutorDefinition() {
     super(new Parameters(BpmPlatformExtension.JOB_EXECUTOR_PATH,
-        BpmPlatformExtension.getResourceDescriptionResolver(ModelConstants.JOB_EXECUTOR))
-        .setAddHandler(JobExecutorAdd.INSTANCE)
-        .setRemoveHandler(JobExecutorRemove.INSTANCE));
+      BpmPlatformExtension.getResourceDescriptionResolver(ModelConstants.JOB_EXECUTOR))
+      .setAddHandler(JobExecutorAdd.INSTANCE)
+      .setRemoveHandler(JobExecutorRemove.INSTANCE));
   }
 
   @Override
-  public Collection<AttributeDefinition> getAttributes() {
-    return Arrays.asList(SubsystemAttributeDefinitons.JOB_EXECUTOR_ATTRIBUTES);
+  public void registerAttributes(ManagementResourceRegistration resourceRegistration) {
+    for (AttributeDefinition attr : SubsystemAttributeDefinitons.JOB_EXECUTOR_ATTRIBUTES) {
+      if (!attr.getFlags().contains(AttributeAccess.Flag.RESTART_ALL_SERVICES)) {
+        throw new IllegalStateException("Attribute " + attr.getName() + " was not marked as reload required: " + resourceRegistration.getPathAddress());
+      }
+      resourceRegistration.registerReadOnlyAttribute(attr, null);
+    }
   }
 
   @Override
-  protected List<? extends SimpleResourceDefinition> getChildren() {
-    return Collections.singletonList(JobAcquisitionDefinition.INSTANCE);
+  public void registerChildren(ManagementResourceRegistration resourceRegistration) {
+    resourceRegistration.registerSubModel(JobAcquisitionDefinition.INSTANCE);
   }
 
 }

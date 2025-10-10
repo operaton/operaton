@@ -22,13 +22,13 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 /**
  * @author Sebastian Menski
  */
-public interface ElementReference<Target extends ModelElementInstance, Source extends ModelElementInstance> extends ElementReferenceCollection<Target, Source> {
+public interface ElementReference<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ElementReferenceCollection<TARGET, SOURCE> {
 
-  Source getReferenceSource(ModelElementInstance referenceSourceParent);
+  SOURCE getReferenceSource(ModelElementInstance referenceSourceParent);
 
-  Target getReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement);
+  TARGET getReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement);
 
-  void setReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement, Target referenceTargetElement);
+  void setReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement, TARGET referenceTargetElement);
 
   void clearReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement);
 

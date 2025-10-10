@@ -17,8 +17,8 @@
 package org.operaton.bpm.example.invoice;
 
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -49,6 +49,7 @@ public final class InvoiceApplicationHelper {
   private static final String VAR_INVOICE_CATEGORY = "invoiceCategory";
   private static final String VAR_INVOICE_NUMBER = "invoiceNumber";
   private static final String VAR_INVOICE_DOCUMENT = "invoiceDocument";
+  public static final String MIME_TYPE_APPLICATION_PDF = "application/pdf";
 
   private InvoiceApplicationHelper() {
   }
@@ -61,8 +62,8 @@ public final class InvoiceApplicationHelper {
     processEngineConfiguration.setDbMetricsReporterActivate(true);
     processEngineConfiguration.getDbMetricsReporter().setReporterId("REPORTER");
 
-    startProcessInstances(processEngine, PROCDEFKEY_INVOICE, 1);
-    startProcessInstances(processEngine, PROCDEFKEY_INVOICE, null);
+    startInvoiceProcessInstances(processEngine, 1);
+    startInvoiceProcessInstances(processEngine, null);
 
     //disable reporting
     processEngineConfiguration.setDbMetricsReporterActivate(false);
@@ -75,7 +76,7 @@ public final class InvoiceApplicationHelper {
 
       RepositoryService repositoryService = processEngine.getRepositoryService();
 
-      if (!isProcessDeployed(repositoryService, PROCDEFKEY_INVOICE)) {
+      if (!isInvoiceProcessDeployed(repositoryService)) {
         repositoryService.createDeployment(applicationReference)
           .addInputStream("invoice.v1.bpmn", classLoader.getResourceAsStream("invoice.v1.bpmn"))
           .addInputStream("invoiceBusinessDecisions.dmn", classLoader.getResourceAsStream("invoiceBusinessDecisions.dmn"))
@@ -85,17 +86,17 @@ public final class InvoiceApplicationHelper {
     }
   }
 
-  protected static boolean isProcessDeployed(RepositoryService repositoryService, String key) {
-    return repositoryService.createProcessDefinitionQuery().processDefinitionKey(key).count() > 0;
+  private static boolean isInvoiceProcessDeployed(RepositoryService repositoryService) {
+    return repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCDEFKEY_INVOICE).count() > 0;
   }
 
-  protected static void startProcessInstances(ProcessEngine processEngine, String processDefinitionKey, Integer version) {
+  private static void startInvoiceProcessInstances(ProcessEngine processEngine, Integer version) {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
     ProcessDefinitionQuery processDefinitionQuery = processEngine
       .getRepositoryService()
       .createProcessDefinitionQuery()
-      .processDefinitionKey(processDefinitionKey);
+      .processDefinitionKey(PROCDEFKEY_INVOICE);
 
     if (version != null) {
       processDefinitionQuery.processDefinitionVersion(version);
@@ -122,7 +123,7 @@ public final class InvoiceApplicationHelper {
           .putValue(VAR_INVOICE_NUMBER, "GPFE-23232323")
           .putValue(VAR_INVOICE_DOCUMENT, fileValue(RESOURCE_INVOICE_PDF)
               .file(invoiceInputStream)
-              .mimeType("application/pdf")
+              .mimeType(MIME_TYPE_APPLICATION_PDF)
               .create()));
 
       IoUtil.closeSilently(invoiceInputStream);
@@ -142,14 +143,14 @@ public final class InvoiceApplicationHelper {
             .putValue(VAR_INVOICE_NUMBER, "BOS-43934")
             .putValue(VAR_INVOICE_DOCUMENT, fileValue(RESOURCE_INVOICE_PDF)
                 .file(invoiceInputStream)
-                .mimeType("application/pdf")
+                .mimeType(MIME_TYPE_APPLICATION_PDF)
                 .create()));
 
         processEngineConfiguration.getDbMetricsReporter().reportNow();
         calendar.add(Calendar.DAY_OF_MONTH, 14);
         ClockUtil.setCurrentTime(calendar.getTime());
 
-        processEngine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.OPERATON_ADMIN));
+        processEngine.getIdentityService().setAuthentication("demo", List.of(Groups.OPERATON_ADMIN));
         Task task = processEngine.getTaskService().createTaskQuery().processInstanceId(pi.getId()).singleResult();
         processEngine.getTaskService().claim(task.getId(), "demo");
         processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", true));
@@ -176,7 +177,7 @@ public final class InvoiceApplicationHelper {
             .putValue(VAR_INVOICE_NUMBER, "PSACE-5342")
             .putValue(VAR_INVOICE_DOCUMENT, fileValue(RESOURCE_INVOICE_PDF)
                 .file(invoiceInputStream)
-                .mimeType("application/pdf")
+                .mimeType(MIME_TYPE_APPLICATION_PDF)
                 .create()));
 
         processEngineConfiguration.getDbMetricsReporter().reportNow();
@@ -194,13 +195,12 @@ public final class InvoiceApplicationHelper {
         processEngine.getIdentityService().clearAuthentication();
       }
     } else {
-      LOGGER.info("No new instances of {} version {} started, there are {} instances running",
+      LOGGER.info(() -> "No new instances of {} version {} started, there are {} instances running",
           processDefinition.getName(), processDefinition.getVersion(), numberOfRunningProcessInstances);
     }
   }
 
-  protected static void createUsers(ProcessEngine processEngine) {
-
+  private static void createUsers(ProcessEngine processEngine) {
     // create demo users
     new DemoDataGenerator().createUsers(processEngine);
   }

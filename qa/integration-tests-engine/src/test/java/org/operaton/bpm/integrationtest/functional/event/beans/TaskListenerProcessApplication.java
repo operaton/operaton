@@ -17,7 +17,6 @@
 package org.operaton.bpm.integrationtest.functional.event.beans;
 
 import org.operaton.bpm.application.ProcessApplication;
-import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
 /**

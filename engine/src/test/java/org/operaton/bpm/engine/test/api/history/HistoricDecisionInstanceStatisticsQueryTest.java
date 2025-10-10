@@ -156,10 +156,10 @@ class HistoricDecisionInstanceStatisticsQueryTest {
     DecisionRequirementsDefinition decisionRequirementsDefinition = repositoryService.createDecisionRequirementsDefinitionQuery().singleResult();
 
     // when
-    assertThatThrownBy(() -> historyService
-                      .createHistoricDecisionInstanceStatisticsQuery(
-                              decisionRequirementsDefinition.getId())
-                      .decisionInstanceId(null))
+    var historicDecisionInstanceStatisticsQuery = historyService.createHistoricDecisionInstanceStatisticsQuery(
+      decisionRequirementsDefinition.getId());
+
+    assertThatThrownBy(() -> historicDecisionInstanceStatisticsQuery.decisionInstanceId(null))
             .isInstanceOf(NotValidException.class);
   }
 

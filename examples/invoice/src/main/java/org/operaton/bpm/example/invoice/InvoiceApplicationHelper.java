@@ -195,7 +195,7 @@ public final class InvoiceApplicationHelper {
         processEngine.getIdentityService().clearAuthentication();
       }
     } else {
-      LOGGER.info(() -> "No new instances of {} version {} started, there are {} instances running",
+      LOGGER.info("No new instances of {} version {} started, there are {} instances running",
           processDefinition.getName(), processDefinition.getVersion(), numberOfRunningProcessInstances);
     }
   }

@@ -20,8 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
@@ -32,6 +30,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Allows to take screenshots in case of a Selenium test error.
@@ -67,8 +67,7 @@ public class SeleniumScreenshotExtension implements AfterTestExecutionCallback, 
     String screenshotDirectory = System.getProperty(OUTPUT_DIR_PROPERTY_NAME);
 
     if (screenshotDirectory == null) {
-      log.info("No screenshot created, because no output directory is specified. "
-          + "Set the system property " + OUTPUT_DIR_PROPERTY_NAME + " to resolve this.");
+      log.info("No screenshot created, because no output directory is specified. " + "Set the system property {} to resolve this.", OUTPUT_DIR_PROPERTY_NAME);
       return;
     }
 

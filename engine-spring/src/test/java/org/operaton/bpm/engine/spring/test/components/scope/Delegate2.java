@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.spring.test.components.scope;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;

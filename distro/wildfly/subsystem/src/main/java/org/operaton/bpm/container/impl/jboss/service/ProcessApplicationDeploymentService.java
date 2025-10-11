@@ -25,9 +25,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import org.operaton.commons.utils.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.jboss.as.ee.component.ComponentView;
 import org.jboss.as.naming.ManagedReference;
@@ -36,6 +33,8 @@ import org.jboss.msc.service.Service;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -49,6 +48,7 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeploymentBuilder;
 import org.operaton.bpm.engine.repository.ResumePreviousBy;
+import org.operaton.commons.utils.StringUtil;
 
 /**
  * <p>Service responsible for performing a deployment to the process engine and managing
@@ -247,7 +247,7 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
   }
 
   protected void logDeploymentSummary(Collection<String> resourceNames, String deploymentName, String processApplicationName) {
-    Collection<String> names = (resourceNames == null) ? List.of() : resourceNames;
+    Collection<String> names = resourceNames == null ? List.of() : resourceNames;
 
     LOGGER.atInfo()
         .setMessage("Deployment '{}' of app '{}' with {} resources")

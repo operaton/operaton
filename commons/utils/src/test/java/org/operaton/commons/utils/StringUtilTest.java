@@ -16,20 +16,20 @@
  */
 package org.operaton.commons.utils;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.operaton.commons.utils.StringUtil.defaultString;
 import static org.operaton.commons.utils.StringUtil.getStackTrace;
 import static org.operaton.commons.utils.StringUtil.isExpression;
 import static org.operaton.commons.utils.StringUtil.join;
 import static org.operaton.commons.utils.StringUtil.split;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 /**
  * @author Sebastian Menski

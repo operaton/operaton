@@ -418,6 +418,13 @@
                   </ignoreVersion>
                 </rule>
                 <rule>
+                  <groupId>jakarta.persistence</groupId>
+                  <ignoreVersion>
+                    <type>regex</type>
+                    <version>.+-B\d+</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
                   <groupId>org.glassfish.extras</groupId>
                   <ignoreVersion>
                     <type>regex</type>
@@ -437,6 +444,106 @@
                   <ignoreVersion>
                     <type>range</type>
                     <version>[10.0,)</version>
+                  </ignoreVersion>
+                </rule>
+                <!-- Well known major upgrades that are handled via issues -->
+                <rule>
+                  <groupId>org.junit.jupiter</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[6,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>org.junit.platform</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[6,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>org.junit.vintage</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[6,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>org.liquibase</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[5,)</version>
+                  </ignoreVersion>
+                </rule>
+                <!-- JakartaEE 11 -->
+                <rule>
+                  <groupId>jakarta.annotation</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[3,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.el</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.enterprise</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[4.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.enterprise.concurrent</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[3.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.faces</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[4.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.interceptor</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[2.2,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.persistence</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[3.2,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.servlet</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[6.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.validation</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[3.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.ws.rs</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[4,)</version>
                   </ignoreVersion>
                 </rule>
               </rules>

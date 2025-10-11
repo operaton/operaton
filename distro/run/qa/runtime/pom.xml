@@ -80,6 +80,7 @@
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <scope>test</scope>
+      <version>1.3.5</version>
     </dependency>
     <!-- Webapps -->
     <dependency>

@@ -17,8 +17,6 @@
 package org.operaton.bpm.container.impl.jboss.service;
 
 import java.util.function.Supplier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.jboss.as.naming.ManagedReferenceFactory;
 import org.jboss.as.naming.deployment.ContextNames;
@@ -29,6 +27,8 @@ import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.impl.jboss.util.BindingUtil;

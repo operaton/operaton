@@ -17,8 +17,6 @@
 package org.operaton.bpm;
 
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jakarta.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,6 +26,8 @@ import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static jakarta.ws.rs.core.HttpHeaders.SET_COOKIE;
 

@@ -28,9 +28,9 @@ import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
 import org.operaton.bpm.client.util.PropertyUtil;
 
+import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
 import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_NAME;
 import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_REST;
-import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
 import static org.operaton.bpm.client.util.TestUtil.waitUntil;
 
 public class ClientRule implements BeforeEachCallback, AfterEachCallback {

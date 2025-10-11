@@ -21,8 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
@@ -31,6 +29,8 @@ import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.AbstractWebIntegrationTest;
 import org.operaton.bpm.engine.rest.hal.Hal;

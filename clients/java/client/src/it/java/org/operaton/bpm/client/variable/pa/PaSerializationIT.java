@@ -38,9 +38,9 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.qa.Bean;
 
+import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
 import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_NAME;
 import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_REST;
-import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
 import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
 import static org.assertj.core.api.Assertions.assertThat;
 

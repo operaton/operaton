@@ -19,9 +19,9 @@ package org.operaton.bpm.engine.spring.test.components.scope;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;

@@ -19,7 +19,9 @@ package org.operaton.bpm.example.invoice;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.List;
+
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -32,7 +34,6 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.slf4j.LoggerFactory;
 
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.fileValue;

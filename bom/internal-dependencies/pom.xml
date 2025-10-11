@@ -20,7 +20,7 @@
   </description>
 
   <properties>
-    <version.jetty>12.0.16</version.jetty>
+    <version.jetty>12.0.27</version.jetty>
   </properties>
 
   <dependencyManagement>

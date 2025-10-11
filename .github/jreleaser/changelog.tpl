@@ -31,7 +31,7 @@ Operaton is based on:
 ### Quarkus Extension
 
 <!-- /pom.xml -->
-The Operaton Quarkus extension is based on **Quarkus 3.28.2** (upgrade from 3.28.0).
+The Operaton Quarkus extension is based on **Quarkus 3.28.3** (upgrade from 3.28.0).
 
 ### Distributions
 

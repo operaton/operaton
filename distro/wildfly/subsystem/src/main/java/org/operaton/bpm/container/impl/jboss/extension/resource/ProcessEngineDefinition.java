@@ -16,32 +16,29 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension.resource;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.jboss.as.controller.AttributeDefinition;
-import org.jboss.as.controller.PersistentResourceDefinition;
-
+import java.util.stream.Stream;
+import org.jboss.as.controller.SimpleResourceDefinition;
+import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 import org.operaton.bpm.container.impl.jboss.extension.SubsystemAttributeDefinitons;
 import org.operaton.bpm.container.impl.jboss.extension.handler.ProcessEngineAdd;
 import org.operaton.bpm.container.impl.jboss.extension.handler.ProcessEngineRemove;
 
-public final class ProcessEngineDefinition extends PersistentResourceDefinition {
+public final class ProcessEngineDefinition extends SimpleResourceDefinition {
 
-  public static final ProcessEngineDefinition INSTANCE = new ProcessEngineDefinition();
+  static final ProcessEngineDefinition INSTANCE = new ProcessEngineDefinition();
 
   private ProcessEngineDefinition() {
     super(new Parameters(BpmPlatformExtension.PROCESS_ENGINES_PATH,
-        BpmPlatformExtension.getResourceDescriptionResolver(ModelConstants.PROCESS_ENGINE))
-        .setAddHandler(ProcessEngineAdd.INSTANCE)
-        .setRemoveHandler(ProcessEngineRemove.INSTANCE));
+      BpmPlatformExtension.getResourceDescriptionResolver(ModelConstants.PROCESS_ENGINE)).setAddHandler(
+      ProcessEngineAdd.INSTANCE).setRemoveHandler(ProcessEngineRemove.INSTANCE));
   }
 
   @Override
-  public Collection<AttributeDefinition> getAttributes() {
-    return Arrays.asList(SubsystemAttributeDefinitons.PROCESS_ENGINE_ATTRIBUTES);
+  public void registerAttributes(ManagementResourceRegistration resourceRegistration) {
+    super.registerAttributes(resourceRegistration);
+    Stream.of(SubsystemAttributeDefinitons.PROCESS_ENGINE_ATTRIBUTES)
+      .forEach(attribute -> resourceRegistration.registerReadOnlyAttribute(attribute, null));
   }
-
 }

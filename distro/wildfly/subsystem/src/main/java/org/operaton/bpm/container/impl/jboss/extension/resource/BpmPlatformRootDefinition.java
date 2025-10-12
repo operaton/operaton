@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension.resource;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import org.jboss.as.controller.AttributeDefinition;
 import org.jboss.as.controller.SimpleResourceDefinition;
 import org.jboss.as.controller.operations.common.GenericSubsystemDescribeHandler;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;

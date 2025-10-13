@@ -8,6 +8,8 @@ With this release we focused on:
 
 - Completing Camunda 7.24 backport
 - Modernizing the code base
+- Java 25 Support
+- Upgrade to Wildfly 37
 
 ## Versions
 
@@ -89,10 +91,10 @@ Operaton is now tested against the following databases:
 
 ### Database Schema Upgrade Tests
 
-With Operaton 1.0.0-beta-5 we are running database schema upgrade tests nightly.
+With Operaton 1.0.0-rc-1 we are running database schema upgrade tests nightly.
 
-- Source DB Version: 7.22.0
-- Target DB Version: 7.23.0
+- Source DB Version: 7.23.0
+- Target DB Version: 7.24.0
 
 Tests are enabled for the following databases:
 
@@ -106,21 +108,11 @@ Tests are enabled for the following databases:
 | Microsoft SQL Server | mcr.microsoft.com/mssql/server | 2022-latest      | 12.10.0.jre8   |
 | DB2                  | n/a                            | n/a              | n/a            |
 
-## JUnit 5 migration
+## Java 25 Support
 
-We have continued to migrate tests to JUnit 5. The migration is not yet complete, but we are making
-steady progress.
+Operaton 1.0.0-rc-1 is the first release to support Java 25.
 
-Especially worth mentioning is that the tests of the most complex module, `engine`,
-has been completed.
-
-49/53 (+5) modules have been migrated to JUnit 5.
-
-## Customizable Model Singletons
-
-BPMN, CMMN, and DMN singletons are now loaded via factories discovered with `ServiceLoader`, allowing custom implementations.
-To override, create an implementation of desired factory and register it in corresponding file in `META-INF/services`.
-
+A requirement for this is the upgrade to GraalVM 25.
 
 {{changelogContributors}}
 

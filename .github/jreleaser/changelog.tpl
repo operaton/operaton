@@ -102,10 +102,10 @@ Tests are enabled for the following databases:
 |----------------------|--------------------------------|------------------|----------------|
 | H2                   | n/a                            | n/a              | 2.3.232        |
 | PostgreSQL           | postgres                       | 17               | 42.7.7         |
-| MySQL                | mysql                          | 9.2.0            | 9.3.0          |
+| MySQL                | mysql                          | 9.2.0            | 9.4.0          |
 | MariaDB              | mariadb                        | 11.8             | 3.0.7          |
 | Oracle               | gvenzl/oracle-xe               | 21-faststart     | 23.5.0.24.07   |
-| Microsoft SQL Server | mcr.microsoft.com/mssql/server | 2022-latest      | 12.10.0.jre8   |
+| Microsoft SQL Server | mcr.microsoft.com/mssql/server | 2022-latest      | 12.10.1.jre11   |
 | DB2                  | n/a                            | n/a              | n/a            |
 
 ## Java 25 Support

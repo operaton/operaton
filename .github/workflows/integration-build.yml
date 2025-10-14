@@ -71,10 +71,14 @@ on:
         required: true
         default: false
   pull_request:             # Runs on pull requests to main
-    branches: ["main"]
+    branches:
+      - main
+      - release/**
   push:
     branches:
       # when developing the workflow itself, create this branch and push to it
+      - main
+      - release/**
       - ci-dev/integration-build
 
 concurrency:

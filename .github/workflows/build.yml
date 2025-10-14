@@ -3,7 +3,9 @@ name: build
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
+      - release/**
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/build.yml'
@@ -15,7 +17,9 @@ on:
       - 'LICENSE'
       - 'NOTICE'
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
+      - release/**
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/build.yml'

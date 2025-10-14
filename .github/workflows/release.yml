@@ -6,11 +6,11 @@ on:
       release_branch:
         description: 'The branch to release from'
         required: true
-        default: 'main'
+        default: 'release/1.x'
       next_version:
         description: 'The next development version to set (without -SNAPSHOT suffix)'
         required: true
-        default: '1.0.0-rc-1'
+        default: '1.0.0'
       dry_run:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean

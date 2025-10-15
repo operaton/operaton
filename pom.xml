@@ -305,7 +305,6 @@
             </additionalJOptions>
             <doctitle>Operaton Javadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</doctitle>
             <windowtitle>Operaton Javadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</windowtitle>
-            <excludePackageNames>*.impl:*.impl.*</excludePackageNames>
           </configuration>
         </plugin>
         <plugin>

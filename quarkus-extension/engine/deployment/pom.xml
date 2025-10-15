@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.quarkus</groupId>
     <artifactId>operaton-bpm-quarkus-engine-parent</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.0.0-rc-1</version>
   </parent>
   <artifactId>operaton-bpm-quarkus-engine-deployment</artifactId>
   <name>Operaton - Quarkus Extension - Engine - Deployment</name>

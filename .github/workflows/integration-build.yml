@@ -127,9 +127,11 @@ jobs:
         env:
           PR_LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
           echo "PR Labels: $PR_LABELS"
           echo "PR Author: $PR_AUTHOR"
+          echo "GitHub Ref Name: $GITHUB_REF_NAME"
           
           # Define whitelisted authors (core team members who don't need full integration tests)
           WHITELISTED_AUTHORS="kthoms,javahippie"
@@ -158,6 +160,10 @@ jobs:
           # Check if PR has database: labels
           elif echo "$PR_LABELS" | grep -q '"database:'; then
             echo "🗄️ PR has database labels"
+            NEEDS_BUILD=true
+          # Check if branch is main or starts with release/
+          elif [[ "$GITHUB_REF_NAME" == release/* ]]; then
+            echo "🌳 Branch is main or release/*, requiring integration build"
             NEEDS_BUILD=true
           # Check if author is not whitelisted
           elif [[ "$AUTHOR_WHITELISTED" == "false" ]]; then
@@ -293,14 +299,17 @@ jobs:
             target/project-reports.zip
           key: ${{ github.run_id }}-build-artifacts
 
-  integration-tests:
+  integration-tests-engine:
     name: Integration Tests
     runs-on: ubuntu-latest
     needs: 
       - detect-recent-changes
       - determine-pr-config
+    # engine tests can run with any db, webapp tests only with h2
     if: |
-      always() && !cancelled() && (
+      always() 
+      && !cancelled() 
+      && (
         (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
         (github.event_name == 'workflow_dispatch' && github.event.inputs.integration_tests == 'true') ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
@@ -309,7 +318,6 @@ jobs:
       fail-fast: false
       matrix:
         java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "25"]') }}
-        testsuite: ${{ github.event_name == 'pull_request' && fromJson('["engine"]') || fromJson(github.event.inputs.testsuite || '["engine"]') }}
         distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
         database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
     steps:
@@ -328,26 +336,19 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-      - name: Install Chromedriver
-        id: install-chromedriver
-        if: ${{ matrix.testsuite == 'webapps' }}
-        shell: bash
-        run: |
-          .github/scripts/install-chrome-and-driver.sh
       - name: Maven Build
         id: maven-build
         shell: bash
         run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-test
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=engine --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-test
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-test
       - name: Execute Integration Tests
         id: maven-integration-tests
         shell: bash
         run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=engine --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
       - name: Execute Database Upgrade Tests
         id: maven-db-upgrade-tests
-        if: ${{ matrix.database == 'h2' }}
         shell: bash
         run: |
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-build
@@ -361,7 +362,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
+          name: surefire-reports-engine}-${{ matrix.distro }}-${{ matrix.database }}
           path: |
             ${{ github.workspace }}/**/target/surefire-reports/**
             ${{ github.workspace }}/**/target/failsafe-reports/**
@@ -370,6 +371,77 @@ jobs:
           retention-days: 30
           overwrite: true
 
+  integration-tests-webapps:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs:
+      - detect-recent-changes
+      - determine-pr-config
+    # engine tests can run with any db, webapp tests only with h2
+    if: |
+      always() 
+      && !cancelled() 
+      && (
+        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
+        (github.event_name == 'workflow_dispatch' && github.event.inputs.integration_tests == 'true') ||
+        (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
+      )
+    strategy:
+      fail-fast: false
+      matrix:
+        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "25"]') }}
+        distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
+        database: ${{ fromJson('["h2"]') }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+      - name: Install Chromedriver
+        id: install-chromedriver
+        shell: bash
+        run: |
+          .github/scripts/install-chrome-and-driver.sh
+      - name: Maven Build
+        id: maven-build
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=webapps --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-test
+          .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-test
+      - name: Execute Integration Tests
+        id: maven-integration-tests
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=webapps --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@5b7ee5a21e8674b695313d769f3cbdfd5d4d53a4 #v6.0.0
+        with:
+          report_paths: ${{ github.workspace }}/**/target/*-reports/*.xml
+          require_passed_tests: true
+      - name: Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-webapps-${{ matrix.distro }}-${{ matrix.database }}
+          path: |
+            ${{ github.workspace }}/**/target/surefire-reports/**
+            ${{ github.workspace }}/**/target/failsafe-reports/**
+            ${{ github.workspace }}/qa/**/target/**/logs/**
+            ${{ github.workspace }}/**/target/cargo.log
+          retention-days: 30
+          overwrite: true
 
   release:
     name: Release

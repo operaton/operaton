@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.qa.rolling.update.eventSubProcess;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,11 +30,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithEventSubProcessScenario")
-public class CompleteProcessWithEventSubProcessTest extends AbstractRollingUpdateTestCase {
+class CompleteProcessWithEventSubProcessTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.1")
-  public void testCompleteProcessWithEventSubProcess() {
+  void testCompleteProcessWithEventSubProcess() {
     //given process within event sub process
     ProcessInstance oldInstance = rule.processInstance();
     assertThat(oldInstance).isNotNull();
@@ -55,9 +54,9 @@ public class CompleteProcessWithEventSubProcessTest extends AbstractRollingUpdat
     rule.assertScenarioEnded();
   }
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.error.1")
-  public void testCompleteProcessWithInEventSubProcess() {
+  void testCompleteProcessWithInEventSubProcess() {
     //given process within event sub process
     ProcessInstance oldInstance = rule.processInstance();
     Task task = rule.getTaskService()

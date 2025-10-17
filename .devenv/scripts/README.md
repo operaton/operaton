@@ -95,8 +95,8 @@ Results are available under `target/reports/clirr/` and in the `target/reports/c
 
 ## `rest-api-doc.sh`
 
-This script generates REST API documentation from the OpenAPI specification using [redocly](https://redocly.com/).
-The output is an HTML file located at `target/rest-api/<VERSION>/index.html`.
+This script prepares REST API documentation from the OpenAPI specification using [redocly](https://redocly.com/).
+The output is an HTML file and the OpenAPI specification located at `target/rest-api/<VERSION>`.
 
 The version is extracted from the OpenAPI specification file.
 

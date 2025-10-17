@@ -51,7 +51,7 @@ jobs:
           ./mvnw versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
-          .devenv/scripts/build/rest-api-doc.sh --version $RELEASE_VERSION
+          .devenv/scripts/build/rest-api-doc.sh
       - name: Cache build artifacts
         uses: actions/cache/save@v4
         with:
@@ -63,7 +63,7 @@ jobs:
 
   deploy:
     # allowed to deploy only from 'main' to github-pages due to environment protection rules
-    if: github.ref == 'refs/heads/main'
+    #if: github.ref == 'refs/heads/main'
     needs: build
     environment:
       name: github-pages

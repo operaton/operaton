@@ -22,7 +22,8 @@ if [[ ! -f "$API_SPEC_PATH" ]]; then
   ./mvnw -DskipTests -am -pl engine-rest/engine-rest-openapi verify
 fi
 
-VERSION=$(jq -r '.info.version | sub("-SNAPSHOT"; "")' "$API_SPEC_PATH")
+# Extract version from the OpenAPI spec, removing "-SNAPSHOT" and patch version
+VERSION=$(jq -r '.info.version | sub("-SNAPSHOT"; "")' "$API_SPEC_PATH" | sed 's/\.[0-9]*$//')
 INDEX_PAGE=engine-rest/engine-rest-openapi/src/main/redocly/index.html
 TARGET_DIR="target/rest-api/${VERSION}"
 

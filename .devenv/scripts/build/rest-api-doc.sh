@@ -30,6 +30,7 @@ if ! command -v npx >/dev/null 2>&1; then
 fi
 
 VERSION=""
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --version)
@@ -54,4 +55,13 @@ if [[ -z "$VERSION" ]]; then
   exit 1
 fi
 
-npx @redocly/cli build-docs engine-rest/engine-rest-openapi/target/generated-sources/openapi-json/openapi.json --output "target/rest-api/${VERSION}/operaton-rest-api.html"
+API_SPEC_PATH="engine-rest/engine-rest-openapi/target/generated-sources/openapi-json/openapi.json"
+if [[ ! -f "$API_SPEC_PATH" ]]; then
+  echo "Info: API spec file not found at $API_SPEC_PATH. Generating it using Maven..."
+  ./mvnw -DskipTests -am -pl engine-rest/engine-rest-openapi verify
+fi
+
+TARGET_FILE="target/rest-api/${VERSION}/index.html"
+
+npx @redocly/cli build-docs $API_SPEC_PATH --output $TARGET_FILE
+echo "REST API documentation generated at: $TARGET_FILE"

@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+# Copyright 2025 the Operaton contributors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 if [ ! -f "mvnw" ]; then
   echo "⚠️ Maven Wrapper not found. You must execute this script from the project root directory. Exiting..."
   exit 1
@@ -32,6 +46,7 @@ else
 fi
 
 NEW_VERSION_WITHOUT_SNAPSHOT=$(echo $NEW_VERSION | sed 's/-SNAPSHOT//')
+NEW_VERSION_WITHOUT_PATCH=$(echo $NEW_VERSION_WITHOUT_SNAPSHOT | sed 's/\.[0-9]*$//')
 CURRENT_VERSION_WITHOUT_SNAPSHOT=$(echo $CURRENT_VERSION | sed 's/-SNAPSHOT//')
 NEXT_VERSION_WITHOUT_SNAPSHOT=$(echo $NEXT_VERSION | sed 's/-SNAPSHOT//')
 
@@ -72,6 +87,10 @@ POM_FILES=(\
 for POM_FILE in "${POM_FILES[@]}"; do
   sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" $POM_FILE
 done
+
+echo "🔄 Updating version in README.md"
+sed -i '' -E "s|rest-api/[^/]+|rest-api/$NEW_VERSION_WITHOUT_PATCH|" README.md
+sed -i '' -E "s|javadoc/[^/]+|javadoc/$NEW_VERSION_WITHOUT_PATCH|" README.md
 
 echo "🔄 Updating version in license-book.txt"
 sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" ./distro/license-book/src/main/resources/license-book.txt

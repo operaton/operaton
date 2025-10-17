@@ -16,13 +16,6 @@
 
 # Script to build REST API documentation using redocly
 
-show_help() {
-  echo "Usage: $0 --version <VERSION>"
-  echo "Options:"
-  echo "  --version <VERSION>   (required) Project version for output filename"
-  echo "  --help                Show this help message"
-}
-
 # Check if npx is installed
 if ! command -v npx >/dev/null 2>&1; then
   echo "Error: npx is not installed. Please install Node.js and npm (which includes npx)."
@@ -31,36 +24,13 @@ fi
 
 VERSION=""
 
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --version)
-      VERSION="$2"
-      shift 2
-      ;;
-    --help)
-      show_help
-      exit 0
-      ;;
-    *)
-      echo "Unknown option: $1"
-      show_help
-      exit 1
-      ;;
-  esac
-done
-
-if [[ -z "$VERSION" ]]; then
-  echo "Error: --version is required."
-  show_help
-  exit 1
-fi
-
 API_SPEC_PATH="engine-rest/engine-rest-openapi/target/generated-sources/openapi-json/openapi.json"
 if [[ ! -f "$API_SPEC_PATH" ]]; then
   echo "Info: API spec file not found at $API_SPEC_PATH. Generating it using Maven..."
   ./mvnw -DskipTests -am -pl engine-rest/engine-rest-openapi verify
 fi
 
+VERSION=$(jq -r '.info.version | sub("-SNAPSHOT"; "")' "$API_SPEC_PATH")
 TARGET_FILE="target/rest-api/${VERSION}/index.html"
 
 npx @redocly/cli build-docs $API_SPEC_PATH --output $TARGET_FILE

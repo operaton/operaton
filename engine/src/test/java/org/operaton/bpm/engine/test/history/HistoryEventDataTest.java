@@ -16,44 +16,40 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.Objects;
 
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Edoardo Patti
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoryEventDataTest {
+class HistoryEventDataTest {
 
   private static final TestEventHandler HANDLER = new TestEventHandler();
 
-  @Rule
-  public HistoryEventVerifier verifier = new HistoryEventVerifier(HANDLER);
-
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-    c -> c.setHistoryEventHandler(HANDLER));
+  @RegisterExtension
+  HistoryEventVerifier verifier = new HistoryEventVerifier(HANDLER);
 
   private RuntimeService runtimeService;
 
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().configurator(c -> c.setHistoryEventHandler(HANDLER))
+    .build();
 
-  @Before
-  public void initServices() {
+  @BeforeEach
+  void initServices() {
     runtimeService = engineRule.getRuntimeService();
 
     verifier.historyEventIs("!= null", Objects::nonNull);
@@ -65,7 +61,7 @@ public class HistoryEventDataTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/threeTasksProcess.bpmn20.xml")
-  public void verify() {
-    runtimeService.startProcessInstanceByKey("threeTasksProcess");
+  void verify() {
+    assertNotNull(runtimeService.startProcessInstanceByKey("threeTasksProcess"));
   }
 }

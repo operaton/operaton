@@ -128,11 +128,12 @@ Operaton uses and includes third-party dependencies published under various lice
 
 Please see our [security policy](SECURITY.md) for how to report security vulnerabilities.
 
-## Project reports
+## Project documentation & reports
 
+- [REST API](https://operaton.github.io/operaton/rest-api/1.0/index.html)
+- [Javadoc API](https://operaton.github.io/javadoc/operaton/1.0/index.html)
 - [Dependency Update Candidates](https://operaton.github.io/operaton/reports/dependency-updates-aggregate-report.html)
 - [Maven Plugin Update Candidates](https://operaton.github.io/operaton/reports/plugin-updates-aggregate-report.html)
-- [Javadoc API](https://operaton.github.io/operaton/javadoc/operaton/1.0/index.html)
 
 ## Contributors
 

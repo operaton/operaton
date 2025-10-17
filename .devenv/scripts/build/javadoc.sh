@@ -10,7 +10,7 @@ echo $CMD
 
 eval $CMD
 
-# The aggregated javadocs are in target/javadoc/operaton/<version>/apidocs, but we want them in target/javadoc/operaton/<version>
+# The aggregated javadocs are in target/javadoc/<version>/apidocs, but we want them in target/javadoc/<version>
 APIDOC_BASEDIR=$(find target -type d -name apidocs | sed -e 's|/apidocs||')
 mv $APIDOC_BASEDIR/apidocs/* $APIDOC_BASEDIR
 rm -rf $APIDOC_BASEDIR/apidocs

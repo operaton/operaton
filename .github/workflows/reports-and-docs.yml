@@ -63,7 +63,7 @@ jobs:
 
   deploy:
     # allowed to deploy only from 'main' to github-pages due to environment protection rules
-    #if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     needs: build
     environment:
       name: github-pages

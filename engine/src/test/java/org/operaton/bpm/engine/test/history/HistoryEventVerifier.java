@@ -16,47 +16,41 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 import org.assertj.core.api.Condition;
-import org.jetbrains.annotations.NotNull;
-import org.junit.rules.Verifier;
-
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Edoardo Patti
  */
-public class HistoryEventVerifier extends Verifier {
+public class HistoryEventVerifier implements AfterEachCallback {
 
   private final TestEventHandler eventHandler;
-  private final List<Condition<HistoryEvent>> hasConditions = new ArrayList<>(50);
-  private final List<Condition<HistoryEvent>> isConditions = new ArrayList<>(50);
 
+  private final List<Condition<HistoryEvent>> hasConditions = new ArrayList<>();
+  private final List<Condition<HistoryEvent>> isConditions  = new ArrayList<>();
 
   public HistoryEventVerifier(TestEventHandler eventHandler) {
     this.eventHandler = eventHandler;
   }
 
   public void historyEventHas(String message, Predicate<HistoryEvent> predicate) {
-    Condition<HistoryEvent> hasCondition = getCondition(message, predicate);
-    this.hasConditions.add(hasCondition);
+    hasConditions.add(getCondition(message, predicate));
   }
 
   public void historyEventIs(String message, Predicate<HistoryEvent> predicate) {
-    Condition<HistoryEvent> isCondition = getCondition(message, predicate);
-    this.isConditions.add(isCondition);
+    isConditions.add(getCondition(message, predicate));
   }
 
-  @NotNull
-  private static Condition<HistoryEvent> getCondition(String message, Predicate<HistoryEvent> predicate) {
-
-    return new Condition<>(message) {
-
+  private Condition<HistoryEvent> getCondition(String message, Predicate<HistoryEvent> predicate) {
+    return new Condition<HistoryEvent>(message) {
       @Override
       public boolean matches(HistoryEvent value) {
         return predicate.test(value);
@@ -65,7 +59,8 @@ public class HistoryEventVerifier extends Verifier {
   }
 
   @Override
-  protected void verify() throws Throwable {
+  public void afterEach(ExtensionContext context) throws Exception {
+    // Consume all events and verify each one
     while (this.eventHandler.peek() != null) {
       final HistoryEvent evt = this.eventHandler.poll();
       hasConditions.forEach(condition -> assertThat(evt).has(condition));

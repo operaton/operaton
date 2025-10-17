@@ -18,9 +18,7 @@ package org.operaton.bpm.engine.cdi.test.api;
 
 import java.util.Collections;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
@@ -40,13 +38,12 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
-public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
+class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   /* General test asserting that the business process bean is functional */
   @Test
   @Deployment
-  public void test() {
+  void test() {
 
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
@@ -93,7 +90,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testProcessWithoutWatestate() {
+  void testProcessWithoutWatestate() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // start the process
@@ -105,7 +102,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testResolveProcessInstanceBean() {
+  void testResolveProcessInstanceBean() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     assertThat(getBeanInstance(ProcessInstance.class)).isNull();
@@ -126,7 +123,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testResolveTaskBean() {
+  void testResolveTaskBean() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     assertThat(getBeanInstance(Task.class)).isNull();
@@ -148,7 +145,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
   @SuppressWarnings("deprecation")
-  public void testGetVariableCache() {
+  void testGetVariableCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
@@ -177,7 +174,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetCachedVariableMap() {
+  void testGetCachedVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
@@ -207,7 +204,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
   @SuppressWarnings("deprecation")
-  public void testGetAndClearVariableCache() {
+  void testGetAndClearVariableCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
@@ -236,7 +233,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetAndClearCachedVariableMap() {
+  void testGetAndClearCachedVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
@@ -266,7 +263,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
   @SuppressWarnings("deprecation")
-  public void testGetVariableLocalCache() {
+  void testGetVariableLocalCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
@@ -298,7 +295,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetCachedLocalVariableMap() {
+  void testGetCachedLocalVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
@@ -330,7 +327,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetVariableLocal()
+  void testGetVariableLocal()
   {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
     ProcessInstance processInstance = businessProcess.startProcessByKey("businessProcessBeanTest");
@@ -353,7 +350,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
   @SuppressWarnings("deprecation")
-  public void testGetAndClearVariableLocalCache() {
+  void testGetAndClearVariableLocalCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
@@ -385,7 +382,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetAndClearCachedLocalVariableMap() {
+  void testGetAndClearCachedLocalVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially, the variable cache is empty
@@ -417,7 +414,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testFlushVariableCache() {
+  void testFlushVariableCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // cannot flush variable cache in absence of an association:
@@ -463,7 +460,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testSaveTask() {
+  void testSaveTask() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // cannot save task in absence of an association:
@@ -500,7 +497,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testStopTask() {
+  void testStopTask() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // cannot stop task in absence of an association:

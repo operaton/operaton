@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.util;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
@@ -34,45 +30,34 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
+ * <p>
+ * With the JUnit 5 extension we temporarily replace the default engine inside the test to mimic the old rule,
+ * ensuring CDI injections still see the engine provided by the suite-level extension afterwards.
  */
-@RunWith(Arquillian.class)
-public class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
-
-  protected ProcessEngine defaultProcessEngine;
-  protected ProcessEngine processEngine;
-
-  @Before
-  public void init() {
-    processEngine = TestHelper.getProcessEngine("activiti.cfg.xml");
-    defaultProcessEngine = BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
-
-    if (defaultProcessEngine != null) {
-      RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(defaultProcessEngine);
-    }
-
-    RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(processEngine);
-  }
-
-  @After
-  @Override
-  public void tearDownCdiProcessEngineTestCase() {
-    RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(processEngine);
-
-    if (defaultProcessEngine != null) {
-      RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(defaultProcessEngine);
-    }
-  }
+class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
 
   @Test
-  public void testProcessEngineInject() {
-    //given only the default engine exist
+  void testProcessEngineInject() {
+    ProcessEngine previousDefault = BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
+    ProcessEngine defaultEngine = TestHelper.getProcessEngine("activiti.cfg.xml");
 
-    //when TestClass is created
-    InjectedProcessEngineBean testClass = ProgrammaticBeanLookup.lookup(InjectedProcessEngineBean.class);
-    assertThat(testClass).isNotNull();
+    try {
+      if (previousDefault != null) {
+        RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(previousDefault);
+      }
 
-    //then the default engine is injected
-    assertThat(testClass.processEngine.getName()).isEqualTo("default");
-    assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()).contains("default-process-engine");
+      RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(defaultEngine);
+
+      InjectedProcessEngineBean testClass = ProgrammaticBeanLookup.lookup(InjectedProcessEngineBean.class);
+      assertThat(testClass).isNotNull();
+
+      assertThat(testClass.processEngine.getName()).isEqualTo("default");
+      assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()).contains("default-process-engine");
+    } finally {
+      RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(defaultEngine);
+      if (previousDefault != null) {
+        RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(previousDefault);
+      }
+    }
   }
 }

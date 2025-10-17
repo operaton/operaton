@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -31,12 +29,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
-public class BusinessProcessContextTest extends CdiProcessEngineTestCase {
+class BusinessProcessContextTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testResolution() {
+  void testResolution() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     businessProcess.startProcessByKey("testResolution").getId();
@@ -46,14 +43,14 @@ public class BusinessProcessContextTest extends CdiProcessEngineTestCase {
 
   @Test
   // no @Deployment for this test
-  public void testResolutionBeforeProcessStart() {
+  void testResolutionBeforeProcessStart() {
     // assert that @BusinessProcessScoped beans can be resolved in the absence of an underlying process instance:
     assertThat(getBeanInstance(CreditCard.class)).isNotNull();
   }
 
   @Test
   @Deployment
-  public void testChangeProcessScopedBeanProperty() {
+  void testChangeProcessScopedBeanProperty() {
 
     // resolve the creditcard bean (@BusinessProcessScoped) and set a value:
     getBeanInstance(CreditCard.class).setCreditcardNumber("123");

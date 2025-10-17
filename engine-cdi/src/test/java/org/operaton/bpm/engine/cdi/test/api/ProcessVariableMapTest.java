@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.api;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -34,14 +32,13 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * @author Michael Scholz
  */
-@RunWith(Arquillian.class)
-public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
+class ProcessVariableMapTest extends CdiProcessEngineTestCase {
 
   private static final String VARNAME_1 = "aVariable";
   private static final String VARNAME_2 = "anotherVariable";
 
   @Test
-  public void testProcessVariableMap() {
+  void testProcessVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     VariableMap variables = (VariableMap) getBeanInstance("processVariableMap");
@@ -54,7 +51,7 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     businessProcess.setVariable(VARNAME_1, Variables.stringValue(aValue));
 
     // Legacy API
-    assertThat(variables).containsEntry(VARNAME_1, aValue);
+    assertThat(variables.get(VARNAME_1)).isEqualTo(aValue);
 
     // Typed variable API
     TypedValue aTypedValue = variables.getValueTyped(VARNAME_1);
@@ -77,7 +74,7 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     variables.put(VARNAME_2, Variables.stringValue(anotherValue));
 
     // Legacy API
-    assertThat((String)businessProcess.getVariable(VARNAME_2)).isEqualTo(anotherValue);
+    assertThat((String) businessProcess.getVariable(VARNAME_2)).isEqualTo(anotherValue);
 
     // Typed variable API
     TypedValue anotherTypedValue = businessProcess.getVariableTyped(VARNAME_2);
@@ -87,7 +84,7 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testProcessVariableMapLocal() {
+  void testProcessVariableMapLocal() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
@@ -101,7 +98,7 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     businessProcess.setVariableLocal(VARNAME_1, Variables.stringValue(aValue));
 
     // Legacy API
-    assertThat(variables).containsEntry(VARNAME_1, aValue);
+    assertThat(variables.get(VARNAME_1)).isEqualTo(aValue);
 
     // Typed variable API
     TypedValue aTypedValue = variables.getValueTyped(VARNAME_1);
@@ -124,7 +121,7 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     variables.put(VARNAME_2, Variables.stringValue(anotherValue));
 
     // Legacy API
-    assertThat((String)businessProcess.getVariableLocal(VARNAME_2)).isEqualTo(anotherValue);
+    assertThat((String) businessProcess.getVariableLocal(VARNAME_2)).isEqualTo(anotherValue);
 
     // Typed variable API
     TypedValue anotherTypedValue = businessProcess.getVariableLocalTyped(VARNAME_2);

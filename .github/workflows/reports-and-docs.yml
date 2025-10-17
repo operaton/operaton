@@ -51,12 +51,14 @@ jobs:
           ./mvnw versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
+          .devenv/scripts/build/rest-api-doc.sh --version $RELEASE_VERSION
       - name: Cache build artifacts
         uses: actions/cache/save@v4
         with:
           path: |
             **/target/reports/**
             **/target/javadoc/**
+            **/target/rest-api/**
           key: ${{ github.run_id }}-build-artifacts
 
   deploy:
@@ -74,6 +76,7 @@ jobs:
           path: |
             **/target/reports/**
             **/target/javadoc/**
+            **/target/rest-api/**
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
       - name: Setup Pages

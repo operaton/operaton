@@ -10,7 +10,14 @@ echo $CMD
 
 eval $CMD
 
-# The aggregated javadocs are in target/javadoc/<version>/apidocs, but we want them in target/javadoc/<version>
-APIDOC_BASEDIR=$(find target -type d -name apidocs | sed -e 's|/apidocs||')
+# The aggregated javadocs are in target/javadoc/apidocs, but we want them in target/javadoc/
+APIDOC_BASEDIR="target/javadoc"
+TARGET_ZIPZILE="target/javadoc.zip"
+
 mv $APIDOC_BASEDIR/apidocs/* $APIDOC_BASEDIR
 rm -rf $APIDOC_BASEDIR/apidocs
+
+echo "Javadocs generated at: $APIDOC_BASEDIR, zipping to $TARGET_ZIPZILE"
+zip -qr $TARGET_ZIPZILE $APIDOC_BASEDIR
+echo "Javadocs zipped to: $TARGET_ZIPZILE"
+echo "✅ Done!"

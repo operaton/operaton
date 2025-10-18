@@ -22,12 +22,14 @@ if [[ ! -f "$API_SPEC_PATH" ]]; then
   ./mvnw -DskipTests -am -pl engine-rest/engine-rest-openapi verify
 fi
 
-# Extract version from the OpenAPI spec, removing "-SNAPSHOT" and patch version
-VERSION=$(jq -r '.info.version | sub("-SNAPSHOT"; "")' "$API_SPEC_PATH" | sed 's/\.[0-9]*$//')
 INDEX_PAGE=engine-rest/engine-rest-openapi/src/main/redocly/index.html
-TARGET_DIR="target/rest-api/${VERSION}"
+TARGET_DIR="target/rest-api"
+TARGET_ZIPFILE="target/rest-api.zip"
 
 mkdir -p "$TARGET_DIR"
 cp $INDEX_PAGE $TARGET_DIR
 cp $API_SPEC_PATH $TARGET_DIR/operaton-rest-api.json
 echo "REST API documentation copied to: $TARGET_DIR"
+zip -qr $TARGET_ZIPFILE $TARGET_DIR
+echo "REST API documentation zipped to: $TARGET_ZIPFILE"
+echo "✅ Done!"

@@ -130,8 +130,8 @@ Please see our [security policy](SECURITY.md) for how to report security vulnera
 
 ## Project documentation & reports
 
-- [REST API](https://operaton.github.io/operaton/rest-api/1.1/index.html)
-- [Javadoc API](https://operaton.github.io/javadoc/1.1/index.html)
+- [REST API](https://operaton.github.io/operaton/rest-api/index.html)
+- [Javadoc API](https://operaton.github.io/javadoc/index.html)
 - [Dependency Update Candidates](https://operaton.github.io/operaton/reports/dependency-updates-aggregate-report.html)
 - [Maven Plugin Update Candidates](https://operaton.github.io/operaton/reports/plugin-updates-aggregate-report.html)
 

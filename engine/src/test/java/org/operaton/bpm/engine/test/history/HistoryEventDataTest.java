@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.util.Objects;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
 
 /**
  * @author Edoardo Patti
@@ -62,6 +63,6 @@ class HistoryEventDataTest {
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/threeTasksProcess.bpmn20.xml")
   void verify() {
-    assertNotNull(runtimeService.startProcessInstanceByKey("threeTasksProcess"));
+    assertThat(runtimeService.startProcessInstanceByKey("threeTasksProcess")).isNotNull();
   }
 }

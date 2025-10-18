@@ -112,7 +112,7 @@ none
 
 **Requirements:**
 
-Node.js, `npm`, `npx` and `jq` must be installed.  
+`jq` must be installed.  
 
 # Directory `maintenance`
 

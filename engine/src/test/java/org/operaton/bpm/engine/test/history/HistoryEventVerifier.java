@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -25,7 +23,10 @@ import java.util.function.Predicate;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Edoardo Patti
@@ -50,7 +51,7 @@ public class HistoryEventVerifier implements AfterEachCallback {
   }
 
   private Condition<HistoryEvent> getCondition(String message, Predicate<HistoryEvent> predicate) {
-    return new Condition<HistoryEvent>(message) {
+    return new Condition<>(message) {
       @Override
       public boolean matches(HistoryEvent value) {
         return predicate.test(value);

@@ -48,6 +48,7 @@ done
 # Create clirr.md with links to remaining non-empty files
 CLIRR_DIR="target/reports/clirr"
 MD_FILE="$CLIRR_DIR/clirr.md"
+TARGET_ZIPFILE="target/clirr-reports.zip"
 
 echo "## all" > "$MD_FILE"
 find "$CLIRR_DIR/all" -type f -name '*.txt' ! -empty | sort | while read -r file; do
@@ -60,3 +61,7 @@ find "$CLIRR_DIR/restrictive" -type f -name '*.txt' ! -empty | sort | while read
   relpath="${file#$CLIRR_DIR/}"
   echo "- [${relpath#restrictive/}]($relpath)" >> "$MD_FILE"
 done
+
+zip -qr "$TARGET_ZIPFILE" "$CLIRR_DIR"
+echo "Clirr reports zipped to: $TARGET_ZIPFILE"
+echo "✅ Done!"

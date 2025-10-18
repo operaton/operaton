@@ -85,6 +85,12 @@ jobs:
           .github/scripts/prepare-reports.sh
           ./mvnw -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
+      - name: Documentation
+        if: always()
+        run: |
+          .devenv/scripts/build/javadoc.sh
+          .devenv/scripts/build/check-api-compatibility.sh
+          .devenv/scripts/build/rest-api-doc.sh
       - name: Cache build artifacts
         uses: actions/cache@v4
         with:
@@ -95,7 +101,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
-            target/project-reports.zip
+            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
 
   release:
@@ -121,7 +127,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
-            target/project-reports.zip
+            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
 

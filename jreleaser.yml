@@ -204,6 +204,9 @@ files:
     - path: 'distro/sql-script/target/operaton-sql-scripts-{{OPERATON_DATABASE_VERSION}}.tar.gz'
     - path: 'distro/webjar/target/operaton-webapp-webjar-{{projectVersion}}.jar'
     - path: 'target/project-reports.zip'
+    - path: 'target/javadoc.zip'
+    - path: 'target/rest-api.zip'
+    - path: 'target/clirr-reports.zip'
 
 distributions:
   operaton:

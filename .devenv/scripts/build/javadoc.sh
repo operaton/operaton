@@ -10,14 +10,21 @@ echo $CMD
 
 eval $CMD
 
-# The aggregated javadocs are in target/javadoc/apidocs, but we want them in target/javadoc/
-APIDOC_BASEDIR="target/javadoc"
-TARGET_ZIPZILE="target/javadoc.zip"
+TARGET_DIR="target/javadoc"
+TEMP_DIR="$(pwd)/target/apidocs"
+TARGET_ZIPFILE="$(pwd)/target/javadoc.zip"
+APIDOC_BASEDIR=$(find target -type d -name apidocs)
 
-mv $APIDOC_BASEDIR/apidocs/* $APIDOC_BASEDIR
-rm -rf $APIDOC_BASEDIR/apidocs
+rm -rf $TEMP_DIR
+mv $APIDOC_BASEDIR target
+rm -rf $TARGET_DIR
+mv $TEMP_DIR $TARGET_DIR
 
-echo "Javadocs generated at: $APIDOC_BASEDIR, zipping to $TARGET_ZIPZILE"
-zip -qr $TARGET_ZIPZILE $APIDOC_BASEDIR
-echo "Javadocs zipped to: $TARGET_ZIPZILE"
+echo "Javadocs generated at: $TARGET_DIR, zipping to $TARGET_ZIPFILE"
+pushd $(pwd)
+cd $TARGET_DIR
+echo $(pwd)
+zip -qr $TARGET_ZIPFILE .
+echo "Javadocs zipped to: $TARGET_ZIPFILE"
+popd
 echo "✅ Done!"

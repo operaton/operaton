@@ -24,12 +24,16 @@ fi
 
 INDEX_PAGE=engine-rest/engine-rest-openapi/src/main/redocly/index.html
 TARGET_DIR="target/rest-api"
-TARGET_ZIPFILE="target/rest-api.zip"
+TARGET_ZIPFILE="$(pwd)/target/rest-api.zip"
 
 mkdir -p "$TARGET_DIR"
 cp $INDEX_PAGE $TARGET_DIR
 cp $API_SPEC_PATH $TARGET_DIR/operaton-rest-api.json
 echo "REST API documentation copied to: $TARGET_DIR"
-zip -qr $TARGET_ZIPFILE $TARGET_DIR
+
+pushd $(pwd)
+cd $TARGET_DIR
+zip -qr $TARGET_ZIPFILE .
 echo "REST API documentation zipped to: $TARGET_ZIPFILE"
+popd
 echo "✅ Done!"

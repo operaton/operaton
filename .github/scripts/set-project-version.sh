@@ -46,7 +46,6 @@ else
 fi
 
 NEW_VERSION_WITHOUT_SNAPSHOT=$(echo $NEW_VERSION | sed 's/-SNAPSHOT//')
-NEW_VERSION_WITHOUT_PATCH=$(echo $NEW_VERSION_WITHOUT_SNAPSHOT | sed 's/\.[0-9]*$//')
 CURRENT_VERSION_WITHOUT_SNAPSHOT=$(echo $CURRENT_VERSION | sed 's/-SNAPSHOT//')
 NEXT_VERSION_WITHOUT_SNAPSHOT=$(echo $NEXT_VERSION | sed 's/-SNAPSHOT//')
 
@@ -87,10 +86,6 @@ POM_FILES=(\
 for POM_FILE in "${POM_FILES[@]}"; do
   sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" $POM_FILE
 done
-
-echo "🔄 Updating version in README.md"
-sed -i '' -E "s|rest-api/[^/]+|rest-api/$NEW_VERSION_WITHOUT_PATCH|" README.md
-sed -i '' -E "s|javadoc/[^/]+|javadoc/$NEW_VERSION_WITHOUT_PATCH|" README.md
 
 echo "🔄 Updating version in license-book.txt"
 sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" ./distro/license-book/src/main/resources/license-book.txt

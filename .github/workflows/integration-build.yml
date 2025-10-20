@@ -290,7 +290,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
-            target/project-reports.zip
+            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
 
   integration-tests:
@@ -370,6 +370,35 @@ jobs:
           retention-days: 30
           overwrite: true
 
+  documentation:
+    name: Documentation
+    runs-on: ubuntu-latest
+    needs:
+      - detect-recent-changes
+      - determine-pr-config
+      - build
+    if: |
+      always() && !cancelled() && (
+        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
+        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false')
+      )
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Documentation
+        if: always()
+        run: |
+          .devenv/scripts/build/javadoc.sh
+          .devenv/scripts/build/check-api-compatibility.sh
+          .devenv/scripts/build/rest-api-doc.sh
+      - name: Cache documentation artifacts
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            target/*.zip
+          key: ${{ github.run_id }}-documentation-artifacts
 
   release:
     name: Release
@@ -377,6 +406,8 @@ jobs:
       - detect-recent-changes
       - determine-pr-config
       - build
+      - integration-tests
+      - documentation
     runs-on: ubuntu-latest
     if: |
       always() && !cancelled() && (
@@ -400,8 +431,16 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
-            target/project-reports.zip
+            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
+          fail-on-cache-miss: true
+
+      - name: Restore documentation artifacts cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            target/*.zip
+          key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
 
       - name: Release with JReleaser

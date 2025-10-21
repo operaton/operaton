@@ -20,17 +20,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.rolling.update.RollingUpdateConstants;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -38,18 +37,18 @@ import static org.hamcrest.core.Is.is;
  * @author Tassilo Weidner
  */
 @ScenarioUnderTest("HistoryCleanupScenario")
-public class HistoryCleanupTest extends AbstractRollingUpdateTestCase {
+class HistoryCleanupTest extends AbstractRollingUpdateTestCase {
 
   static final Date FIXED_DATE = new Date(1363608000000L);
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("initHistoryCleanup.1")
-  public void testHistoryCleanup() {
+  void testHistoryCleanup() {
 
     if (RollingUpdateConstants.OLD_ENGINE_TAG.equals(rule.getTag())) { // test cleanup with old engine
 

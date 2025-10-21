@@ -16,44 +16,36 @@
  */
 package org.operaton.bpm.qa.rolling.update;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
+import org.operaton.bpm.qa.upgrade.UpgradeTestExtension;
 
 /**
  * The abstract rolling update test case, which should be used as base class from all
- * rolling update test cases. Defines a parameterized test case, which executes
- * all tests for each engine version. The engine version will be used as tag for
- * the upgrade test rule.
+ * rolling update test cases. Provides access to the shared {@link UpgradeTestExtension}
+ * and exposes the engine tags that tests should exercise.
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Parameterized.class)
 public abstract class AbstractRollingUpdateTestCase {
 
-  @Parameters(name = "{0} engine")
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-          {RollingUpdateConstants.OLD_ENGINE_TAG}, {RollingUpdateConstants.NEW_ENGINE_TAG}
-           });
-    }
+  @RegisterExtension
+  public static UpgradeTestExtension rule = new UpgradeTestExtension();
 
-  @Parameter
-  public String tag;
+  private static String currentTag;
 
-  @Rule
-  public UpgradeTestRule rule = new UpgradeTestRule();
+  static Stream<String> engineTags() {
+    return Stream.of(RollingUpdateConstants.OLD_ENGINE_TAG, RollingUpdateConstants.NEW_ENGINE_TAG);
+  }
 
-  @Before
-  public void init() {
+  void setEngineTag(String tag) {
+    currentTag = tag;
     rule.setTag(tag);
+  }
+
+  protected String getEngineTag() {
+    return currentTag;
   }
 }

@@ -33,7 +33,7 @@ import static org.operaton.spin.Spin.S;
 public class SpinApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringApplication.class, args);
+    SpringApplication.run(SpinApplication.class, args);
   }
 
   @Bean

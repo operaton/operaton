@@ -28,8 +28,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Edoardo Patti

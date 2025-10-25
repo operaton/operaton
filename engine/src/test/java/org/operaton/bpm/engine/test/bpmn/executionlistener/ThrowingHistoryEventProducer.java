@@ -47,7 +47,7 @@ public class ThrowingHistoryEventProducer extends DefaultHistoryEventProducer {
   @Override
   public HistoryEvent createActivityInstanceEndEvt(DelegateExecution execution) {
     String currentActivityName = execution.getCurrentActivityName();
-    if (currentActivityName != null && currentActivityName.equals(activityName)) {
+    if (currentActivityName.equals(activityName)) {
       if (failsWithException) {
         throw new RuntimeException(EXCEPTION_MESSAGE);
       }

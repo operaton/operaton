@@ -1501,7 +1501,7 @@ public class BpmnParse extends Parse {
       ArrayList<PvmTransition> flowsWithoutCondition = new ArrayList<>();
       for (PvmTransition flow : activity.getOutgoingTransitions()) {
         Condition condition = (Condition) flow.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
-        boolean isDefaultFlow = flow.getId() != null && flow.getId().equals(defaultSequenceFlow);
+        boolean isDefaultFlow = flow.getId().equals(defaultSequenceFlow);
         boolean hasConditon = condition != null;
 
         if (!hasConditon && !isDefaultFlow) {

@@ -47,7 +47,7 @@ public abstract class AbstractTypedValueMapper<T extends TypedValue> implements 
   @Override
   public boolean canHandleTypedValueField(TypedValueField typedValueField) {
     String type = typedValueField.getType();
-    return type != null && type.equals(valueType.getName()) && canReadValue(typedValueField);
+    return type.equals(valueType.getName()) && canReadValue(typedValueField);
   }
 
   protected abstract boolean canWriteValue(TypedValue typedValue);

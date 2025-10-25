@@ -104,7 +104,7 @@ public abstract class BaseElementImpl extends BpmnModelElementInstanceImpl imple
     for (Reference<?> reference : incomingReferences) {
       for (ModelElementInstance sourceElement : reference.findReferenceSourceElements(this)) {
         String referenceIdentifier = reference.getReferenceIdentifier(sourceElement);
-        if (referenceIdentifier != null && referenceIdentifier.equals(getId())) {
+        if (referenceIdentifier.equals(getId())) {
           return (DiagramElement) sourceElement;
         }
       }

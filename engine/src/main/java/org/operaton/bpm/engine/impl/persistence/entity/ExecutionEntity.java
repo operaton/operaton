@@ -1592,7 +1592,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   public IncidentEntity getIncidentByCauseIncidentId(String causeIncidentId) {
     for (IncidentEntity incident : getIncidents()) {
-      if (incident.getCauseIncidentId() != null && incident.getCauseIncidentId().equals(causeIncidentId)) {
+      if (incident.getCauseIncidentId().equals(causeIncidentId)) {
         return incident;
       }
     }

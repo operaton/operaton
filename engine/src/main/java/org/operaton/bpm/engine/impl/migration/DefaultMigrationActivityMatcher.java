@@ -26,7 +26,7 @@ public class DefaultMigrationActivityMatcher implements MigrationActivityMatcher
   }
 
   protected boolean equalId(ActivityImpl source, ActivityImpl target) {
-    return source.getId() != null && source.getId().equals(target.getId());
+    return source.getId().equals(target.getId());
   }
 
 }

@@ -90,7 +90,7 @@ public class VersionedDeploymentHandler implements DeploymentHandler {
     for (ProcessDefinition processDefinition : processDefinitions) {
       // If all the resources are new, the candidateVersionTag
       // property will be null since there's nothing to compare it to.
-      if (candidateVersionTag.equals(processDefinition.getVersionTag())) {
+      if (candidateVersionTag != null && candidateVersionTag.equals(processDefinition.getVersionTag())) {
         deploymentIds.add(processDefinition.getDeploymentId());
       }
     }
@@ -116,7 +116,7 @@ public class VersionedDeploymentHandler implements DeploymentHandler {
         // only deploy Deployments of the same name that contain a Process Definition with the
         // correct Operaton Version Tag. If all the resources are new, the candidateVersionTag
         // property will be null since there's nothing to compare it to.
-        if (candidateVersionTag.equals(processDefinition.getVersionTag())) {
+        if (candidateVersionTag != null && candidateVersionTag.equals(processDefinition.getVersionTag())) {
           deploymentIds.add(deployment.getId());
           break;
         }

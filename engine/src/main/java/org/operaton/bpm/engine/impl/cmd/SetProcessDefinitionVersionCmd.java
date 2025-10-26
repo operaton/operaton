@@ -194,12 +194,14 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
     boolean typesMatch =
         (currentJobDefinition.getJobType() == null && newJobDefinition.getJobType() == null)
           ||
-        (currentJobDefinition.getJobType().equals(newJobDefinition.getJobType()));
+        (currentJobDefinition.getJobType() != null
+          && currentJobDefinition.getJobType().equals(newJobDefinition.getJobType()));
 
     boolean configurationsMatch =
         (currentJobDefinition.getJobConfiguration() == null && newJobDefinition.getJobConfiguration() == null)
           ||
-        (currentJobDefinition.getJobConfiguration().equals(newJobDefinition.getJobConfiguration()));
+        (currentJobDefinition.getJobConfiguration() != null
+          && currentJobDefinition.getJobConfiguration().equals(newJobDefinition.getJobConfiguration()));
 
     return activitiesMatch && typesMatch && configurationsMatch;
   }

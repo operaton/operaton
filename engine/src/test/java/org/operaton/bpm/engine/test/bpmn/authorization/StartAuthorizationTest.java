@@ -206,8 +206,8 @@ class StartAuthorizationTest {
 
   private boolean containsUserOrGroup(String userId, String groupId, List<IdentityLink> links) {
     return links.stream().anyMatch(identityLink ->
-      (userId.equals(identityLink.getUserId())) ||
-      (groupId.equals(identityLink.getGroupId()))
+      (userId != null && userId.equals(identityLink.getUserId())) ||
+      (groupId != null && groupId.equals(identityLink.getGroupId()))
     );
   }
 

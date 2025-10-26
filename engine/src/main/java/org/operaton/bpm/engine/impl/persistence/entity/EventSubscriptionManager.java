@@ -340,7 +340,7 @@ public class EventSubscriptionManager extends AbstractManager {
     String subscriptionEventName = subscription.getEventName();
 
     return type.equals(subscription.getEventType()) &&
-          ((eventName == null && subscriptionEventName == null) || (eventName.equals(subscriptionEventName)));
+          ((eventName == null && subscriptionEventName == null) || (eventName != null && eventName.equals(subscriptionEventName)));
   }
 
 }

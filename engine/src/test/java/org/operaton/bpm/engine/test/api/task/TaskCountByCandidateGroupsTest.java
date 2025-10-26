@@ -139,7 +139,7 @@ class TaskCountByCandidateGroupsTest {
 
   protected void checkResultCount(TaskCountByCandidateGroupResult result, String expectedResultName, int expectedResultCount) {
     if((expectedResultName == null && result.getGroupName() == null) ||
-       (result.getGroupName().equals(expectedResultName))) {
+       (result.getGroupName() != null && result.getGroupName().equals(expectedResultName))) {
       assertThat(result.getTaskCount()).isEqualTo(expectedResultCount);
     }
   }

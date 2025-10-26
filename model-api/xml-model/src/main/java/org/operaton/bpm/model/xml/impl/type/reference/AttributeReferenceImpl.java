@@ -61,7 +61,7 @@ public class AttributeReferenceImpl<T extends ModelElementInstance> extends Refe
   @Override
   protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
     String referencingAttributeValue = getReferenceIdentifier(referenceSourceElement);
-    if(oldIdentifier.equals(referencingAttributeValue)) {
+    if(oldIdentifier != null && oldIdentifier.equals(referencingAttributeValue)) {
       setReferenceIdentifier(referenceSourceElement, newIdentifier);
     }
   }

@@ -96,7 +96,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   @Override
   protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
     String referencingTextContent = getReferenceIdentifier(referenceSourceElement);
-    if (oldIdentifier.equals(referencingTextContent)) {
+    if (oldIdentifier != null && oldIdentifier.equals(referencingTextContent)) {
       setReferenceIdentifier(referenceSourceElement, newIdentifier);
     }
   }

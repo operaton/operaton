@@ -98,6 +98,7 @@ def run_npm_license_report():
     subprocess.run([
         "license-checker",
         "--production",
+        "--relativeLicensePath",
         "--json",
         "--out",
         "target/generated-resources/npm-licenses.json"
@@ -140,44 +141,6 @@ def postprocess_licenses_xml():
     else:
         print("[INFO] No license files needed renaming.")
 
-def generate_npm_license_book(json_path="target/generated-resources/npm-licenses.json", output_dir="target/generated-resources/license-book"):
-    with open(json_path, "r") as f:
-        data = json.load(f)
-
-    md_path = os.path.join(output_dir, "npm-licenses.md")
-    os.makedirs(output_dir, exist_ok=True)
-
-    with open(md_path, "w", encoding="utf-8") as md:
-        for lib, info in data.items():
-            if lib.startswith("org.operaton"):
-                continue
-            license_name = info.get("licenses", "UNKNOWN")
-            repo = info.get("repository", "")
-            publisher = info.get("publisher", "")
-            email = info.get("email", "")
-            license_file = info.get("licenseFile", "")
-            lib_name = lib.split("@")[0]
-            file_name = os.path.basename(license_file) if license_file else ""
-            license_link = f"licenses/{license_name}/{lib_name}/{file_name}" if license_file else ""
-            # Copy license file
-            if license_file and os.path.exists(license_file):
-                target_license_dir = os.path.join(output_dir, "licenses", license_name, lib_name)
-                os.makedirs(target_license_dir, exist_ok=True)
-                shutil.copy2(license_file, os.path.join(target_license_dir, file_name))
-            # Write markdown section
-            md.write("---\n")
-            md.write(f"**{lib}**\n\n")
-            if license_file:
-                md.write(f"- License: [{license_name}]({license_link})\n")
-            else:
-                md.write(f"- License: {license_name}\n")
-            if repo:
-                md.write(f"- Repository: {repo}\n")
-            if publisher:
-                md.write(f"- Publisher: {publisher}\n")
-            if email:
-                md.write(f"- Email: [{email}](mailto:{email})\n")
-            md.write("\n")
 
 def copy_license_book_to_dist():
     """Copy the content of target/generated-resources/license-book to LICENSEBOOK_DIR/target/generated-resources."""
@@ -194,6 +157,30 @@ def copy_license_book_to_dist():
         shutil.copy2(os.path.join("target/generated-resources", f), os.path.join(dst, f))
     print("[INFO] License book copied successfully.")
 
+def read_dependencies_from_xml(xml_path):
+    tree = ET.parse(xml_path)
+    root = tree.getroot()
+    dependencies = []
+    for dep in root.findall(".//dependency"):
+        group_id = dep.findtext("groupId")
+        artifact_id = dep.findtext("artifactId")
+        version = dep.findtext("version")
+        licenses = dep.findall('.//license/name')
+        license_names = [l.text for l in licenses]
+        license_str = ', '.join(license_names).replace('\n', ' ').replace('\r', ' ')
+        licenses = []
+        for lic in dep.findall(".//license"):
+            name = lic.findtext("name")
+            if name:
+                licenses.append(name)
+        dependencies.append({
+            "groupId": group_id,
+            "artifactId": artifact_id,
+            "version": version,
+            "licenses": license_str
+        })
+    return dependencies
+
 def generate_license_book():
     # read licenses from files
     licenses_dir = 'distro/license-book/src/main/resources/licenses'
@@ -203,7 +190,10 @@ def generate_license_book():
         with open(file_path, 'r', encoding='utf-8') as f:
             licenses[key] = {'license_name': key, 'license_text': f.read()}
 
-    print(f"[INFO] Loaded {len(licenses)} licenses for the license book.")
+    print(f"[INFO] Loaded {len(licenses)} npm libraries for the license book.")
+
+    mvn_dependencies = read_dependencies_from_xml('distro/license-book/target/generated-resources/licenses.xml')
+    print(f"[INFO] Loaded {len(mvn_dependencies)} Maven dependencies for the license book.")
 
     # get project version from pom.xml
     pom_path = 'distro/license-book/pom.xml'
@@ -213,40 +203,57 @@ def generate_license_book():
     version = parent.find('{http://maven.apache.org/POM/4.0.0}version')
     version_str = version.text if version is not None else 'unknown'
 
-    # Datum setzen
-    date_str = datetime.datetime.now().strftime('%Y-%m-%d')
-
-    # Mustache-Template lesen
+    # read main template
     tpl_path = 'distro/license-book/src/main/mustache/license-book.tpl'
     with open(tpl_path, 'r', encoding='utf-8') as tpl_file:
         template = tpl_file.read()
 
+    renderer = get_renderer_with_partials()
 
-    # Template rendern
-    renderer = pystache.Renderer(partials={
-        'license': open('distro/license-book/src/main/mustache/license.tpl', encoding='utf-8').read()}
-    )
+    json_path="distro/license-book/target/generated-resources/npm-licenses.json"
+    with open(json_path, 'r', encoding='utf-8') as json_file:
+        npm_licenses = json.load(json_file)
+    for library, data in npm_licenses.items():
+        data['library'] = library.split('@')[0]
+        data['name'] = "X " + library
+        data['version'] = library.split('@')[1]
 
+    # define variables
     license_ids=sorted(licenses.keys(), key=lambda k: k.lower())
-
+    date_str = datetime.datetime.now().strftime('%Y-%m-%d')
+    npm_licenses = sorted(npm_licenses.values(), key=lambda k: k['library'])
     output = renderer.render(template, {
+        'version': version_str,
+        'date': date_str,
         'license_ids': license_ids,
         'licenses': licenses.values(),
-        'version': version_str,
-        'date': date_str
+        'npm_licenses': npm_licenses,
+        'mvn_dependencies': mvn_dependencies
     })
 
-    # Ausgabe schreiben
+    # write output file
     os.makedirs('distro/license-book/target/generated-resources', exist_ok=True)
-    out_path = 'distro/license-book/target/generated-resources/license-book.txt'
+    out_path = 'distro/license-book/target/generated-resources/license-book.md'
     with open(out_path, 'w', encoding='utf-8') as out_file:
         out_file.write(output)
+
+def get_renderer_with_partials():
+    partials = {}
+    tpl_dir = 'distro/license-book/src/main/mustache/'
+
+    for fname in os.listdir(tpl_dir):
+        if fname.endswith('.tpl'):
+            key = fname[:-4]
+            with open(os.path.join(tpl_dir, fname), encoding='utf-8') as f:
+                partials[key] = f.read()
+
+    renderer = pystache.Renderer(partials=partials)
+    return renderer
 
 def main():
     #run_maven_license_report()
     #run_npm_license_report()
     #postprocess_licenses_xml()
-    #generate_npm_license_book()
     #copy_license_book_to_dist()
     generate_license_book()
     print("[INFO] License reports generated and postprocessed. You can now process them to create the license book.")

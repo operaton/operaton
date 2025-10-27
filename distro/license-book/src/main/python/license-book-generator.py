@@ -214,9 +214,9 @@ def generate_license_book():
     with open(json_path, 'r', encoding='utf-8') as json_file:
         npm_licenses = json.load(json_file)
     for library, data in npm_licenses.items():
-        data['library'] = library.split('@')[0]
-        data['name'] = "X " + library
-        data['version'] = library.split('@')[1]
+        splitted = library.split('@')
+        data['library'] = splitted[len(splitted)-2]
+        data['version'] = splitted[len(splitted)-1]
 
     # define variables
     license_ids=sorted(licenses.keys(), key=lambda k: k.lower())

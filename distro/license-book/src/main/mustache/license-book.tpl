@@ -1,14 +1,12 @@
-#License Book for Operaton {{version}}
+# License Book for Operaton {{version}}
+
+{{>toc}}
 
 {{>preamble}}
 
 {{>license-summary}}
 
-### Licenses
-
-{{#licenses}}
 {{> license}}
-{{/licenses}}
 
 {{> mvn-dependency}}
 

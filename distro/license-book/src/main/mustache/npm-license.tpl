@@ -1,3 +1,4 @@
+<a name="npm_licenses"></a>
 ### Operaton Third-Party Node Libraries
 
 The below table lists the third-party Node libraries used in Operaton along with their versions and associated licenses.

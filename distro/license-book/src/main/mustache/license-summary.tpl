@@ -1,3 +1,4 @@
+<a name="3rd_party_licenses"></a>
 ## Licenses for Third-Party Libraries
 The following sections contain licensing information for third-party libraries that we distribute with the Operaton source code and binaries for your convenience. None of the Libraries are modified or changed and they are solely distributed as is. For practicality, the license text is only referenced once. Each library (whether provided in source or object form) is licensed to you by its copyright holders under the original open source license listed in this License Book. Nothing in this License Book or any license agreement we enter into with you removes or restricts any rights you may have in respect of any component under its original open source license, or makes any of the original authors or copyright holders of the component liable to you in respect of your use or distribution of that component.
 

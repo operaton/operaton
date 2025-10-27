@@ -393,6 +393,7 @@ jobs:
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
+          .devenv/scripts/build/build-sbom.sh
       - name: Cache documentation artifacts
         uses: actions/cache/save@v4
         with:

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "Generating SBOM files for Operaton modules..."
 
 # Check that npx is installed
@@ -17,6 +18,10 @@ echo "Generating CycloneDX SBOM for Maven modules..."
   -DprojectType=application \
   -DskipAttach=true \
   -DskipNotDeployed=true
+if [ ! -f target/sbom/operaton-modules.json ]; then
+    echo "❌ SBOM file target/sbom/operaton-modules.json not found. Maven plugin may have failed."
+    exit 1
+fi
 mv target/sbom/operaton-modules.json target/sbom/operaton-modules.cyclonedx-json.sbom
 
 echo "Generating CycloneDX SBOM for Node.js frontend module..."

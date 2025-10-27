@@ -86,23 +86,25 @@ LICENSEBOOK_DIR = "distro/license-book"
 
 def run_maven_license_report():
     print("[INFO] Generating Maven license report...")
-    subprocess.run([
-        "./mvnw",
-        "-Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory,check-api-compatibility",
-        "license:aggregate-add-third-party"
-    ], check=True)
+    with open('distro/license-book/target/license-book-generator.out', 'w+') as out_file:
+        subprocess.run([
+            "./mvnw",
+            "-Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory,check-api-compatibility",
+            "license:aggregate-add-third-party"
+        ], check=True, stdout=out_file, stderr=out_file)
 
 def run_npm_license_report():
     print("[INFO] Generating Node.js license report...")
-    subprocess.run(["npm", "install", "license-checker"], check=True)
-    subprocess.run([
-        "license-checker",
-        "--production",
-        "--relativeLicensePath",
-        "--json",
-        "--out",
-        "target/generated-resources/npm-licenses.json"
-    ], check=True)
+    with open('distro/license-book/target/license-book-generator.out', 'a') as out_file:
+        subprocess.run(["npm", "install", "license-checker"], check=True, stdout=out_file, stderr=out_file)
+        subprocess.run([
+            "license-checker",
+            "--production",
+            "--relativeLicensePath",
+            "--json",
+            "--out",
+            "target/generated-resources/npm-licenses.json"
+        ], check=True, stdout=out_file, stderr=out_file)
 
 def normalize_license_name(name):
     return name.strip().lower()
@@ -163,6 +165,8 @@ def read_dependencies_from_xml(xml_path):
     dependencies = []
     for dep in root.findall(".//dependency"):
         group_id = dep.findtext("groupId")
+        if group_id and group_id.startswith("org.operaton"):
+            continue
         artifact_id = dep.findtext("artifactId")
         version = dep.findtext("version")
         licenses = dep.findall('.//license/name')
@@ -233,7 +237,7 @@ def generate_license_book():
 
     # write output file
     os.makedirs('distro/license-book/target/generated-resources', exist_ok=True)
-    out_path = 'distro/license-book/target/generated-resources/license-book.md'
+    out_path = 'distro/license-book/src/main/resources/license-book.md'
     with open(out_path, 'w', encoding='utf-8') as out_file:
         out_file.write(output)
 
@@ -251,12 +255,13 @@ def get_renderer_with_partials():
     return renderer
 
 def main():
-    #run_maven_license_report()
-    #run_npm_license_report()
-    #postprocess_licenses_xml()
-    #copy_license_book_to_dist()
+    run_maven_license_report()
+    run_npm_license_report()
+    postprocess_licenses_xml()
+    print("[INFO] License reports generated and postprocessed.")
+    copy_license_book_to_dist()
     generate_license_book()
-    print("[INFO] License reports generated and postprocessed. You can now process them to create the license book.")
+    print("[INFO] Done.")
 
 if __name__ == "__main__":
     main()

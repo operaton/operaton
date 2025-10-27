@@ -13,10 +13,20 @@
 
   <files>
     <file>
-      <source>src/main/resources/license-book.txt</source>
+      <source>src/main/resources/license-book.md</source>
       <lineEnding>crlf</lineEnding>
       <outputDirectory></outputDirectory>
-      <destName>LICENSE_BOOK-${project.version}.txt</destName>
+      <destName>LICENSE_BOOK-${project.version}.md</destName>
     </file>
   </files>
+
+  <fileSets>
+    <fileSet>
+      <directory>src/main/resources/licenses</directory>
+      <outputDirectory>licenses</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+  </fileSets>
 </assembly>

@@ -18,8 +18,11 @@ on:
         description: 'Java version to use'
         type: choice
         required: true
-        default: '["17"]'
+        default: '17'
         options:
+          - '17'
+          - '17 21'
+          - '(17 21)'
           - '["17"]'
           - '["21"]'
           - '["25"]'
@@ -27,43 +30,37 @@ on:
           - '["17", "25"]'
           - '["21", "25"]'
           - '["17", "21", "25"]'
-      skip_build:
-        description: 'Build: By default skipped. Deactivate to perform the regular project build'
+      distro_operaton:
+        description: 'Distribution: Operaton'
         type: boolean
         default: true
-      skip_tests:
-        description: 'Build: Skip test execution for faster build'
+      distro_tomcat:
+        description: 'Distribution: Tomcat'
         type: boolean
         default: true
-      integration_tests:
-        description: 'Integration Tests: Enable/Disable'
+      distro_wildfly:
+        description: 'Distribution: Wildfly'
         type: boolean
         default: true
-      testsuite:
-        description: 'Integration Tests: Test suite to run'
-        type: choice
-        required: true
-        default: '["engine", "webapps"]'
-        options:
-          - '["engine"]'
-          - '["webapps"]'
-          - '["engine", "webapps"]'
-      distro:
-        description: 'Integration Tests: Distribution to use'
-        type: choice
-        required: true
-        default: '["operaton", "tomcat", "wildfly"]'
-        options:
-          - '["operaton"]'
-          - '["tomcat"]'
-          - '["wildfly"]'
-          - '["operaton", "tomcat", "wildfly"]'
+      testsuite_engine:
+        description: 'Run Integration Tests: Engine'
+        type: boolean
+        default: true
+      testsuite_webapps:
+        description: 'Run Integration Tests: Webapps'
+        type: boolean
+        default: true
       database:
         description: 'Integration Tests: Database to use'
         type: choice
         required: true
-        default: '["h2"]'
+        default: 'h2 postgresql'
         options:
+          - 'h2'
+          - '(h2)'
+          - 'h2 postgresql'
+          - '(h2 postgresql)'
+          - '(h2, postgresql)'
           - '["h2"]'
           - '["postgresql"]'
           - '["postgresql-xa"]'
@@ -75,20 +72,20 @@ on:
           - '["h2", "postgresql"]'
           - '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]'
       perform_documentation:
-        description: 'Enable to build documentation (javadoc, rest-api, clirr, sbom)'
+        description: 'Build documentation (javadoc, rest-api, clirr, sbom)'
         type: boolean
         required: true
         default: false
       perform_release:
-        description: 'Enable to perform release actions (simulate scheduled release builds)'
+        description: 'Perform release actions (simulate scheduled release builds)'
         type: boolean
         required: true
         default: false
       dry_run:
-        description: 'Dry run: Skips remote operations (e.g. Maven Central, Docker) when true'
+        description: 'Dry run: Skip remote operations (e.g. Maven Central, Docker)'
         type: boolean
         required: true
-        default: false
+        default: true
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
@@ -104,7 +101,6 @@ jobs:
       needs_documentation:      ${{ steps.check-pr.outputs.needs_documentation }}
       needs_release:            ${{ steps.check-pr.outputs.needs_release }}
       recent_changes:           ${{ steps.check-pr.outputs.recent_changes }}
-      skip_tests:               ${{ steps.check-pr.outputs.recent_changes }}
       dry_run:                  ${{ steps.check-pr.outputs.dry_run }}
       java_versions:            ${{ steps.compute-matrix.outputs.java_versions }}
       distros:                  ${{ steps.compute-matrix.outputs.distros }}
@@ -121,22 +117,13 @@ jobs:
           PR_LABELS:                    ${{ toJson(github.event.pull_request.labels.*.name) }}
           PR_AUTHOR:                    ${{ github.event.pull_request.user.login }}
           EVENT_NAME:                   ${{ github.event_name }}
-          INPUT_INTEGRATION_TESTS:      ${{ github.event.inputs.integration_tests }}
-          INPUT_SKIP_BUILD:             ${{ github.event.inputs.skip_build }}
-          INPUT_SKIP_TESTS:             ${{ github.event.inputs.skip_tests }}
-          INPUT_PERFORM_DOCUMENTATION:  ${{ github.event.inputs.perform_documentation }}
-          INPUT_PERFORM_RELEASE:        ${{ github.event.inputs.perform_release }}
-          INPUT_DRY_RUN:                ${{ github.event.inputs.dry_run || 'true' }}
         run: |
-          echo "PR Labels: $PR_LABELS"
-          echo "PR Author: $PR_AUTHOR"
-          NEED_BUILS=true
+          NEEDS_BUILD=false
           NEEDS_INTEGRATION_BUILD=true
-          NEEDS_DOCUMENTATION=$INPUT_PERFORM_DOCUMENTATION
-          NEEDS_RELEASE=$INPUT_PERFORM_RELEASE
-          DRY_RUN=$INPUT_DRY_RUN
+          NEEDS_DOCUMENTATION=${{ github.event.inputs.perform_documentation }}
+          NEEDS_RELEASE=${{ github.event.inputs.perform_release }}
+          DRY_RUN=${{ github.event.inputs.dry_run }}
           HAS_RECENT_CHANGES=false
-          SKIP_TESTS=$INPUT_SKIP_TESTS
           
           COMMITS=$(git rev-list --since="24 hours ago" HEAD)
           if [ -z "$COMMITS" ]; then
@@ -149,24 +136,30 @@ jobs:
           # Define whitelisted authors (core team members who don't need full integration tests)
           WHITELISTED_AUTHORS="kthoms,javahippie"
           
-          # Check if author is whitelisted
-          if echo "$WHITELISTED_AUTHORS" | grep -q "$PR_AUTHOR"; then
-            echo "ℹ️ PR author $PR_AUTHOR is whitelisted"
-            AUTHOR_WHITELISTED=true
-          else
-            echo "ℹ️ PR author $PR_AUTHOR is NOT whitelisted"
-            AUTHOR_WHITELISTED=false
-          fi
           
           # Check if PR is from Dependabot
           if [[ "$EVENT_NAME" == "schedule" && -z "$COMMITS" ]]; then
             echo "⏰ Scheduled run, requiring integration build"
+            NEEDS_BUILD=true
             NEEDS_DOCUMENTATION=true
             NEEDS_RELEASE=true
             DRY_RUN=false
             SKIP_TESTS=false
           elif [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]]; then
             echo "🔀 Pull request event, evaluating conditions"            
+
+            echo "PR Labels: $PR_LABELS"
+            echo "PR Author: $PR_AUTHOR"
+
+            # Check if author is whitelisted
+            if echo "$WHITELISTED_AUTHORS" | grep -q "$PR_AUTHOR"; then
+              echo "ℹ️ PR author $PR_AUTHOR is whitelisted"
+              AUTHOR_WHITELISTED=true
+            else
+              echo "ℹ️ PR author $PR_AUTHOR is NOT whitelisted"
+              AUTHOR_WHITELISTED=false
+            fi
+
             # Check if PR has dependency label
             if echo "$PR_LABELS" | grep -q '"dependencies"'; then
               echo "📦 PR has dependencies label"
@@ -184,24 +177,11 @@ jobs:
             else
               NEEDS_INTEGRATION_BUILD=false
             fi
-          elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-              echo "🚀 Manual workflow dispatch"
-              if [[ "$INPUT_SKIP_BUILD" == "true" ]]; then
-                  echo "ℹ️ Build skipped as per input"
-                  NEEDS_BUILD=false
-              fi  
-              if [[ "$INPUT_INTEGRATION_TESTS" == "false" ]]; then
-                echo "ℹ️ Integration tests not requested"
-                NEEDS_INTEGRATION_BUILD=false
-              fi
           else
-            echo "ℹ️ Event type $EVENT_NAME does not require integration build by default"
-            NEEDS_INTEGRATION_BUILD=false
+            echo "ℹ️ Event type $EVENT_NAME requires an integration build by default"
+            NEEDS_INTEGRATION_BUILD=true
           fi
           
-          if [[ "$INPUT_SKIP_BUILD" == "false" ]]; then
-              echo "⚠️ Build skipped"
-          fi  
           if [[ "$NEEDS_INTEGRATION_BUILD" == "false" ]]; then
             echo "⚠️ Integration build not required"
           fi
@@ -212,45 +192,63 @@ jobs:
           echo "needs_release=$NEEDS_RELEASE" >> $GITHUB_OUTPUT
           echo "recent_changes=$HAS_RECENT_CHANGES" >> $GITHUB_OUTPUT
           echo "dry_run=$DRY_RUN" >> $GITHUB_OUTPUT
-          echo "skip_tests=$SKIP_TESTS" >> $GITHUB_OUTPUT
       - name: Compute matrix values
         id: compute-matrix
         if: steps.check-pr.outputs.needs_integration_build == 'true'
         env:
           PR_LABELS:          ${{ toJson(github.event.pull_request.labels.*.name) }}
           EVENT_NAME:         ${{ github.event_name }}
-          INPUT_JAVA_VERSION: ${{ fromJson(github.event.inputs.java_version || '["17", "21", "25"]') }}
-          INPUT_DISTROS:      ${{ fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]') }}
-          INPUT_DATABASES:    ${{ fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]') }}
-          INPUT_TESTSUITES:   ${{ fromJson(github.event.inputs.testsuite || '["engine", "webapps" ]') }}
         run: |
           # Java version is always 17 for PR builds
-          JAVA_VERSIONS=$INPUT_JAVA_VERSION
-          DISTROS=$INPUT_DISTROS
-          DATABASES=$INPUT_DATABASES
-          TEST_SUITES=$INPUT_TESTSUITES
-          
-          if [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]]; then
-            JAVA_VERSIONS='["17"]'
+          JAVA_VERSIONS=(17 21 25)
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            JAVA_VERSIONS=${{ github.event.inputs.java_version }}
+          elif [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]]; then
+            JAVA_VERSIONS=(17)
             echo "🎯 Using Java version 17 for PR/Push builds"
           else
             echo "🎯 Using Java versions from input: $JAVA_VERSIONS"
           fi
           echo "java_versions=$JAVA_VERSIONS" >> $GITHUB_OUTPUT
           
+          echo "****************** 1"
+          DISTROS=(operaton tomcat wildfly)
           # Determine distros based on labels
           DISTRO_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("distro:")) | sub("distro:"; "")')
-          if [[ -n "$DISTRO_LABELS" ]]; then
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "****************** 2 $DISTROS"
+            DISTROS=()
+              if [[ "${{ github.event.inputs.distro_operaton }}" == "true" ]]; then
+                DISTROS+=('operaton')
+              fi
+              if [[ "${{ github.event.inputs.distro_tomcat }}" == "true" ]]; then
+                DISTROS+=('tomcat')
+              fi
+              if [[ "${{ github.event.inputs.distro_wildfly }}" == "true" ]]; then
+                DISTROS+=('wildfly')
+              fi
+            # convert to JSON array
+            echo "****************** 3 $DISTROS"
+
+            #DISTROS=$(printf '%s\n' "${DISTROS[@]}" | jq -R . | jq -s . | sed 's/\n/,/g')
+            echo "****************** 4 $DISTROS"
+            if [[ -z "$DISTROS" ]]; then
+              echo "⚠️ No distros selected, skipping integration build"
+              echo "needs_integration_build=false" >> $GITHUB_OUTPUT
+            fi
+          elif [[ -n "$DISTRO_LABELS" ]]; then
             # Convert to JSON array
             DISTROS=$(echo "$DISTRO_LABELS" | jq -R -s 'split("\n") | map(select(. != ""))')
             echo "🎯 Using specific distros from labels: $DISTROS"
           else
-            # Default to all distros
-            DISTROS='["operaton", "tomcat", "wildfly"]'
-            echo "🎯 Using default distros: $DISTROS"
+            echo "🎯 Using distros: $DISTROS"
           fi
+          echo "****************** 5 $DISTROS"
           echo "distros=$DISTROS" >> $GITHUB_OUTPUT
+          echo "****************** 6 $DISTROS"
           
+          #DATABASES='["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]'
+          DATABASES=(h2)
           # Determine databases based on labels
           DATABASE_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("database:")) | sub("database:"; "")')
           if [[ -n "$DATABASE_LABELS" ]]; then
@@ -260,21 +258,48 @@ jobs:
           elif [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]]; then
             DATABASES='["h2"]'
             echo "🎯 Using H2 database for PR/Push builds"
+          elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            DATABASES=${{ github.event.inputs.database }}
           fi
           echo "databases=$DATABASES" >> $GITHUB_OUTPUT
           
+          TEST_SUITES=(engine webapps)
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            TEST_SUITES=()
+            if [[ "${{ github.event.inputs.testsuite_engine }}" == "true" ]]; then
+              TEST_SUITES+=('engine')
+            fi
+            if [[ "${{ github.event.inputs.testsuite_webapps }}" == "true" ]]; then
+              TEST_SUITES+=('webapps')
+            fi
+            # convert to JSON array
+            #TEST_SUITES=$(printf '%s\n' "${TEST_SUITES[@]}" | jq -R . | jq -s . | sed 's/\n/,/g')
+            if [[ -z "$TEST_SUITES" ]]; then
+              echo "⚠️ No test suites selected, skipping integration build"
+              echo "needs_integration_build=false" >> $GITHUB_OUTPUT
+            fi
+          fi
           echo "test_suites=$TEST_SUITES" >> $GITHUB_OUTPUT
 
-  early-exit:
-    name: Early Exit Check
-    runs-on: ubuntu-latest
-    needs: determine-build-config
-    if: needs.determine-build-config.outputs.needs_integration_build == 'false'
-    steps:
-      - name: Cancel workflow
+
+      - name: Debug Outputs
         run: |
-          echo "🚫 Integration build not needed for this PR"
-          echo "✅ PR author is whitelisted and no dependency/distro/database labels found"
+          echo "🛠️ Build Configuration:"
+          echo "  Needs Build:               ${{ steps.check-pr.outputs.needs_build }}"
+          echo "  Needs Integration Build:   ${{ steps.check-pr.outputs.needs_integration_build }}"
+          echo "  Needs Documentation:       ${{ steps.check-pr.outputs.needs_documentation }}"
+          echo "  Needs Release:             ${{ steps.check-pr.outputs.needs_release }}"
+          echo "  Recent Changes:            ${{ steps.check-pr.outputs.recent_changes }}"
+          echo "  Dry Run:                   ${{ steps.check-pr.outputs.dry_run }}"
+          echo "  Java Versions:             ${{ steps.compute-matrix.outputs.java_versions }}"
+          echo "  Distros:                   ${{ steps.compute-matrix.outputs.distros }}"
+          echo "  Databases:                 ${{ steps.compute-matrix.outputs.databases }}"
+          echo "  Test Suites:               ${{ steps.compute-matrix.outputs.test_suites }}"
+
+      - name: Early Exit Check
+        if: steps.check-pr.outputs.needs_integration_build == 'false'
+        run: |
+          echo "🚫 Integration build not needed for this run"
           echo "Workflow will be cancelled gracefully"
           exit 0
 
@@ -283,7 +308,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        java: ${{ fromJson(needs.determine-build-config.outputs.java_versions) }}
+        java: ${{ needs.determine-build-config.outputs.java_versions }}
     runs-on: ubuntu-latest
     needs: 
       - determine-build-config
@@ -323,12 +348,8 @@ jobs:
           DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
-          SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
           
           CMD=".devenv/scripts/build/build.sh --profile=max --reports"
-          if [ "$SKIP_TESTS" = "true" ]; then
-              CMD="$CMD --skip-tests"
-          fi
           $CMD
 
           .github/scripts/prepare-reports.sh
@@ -358,10 +379,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java:      ${{ fromJson(needs.determine-build-config.outputs.java_versions)  }}
-        testsuite: ${{ fromJson(needs.determine-build-config.outputs.test_suites) }}
-        distro:    ${{ fromJson(needs.determine-build-config.outputs.distros) }}
-        database:  ${{ fromJson(needs.determine-build-config.outputs.databases) }}
+        java:      ${{ needs.determine-build-config.outputs.java_versions  }}
+        testsuite: ${{ needs.determine-build-config.outputs.test_suites }}
+        distro:    ${{ needs.determine-build-config.outputs.distros }}
+        database:  ${{ needs.determine-build-config.outputs.databases }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
@@ -502,7 +523,7 @@ jobs:
           arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.build.outputs.database_version}}
 
       - name: Publish Test Report
-        if: ${{ needs.determine-build-config.outputs.needs_integration_build == 'true' || needs.determine-build-config.outputs.skip_tests == 'true' == 'false'}}
+        if: ${{ needs.determine-build-config.outputs.needs_build == 'true' }}
         uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml

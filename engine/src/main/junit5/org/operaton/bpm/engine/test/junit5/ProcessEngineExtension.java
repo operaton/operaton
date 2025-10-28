@@ -44,7 +44,6 @@ import org.junit.jupiter.api.extension.TestWatcher;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.*;
-import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;

@@ -18,6 +18,7 @@ package org.operaton.bpm.model.bpmn.impl.instance;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 import org.operaton.bpm.model.bpmn.BpmnModelException;
 import org.operaton.bpm.model.bpmn.Query;
@@ -113,7 +114,7 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
       for (ModelElementInstance sourceElement : reference.findReferenceSourceElements(this)) {
         String referenceIdentifier = reference.getReferenceIdentifier(sourceElement);
 
-        if (referenceIdentifier.equals(getId()) && reference instanceof AttributeReference attributeReference) {
+        if (referenceIdentifier != null && Objects.equals(referenceIdentifier, getId()) && reference instanceof AttributeReference attributeReference) {
           String attributeName = attributeReference.getReferenceSourceAttribute().getAttributeName();
           if (BPMN_ATTRIBUTE_SOURCE_REF.equals(attributeName)) {
             getOutgoing().add((SequenceFlow) sourceElement);

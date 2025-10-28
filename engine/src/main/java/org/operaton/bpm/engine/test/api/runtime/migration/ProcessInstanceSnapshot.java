@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
@@ -148,10 +149,7 @@ public class ProcessInstanceSnapshot {
     List<EventSubscription> collectedEventsubscriptions = new ArrayList<>();
 
     for (EventSubscription eventSubscription : getEventSubscriptions()) {
-      if (activityId.equals(eventSubscription.getActivityId())
-              && ((eventName == null && eventSubscription.getEventName() == null)
-              || eventName.equals(eventSubscription.getEventName()))
-      ) {
+      if (activityId.equals(eventSubscription.getActivityId()) && Objects.equals(eventName, eventSubscription.getEventName())) {
         collectedEventsubscriptions.add(eventSubscription);
       }
     }

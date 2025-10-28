@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -191,15 +192,9 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
   protected boolean jobDefinitionsMatch(JobDefinitionEntity currentJobDefinition, JobDefinitionEntity newJobDefinition) {
     boolean activitiesMatch = currentJobDefinition.getActivityId().equals(newJobDefinition.getActivityId());
 
-    boolean typesMatch =
-        (currentJobDefinition.getJobType() == null && newJobDefinition.getJobType() == null)
-          ||
-        (currentJobDefinition.getJobType().equals(newJobDefinition.getJobType()));
+    boolean typesMatch = Objects.equals(currentJobDefinition.getJobType(), newJobDefinition.getJobType());
 
-    boolean configurationsMatch =
-        (currentJobDefinition.getJobConfiguration() == null && newJobDefinition.getJobConfiguration() == null)
-          ||
-        (currentJobDefinition.getJobConfiguration().equals(newJobDefinition.getJobConfiguration()));
+    boolean configurationsMatch = Objects.equals(currentJobDefinition.getJobConfiguration(), newJobDefinition.getJobConfiguration());
 
     return activitiesMatch && typesMatch && configurationsMatch;
   }

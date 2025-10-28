@@ -7,7 +7,7 @@
 3. [Licenses for Third-Party Libraries](#3rd_party_licenses)
    1. [Operaton Third-Party Java Libraries](#mvn_dependencies)
    2. [Operaton Third-Party Node Libraries](#npm_licenses)
-   3. [License](#licenses)
+4. [License Texts](#licenses)
 
 This is a license book. It contains licensing information for third-party libraries which are used
 in this release of Operaton 1.1.0-SNAPSHOT.
@@ -34,33 +34,33 @@ We are thankful to all individuals that have created these.
 
 The Libraries used within Operaton 1.1.0-SNAPSHOT are published under the following licenses:
 
-* [Apache-2.0](#Apache-2.0) 
-* [BlueOak-1.0.0](#BlueOak-1.0.0) 
+* [Apache-2.0](#apache-2.0) 
+* [BlueOak-1.0.0](#blueoak-1.0.0) 
 * [bpmn.io](#bpmn.io) 
-* [BSD-2-Clause](#BSD-2-Clause) 
-* [BSD-3-Clause](#BSD-3-Clause) 
-* [CC-BY-2.5](#CC-BY-2.5) 
-* [CC0-1.0](#CC0-1.0) 
-* [CDDL-1.0](#CDDL-1.0) 
-* [CDDL-1.1](#CDDL-1.1) 
-* [EDL-1.0](#EDL-1.0) 
-* [EPL-1.0](#EPL-1.0) 
-* [EPL-2.0](#EPL-2.0) 
-* [GPL-2.0-with-classpath-exception](#GPL-2.0-with-classpath-exception) 
-* [IndianaUniversity-1.1.1](#IndianaUniversity-1.1.1) 
-* [ISC](#ISC) 
-* [LGPL-2.1-only](#LGPL-2.1-only) 
-* [LGPL-2.1-or-later](#LGPL-2.1-or-later) 
-* [MIT](#MIT) 
-* [MIT-0](#MIT-0) 
-* [MPL-1.1](#MPL-1.1) 
-* [MPL-2.0](#MPL-2.0) 
-* [OFL-1.1](#OFL-1.1) 
-* [Python-2.0](#Python-2.0) 
-* [Unicode-3.0](#Unicode-3.0) 
-* [Unicode-DFS-2016](#Unicode-DFS-2016) 
-* [UPL-1.0](#UPL-1.0) 
-* [W3C-19990505](#W3C-19990505) 
+* [BSD-2-Clause](#bsd-2-clause) 
+* [BSD-3-Clause](#bsd-3-clause) 
+* [CC-BY-2.5](#cc-by-2.5) 
+* [CC0-1.0](#cc0-1.0) 
+* [CDDL-1.0](#cddl-1.0) 
+* [CDDL-1.1](#cddl-1.1) 
+* [EDL-1.0](#edl-1.0) 
+* [EPL-1.0](#epl-1.0) 
+* [EPL-2.0](#epl-2.0) 
+* [GPL-2.0-with-classpath-exception](#gpl-2.0-with-classpath-exception) 
+* [IndianaUniversity-1.1.1](#indianauniversity-1.1.1) 
+* [ISC](#isc) 
+* [LGPL-2.1-only](#lgpl-2.1-only) 
+* [LGPL-2.1-or-later](#lgpl-2.1-or-later) 
+* [MIT](#mit) 
+* [MIT-0](#mit-0) 
+* [MPL-1.1](#mpl-1.1) 
+* [MPL-2.0](#mpl-2.0) 
+* [OFL-1.1](#ofl-1.1) 
+* [Python-2.0](#python-2.0) 
+* [Unicode-3.0](#unicode-3.0) 
+* [Unicode-DFS-2016](#unicode-dfs-2016) 
+* [UPL-1.0](#upl-1.0) 
+* [W3C-19990505](#w3c-19990505) 
 
 GNU Lesser/Library General Public License LGPL (any version)
 
@@ -1049,7 +1049,7 @@ Operaton uses Node libraries for the web applications included in the distributi
 ### Licenses
 
 ---
-#### <a name="Unicode-DFS-2016"></a>Unicode-DFS-2016
+#### <a name="unicode-dfs-2016"></a>Unicode-DFS-2016
 The following license text for the Unicode-DFS-2016 license is cited only once.
 
 ```
@@ -1102,7 +1102,7 @@ written authorization of the copyright holder.
 
 ```
 ---
-#### <a name="UPL-1.0"></a>UPL-1.0
+#### <a name="upl-1.0"></a>UPL-1.0
 The following license text for the UPL-1.0 license is cited only once.
 
 ```
@@ -1126,7 +1126,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRES
 
 ```
 ---
-#### <a name="OFL-1.1"></a>OFL-1.1
+#### <a name="ofl-1.1"></a>OFL-1.1
 The following license text for the OFL-1.1 license is cited only once.
 
 ```
@@ -1203,7 +1203,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 ```
 ---
-#### <a name="MPL-1.1"></a>MPL-1.1
+#### <a name="mpl-1.1"></a>MPL-1.1
 The following license text for the MPL-1.1 license is cited only once.
 
 ```
@@ -1543,7 +1543,7 @@ Original Code. You should use the text of this Exhibit A rather than the text fo
 Your Modifications.
 ```
 ---
-#### <a name="IndianaUniversity-1.1.1"></a>IndianaUniversity-1.1.1
+#### <a name="indianauniversity-1.1.1"></a>IndianaUniversity-1.1.1
 The following license text for the IndianaUniversity-1.1.1 license is cited only once.
 
 ```
@@ -1602,7 +1602,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRES
 
 ```
 ---
-#### <a name="CC-BY-2.5"></a>CC-BY-2.5
+#### <a name="cc-by-2.5"></a>CC-BY-2.5
 The following license text for the CC-BY-2.5 license is cited only once.
 
 ```
@@ -1645,7 +1645,7 @@ This License constitutes the entire agreement between the parties with respect t
 
 ```
 ---
-#### <a name="MPL-2.0"></a>MPL-2.0
+#### <a name="mpl-2.0"></a>MPL-2.0
 The following license text for the MPL-2.0 license is cited only once.
 
 ```
@@ -2005,7 +2005,7 @@ Exhibit B - “Incompatible With Secondary Licenses” Notice
 
 ```
 ---
-#### <a name="ISC"></a>ISC
+#### <a name="isc"></a>ISC
 The following license text for the ISC license is cited only once.
 
 ```
@@ -2016,7 +2016,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot; AND THE AUTHOR DISCLAIMS ALL WARRANTI
 
 ```
 ---
-#### <a name="CC0-1.0"></a>CC0-1.0
+#### <a name="cc0-1.0"></a>CC0-1.0
 The following license text for the CC0-1.0 license is cited only once.
 
 ```
@@ -2144,7 +2144,7 @@ express Statement of Purpose.
 
 ```
 ---
-#### <a name="BlueOak-1.0.0"></a>BlueOak-1.0.0
+#### <a name="blueoak-1.0.0"></a>BlueOak-1.0.0
 The following license text for the BlueOak-1.0.0 license is cited only once.
 
 ```
@@ -2206,7 +2206,7 @@ software or this license, under any kind of legal claim.***
 
 ```
 ---
-#### <a name="MIT-0"></a>MIT-0
+#### <a name="mit-0"></a>MIT-0
 The following license text for the MIT-0 license is cited only once.
 
 ```
@@ -2225,7 +2225,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 ---
-#### <a name="BSD-2-Clause"></a>BSD-2-Clause
+#### <a name="bsd-2-clause"></a>BSD-2-Clause
 The following license text for the BSD-2-Clause license is cited only once.
 
 ```
@@ -2256,7 +2256,7 @@ IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY O
 SUCH DAMAGE.
 ```
 ---
-#### <a name="Unicode-3.0"></a>Unicode-3.0
+#### <a name="unicode-3.0"></a>Unicode-3.0
 The following license text for the Unicode-3.0 license is cited only once.
 
 ```
@@ -2275,7 +2275,7 @@ IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE BE LIA
 Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to promote the sale, use or other dealings in these Data Files or Software without prior written authorization of the copyright holder.
 ```
 ---
-#### <a name="CDDL-1.1"></a>CDDL-1.1
+#### <a name="cddl-1.1"></a>CDDL-1.1
 The following license text for the CDDL-1.1 license is cited only once.
 
 ```
@@ -2644,7 +2644,7 @@ County, California.
 
 ```
 ---
-#### <a name="LGPL-2.1-only"></a>LGPL-2.1-only
+#### <a name="lgpl-2.1-only"></a>LGPL-2.1-only
 The following license text for the LGPL-2.1-only license is cited only once.
 
 ```
@@ -2731,7 +2731,7 @@ END OF TERMS AND CONDITIONS
 
 ```
 ---
-#### <a name="EPL-2.0"></a>EPL-2.0
+#### <a name="epl-2.0"></a>EPL-2.0
 The following license text for the EPL-2.0 license is cited only once.
 
 ```
@@ -2792,7 +2792,7 @@ You may add additional accurate notices of copyright ownership.
 
 ```
 ---
-#### <a name="Python-2.0"></a>Python-2.0
+#### <a name="python-2.0"></a>Python-2.0
 The following license text for the Python-2.0 license is cited only once.
 
 ```
@@ -3053,7 +3053,7 @@ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ```
 ---
-#### <a name="CDDL-1.0"></a>CDDL-1.0
+#### <a name="cddl-1.0"></a>CDDL-1.0
 The following license text for the CDDL-1.0 license is cited only once.
 
 ```
@@ -3444,7 +3444,7 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 
 ```
 ---
-#### <a name="MIT"></a>MIT
+#### <a name="mit"></a>MIT
 The following license text for the MIT license is cited only once.
 
 ```
@@ -3457,7 +3457,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRES
 
 ```
 ---
-#### <a name="LGPL-2.1-or-later"></a>LGPL-2.1-or-later
+#### <a name="lgpl-2.1-or-later"></a>LGPL-2.1-or-later
 The following license text for the LGPL-2.1-or-later license is cited only once.
 
 ```
@@ -3869,7 +3869,7 @@ That’s all there is to it!
 
 ```
 ---
-#### <a name="GPL-2.0-with-classpath-exception"></a>GPL-2.0-with-classpath-exception
+#### <a name="gpl-2.0-with-classpath-exception"></a>GPL-2.0-with-classpath-exception
 The following license text for the GPL-2.0-with-classpath-exception license is cited only once.
 
 ```
@@ -4239,7 +4239,7 @@ exception as provided by Oracle in the LICENSE file that accompanied this code.&
 
 ```
 ---
-#### <a name="EDL-1.0"></a>EDL-1.0
+#### <a name="edl-1.0"></a>EDL-1.0
 The following license text for the EDL-1.0 license is cited only once.
 
 ```
@@ -4257,7 +4257,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
 
 ```
 ---
-#### <a name="BSD-3-Clause"></a>BSD-3-Clause
+#### <a name="bsd-3-clause"></a>BSD-3-Clause
 The following license text for the BSD-3-Clause license is cited only once.
 
 ```
@@ -4293,7 +4293,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ```
 ---
-#### <a name="EPL-1.0"></a>EPL-1.0
+#### <a name="epl-1.0"></a>EPL-1.0
 The following license text for the EPL-1.0 license is cited only once.
 
 ```
@@ -4344,7 +4344,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
 ```
 ---
-#### <a name="W3C-19990505"></a>W3C-19990505
+#### <a name="w3c-19990505"></a>W3C-19990505
 The following license text for the W3C-19990505 license is cited only once.
 
 ```
@@ -4376,7 +4376,7 @@ webmaster
 (last updated by reagle on 1999/04/99.)
 ```
 ---
-#### <a name="Apache-2.0"></a>Apache-2.0
+#### <a name="apache-2.0"></a>Apache-2.0
 The following license text for the Apache-2.0 license is cited only once.
 
 ```

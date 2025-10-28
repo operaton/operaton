@@ -192,7 +192,7 @@ def generate_license_book():
     for file_path in glob.glob(os.path.join(licenses_dir, '*.txt')):
         key = os.path.splitext(os.path.basename(file_path))[0]
         with open(file_path, 'r', encoding='utf-8') as f:
-            licenses[key] = {'license_name': key, 'license_text': f.read()}
+            licenses[key] = {'license_name': key, 'license_name_lower': key.lower(), 'license_text': f.read()}
 
     print(f"[INFO] Loaded {len(licenses)} npm libraries for the license book.")
 
@@ -223,7 +223,11 @@ def generate_license_book():
         data['version'] = splitted[len(splitted)-1]
 
     # define variables
-    license_ids=sorted(licenses.keys(), key=lambda k: k.lower())
+    license_ids = sorted(
+        [{"id": k, "id_lower": k.lower()} for k in licenses.keys()],
+        key=lambda x: x["id_lower"]
+    )
+
     date_str = datetime.datetime.now().strftime('%Y-%m-%d')
     npm_licenses = sorted(npm_licenses.values(), key=lambda k: k['library'])
     output = renderer.render(template, {

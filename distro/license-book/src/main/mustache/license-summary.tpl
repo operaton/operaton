@@ -7,7 +7,7 @@ We are thankful to all individuals that have created these.
 The Libraries used within Operaton {{version}} are published under the following licenses:
 
 {{#license_ids}}
-* [{{.}}](#{{.}}) 
+* [{{id}}](#{{id_lower}}) 
 {{/license_ids}}
 
 GNU Lesser/Library General Public License LGPL (any version)

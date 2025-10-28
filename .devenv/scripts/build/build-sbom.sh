@@ -8,6 +8,13 @@ if ! command -v npx &> /dev/null; then
     exit 1
 fi
 
+echo "Generating CycloneDX SBOM for Node.js frontend module..."
+pushd $(pwd) > /dev/null
+npm install @cyclonedx/cyclonedx-npm@latest
+npm install
+npx @cyclonedx/cyclonedx-npm --output-file target/sbom/operaton-webapps.cyclonedx-json.sbom
+popd > /dev/null
+
 echo "Generating CycloneDX SBOM for Maven modules..."
 ./mvnw org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom \
   -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless \
@@ -23,8 +30,5 @@ if [ ! -f target/sbom/operaton-modules.json ]; then
     exit 1
 fi
 mv target/sbom/operaton-modules.json target/sbom/operaton-modules.cyclonedx-json.sbom
-
-echo "Generating CycloneDX SBOM for Node.js frontend module..."
-npx @cyclonedx/cyclonedx-npm --output-file target/sbom/operaton-webapps.cyclonedx-json.sbom webapps/frontend/package-lock.json
 
 echo "📦 SBOM files generated in target/sbom/"

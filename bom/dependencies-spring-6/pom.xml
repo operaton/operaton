@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-core-internal-dependencies</artifactId>
     <relativePath>../internal-dependencies/pom.xml</relativePath>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-core-dependencies-spring-6</artifactId>

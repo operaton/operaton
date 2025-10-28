@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-engine-spring-7</artifactId>
   <name>Operaton - Engine - Spring 7</name>
@@ -92,11 +92,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
       <scope>test</scope>
@@ -104,11 +99,6 @@
     <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

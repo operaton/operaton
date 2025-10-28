@@ -6,9 +6,8 @@
 
 {{>license-summary}}
 
-{{> license}}
-
 {{> mvn-dependency}}
 
 {{> npm-license}}
 
+{{> license}}

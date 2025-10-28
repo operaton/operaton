@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.junit5.deployment;
 
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -26,6 +25,8 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ProcessEngineExtension.class)
 @Deployment(resources = {"processes/superProcess.bpmn", "processes/subProcess.bpmn"})
@@ -40,12 +41,12 @@ class ProcessEngineExtensionResourcesDeploymentTest {
   })
   void testDeployTwoDiagrams() {
     List<ProcessDefinition> processDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().list();
-    Assertions.assertThat(processDefinitions).hasSize(2);
+    assertThat(processDefinitions).hasSize(2);
   }
 
   @Test
   void testDeployTwoDiagramsFromClassLevel() {
     List<ProcessDefinition> processDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().list();
-    Assertions.assertThat(processDefinitions).hasSize(2);
+    assertThat(processDefinitions).hasSize(2);
   }
 }

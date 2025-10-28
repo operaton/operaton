@@ -396,6 +396,7 @@ jobs:
         with:
           path: |
             target/*.zip
+            target/sbom/**
           key: ${{ github.run_id }}-documentation-artifacts
 
   release:
@@ -438,6 +439,7 @@ jobs:
         with:
           path: |
             target/*.zip
+            target/sbom/**
           key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
 

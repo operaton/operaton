@@ -3,6 +3,15 @@ name: Integration Build
 on:
   schedule:
     - cron: "0 2 * * *"     # Runs at 2:00 AM UTC daily
+  pull_request:
+    branches:
+      - main
+      - release/*
+  push:
+    branches:
+      - release/*
+      # when developing the workflow itself, create this branch and push to it
+      - ci-dev/integration-build
   workflow_dispatch:        # Allows manual trigger
     inputs:
       java_version:
@@ -65,58 +74,44 @@ on:
           - '["db2"]'
           - '["h2", "postgresql"]'
           - '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]'
-      dry_run:
-        description: 'Release: Skips remote operations when true'
+      perform_documentation:
+        description: 'Enable to build documentation (javadoc, rest-api, clirr, sbom)'
         type: boolean
         required: true
         default: false
-  pull_request:             # Runs on pull requests to main
-    branches:
-      - main
-      - release/**
-  push:
-    branches:
-      # when developing the workflow itself, create this branch and push to it
-      - main
-      - release/**
-      - ci-dev/integration-build
+      perform_release:
+        description: 'Enable to perform release actions (simulate scheduled release builds)'
+        type: boolean
+        required: true
+        default: false
+      dry_run:
+        description: 'Dry run: Skips remote operations (e.g. Maven Central, Docker) when true'
+        type: boolean
+        required: true
+        default: false
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
-  detect-recent-changes:
-    name: Detect recent changes
-    runs-on: ubuntu-latest
-    outputs:
-      recent_changes: ${{steps.check-commits.outputs.commits}}
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - name: Check for recent commits
-        id: check-commits
-        run: |
-          COMMITS=$(git rev-list --since="24 hours ago" HEAD)
-          if [ -z "$COMMITS" ]; then
-            echo "🔎❌ No commits in the last 24 hours detected."
-            echo "commits=false" >> $GITHUB_OUTPUT
-          else
-            echo "🔎✔️ Commits within the last 24 hours detected."
-            echo "commits=true" >> $GITHUB_OUTPUT
-          fi
-
-  determine-pr-config:
+  determine-build-config:
     name: Determine PR Configuration
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    needs:
+      - detect-recent-changes
     outputs:
-      needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
-      java_versions: ${{ steps.compute-matrix.outputs.java_versions }}
-      distros: ${{ steps.compute-matrix.outputs.distros }}
-      databases: ${{ steps.compute-matrix.outputs.databases }}
+      needs_build:              ${{ steps.check-pr.outputs.needs_build }}
+      needs_integration_build:  ${{ steps.check-pr.outputs.needs_integration_build }}
+      needs_documentation:      ${{ steps.check-pr.outputs.needs_documentation }}
+      needs_release:            ${{ steps.check-pr.outputs.needs_release }}
+      recent_changes:           ${{ steps.check-pr.outputs.recent_changes }}
+      skip_tests:               ${{ steps.check-pr.outputs.recent_changes }}
+      dry_run:                  ${{ steps.check-pr.outputs.dry_run }}
+      java_versions:            ${{ steps.compute-matrix.outputs.java_versions }}
+      distros:                  ${{ steps.compute-matrix.outputs.distros }}
+      databases:                ${{ steps.compute-matrix.outputs.databases }}
+      test_suites:              ${{ steps.compute-matrix.outputs.test_suites }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
@@ -125,12 +120,34 @@ jobs:
       - name: Check PR conditions
         id: check-pr
         env:
-          PR_LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
-          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR_LABELS:                    ${{ toJson(github.event.pull_request.labels.*.name) }}
+          PR_AUTHOR:                    ${{ github.event.pull_request.user.login }}
+          EVENT_NAME:                   ${{ github.event_name }}
+          INPUT_INTEGRATION_TESTS:      ${{ github.event.inputs.integration_tests }}
+          INPUT_SKIP_BUILD:             ${{ github.event.inputs.skip_build }}
+          INPUT_SKIP_TESTS:             ${{ github.event.inputs.skip_tests }}
+          INPUT_PERFORM_DOCUMENTATION:  ${{ github.event.inputs.perform_documentation }}
+          INPUT_PERFORM_RELEASE:        ${{ github.event.inputs.perform_release }}
+          INPUT_DRY_RUN:                ${{ github.event.inputs.dry_run || 'true' }}
         run: |
           echo "PR Labels: $PR_LABELS"
           echo "PR Author: $PR_AUTHOR"
+          NEED_BUILS=true
+          NEEDS_INTEGRATION_BUILD=true
+          NEEDS_DOCUMENTATION=$INPUT_PERFORM_DOCUMENTATION
+          NEEDS_RELEASE=$INPUT_PERFORM_RELEASE
+          DRY_RUN=$INPUT_DRY_RUN
+          HAS_RECENT_CHANGES=false
+          SKIP_TESTS=$INPUT_SKIP_TESTS
           
+          COMMITS=$(git rev-list --since="24 hours ago" HEAD)
+          if [ -z "$COMMITS" ]; then
+            echo "🔎❌ No commits in the last 24 hours detected."
+          else
+            echo "🔎✔️ Commits within the last 24 hours detected."
+            HAS_RECENT_CHANGES=true
+          fi
+
           # Define whitelisted authors (core team members who don't need full integration tests)
           WHITELISTED_AUTHORS="kthoms,javahippie"
           
@@ -144,39 +161,83 @@ jobs:
           fi
           
           # Check if PR is from Dependabot
-          if [[ "$PR_AUTHOR" == "dependabot"* ]]; then
-            echo "🤖 PR is from Dependabot"
-            NEEDS_BUILD=true
-          # Check if PR has dependency label
-          elif echo "$PR_LABELS" | grep -q '"dependencies"'; then
-            echo "📦 PR has dependencies label"
-            NEEDS_BUILD=true
-          # Check if PR has distro: labels
-          elif echo "$PR_LABELS" | grep -q '"distro:'; then
-            echo "🏗️ PR has distro labels"
-            NEEDS_BUILD=true
-          # Check if PR has database: labels
-          elif echo "$PR_LABELS" | grep -q '"database:'; then
-            echo "🗄️ PR has database labels"
-            NEEDS_BUILD=true
-          # Check if author is not whitelisted
-          elif [[ "$AUTHOR_WHITELISTED" == "false" ]]; then
-            echo "👤 PR author is not whitelisted, requiring integration build"
-            NEEDS_BUILD=true
+          if [[ "$EVENT_NAME" == "schedule" && -z "$COMMITS" ]]; then
+            echo "⏰ Scheduled run, requiring integration build"
+            NEEDS_DOCUMENTATION=true
+            NEEDS_RELEASE=true
+            DRY_RUN=false
+            SKIP_TESTS=false
+          elif [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]]; then
+            echo "🔀 Pull request event, evaluating conditions"            
+            # Check if PR has dependency label
+            if echo "$PR_LABELS" | grep -q '"dependencies"'; then
+              echo "📦 PR has dependencies label"
+            # Check if PR has distro: labels
+            elif echo "$PR_LABELS" | grep -q '"distro:'; then
+              echo "🏗️ PR has distro labels"
+            # Check if PR has database: labels
+            elif echo "$PR_LABELS" | grep -q '"database:'; then
+              echo "🗄️ PR has database labels"
+            elif [[ "$PR_AUTHOR" == "dependabot"* ]]; then
+              echo "🤖 PR is from Dependabot"
+            # Check if author is not whitelisted
+            elif [[ "$AUTHOR_WHITELISTED" == "false" ]]; then
+              echo "👤 PR author is not whitelisted, requiring integration build"
+            else
+              NEEDS_INTEGRATION_BUILD=false
+            fi
+          elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+              echo "🚀 Manual workflow dispatch"
+              if [[ "$INPUT_SKIP_BUILD" == "true" ]]; then
+                  echo "ℹ️ Build skipped as per input"
+                  NEEDS_BUILD=false
+              fi  
+              if [[ "$INPUT_INTEGRATION_TESTS" == "false" ]]; then
+                echo "ℹ️ Integration tests not requested"
+                NEEDS_INTEGRATION_BUILD=false
+              fi
           else
-            echo "✅ PR doesn't require integration build"
-            NEEDS_BUILD=false
+            echo "ℹ️ Event type $EVENT_NAME does not require integration build by default"
+            NEEDS_INTEGRATION_BUILD=false
           fi
           
+          if [[ "$INPUT_SKIP_BUILD" == "false" ]]; then
+              echo "⚠️ Build skipped"
+          fi  
+          if [[ "$NEEDS_INTEGRATION_BUILD" == "false" ]]; then
+            echo "⚠️ Integration build not required"
+          fi
+          
+          echo "needs_integration_build=$NEEDS_INTEGRATION_BUILD" >> $GITHUB_OUTPUT
           echo "needs_build=$NEEDS_BUILD" >> $GITHUB_OUTPUT
+          echo "needs_documentation=$NEEDS_DOCUMENTATION" >> $GITHUB_OUTPUT
+          echo "needs_release=$NEEDS_RELEASE" >> $GITHUB_OUTPUT
+          echo "recent_changes=$HAS_RECENT_CHANGES" >> $GITHUB_OUTPUT
+          echo "dry_run=$DRY_RUN" >> $GITHUB_OUTPUT
+          echo "skip_tests=$SKIP_TESTS" >> $GITHUB_OUTPUT
       - name: Compute matrix values
         id: compute-matrix
-        if: steps.check-pr.outputs.needs_build == 'true'
+        if: steps.check-pr.outputs.needs_integration_build == 'true'
         env:
-          PR_LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
+          PR_LABELS:          ${{ toJson(github.event.pull_request.labels.*.name) }}
+          EVENT_NAME:         ${{ github.event_name }}
+          INPUT_JAVA_VERSION: ${{ fromJson(github.event.inputs.java_version || '["17", "21", "25"]') }}
+          INPUT_DISTROS:      ${{ fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]') }}
+          INPUT_DATABASES:    ${{ fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]') }}
+          INPUT_TESTSUITES:   ${{ fromJson(github.event.inputs.testsuite || '["engine", "webapps" ]') }}
         run: |
           # Java version is always 17 for PR builds
-          JAVA_VERSIONS='["17"]'
+          JAVA_VERSIONS=$INPUT_JAVA_VERSION
+          DISTROS=$INPUT_DISTROS
+          DATABASES=$INPUT_DATABASES
+          TEST_SUITES=$INPUT_TESTSUITES
+          
+          if [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]]; then
+            JAVA_VERSIONS='["17"]'
+            echo "🎯 Using Java version 17 for PR/Push builds"
+          else
+            echo "🎯 Using Java versions from input: $JAVA_VERSIONS"
+          fi
           echo "java_versions=$JAVA_VERSIONS" >> $GITHUB_OUTPUT
           
           # Determine distros based on labels
@@ -198,18 +259,19 @@ jobs:
             # Convert to JSON array
             DATABASES=$(echo "$DATABASE_LABELS" | jq -R -s 'split("\n") | map(select(. != ""))')
             echo "🎯 Using specific databases from labels: $DATABASES"
-          else
-            # Default to h2 only
+          elif [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]]; then
             DATABASES='["h2"]'
-            echo "🎯 Using default database: $DATABASES"
+            echo "🎯 Using H2 database for PR/Push builds"
           fi
           echo "databases=$DATABASES" >> $GITHUB_OUTPUT
+          
+          echo "test_suites=$TEST_SUITES" >> $GITHUB_OUTPUT
 
   early-exit:
     name: Early Exit Check
     runs-on: ubuntu-latest
-    needs: determine-pr-config
-    if: github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'false'
+    needs: determine-build-config
+    if: needs.determine-build-config.outputs.needs_integration_build == 'false'
     steps:
       - name: Cancel workflow
         run: |
@@ -223,20 +285,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "21", "25"]') }}
+        java: ${{ fromJson(needs.determine-build-config.outputs.java_versions) }}
     runs-on: ubuntu-latest
     needs: 
-      - detect-recent-changes
-      - determine-pr-config
+      - determine-build-config
     if: |
-      always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false') ||
-        (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
-      )
+      always() && !cancelled() && (needs.determine-build-config.outputs.needs_build == 'true')
     outputs:
-      version: ${{steps.maven-build.outputs.version}}
-      project_version: ${{steps.maven-build.outputs.project_version}}
+      version:          ${{steps.maven-build.outputs.version}}
+      project_version:  ${{steps.maven-build.outputs.project_version}}
       database_version: ${{steps.maven-build.outputs.database_version}}
     steps:
       - name: Checkout Code
@@ -297,21 +354,16 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     needs: 
-      - detect-recent-changes
-      - determine-pr-config
+      - determine-build-config
     if: |
-      always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.integration_tests == 'true') ||
-        (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
-      )
+      always() && !cancelled() && (needs.determine-build-config.outputs.needs_integration_build == 'true')
     strategy:
       fail-fast: false
       matrix:
-        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "25"]') }}
-        testsuite: ${{ github.event_name == 'pull_request' && fromJson('["engine"]') || fromJson(github.event.inputs.testsuite || '["engine"]') }}
-        distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
-        database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
+        java:      ${{ fromJson(needs.determine-build-config.outputs.java_versions)  }}
+        testsuite: ${{ fromJson(needs.determine-build-config.outputs.test_suites) }}
+        distro:    ${{ fromJson(needs.determine-build-config.outputs.distros) }}
+        database:  ${{ fromJson(needs.determine-build-config.outputs.databases) }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
@@ -374,21 +426,15 @@ jobs:
     name: Documentation
     runs-on: ubuntu-latest
     needs:
-      - detect-recent-changes
-      - determine-pr-config
-      - build
+      - determine-build-config
     if: |
-      always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false')
-      )
+      always() && !cancelled() && (needs.detect-recent-changes.outputs.needs_documentation == 'true')
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Documentation
-        if: always()
         run: |
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
@@ -406,17 +452,13 @@ jobs:
   release:
     name: Release
     needs:
-      - detect-recent-changes
-      - determine-pr-config
+      - determine-build-config
       - build
       - integration-tests
       - documentation
     runs-on: ubuntu-latest
     if: |
-      always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false')
-      )
+      always() && !cancelled() && (needs.detect-recent-changes.outputs.needs_release == 'true')
     steps:
       - name: Check out the code
         uses: actions/checkout@v6
@@ -462,7 +504,7 @@ jobs:
           arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.build.outputs.database_version}}
 
       - name: Publish Test Report
-        if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_tests == 'false'}}
+        if: ${{ needs.determine-build-config.outputs.needs_integration_build == 'true' || needs.determine-build-config.outputs.skip_tests == 'true' == 'false'}}
         uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
@@ -487,15 +529,10 @@ jobs:
     name: Post-Release
     runs-on: ubuntu-latest
     needs:
-      - detect-recent-changes
-      - determine-pr-config
-      - build
+      - determine-build-config
       - release
     if: |
-      always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false')
-      )
+      always() && !cancelled() && (needs.detect-recent-changes.outputs.needs_release == 'true') && (needs.detect-recent-changes.outputs.dry_run == 'false')
     steps:
       - name: Notify Docker Repository
         run: |

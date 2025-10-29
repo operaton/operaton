@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.cdi.test.api;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
@@ -28,12 +27,11 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Michael Scholz
  */
-@Disabled("FIXME: Broke with refactoring of tests to JUnit 5, commit 48e399bd")
 class ProcessVariableMapTest extends CdiProcessEngineTestCase {
 
   private static final String VARNAME_1 = "aVariable";
@@ -53,7 +51,8 @@ class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     businessProcess.setVariable(VARNAME_1, Variables.stringValue(aValue));
 
     // Legacy API
-    assertThat(variables).containsEntry(VARNAME_1, aValue);
+    Object actual = variables.get(VARNAME_1);
+    assertThat(actual).isEqualTo(aValue);
 
     // Typed variable API
     TypedValue aTypedValue = variables.getValueTyped(VARNAME_1);
@@ -62,12 +61,9 @@ class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     assertThat(variables.getValue(VARNAME_1, String.class)).isEqualTo(aValue);
 
     // Type API with wrong type
-    try {
-      variables.getValue(VARNAME_1, Integer.class);
-      fail("ClassCastException expected!");
-    } catch(ClassCastException ex) {
-      assertThat(ex.getMessage()).isEqualTo("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.");
-    }
+    assertThatThrownBy(() -> variables.getValue(VARNAME_1, Integer.class))
+      .isInstanceOf(ClassCastException.class)
+      .hasMessage("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.");
 
     // ////////////////////////////////////////////////////////////////
     // Put a variable via VariableMap and get it via BusinessProcess //
@@ -100,7 +96,8 @@ class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     businessProcess.setVariableLocal(VARNAME_1, Variables.stringValue(aValue));
 
     // Legacy API
-    assertThat(variables).containsEntry(VARNAME_1, aValue);
+    Object actual = variables.get(VARNAME_1);
+    assertThat(actual).isEqualTo(aValue);
 
     // Typed variable API
     TypedValue aTypedValue = variables.getValueTyped(VARNAME_1);
@@ -109,12 +106,9 @@ class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     assertThat(variables.getValue(VARNAME_1, String.class)).isEqualTo(aValue);
 
     // Type API with wrong type
-    try {
-      variables.getValue(VARNAME_1, Integer.class);
-      fail("ClassCastException expected!");
-    } catch(ClassCastException ex) {
-      assertThat(ex.getMessage()).isEqualTo("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.");
-    }
+    assertThatThrownBy(() -> variables.getValue(VARNAME_1, Integer.class))
+      .isInstanceOf(ClassCastException.class)
+      .hasMessage("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.");
 
     // ////////////////////////////////////////////////////////////////
     // Put a variable via VariableMap and get it via BusinessProcess //

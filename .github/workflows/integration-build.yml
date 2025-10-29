@@ -3,6 +3,7 @@ name: Integration Build
 on:
   schedule:
     - cron: "0 2 * * *"     # Runs at 2:00 AM UTC daily
+    - cron: "30 11 * * *"
   workflow_dispatch:        # Allows manual trigger
     inputs:
       java_version:
@@ -355,7 +356,7 @@ jobs:
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
           path: |
@@ -389,6 +390,7 @@ jobs:
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
+          .devenv/scripts/build/build-sbom.sh
       - name: Cache documentation artifacts
         uses: actions/cache/save@v4
         with:
@@ -462,14 +464,14 @@ jobs:
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: staging
           path: |

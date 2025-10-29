@@ -91,6 +91,7 @@ jobs:
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
+          .devenv/scripts/build/build-sbom.sh
       - name: Cache build artifacts
         uses: actions/cache@v4
         with:
@@ -154,14 +155,14 @@ jobs:
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: staging
           path: |

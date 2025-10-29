@@ -186,7 +186,7 @@ public class JobManager extends AbstractManager {
       return false;
     }
 
-    return Objects.equals(job1.getProcessInstanceId(), job1.getProcessInstanceId());
+    return Objects.equals(job1.getProcessInstanceId(), job2.getProcessInstanceId());
   }
 
   protected boolean isJobPriorityInJobExecutorPriorityRange(long jobPriority) {

@@ -19,6 +19,7 @@ package org.operaton.bpm.model.xml.impl.type.reference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelReferenceException;
@@ -96,7 +97,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   @Override
   protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
     String referencingTextContent = getReferenceIdentifier(referenceSourceElement);
-    if (oldIdentifier.equals(referencingTextContent)) {
+    if (oldIdentifier != null && Objects.equals(oldIdentifier, referencingTextContent)) {
       setReferenceIdentifier(referenceSourceElement, newIdentifier);
     }
   }

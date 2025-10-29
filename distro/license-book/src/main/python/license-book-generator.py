@@ -42,10 +42,13 @@ LICENSE_SPDX_MAP = {
     "EPL-2.0": "EPL-2.0",
     "GNU General Public License, version 2 with the GNU Classpath Exception": "GPL-2.0-with-classpath-exception",
     "GNU General Public License, Version 2 with the Classpath Exception": "GPL-2.0-with-classpath-exception",
+    "The GNU General Public License (GPL), Version 2, With Classpath Exception": "GPL-2.0-with-classpath-exception",
     "GNU Lesser General Public License v2.1 only": "LGPL-2.1-only",
     "GNU Lesser General Public License v2.1 or later": "LGPL-2.1-or-later",
     "GNU Library General Public License v2.1 or later": "LGPL-2.1-or-later",
+    "GNU Lesser General Public License": "LGPL-2.1-only",
     "GPL2 w/ CPE": "GPL-2.0-with-classpath-exception",
+    "Indiana University Extreme! Lab Software License 1.1.1": "IndianaUniversity-1.1.1",
     "lgpl": "LGPL-2.1-only",
     "MIT": "MIT",
     "MIT-0": "MIT-0",
@@ -58,6 +61,10 @@ LICENSE_SPDX_MAP = {
     "Public Domain, per Creative Commons CC0": "CC0-1.0",
     "Unicode/ICU License": "Unicode-3.0",
     "Universal Permissive License, Version 1.0": "UPL-1.0",
+    "W3C license": "W3C-19990505",
+    "jQuery license": "JQUERY",
+    "Apache License, Version 2.0 and Common Development And Distribution License (CDDL) Version 1.0 and Eclipse Public License - v 2.0": "(Apache-2.0 AND CDDL-1.0 AND EPL-2.0)",
+    "Fabric3 License": "FABRIC3"
 }
 
 SPDX_FILE_MAP = {
@@ -84,106 +91,67 @@ LICENSES_XML_PATH = "target/generated-resources/licenses.xml"
 LICENSES_DIR = "target/generated-resources/licenses"
 LICENSEBOOK_DIR = "distro/license-book"
 
-def run_maven_license_report():
-    print("[INFO] Generating Maven license report...")
-    with open('distro/license-book/target/license-book-generator.out', 'w+') as out_file:
-        subprocess.run([
-            "./mvnw",
-            "-Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory,check-api-compatibility",
-            "license:aggregate-add-third-party"
-        ], check=True, stdout=out_file, stderr=out_file)
-
-def run_npm_license_report():
-    print("[INFO] Generating Node.js license report...")
+def run_sbom_generation():
+    print("[INFO] Generating SBOMs...")
     with open('distro/license-book/target/license-book-generator.out', 'a') as out_file:
-        subprocess.run(["npm", "install", "license-checker"], check=True, stdout=out_file, stderr=out_file)
-        subprocess.run([
-            "license-checker",
-            "--production",
-            "--relativeLicensePath",
-            "--json",
-            "--out",
-            "target/generated-resources/npm-licenses.json"
-        ], check=True, stdout=out_file, stderr=out_file)
-
-def normalize_license_name(name):
-    return name.strip().lower()
+        subprocess.run([".devenv/scripts/build/build-sbom.sh"], check=True, stdout=out_file, stderr=out_file)
 
 
-def postprocess_licenses_xml():
-    if not os.path.exists(LICENSES_XML_PATH):
-        print(f"[WARN] {LICENSES_XML_PATH} not found, skipping postprocessing.")
-        return
-
-    print("[INFO] Postprocessing licenses.xml and renaming license files to SPDX names...")
-    tree = ET.parse(LICENSES_XML_PATH)
-    root = tree.getroot()
-    renamed = {}
-
-    for lic in root.findall(".//license"):
-        name = lic.findtext("name")
-        file_elem = lic.find("file")
-        if name and file_elem is not None:
-            spdx_id = LICENSE_SPDX_MAP.get(name)
-            if spdx_id is None and name in LICENSE_SPDX_MAP.values():
-                spdx_id = name
-            print(f"[DEBUG] {name} -> {spdx_id}")
-            if spdx_id:
-                lic.find("name").text = spdx_id
-                # Rename file if not already done
-                #src = os.path.join(LICENSES_DIR, orig_file)
-                #dst = os.path.join(LICENSES_DIR, spdx_id)
-                #if os.path.exists(src) and not os.path.exists(dst):
-                #    shutil.move(src, dst)
-                #    renamed[orig_file] = spdx_id
-
-    tree.write(LICENSES_XML_PATH, encoding="utf-8", xml_declaration=True)
-    if renamed:
-        print(f"[INFO] Renamed license files: {renamed}")
-    else:
-        print("[INFO] No license files needed renaming.")
-
-
-def copy_license_book_to_dist():
+def copy_sboms_to_dist():
     """Copy the content of target/generated-resources/license-book to LICENSEBOOK_DIR/target/generated-resources."""
-    src = "target/generated-resources/license-book"
+    src = "target/sbom"
     dst = os.path.join(LICENSEBOOK_DIR, "target/generated-resources/")
     if not os.path.exists(src):
         print(f"[WARN] Source directory {src} does not exist, nothing to copy.")
         return
-    print(f"[INFO] Copying license book from {src} to {dst} ...")
+    print(f"[INFO] Copying CycloneDX SBOMs from {src} to {dst} ...")
     if os.path.exists(dst):
         shutil.rmtree(dst)
     shutil.copytree(src, dst)
-    for f in ['npm-licenses.json', 'licenses.xml']:
-        shutil.copy2(os.path.join("target/generated-resources", f), os.path.join(dst, f))
+    for f in ['operaton-modules.cyclonedx-json.sbom', 'operaton-modules.cyclonedx-json.sbom']:
+        shutil.copy2(os.path.join(src, f), os.path.join(dst, f))
     print("[INFO] License book copied successfully.")
 
-def read_dependencies_from_xml(xml_path):
-    tree = ET.parse(xml_path)
-    root = tree.getroot()
+def read_sbom(sbom_path):
+    with open(sbom_path, 'r', encoding='utf-8') as f:
+        sbom = json.load(f)
+
     dependencies = []
-    for dep in root.findall(".//dependency"):
-        group_id = dep.findtext("groupId")
-        if group_id and group_id.startswith("org.operaton"):
+    components = sbom.get('components', [])
+    for comp in components:
+        purl = comp.get('purl', '')
+        group = comp.get('group', '')
+
+        if purl.startswith('maven/org.operaton'):
             continue
-        artifact_id = dep.findtext("artifactId")
-        version = dep.findtext("version")
-        licenses = dep.findall('.//license/name')
-        license_names = [l.text for l in licenses]
+
+        licenses_info = comp.get('licenses', [])
+        license_names = []
+        for lic in licenses_info:
+            lic_name = lic.get('license', {}).get('id', '')
+            if not lic_name:
+                lic_name = lic.get('expression', {})
+            if not lic_name:
+                lic_name = lic.get('license', {}).get('name', '')
+                if lic_name:
+                    lic_name = LICENSE_SPDX_MAP.get(lic_name)
+            if not lic_name:
+                print(f"[DEBUG] {lic}")
+                lic_name = 'UNKNOWN'
+            if lic_name:
+                license_names.append(lic_name)
         license_str = ', '.join(license_names).replace('\n', ' ').replace('\r', ' ')
-        licenses = []
-        for lic in dep.findall(".//license"):
-            name = lic.findtext("name")
-            if name:
-                licenses.append(name)
+        if group.startswith('org.operaton'):
+            continue
         dependencies.append({
-            "groupId": group_id,
-            "artifactId": artifact_id,
-            "version": version,
+            "purl": purl,
+            "group": group,
+            "name": comp.get('name', ''),
+            "version": comp.get('version', ''),
+            "description": comp.get('description', ''),
             "licenses": license_str
         })
-    return dependencies
+    return sorted(Re-imdependencies, key=lambda k: k['licenses']+':'+k['group']+':'+k['name'])
 
 def generate_license_book():
     # read licenses from files
@@ -195,9 +163,6 @@ def generate_license_book():
             licenses[key] = {'license_name': key, 'license_name_lower': key.lower(), 'license_text': f.read()}
 
     print(f"[INFO] Loaded {len(licenses)} npm libraries for the license book.")
-
-    mvn_dependencies = read_dependencies_from_xml('distro/license-book/target/generated-resources/licenses.xml')
-    print(f"[INFO] Loaded {len(mvn_dependencies)} Maven dependencies for the license book.")
 
     # get project version from pom.xml
     pom_path = 'distro/license-book/pom.xml'
@@ -212,15 +177,11 @@ def generate_license_book():
     with open(tpl_path, 'r', encoding='utf-8') as tpl_file:
         template = tpl_file.read()
 
-    renderer = get_renderer_with_partials()
+    mvn_dependencies = read_sbom('distro/license-book/target/generated-resources/operaton-modules.cyclonedx-json.sbom')
+    print(f"[INFO] Loaded {len(mvn_dependencies)} Maven dependencies for the license book.")
 
-    json_path="distro/license-book/target/generated-resources/npm-licenses.json"
-    with open(json_path, 'r', encoding='utf-8') as json_file:
-        npm_licenses = json.load(json_file)
-    for library, data in npm_licenses.items():
-        splitted = library.split('@')
-        data['library'] = splitted[len(splitted)-2]
-        data['version'] = splitted[len(splitted)-1]
+    npm_dependencies = read_sbom('distro/license-book/target/generated-resources/operaton-webapps.cyclonedx-json.sbom')
+    print(f"[INFO] Loaded {len(npm_dependencies)} NPM dependencies for the license book.")
 
     # define variables
     license_ids = sorted(
@@ -229,13 +190,14 @@ def generate_license_book():
     )
 
     date_str = datetime.datetime.now().strftime('%Y-%m-%d')
-    npm_licenses = sorted(npm_licenses.values(), key=lambda k: k['library'])
+    npm_dependencies = sorted(npm_dependencies, key=lambda k: k['licenses']+':'+k['group']+':'+k['name'])
+    renderer = get_renderer_with_partials()
     output = renderer.render(template, {
         'version': version_str,
         'date': date_str,
         'license_ids': license_ids,
         'licenses': licenses.values(),
-        'npm_licenses': npm_licenses,
+        'npm_dependencies': npm_dependencies,
         'mvn_dependencies': mvn_dependencies
     })
 
@@ -259,11 +221,8 @@ def get_renderer_with_partials():
     return renderer
 
 def main():
-    run_maven_license_report()
-    run_npm_license_report()
-    postprocess_licenses_xml()
-    print("[INFO] License reports generated and postprocessed.")
-    copy_license_book_to_dist()
+    #run_sbom_generation()
+    copy_sboms_to_dist()
     generate_license_book()
     print("[INFO] Done.")
 

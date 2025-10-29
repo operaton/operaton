@@ -180,12 +180,23 @@ jobs:
             echo "⚠️ Integration build not required"
           fi
           
-          echo "needs_integration_build=$NEEDS_INTEGRATION_BUILD" >> $GITHUB_OUTPUT
           echo "needs_build=$NEEDS_BUILD" >> $GITHUB_OUTPUT
+          echo "needs_integration_build=$NEEDS_INTEGRATION_BUILD" >> $GITHUB_OUTPUT
           echo "needs_documentation=$NEEDS_DOCUMENTATION" >> $GITHUB_OUTPUT
           echo "needs_release=$NEEDS_RELEASE" >> $GITHUB_OUTPUT
           echo "recent_changes=$HAS_RECENT_CHANGES" >> $GITHUB_OUTPUT
           echo "dry_run=$DRY_RUN" >> $GITHUB_OUTPUT
+
+      - name: Debug Outputs
+        run: |
+          echo "🛠️ Build Configuration:"
+          echo "  Needs Build:               ${{ steps.check-pr.outputs.needs_build }}"
+          echo "  Needs Integration Build:   ${{ steps.check-pr.outputs.needs_integration_build }}"
+          echo "  Needs Documentation:       ${{ steps.check-pr.outputs.needs_documentation }}"
+          echo "  Needs Release:             ${{ steps.check-pr.outputs.needs_release }}"
+          echo "  Recent Changes:            ${{ steps.check-pr.outputs.recent_changes }}"
+          echo "  Dry Run:                   ${{ steps.check-pr.outputs.dry_run }}"
+
       - name: Compute matrix values
         id: compute-matrix
         if: steps.check-pr.outputs.needs_integration_build == 'true'

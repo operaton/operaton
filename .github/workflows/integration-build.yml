@@ -18,11 +18,8 @@ on:
         description: 'Java version to use'
         type: choice
         required: true
-        default: '17'
+        default: '["17"]'
         options:
-          - '17'
-          - '17 21'
-          - '(17 21)'
           - '["17"]'
           - '["21"]'
           - '["25"]'
@@ -130,8 +127,6 @@ jobs:
           # Define whitelisted authors (core team members who don't need full integration tests)
           WHITELISTED_AUTHORS="kthoms,javahippie"
           
-          
-          # Check if PR is from Dependabot
           if [[ "$EVENT_NAME" == "schedule" && -z "$COMMITS" ]]; then
             echo "⏰ Scheduled run, requiring integration build"
             NEEDS_BUILD=true
@@ -163,6 +158,7 @@ jobs:
             # Check if PR has database: labels
             elif echo "$PR_LABELS" | grep -q '"database:'; then
               echo "🗄️ PR has database labels"
+            # Check if PR is from Dependabot
             elif [[ "$PR_AUTHOR" == "dependabot"* ]]; then
               echo "🤖 PR is from Dependabot"
             # Check if author is not whitelisted
@@ -220,13 +216,7 @@ jobs:
           # Determine distros based on labels
           DISTRO_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("distro:")) | sub("distro:"; "")')
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            echo "****************** 2 $DISTROS"
             DISTROS= ${{ fromJson(github.event.inputs.distro_operaton) }}
-
-            if [[ -z "$DISTROS" ]]; then
-              echo "⚠️ No distros selected, skipping integration build"
-              echo "needs_integration_build=false" >> $GITHUB_OUTPUT
-            fi
           elif [[ -n "$DISTRO_LABELS" ]]; then
             # Convert to JSON array
             DISTROS=$(echo "$DISTRO_LABELS" | jq -R -s 'split("\n") | map(select(. != ""))')

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.model.xml.impl.type.reference;
 
+import java.util.Objects;
+
 import org.operaton.bpm.model.xml.impl.type.attribute.AttributeImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
-
-import java.util.Objects;
 
 /**
  * @author Sebastian Menski

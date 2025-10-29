@@ -22,6 +22,8 @@ import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
+import java.util.Objects;
+
 /**
  * @author Sebastian Menski
  */
@@ -61,7 +63,7 @@ public class AttributeReferenceImpl<T extends ModelElementInstance> extends Refe
   @Override
   protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
     String referencingAttributeValue = getReferenceIdentifier(referenceSourceElement);
-    if(oldIdentifier != null && oldIdentifier.equals(referencingAttributeValue)) {
+    if(oldIdentifier != null && Objects.equals(oldIdentifier, referencingAttributeValue)) {
       setReferenceIdentifier(referenceSourceElement, newIdentifier);
     }
   }

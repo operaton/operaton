@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.migration;
 
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
+import java.util.Objects;
+
 public class DefaultMigrationActivityMatcher implements MigrationActivityMatcher {
 
   @Override
@@ -26,7 +28,7 @@ public class DefaultMigrationActivityMatcher implements MigrationActivityMatcher
   }
 
   protected boolean equalId(ActivityImpl source, ActivityImpl target) {
-    return source.getId() != null && source.getId().equals(target.getId());
+    return source.getId() != null && Objects.equals(source.getId(), target.getId());
   }
 
 }

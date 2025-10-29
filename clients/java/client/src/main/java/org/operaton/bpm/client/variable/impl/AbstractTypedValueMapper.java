@@ -19,6 +19,8 @@ package org.operaton.bpm.client.variable.impl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import java.util.Objects;
+
 public abstract class AbstractTypedValueMapper<T extends TypedValue> implements ValueMapper<T> {
 
   protected ValueType valueType;
@@ -47,7 +49,7 @@ public abstract class AbstractTypedValueMapper<T extends TypedValue> implements 
   @Override
   public boolean canHandleTypedValueField(TypedValueField typedValueField) {
     String type = typedValueField.getType();
-    return type != null && type.equals(valueType.getName()) && canReadValue(typedValueField);
+    return type != null && Objects.equals(type, valueType.getName()) && canReadValue(typedValueField);
   }
 
   protected abstract boolean canWriteValue(TypedValue typedValue);

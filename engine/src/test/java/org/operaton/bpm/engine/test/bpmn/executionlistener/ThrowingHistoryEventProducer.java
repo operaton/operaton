@@ -21,6 +21,8 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.producer.DefaultHistoryEventProducer;
 
+import java.util.Objects;
+
 public class ThrowingHistoryEventProducer extends DefaultHistoryEventProducer {
 
   public static final String EXCEPTION_MESSAGE = "Intended exception from history producer";
@@ -47,7 +49,7 @@ public class ThrowingHistoryEventProducer extends DefaultHistoryEventProducer {
   @Override
   public HistoryEvent createActivityInstanceEndEvt(DelegateExecution execution) {
     String currentActivityName = execution.getCurrentActivityName();
-    if (currentActivityName != null && currentActivityName.equals(activityName)) {
+    if (currentActivityName != null && Objects.equals(currentActivityName, activityName)) {
       if (failsWithException) {
         throw new RuntimeException(EXCEPTION_MESSAGE);
       }

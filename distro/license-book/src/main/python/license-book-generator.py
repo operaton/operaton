@@ -23,6 +23,7 @@ LICENSE_SPDX_MAP = {
     "Apache License, version 2.0": "Apache-2.0",
     "The Apache License, Version 2.0": "Apache-2.0",
     "Apache License, 2.0": "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception": "Apache-2.0-with-LLVM-exception",
     "BSD": "BSD-3-Clause",
     "BSD-2-Clause": "BSD-2-Clause",
     "BSD 2-Clause": "BSD-2-Clause",
@@ -52,6 +53,7 @@ LICENSE_SPDX_MAP = {
     "lgpl": "LGPL-2.1-only",
     "MIT": "MIT",
     "MIT-0": "MIT-0",
+    "MIT-X11": "X11",
     "MIT license": "MIT",
     "MIT License": "MIT",
     "Modified BSD": "BSD-3-Clause",
@@ -64,7 +66,10 @@ LICENSE_SPDX_MAP = {
     "W3C license": "W3C-19990505",
     "jQuery license": "JQUERY",
     "Apache License, Version 2.0 and Common Development And Distribution License (CDDL) Version 1.0 and Eclipse Public License - v 2.0": "(Apache-2.0 AND CDDL-1.0 AND EPL-2.0)",
-    "Fabric3 License": "FABRIC3"
+    "Fabric3 License": "FABRIC3",
+    "OFL-1.1": "OFL-1.1",
+    "SIL": "OFL-1.1",
+    "SEE-LICENSE-IN-LICENSE": "bpmn.io"
 }
 
 SPDX_FILE_MAP = {
@@ -86,6 +91,15 @@ SPDX_FILE_MAP = {
     "Unicode-3.0": "unicode_icu license - license.txt",
     "UPL-1.0": "universal permissive license, version 1.0 - upl.html"
 }
+
+LIBNAME_LICENSE_OVERRIDES = {
+    "requirejs": "MIT",
+    "dom4": "MIT",
+    "component-events": "MIT",
+    "component-props": "MIT",
+    "indexof": "MIT",
+}
+
 
 LICENSES_XML_PATH = "target/generated-resources/licenses.xml"
 LICENSES_DIR = "target/generated-resources/licenses"
@@ -121,8 +135,11 @@ def read_sbom(sbom_path):
     for comp in components:
         purl = comp.get('purl', '')
         group = comp.get('group', '')
+        name = comp.get('name', '')
 
-        if purl.startswith('maven/org.operaton'):
+        if group.startswith('org.operaton'):
+            continue
+        if name == 'package-lock.json':
             continue
 
         licenses_info = comp.get('licenses', [])
@@ -135,23 +152,25 @@ def read_sbom(sbom_path):
                 lic_name = lic.get('license', {}).get('name', '')
                 if lic_name:
                     lic_name = LICENSE_SPDX_MAP.get(lic_name)
-            if not lic_name:
-                print(f"[DEBUG] {lic}")
+            if not lic_name or lic_name == '':
+                print(f"[DEBUG] Unknown license {lic}")
                 lic_name = 'UNKNOWN'
             if lic_name:
                 license_names.append(lic_name)
+        if not license_names:
+            license_names.append(LIBNAME_LICENSE_OVERRIDES.get(name, 'UNKNOWN'))
+
         license_str = ', '.join(license_names).replace('\n', ' ').replace('\r', ' ')
-        if group.startswith('org.operaton'):
-            continue
         dependencies.append({
             "purl": purl,
             "group": group,
-            "name": comp.get('name', ''),
+            "name": name,
             "version": comp.get('version', ''),
             "description": comp.get('description', ''),
             "licenses": license_str
         })
-    return sorted(Re-imdependencies, key=lambda k: k['licenses']+':'+k['group']+':'+k['name'])
+    result = sorted(dependencies, key=lambda k: k['licenses']+':'+k['group']+':'+k['name'])
+    return result
 
 def generate_license_book():
     # read licenses from files
@@ -162,7 +181,7 @@ def generate_license_book():
         with open(file_path, 'r', encoding='utf-8') as f:
             licenses[key] = {'license_name': key, 'license_name_lower': key.lower(), 'license_text': f.read()}
 
-    print(f"[INFO] Loaded {len(licenses)} npm libraries for the license book.")
+    print(f"[INFO] Loaded {len(licenses)} licenses for the license book.")
 
     # get project version from pom.xml
     pom_path = 'distro/license-book/pom.xml'
@@ -190,7 +209,6 @@ def generate_license_book():
     )
 
     date_str = datetime.datetime.now().strftime('%Y-%m-%d')
-    npm_dependencies = sorted(npm_dependencies, key=lambda k: k['licenses']+':'+k['group']+':'+k['name'])
     renderer = get_renderer_with_partials()
     output = renderer.render(template, {
         'version': version_str,
@@ -221,7 +239,7 @@ def get_renderer_with_partials():
     return renderer
 
 def main():
-    #run_sbom_generation()
+    run_sbom_generation()
     copy_sboms_to_dist()
     generate_license_book()
     print("[INFO] Done.")

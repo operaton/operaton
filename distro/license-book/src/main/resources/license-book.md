@@ -35,6 +35,7 @@ We are thankful to all individuals that have created these.
 The Libraries used within Operaton 1.1.0-SNAPSHOT are published under the following licenses:
 
 * [Apache-2.0](#apache-2.0) 
+* [Apache-2.0-with-LLVM-exception](#apache-2.0-with-llvm-exception) 
 * [BlueOak-1.0.0](#blueoak-1.0.0) 
 * [bpmn.io](#bpmn.io) 
 * [BSD-2-Clause](#bsd-2-clause) 
@@ -63,6 +64,7 @@ The Libraries used within Operaton 1.1.0-SNAPSHOT are published under the follow
 * [Unicode-DFS-2016](#unicode-dfs-2016) 
 * [UPL-1.0](#upl-1.0) 
 * [W3C-19990505](#w3c-19990505) 
+* [X11](#x11) 
 
 GNU Lesser/Library General Public License LGPL (any version)
 
@@ -73,661 +75,661 @@ Where the Operaton binaries contain components licensed under any version of LGP
 
 | Library | Version | License(s) |
 |---------|---------|------------|
-| org.apache.tomcat:tomcat-servlet-api | 11.0.12 | (Apache-2.0 AND CDDL-1.0 AND EPL-2.0) |
-| org.glassfish.extras:glassfish-embedded-all | 3.1.1 | (CDDL-1.0 OR GPL-2.0-with-classpath-exception) |
-| com.tngtech.archunit:archunit | 1.4.1 | Apache-2.0, BSD-4-Clause |
-| org.jboss.modules:jboss-modules | 2.1.6.Final | Apache-2.0, IndianaUniversity-1.1.1 |
-| com.cronutils:cron-utils | 9.2.1 | Apache-2.0 |
-| com.ethlo.time:itu | 1.14.0 | Apache-2.0 |
-| com.fasterxml.jackson.core:jackson-annotations | 2.20 | Apache-2.0 |
-| com.fasterxml.jackson.core:jackson-core | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.core:jackson-databind | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.dataformat:jackson-dataformat-yaml | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.datatype:jackson-datatype-jdk8 | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.datatype:jackson-datatype-joda | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.datatype:jackson-datatype-jsr310 | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-base | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.jaxrs:jackson-jaxrs-base | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.module:jackson-module-jaxb-annotations | 2.20.0 | Apache-2.0 |
-| com.fasterxml.jackson.module:jackson-module-parameter-names | 2.20.0 | Apache-2.0 |
-| com.fasterxml.uuid:java-uuid-generator | 5.1.1 | Apache-2.0 |
-| com.fasterxml:classmate | 1.7.0 | Apache-2.0 |
-| com.github.ben-manes.caffeine:caffeine | 3.2.2 | Apache-2.0 |
-| com.github.docker-java:docker-java-api | 3.4.2 | Apache-2.0 |
-| com.github.docker-java:docker-java-transport | 3.4.2 | Apache-2.0 |
-| com.github.docker-java:docker-java-transport-zerodep | 3.4.2 | Apache-2.0 |
-| com.github.stephenc.jcip:jcip-annotations | 1.0-1 | Apache-2.0 |
-| com.google.auto.service:auto-service-annotations | 1.1.1 | Apache-2.0 |
-| com.google.code.gson:gson | 2.8.9 | Apache-2.0 |
-| com.google.code.gson:gson | 2.13.2 | Apache-2.0 |
-| com.google.errorprone:error_prone_annotations | 2.42.0 | Apache-2.0 |
-| com.google.guava:failureaccess | 1.0.2 | Apache-2.0 |
-| com.google.guava:guava | 33.2.1-jre | Apache-2.0 |
-| com.google.inject:guice | 5.1.0 | Apache-2.0 |
-| com.googlecode.javaewah:JavaEWAH | 1.2.3 | Apache-2.0 |
-| com.ibm.async:asyncutil | 0.1.0 | Apache-2.0 |
-| com.jayway.jsonpath:json-path | 2.9.0 | Apache-2.0 |
-| com.networknt:json-schema-validator | 1.5.9 | Apache-2.0 |
-| com.nimbusds:content-type | 2.2 | Apache-2.0 |
-| com.nimbusds:lang-tag | 1.7 | Apache-2.0 |
-| com.nimbusds:nimbus-jose-jwt | 10.5 | Apache-2.0 |
-| com.nimbusds:oauth2-oidc-sdk | 9.43.6 | Apache-2.0 |
-| com.opencsv:opencsv | 5.9 | Apache-2.0 |
-| com.tngtech.archunit:archunit-junit4 | 1.4.1 | Apache-2.0 |
-| com.zaxxer:HikariCP | 6.3.3 | Apache-2.0 |
-| commons-codec:commons-codec | 1.19.0 | Apache-2.0 |
-| commons-fileupload:commons-fileupload | 1.6.0 | Apache-2.0 |
-| commons-io:commons-io | 2.20.0 | Apache-2.0 |
-| commons-logging:commons-logging | 1.2 | Apache-2.0 |
-| commons-logging:commons-logging | 1.3.5 | Apache-2.0 |
-| io.agroal:agroal-api | 2.8 | Apache-2.0 |
-| io.agroal:agroal-narayana | 2.8 | Apache-2.0 |
-| io.agroal:agroal-pool | 2.8 | Apache-2.0 |
-| io.micrometer:micrometer-commons | 1.15.4 | Apache-2.0 |
-| io.micrometer:micrometer-core | 1.15.4 | Apache-2.0 |
-| io.micrometer:micrometer-jakarta9 | 1.15.4 | Apache-2.0 |
-| io.micrometer:micrometer-observation | 1.15.4 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-api | 1.49.0 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-context | 1.49.0 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-exporter-logging | 1.49.0 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-sdk | 1.49.0 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-sdk-common | 1.49.0 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-sdk-extension-autoconfigure | 1.49.0 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi | 1.49.0 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-sdk-logs | 1.49.0 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-sdk-metrics | 1.49.0 | Apache-2.0 |
-| io.opentelemetry:opentelemetry-sdk-trace | 1.49.0 | Apache-2.0 |
-| io.quarkus.arc:arc | 3.29.0 | Apache-2.0 |
-| io.quarkus.arc:arc-processor | 3.29.0 | Apache-2.0 |
-| io.quarkus.gizmo:gizmo | 1.9.0 | Apache-2.0 |
-| io.quarkus.gizmo:gizmo2 | 2.0.0.Beta6 | Apache-2.0 |
-| io.quarkus:quarkus-agroal | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-agroal-deployment | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-agroal-dev | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-agroal-spi | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-arc | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-arc-deployment | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-arc-dev | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-assistant-deployment-spi | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-assistant-dev | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-bootstrap-app-model | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-bootstrap-core | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-bootstrap-runner | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-builder | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-class-change-agent | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-classloader-commons | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-core | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-core-deployment | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-credentials | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-credentials-deployment | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-datasource | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-datasource-common | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-datasource-deployment | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-datasource-deployment-spi | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-datasource-dev | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-development-mode-spi | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-devservices-common | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-devservices-deployment | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-devui-deployment-spi | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-fs-util | 1.2.0 | Apache-2.0 |
-| io.quarkus:quarkus-hibernate-validator-spi | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-ide-launcher | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-junit4-mock | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-kubernetes-service-binding-spi | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-mutiny | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-mutiny-deployment | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-narayana-jta | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-narayana-jta-deployment | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-smallrye-context-propagation | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-smallrye-context-propagation-deployment | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-smallrye-context-propagation-spi | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-smallrye-health-spi | 3.29.0 | Apache-2.0 |
-| io.quarkus:quarkus-transaction-annotations | 3.29.0 | Apache-2.0 |
-| io.reactivex.rxjava3:rxjava | 3.1.11 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-annotation | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-classloader | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-constraint | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-constraint | 2.12.0 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-cpu | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-cpu | 2.12.0 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-expression | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-function | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-function | 2.12.0 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-io | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-net | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-os | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-process | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-ref | 2.13.9 | Apache-2.0 |
-| io.smallrye.common:smallrye-common-resource | 2.13.9 | Apache-2.0 |
-| io.smallrye.config:smallrye-config | 3.14.1 | Apache-2.0 |
-| io.smallrye.config:smallrye-config-common | 3.14.1 | Apache-2.0 |
-| io.smallrye.config:smallrye-config-core | 3.14.1 | Apache-2.0 |
-| io.smallrye.reactive:mutiny | 3.0.0 | Apache-2.0 |
-| io.smallrye.reactive:mutiny-smallrye-context-propagation | 3.0.0 | Apache-2.0 |
-| io.smallrye.reactive:mutiny-zero-flow-adapters | 1.1.1 | Apache-2.0 |
-| io.smallrye.reactive:smallrye-reactive-converter-api | 3.0.3 | Apache-2.0 |
-| io.smallrye.reactive:smallrye-reactive-converter-mutiny | 3.0.3 | Apache-2.0 |
-| io.smallrye:jandex | 3.2.0 | Apache-2.0 |
-| io.smallrye:jandex | 3.5.0 | Apache-2.0 |
-| io.smallrye:jandex | 3.3.2 | Apache-2.0 |
-| io.smallrye:jandex-gizmo2 | 3.5.0 | Apache-2.0 |
-| io.smallrye:smallrye-context-propagation | 2.2.1 | Apache-2.0 |
-| io.smallrye:smallrye-context-propagation-api | 2.2.1 | Apache-2.0 |
-| io.smallrye:smallrye-context-propagation-jta | 2.2.1 | Apache-2.0 |
-| io.smallrye:smallrye-context-propagation-storage | 2.2.1 | Apache-2.0 |
-| io.undertow:undertow-core | 2.3.19.Final | Apache-2.0 |
-| jakarta.enterprise:jakarta.enterprise.cdi-api | 4.0.1 | Apache-2.0 |
-| jakarta.enterprise:jakarta.enterprise.cdi-api | 4.1.0 | Apache-2.0 |
-| jakarta.enterprise:jakarta.enterprise.lang-model | 4.0.1 | Apache-2.0 |
-| jakarta.inject:jakarta.inject-api | 2.0.1 | Apache-2.0 |
-| jakarta.validation:jakarta.validation-api | 3.0.2 | Apache-2.0 |
-| javax.inject:javax.inject | 1 | Apache-2.0 |
-| joda-time:joda-time | 2.12.5 | Apache-2.0 |
-| net.bytebuddy:byte-buddy | 1.17.7 | Apache-2.0 |
-| net.bytebuddy:byte-buddy | 1.17.6 | Apache-2.0 |
-| net.bytebuddy:byte-buddy-agent | 1.17.7 | Apache-2.0 |
-| net.minidev:accessors-smart | 2.5.2 | Apache-2.0 |
-| net.minidev:accessors-smart | 2.6.0 | Apache-2.0 |
-| net.minidev:json-smart | 2.5.2 | Apache-2.0 |
-| net.minidev:json-smart | 2.6.0 | Apache-2.0 |
-| org.aesh:aesh | 2.8.2 | Apache-2.0 |
-| org.aesh:readline | 2.6 | Apache-2.0 |
-| org.apache.ant:ant | 1.10.15 | Apache-2.0 |
-| org.apache.ant:ant-launcher | 1.10.15 | Apache-2.0 |
-| org.apache.commons:commons-collections4 | 4.4 | Apache-2.0 |
-| org.apache.commons:commons-compress | 1.27.1 | Apache-2.0 |
-| org.apache.commons:commons-email2-core | 2.0.0-M1 | Apache-2.0 |
-| org.apache.commons:commons-email2-jakarta | 2.0.0-M1 | Apache-2.0 |
-| org.apache.commons:commons-exec | 1.4.0 | Apache-2.0 |
-| org.apache.commons:commons-lang3 | 3.19.0 | Apache-2.0 |
-| org.apache.commons:commons-text | 1.13.0 | Apache-2.0 |
-| org.apache.groovy:groovy | 4.0.28 | Apache-2.0 |
-| org.apache.groovy:groovy | 5.0.1 | Apache-2.0 |
-| org.apache.groovy:groovy-datetime | 4.0.28 | Apache-2.0 |
-| org.apache.groovy:groovy-datetime | 5.0.1 | Apache-2.0 |
-| org.apache.groovy:groovy-dateutil | 4.0.28 | Apache-2.0 |
-| org.apache.groovy:groovy-dateutil | 5.0.1 | Apache-2.0 |
-| org.apache.groovy:groovy-json | 5.0.1 | Apache-2.0 |
-| org.apache.groovy:groovy-json | 4.0.28 | Apache-2.0 |
-| org.apache.groovy:groovy-jsr223 | 4.0.28 | Apache-2.0 |
-| org.apache.groovy:groovy-jsr223 | 5.0.1 | Apache-2.0 |
-| org.apache.groovy:groovy-templates | 4.0.28 | Apache-2.0 |
-| org.apache.groovy:groovy-templates | 5.0.1 | Apache-2.0 |
-| org.apache.groovy:groovy-xml | 5.0.1 | Apache-2.0 |
-| org.apache.groovy:groovy-xml | 4.0.28 | Apache-2.0 |
-| org.apache.httpcomponents.client5:httpclient5 | 5.5.1 | Apache-2.0 |
-| org.apache.httpcomponents.core5:httpcore5 | 5.3.6 | Apache-2.0 |
-| org.apache.httpcomponents.core5:httpcore5-h2 | 5.3.5 | Apache-2.0 |
-| org.apache.httpcomponents:httpasyncclient | 4.1.5 | Apache-2.0 |
-| org.apache.httpcomponents:httpclient | 4.5.14 | Apache-2.0 |
-| org.apache.httpcomponents:httpcore | 4.4.16 | Apache-2.0 |
-| org.apache.httpcomponents:httpcore-nio | 4.4.16 | Apache-2.0 |
-| org.apache.httpcomponents:httpmime | 4.5.13 | Apache-2.0 |
-| org.apache.logging.log4j:log4j-api | 2.24.3 | Apache-2.0 |
-| org.apache.logging.log4j:log4j-to-slf4j | 2.24.3 | Apache-2.0 |
-| org.apache.maven.resolver:maven-resolver-api | 1.9.22 | Apache-2.0 |
-| org.apache.maven.resolver:maven-resolver-connector-basic | 1.9.22 | Apache-2.0 |
-| org.apache.maven.resolver:maven-resolver-impl | 1.9.22 | Apache-2.0 |
-| org.apache.maven.resolver:maven-resolver-named-locks | 1.9.22 | Apache-2.0 |
-| org.apache.maven.resolver:maven-resolver-spi | 1.9.22 | Apache-2.0 |
-| org.apache.maven.resolver:maven-resolver-supplier | 1.9.22 | Apache-2.0 |
-| org.apache.maven.resolver:maven-resolver-transport-file | 1.9.22 | Apache-2.0 |
-| org.apache.maven.resolver:maven-resolver-transport-http | 1.9.22 | Apache-2.0 |
-| org.apache.maven.resolver:maven-resolver-util | 1.9.22 | Apache-2.0 |
-| org.apache.maven.shared:maven-invoker | 3.3.0 | Apache-2.0 |
-| org.apache.maven.shared:maven-shared-utils | 3.4.2 | Apache-2.0 |
-| org.apache.maven:maven-artifact | 3.9.9 | Apache-2.0 |
-| org.apache.maven:maven-builder-support | 3.9.9 | Apache-2.0 |
-| org.apache.maven:maven-model | 3.9.9 | Apache-2.0 |
-| org.apache.maven:maven-model-builder | 3.9.9 | Apache-2.0 |
-| org.apache.maven:maven-repository-metadata | 3.9.9 | Apache-2.0 |
-| org.apache.maven:maven-resolver-provider | 3.9.9 | Apache-2.0 |
-| org.apache.maven:maven-settings | 3.9.9 | Apache-2.0 |
-| org.apache.maven:maven-settings-builder | 3.9.9 | Apache-2.0 |
-| org.apache.sshd:sshd-common | 2.15.0 | Apache-2.0 |
-| org.apache.sshd:sshd-core | 2.15.0 | Apache-2.0 |
-| org.apache.tomcat.embed:tomcat-embed-core | 10.1.46 | Apache-2.0 |
-| org.apache.tomcat.embed:tomcat-embed-el | 10.1.46 | Apache-2.0 |
-| org.apache.tomcat.embed:tomcat-embed-websocket | 10.1.46 | Apache-2.0 |
-| org.apache.tomcat:tomcat | 11.0.12 | Apache-2.0 |
-| org.apache.tomcat:tomcat-annotations-api | 10.1.46 | Apache-2.0 |
-| org.apache.tomcat:tomcat-api | 11.0.12 | Apache-2.0 |
-| org.apache.tomcat:tomcat-catalina | 11.0.12 | Apache-2.0 |
-| org.apache.tomcat:tomcat-coyote | 11.0.12 | Apache-2.0 |
-| org.apache.tomcat:tomcat-el-api | 10.1.46 | Apache-2.0 |
-| org.apache.tomcat:tomcat-jaspic-api | 11.0.12 | Apache-2.0 |
-| org.apache.tomcat:tomcat-jdbc | 11.0.12 | Apache-2.0 |
-| org.apache.tomcat:tomcat-jni | 11.0.12 | Apache-2.0 |
-| org.apache.tomcat:tomcat-jsp-api | 10.1.46 | Apache-2.0 |
-| org.apache.tomcat:tomcat-juli | 11.0.12 | Apache-2.0 |
-| org.apache.tomcat:tomcat-util | 11.0.12 | Apache-2.0 |
-| org.apache.tomcat:tomcat-util-scan | 11.0.12 | Apache-2.0 |
-| org.apiguardian:apiguardian-api | 1.1.2 | Apache-2.0 |
-| org.assertj:assertj-core | 3.27.6 | Apache-2.0 |
-| org.awaitility:awaitility | 4.3.0 | Apache-2.0 |
-| org.camunda.feel:feel-engine | 1.19.3 | Apache-2.0 |
-| org.codehaus.plexus:plexus-cipher | 2.0 | Apache-2.0 |
-| org.codehaus.plexus:plexus-classworlds | 2.8.0 | Apache-2.0 |
-| org.codehaus.plexus:plexus-compiler-api | 2.15.0 | Apache-2.0 |
-| org.codehaus.plexus:plexus-compiler-javac | 2.15.0 | Apache-2.0 |
-| org.codehaus.plexus:plexus-component-annotations | 2.1.0 | Apache-2.0 |
-| org.codehaus.plexus:plexus-interpolation | 1.27 | Apache-2.0 |
-| org.codehaus.plexus:plexus-sec-dispatcher | 2.0 | Apache-2.0 |
-| org.codehaus.plexus:plexus-utils | 3.5.1 | Apache-2.0 |
-| org.codehaus.plexus:plexus-xml | 3.0.1 | Apache-2.0 |
-| org.eclipse.microprofile.config:microprofile-config-api | 3.1 | Apache-2.0 |
-| org.eclipse.microprofile.context-propagation:microprofile-context-propagation-api | 1.3 | Apache-2.0 |
-| org.eclipse.microprofile.reactive-streams-operators:microprofile-reactive-streams-operators-api | 3.0.1 | Apache-2.0 |
-| org.freemarker:freemarker | 2.3.34 | Apache-2.0 |
-| org.fusesource.jansi:jansi | 2.4.1 | Apache-2.0 |
-| org.hibernate.common:hibernate-commons-annotations | 7.0.3.Final | Apache-2.0 |
-| org.hibernate.validator:hibernate-validator | 8.0.3.Final | Apache-2.0 |
-| org.hibernate.validator:hibernate-validator-cdi | 8.0.2.Final | Apache-2.0 |
-| org.infinispan.protostream:protostream | 5.0.13.Final | Apache-2.0 |
-| org.infinispan.protostream:protostream-processor | 5.0.13.Final | Apache-2.0 |
-| org.infinispan.protostream:protostream-types | 5.0.13.Final | Apache-2.0 |
-| org.infinispan:infinispan-commons | 15.2.6.Final | Apache-2.0 |
-| org.infinispan:infinispan-commons-spi | 15.2.6.Final | Apache-2.0 |
-| org.infinispan:infinispan-core | 15.2.6.Final | Apache-2.0 |
-| org.infinispan:infinispan-counter-api | 15.2.6.Final | Apache-2.0 |
-| org.jboss.arquillian.config:arquillian-config-api | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.config:arquillian-config-impl-base | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.config:arquillian-config-spi | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.container:arquillian-container-impl-base | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.container:arquillian-container-spi | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.container:arquillian-container-test-api | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.container:arquillian-container-test-impl-base | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.container:arquillian-container-test-spi | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.core:arquillian-core-api | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.core:arquillian-core-impl-base | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.core:arquillian-core-spi | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.junit5:arquillian-junit5-container | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.junit5:arquillian-junit5-core | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.test:arquillian-test-api | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.test:arquillian-test-impl-base | 1.10.0.Final | Apache-2.0 |
-| org.jboss.arquillian.test:arquillian-test-spi | 1.10.0.Final | Apache-2.0 |
-| org.jboss.classfilewriter:jboss-classfilewriter | 1.3.1.Final | Apache-2.0 |
-| org.jboss.ejb3:jboss-ejb3-ext-api | 2.4.0.Final | Apache-2.0 |
-| org.jboss.invocation:jboss-invocation | 2.0.0.Final | Apache-2.0 |
-| org.jboss.invocation:jboss-invocation | 2.0.1.Final | Apache-2.0 |
-| org.jboss.logging:commons-logging-jboss-logging | 1.0.0.Final | Apache-2.0 |
-| org.jboss.logging:jboss-logging | 3.6.1.Final | Apache-2.0 |
-| org.jboss.logmanager:jboss-logmanager | 3.1.2.Final | Apache-2.0 |
-| org.jboss.logmanager:jboss-logmanager | 2.1.19.Final | Apache-2.0 |
-| org.jboss.marshalling:jboss-marshalling | 2.2.3.Final | Apache-2.0 |
-| org.jboss.marshalling:jboss-marshalling-river | 2.2.3.Final | Apache-2.0 |
-| org.jboss.metadata:jboss-metadata-common | 16.1.0.Final | Apache-2.0 |
-| org.jboss.metadata:jboss-metadata-ear | 16.1.0.Final | Apache-2.0 |
-| org.jboss.metadata:jboss-metadata-ejb | 16.1.0.Final | Apache-2.0 |
-| org.jboss.metadata:jboss-metadata-web | 16.1.0.Final | Apache-2.0 |
-| org.jboss.narayana.jta:narayana-jta | 7.3.0.Final | Apache-2.0 |
-| org.jboss.narayana.jts:narayana-jts-integration | 7.3.0.Final | Apache-2.0 |
-| org.jboss.narayana.jts:narayana-jts-integration | 7.2.2.Final | Apache-2.0 |
-| org.jboss.remoting:jboss-remoting | 5.0.31.Final | Apache-2.0 |
-| org.jboss.resteasy:resteasy-core | 6.2.14.Final | Apache-2.0 |
-| org.jboss.resteasy:resteasy-core-spi | 6.2.14.Final | Apache-2.0 |
-| org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-api-base | 2.0.0 | Apache-2.0 |
-| org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-spi | 2.0.0 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven-archive | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven-embedded | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-depchain | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven-archive | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven-embedded | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi-maven | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi-maven-archive | 3.3.4 | Apache-2.0 |
-| org.jboss.shrinkwrap:shrinkwrap-api | 1.2.6 | Apache-2.0 |
-| org.jboss.shrinkwrap:shrinkwrap-impl-base | 1.2.6 | Apache-2.0 |
-| org.jboss.shrinkwrap:shrinkwrap-spi | 1.2.6 | Apache-2.0 |
-| org.jboss.slf4j:slf4j-jboss-logmanager | 2.0.0.Final | Apache-2.0 |
-| org.jboss.threads:jboss-threads | 3.9.1 | Apache-2.0 |
-| org.jboss.xnio:xnio-api | 3.8.16.Final | Apache-2.0 |
-| org.jboss.xnio:xnio-nio | 3.8.16.Final | Apache-2.0 |
-| org.jboss:jandex | 2.4.5.Final | Apache-2.0 |
-| org.jboss:jboss-dmr | 1.7.0.Final | Apache-2.0 |
-| org.jboss:jboss-ejb-client | 5.0.8.Final | Apache-2.0 |
-| org.jboss:jboss-iiop-client | 2.0.1.Final | Apache-2.0 |
-| org.jboss:jboss-vfs | 3.3.2.Final | Apache-2.0 |
-| org.jboss:staxmapper | 1.5.0.Final | Apache-2.0 |
-| org.jctools:jctools-core | 4.0.5 | Apache-2.0 |
-| org.jetbrains:annotations | 17.0.0 | Apache-2.0 |
-| org.jetbrains:annotations | 26.0.2 | Apache-2.0 |
-| org.jgroups:jgroups | 5.4.9.Final | Apache-2.0 |
-| org.jspecify:jspecify | 1.0.0 | Apache-2.0 |
-| org.liquibase:liquibase-core | 4.31.1 | Apache-2.0 |
-| org.mybatis:mybatis | 3.5.19 | Apache-2.0 |
-| org.objenesis:objenesis | 3.3 | Apache-2.0 |
-| org.openapitools:jackson-databind-nullable | 0.2.7 | Apache-2.0 |
-| org.opentest4j:opentest4j | 1.3.0 | Apache-2.0 |
-| org.projectodd.vdx:vdx-core | 1.1.6 | Apache-2.0 |
-| org.projectodd.vdx:vdx-wildfly | 1.1.6 | Apache-2.0 |
-| org.scala-lang:scala-library | 2.13.15 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-api | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-chrome-driver | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-chromium-driver | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-devtools-v140 | 4.38.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-devtools-v141 | 4.38.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-devtools-v142 | 4.38.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-edge-driver | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-firefox-driver | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-http | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-ie-driver | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-java | 4.38.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-json | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-manager | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-os | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-remote-driver | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-safari-driver | 4.31.0 | Apache-2.0 |
-| org.seleniumhq.selenium:selenium-support | 4.31.0 | Apache-2.0 |
-| org.slf4j:jcl-over-slf4j | 2.0.17 | Apache-2.0 |
-| org.springframework.boot:spring-boot | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-actuator | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-actuator-autoconfigure | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-autoconfigure | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-configuration-processor | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-devtools | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-actuator | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-data-jpa | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-jdbc | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-jersey | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-json | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-logging | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-oauth2-client | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-security | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-test | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-tomcat | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-validation | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-starter-web | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-test | 3.5.6 | Apache-2.0 |
-| org.springframework.boot:spring-boot-test-autoconfigure | 3.5.6 | Apache-2.0 |
-| org.springframework.data:spring-data-commons | 3.5.4 | Apache-2.0 |
-| org.springframework.data:spring-data-jpa | 3.5.4 | Apache-2.0 |
-| org.springframework.security:spring-security-config | 6.5.5 | Apache-2.0 |
-| org.springframework.security:spring-security-core | 6.5.5 | Apache-2.0 |
-| org.springframework.security:spring-security-crypto | 6.5.5 | Apache-2.0 |
-| org.springframework.security:spring-security-oauth2-client | 6.5.5 | Apache-2.0 |
-| org.springframework.security:spring-security-oauth2-core | 6.5.5 | Apache-2.0 |
-| org.springframework.security:spring-security-oauth2-jose | 6.5.5 | Apache-2.0 |
-| org.springframework.security:spring-security-web | 6.5.5 | Apache-2.0 |
-| org.springframework:spring-aop | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-aop | 6.2.11 | Apache-2.0 |
-| org.springframework:spring-aspects | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-beans | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-beans | 6.2.11 | Apache-2.0 |
-| org.springframework:spring-context | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-context | 6.2.11 | Apache-2.0 |
-| org.springframework:spring-core | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-core | 6.2.11 | Apache-2.0 |
-| org.springframework:spring-expression | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-expression | 6.2.11 | Apache-2.0 |
-| org.springframework:spring-jcl | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-jdbc | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-orm | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-test | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-tx | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-web | 6.2.12 | Apache-2.0 |
-| org.springframework:spring-web | 6.2.11 | Apache-2.0 |
-| org.springframework:spring-webmvc | 6.2.12 | Apache-2.0 |
-| org.wildfly.client:wildfly-client-config | 1.0.1.Final | Apache-2.0 |
-| org.wildfly.clustering:wildfly-clustering-cache-spi | 7.0.12.Final | Apache-2.0 |
-| org.wildfly.clustering:wildfly-clustering-context | 7.0.12.Final | Apache-2.0 |
-| org.wildfly.clustering:wildfly-clustering-function | 7.0.12.Final | Apache-2.0 |
-| org.wildfly.clustering:wildfly-clustering-marshalling-jboss | 7.0.12.Final | Apache-2.0 |
-| org.wildfly.clustering:wildfly-clustering-marshalling-protostream | 7.0.12.Final | Apache-2.0 |
-| org.wildfly.clustering:wildfly-clustering-marshalling-spi | 7.0.12.Final | Apache-2.0 |
-| org.wildfly.clustering:wildfly-clustering-server-api | 7.0.12.Final | Apache-2.0 |
-| org.wildfly.clustering:wildfly-clustering-server-local | 7.0.12.Final | Apache-2.0 |
-| org.wildfly.clustering:wildfly-clustering-server-spi | 7.0.12.Final | Apache-2.0 |
-| org.wildfly.common:wildfly-common | 2.0.1 | Apache-2.0 |
-| org.wildfly.common:wildfly-common | 1.7.0.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-controller | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-controller-client | 30.0.0.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-core-management-client | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-core-security | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-deployment-repository | 30.0.0.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-domain-http-interface | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-domain-management | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-embedded | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-io-spi | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-network | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-platform-mbean | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-process-controller | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-remoting | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-request-controller | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-server | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-service | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-subsystem | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-threads | 29.0.1.Final | Apache-2.0 |
-| org.wildfly.core:wildfly-version | 30.0.0.Final | Apache-2.0 |
-| org.wildfly.discovery:wildfly-discovery-client | 1.3.0.Final | Apache-2.0 |
-| org.wildfly.security.elytron-web:undertow-server | 4.1.2.Final | Apache-2.0 |
-| org.wildfly.security.jakarta:jakarta-authorization | 3.1.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-asn1 | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-audit | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-auth | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-auth-server | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-auth-server-deprecated | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-auth-server-http | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-auth-server-sasl | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-auth-util | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-base | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-client | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-credential | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-credential-source-impl | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-credential-store | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-encryption | 2.7.0.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-http | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-http-util | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-keystore | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-mechanism | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-mechanism-digest | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-mechanism-gssapi | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-password-impl | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-permission | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-provider-util | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-realm | 2.7.0.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-sasl | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-sasl-anonymous | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-sasl-auth-util | 2.5.0.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-sasl-digest | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-security-manager | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-security-manager-action | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-ssh-util | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-ssl | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-util | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-x500 | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-x500-cert | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-x500-cert-acme | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.security:wildfly-elytron-x500-cert-util | 2.6.4.Final | Apache-2.0 |
-| org.wildfly.transaction:wildfly-transaction-client | 3.0.5.Final | Apache-2.0 |
-| org.wildfly.wildfly-http-client:wildfly-http-client-common | 2.1.1.Final | Apache-2.0 |
-| org.wildfly.wildfly-http-client:wildfly-http-ejb-client | 2.1.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-clustering-common | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-clustering-ejb-spi | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-clustering-infinispan-embedded-service | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-clustering-server-api | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-clustering-server-service | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-clustering-service | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-clustering-singleton-api | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-common-ee-dependency-management | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-common-expansion-dependency-management | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-concurrency-spi | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-connector | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-dist | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-ee | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-ejb3 | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-galleon-pack | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-iiop-openjdk | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-naming | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-naming-client | 2.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-standard-ee-bom | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-standard-expansion-bom | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-transactions | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-web-common | 37.0.1.Final | Apache-2.0 |
-| org.wildfly:wildfly-weld-common | 37.0.1.Final | Apache-2.0 |
-| org.yaml:snakeyaml | 2.4 | Apache-2.0 |
-| org.crac:crac | 1.5.0 | BSD-2-Clause |
-| com.sun.activation:jakarta.activation | 2.0.1 | BSD-3-Clause |
-| com.sun.istack:istack-commons-runtime | 4.1.2 | BSD-3-Clause |
-| com.sun.istack:istack-commons-runtime | 4.2.0 | BSD-3-Clause |
-| jakarta.activation:jakarta.activation-api | 2.1.0 | BSD-3-Clause |
-| jakarta.xml.bind:jakarta.xml.bind-api | 4.0.0 | BSD-3-Clause |
-| org.antlr:antlr4-runtime | 4.13.0 | BSD-3-Clause |
-| org.eclipse.angus:angus-activation | 2.0.2 | BSD-3-Clause |
-| org.eclipse.jgit:org.eclipse.jgit | 6.10.1.202505221210-r | BSD-3-Clause |
-| org.eclipse.jgit:org.eclipse.jgit.ssh.apache | 6.10.1.202505221210-r | BSD-3-Clause |
-| org.glassfish.jaxb:jaxb-core | 4.0.5 | BSD-3-Clause |
-| org.glassfish.jaxb:jaxb-runtime | 4.0.6 | BSD-3-Clause |
-| org.glassfish.jaxb:txw2 | 4.0.5 | BSD-3-Clause |
-| org.hamcrest:hamcrest | 3.0 | BSD-3-Clause |
-| org.hamcrest:hamcrest-core | 1.3 | BSD-3-Clause |
-| org.hamcrest:hamcrest-core | 3.0 | BSD-3-Clause |
-| org.ow2.asm:asm | 7.3.1 | BSD-3-Clause |
-| org.ow2.asm:asm | 9.7.1 | BSD-3-Clause |
-| org.ow2.asm:asm | 9.9 | BSD-3-Clause |
-| org.ow2.asm:asm-analysis | 9.9 | BSD-3-Clause |
-| org.ow2.asm:asm-commons | 9.6 | BSD-3-Clause |
-| org.ow2.asm:asm-commons | 9.9 | BSD-3-Clause |
-| org.ow2.asm:asm-tree | 9.9 | BSD-3-Clause |
-| org.ow2.asm:asm-util | 9.9 | BSD-3-Clause |
-| org.hdrhistogram:HdrHistogram | 2.2.2 | CC0-1.0, BSD-2-Clause |
-| aopalliance:aopalliance | 1.0 | CC0-1.0 |
-| org.jboss:jboss-transaction-spi | 8.0.0.Final | CC0-1.0 |
-| org.latencyutils:LatencyUtils | 2.0.3 | CC0-1.0 |
-| org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec | 1.0.0.Final | CDDL-1.0, GPL-2.0-with-classpath-exception |
-| javax.xml.bind:jaxb-api | 2.3.1 | CDDL-1.1, GPL-2.0-with-classpath-exception |
-| javax.xml.bind:jaxb-api | 2.2.12 | CDDL-1.1, GPL-2.0-with-classpath-exception |
-| ch.qos.logback:logback-classic | 1.5.19 | EPL-1.0, LGPL-2.1-only |
-| ch.qos.logback:logback-core | 1.5.19 | EPL-1.0, LGPL-2.1-only |
-| junit:junit | 4.13.2 | EPL-1.0 |
-| jakarta.persistence:jakarta.persistence-api | 3.1.0 | EPL-2.0, BSD-3-Clause |
-| org.glassfish.jersey.core:jersey-server | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, Apache-2.0, BSD-3-Clause |
-| org.glassfish.jersey.core:jersey-common | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, Apache-2.0, CC0-1.0 |
-| org.jboss.spec.jakarta.el:jboss-el-api_5.0_spec | 4.0.1.Final | EPL-2.0, GPL-2.0-with-classpath-exception, Apache-2.0, LGPL-2.1-only |
-| org.glassfish.jersey.media:jersey-media-json-jackson | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, Apache-2.0 |
-| org.glassfish.jersey.containers:jersey-container-servlet | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
-| org.glassfish.jersey.containers:jersey-container-servlet-core | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
-| org.glassfish.jersey.core:jersey-client | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
-| org.glassfish.jersey.ext:jersey-bean-validation | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
-| org.glassfish.jersey.ext:jersey-entity-filtering | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
-| org.glassfish.jersey.ext:jersey-spring6 | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
-| org.glassfish.jersey.inject:jersey-hk2 | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
-| com.sun.mail:jakarta.mail | 2.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause |
-| jakarta.annotation:jakarta.annotation-api | 2.1.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.annotation:jakarta.annotation-api | 3.0.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.authentication:jakarta.authentication-api | 3.0.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.authorization:jakarta.authorization-api | 2.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.ejb:jakarta.ejb-api | 4.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.el:jakarta.el-api | 5.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.el:jakarta.el-api | 6.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.enterprise.concurrent:jakarta.enterprise.concurrent-api | 3.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.faces:jakarta.faces-api | 4.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.interceptor:jakarta.interceptor-api | 2.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.interceptor:jakarta.interceptor-api | 2.2.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.jms:jakarta.jms-api | 3.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.json:jakarta.json-api | 2.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.json:jakarta.json-api | 2.1.3 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.resource:jakarta.resource-api | 2.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.servlet.jsp:jakarta.servlet.jsp-api | 3.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.servlet:jakarta.servlet-api | 6.0.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.transaction:jakarta.transaction-api | 2.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| jakarta.ws.rs:jakarta.ws.rs-api | 3.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.eclipse.parsson:parsson | 1.1.7 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.expressly:expressly | 5.0.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2.external:aopalliance-repackaged | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2:class-model | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2:hk2 | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2:hk2-api | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2:hk2-core | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2:hk2-locator | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2:hk2-runlevel | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2:hk2-utils | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2:osgi-resource-locator | 1.0.3 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish.hk2:spring-bridge | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| org.glassfish:jakarta.enterprise.concurrent | 3.0.2 | EPL-2.0, GPL-2.0-with-classpath-exception |
-| eu.maveniverse.maven.mima.runtime:embedded-maven | 2.4.22 | EPL-2.0 |
-| eu.maveniverse.maven.mima.runtime:standalone-shared | 2.4.22 | EPL-2.0 |
-| eu.maveniverse.maven.mima.runtime:standalone-static | 2.4.22 | EPL-2.0 |
-| eu.maveniverse.maven.mima:context | 2.4.22 | EPL-2.0 |
-| org.aspectj:aspectjweaver | 1.9.24 | EPL-2.0 |
-| org.eclipse.sisu:org.eclipse.sisu.inject | 0.9.0.M3 | EPL-2.0 |
-| org.eclipse.sisu:org.eclipse.sisu.plexus | 0.9.0.M3 | EPL-2.0 |
-| org.junit.jupiter:junit-jupiter | 5.14.0 | EPL-2.0 |
-| org.junit.jupiter:junit-jupiter | 5.13.4 | EPL-2.0 |
-| org.junit.jupiter:junit-jupiter-api | 5.14.0 | EPL-2.0 |
-| org.junit.jupiter:junit-jupiter-api | 5.13.4 | EPL-2.0 |
-| org.junit.jupiter:junit-jupiter-engine | 5.14.0 | EPL-2.0 |
-| org.junit.jupiter:junit-jupiter-engine | 5.13.4 | EPL-2.0 |
-| org.junit.jupiter:junit-jupiter-params | 5.14.0 | EPL-2.0 |
-| org.junit.jupiter:junit-jupiter-params | 5.13.4 | EPL-2.0 |
-| org.junit.platform:junit-platform-commons | 1.14.0 | EPL-2.0 |
-| org.junit.platform:junit-platform-commons | 1.13.4 | EPL-2.0 |
-| org.junit.platform:junit-platform-engine | 1.14.0 | EPL-2.0 |
-| org.junit.platform:junit-platform-engine | 1.13.4 | EPL-2.0 |
-| org.junit.platform:junit-platform-launcher | 1.14.0 | EPL-2.0 |
-| org.codehaus.fabric3.api:commonj | 1.1.1 | FABRIC3 |
-| io.github.dmlloyd:jdk-classfile-backport | 24.0 | GPL-2.0-with-classpath-exception |
-| org.jboss.ironjacamar:ironjacamar-common-api | 3.0.14.Final | LGPL-2.1+ |
-| org.jboss.ironjacamar:ironjacamar-common-impl | 3.0.14.Final | LGPL-2.1+ |
-| org.jboss.ironjacamar:ironjacamar-common-spi | 3.0.14.Final | LGPL-2.1+ |
-| org.jboss.ironjacamar:ironjacamar-core-api | 3.0.14.Final | LGPL-2.1+ |
-| org.jboss.ironjacamar:ironjacamar-core-impl | 3.0.14.Final | LGPL-2.1+ |
-| org.jboss.ironjacamar:ironjacamar-deployers-common | 3.0.14.Final | LGPL-2.1+ |
-| org.jboss.ironjacamar:ironjacamar-jdbc | 3.0.14.Final | LGPL-2.1+ |
-| org.jboss.ironjacamar:ironjacamar-validator | 3.0.14.Final | LGPL-2.1+ |
-| org.hibernate.orm:hibernate-core | 6.6.29.Final | LGPL-2.1-only |
-| org.jboss.common:jboss-common-beans | 2.0.1.Final | LGPL-2.1-only |
-| org.jboss.ironjacamar:ironjacamar-spec-api | 1.4.35.Final | LGPL-2.1-only |
-| org.jboss.msc:jboss-msc | 1.5.6.Final | LGPL-2.1 |
-| org.jboss.stdio:jboss-stdio | 1.1.0.Final | LGPL-2.1 |
-| org.graalvm.polyglot:js | 25.0.0 | MIT, UPL-1.0 |
-| org.reactivestreams:reactive-streams | 1.0.4 | MIT-0 |
-| com.konghq:unirest-java | 3.14.5 | MIT |
-| com.lihaoyi:fastparse_2.13 | 3.1.1 | MIT |
-| com.lihaoyi:geny_2.13 | 1.1.0 | MIT |
-| com.lihaoyi:sourcecode_2.13 | 0.4.0 | MIT |
-| org.mockito:mockito-core | 5.17.0 | MIT |
-| org.mockito:mockito-core | 5.20.0 | MIT |
-| org.mockito:mockito-junit-jupiter | 5.17.0 | MIT |
-| org.rnorth.duct-tape:duct-tape | 1.0.8 | MIT |
-| org.slf4j:jul-to-slf4j | 2.0.17 | MIT |
-| org.slf4j:slf4j-api | 2.0.17 | MIT |
-| org.slf4j:slf4j-jdk14 | 2.0.17 | MIT |
-| org.testcontainers:database-commons | 1.21.3 | MIT |
-| org.testcontainers:db2 | 1.21.3 | MIT |
-| org.testcontainers:jdbc | 1.21.3 | MIT |
-| org.testcontainers:mariadb | 1.21.3 | MIT |
-| org.testcontainers:mssqlserver | 1.21.3 | MIT |
-| org.testcontainers:mysql | 1.21.3 | MIT |
-| org.testcontainers:oracle-xe | 1.21.3 | MIT |
-| org.testcontainers:postgresql | 1.21.3 | MIT |
-| org.testcontainers:testcontainers | 1.21.3 | MIT |
-| org.javassist:javassist | 3.30.2-GA | MPL-1.1, LGPL-2.1-only, Apache-2.0 |
-| com.h2database:h2 | 2.4.240 | MPL-2.0, EPL-1.0 |
-| com.h2database:h2 | 2.3.232 | MPL-2.0, EPL-1.0 |
-| org.graalvm.js:js | 25.0.0 | UPL-1.0, MIT |
-| org.graalvm.js:js-language | 25.0.0 | UPL-1.0, MIT |
-| org.graalvm.js:js-scriptengine | 25.0.0 | UPL-1.0 |
-| org.graalvm.polyglot:polyglot | 25.0.0 | UPL-1.0 |
-| org.graalvm.regex:regex | 25.0.0 | UPL-1.0 |
-| org.graalvm.sdk:collections | 25.0.0 | UPL-1.0 |
-| org.graalvm.sdk:jniutils | 25.0.0 | UPL-1.0 |
-| org.graalvm.sdk:nativeimage | 25.0.0 | UPL-1.0 |
-| org.graalvm.sdk:nativeimage | 23.1.2 | UPL-1.0 |
-| org.graalvm.sdk:word | 25.0.0 | UPL-1.0 |
-| org.graalvm.sdk:word | 23.1.2 | UPL-1.0 |
-| org.graalvm.shadowed:xz | 25.0.0 | UPL-1.0 |
-| org.graalvm.truffle:truffle-api | 25.0.0 | UPL-1.0 |
-| org.graalvm.truffle:truffle-compiler | 25.0.0 | UPL-1.0 |
-| org.graalvm.truffle:truffle-runtime | 25.0.0 | UPL-1.0 |
-| org.graalvm.shadowed:icu4j | 25.0.0 | Unicode-3.0 |
+| [org.apache.tomcat:tomcat-servlet-api](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-servlet-api/11.0.12) | 11.0.12 | (Apache-2.0 AND CDDL-1.0 AND EPL-2.0) |
+| [org.glassfish.extras:glassfish-embedded-all](https://central.sonatype.com/artifact/org.glassfish.extras/glassfish-embedded-all/3.1.1) | 3.1.1 | (CDDL-1.0 OR GPL-2.0-with-classpath-exception) |
+| [com.tngtech.archunit:archunit](https://central.sonatype.com/artifact/com.tngtech.archunit/archunit/1.4.1) | 1.4.1 | Apache-2.0, BSD-4-Clause |
+| [org.jboss.modules:jboss-modules](https://central.sonatype.com/artifact/org.jboss.modules/jboss-modules/2.1.6.Final) | 2.1.6.Final | Apache-2.0, IndianaUniversity-1.1.1 |
+| [com.cronutils:cron-utils](https://central.sonatype.com/artifact/com.cronutils/cron-utils/9.2.1) | 9.2.1 | Apache-2.0 |
+| [com.ethlo.time:itu](https://central.sonatype.com/artifact/com.ethlo.time/itu/1.14.0) | 1.14.0 | Apache-2.0 |
+| [com.fasterxml.jackson.core:jackson-annotations](https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-annotations/2.20) | 2.20 | Apache-2.0 |
+| [com.fasterxml.jackson.core:jackson-core](https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-core/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.core:jackson-databind](https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.dataformat:jackson-dataformat-yaml](https://central.sonatype.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.datatype:jackson-datatype-jdk8](https://central.sonatype.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.datatype:jackson-datatype-joda](https://central.sonatype.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-joda/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.datatype:jackson-datatype-jsr310](https://central.sonatype.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-base](https://central.sonatype.com/artifact/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider](https://central.sonatype.com/artifact/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.jaxrs:jackson-jaxrs-base](https://central.sonatype.com/artifact/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider](https://central.sonatype.com/artifact/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations](https://central.sonatype.com/artifact/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.module:jackson-module-jaxb-annotations](https://central.sonatype.com/artifact/com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.jackson.module:jackson-module-parameter-names](https://central.sonatype.com/artifact/com.fasterxml.jackson.module/jackson-module-parameter-names/2.20.0) | 2.20.0 | Apache-2.0 |
+| [com.fasterxml.uuid:java-uuid-generator](https://central.sonatype.com/artifact/com.fasterxml.uuid/java-uuid-generator/5.1.1) | 5.1.1 | Apache-2.0 |
+| [com.fasterxml:classmate](https://central.sonatype.com/artifact/com.fasterxml/classmate/1.7.0) | 1.7.0 | Apache-2.0 |
+| [com.github.ben-manes.caffeine:caffeine](https://central.sonatype.com/artifact/com.github.ben-manes.caffeine/caffeine/3.2.2) | 3.2.2 | Apache-2.0 |
+| [com.github.docker-java:docker-java-api](https://central.sonatype.com/artifact/com.github.docker-java/docker-java-api/3.4.2) | 3.4.2 | Apache-2.0 |
+| [com.github.docker-java:docker-java-transport](https://central.sonatype.com/artifact/com.github.docker-java/docker-java-transport/3.4.2) | 3.4.2 | Apache-2.0 |
+| [com.github.docker-java:docker-java-transport-zerodep](https://central.sonatype.com/artifact/com.github.docker-java/docker-java-transport-zerodep/3.4.2) | 3.4.2 | Apache-2.0 |
+| [com.github.stephenc.jcip:jcip-annotations](https://central.sonatype.com/artifact/com.github.stephenc.jcip/jcip-annotations/1.0-1) | 1.0-1 | Apache-2.0 |
+| [com.google.auto.service:auto-service-annotations](https://central.sonatype.com/artifact/com.google.auto.service/auto-service-annotations/1.1.1) | 1.1.1 | Apache-2.0 |
+| [com.google.code.gson:gson](https://central.sonatype.com/artifact/com.google.code.gson/gson/2.8.9) | 2.8.9 | Apache-2.0 |
+| [com.google.code.gson:gson](https://central.sonatype.com/artifact/com.google.code.gson/gson/2.13.2) | 2.13.2 | Apache-2.0 |
+| [com.google.errorprone:error_prone_annotations](https://central.sonatype.com/artifact/com.google.errorprone/error_prone_annotations/2.42.0) | 2.42.0 | Apache-2.0 |
+| [com.google.guava:failureaccess](https://central.sonatype.com/artifact/com.google.guava/failureaccess/1.0.2) | 1.0.2 | Apache-2.0 |
+| [com.google.guava:guava](https://central.sonatype.com/artifact/com.google.guava/guava/33.2.1-jre) | 33.2.1-jre | Apache-2.0 |
+| [com.google.inject:guice](https://central.sonatype.com/artifact/com.google.inject/guice/5.1.0) | 5.1.0 | Apache-2.0 |
+| [com.googlecode.javaewah:JavaEWAH](https://central.sonatype.com/artifact/com.googlecode.javaewah/JavaEWAH/1.2.3) | 1.2.3 | Apache-2.0 |
+| [com.ibm.async:asyncutil](https://central.sonatype.com/artifact/com.ibm.async/asyncutil/0.1.0) | 0.1.0 | Apache-2.0 |
+| [com.jayway.jsonpath:json-path](https://central.sonatype.com/artifact/com.jayway.jsonpath/json-path/2.9.0) | 2.9.0 | Apache-2.0 |
+| [com.networknt:json-schema-validator](https://central.sonatype.com/artifact/com.networknt/json-schema-validator/1.5.9) | 1.5.9 | Apache-2.0 |
+| [com.nimbusds:content-type](https://central.sonatype.com/artifact/com.nimbusds/content-type/2.2) | 2.2 | Apache-2.0 |
+| [com.nimbusds:lang-tag](https://central.sonatype.com/artifact/com.nimbusds/lang-tag/1.7) | 1.7 | Apache-2.0 |
+| [com.nimbusds:nimbus-jose-jwt](https://central.sonatype.com/artifact/com.nimbusds/nimbus-jose-jwt/10.5) | 10.5 | Apache-2.0 |
+| [com.nimbusds:oauth2-oidc-sdk](https://central.sonatype.com/artifact/com.nimbusds/oauth2-oidc-sdk/9.43.6) | 9.43.6 | Apache-2.0 |
+| [com.opencsv:opencsv](https://central.sonatype.com/artifact/com.opencsv/opencsv/5.9) | 5.9 | Apache-2.0 |
+| [com.tngtech.archunit:archunit-junit4](https://central.sonatype.com/artifact/com.tngtech.archunit/archunit-junit4/1.4.1) | 1.4.1 | Apache-2.0 |
+| [com.zaxxer:HikariCP](https://central.sonatype.com/artifact/com.zaxxer/HikariCP/6.3.3) | 6.3.3 | Apache-2.0 |
+| [commons-codec:commons-codec](https://central.sonatype.com/artifact/commons-codec/commons-codec/1.19.0) | 1.19.0 | Apache-2.0 |
+| [commons-fileupload:commons-fileupload](https://central.sonatype.com/artifact/commons-fileupload/commons-fileupload/1.6.0) | 1.6.0 | Apache-2.0 |
+| [commons-io:commons-io](https://central.sonatype.com/artifact/commons-io/commons-io/2.20.0) | 2.20.0 | Apache-2.0 |
+| [commons-logging:commons-logging](https://central.sonatype.com/artifact/commons-logging/commons-logging/1.2) | 1.2 | Apache-2.0 |
+| [commons-logging:commons-logging](https://central.sonatype.com/artifact/commons-logging/commons-logging/1.3.5) | 1.3.5 | Apache-2.0 |
+| [io.agroal:agroal-api](https://central.sonatype.com/artifact/io.agroal/agroal-api/2.8) | 2.8 | Apache-2.0 |
+| [io.agroal:agroal-narayana](https://central.sonatype.com/artifact/io.agroal/agroal-narayana/2.8) | 2.8 | Apache-2.0 |
+| [io.agroal:agroal-pool](https://central.sonatype.com/artifact/io.agroal/agroal-pool/2.8) | 2.8 | Apache-2.0 |
+| [io.micrometer:micrometer-commons](https://central.sonatype.com/artifact/io.micrometer/micrometer-commons/1.15.4) | 1.15.4 | Apache-2.0 |
+| [io.micrometer:micrometer-core](https://central.sonatype.com/artifact/io.micrometer/micrometer-core/1.15.4) | 1.15.4 | Apache-2.0 |
+| [io.micrometer:micrometer-jakarta9](https://central.sonatype.com/artifact/io.micrometer/micrometer-jakarta9/1.15.4) | 1.15.4 | Apache-2.0 |
+| [io.micrometer:micrometer-observation](https://central.sonatype.com/artifact/io.micrometer/micrometer-observation/1.15.4) | 1.15.4 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-api](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-api/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-context](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-context/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-exporter-logging](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-exporter-logging/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-sdk](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-sdk/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-sdk-common](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-sdk-common/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-sdk-extension-autoconfigure](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-sdk-extension-autoconfigure/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-sdk-extension-autoconfigure-spi/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-sdk-logs](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-sdk-logs/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-sdk-metrics](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-sdk-metrics/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.opentelemetry:opentelemetry-sdk-trace](https://central.sonatype.com/artifact/io.opentelemetry/opentelemetry-sdk-trace/1.49.0) | 1.49.0 | Apache-2.0 |
+| [io.quarkus.arc:arc](https://central.sonatype.com/artifact/io.quarkus.arc/arc/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus.arc:arc-processor](https://central.sonatype.com/artifact/io.quarkus.arc/arc-processor/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus.gizmo:gizmo](https://central.sonatype.com/artifact/io.quarkus.gizmo/gizmo/1.9.0) | 1.9.0 | Apache-2.0 |
+| [io.quarkus.gizmo:gizmo2](https://central.sonatype.com/artifact/io.quarkus.gizmo/gizmo2/2.0.0.Beta6) | 2.0.0.Beta6 | Apache-2.0 |
+| [io.quarkus:quarkus-agroal](https://central.sonatype.com/artifact/io.quarkus/quarkus-agroal/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-agroal-deployment](https://central.sonatype.com/artifact/io.quarkus/quarkus-agroal-deployment/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-agroal-dev](https://central.sonatype.com/artifact/io.quarkus/quarkus-agroal-dev/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-agroal-spi](https://central.sonatype.com/artifact/io.quarkus/quarkus-agroal-spi/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-arc](https://central.sonatype.com/artifact/io.quarkus/quarkus-arc/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-arc-deployment](https://central.sonatype.com/artifact/io.quarkus/quarkus-arc-deployment/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-arc-dev](https://central.sonatype.com/artifact/io.quarkus/quarkus-arc-dev/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-assistant-deployment-spi](https://central.sonatype.com/artifact/io.quarkus/quarkus-assistant-deployment-spi/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-assistant-dev](https://central.sonatype.com/artifact/io.quarkus/quarkus-assistant-dev/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-bootstrap-app-model](https://central.sonatype.com/artifact/io.quarkus/quarkus-bootstrap-app-model/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-bootstrap-core](https://central.sonatype.com/artifact/io.quarkus/quarkus-bootstrap-core/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-bootstrap-runner](https://central.sonatype.com/artifact/io.quarkus/quarkus-bootstrap-runner/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-builder](https://central.sonatype.com/artifact/io.quarkus/quarkus-builder/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-class-change-agent](https://central.sonatype.com/artifact/io.quarkus/quarkus-class-change-agent/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-classloader-commons](https://central.sonatype.com/artifact/io.quarkus/quarkus-classloader-commons/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-core](https://central.sonatype.com/artifact/io.quarkus/quarkus-core/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-core-deployment](https://central.sonatype.com/artifact/io.quarkus/quarkus-core-deployment/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-credentials](https://central.sonatype.com/artifact/io.quarkus/quarkus-credentials/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-credentials-deployment](https://central.sonatype.com/artifact/io.quarkus/quarkus-credentials-deployment/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-datasource](https://central.sonatype.com/artifact/io.quarkus/quarkus-datasource/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-datasource-common](https://central.sonatype.com/artifact/io.quarkus/quarkus-datasource-common/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-datasource-deployment](https://central.sonatype.com/artifact/io.quarkus/quarkus-datasource-deployment/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-datasource-deployment-spi](https://central.sonatype.com/artifact/io.quarkus/quarkus-datasource-deployment-spi/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-datasource-dev](https://central.sonatype.com/artifact/io.quarkus/quarkus-datasource-dev/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-development-mode-spi](https://central.sonatype.com/artifact/io.quarkus/quarkus-development-mode-spi/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-devservices-common](https://central.sonatype.com/artifact/io.quarkus/quarkus-devservices-common/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-devservices-deployment](https://central.sonatype.com/artifact/io.quarkus/quarkus-devservices-deployment/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-devui-deployment-spi](https://central.sonatype.com/artifact/io.quarkus/quarkus-devui-deployment-spi/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-fs-util](https://central.sonatype.com/artifact/io.quarkus/quarkus-fs-util/1.2.0) | 1.2.0 | Apache-2.0 |
+| [io.quarkus:quarkus-hibernate-validator-spi](https://central.sonatype.com/artifact/io.quarkus/quarkus-hibernate-validator-spi/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-ide-launcher](https://central.sonatype.com/artifact/io.quarkus/quarkus-ide-launcher/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-junit4-mock](https://central.sonatype.com/artifact/io.quarkus/quarkus-junit4-mock/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-kubernetes-service-binding-spi](https://central.sonatype.com/artifact/io.quarkus/quarkus-kubernetes-service-binding-spi/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-mutiny](https://central.sonatype.com/artifact/io.quarkus/quarkus-mutiny/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-mutiny-deployment](https://central.sonatype.com/artifact/io.quarkus/quarkus-mutiny-deployment/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-narayana-jta](https://central.sonatype.com/artifact/io.quarkus/quarkus-narayana-jta/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-narayana-jta-deployment](https://central.sonatype.com/artifact/io.quarkus/quarkus-narayana-jta-deployment/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-smallrye-context-propagation](https://central.sonatype.com/artifact/io.quarkus/quarkus-smallrye-context-propagation/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-smallrye-context-propagation-deployment](https://central.sonatype.com/artifact/io.quarkus/quarkus-smallrye-context-propagation-deployment/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-smallrye-context-propagation-spi](https://central.sonatype.com/artifact/io.quarkus/quarkus-smallrye-context-propagation-spi/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-smallrye-health-spi](https://central.sonatype.com/artifact/io.quarkus/quarkus-smallrye-health-spi/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.quarkus:quarkus-transaction-annotations](https://central.sonatype.com/artifact/io.quarkus/quarkus-transaction-annotations/3.29.0) | 3.29.0 | Apache-2.0 |
+| [io.reactivex.rxjava3:rxjava](https://central.sonatype.com/artifact/io.reactivex.rxjava3/rxjava/3.1.11) | 3.1.11 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-annotation](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-annotation/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-classloader](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-classloader/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-constraint](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-constraint/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-constraint](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-constraint/2.12.0) | 2.12.0 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-cpu](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-cpu/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-cpu](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-cpu/2.12.0) | 2.12.0 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-expression](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-expression/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-function](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-function/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-function](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-function/2.12.0) | 2.12.0 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-io](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-io/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-net](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-net/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-os](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-os/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-process](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-process/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-ref](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-ref/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.common:smallrye-common-resource](https://central.sonatype.com/artifact/io.smallrye.common/smallrye-common-resource/2.13.9) | 2.13.9 | Apache-2.0 |
+| [io.smallrye.config:smallrye-config](https://central.sonatype.com/artifact/io.smallrye.config/smallrye-config/3.14.1) | 3.14.1 | Apache-2.0 |
+| [io.smallrye.config:smallrye-config-common](https://central.sonatype.com/artifact/io.smallrye.config/smallrye-config-common/3.14.1) | 3.14.1 | Apache-2.0 |
+| [io.smallrye.config:smallrye-config-core](https://central.sonatype.com/artifact/io.smallrye.config/smallrye-config-core/3.14.1) | 3.14.1 | Apache-2.0 |
+| [io.smallrye.reactive:mutiny](https://central.sonatype.com/artifact/io.smallrye.reactive/mutiny/3.0.0) | 3.0.0 | Apache-2.0 |
+| [io.smallrye.reactive:mutiny-smallrye-context-propagation](https://central.sonatype.com/artifact/io.smallrye.reactive/mutiny-smallrye-context-propagation/3.0.0) | 3.0.0 | Apache-2.0 |
+| [io.smallrye.reactive:mutiny-zero-flow-adapters](https://central.sonatype.com/artifact/io.smallrye.reactive/mutiny-zero-flow-adapters/1.1.1) | 1.1.1 | Apache-2.0 |
+| [io.smallrye.reactive:smallrye-reactive-converter-api](https://central.sonatype.com/artifact/io.smallrye.reactive/smallrye-reactive-converter-api/3.0.3) | 3.0.3 | Apache-2.0 |
+| [io.smallrye.reactive:smallrye-reactive-converter-mutiny](https://central.sonatype.com/artifact/io.smallrye.reactive/smallrye-reactive-converter-mutiny/3.0.3) | 3.0.3 | Apache-2.0 |
+| [io.smallrye:jandex](https://central.sonatype.com/artifact/io.smallrye/jandex/3.2.0) | 3.2.0 | Apache-2.0 |
+| [io.smallrye:jandex](https://central.sonatype.com/artifact/io.smallrye/jandex/3.5.0) | 3.5.0 | Apache-2.0 |
+| [io.smallrye:jandex](https://central.sonatype.com/artifact/io.smallrye/jandex/3.3.2) | 3.3.2 | Apache-2.0 |
+| [io.smallrye:jandex-gizmo2](https://central.sonatype.com/artifact/io.smallrye/jandex-gizmo2/3.5.0) | 3.5.0 | Apache-2.0 |
+| [io.smallrye:smallrye-context-propagation](https://central.sonatype.com/artifact/io.smallrye/smallrye-context-propagation/2.2.1) | 2.2.1 | Apache-2.0 |
+| [io.smallrye:smallrye-context-propagation-api](https://central.sonatype.com/artifact/io.smallrye/smallrye-context-propagation-api/2.2.1) | 2.2.1 | Apache-2.0 |
+| [io.smallrye:smallrye-context-propagation-jta](https://central.sonatype.com/artifact/io.smallrye/smallrye-context-propagation-jta/2.2.1) | 2.2.1 | Apache-2.0 |
+| [io.smallrye:smallrye-context-propagation-storage](https://central.sonatype.com/artifact/io.smallrye/smallrye-context-propagation-storage/2.2.1) | 2.2.1 | Apache-2.0 |
+| [io.undertow:undertow-core](https://central.sonatype.com/artifact/io.undertow/undertow-core/2.3.19.Final) | 2.3.19.Final | Apache-2.0 |
+| [jakarta.enterprise:jakarta.enterprise.cdi-api](https://central.sonatype.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api/4.0.1) | 4.0.1 | Apache-2.0 |
+| [jakarta.enterprise:jakarta.enterprise.cdi-api](https://central.sonatype.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api/4.1.0) | 4.1.0 | Apache-2.0 |
+| [jakarta.enterprise:jakarta.enterprise.lang-model](https://central.sonatype.com/artifact/jakarta.enterprise/jakarta.enterprise.lang-model/4.0.1) | 4.0.1 | Apache-2.0 |
+| [jakarta.inject:jakarta.inject-api](https://central.sonatype.com/artifact/jakarta.inject/jakarta.inject-api/2.0.1) | 2.0.1 | Apache-2.0 |
+| [jakarta.validation:jakarta.validation-api](https://central.sonatype.com/artifact/jakarta.validation/jakarta.validation-api/3.0.2) | 3.0.2 | Apache-2.0 |
+| [javax.inject:javax.inject](https://central.sonatype.com/artifact/javax.inject/javax.inject/1) | 1 | Apache-2.0 |
+| [joda-time:joda-time](https://central.sonatype.com/artifact/joda-time/joda-time/2.12.5) | 2.12.5 | Apache-2.0 |
+| [net.bytebuddy:byte-buddy](https://central.sonatype.com/artifact/net.bytebuddy/byte-buddy/1.17.7) | 1.17.7 | Apache-2.0 |
+| [net.bytebuddy:byte-buddy](https://central.sonatype.com/artifact/net.bytebuddy/byte-buddy/1.17.6) | 1.17.6 | Apache-2.0 |
+| [net.bytebuddy:byte-buddy-agent](https://central.sonatype.com/artifact/net.bytebuddy/byte-buddy-agent/1.17.7) | 1.17.7 | Apache-2.0 |
+| [net.minidev:accessors-smart](https://central.sonatype.com/artifact/net.minidev/accessors-smart/2.5.2) | 2.5.2 | Apache-2.0 |
+| [net.minidev:accessors-smart](https://central.sonatype.com/artifact/net.minidev/accessors-smart/2.6.0) | 2.6.0 | Apache-2.0 |
+| [net.minidev:json-smart](https://central.sonatype.com/artifact/net.minidev/json-smart/2.5.2) | 2.5.2 | Apache-2.0 |
+| [net.minidev:json-smart](https://central.sonatype.com/artifact/net.minidev/json-smart/2.6.0) | 2.6.0 | Apache-2.0 |
+| [org.aesh:aesh](https://central.sonatype.com/artifact/org.aesh/aesh/2.8.2) | 2.8.2 | Apache-2.0 |
+| [org.aesh:readline](https://central.sonatype.com/artifact/org.aesh/readline/2.6) | 2.6 | Apache-2.0 |
+| [org.apache.ant:ant](https://central.sonatype.com/artifact/org.apache.ant/ant/1.10.15) | 1.10.15 | Apache-2.0 |
+| [org.apache.ant:ant-launcher](https://central.sonatype.com/artifact/org.apache.ant/ant-launcher/1.10.15) | 1.10.15 | Apache-2.0 |
+| [org.apache.commons:commons-collections4](https://central.sonatype.com/artifact/org.apache.commons/commons-collections4/4.4) | 4.4 | Apache-2.0 |
+| [org.apache.commons:commons-compress](https://central.sonatype.com/artifact/org.apache.commons/commons-compress/1.27.1) | 1.27.1 | Apache-2.0 |
+| [org.apache.commons:commons-email2-core](https://central.sonatype.com/artifact/org.apache.commons/commons-email2-core/2.0.0-M1) | 2.0.0-M1 | Apache-2.0 |
+| [org.apache.commons:commons-email2-jakarta](https://central.sonatype.com/artifact/org.apache.commons/commons-email2-jakarta/2.0.0-M1) | 2.0.0-M1 | Apache-2.0 |
+| [org.apache.commons:commons-exec](https://central.sonatype.com/artifact/org.apache.commons/commons-exec/1.4.0) | 1.4.0 | Apache-2.0 |
+| [org.apache.commons:commons-lang3](https://central.sonatype.com/artifact/org.apache.commons/commons-lang3/3.19.0) | 3.19.0 | Apache-2.0 |
+| [org.apache.commons:commons-text](https://central.sonatype.com/artifact/org.apache.commons/commons-text/1.13.0) | 1.13.0 | Apache-2.0 |
+| [org.apache.groovy:groovy](https://central.sonatype.com/artifact/org.apache.groovy/groovy/4.0.28) | 4.0.28 | Apache-2.0 |
+| [org.apache.groovy:groovy](https://central.sonatype.com/artifact/org.apache.groovy/groovy/5.0.1) | 5.0.1 | Apache-2.0 |
+| [org.apache.groovy:groovy-datetime](https://central.sonatype.com/artifact/org.apache.groovy/groovy-datetime/4.0.28) | 4.0.28 | Apache-2.0 |
+| [org.apache.groovy:groovy-datetime](https://central.sonatype.com/artifact/org.apache.groovy/groovy-datetime/5.0.1) | 5.0.1 | Apache-2.0 |
+| [org.apache.groovy:groovy-dateutil](https://central.sonatype.com/artifact/org.apache.groovy/groovy-dateutil/4.0.28) | 4.0.28 | Apache-2.0 |
+| [org.apache.groovy:groovy-dateutil](https://central.sonatype.com/artifact/org.apache.groovy/groovy-dateutil/5.0.1) | 5.0.1 | Apache-2.0 |
+| [org.apache.groovy:groovy-json](https://central.sonatype.com/artifact/org.apache.groovy/groovy-json/5.0.1) | 5.0.1 | Apache-2.0 |
+| [org.apache.groovy:groovy-json](https://central.sonatype.com/artifact/org.apache.groovy/groovy-json/4.0.28) | 4.0.28 | Apache-2.0 |
+| [org.apache.groovy:groovy-jsr223](https://central.sonatype.com/artifact/org.apache.groovy/groovy-jsr223/4.0.28) | 4.0.28 | Apache-2.0 |
+| [org.apache.groovy:groovy-jsr223](https://central.sonatype.com/artifact/org.apache.groovy/groovy-jsr223/5.0.1) | 5.0.1 | Apache-2.0 |
+| [org.apache.groovy:groovy-templates](https://central.sonatype.com/artifact/org.apache.groovy/groovy-templates/4.0.28) | 4.0.28 | Apache-2.0 |
+| [org.apache.groovy:groovy-templates](https://central.sonatype.com/artifact/org.apache.groovy/groovy-templates/5.0.1) | 5.0.1 | Apache-2.0 |
+| [org.apache.groovy:groovy-xml](https://central.sonatype.com/artifact/org.apache.groovy/groovy-xml/5.0.1) | 5.0.1 | Apache-2.0 |
+| [org.apache.groovy:groovy-xml](https://central.sonatype.com/artifact/org.apache.groovy/groovy-xml/4.0.28) | 4.0.28 | Apache-2.0 |
+| [org.apache.httpcomponents.client5:httpclient5](https://central.sonatype.com/artifact/org.apache.httpcomponents.client5/httpclient5/5.5.1) | 5.5.1 | Apache-2.0 |
+| [org.apache.httpcomponents.core5:httpcore5](https://central.sonatype.com/artifact/org.apache.httpcomponents.core5/httpcore5/5.3.6) | 5.3.6 | Apache-2.0 |
+| [org.apache.httpcomponents.core5:httpcore5-h2](https://central.sonatype.com/artifact/org.apache.httpcomponents.core5/httpcore5-h2/5.3.5) | 5.3.5 | Apache-2.0 |
+| [org.apache.httpcomponents:httpasyncclient](https://central.sonatype.com/artifact/org.apache.httpcomponents/httpasyncclient/4.1.5) | 4.1.5 | Apache-2.0 |
+| [org.apache.httpcomponents:httpclient](https://central.sonatype.com/artifact/org.apache.httpcomponents/httpclient/4.5.14) | 4.5.14 | Apache-2.0 |
+| [org.apache.httpcomponents:httpcore](https://central.sonatype.com/artifact/org.apache.httpcomponents/httpcore/4.4.16) | 4.4.16 | Apache-2.0 |
+| [org.apache.httpcomponents:httpcore-nio](https://central.sonatype.com/artifact/org.apache.httpcomponents/httpcore-nio/4.4.16) | 4.4.16 | Apache-2.0 |
+| [org.apache.httpcomponents:httpmime](https://central.sonatype.com/artifact/org.apache.httpcomponents/httpmime/4.5.13) | 4.5.13 | Apache-2.0 |
+| [org.apache.logging.log4j:log4j-api](https://central.sonatype.com/artifact/org.apache.logging.log4j/log4j-api/2.24.3) | 2.24.3 | Apache-2.0 |
+| [org.apache.logging.log4j:log4j-to-slf4j](https://central.sonatype.com/artifact/org.apache.logging.log4j/log4j-to-slf4j/2.24.3) | 2.24.3 | Apache-2.0 |
+| [org.apache.maven.resolver:maven-resolver-api](https://central.sonatype.com/artifact/org.apache.maven.resolver/maven-resolver-api/1.9.22) | 1.9.22 | Apache-2.0 |
+| [org.apache.maven.resolver:maven-resolver-connector-basic](https://central.sonatype.com/artifact/org.apache.maven.resolver/maven-resolver-connector-basic/1.9.22) | 1.9.22 | Apache-2.0 |
+| [org.apache.maven.resolver:maven-resolver-impl](https://central.sonatype.com/artifact/org.apache.maven.resolver/maven-resolver-impl/1.9.22) | 1.9.22 | Apache-2.0 |
+| [org.apache.maven.resolver:maven-resolver-named-locks](https://central.sonatype.com/artifact/org.apache.maven.resolver/maven-resolver-named-locks/1.9.22) | 1.9.22 | Apache-2.0 |
+| [org.apache.maven.resolver:maven-resolver-spi](https://central.sonatype.com/artifact/org.apache.maven.resolver/maven-resolver-spi/1.9.22) | 1.9.22 | Apache-2.0 |
+| [org.apache.maven.resolver:maven-resolver-supplier](https://central.sonatype.com/artifact/org.apache.maven.resolver/maven-resolver-supplier/1.9.22) | 1.9.22 | Apache-2.0 |
+| [org.apache.maven.resolver:maven-resolver-transport-file](https://central.sonatype.com/artifact/org.apache.maven.resolver/maven-resolver-transport-file/1.9.22) | 1.9.22 | Apache-2.0 |
+| [org.apache.maven.resolver:maven-resolver-transport-http](https://central.sonatype.com/artifact/org.apache.maven.resolver/maven-resolver-transport-http/1.9.22) | 1.9.22 | Apache-2.0 |
+| [org.apache.maven.resolver:maven-resolver-util](https://central.sonatype.com/artifact/org.apache.maven.resolver/maven-resolver-util/1.9.22) | 1.9.22 | Apache-2.0 |
+| [org.apache.maven.shared:maven-invoker](https://central.sonatype.com/artifact/org.apache.maven.shared/maven-invoker/3.3.0) | 3.3.0 | Apache-2.0 |
+| [org.apache.maven.shared:maven-shared-utils](https://central.sonatype.com/artifact/org.apache.maven.shared/maven-shared-utils/3.4.2) | 3.4.2 | Apache-2.0 |
+| [org.apache.maven:maven-artifact](https://central.sonatype.com/artifact/org.apache.maven/maven-artifact/3.9.9) | 3.9.9 | Apache-2.0 |
+| [org.apache.maven:maven-builder-support](https://central.sonatype.com/artifact/org.apache.maven/maven-builder-support/3.9.9) | 3.9.9 | Apache-2.0 |
+| [org.apache.maven:maven-model](https://central.sonatype.com/artifact/org.apache.maven/maven-model/3.9.9) | 3.9.9 | Apache-2.0 |
+| [org.apache.maven:maven-model-builder](https://central.sonatype.com/artifact/org.apache.maven/maven-model-builder/3.9.9) | 3.9.9 | Apache-2.0 |
+| [org.apache.maven:maven-repository-metadata](https://central.sonatype.com/artifact/org.apache.maven/maven-repository-metadata/3.9.9) | 3.9.9 | Apache-2.0 |
+| [org.apache.maven:maven-resolver-provider](https://central.sonatype.com/artifact/org.apache.maven/maven-resolver-provider/3.9.9) | 3.9.9 | Apache-2.0 |
+| [org.apache.maven:maven-settings](https://central.sonatype.com/artifact/org.apache.maven/maven-settings/3.9.9) | 3.9.9 | Apache-2.0 |
+| [org.apache.maven:maven-settings-builder](https://central.sonatype.com/artifact/org.apache.maven/maven-settings-builder/3.9.9) | 3.9.9 | Apache-2.0 |
+| [org.apache.sshd:sshd-common](https://central.sonatype.com/artifact/org.apache.sshd/sshd-common/2.15.0) | 2.15.0 | Apache-2.0 |
+| [org.apache.sshd:sshd-core](https://central.sonatype.com/artifact/org.apache.sshd/sshd-core/2.15.0) | 2.15.0 | Apache-2.0 |
+| [org.apache.tomcat.embed:tomcat-embed-core](https://central.sonatype.com/artifact/org.apache.tomcat.embed/tomcat-embed-core/10.1.46) | 10.1.46 | Apache-2.0 |
+| [org.apache.tomcat.embed:tomcat-embed-el](https://central.sonatype.com/artifact/org.apache.tomcat.embed/tomcat-embed-el/10.1.46) | 10.1.46 | Apache-2.0 |
+| [org.apache.tomcat.embed:tomcat-embed-websocket](https://central.sonatype.com/artifact/org.apache.tomcat.embed/tomcat-embed-websocket/10.1.46) | 10.1.46 | Apache-2.0 |
+| [org.apache.tomcat:tomcat](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-annotations-api](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-annotations-api/10.1.46) | 10.1.46 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-api](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-api/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-catalina](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-catalina/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-coyote](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-coyote/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-el-api](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-el-api/10.1.46) | 10.1.46 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-jaspic-api](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-jaspic-api/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-jdbc](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-jdbc/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-jni](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-jni/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-jsp-api](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-jsp-api/10.1.46) | 10.1.46 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-juli](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-juli/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-util](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-util/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apache.tomcat:tomcat-util-scan](https://central.sonatype.com/artifact/org.apache.tomcat/tomcat-util-scan/11.0.12) | 11.0.12 | Apache-2.0 |
+| [org.apiguardian:apiguardian-api](https://central.sonatype.com/artifact/org.apiguardian/apiguardian-api/1.1.2) | 1.1.2 | Apache-2.0 |
+| [org.assertj:assertj-core](https://central.sonatype.com/artifact/org.assertj/assertj-core/3.27.6) | 3.27.6 | Apache-2.0 |
+| [org.awaitility:awaitility](https://central.sonatype.com/artifact/org.awaitility/awaitility/4.3.0) | 4.3.0 | Apache-2.0 |
+| [org.camunda.feel:feel-engine](https://central.sonatype.com/artifact/org.camunda.feel/feel-engine/1.19.3) | 1.19.3 | Apache-2.0 |
+| [org.codehaus.plexus:plexus-cipher](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-cipher/2.0) | 2.0 | Apache-2.0 |
+| [org.codehaus.plexus:plexus-classworlds](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-classworlds/2.8.0) | 2.8.0 | Apache-2.0 |
+| [org.codehaus.plexus:plexus-compiler-api](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-compiler-api/2.15.0) | 2.15.0 | Apache-2.0 |
+| [org.codehaus.plexus:plexus-compiler-javac](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-compiler-javac/2.15.0) | 2.15.0 | Apache-2.0 |
+| [org.codehaus.plexus:plexus-component-annotations](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-component-annotations/2.1.0) | 2.1.0 | Apache-2.0 |
+| [org.codehaus.plexus:plexus-interpolation](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-interpolation/1.27) | 1.27 | Apache-2.0 |
+| [org.codehaus.plexus:plexus-sec-dispatcher](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-sec-dispatcher/2.0) | 2.0 | Apache-2.0 |
+| [org.codehaus.plexus:plexus-utils](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-utils/3.5.1) | 3.5.1 | Apache-2.0 |
+| [org.codehaus.plexus:plexus-xml](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-xml/3.0.1) | 3.0.1 | Apache-2.0 |
+| [org.eclipse.microprofile.config:microprofile-config-api](https://central.sonatype.com/artifact/org.eclipse.microprofile.config/microprofile-config-api/3.1) | 3.1 | Apache-2.0 |
+| [org.eclipse.microprofile.context-propagation:microprofile-context-propagation-api](https://central.sonatype.com/artifact/org.eclipse.microprofile.context-propagation/microprofile-context-propagation-api/1.3) | 1.3 | Apache-2.0 |
+| [org.eclipse.microprofile.reactive-streams-operators:microprofile-reactive-streams-operators-api](https://central.sonatype.com/artifact/org.eclipse.microprofile.reactive-streams-operators/microprofile-reactive-streams-operators-api/3.0.1) | 3.0.1 | Apache-2.0 |
+| [org.freemarker:freemarker](https://central.sonatype.com/artifact/org.freemarker/freemarker/2.3.34) | 2.3.34 | Apache-2.0 |
+| [org.fusesource.jansi:jansi](https://central.sonatype.com/artifact/org.fusesource.jansi/jansi/2.4.1) | 2.4.1 | Apache-2.0 |
+| [org.hibernate.common:hibernate-commons-annotations](https://central.sonatype.com/artifact/org.hibernate.common/hibernate-commons-annotations/7.0.3.Final) | 7.0.3.Final | Apache-2.0 |
+| [org.hibernate.validator:hibernate-validator](https://central.sonatype.com/artifact/org.hibernate.validator/hibernate-validator/8.0.3.Final) | 8.0.3.Final | Apache-2.0 |
+| [org.hibernate.validator:hibernate-validator-cdi](https://central.sonatype.com/artifact/org.hibernate.validator/hibernate-validator-cdi/8.0.2.Final) | 8.0.2.Final | Apache-2.0 |
+| [org.infinispan.protostream:protostream](https://central.sonatype.com/artifact/org.infinispan.protostream/protostream/5.0.13.Final) | 5.0.13.Final | Apache-2.0 |
+| [org.infinispan.protostream:protostream-processor](https://central.sonatype.com/artifact/org.infinispan.protostream/protostream-processor/5.0.13.Final) | 5.0.13.Final | Apache-2.0 |
+| [org.infinispan.protostream:protostream-types](https://central.sonatype.com/artifact/org.infinispan.protostream/protostream-types/5.0.13.Final) | 5.0.13.Final | Apache-2.0 |
+| [org.infinispan:infinispan-commons](https://central.sonatype.com/artifact/org.infinispan/infinispan-commons/15.2.6.Final) | 15.2.6.Final | Apache-2.0 |
+| [org.infinispan:infinispan-commons-spi](https://central.sonatype.com/artifact/org.infinispan/infinispan-commons-spi/15.2.6.Final) | 15.2.6.Final | Apache-2.0 |
+| [org.infinispan:infinispan-core](https://central.sonatype.com/artifact/org.infinispan/infinispan-core/15.2.6.Final) | 15.2.6.Final | Apache-2.0 |
+| [org.infinispan:infinispan-counter-api](https://central.sonatype.com/artifact/org.infinispan/infinispan-counter-api/15.2.6.Final) | 15.2.6.Final | Apache-2.0 |
+| [org.jboss.arquillian.config:arquillian-config-api](https://central.sonatype.com/artifact/org.jboss.arquillian.config/arquillian-config-api/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.config:arquillian-config-impl-base](https://central.sonatype.com/artifact/org.jboss.arquillian.config/arquillian-config-impl-base/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.config:arquillian-config-spi](https://central.sonatype.com/artifact/org.jboss.arquillian.config/arquillian-config-spi/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.container:arquillian-container-impl-base](https://central.sonatype.com/artifact/org.jboss.arquillian.container/arquillian-container-impl-base/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.container:arquillian-container-spi](https://central.sonatype.com/artifact/org.jboss.arquillian.container/arquillian-container-spi/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.container:arquillian-container-test-api](https://central.sonatype.com/artifact/org.jboss.arquillian.container/arquillian-container-test-api/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.container:arquillian-container-test-impl-base](https://central.sonatype.com/artifact/org.jboss.arquillian.container/arquillian-container-test-impl-base/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.container:arquillian-container-test-spi](https://central.sonatype.com/artifact/org.jboss.arquillian.container/arquillian-container-test-spi/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.core:arquillian-core-api](https://central.sonatype.com/artifact/org.jboss.arquillian.core/arquillian-core-api/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.core:arquillian-core-impl-base](https://central.sonatype.com/artifact/org.jboss.arquillian.core/arquillian-core-impl-base/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.core:arquillian-core-spi](https://central.sonatype.com/artifact/org.jboss.arquillian.core/arquillian-core-spi/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.junit5:arquillian-junit5-container](https://central.sonatype.com/artifact/org.jboss.arquillian.junit5/arquillian-junit5-container/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.junit5:arquillian-junit5-core](https://central.sonatype.com/artifact/org.jboss.arquillian.junit5/arquillian-junit5-core/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.test:arquillian-test-api](https://central.sonatype.com/artifact/org.jboss.arquillian.test/arquillian-test-api/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.test:arquillian-test-impl-base](https://central.sonatype.com/artifact/org.jboss.arquillian.test/arquillian-test-impl-base/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.arquillian.test:arquillian-test-spi](https://central.sonatype.com/artifact/org.jboss.arquillian.test/arquillian-test-spi/1.10.0.Final) | 1.10.0.Final | Apache-2.0 |
+| [org.jboss.classfilewriter:jboss-classfilewriter](https://central.sonatype.com/artifact/org.jboss.classfilewriter/jboss-classfilewriter/1.3.1.Final) | 1.3.1.Final | Apache-2.0 |
+| [org.jboss.ejb3:jboss-ejb3-ext-api](https://central.sonatype.com/artifact/org.jboss.ejb3/jboss-ejb3-ext-api/2.4.0.Final) | 2.4.0.Final | Apache-2.0 |
+| [org.jboss.invocation:jboss-invocation](https://central.sonatype.com/artifact/org.jboss.invocation/jboss-invocation/2.0.0.Final) | 2.0.0.Final | Apache-2.0 |
+| [org.jboss.invocation:jboss-invocation](https://central.sonatype.com/artifact/org.jboss.invocation/jboss-invocation/2.0.1.Final) | 2.0.1.Final | Apache-2.0 |
+| [org.jboss.logging:commons-logging-jboss-logging](https://central.sonatype.com/artifact/org.jboss.logging/commons-logging-jboss-logging/1.0.0.Final) | 1.0.0.Final | Apache-2.0 |
+| [org.jboss.logging:jboss-logging](https://central.sonatype.com/artifact/org.jboss.logging/jboss-logging/3.6.1.Final) | 3.6.1.Final | Apache-2.0 |
+| [org.jboss.logmanager:jboss-logmanager](https://central.sonatype.com/artifact/org.jboss.logmanager/jboss-logmanager/3.1.2.Final) | 3.1.2.Final | Apache-2.0 |
+| [org.jboss.logmanager:jboss-logmanager](https://central.sonatype.com/artifact/org.jboss.logmanager/jboss-logmanager/2.1.19.Final) | 2.1.19.Final | Apache-2.0 |
+| [org.jboss.marshalling:jboss-marshalling](https://central.sonatype.com/artifact/org.jboss.marshalling/jboss-marshalling/2.2.3.Final) | 2.2.3.Final | Apache-2.0 |
+| [org.jboss.marshalling:jboss-marshalling-river](https://central.sonatype.com/artifact/org.jboss.marshalling/jboss-marshalling-river/2.2.3.Final) | 2.2.3.Final | Apache-2.0 |
+| [org.jboss.metadata:jboss-metadata-common](https://central.sonatype.com/artifact/org.jboss.metadata/jboss-metadata-common/16.1.0.Final) | 16.1.0.Final | Apache-2.0 |
+| [org.jboss.metadata:jboss-metadata-ear](https://central.sonatype.com/artifact/org.jboss.metadata/jboss-metadata-ear/16.1.0.Final) | 16.1.0.Final | Apache-2.0 |
+| [org.jboss.metadata:jboss-metadata-ejb](https://central.sonatype.com/artifact/org.jboss.metadata/jboss-metadata-ejb/16.1.0.Final) | 16.1.0.Final | Apache-2.0 |
+| [org.jboss.metadata:jboss-metadata-web](https://central.sonatype.com/artifact/org.jboss.metadata/jboss-metadata-web/16.1.0.Final) | 16.1.0.Final | Apache-2.0 |
+| [org.jboss.narayana.jta:narayana-jta](https://central.sonatype.com/artifact/org.jboss.narayana.jta/narayana-jta/7.3.0.Final) | 7.3.0.Final | Apache-2.0 |
+| [org.jboss.narayana.jts:narayana-jts-integration](https://central.sonatype.com/artifact/org.jboss.narayana.jts/narayana-jts-integration/7.3.0.Final) | 7.3.0.Final | Apache-2.0 |
+| [org.jboss.narayana.jts:narayana-jts-integration](https://central.sonatype.com/artifact/org.jboss.narayana.jts/narayana-jts-integration/7.2.2.Final) | 7.2.2.Final | Apache-2.0 |
+| [org.jboss.remoting:jboss-remoting](https://central.sonatype.com/artifact/org.jboss.remoting/jboss-remoting/5.0.31.Final) | 5.0.31.Final | Apache-2.0 |
+| [org.jboss.resteasy:resteasy-core](https://central.sonatype.com/artifact/org.jboss.resteasy/resteasy-core/6.2.14.Final) | 6.2.14.Final | Apache-2.0 |
+| [org.jboss.resteasy:resteasy-core-spi](https://central.sonatype.com/artifact/org.jboss.resteasy/resteasy-core-spi/6.2.14.Final) | 6.2.14.Final | Apache-2.0 |
+| [org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-api-base](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/2.0.0) | 2.0.0 | Apache-2.0 |
+| [org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-spi](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/2.0.0) | 2.0.0 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven-archive](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven-archive/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven-embedded](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven-embedded/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-depchain](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-depchain/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-impl-maven/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven-archive](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-impl-maven-archive/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven-embedded](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-impl-maven-embedded/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-spi/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi-maven](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-spi-maven/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi-maven-archive](https://central.sonatype.com/artifact/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-spi-maven-archive/3.3.4) | 3.3.4 | Apache-2.0 |
+| [org.jboss.shrinkwrap:shrinkwrap-api](https://central.sonatype.com/artifact/org.jboss.shrinkwrap/shrinkwrap-api/1.2.6) | 1.2.6 | Apache-2.0 |
+| [org.jboss.shrinkwrap:shrinkwrap-impl-base](https://central.sonatype.com/artifact/org.jboss.shrinkwrap/shrinkwrap-impl-base/1.2.6) | 1.2.6 | Apache-2.0 |
+| [org.jboss.shrinkwrap:shrinkwrap-spi](https://central.sonatype.com/artifact/org.jboss.shrinkwrap/shrinkwrap-spi/1.2.6) | 1.2.6 | Apache-2.0 |
+| [org.jboss.slf4j:slf4j-jboss-logmanager](https://central.sonatype.com/artifact/org.jboss.slf4j/slf4j-jboss-logmanager/2.0.0.Final) | 2.0.0.Final | Apache-2.0 |
+| [org.jboss.threads:jboss-threads](https://central.sonatype.com/artifact/org.jboss.threads/jboss-threads/3.9.1) | 3.9.1 | Apache-2.0 |
+| [org.jboss.xnio:xnio-api](https://central.sonatype.com/artifact/org.jboss.xnio/xnio-api/3.8.16.Final) | 3.8.16.Final | Apache-2.0 |
+| [org.jboss.xnio:xnio-nio](https://central.sonatype.com/artifact/org.jboss.xnio/xnio-nio/3.8.16.Final) | 3.8.16.Final | Apache-2.0 |
+| [org.jboss:jandex](https://central.sonatype.com/artifact/org.jboss/jandex/2.4.5.Final) | 2.4.5.Final | Apache-2.0 |
+| [org.jboss:jboss-dmr](https://central.sonatype.com/artifact/org.jboss/jboss-dmr/1.7.0.Final) | 1.7.0.Final | Apache-2.0 |
+| [org.jboss:jboss-ejb-client](https://central.sonatype.com/artifact/org.jboss/jboss-ejb-client/5.0.8.Final) | 5.0.8.Final | Apache-2.0 |
+| [org.jboss:jboss-iiop-client](https://central.sonatype.com/artifact/org.jboss/jboss-iiop-client/2.0.1.Final) | 2.0.1.Final | Apache-2.0 |
+| [org.jboss:jboss-vfs](https://central.sonatype.com/artifact/org.jboss/jboss-vfs/3.3.2.Final) | 3.3.2.Final | Apache-2.0 |
+| [org.jboss:staxmapper](https://central.sonatype.com/artifact/org.jboss/staxmapper/1.5.0.Final) | 1.5.0.Final | Apache-2.0 |
+| [org.jctools:jctools-core](https://central.sonatype.com/artifact/org.jctools/jctools-core/4.0.5) | 4.0.5 | Apache-2.0 |
+| [org.jetbrains:annotations](https://central.sonatype.com/artifact/org.jetbrains/annotations/17.0.0) | 17.0.0 | Apache-2.0 |
+| [org.jetbrains:annotations](https://central.sonatype.com/artifact/org.jetbrains/annotations/26.0.2) | 26.0.2 | Apache-2.0 |
+| [org.jgroups:jgroups](https://central.sonatype.com/artifact/org.jgroups/jgroups/5.4.9.Final) | 5.4.9.Final | Apache-2.0 |
+| [org.jspecify:jspecify](https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.0) | 1.0.0 | Apache-2.0 |
+| [org.liquibase:liquibase-core](https://central.sonatype.com/artifact/org.liquibase/liquibase-core/4.31.1) | 4.31.1 | Apache-2.0 |
+| [org.mybatis:mybatis](https://central.sonatype.com/artifact/org.mybatis/mybatis/3.5.19) | 3.5.19 | Apache-2.0 |
+| [org.objenesis:objenesis](https://central.sonatype.com/artifact/org.objenesis/objenesis/3.3) | 3.3 | Apache-2.0 |
+| [org.openapitools:jackson-databind-nullable](https://central.sonatype.com/artifact/org.openapitools/jackson-databind-nullable/0.2.7) | 0.2.7 | Apache-2.0 |
+| [org.opentest4j:opentest4j](https://central.sonatype.com/artifact/org.opentest4j/opentest4j/1.3.0) | 1.3.0 | Apache-2.0 |
+| [org.projectodd.vdx:vdx-core](https://central.sonatype.com/artifact/org.projectodd.vdx/vdx-core/1.1.6) | 1.1.6 | Apache-2.0 |
+| [org.projectodd.vdx:vdx-wildfly](https://central.sonatype.com/artifact/org.projectodd.vdx/vdx-wildfly/1.1.6) | 1.1.6 | Apache-2.0 |
+| [org.scala-lang:scala-library](https://central.sonatype.com/artifact/org.scala-lang/scala-library/2.13.15) | 2.13.15 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-api](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-api/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-chrome-driver](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-chromium-driver](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-chromium-driver/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-devtools-v140](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-devtools-v140/4.38.0) | 4.38.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-devtools-v141](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-devtools-v141/4.38.0) | 4.38.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-devtools-v142](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-devtools-v142/4.38.0) | 4.38.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-edge-driver](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-edge-driver/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-firefox-driver](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-firefox-driver/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-http](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-http/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-ie-driver](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-ie-driver/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-java](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-java/4.38.0) | 4.38.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-json](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-json/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-manager](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-manager/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-os](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-os/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-remote-driver](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-remote-driver/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-safari-driver](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-safari-driver/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.seleniumhq.selenium:selenium-support](https://central.sonatype.com/artifact/org.seleniumhq.selenium/selenium-support/4.31.0) | 4.31.0 | Apache-2.0 |
+| [org.slf4j:jcl-over-slf4j](https://central.sonatype.com/artifact/org.slf4j/jcl-over-slf4j/2.0.17) | 2.0.17 | Apache-2.0 |
+| [org.springframework.boot:spring-boot](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-actuator](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-actuator/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-actuator-autoconfigure](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-actuator-autoconfigure/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-autoconfigure](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-autoconfigure/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-configuration-processor](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-configuration-processor/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-devtools](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-devtools/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-actuator](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-actuator/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-data-jpa](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-jdbc](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-jdbc/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-jersey](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-jersey/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-json](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-json/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-logging](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-logging/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-oauth2-client](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-security](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-security/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-test](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-test/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-tomcat](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-tomcat/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-validation](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-starter-web](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-web/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-test](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-test/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.boot:spring-boot-test-autoconfigure](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-test-autoconfigure/3.5.6) | 3.5.6 | Apache-2.0 |
+| [org.springframework.data:spring-data-commons](https://central.sonatype.com/artifact/org.springframework.data/spring-data-commons/3.5.4) | 3.5.4 | Apache-2.0 |
+| [org.springframework.data:spring-data-jpa](https://central.sonatype.com/artifact/org.springframework.data/spring-data-jpa/3.5.4) | 3.5.4 | Apache-2.0 |
+| [org.springframework.security:spring-security-config](https://central.sonatype.com/artifact/org.springframework.security/spring-security-config/6.5.5) | 6.5.5 | Apache-2.0 |
+| [org.springframework.security:spring-security-core](https://central.sonatype.com/artifact/org.springframework.security/spring-security-core/6.5.5) | 6.5.5 | Apache-2.0 |
+| [org.springframework.security:spring-security-crypto](https://central.sonatype.com/artifact/org.springframework.security/spring-security-crypto/6.5.5) | 6.5.5 | Apache-2.0 |
+| [org.springframework.security:spring-security-oauth2-client](https://central.sonatype.com/artifact/org.springframework.security/spring-security-oauth2-client/6.5.5) | 6.5.5 | Apache-2.0 |
+| [org.springframework.security:spring-security-oauth2-core](https://central.sonatype.com/artifact/org.springframework.security/spring-security-oauth2-core/6.5.5) | 6.5.5 | Apache-2.0 |
+| [org.springframework.security:spring-security-oauth2-jose](https://central.sonatype.com/artifact/org.springframework.security/spring-security-oauth2-jose/6.5.5) | 6.5.5 | Apache-2.0 |
+| [org.springframework.security:spring-security-web](https://central.sonatype.com/artifact/org.springframework.security/spring-security-web/6.5.5) | 6.5.5 | Apache-2.0 |
+| [org.springframework:spring-aop](https://central.sonatype.com/artifact/org.springframework/spring-aop/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-aop](https://central.sonatype.com/artifact/org.springframework/spring-aop/6.2.11) | 6.2.11 | Apache-2.0 |
+| [org.springframework:spring-aspects](https://central.sonatype.com/artifact/org.springframework/spring-aspects/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-beans](https://central.sonatype.com/artifact/org.springframework/spring-beans/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-beans](https://central.sonatype.com/artifact/org.springframework/spring-beans/6.2.11) | 6.2.11 | Apache-2.0 |
+| [org.springframework:spring-context](https://central.sonatype.com/artifact/org.springframework/spring-context/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-context](https://central.sonatype.com/artifact/org.springframework/spring-context/6.2.11) | 6.2.11 | Apache-2.0 |
+| [org.springframework:spring-core](https://central.sonatype.com/artifact/org.springframework/spring-core/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-core](https://central.sonatype.com/artifact/org.springframework/spring-core/6.2.11) | 6.2.11 | Apache-2.0 |
+| [org.springframework:spring-expression](https://central.sonatype.com/artifact/org.springframework/spring-expression/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-expression](https://central.sonatype.com/artifact/org.springframework/spring-expression/6.2.11) | 6.2.11 | Apache-2.0 |
+| [org.springframework:spring-jcl](https://central.sonatype.com/artifact/org.springframework/spring-jcl/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-jdbc](https://central.sonatype.com/artifact/org.springframework/spring-jdbc/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-orm](https://central.sonatype.com/artifact/org.springframework/spring-orm/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-test](https://central.sonatype.com/artifact/org.springframework/spring-test/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-tx](https://central.sonatype.com/artifact/org.springframework/spring-tx/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-web](https://central.sonatype.com/artifact/org.springframework/spring-web/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.springframework:spring-web](https://central.sonatype.com/artifact/org.springframework/spring-web/6.2.11) | 6.2.11 | Apache-2.0 |
+| [org.springframework:spring-webmvc](https://central.sonatype.com/artifact/org.springframework/spring-webmvc/6.2.12) | 6.2.12 | Apache-2.0 |
+| [org.wildfly.client:wildfly-client-config](https://central.sonatype.com/artifact/org.wildfly.client/wildfly-client-config/1.0.1.Final) | 1.0.1.Final | Apache-2.0 |
+| [org.wildfly.clustering:wildfly-clustering-cache-spi](https://central.sonatype.com/artifact/org.wildfly.clustering/wildfly-clustering-cache-spi/7.0.12.Final) | 7.0.12.Final | Apache-2.0 |
+| [org.wildfly.clustering:wildfly-clustering-context](https://central.sonatype.com/artifact/org.wildfly.clustering/wildfly-clustering-context/7.0.12.Final) | 7.0.12.Final | Apache-2.0 |
+| [org.wildfly.clustering:wildfly-clustering-function](https://central.sonatype.com/artifact/org.wildfly.clustering/wildfly-clustering-function/7.0.12.Final) | 7.0.12.Final | Apache-2.0 |
+| [org.wildfly.clustering:wildfly-clustering-marshalling-jboss](https://central.sonatype.com/artifact/org.wildfly.clustering/wildfly-clustering-marshalling-jboss/7.0.12.Final) | 7.0.12.Final | Apache-2.0 |
+| [org.wildfly.clustering:wildfly-clustering-marshalling-protostream](https://central.sonatype.com/artifact/org.wildfly.clustering/wildfly-clustering-marshalling-protostream/7.0.12.Final) | 7.0.12.Final | Apache-2.0 |
+| [org.wildfly.clustering:wildfly-clustering-marshalling-spi](https://central.sonatype.com/artifact/org.wildfly.clustering/wildfly-clustering-marshalling-spi/7.0.12.Final) | 7.0.12.Final | Apache-2.0 |
+| [org.wildfly.clustering:wildfly-clustering-server-api](https://central.sonatype.com/artifact/org.wildfly.clustering/wildfly-clustering-server-api/7.0.12.Final) | 7.0.12.Final | Apache-2.0 |
+| [org.wildfly.clustering:wildfly-clustering-server-local](https://central.sonatype.com/artifact/org.wildfly.clustering/wildfly-clustering-server-local/7.0.12.Final) | 7.0.12.Final | Apache-2.0 |
+| [org.wildfly.clustering:wildfly-clustering-server-spi](https://central.sonatype.com/artifact/org.wildfly.clustering/wildfly-clustering-server-spi/7.0.12.Final) | 7.0.12.Final | Apache-2.0 |
+| [org.wildfly.common:wildfly-common](https://central.sonatype.com/artifact/org.wildfly.common/wildfly-common/2.0.1) | 2.0.1 | Apache-2.0 |
+| [org.wildfly.common:wildfly-common](https://central.sonatype.com/artifact/org.wildfly.common/wildfly-common/1.7.0.Final) | 1.7.0.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-controller](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-controller/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-controller-client](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-controller-client/30.0.0.Final) | 30.0.0.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-core-management-client](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-core-management-client/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-core-security](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-core-security/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-deployment-repository](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-deployment-repository/30.0.0.Final) | 30.0.0.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-domain-http-interface](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-domain-http-interface/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-domain-management](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-domain-management/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-embedded](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-embedded/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-io-spi](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-io-spi/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-network](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-network/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-platform-mbean](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-platform-mbean/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-process-controller](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-process-controller/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-remoting](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-remoting/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-request-controller](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-request-controller/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-server](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-server/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-service](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-service/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-subsystem](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-subsystem/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-threads](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-threads/29.0.1.Final) | 29.0.1.Final | Apache-2.0 |
+| [org.wildfly.core:wildfly-version](https://central.sonatype.com/artifact/org.wildfly.core/wildfly-version/30.0.0.Final) | 30.0.0.Final | Apache-2.0 |
+| [org.wildfly.discovery:wildfly-discovery-client](https://central.sonatype.com/artifact/org.wildfly.discovery/wildfly-discovery-client/1.3.0.Final) | 1.3.0.Final | Apache-2.0 |
+| [org.wildfly.security.elytron-web:undertow-server](https://central.sonatype.com/artifact/org.wildfly.security.elytron-web/undertow-server/4.1.2.Final) | 4.1.2.Final | Apache-2.0 |
+| [org.wildfly.security.jakarta:jakarta-authorization](https://central.sonatype.com/artifact/org.wildfly.security.jakarta/jakarta-authorization/3.1.4.Final) | 3.1.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-asn1](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-asn1/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-audit](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-audit/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-auth](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-auth/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-auth-server](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-auth-server/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-auth-server-deprecated](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-auth-server-deprecated/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-auth-server-http](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-auth-server-http/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-auth-server-sasl](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-auth-server-sasl/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-auth-util](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-auth-util/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-base](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-base/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-client](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-client/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-credential](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-credential/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-credential-source-impl](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-credential-source-impl/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-credential-store](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-credential-store/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-encryption](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-encryption/2.7.0.Final) | 2.7.0.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-http](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-http/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-http-util](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-http-util/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-keystore](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-keystore/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-mechanism](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-mechanism/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-mechanism-digest](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-mechanism-digest/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-mechanism-gssapi](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-mechanism-gssapi/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-password-impl](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-password-impl/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-permission](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-permission/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-provider-util](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-provider-util/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-realm](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-realm/2.7.0.Final) | 2.7.0.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-sasl](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-sasl/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-sasl-anonymous](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-sasl-anonymous/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-sasl-auth-util](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-sasl-auth-util/2.5.0.Final) | 2.5.0.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-sasl-digest](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-sasl-digest/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-security-manager](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-security-manager/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-security-manager-action](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-security-manager-action/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-ssh-util](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-ssh-util/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-ssl](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-ssl/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-util](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-util/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-x500](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-x500/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-x500-cert](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-x500-cert/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-x500-cert-acme](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-x500-cert-acme/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.security:wildfly-elytron-x500-cert-util](https://central.sonatype.com/artifact/org.wildfly.security/wildfly-elytron-x500-cert-util/2.6.4.Final) | 2.6.4.Final | Apache-2.0 |
+| [org.wildfly.transaction:wildfly-transaction-client](https://central.sonatype.com/artifact/org.wildfly.transaction/wildfly-transaction-client/3.0.5.Final) | 3.0.5.Final | Apache-2.0 |
+| [org.wildfly.wildfly-http-client:wildfly-http-client-common](https://central.sonatype.com/artifact/org.wildfly.wildfly-http-client/wildfly-http-client-common/2.1.1.Final) | 2.1.1.Final | Apache-2.0 |
+| [org.wildfly.wildfly-http-client:wildfly-http-ejb-client](https://central.sonatype.com/artifact/org.wildfly.wildfly-http-client/wildfly-http-ejb-client/2.1.1.Final) | 2.1.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-clustering-common](https://central.sonatype.com/artifact/org.wildfly/wildfly-clustering-common/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-clustering-ejb-spi](https://central.sonatype.com/artifact/org.wildfly/wildfly-clustering-ejb-spi/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-clustering-infinispan-embedded-service](https://central.sonatype.com/artifact/org.wildfly/wildfly-clustering-infinispan-embedded-service/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-clustering-server-api](https://central.sonatype.com/artifact/org.wildfly/wildfly-clustering-server-api/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-clustering-server-service](https://central.sonatype.com/artifact/org.wildfly/wildfly-clustering-server-service/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-clustering-service](https://central.sonatype.com/artifact/org.wildfly/wildfly-clustering-service/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-clustering-singleton-api](https://central.sonatype.com/artifact/org.wildfly/wildfly-clustering-singleton-api/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-common-ee-dependency-management](https://central.sonatype.com/artifact/org.wildfly/wildfly-common-ee-dependency-management/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-common-expansion-dependency-management](https://central.sonatype.com/artifact/org.wildfly/wildfly-common-expansion-dependency-management/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-concurrency-spi](https://central.sonatype.com/artifact/org.wildfly/wildfly-concurrency-spi/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-connector](https://central.sonatype.com/artifact/org.wildfly/wildfly-connector/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-dist](https://central.sonatype.com/artifact/org.wildfly/wildfly-dist/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-ee](https://central.sonatype.com/artifact/org.wildfly/wildfly-ee/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-ejb3](https://central.sonatype.com/artifact/org.wildfly/wildfly-ejb3/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-galleon-pack](https://central.sonatype.com/artifact/org.wildfly/wildfly-galleon-pack/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-iiop-openjdk](https://central.sonatype.com/artifact/org.wildfly/wildfly-iiop-openjdk/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-naming](https://central.sonatype.com/artifact/org.wildfly/wildfly-naming/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-naming-client](https://central.sonatype.com/artifact/org.wildfly/wildfly-naming-client/2.0.1.Final) | 2.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-standard-ee-bom](https://central.sonatype.com/artifact/org.wildfly/wildfly-standard-ee-bom/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-standard-expansion-bom](https://central.sonatype.com/artifact/org.wildfly/wildfly-standard-expansion-bom/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-transactions](https://central.sonatype.com/artifact/org.wildfly/wildfly-transactions/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-web-common](https://central.sonatype.com/artifact/org.wildfly/wildfly-web-common/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.wildfly:wildfly-weld-common](https://central.sonatype.com/artifact/org.wildfly/wildfly-weld-common/37.0.1.Final) | 37.0.1.Final | Apache-2.0 |
+| [org.yaml:snakeyaml](https://central.sonatype.com/artifact/org.yaml/snakeyaml/2.4) | 2.4 | Apache-2.0 |
+| [org.crac:crac](https://central.sonatype.com/artifact/org.crac/crac/1.5.0) | 1.5.0 | BSD-2-Clause |
+| [com.sun.activation:jakarta.activation](https://central.sonatype.com/artifact/com.sun.activation/jakarta.activation/2.0.1) | 2.0.1 | BSD-3-Clause |
+| [com.sun.istack:istack-commons-runtime](https://central.sonatype.com/artifact/com.sun.istack/istack-commons-runtime/4.1.2) | 4.1.2 | BSD-3-Clause |
+| [com.sun.istack:istack-commons-runtime](https://central.sonatype.com/artifact/com.sun.istack/istack-commons-runtime/4.2.0) | 4.2.0 | BSD-3-Clause |
+| [jakarta.activation:jakarta.activation-api](https://central.sonatype.com/artifact/jakarta.activation/jakarta.activation-api/2.1.0) | 2.1.0 | BSD-3-Clause |
+| [jakarta.xml.bind:jakarta.xml.bind-api](https://central.sonatype.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api/4.0.0) | 4.0.0 | BSD-3-Clause |
+| [org.antlr:antlr4-runtime](https://central.sonatype.com/artifact/org.antlr/antlr4-runtime/4.13.0) | 4.13.0 | BSD-3-Clause |
+| [org.eclipse.angus:angus-activation](https://central.sonatype.com/artifact/org.eclipse.angus/angus-activation/2.0.2) | 2.0.2 | BSD-3-Clause |
+| [org.eclipse.jgit:org.eclipse.jgit](https://central.sonatype.com/artifact/org.eclipse.jgit/org.eclipse.jgit/6.10.1.202505221210-r) | 6.10.1.202505221210-r | BSD-3-Clause |
+| [org.eclipse.jgit:org.eclipse.jgit.ssh.apache](https://central.sonatype.com/artifact/org.eclipse.jgit/org.eclipse.jgit.ssh.apache/6.10.1.202505221210-r) | 6.10.1.202505221210-r | BSD-3-Clause |
+| [org.glassfish.jaxb:jaxb-core](https://central.sonatype.com/artifact/org.glassfish.jaxb/jaxb-core/4.0.5) | 4.0.5 | BSD-3-Clause |
+| [org.glassfish.jaxb:jaxb-runtime](https://central.sonatype.com/artifact/org.glassfish.jaxb/jaxb-runtime/4.0.6) | 4.0.6 | BSD-3-Clause |
+| [org.glassfish.jaxb:txw2](https://central.sonatype.com/artifact/org.glassfish.jaxb/txw2/4.0.5) | 4.0.5 | BSD-3-Clause |
+| [org.hamcrest:hamcrest](https://central.sonatype.com/artifact/org.hamcrest/hamcrest/3.0) | 3.0 | BSD-3-Clause |
+| [org.hamcrest:hamcrest-core](https://central.sonatype.com/artifact/org.hamcrest/hamcrest-core/1.3) | 1.3 | BSD-3-Clause |
+| [org.hamcrest:hamcrest-core](https://central.sonatype.com/artifact/org.hamcrest/hamcrest-core/3.0) | 3.0 | BSD-3-Clause |
+| [org.ow2.asm:asm](https://central.sonatype.com/artifact/org.ow2.asm/asm/7.3.1) | 7.3.1 | BSD-3-Clause |
+| [org.ow2.asm:asm](https://central.sonatype.com/artifact/org.ow2.asm/asm/9.7.1) | 9.7.1 | BSD-3-Clause |
+| [org.ow2.asm:asm](https://central.sonatype.com/artifact/org.ow2.asm/asm/9.9) | 9.9 | BSD-3-Clause |
+| [org.ow2.asm:asm-analysis](https://central.sonatype.com/artifact/org.ow2.asm/asm-analysis/9.9) | 9.9 | BSD-3-Clause |
+| [org.ow2.asm:asm-commons](https://central.sonatype.com/artifact/org.ow2.asm/asm-commons/9.6) | 9.6 | BSD-3-Clause |
+| [org.ow2.asm:asm-commons](https://central.sonatype.com/artifact/org.ow2.asm/asm-commons/9.9) | 9.9 | BSD-3-Clause |
+| [org.ow2.asm:asm-tree](https://central.sonatype.com/artifact/org.ow2.asm/asm-tree/9.9) | 9.9 | BSD-3-Clause |
+| [org.ow2.asm:asm-util](https://central.sonatype.com/artifact/org.ow2.asm/asm-util/9.9) | 9.9 | BSD-3-Clause |
+| [org.hdrhistogram:HdrHistogram](https://central.sonatype.com/artifact/org.hdrhistogram/HdrHistogram/2.2.2) | 2.2.2 | CC0-1.0, BSD-2-Clause |
+| [aopalliance:aopalliance](https://central.sonatype.com/artifact/aopalliance/aopalliance/1.0) | 1.0 | CC0-1.0 |
+| [org.jboss:jboss-transaction-spi](https://central.sonatype.com/artifact/org.jboss/jboss-transaction-spi/8.0.0.Final) | 8.0.0.Final | CC0-1.0 |
+| [org.latencyutils:LatencyUtils](https://central.sonatype.com/artifact/org.latencyutils/LatencyUtils/2.0.3) | 2.0.3 | CC0-1.0 |
+| [org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec](https://central.sonatype.com/artifact/org.jboss.spec.javax.transaction/jboss-transaction-api_1.2_spec/1.0.0.Final) | 1.0.0.Final | CDDL-1.0, GPL-2.0-with-classpath-exception |
+| [javax.xml.bind:jaxb-api](https://central.sonatype.com/artifact/javax.xml.bind/jaxb-api/2.3.1) | 2.3.1 | CDDL-1.1, GPL-2.0-with-classpath-exception |
+| [javax.xml.bind:jaxb-api](https://central.sonatype.com/artifact/javax.xml.bind/jaxb-api/2.2.12) | 2.2.12 | CDDL-1.1, GPL-2.0-with-classpath-exception |
+| [ch.qos.logback:logback-classic](https://central.sonatype.com/artifact/ch.qos.logback/logback-classic/1.5.19) | 1.5.19 | EPL-1.0, LGPL-2.1-only |
+| [ch.qos.logback:logback-core](https://central.sonatype.com/artifact/ch.qos.logback/logback-core/1.5.19) | 1.5.19 | EPL-1.0, LGPL-2.1-only |
+| [junit:junit](https://central.sonatype.com/artifact/junit/junit/4.13.2) | 4.13.2 | EPL-1.0 |
+| [jakarta.persistence:jakarta.persistence-api](https://central.sonatype.com/artifact/jakarta.persistence/jakarta.persistence-api/3.1.0) | 3.1.0 | EPL-2.0, BSD-3-Clause |
+| [org.glassfish.jersey.core:jersey-server](https://central.sonatype.com/artifact/org.glassfish.jersey.core/jersey-server/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, Apache-2.0, BSD-3-Clause |
+| [org.glassfish.jersey.core:jersey-common](https://central.sonatype.com/artifact/org.glassfish.jersey.core/jersey-common/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, Apache-2.0, CC0-1.0 |
+| [org.jboss.spec.jakarta.el:jboss-el-api_5.0_spec](https://central.sonatype.com/artifact/org.jboss.spec.jakarta.el/jboss-el-api_5.0_spec/4.0.1.Final) | 4.0.1.Final | EPL-2.0, GPL-2.0-with-classpath-exception, Apache-2.0, LGPL-2.1-only |
+| [org.glassfish.jersey.media:jersey-media-json-jackson](https://central.sonatype.com/artifact/org.glassfish.jersey.media/jersey-media-json-jackson/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, Apache-2.0 |
+| [org.glassfish.jersey.containers:jersey-container-servlet](https://central.sonatype.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
+| [org.glassfish.jersey.containers:jersey-container-servlet-core](https://central.sonatype.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet-core/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
+| [org.glassfish.jersey.core:jersey-client](https://central.sonatype.com/artifact/org.glassfish.jersey.core/jersey-client/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
+| [org.glassfish.jersey.ext:jersey-bean-validation](https://central.sonatype.com/artifact/org.glassfish.jersey.ext/jersey-bean-validation/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
+| [org.glassfish.jersey.ext:jersey-entity-filtering](https://central.sonatype.com/artifact/org.glassfish.jersey.ext/jersey-entity-filtering/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
+| [org.glassfish.jersey.ext:jersey-spring6](https://central.sonatype.com/artifact/org.glassfish.jersey.ext/jersey-spring6/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
+| [org.glassfish.jersey.inject:jersey-hk2](https://central.sonatype.com/artifact/org.glassfish.jersey.inject/jersey-hk2/3.1.11) | 3.1.11 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause, BSD-2-Clause, Apache-2.0, CC0-1.0, BSD-3-Clause, JQUERY, MIT, W3C-19990505 |
+| [com.sun.mail:jakarta.mail](https://central.sonatype.com/artifact/com.sun.mail/jakarta.mail/2.0.1) | 2.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception, BSD-3-Clause |
+| [jakarta.annotation:jakarta.annotation-api](https://central.sonatype.com/artifact/jakarta.annotation/jakarta.annotation-api/2.1.1) | 2.1.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.annotation:jakarta.annotation-api](https://central.sonatype.com/artifact/jakarta.annotation/jakarta.annotation-api/3.0.0) | 3.0.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.authentication:jakarta.authentication-api](https://central.sonatype.com/artifact/jakarta.authentication/jakarta.authentication-api/3.0.0) | 3.0.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.authorization:jakarta.authorization-api](https://central.sonatype.com/artifact/jakarta.authorization/jakarta.authorization-api/2.1.0) | 2.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.ejb:jakarta.ejb-api](https://central.sonatype.com/artifact/jakarta.ejb/jakarta.ejb-api/4.0.1) | 4.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.el:jakarta.el-api](https://central.sonatype.com/artifact/jakarta.el/jakarta.el-api/5.0.1) | 5.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.el:jakarta.el-api](https://central.sonatype.com/artifact/jakarta.el/jakarta.el-api/6.0.1) | 6.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.enterprise.concurrent:jakarta.enterprise.concurrent-api](https://central.sonatype.com/artifact/jakarta.enterprise.concurrent/jakarta.enterprise.concurrent-api/3.0.1) | 3.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.faces:jakarta.faces-api](https://central.sonatype.com/artifact/jakarta.faces/jakarta.faces-api/4.0.1) | 4.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.interceptor:jakarta.interceptor-api](https://central.sonatype.com/artifact/jakarta.interceptor/jakarta.interceptor-api/2.1.0) | 2.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.interceptor:jakarta.interceptor-api](https://central.sonatype.com/artifact/jakarta.interceptor/jakarta.interceptor-api/2.2.0) | 2.2.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.jms:jakarta.jms-api](https://central.sonatype.com/artifact/jakarta.jms/jakarta.jms-api/3.1.0) | 3.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.json:jakarta.json-api](https://central.sonatype.com/artifact/jakarta.json/jakarta.json-api/2.1.0) | 2.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.json:jakarta.json-api](https://central.sonatype.com/artifact/jakarta.json/jakarta.json-api/2.1.3) | 2.1.3 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.resource:jakarta.resource-api](https://central.sonatype.com/artifact/jakarta.resource/jakarta.resource-api/2.1.0) | 2.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.servlet.jsp:jakarta.servlet.jsp-api](https://central.sonatype.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api/3.1.0) | 3.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.servlet:jakarta.servlet-api](https://central.sonatype.com/artifact/jakarta.servlet/jakarta.servlet-api/6.0.0) | 6.0.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.transaction:jakarta.transaction-api](https://central.sonatype.com/artifact/jakarta.transaction/jakarta.transaction-api/2.0.1) | 2.0.1 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [jakarta.ws.rs:jakarta.ws.rs-api](https://central.sonatype.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api/3.1.0) | 3.1.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.eclipse.parsson:parsson](https://central.sonatype.com/artifact/org.eclipse.parsson/parsson/1.1.7) | 1.1.7 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.expressly:expressly](https://central.sonatype.com/artifact/org.glassfish.expressly/expressly/5.0.0) | 5.0.0 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2.external:aopalliance-repackaged](https://central.sonatype.com/artifact/org.glassfish.hk2.external/aopalliance-repackaged/3.0.6) | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2:class-model](https://central.sonatype.com/artifact/org.glassfish.hk2/class-model/3.0.6) | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2:hk2](https://central.sonatype.com/artifact/org.glassfish.hk2/hk2/3.0.6) | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2:hk2-api](https://central.sonatype.com/artifact/org.glassfish.hk2/hk2-api/3.0.6) | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2:hk2-core](https://central.sonatype.com/artifact/org.glassfish.hk2/hk2-core/3.0.6) | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2:hk2-locator](https://central.sonatype.com/artifact/org.glassfish.hk2/hk2-locator/3.0.6) | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2:hk2-runlevel](https://central.sonatype.com/artifact/org.glassfish.hk2/hk2-runlevel/3.0.6) | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2:hk2-utils](https://central.sonatype.com/artifact/org.glassfish.hk2/hk2-utils/3.0.6) | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2:osgi-resource-locator](https://central.sonatype.com/artifact/org.glassfish.hk2/osgi-resource-locator/1.0.3) | 1.0.3 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish.hk2:spring-bridge](https://central.sonatype.com/artifact/org.glassfish.hk2/spring-bridge/3.0.6) | 3.0.6 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [org.glassfish:jakarta.enterprise.concurrent](https://central.sonatype.com/artifact/org.glassfish/jakarta.enterprise.concurrent/3.0.2) | 3.0.2 | EPL-2.0, GPL-2.0-with-classpath-exception |
+| [eu.maveniverse.maven.mima.runtime:embedded-maven](https://central.sonatype.com/artifact/eu.maveniverse.maven.mima.runtime/embedded-maven/2.4.22) | 2.4.22 | EPL-2.0 |
+| [eu.maveniverse.maven.mima.runtime:standalone-shared](https://central.sonatype.com/artifact/eu.maveniverse.maven.mima.runtime/standalone-shared/2.4.22) | 2.4.22 | EPL-2.0 |
+| [eu.maveniverse.maven.mima.runtime:standalone-static](https://central.sonatype.com/artifact/eu.maveniverse.maven.mima.runtime/standalone-static/2.4.22) | 2.4.22 | EPL-2.0 |
+| [eu.maveniverse.maven.mima:context](https://central.sonatype.com/artifact/eu.maveniverse.maven.mima/context/2.4.22) | 2.4.22 | EPL-2.0 |
+| [org.aspectj:aspectjweaver](https://central.sonatype.com/artifact/org.aspectj/aspectjweaver/1.9.24) | 1.9.24 | EPL-2.0 |
+| [org.eclipse.sisu:org.eclipse.sisu.inject](https://central.sonatype.com/artifact/org.eclipse.sisu/org.eclipse.sisu.inject/0.9.0.M3) | 0.9.0.M3 | EPL-2.0 |
+| [org.eclipse.sisu:org.eclipse.sisu.plexus](https://central.sonatype.com/artifact/org.eclipse.sisu/org.eclipse.sisu.plexus/0.9.0.M3) | 0.9.0.M3 | EPL-2.0 |
+| [org.junit.jupiter:junit-jupiter](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter/5.14.0) | 5.14.0 | EPL-2.0 |
+| [org.junit.jupiter:junit-jupiter](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter/5.13.4) | 5.13.4 | EPL-2.0 |
+| [org.junit.jupiter:junit-jupiter-api](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter-api/5.14.0) | 5.14.0 | EPL-2.0 |
+| [org.junit.jupiter:junit-jupiter-api](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter-api/5.13.4) | 5.13.4 | EPL-2.0 |
+| [org.junit.jupiter:junit-jupiter-engine](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter-engine/5.14.0) | 5.14.0 | EPL-2.0 |
+| [org.junit.jupiter:junit-jupiter-engine](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter-engine/5.13.4) | 5.13.4 | EPL-2.0 |
+| [org.junit.jupiter:junit-jupiter-params](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter-params/5.14.0) | 5.14.0 | EPL-2.0 |
+| [org.junit.jupiter:junit-jupiter-params](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter-params/5.13.4) | 5.13.4 | EPL-2.0 |
+| [org.junit.platform:junit-platform-commons](https://central.sonatype.com/artifact/org.junit.platform/junit-platform-commons/1.14.0) | 1.14.0 | EPL-2.0 |
+| [org.junit.platform:junit-platform-commons](https://central.sonatype.com/artifact/org.junit.platform/junit-platform-commons/1.13.4) | 1.13.4 | EPL-2.0 |
+| [org.junit.platform:junit-platform-engine](https://central.sonatype.com/artifact/org.junit.platform/junit-platform-engine/1.14.0) | 1.14.0 | EPL-2.0 |
+| [org.junit.platform:junit-platform-engine](https://central.sonatype.com/artifact/org.junit.platform/junit-platform-engine/1.13.4) | 1.13.4 | EPL-2.0 |
+| [org.junit.platform:junit-platform-launcher](https://central.sonatype.com/artifact/org.junit.platform/junit-platform-launcher/1.14.0) | 1.14.0 | EPL-2.0 |
+| [org.codehaus.fabric3.api:commonj](https://central.sonatype.com/artifact/org.codehaus.fabric3.api/commonj/1.1.1) | 1.1.1 | FABRIC3 |
+| [io.github.dmlloyd:jdk-classfile-backport](https://central.sonatype.com/artifact/io.github.dmlloyd/jdk-classfile-backport/24.0) | 24.0 | GPL-2.0-with-classpath-exception |
+| [org.jboss.ironjacamar:ironjacamar-common-api](https://central.sonatype.com/artifact/org.jboss.ironjacamar/ironjacamar-common-api/3.0.14.Final) | 3.0.14.Final | LGPL-2.1+ |
+| [org.jboss.ironjacamar:ironjacamar-common-impl](https://central.sonatype.com/artifact/org.jboss.ironjacamar/ironjacamar-common-impl/3.0.14.Final) | 3.0.14.Final | LGPL-2.1+ |
+| [org.jboss.ironjacamar:ironjacamar-common-spi](https://central.sonatype.com/artifact/org.jboss.ironjacamar/ironjacamar-common-spi/3.0.14.Final) | 3.0.14.Final | LGPL-2.1+ |
+| [org.jboss.ironjacamar:ironjacamar-core-api](https://central.sonatype.com/artifact/org.jboss.ironjacamar/ironjacamar-core-api/3.0.14.Final) | 3.0.14.Final | LGPL-2.1+ |
+| [org.jboss.ironjacamar:ironjacamar-core-impl](https://central.sonatype.com/artifact/org.jboss.ironjacamar/ironjacamar-core-impl/3.0.14.Final) | 3.0.14.Final | LGPL-2.1+ |
+| [org.jboss.ironjacamar:ironjacamar-deployers-common](https://central.sonatype.com/artifact/org.jboss.ironjacamar/ironjacamar-deployers-common/3.0.14.Final) | 3.0.14.Final | LGPL-2.1+ |
+| [org.jboss.ironjacamar:ironjacamar-jdbc](https://central.sonatype.com/artifact/org.jboss.ironjacamar/ironjacamar-jdbc/3.0.14.Final) | 3.0.14.Final | LGPL-2.1+ |
+| [org.jboss.ironjacamar:ironjacamar-validator](https://central.sonatype.com/artifact/org.jboss.ironjacamar/ironjacamar-validator/3.0.14.Final) | 3.0.14.Final | LGPL-2.1+ |
+| [org.hibernate.orm:hibernate-core](https://central.sonatype.com/artifact/org.hibernate.orm/hibernate-core/6.6.29.Final) | 6.6.29.Final | LGPL-2.1-only |
+| [org.jboss.common:jboss-common-beans](https://central.sonatype.com/artifact/org.jboss.common/jboss-common-beans/2.0.1.Final) | 2.0.1.Final | LGPL-2.1-only |
+| [org.jboss.ironjacamar:ironjacamar-spec-api](https://central.sonatype.com/artifact/org.jboss.ironjacamar/ironjacamar-spec-api/1.4.35.Final) | 1.4.35.Final | LGPL-2.1-only |
+| [org.jboss.msc:jboss-msc](https://central.sonatype.com/artifact/org.jboss.msc/jboss-msc/1.5.6.Final) | 1.5.6.Final | LGPL-2.1 |
+| [org.jboss.stdio:jboss-stdio](https://central.sonatype.com/artifact/org.jboss.stdio/jboss-stdio/1.1.0.Final) | 1.1.0.Final | LGPL-2.1 |
+| [org.graalvm.polyglot:js](https://central.sonatype.com/artifact/org.graalvm.polyglot/js/25.0.0) | 25.0.0 | MIT, UPL-1.0 |
+| [org.reactivestreams:reactive-streams](https://central.sonatype.com/artifact/org.reactivestreams/reactive-streams/1.0.4) | 1.0.4 | MIT-0 |
+| [com.konghq:unirest-java](https://central.sonatype.com/artifact/com.konghq/unirest-java/3.14.5) | 3.14.5 | MIT |
+| [com.lihaoyi:fastparse_2.13](https://central.sonatype.com/artifact/com.lihaoyi/fastparse_2.13/3.1.1) | 3.1.1 | MIT |
+| [com.lihaoyi:geny_2.13](https://central.sonatype.com/artifact/com.lihaoyi/geny_2.13/1.1.0) | 1.1.0 | MIT |
+| [com.lihaoyi:sourcecode_2.13](https://central.sonatype.com/artifact/com.lihaoyi/sourcecode_2.13/0.4.0) | 0.4.0 | MIT |
+| [org.mockito:mockito-core](https://central.sonatype.com/artifact/org.mockito/mockito-core/5.17.0) | 5.17.0 | MIT |
+| [org.mockito:mockito-core](https://central.sonatype.com/artifact/org.mockito/mockito-core/5.20.0) | 5.20.0 | MIT |
+| [org.mockito:mockito-junit-jupiter](https://central.sonatype.com/artifact/org.mockito/mockito-junit-jupiter/5.17.0) | 5.17.0 | MIT |
+| [org.rnorth.duct-tape:duct-tape](https://central.sonatype.com/artifact/org.rnorth.duct-tape/duct-tape/1.0.8) | 1.0.8 | MIT |
+| [org.slf4j:jul-to-slf4j](https://central.sonatype.com/artifact/org.slf4j/jul-to-slf4j/2.0.17) | 2.0.17 | MIT |
+| [org.slf4j:slf4j-api](https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.17) | 2.0.17 | MIT |
+| [org.slf4j:slf4j-jdk14](https://central.sonatype.com/artifact/org.slf4j/slf4j-jdk14/2.0.17) | 2.0.17 | MIT |
+| [org.testcontainers:database-commons](https://central.sonatype.com/artifact/org.testcontainers/database-commons/1.21.3) | 1.21.3 | MIT |
+| [org.testcontainers:db2](https://central.sonatype.com/artifact/org.testcontainers/db2/1.21.3) | 1.21.3 | MIT |
+| [org.testcontainers:jdbc](https://central.sonatype.com/artifact/org.testcontainers/jdbc/1.21.3) | 1.21.3 | MIT |
+| [org.testcontainers:mariadb](https://central.sonatype.com/artifact/org.testcontainers/mariadb/1.21.3) | 1.21.3 | MIT |
+| [org.testcontainers:mssqlserver](https://central.sonatype.com/artifact/org.testcontainers/mssqlserver/1.21.3) | 1.21.3 | MIT |
+| [org.testcontainers:mysql](https://central.sonatype.com/artifact/org.testcontainers/mysql/1.21.3) | 1.21.3 | MIT |
+| [org.testcontainers:oracle-xe](https://central.sonatype.com/artifact/org.testcontainers/oracle-xe/1.21.3) | 1.21.3 | MIT |
+| [org.testcontainers:postgresql](https://central.sonatype.com/artifact/org.testcontainers/postgresql/1.21.3) | 1.21.3 | MIT |
+| [org.testcontainers:testcontainers](https://central.sonatype.com/artifact/org.testcontainers/testcontainers/1.21.3) | 1.21.3 | MIT |
+| [org.javassist:javassist](https://central.sonatype.com/artifact/org.javassist/javassist/3.30.2-GA) | 3.30.2-GA | MPL-1.1, LGPL-2.1-only, Apache-2.0 |
+| [com.h2database:h2](https://central.sonatype.com/artifact/com.h2database/h2/2.4.240) | 2.4.240 | MPL-2.0, EPL-1.0 |
+| [com.h2database:h2](https://central.sonatype.com/artifact/com.h2database/h2/2.3.232) | 2.3.232 | MPL-2.0, EPL-1.0 |
+| [org.graalvm.js:js](https://central.sonatype.com/artifact/org.graalvm.js/js/25.0.0) | 25.0.0 | UPL-1.0, MIT |
+| [org.graalvm.js:js-language](https://central.sonatype.com/artifact/org.graalvm.js/js-language/25.0.0) | 25.0.0 | UPL-1.0, MIT |
+| [org.graalvm.js:js-scriptengine](https://central.sonatype.com/artifact/org.graalvm.js/js-scriptengine/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.polyglot:polyglot](https://central.sonatype.com/artifact/org.graalvm.polyglot/polyglot/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.regex:regex](https://central.sonatype.com/artifact/org.graalvm.regex/regex/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.sdk:collections](https://central.sonatype.com/artifact/org.graalvm.sdk/collections/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.sdk:jniutils](https://central.sonatype.com/artifact/org.graalvm.sdk/jniutils/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.sdk:nativeimage](https://central.sonatype.com/artifact/org.graalvm.sdk/nativeimage/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.sdk:nativeimage](https://central.sonatype.com/artifact/org.graalvm.sdk/nativeimage/23.1.2) | 23.1.2 | UPL-1.0 |
+| [org.graalvm.sdk:word](https://central.sonatype.com/artifact/org.graalvm.sdk/word/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.sdk:word](https://central.sonatype.com/artifact/org.graalvm.sdk/word/23.1.2) | 23.1.2 | UPL-1.0 |
+| [org.graalvm.shadowed:xz](https://central.sonatype.com/artifact/org.graalvm.shadowed/xz/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.truffle:truffle-api](https://central.sonatype.com/artifact/org.graalvm.truffle/truffle-api/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.truffle:truffle-compiler](https://central.sonatype.com/artifact/org.graalvm.truffle/truffle-compiler/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.truffle:truffle-runtime](https://central.sonatype.com/artifact/org.graalvm.truffle/truffle-runtime/25.0.0) | 25.0.0 | UPL-1.0 |
+| [org.graalvm.shadowed:icu4j](https://central.sonatype.com/artifact/org.graalvm.shadowed/icu4j/25.0.0) | 25.0.0 | Unicode-3.0 |
 
 
 <a name="npm_licenses"></a>
@@ -739,6 +741,226 @@ Operaton uses Node libraries for the web applications included in the distributi
 
 | Library | Version | License(s) |
 |---------|---------|------------|
+| [mousetrap](https://www.npmjs.com/package/mousetrap/v/1.6.5) | 1.6.5 | Apache-2.0 WITH LLVM-exception |
+| [htm](https://www.npmjs.com/package/htm/v/3.1.1) | 3.1.1 | Apache-2.0 |
+| [@carbon/grid](https://www.npmjs.com/package/@carbon/grid/v/11.42.0) | 11.42.0 | Apache-2.0 |
+| [@carbon/layout](https://www.npmjs.com/package/@carbon/layout/v/11.40.0) | 11.40.0 | Apache-2.0 |
+| [@ibm/telemetry-js](https://www.npmjs.com/package/@ibm/telemetry-js/v/1.10.1) | 1.10.1 | Apache-2.0 |
+| [qs](https://www.npmjs.com/package/qs/v/6.13.0) | 6.13.0 | BSD-3-Clause |
+| [dezalgo](https://www.npmjs.com/package/dezalgo/v/1.0.4) | 1.0.4 | ISC |
+| [inherits](https://www.npmjs.com/package/inherits/v/2.0.4) | 2.0.4 | ISC |
+| [inherits-browser](https://www.npmjs.com/package/inherits-browser/v/0.1.0) | 0.1.0 | ISC |
+| [once](https://www.npmjs.com/package/once/v/1.4.0) | 1.4.0 | ISC |
+| [semver](https://www.npmjs.com/package/semver/v/7.7.2) | 7.7.2 | ISC |
+| [wrappy](https://www.npmjs.com/package/wrappy/v/1.0.2) | 1.0.2 | ISC |
+| [angular](https://www.npmjs.com/package/angular/v/1.8.2) | 1.8.2 | MIT |
+| [angular-animate](https://www.npmjs.com/package/angular-animate/v/1.8.2) | 1.8.2 | MIT |
+| [angular-cookies](https://www.npmjs.com/package/angular-cookies/v/1.8.2) | 1.8.2 | MIT |
+| [angular-data-depend](https://www.npmjs.com/package/angular-data-depend/v/1.0.0) | 1.0.0 | MIT |
+| [angular-loader](https://www.npmjs.com/package/angular-loader/v/1.8.3) | 1.8.3 | MIT |
+| [angular-moment](https://www.npmjs.com/package/angular-moment/v/1.3.0) | 1.3.0 | MIT |
+| [angular-resource](https://www.npmjs.com/package/angular-resource/v/1.8.2) | 1.8.2 | MIT |
+| [angular-route](https://www.npmjs.com/package/angular-route/v/1.8.2) | 1.8.2 | MIT |
+| [angular-sanitize](https://www.npmjs.com/package/angular-sanitize/v/1.8.2) | 1.8.2 | MIT |
+| [angular-touch](https://www.npmjs.com/package/angular-touch/v/1.8.2) | 1.8.2 | MIT |
+| [angular-translate](https://www.npmjs.com/package/angular-translate/v/2.19.0) | 2.19.0 | MIT |
+| [angular-ui-bootstrap](https://www.npmjs.com/package/angular-ui-bootstrap/v/2.5.6) | 2.5.6 | MIT |
+| [array-move](https://www.npmjs.com/package/array-move/v/4.0.0) | 4.0.0 | MIT |
+| [asap](https://www.npmjs.com/package/asap/v/2.0.6) | 2.0.6 | MIT |
+| [asynckit](https://www.npmjs.com/package/asynckit/v/0.4.0) | 0.4.0 | MIT |
+| [atoa](https://www.npmjs.com/package/atoa/v/1.0.0) | 1.0.0 | MIT |
+| [big.js](https://www.npmjs.com/package/big.js/v/7.0.1) | 7.0.1 | MIT |
+| [bootstrap](https://www.npmjs.com/package/bootstrap/v/3.4.1) | 3.4.1 | MIT |
+| [bpmn-moddle](https://www.npmjs.com/package/bpmn-moddle/v/8.1.0) | 8.1.0 | MIT |
+| [call-bind-apply-helpers](https://www.npmjs.com/package/call-bind-apply-helpers/v/1.0.2) | 1.0.2 | MIT |
+| [call-bound](https://www.npmjs.com/package/call-bound/v/1.0.4) | 1.0.4 | MIT |
+| [camunda-dmn-js](https://www.npmjs.com/package/camunda-dmn-js/v/3.2.0) | 3.2.0 | MIT |
+| [camunda-dmn-moddle](https://www.npmjs.com/package/camunda-dmn-moddle/v/1.3.0) | 1.3.0 | MIT |
+| [chart.js](https://www.npmjs.com/package/chart.js/v/4.5.0) | 4.5.0 | MIT |
+| [classnames](https://www.npmjs.com/package/classnames/v/2.5.1) | 2.5.1 | MIT |
+| [clipboard](https://www.npmjs.com/package/clipboard/v/2.0.11) | 2.0.11 | MIT |
+| [clsx](https://www.npmjs.com/package/clsx/v/2.1.1) | 2.1.1 | MIT |
+| [cmmn-moddle](https://www.npmjs.com/package/cmmn-moddle/v/5.0.0) | 5.0.0 | MIT |
+| [codemirror](https://www.npmjs.com/package/codemirror/v/6.0.2) | 6.0.2 | MIT |
+| [combined-stream](https://www.npmjs.com/package/combined-stream/v/1.0.8) | 1.0.8 | MIT |
+| [component-emitter](https://www.npmjs.com/package/component-emitter/v/1.3.1) | 1.3.1 | MIT |
+| [component-event](https://www.npmjs.com/package/component-event/v/0.2.1) | 0.2.1 | MIT |
+| [component-props](https://www.npmjs.com/package/component-props/v/1.1.1) | 1.1.1 | MIT |
+| [component-xor](https://www.npmjs.com/package/component-xor/v/0.0.4) | 0.0.4 | MIT |
+| [contra](https://www.npmjs.com/package/contra/v/1.9.4) | 1.9.4 | MIT |
+| [cookiejar](https://www.npmjs.com/package/cookiejar/v/2.1.4) | 2.1.4 | MIT |
+| [core-js](https://www.npmjs.com/package/core-js/v/3.35.1) | 3.35.1 | MIT |
+| [crelt](https://www.npmjs.com/package/crelt/v/1.0.6) | 1.0.6 | MIT |
+| [css.escape](https://www.npmjs.com/package/css.escape/v/1.5.1) | 1.5.1 | MIT |
+| [debug](https://www.npmjs.com/package/debug/v/4.4.1) | 4.4.1 | MIT |
+| [delayed-stream](https://www.npmjs.com/package/delayed-stream/v/1.0.0) | 1.0.0 | MIT |
+| [delegate](https://www.npmjs.com/package/delegate/v/3.2.0) | 3.2.0 | MIT |
+| [diagram-js](https://www.npmjs.com/package/diagram-js/v/12.8.1) | 12.8.1 | MIT |
+| [diagram-js](https://www.npmjs.com/package/diagram-js/v/13.4.0) | 13.4.0 | MIT |
+| [diagram-js](https://www.npmjs.com/package/diagram-js/v/15.3.0) | 15.3.0 | MIT |
+| [diagram-js](https://www.npmjs.com/package/diagram-js/v/4.0.3) | 4.0.3 | MIT |
+| [diagram-js-direct-editing](https://www.npmjs.com/package/diagram-js-direct-editing/v/1.8.0) | 1.8.0 | MIT |
+| [diagram-js-direct-editing](https://www.npmjs.com/package/diagram-js-direct-editing/v/2.1.2) | 2.1.2 | MIT |
+| [diagram-js-direct-editing](https://www.npmjs.com/package/diagram-js-direct-editing/v/3.2.0) | 3.2.0 | MIT |
+| [diagram-js-grid](https://www.npmjs.com/package/diagram-js-grid/v/1.1.0) | 1.1.0 | MIT |
+| [diagram-js-origin](https://www.npmjs.com/package/diagram-js-origin/v/1.4.0) | 1.4.0 | MIT |
+| [didi](https://www.npmjs.com/package/didi/v/10.2.2) | 10.2.2 | MIT |
+| [didi](https://www.npmjs.com/package/didi/v/4.0.0) | 4.0.0 | MIT |
+| [didi](https://www.npmjs.com/package/didi/v/9.0.2) | 9.0.2 | MIT |
+| [dmn-js-properties-panel](https://www.npmjs.com/package/dmn-js-properties-panel/v/3.2.1) | 3.2.1 | MIT |
+| [dmn-moddle](https://www.npmjs.com/package/dmn-moddle/v/10.0.0) | 10.0.0 | MIT |
+| [dmn-moddle](https://www.npmjs.com/package/dmn-moddle/v/11.0.0) | 11.0.0 | MIT |
+| [dom-iterator](https://www.npmjs.com/package/dom-iterator/v/1.0.2) | 1.0.2 | MIT |
+| [dom4](https://www.npmjs.com/package/dom4/v/2.1.6) | 2.1.6 | MIT |
+| [domify](https://www.npmjs.com/package/domify/v/1.4.2) | 1.4.2 | MIT |
+| [domify](https://www.npmjs.com/package/domify/v/2.0.0) | 2.0.0 | MIT |
+| [downloadjs](https://www.npmjs.com/package/downloadjs/v/1.4.7) | 1.4.7 | MIT |
+| [dunder-proto](https://www.npmjs.com/package/dunder-proto/v/1.0.1) | 1.0.1 | MIT |
+| [es-define-property](https://www.npmjs.com/package/es-define-property/v/1.0.1) | 1.0.1 | MIT |
+| [es-errors](https://www.npmjs.com/package/es-errors/v/1.3.0) | 1.3.0 | MIT |
+| [es-object-atoms](https://www.npmjs.com/package/es-object-atoms/v/1.1.1) | 1.1.1 | MIT |
+| [es-set-tostringtag](https://www.npmjs.com/package/es-set-tostringtag/v/2.1.0) | 2.1.0 | MIT |
+| [escape-html](https://www.npmjs.com/package/escape-html/v/1.0.3) | 1.0.3 | MIT |
+| [events](https://www.npmjs.com/package/events/v/3.3.0) | 3.3.0 | MIT |
+| [fast-safe-stringify](https://www.npmjs.com/package/fast-safe-stringify/v/2.1.1) | 2.1.1 | MIT |
+| [fast-xml-parser](https://www.npmjs.com/package/fast-xml-parser/v/4.3.4) | 4.3.4 | MIT |
+| [feelers](https://www.npmjs.com/package/feelers/v/1.4.0) | 1.4.0 | MIT |
+| [feelin](https://www.npmjs.com/package/feelin/v/3.2.0) | 3.2.0 | MIT |
+| [feelin](https://www.npmjs.com/package/feelin/v/4.3.0) | 4.3.0 | MIT |
+| [file-drops](https://www.npmjs.com/package/file-drops/v/0.6.1) | 0.6.1 | MIT |
+| [flatpickr](https://www.npmjs.com/package/flatpickr/v/4.6.13) | 4.6.13 | MIT |
+| [focus-trap](https://www.npmjs.com/package/focus-trap/v/7.6.5) | 7.6.5 | MIT |
+| [form-data](https://www.npmjs.com/package/form-data/v/4.0.4) | 4.0.4 | MIT |
+| [formidable](https://www.npmjs.com/package/formidable/v/2.1.5) | 2.1.5 | MIT |
+| [function-bind](https://www.npmjs.com/package/function-bind/v/1.1.2) | 1.1.2 | MIT |
+| [get-intrinsic](https://www.npmjs.com/package/get-intrinsic/v/1.3.0) | 1.3.0 | MIT |
+| [get-proto](https://www.npmjs.com/package/get-proto/v/1.0.1) | 1.0.1 | MIT |
+| [good-listener](https://www.npmjs.com/package/good-listener/v/1.2.2) | 1.2.2 | MIT |
+| [gopd](https://www.npmjs.com/package/gopd/v/1.2.0) | 1.2.0 | MIT |
+| [hammerjs](https://www.npmjs.com/package/hammerjs/v/2.0.8) | 2.0.8 | MIT |
+| [has-symbols](https://www.npmjs.com/package/has-symbols/v/1.1.0) | 1.1.0 | MIT |
+| [has-tostringtag](https://www.npmjs.com/package/has-tostringtag/v/1.0.2) | 1.0.2 | MIT |
+| [hasown](https://www.npmjs.com/package/hasown/v/2.0.2) | 2.0.2 | MIT |
+| [ids](https://www.npmjs.com/package/ids/v/0.2.2) | 0.2.2 | MIT |
+| [ids](https://www.npmjs.com/package/ids/v/1.0.5) | 1.0.5 | MIT |
+| [indexof](https://www.npmjs.com/package/indexof/v/0.0.1) | 0.0.1 | MIT |
+| [inferno](https://www.npmjs.com/package/inferno/v/5.6.3) | 5.6.3 | MIT |
+| [inferno-shared](https://www.npmjs.com/package/inferno-shared/v/5.6.3) | 5.6.3 | MIT |
+| [inferno-vnode-flags](https://www.npmjs.com/package/inferno-vnode-flags/v/5.6.3) | 5.6.3 | MIT |
+| [jquery](https://www.npmjs.com/package/jquery/v/3.7.1) | 3.7.1 | MIT |
+| [jquery-ui](https://www.npmjs.com/package/jquery-ui/v/1.13.2) | 1.13.2 | MIT |
+| [lezer-feel](https://www.npmjs.com/package/lezer-feel/v/1.8.1) | 1.8.1 | MIT |
+| [lodash](https://www.npmjs.com/package/lodash/v/4.17.21) | 4.17.21 | MIT |
+| [luxon](https://www.npmjs.com/package/luxon/v/3.7.1) | 3.7.1 | MIT |
+| [marked](https://www.npmjs.com/package/marked/v/16.2.1) | 16.2.1 | MIT |
+| [matches-selector](https://www.npmjs.com/package/matches-selector/v/1.2.0) | 1.2.0 | MIT |
+| [math-intrinsics](https://www.npmjs.com/package/math-intrinsics/v/1.1.0) | 1.1.0 | MIT |
+| [methods](https://www.npmjs.com/package/methods/v/1.1.2) | 1.1.2 | MIT |
+| [mime](https://www.npmjs.com/package/mime/v/2.6.0) | 2.6.0 | MIT |
+| [mime-db](https://www.npmjs.com/package/mime-db/v/1.52.0) | 1.52.0 | MIT |
+| [mime-types](https://www.npmjs.com/package/mime-types/v/2.1.35) | 2.1.35 | MIT |
+| [min-dash](https://www.npmjs.com/package/min-dash/v/3.8.1) | 3.8.1 | MIT |
+| [min-dash](https://www.npmjs.com/package/min-dash/v/4.2.3) | 4.2.3 | MIT |
+| [min-dom](https://www.npmjs.com/package/min-dom/v/3.2.1) | 3.2.1 | MIT |
+| [min-dom](https://www.npmjs.com/package/min-dom/v/4.2.1) | 4.2.1 | MIT |
+| [min-dom](https://www.npmjs.com/package/min-dom/v/5.1.1) | 5.1.1 | MIT |
+| [mitt](https://www.npmjs.com/package/mitt/v/3.0.1) | 3.0.1 | MIT |
+| [moddle](https://www.npmjs.com/package/moddle/v/4.1.0) | 4.1.0 | MIT |
+| [moddle](https://www.npmjs.com/package/moddle/v/5.0.4) | 5.0.4 | MIT |
+| [moddle](https://www.npmjs.com/package/moddle/v/6.2.3) | 6.2.3 | MIT |
+| [moddle](https://www.npmjs.com/package/moddle/v/7.2.0) | 7.2.0 | MIT |
+| [moddle-xml](https://www.npmjs.com/package/moddle-xml/v/10.1.0) | 10.1.0 | MIT |
+| [moddle-xml](https://www.npmjs.com/package/moddle-xml/v/11.0.0) | 11.0.0 | MIT |
+| [moddle-xml](https://www.npmjs.com/package/moddle-xml/v/7.5.0) | 7.5.0 | MIT |
+| [moddle-xml](https://www.npmjs.com/package/moddle-xml/v/9.0.6) | 9.0.6 | MIT |
+| [moment](https://www.npmjs.com/package/moment/v/2.30.1) | 2.30.1 | MIT |
+| [ms](https://www.npmjs.com/package/ms/v/2.1.3) | 2.1.3 | MIT |
+| [object-inspect](https://www.npmjs.com/package/object-inspect/v/1.13.4) | 1.13.4 | MIT |
+| [object-refs](https://www.npmjs.com/package/object-refs/v/0.3.0) | 0.3.0 | MIT |
+| [object-refs](https://www.npmjs.com/package/object-refs/v/0.4.0) | 0.4.0 | MIT |
+| [opencollective-postinstall](https://www.npmjs.com/package/opencollective-postinstall/v/2.0.3) | 2.0.3 | MIT |
+| [path-intersection](https://www.npmjs.com/package/path-intersection/v/1.1.1) | 1.1.1 | MIT |
+| [path-intersection](https://www.npmjs.com/package/path-intersection/v/2.2.1) | 2.2.1 | MIT |
+| [path-intersection](https://www.npmjs.com/package/path-intersection/v/3.1.0) | 3.1.0 | MIT |
+| [preact](https://www.npmjs.com/package/preact/v/10.27.1) | 10.27.1 | MIT |
+| [q](https://www.npmjs.com/package/q/v/1.5.1) | 1.5.1 | MIT |
+| [requirejs](https://www.npmjs.com/package/requirejs/v/2.1.22) | 2.1.22 | MIT |
+| [requirejs](https://www.npmjs.com/package/requirejs/v/2.3.7) | 2.3.7 | MIT |
+| [requirejs-angular-define](https://www.npmjs.com/package/requirejs-angular-define/v/1.1.0) | 1.1.0 | MIT |
+| [saxen](https://www.npmjs.com/package/saxen/v/10.0.0) | 10.0.0 | MIT |
+| [saxen](https://www.npmjs.com/package/saxen/v/8.1.2) | 8.1.2 | MIT |
+| [select](https://www.npmjs.com/package/select/v/1.1.2) | 1.1.2 | MIT |
+| [selection-ranges](https://www.npmjs.com/package/selection-ranges/v/3.0.3) | 3.0.3 | MIT |
+| [selection-ranges](https://www.npmjs.com/package/selection-ranges/v/4.0.3) | 4.0.3 | MIT |
+| [selection-update](https://www.npmjs.com/package/selection-update/v/0.1.2) | 0.1.2 | MIT |
+| [side-channel](https://www.npmjs.com/package/side-channel/v/1.1.0) | 1.1.0 | MIT |
+| [side-channel-list](https://www.npmjs.com/package/side-channel-list/v/1.0.0) | 1.0.0 | MIT |
+| [side-channel-map](https://www.npmjs.com/package/side-channel-map/v/1.0.1) | 1.0.1 | MIT |
+| [side-channel-weakmap](https://www.npmjs.com/package/side-channel-weakmap/v/1.0.2) | 1.0.2 | MIT |
+| [strnum](https://www.npmjs.com/package/strnum/v/1.1.2) | 1.1.2 | MIT |
+| [style-mod](https://www.npmjs.com/package/style-mod/v/4.1.2) | 4.1.2 | MIT |
+| [superagent](https://www.npmjs.com/package/superagent/v/8.1.2) | 8.1.2 | MIT |
+| [tabbable](https://www.npmjs.com/package/tabbable/v/6.2.0) | 6.2.0 | MIT |
+| [table-js](https://www.npmjs.com/package/table-js/v/9.2.0) | 9.2.0 | MIT |
+| [ticky](https://www.npmjs.com/package/ticky/v/1.0.1) | 1.0.1 | MIT |
+| [tiny-emitter](https://www.npmjs.com/package/tiny-emitter/v/2.1.0) | 2.1.0 | MIT |
+| [tiny-svg](https://www.npmjs.com/package/tiny-svg/v/2.2.4) | 2.2.4 | MIT |
+| [tiny-svg](https://www.npmjs.com/package/tiny-svg/v/3.1.3) | 3.1.3 | MIT |
+| [w3c-keyname](https://www.npmjs.com/package/w3c-keyname/v/2.2.8) | 2.2.8 | MIT |
+| [zeebe-dmn-moddle](https://www.npmjs.com/package/zeebe-dmn-moddle/v/1.0.0) | 1.0.0 | MIT |
+| [@bpmn-io/align-to-origin](https://www.npmjs.com/package/@bpmn-io/align-to-origin/v/0.7.0) | 0.7.0 | MIT |
+| [@bpmn-io/cm-theme](https://www.npmjs.com/package/@bpmn-io/cm-theme/v/0.1.0-alpha.2) | 0.1.0-alpha.2 | MIT |
+| [@bpmn-io/diagram-js-ui](https://www.npmjs.com/package/@bpmn-io/diagram-js-ui/v/0.2.3) | 0.2.3 | MIT |
+| [@bpmn-io/dmn-migrate](https://www.npmjs.com/package/@bpmn-io/dmn-migrate/v/0.5.0) | 0.5.0 | MIT |
+| [@bpmn-io/dmn-variable-resolver](https://www.npmjs.com/package/@bpmn-io/dmn-variable-resolver/v/0.7.0) | 0.7.0 | MIT |
+| [@bpmn-io/draggle](https://www.npmjs.com/package/@bpmn-io/draggle/v/4.1.2) | 4.1.2 | MIT |
+| [@bpmn-io/feel-editor](https://www.npmjs.com/package/@bpmn-io/feel-editor/v/1.12.0) | 1.12.0 | MIT |
+| [@bpmn-io/feel-lint](https://www.npmjs.com/package/@bpmn-io/feel-lint/v/1.4.0) | 1.4.0 | MIT |
+| [@bpmn-io/feel-lint](https://www.npmjs.com/package/@bpmn-io/feel-lint/v/2.1.0) | 2.1.0 | MIT |
+| [@bpmn-io/lang-feel](https://www.npmjs.com/package/@bpmn-io/lang-feel/v/2.4.0) | 2.4.0 | MIT |
+| [@bpmn-io/lezer-feel](https://www.npmjs.com/package/@bpmn-io/lezer-feel/v/1.9.0) | 1.9.0 | MIT |
+| [@bpmn-io/properties-panel](https://www.npmjs.com/package/@bpmn-io/properties-panel/v/3.33.0) | 3.33.0 | MIT |
+| [@camunda/feel-builtins](https://www.npmjs.com/package/@camunda/feel-builtins/v/0.2.0) | 0.2.0 | MIT |
+| [@codemirror/autocomplete](https://www.npmjs.com/package/@codemirror/autocomplete/v/6.18.6) | 6.18.6 | MIT |
+| [@codemirror/commands](https://www.npmjs.com/package/@codemirror/commands/v/6.8.1) | 6.8.1 | MIT |
+| [@codemirror/lang-json](https://www.npmjs.com/package/@codemirror/lang-json/v/6.0.2) | 6.0.2 | MIT |
+| [@codemirror/language](https://www.npmjs.com/package/@codemirror/language/v/6.11.3) | 6.11.3 | MIT |
+| [@codemirror/lint](https://www.npmjs.com/package/@codemirror/lint/v/6.8.5) | 6.8.5 | MIT |
+| [@codemirror/search](https://www.npmjs.com/package/@codemirror/search/v/6.5.11) | 6.5.11 | MIT |
+| [@codemirror/state](https://www.npmjs.com/package/@codemirror/state/v/6.5.2) | 6.5.2 | MIT |
+| [@codemirror/view](https://www.npmjs.com/package/@codemirror/view/v/6.38.1) | 6.38.1 | MIT |
+| [@kurkle/color](https://www.npmjs.com/package/@kurkle/color/v/0.3.4) | 0.3.4 | MIT |
+| [@lezer/common](https://www.npmjs.com/package/@lezer/common/v/1.2.3) | 1.2.3 | MIT |
+| [@lezer/highlight](https://www.npmjs.com/package/@lezer/highlight/v/1.2.1) | 1.2.1 | MIT |
+| [@lezer/json](https://www.npmjs.com/package/@lezer/json/v/1.0.3) | 1.0.3 | MIT |
+| [@lezer/lr](https://www.npmjs.com/package/@lezer/lr/v/1.4.2) | 1.4.2 | MIT |
+| [@lezer/markdown](https://www.npmjs.com/package/@lezer/markdown/v/1.4.3) | 1.4.3 | MIT |
+| [@marijn/find-cluster-break](https://www.npmjs.com/package/@marijn/find-cluster-break/v/1.0.2) | 1.0.2 | MIT |
+| [@noble/hashes](https://www.npmjs.com/package/@noble/hashes/v/1.8.0) | 1.8.0 | MIT |
+| [@paralleldrive/cuid2](https://www.npmjs.com/package/@paralleldrive/cuid2/v/2.2.2) | 2.2.2 | MIT |
+| [@types/trusted-types](https://www.npmjs.com/package/@types/trusted-types/v/2.0.7) | 2.0.7 | MIT |
+| [dompurify](https://www.npmjs.com/package/dompurify/v/3.2.4) | 3.2.4 | MPL-2.0 OR Apache-2.0 |
+| [dompurify](https://www.npmjs.com/package/dompurify/v/3.2.6) | 3.2.6 | MPL-2.0 OR Apache-2.0 |
+| [bpmn-font](https://www.npmjs.com/package/bpmn-font/v/0.12.1) | 0.12.1 | OFL-1.1 |
+| [cmmn-font](https://www.npmjs.com/package/cmmn-font/v/0.5.0) | 0.5.0 | OFL-1.1 |
+| [dmn-font](https://www.npmjs.com/package/dmn-font/v/0.6.2) | 0.6.2 | OFL-1.1 |
+| [@ibm/plex](https://www.npmjs.com/package/@ibm/plex/v/6.4.0) | 6.4.0 | OFL-1.1 |
+| [component-event](https://www.npmjs.com/package/component-event/v/0.1.4) | 0.1.4 | UNKNOWN |
+| [hat](https://www.npmjs.com/package/hat/v/0.0.3) | 0.0.3 | X11 |
+| [bpmn-js](https://www.npmjs.com/package/bpmn-js/v/16.5.0) | 16.5.0 | bpmn.io |
+| [cmmn-js](https://www.npmjs.com/package/cmmn-js/v/0.20.0) | 0.20.0 | bpmn.io |
+| [dmn-js](https://www.npmjs.com/package/dmn-js/v/17.2.0) | 17.2.0 | bpmn.io |
+| [dmn-js-boxed-expression](https://www.npmjs.com/package/dmn-js-boxed-expression/v/17.4.0) | 17.4.0 | bpmn.io |
+| [dmn-js-decision-table](https://www.npmjs.com/package/dmn-js-decision-table/v/17.1.0) | 17.1.0 | bpmn.io |
+| [dmn-js-drd](https://www.npmjs.com/package/dmn-js-drd/v/17.2.0) | 17.2.0 | bpmn.io |
+| [dmn-js-literal-expression](https://www.npmjs.com/package/dmn-js-literal-expression/v/17.1.0) | 17.1.0 | bpmn.io |
+| [dmn-js-shared](https://www.npmjs.com/package/dmn-js-shared/v/17.1.0) | 17.1.0 | bpmn.io |
+| [dmn-js-shared](https://www.npmjs.com/package/dmn-js-shared/v/17.4.0) | 17.4.0 | bpmn.io |
+| [@bpmn-io/form-js](https://www.npmjs.com/package/@bpmn-io/form-js/v/1.8.7) | 1.8.7 | bpmn.io |
+| [@bpmn-io/form-js-carbon-styles](https://www.npmjs.com/package/@bpmn-io/form-js-carbon-styles/v/1.17.0) | 1.17.0 | bpmn.io |
+| [@bpmn-io/form-js-editor](https://www.npmjs.com/package/@bpmn-io/form-js-editor/v/1.17.0) | 1.17.0 | bpmn.io |
+| [@bpmn-io/form-js-playground](https://www.npmjs.com/package/@bpmn-io/form-js-playground/v/1.17.0) | 1.17.0 | bpmn.io |
+| [@bpmn-io/form-js-viewer](https://www.npmjs.com/package/@bpmn-io/form-js-viewer/v/1.17.0) | 1.17.0 | bpmn.io |
 
 <a name="licenses"></a>
 ## License Texts
@@ -2006,6 +2228,206 @@ IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY O
 SUCH DAMAGE.
 ```
 ---
+#### <a name="apache-2.0-with-llvm-exception"></a>Apache-2.0-with-LLVM-exception
+The following license text for the Apache-2.0-with-LLVM-exception license is cited only once.
+
+```
+
+                              Apache License
+                        Version 2.0, January 2004
+                     http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+
+   &quot;License&quot; shall mean the terms and conditions for use, reproduction,
+   and distribution as defined by Sections 1 through 9 of this document.
+
+   &quot;Licensor&quot; shall mean the copyright owner or entity authorized by
+   the copyright owner that is granting the License.
+
+   &quot;Legal Entity&quot; shall mean the union of the acting entity and all
+   other entities that control, are controlled by, or are under common
+   control with that entity. For the purposes of this definition,
+   &quot;control&quot; means (i) the power, direct or indirect, to cause the
+   direction or management of such entity, whether by contract or
+   otherwise, or (ii) ownership of fifty percent (50%) or more of the
+   outstanding shares, or (iii) beneficial ownership of such entity.
+
+   &quot;You&quot; (or &quot;Your&quot;) shall mean an individual or Legal Entity
+   exercising permissions granted by this License.
+
+   &quot;Source&quot; form shall mean the preferred form for making modifications,
+   including but not limited to software source code, documentation
+   source, and configuration files.
+
+   &quot;Object&quot; form shall mean any form resulting from mechanical
+   transformation or translation of a Source form, including but
+   not limited to compiled object code, generated documentation,
+   and conversions to other media types.
+
+   &quot;Work&quot; shall mean the work of authorship, whether in Source or
+   Object form, made available under the License, as indicated by a
+   copyright notice that is included in or attached to the work
+   (an example is provided in the Appendix below).
+
+   &quot;Derivative Works&quot; shall mean any work, whether in Source or Object
+   form, that is based on (or derived from) the Work and for which the
+   editorial revisions, annotations, elaborations, or other modifications
+   represent, as a whole, an original work of authorship. For the purposes
+   of this License, Derivative Works shall not include works that remain
+   separable from, or merely link (or bind by name) to the interfaces of,
+   the Work and Derivative Works thereof.
+
+   &quot;Contribution&quot; shall mean any work of authorship, including
+   the original version of the Work and any modifications or additions
+   to that Work or Derivative Works thereof, that is intentionally
+   submitted to Licensor for inclusion in the Work by the copyright owner
+   or by an individual or Legal Entity authorized to submit on behalf of
+   the copyright owner. For the purposes of this definition, &quot;submitted&quot;
+   means any form of electronic, verbal, or written communication sent
+   to the Licensor or its representatives, including but not limited to
+   communication on electronic mailing lists, source code control systems,
+   and issue tracking systems that are managed by, or on behalf of, the
+   Licensor for the purpose of discussing and improving the Work, but
+   excluding communication that is conspicuously marked or otherwise
+   designated in writing by the copyright owner as &quot;Not a Contribution.&quot;
+
+   &quot;Contributor&quot; shall mean Licensor and any individual or Legal Entity
+   on behalf of whom a Contribution has been received by Licensor and
+   subsequently incorporated within the Work.
+
+2. Grant of Copyright License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   copyright license to reproduce, prepare Derivative Works of,
+   publicly display, publicly perform, sublicense, and distribute the
+   Work and such Derivative Works in Source or Object form.
+
+3. Grant of Patent License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   (except as stated in this section) patent license to make, have made,
+   use, offer to sell, sell, import, and otherwise transfer the Work,
+   where such license applies only to those patent claims licensable
+   by such Contributor that are necessarily infringed by their
+   Contribution(s) alone or by combination of their Contribution(s)
+   with the Work to which such Contribution(s) was submitted. If You
+   institute patent litigation against any entity (including a
+   cross-claim or counterclaim in a lawsuit) alleging that the Work
+   or a Contribution incorporated within the Work constitutes direct
+   or contributory patent infringement, then any patent licenses
+   granted to You under this License for that Work shall terminate
+   as of the date such litigation is filed.
+
+4. Redistribution. You may reproduce and distribute copies of the
+   Work or Derivative Works thereof in any medium, with or without
+   modifications, and in Source or Object form, provided that You
+   meet the following conditions:
+
+   (a) You must give any other recipients of the Work or
+       Derivative Works a copy of this License; and
+
+   (b) You must cause any modified files to carry prominent notices
+       stating that You changed the files; and
+
+   (c) You must retain, in the Source form of any Derivative Works
+       that You distribute, all copyright, patent, trademark, and
+       attribution notices from the Source form of the Work,
+       excluding those notices that do not pertain to any part of
+       the Derivative Works; and
+
+   (d) If the Work includes a &quot;NOTICE&quot; text file as part of its
+       distribution, then any Derivative Works that You distribute must
+       include a readable copy of the attribution notices contained
+       within such NOTICE file, excluding those notices that do not
+       pertain to any part of the Derivative Works, in at least one
+       of the following places: within a NOTICE text file distributed
+       as part of the Derivative Works; within the Source form or
+       documentation, if provided along with the Derivative Works; or,
+       within a display generated by the Derivative Works, if and
+       wherever such third-party notices normally appear. The contents
+       of the NOTICE file are for informational purposes only and
+       do not modify the License. You may add Your own attribution
+       notices within Derivative Works that You distribute, alongside
+       or as an addendum to the NOTICE text from the Work, provided
+       that such additional attribution notices cannot be construed
+       as modifying the License.
+
+   You may add Your own copyright statement to Your modifications and
+   may provide additional or different license terms and conditions
+   for use, reproduction, or distribution of Your modifications, or
+   for any such Derivative Works as a whole, provided Your use,
+   reproduction, and distribution of the Work otherwise complies with
+   the conditions stated in this License.
+
+5. Submission of Contributions. Unless You explicitly state otherwise,
+   any Contribution intentionally submitted for inclusion in the Work
+   by You to the Licensor shall be under the terms and conditions of
+   this License, without any additional terms or conditions.
+   Notwithstanding the above, nothing herein shall supersede or modify
+   the terms of any separate license agreement you may have executed
+   with Licensor regarding such Contributions.
+
+6. Trademarks. This License does not grant permission to use the trade
+   names, trademarks, service marks, or product names of the Licensor,
+   except as required for reasonable and customary use in describing the
+   origin of the Work and reproducing the content of the NOTICE file.
+
+7. Disclaimer of Warranty. Unless required by applicable law or
+   agreed to in writing, Licensor provides the Work (and each
+   Contributor provides its Contributions) on an &quot;AS IS&quot; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied, including, without limitation, any warranties or conditions
+   of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+   PARTICULAR PURPOSE. You are solely responsible for determining the
+   appropriateness of using or redistributing the Work and assume any
+   risks associated with Your exercise of permissions under this License.
+
+8. Limitation of Liability. In no event and under no legal theory,
+   whether in tort (including negligence), contract, or otherwise,
+   unless required by applicable law (such as deliberate and grossly
+   negligent acts) or agreed to in writing, shall any Contributor be
+   liable to You for damages, including any direct, indirect, special,
+   incidental, or consequential damages of any character arising as a
+   result of this License or out of the use or inability to use the
+   Work (including but not limited to damages for loss of goodwill,
+   work stoppage, computer failure or malfunction, or any and all
+   other commercial damages or losses), even if such Contributor
+   has been advised of the possibility of such damages.
+
+9. Accepting Warranty or Additional Liability. While redistributing
+   the Work or Derivative Works thereof, You may choose to offer,
+   and charge a fee for, acceptance of support, warranty, indemnity,
+   or other liability obligations and/or rights consistent with this
+   License. However, in accepting such obligations, You may act only
+   on Your own behalf and on Your sole responsibility, not on behalf
+   of any other Contributor, and only if You agree to indemnify,
+   defend, and hold each Contributor harmless for any liability
+   incurred by, or claims asserted against, such Contributor by reason
+   of your accepting any such warranty or additional liability.
+
+END OF TERMS AND CONDITIONS
+
+--- Exceptions to the Apache 2.0 License ----
+
+As an exception, if, as a result of your compiling your source code, portions
+of this Software are embedded into an Object form of such source code, you
+may redistribute such embedded portions in such Object form without complying
+with the conditions of Sections 4(a), 4(b) and 4(d) of the License.
+
+In addition, if you combine or link compiled forms of this Software with
+software that is licensed under the GPLv2 (&quot;Combined Software&quot;) and if a
+court of competent jurisdiction determines that the patent provision (Section
+3), the indemnity provision (Section 9) or other Section of the License
+conflicts with the conditions of the GPLv2, you may retroactively and
+prospectively choose to deem waived or otherwise exclude such Section(s) of
+the License, but only in their entirety and only with respect to the Combined
+Software.
+
+```
+---
 #### <a name="unicode-3.0"></a>Unicode-3.0
 The following license text for the Unicode-3.0 license is cited only once.
 
@@ -2023,6 +2445,33 @@ THE DATA FILES AND SOFTWARE ARE PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF 
 IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA FILES OR SOFTWARE.
 
 Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to promote the sale, use or other dealings in these Data Files or Software without prior written authorization of the copyright holder.
+```
+---
+#### <a name="x11"></a>X11
+The following license text for the X11 license is cited only once.
+
+```
+X11 License
+
+Copyright (C) 1996 X Consortium
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE X CONSORTIUM
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Except as contained in this notice, the name of the X Consortium shall not be used in advertising or otherwise to
+promote the sale, use or other dealings in this Software without prior written authorization from the X Consortium.
+
+X Window System is a trademark of X Consortium, Inc.
 ```
 ---
 #### <a name="cddl-1.1"></a>CDDL-1.1

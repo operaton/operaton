@@ -7,6 +7,6 @@ Operaton uses Node libraries for the web applications included in the distributi
 
 | Library | Version | License(s) |
 |---------|---------|------------|
-{{#npm_licenses}}
-| {{group}}/{{name}} | {{version}} | {{licenses}} |
-{{/npm_licenses}}
+{{#npm_dependencies}}
+| [{{#group}}{{group}}/{{/group}}{{name}}](https://www.npmjs.com/package/{{#group}}{{group}}/{{/group}}{{name}}/v/{{version}}) | {{version}} | {{licenses}} |
+{{/npm_dependencies}}

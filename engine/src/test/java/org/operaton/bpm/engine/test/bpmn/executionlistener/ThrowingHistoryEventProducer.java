@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.executionlistener;
 
+import java.util.Objects;
+
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.producer.DefaultHistoryEventProducer;
-
-import java.util.Objects;
 
 public class ThrowingHistoryEventProducer extends DefaultHistoryEventProducer {
 

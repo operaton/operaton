@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.migration;
 
-import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-
 import java.util.Objects;
+
+import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
 public class DefaultMigrationActivityMatcher implements MigrationActivityMatcher {
 

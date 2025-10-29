@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.variable.impl;
 
+import java.util.Objects;
+
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import java.util.Objects;
 
 public abstract class AbstractTypedValueMapper<T extends TypedValue> implements ValueMapper<T> {
 

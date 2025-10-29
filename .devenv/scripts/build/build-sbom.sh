@@ -9,11 +9,7 @@ if ! command -v npx &> /dev/null; then
 fi
 
 echo "Generating CycloneDX SBOM for Node.js frontend module..."
-pushd $(pwd) > /dev/null
-npm install @cyclonedx/cyclonedx-npm@latest
-npm install
-npx @cyclonedx/cyclonedx-npm --output-file target/sbom/operaton-webapps.cyclonedx-json.sbom
-popd > /dev/null
+docker run --rm -v "$(pwd)":/repo aquasec/trivy:latest fs --scanners vuln --format cyclonedx --output /repo/target/sbom/operaton-webapps.cyclonedx-json.sbom /repo/webapps/frontend
 
 echo "Generating CycloneDX SBOM for Maven modules..."
 ./mvnw org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom \

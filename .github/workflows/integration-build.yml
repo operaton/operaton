@@ -3,7 +3,6 @@ name: Integration Build
 on:
   schedule:
     - cron: "0 2 * * *"     # Runs at 2:00 AM UTC daily
-    - cron: "30 11 * * *"
   workflow_dispatch:        # Allows manual trigger
     inputs:
       java_version:
@@ -400,6 +399,7 @@ jobs:
         with:
           path: |
             target/*.zip
+            target/sbom/**
           key: ${{ github.run_id }}-documentation-artifacts
 
   release:
@@ -442,6 +442,7 @@ jobs:
         with:
           path: |
             target/*.zip
+            target/sbom/**
           key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
 

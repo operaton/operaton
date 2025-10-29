@@ -30,37 +30,31 @@ on:
           - '["17", "25"]'
           - '["21", "25"]'
           - '["17", "21", "25"]'
-      distro_operaton:
-        description: 'Distribution: Operaton'
-        type: boolean
-        default: true
-      distro_tomcat:
-        description: 'Distribution: Tomcat'
-        type: boolean
-        default: true
-      distro_wildfly:
-        description: 'Distribution: Wildfly'
-        type: boolean
-        default: true
-      testsuite_engine:
-        description: 'Run Integration Tests: Engine'
-        type: boolean
-        default: true
-      testsuite_webapps:
-        description: 'Run Integration Tests: Webapps'
-        type: boolean
-        default: true
+      distro:
+        description: 'Integration Tests: Distribution to use'
+        type: choice
+        required: true
+        default: '["operaton", "tomcat", "wildfly"]'
+        options:
+          - '["operaton"]'
+          - '["tomcat"]'
+          - '["wildfly"]'
+          - '["operaton", "tomcat", "wildfly"]'
+      testsuite:
+        description: 'Integration Tests: Test suite to run'
+        type: choice
+        required: true
+        default: '["engine", "webapps"]'
+        options:
+          - '["engine"]'
+          - '["webapps"]'
+          - '["engine", "webapps"]'
       database:
         description: 'Integration Tests: Database to use'
         type: choice
         required: true
-        default: 'h2 postgresql'
+        default: '["h2"]'
         options:
-          - 'h2'
-          - '(h2)'
-          - 'h2 postgresql'
-          - '(h2 postgresql)'
-          - '(h2, postgresql)'
           - '["h2"]'
           - '["postgresql"]'
           - '["postgresql-xa"]'
@@ -200,9 +194,9 @@ jobs:
           EVENT_NAME:         ${{ github.event_name }}
         run: |
           # Java version is always 17 for PR builds
-          JAVA_VERSIONS=(17 21 25)
+          JAVA_VERSIONS='["17", "21", "25"]'
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            JAVA_VERSIONS=${{ github.event.inputs.java_version }}
+            JAVA_VERSIONS=${{ fromJson(github.event.inputs.java_version) }}
           elif [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]]; then
             JAVA_VERSIONS=(17)
             echo "🎯 Using Java version 17 for PR/Push builds"
@@ -211,27 +205,13 @@ jobs:
           fi
           echo "java_versions=$JAVA_VERSIONS" >> $GITHUB_OUTPUT
           
-          echo "****************** 1"
-          DISTROS=(operaton tomcat wildfly)
+          DISTROS='["operaton", "tomcat", "wildfly"]'
           # Determine distros based on labels
           DISTRO_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("distro:")) | sub("distro:"; "")')
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
             echo "****************** 2 $DISTROS"
-            DISTROS=()
-              if [[ "${{ github.event.inputs.distro_operaton }}" == "true" ]]; then
-                DISTROS+=('operaton')
-              fi
-              if [[ "${{ github.event.inputs.distro_tomcat }}" == "true" ]]; then
-                DISTROS+=('tomcat')
-              fi
-              if [[ "${{ github.event.inputs.distro_wildfly }}" == "true" ]]; then
-                DISTROS+=('wildfly')
-              fi
-            # convert to JSON array
-            echo "****************** 3 $DISTROS"
+            DISTROS= ${{ fromJson(github.event.inputs.distro_operaton) }}
 
-            #DISTROS=$(printf '%s\n' "${DISTROS[@]}" | jq -R . | jq -s . | sed 's/\n/,/g')
-            echo "****************** 4 $DISTROS"
             if [[ -z "$DISTROS" ]]; then
               echo "⚠️ No distros selected, skipping integration build"
               echo "needs_integration_build=false" >> $GITHUB_OUTPUT
@@ -243,12 +223,9 @@ jobs:
           else
             echo "🎯 Using distros: $DISTROS"
           fi
-          echo "****************** 5 $DISTROS"
           echo "distros=$DISTROS" >> $GITHUB_OUTPUT
-          echo "****************** 6 $DISTROS"
           
-          #DATABASES='["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]'
-          DATABASES=(h2)
+          DATABASES='["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]'
           # Determine databases based on labels
           DATABASE_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("database:")) | sub("database:"; "")')
           if [[ -n "$DATABASE_LABELS" ]]; then
@@ -259,21 +236,13 @@ jobs:
             DATABASES='["h2"]'
             echo "🎯 Using H2 database for PR/Push builds"
           elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            DATABASES=${{ github.event.inputs.database }}
+            DATABASES=${{ fromJson(github.event.inputs.database) }}
           fi
           echo "databases=$DATABASES" >> $GITHUB_OUTPUT
           
-          TEST_SUITES=(engine webapps)
+          TEST_SUITES='["engine", "webapps"]'
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            TEST_SUITES=()
-            if [[ "${{ github.event.inputs.testsuite_engine }}" == "true" ]]; then
-              TEST_SUITES+=('engine')
-            fi
-            if [[ "${{ github.event.inputs.testsuite_webapps }}" == "true" ]]; then
-              TEST_SUITES+=('webapps')
-            fi
-            # convert to JSON array
-            #TEST_SUITES=$(printf '%s\n' "${TEST_SUITES[@]}" | jq -R . | jq -s . | sed 's/\n/,/g')
+            TEST_SUITES=${{ fromJson(github.event.inputs.testsuite_engine) }}
             if [[ -z "$TEST_SUITES" ]]; then
               echo "⚠️ No test suites selected, skipping integration build"
               echo "needs_integration_build=false" >> $GITHUB_OUTPUT

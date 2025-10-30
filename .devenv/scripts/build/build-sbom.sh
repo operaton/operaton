@@ -18,6 +18,7 @@ set -euo pipefail
 echo "Generating SBOM files for Operaton modules..."
 
 echo "Generating CycloneDX SBOM for Node.js frontend module..."
+mkdir -p target/sbom
 docker run --rm -v "$(pwd)":/repo aquasec/trivy:latest fs --scanners vuln --format cyclonedx --output /repo/target/sbom/operaton-webapps.cyclonedx-json.sbom /repo/webapps/frontend
 
 echo "Generating CycloneDX SBOM for Maven modules..."

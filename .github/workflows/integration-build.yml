@@ -256,7 +256,7 @@ jobs:
         run: |
           echo "🛠️ Build Configuration:"
           echo "  Needs Build:               ${{ steps.check-pr.outputs.needs_build }}"
-          echo "  Needs Integration Build:   ${{ steps.check-pr.outputs.needs_integration_build }}"
+          echo "  Needs Integration Build:   ${{ steps.compute-matrix.outputs.needs_integration_build }}"
           echo "  Needs Documentation:       ${{ steps.check-pr.outputs.needs_documentation }}"
           echo "  Needs Release:             ${{ steps.check-pr.outputs.needs_release }}"
           echo "  Recent Changes:            ${{ steps.check-pr.outputs.recent_changes }}"

@@ -117,7 +117,7 @@ LICENSES_XML_PATH = "target/generated-resources/licenses.xml"
 LICENSES_DIR = "target/generated-resources/licenses"
 LICENSEBOOK_DIR = "distro/license-book"
 SBOM_DIR = "target/sbom"
-SBOM_FILES = ['operaton-modules.cyclonedx-json.sbom', 'operaton-modules.cyclonedx-json.sbom']
+SBOM_FILES = ['operaton-modules.cyclonedx-json.sbom', 'operaton-webapps.cyclonedx-json.sbom']
 CMD_BUILD_SBOM = ".devenv/scripts/build/build-sbom.sh"
 
 def run_sbom_generation():

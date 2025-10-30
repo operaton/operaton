@@ -17,12 +17,6 @@
 set -euo pipefail
 echo "Generating SBOM files for Operaton modules..."
 
-# Check that npx is installed
-if ! command -v npx &> /dev/null; then
-    echo "❌ npx could not be found. Please install Node.js and npm."
-    exit 1
-fi
-
 echo "Generating CycloneDX SBOM for Node.js frontend module..."
 docker run --rm -v "$(pwd)":/repo aquasec/trivy:latest fs --scanners vuln --format cyclonedx --output /repo/target/sbom/operaton-webapps.cyclonedx-json.sbom /repo/webapps/frontend
 

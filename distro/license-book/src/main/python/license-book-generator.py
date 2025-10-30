@@ -252,7 +252,7 @@ def get_renderer_with_partials():
     return renderer
 
 def main():
-    run_sbom_generation()
+    #run_sbom_generation()
     copy_sboms_to_dist()
     generate_license_book()
     print("[INFO] Done.")

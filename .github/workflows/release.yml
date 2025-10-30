@@ -1,12 +1,21 @@
+# Copyright 2024 the Operaton contributors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 name: Release
 
 on:
   workflow_dispatch:
     inputs:
-      release_branch:
-        description: 'The branch to release from'
-        required: true
-        default: 'main'
       next_version:
         description: 'The next development version to set (without -SNAPSHOT suffix)'
         required: true
@@ -17,19 +26,26 @@ on:
         required: true
         default: false
 jobs:
-  precheck:
-    name: Precheck
-    runs-on: ubuntu-24.04
+
+  release_build:
+    name: Release Build
+    runs-on: ubuntu-latest
     outputs:
       version: ${{steps.version.outputs.version}}
       database_version: ${{steps.version.outputs.database_version}}
       is_prerelease: ${{steps.version.outputs.is_prerelease}}
     steps:
-      - name: Checkout
+      - name: Check out the code
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{github.event.inputs.release_branch}}
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Version
         id: version
         shell: bash
@@ -47,29 +63,6 @@ jobs:
             echo "is_prerelease=false" >> $GITHUB_OUTPUT
           fi
           .github/scripts/set-project-version.sh $RELEASE_VERSION
-      - name: Commit changes
-        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
-        with:
-          message: "[releng] Releasing version ${{steps.version.outputs.version}}"
-
-  release_build:
-    name: Release Build
-    needs: precheck
-    runs-on: ubuntu-24.04
-    outputs:
-      output1: ${{steps.upload-release-artifacts.outputs.artifact-id}}
-    steps:
-      - name: Check out the code
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-          ref: ${{github.event.inputs.release_branch}}
-
-      - name: Set up JDK
-        uses: actions/setup-java@v5
-        with:
-          java-version: '17'
-          distribution: 'temurin'
 
       - name: Maven Build
         run: |
@@ -92,6 +85,13 @@ jobs:
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
           .devenv/scripts/build/build-sbom.sh
+          pip install pystache
+          distro/license-book/src/main/python/license-book-generator.py
+      - name: Commit changes
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
+        if: ${{github.event.inputs.dry_run == 'false' }}
+        with:
+          message: "chore(release) Releasing version ${{steps.version.outputs.version}}"
       - name: Cache build artifacts
         uses: actions/cache@v4
         with:
@@ -104,20 +104,19 @@ jobs:
             **/target/surefire-reports/*.xml
             target/sbom/**
             target/*.zip
+            distro/license-book/src/main/resources/license-book.md
           key: ${{ github.run_id }}-build-artifacts
 
   release:
     name: Release
     needs:
-      - precheck
       - release_build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Check out the code
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{github.event.inputs.release_branch}}
 
       - name: Restore build artifacts cache
         uses: actions/cache@v4
@@ -131,13 +130,14 @@ jobs:
             **/target/surefire-reports/*.xml
             target/sbom/**
             target/*.zip
+            distro/license-book/src/main/resources/license-book.md
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
 
       - name: Release with JReleaser
         uses: jreleaser/release-action@v2
         env:
-          JRELEASER_PROJECT_VERSION: ${{needs.precheck.outputs.version}}
+          JRELEASER_PROJECT_VERSION: ${{needs.release_build.outputs.version}}
           JRELEASER_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           JRELEASER_GPG_PUBLIC_KEY: ${{secrets.GPG_PUBLIC_KEY}}
           JRELEASER_GPG_SECRET_KEY: ${{secrets.GPG_PRIVATE_KEY}}
@@ -147,7 +147,7 @@ jobs:
           JRELEASER_DRY_RUN: ${{github.event.inputs.dry_run}}
           JRELEASER_PRERELEASE_ENABLED: false
         with:
-          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.precheck.outputs.database_version}}
+          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}}
 
       - name: Publish Test Report
         if: always()
@@ -174,21 +174,13 @@ jobs:
   post_release:
     name: Post-Release
     needs:
-      - precheck
       - release
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Check out the code
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{github.event.inputs.release_branch}}
-
-      - name: Set up JDK
-        uses: actions/setup-java@v5
-        with:
-          java-version: '17'
-          distribution: 'temurin'
 
       - name: Set next development version
         id: set-next-version
@@ -199,16 +191,18 @@ jobs:
 
       - name: Commit changes
         uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
+        if: ${{github.event.inputs.dry_run == 'false' }}
         with:
           message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"
 
       - name: Notify Docker Repository
+        if: ${{github.event.inputs.dry_run == 'false' }}
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"ref":"main","inputs":{"version": "${{ needs.precheck.outputs.version}}","snapshot": "false"}}' \
+            -d '{"ref":"main","inputs":{"version": "${{ needs.release_build.outputs.version}}","snapshot": "false"}}' \
             https://api.github.com/repos/operaton/operaton-docker/actions/workflows/build-test-and-publish.yml/dispatches)
           if [ "$response" -ne 204 ]; then
             echo "Failed to notify Docker repository. HTTP response code: $response"

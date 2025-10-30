@@ -87,16 +87,13 @@ for POM_FILE in "${POM_FILES[@]}"; do
   sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" $POM_FILE
 done
 
-echo "🔄 Updating version in license-book.txt"
-sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" ./distro/license-book/src/main/resources/license-book.txt
-
 echo "🔄 Updating version in jreleaser.yml"
 sed -i '' -E "s/previousTagName: v.+/previousTagName: v$CURRENT_VERSION_WITHOUT_SNAPSHOT/" jreleaser.yml
 
 echo "🔄 Updating version in release.yml"
 sed -i '' -E "s/default: '[0-9]+\.[0-9]+\.[0-9]+[^']*'/default: '$NEXT_VERSION_WITHOUT_SNAPSHOT'/" .github/workflows/release.yml
 
-MISSED_FILES=$(grep -R "$CURRENT_VERSION" --include pom.xml --include package.json --include license-book.txt .)
+MISSED_FILES=$(grep -R "$CURRENT_VERSION" --include pom.xml --include package.json  .)
 if [ -n "$MISSED_FILES" ]; then
   echo "⚠️ The following files still contain the old version:"
   echo "$MISSED_FILES"

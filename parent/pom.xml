@@ -516,6 +516,27 @@
         </pluginManagement>
       </build>
     </profile>
+    <profile>
+      <id>skip-deploy</id>
+      <activation>
+        <file>
+          <exists>.skip-deploy</exists>
+        </file>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-deploy-plugin</artifactId>
+              <configuration>
+                <skip>true</skip>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
   </profiles>
   <repositories>
     <repository>

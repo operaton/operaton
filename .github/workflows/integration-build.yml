@@ -203,7 +203,7 @@ jobs:
           # Java version is always 17 for PR builds
           JAVA_VERSIONS='["17", "21", "25"]'
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            JAVA_VERSIONS=${{ fromJson(github.event.inputs.java_version) }}
+            JAVA_VERSIONS=${{ github.event.inputs.java_version }}
           elif [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]]; then
             JAVA_VERSIONS=(17)
             echo "🎯 Using Java version 17 for PR/Push builds"
@@ -216,7 +216,7 @@ jobs:
           # Determine distros based on labels
           DISTRO_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("distro:")) | sub("distro:"; "")')
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            DISTROS= ${{ fromJson(github.event.inputs.distro_operaton) }}
+            DISTROS= ${{ github.event.inputs.distro_operaton }}
           elif [[ -n "$DISTRO_LABELS" ]]; then
             # Convert to JSON array
             DISTROS=$(echo "$DISTRO_LABELS" | jq -R -s 'split("\n") | map(select(. != ""))')
@@ -237,13 +237,13 @@ jobs:
             DATABASES='["h2"]'
             echo "🎯 Using H2 database for PR/Push builds"
           elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            DATABASES=${{ fromJson(github.event.inputs.database) }}
+            DATABASES=${{ github.event.inputs.database }}
           fi
           echo "databases=$DATABASES" >> $GITHUB_OUTPUT
           
           TEST_SUITES='["engine", "webapps"]'
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            TEST_SUITES=${{ fromJson(github.event.inputs.testsuite_engine) }}
+            TEST_SUITES=${{ github.event.inputs.testsuite_engine }}
             if [[ -z "$TEST_SUITES" ]]; then
               echo "⚠️ No test suites selected, skipping integration build"
               echo "needs_integration_build=false" >> $GITHUB_OUTPUT

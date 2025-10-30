@@ -85,6 +85,7 @@ jobs:
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
           .devenv/scripts/build/build-sbom.sh
+          pip install pystache
           distro/license-book/src/main/python/license-book-generator.py
       - name: Commit changes
         uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4

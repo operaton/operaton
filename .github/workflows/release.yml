@@ -93,6 +93,7 @@ jobs:
           distro/license-book/src/main/python/license-book-generator.py
       - name: Commit changes
         uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
+        if: ${{github.event.inputs.dry_run == 'false' }}
         with:
           message: "chore(release) Releasing version ${{steps.version.outputs.version}}"
       - name: Cache build artifacts
@@ -187,12 +188,6 @@ jobs:
           fetch-depth: 0
           ref: ${{github.event.inputs.release_branch}}
 
-      - name: Set up JDK
-        uses: actions/setup-java@v5
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
       - name: Set next development version
         id: set-next-version
         run: |
@@ -202,10 +197,12 @@ jobs:
 
       - name: Commit changes
         uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
+        if: ${{github.event.inputs.dry_run == 'false' }}
         with:
           message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"
 
       - name: Notify Docker Repository
+        if: ${{github.event.inputs.dry_run == 'false' }}
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \

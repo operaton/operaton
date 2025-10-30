@@ -13,10 +13,11 @@
 
   <files>
     <file>
-      <source>src/main/resources/license-book.md</source>
+      <source>src/main/resources/LICENSE_BOOK.md</source>
       <lineEnding>crlf</lineEnding>
       <outputDirectory></outputDirectory>
-      <destName>LICENSE_BOOK-${project.version}.md</destName>
+      <destName>LICENSE_BOOK.md</destName>
+      <filtered>true</filtered>
     </file>
   </files>
 

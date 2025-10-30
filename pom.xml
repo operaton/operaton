@@ -79,9 +79,23 @@
             <goals>
               <goal>parse-version</goal>
             </goals>
+            <phase>initialize</phase>
             <configuration>
               <propertyPrefix>operaton.version</propertyPrefix>
               <versionString>${project.version}</versionString>
+            </configuration>
+          </execution>
+          <execution>
+            <id>build-date-property</id>
+            <goals>
+              <goal>timestamp-property</goal>
+            </goals>
+            <phase>initialize</phase>
+            <configuration>
+              <name>build.date</name>
+              <pattern>yyyy-MM-dd</pattern>
+              <timeZone>Europe/Zurich</timeZone>
+              <locale>en</locale>
             </configuration>
           </execution>
         </executions>

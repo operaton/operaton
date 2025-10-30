@@ -230,7 +230,7 @@ def generate_license_book():
 
     # write output file
     os.makedirs('distro/license-book/target/generated-resources', exist_ok=True)
-    out_path = 'distro/license-book/src/main/resources/license-book.md'
+    out_path = 'distro/license-book/src/main/resources/LICENSE_BOOK.md'
     with open(out_path, 'w', encoding='utf-8') as out_file:
         out_file.write(output)
 

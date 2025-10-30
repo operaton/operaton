@@ -597,6 +597,7 @@
         <!-- This profile is run in the CI as the first step (platform-ASSEMBLY); It must not activate
           any modules that have a dependency to the webapps. See also the referenced POMs,
           they usually define which modules are covered by the distro profile -->
+        <module>spring-boot-4-starter</module>
         <module>spring-boot-starter</module>
         <module>quarkus-extension</module>
         <module>qa</module>

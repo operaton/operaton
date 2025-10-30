@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <groupId>org.operaton.bpm.dmn</groupId>
@@ -43,5 +43,5 @@
       -->
     </dependencies>
   </dependencyManagement>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.1.0</version>
 </project>

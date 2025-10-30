@@ -1,19 +1,25 @@
 #!/usr/bin/env bash
+
+# Copyright 2025 the Operaton contributors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 set -euo pipefail
 echo "Generating SBOM files for Operaton modules..."
 
-# Check that npx is installed
-if ! command -v npx &> /dev/null; then
-    echo "❌ npx could not be found. Please install Node.js and npm."
-    exit 1
-fi
-
 echo "Generating CycloneDX SBOM for Node.js frontend module..."
-pushd $(pwd) > /dev/null
-npm install @cyclonedx/cyclonedx-npm@latest
-npm install
-npx @cyclonedx/cyclonedx-npm --output-file target/sbom/operaton-webapps.cyclonedx-json.sbom
-popd > /dev/null
+mkdir -p target/sbom
+docker run --rm -v "$(pwd)":/repo aquasec/trivy:latest fs --scanners vuln --format cyclonedx --output /repo/target/sbom/operaton-webapps.cyclonedx-json.sbom /repo/webapps/frontend
 
 echo "Generating CycloneDX SBOM for Maven modules..."
 ./mvnw org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom \

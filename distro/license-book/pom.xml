@@ -85,7 +85,7 @@
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>target/license-book.txt</file>
+                  <file>target/license-book.md</file>
                   <type>txt</type>
                 </artifact>
               </artifacts>

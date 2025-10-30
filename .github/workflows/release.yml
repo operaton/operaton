@@ -104,7 +104,7 @@ jobs:
             **/target/surefire-reports/*.xml
             target/sbom/**
             target/*.zip
-            distro/license-book/src/main/resources/license-book.md
+            distro/license-book/src/main/resources/LICENSE_BOOK.md
           key: ${{ github.run_id }}-build-artifacts
 
   release:
@@ -130,7 +130,7 @@ jobs:
             **/target/surefire-reports/*.xml
             target/sbom/**
             target/*.zip
-            distro/license-book/src/main/resources/license-book.md
+            distro/license-book/src/main/resources/LICENSE_BOOK.md
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
 

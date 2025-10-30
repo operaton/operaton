@@ -398,7 +398,7 @@ jobs:
           path: |
             target/*.zip
             target/sbom/**
-            distro/license-book/src/main/resources/license-book.md
+            distro/license-book/src/main/resources/LICENSE_BOOK.md
           key: ${{ github.run_id }}-documentation-artifacts
 
   release:
@@ -442,7 +442,7 @@ jobs:
           path: |
             target/*.zip
             target/sbom/**
-            distro/license-book/src/main/resources/license-book.md
+            distro/license-book/src/main/resources/LICENSE_BOOK.md
           key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
 

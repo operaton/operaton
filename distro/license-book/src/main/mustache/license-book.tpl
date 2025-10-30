@@ -1,4 +1,4 @@
-# License Book for Operaton {{version}}
+# Operaton ${project.version} License Book
 
 {{>toc}}
 

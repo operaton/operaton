@@ -4,7 +4,7 @@ The following sections contain licensing information for third-party libraries t
 
 We are thankful to all individuals that have created these.
 
-The Libraries used within Operaton {{version}} are published under the following licenses:
+The Libraries used within Operaton ${project.version} are published under the following licenses:
 
 {{#license_ids}}
 * [{{id}}](#{{id_lower}}) 

@@ -16,10 +16,6 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      release_branch:
-        description: 'The branch to release from'
-        required: true
-        default: 'main'
       next_version:
         description: 'The next development version to set (without -SNAPSHOT suffix)'
         required: true
@@ -43,7 +39,6 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{github.event.inputs.release_branch}}
 
       - name: Set up JDK
         uses: actions/setup-java@v5
@@ -121,7 +116,6 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{github.event.inputs.release_branch}}
 
       - name: Restore build artifacts cache
         uses: actions/cache@v4
@@ -186,7 +180,6 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{github.event.inputs.release_branch}}
 
       - name: Set next development version
         id: set-next-version

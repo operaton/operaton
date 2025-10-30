@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
@@ -94,8 +95,8 @@ public class HistoricVariableInstanceManager extends AbstractHistoricManager {
       List <HistoricVariableInstanceEntity> cachedHistoricVariableInstances = getDbEntityManager().getCachedEntitiesByType(HistoricVariableInstanceEntity.class);
       for (HistoricVariableInstanceEntity historicVariableInstance : cachedHistoricVariableInstances) {
         // make sure we only delete the right ones (as we cannot make a proper query in the cache)
-        if ((historicProcessInstanceId != null && historicProcessInstanceId.equals(historicVariableInstance.getProcessInstanceId()))
-            || (historicCaseInstanceId != null && historicCaseInstanceId.equals(historicVariableInstance.getCaseInstanceId()))) {
+        if ((historicProcessInstanceId != null && Objects.equals(historicProcessInstanceId, historicVariableInstance.getProcessInstanceId()))
+            || (historicCaseInstanceId != null && Objects.equals(historicCaseInstanceId, historicVariableInstance.getCaseInstanceId()))) {
           historicVariableInstance.delete();
         }
       }

@@ -24,7 +24,7 @@ on:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean
         required: true
-        default: false
+        default: true
 jobs:
 
   release_build:

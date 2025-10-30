@@ -12,7 +12,7 @@
 This is a license book. It contains licensing information for third-party libraries which are used
 in this release of Operaton 1.1.0-SNAPSHOT.
 
-_(Document generated on: 2025-10-29)_
+_(Document generated on: 2025-10-30)_
 
 <a name="introduction"></a>
 ## Introduction

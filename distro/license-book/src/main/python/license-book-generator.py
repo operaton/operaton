@@ -17,7 +17,6 @@
 import os
 import json
 import subprocess
-import shutil
 import glob
 import datetime
 import xml.etree.ElementTree as ET
@@ -117,27 +116,24 @@ LIBNAME_LICENSE_OVERRIDES = {
 LICENSES_XML_PATH = "target/generated-resources/licenses.xml"
 LICENSES_DIR = "target/generated-resources/licenses"
 LICENSEBOOK_DIR = "distro/license-book"
+SBOM_DIR = "target/sbom"
+SBOM_FILES = ['operaton-modules.cyclonedx-json.sbom', 'operaton-modules.cyclonedx-json.sbom']
+CMD_BUILD_SBOM = ".devenv/scripts/build/build-sbom.sh"
 
 def run_sbom_generation():
+    need_generation = False
+    for f in SBOM_FILES:
+        if not os.path.exists(os.path.join(SBOM_DIR, f)):
+            need_generation = True
+
+    if not need_generation:
+        print("[INFO] SBOMs already exist, skipping generation.")
+        print(f"[INFO]   Execute command {CMD_BUILD_SBOM} or delete {SBOM_DIR} to regenerate.")
+        return
+
     print("[INFO] Generating SBOMs...")
     with open('distro/license-book/target/license-book-generator.out', 'a') as out_file:
         subprocess.run([".devenv/scripts/build/build-sbom.sh"], check=True, stdout=out_file, stderr=out_file)
-
-
-def copy_sboms_to_dist():
-    """Copy the content of target/generated-resources/license-book to LICENSEBOOK_DIR/target/generated-resources."""
-    src = "target/sbom"
-    dst = os.path.join(LICENSEBOOK_DIR, "target/generated-resources/")
-    if not os.path.exists(src):
-        print(f"[WARN] Source directory {src} does not exist, nothing to copy.")
-        return
-    print(f"[INFO] Copying CycloneDX SBOMs from {src} to {dst} ...")
-    if os.path.exists(dst):
-        shutil.rmtree(dst)
-    shutil.copytree(src, dst)
-    for f in ['operaton-modules.cyclonedx-json.sbom', 'operaton-modules.cyclonedx-json.sbom']:
-        shutil.copy2(os.path.join(src, f), os.path.join(dst, f))
-    print("[INFO] License book copied successfully.")
 
 def read_sbom(sbom_path):
     with open(sbom_path, 'r', encoding='utf-8') as f:
@@ -209,10 +205,10 @@ def generate_license_book():
     with open(tpl_path, 'r', encoding='utf-8') as tpl_file:
         template = tpl_file.read()
 
-    mvn_dependencies = read_sbom('distro/license-book/target/generated-resources/operaton-modules.cyclonedx-json.sbom')
+    mvn_dependencies = read_sbom(SBOM_DIR + '/operaton-modules.cyclonedx-json.sbom')
     print(f"[INFO] Loaded {len(mvn_dependencies)} Maven dependencies for the license book.")
 
-    npm_dependencies = read_sbom('distro/license-book/target/generated-resources/operaton-webapps.cyclonedx-json.sbom')
+    npm_dependencies = read_sbom(SBOM_DIR + '/operaton-webapps.cyclonedx-json.sbom')
     print(f"[INFO] Loaded {len(npm_dependencies)} NPM dependencies for the license book.")
 
     # define variables
@@ -252,8 +248,8 @@ def get_renderer_with_partials():
     return renderer
 
 def main():
-    #run_sbom_generation()
-    copy_sboms_to_dist()
+    print("[INFO] Generating license book...")
+    run_sbom_generation()
     generate_license_book()
     print("[INFO] Done.")
 

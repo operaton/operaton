@@ -1804,7 +1804,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     userTask.setDescription("desc");
     userTask.setOwner("icke");
     userTask.setAssignee("er");
-    userTask.setDueDate(new Date());
+    userTask.setDueDate(today);
     taskService.saveTask(userTask);
 
     // complete the userTask

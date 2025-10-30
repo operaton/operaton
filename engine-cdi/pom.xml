@@ -15,7 +15,7 @@
 
   <properties>
     <arquillian.container.version>4.0.0.Final</arquillian.container.version>
-    <arquillian.junit.version>1.9.3.Final</arquillian.junit.version>
+    <arquillian.junit.version>1.10.0.Final</arquillian.junit.version>
   </properties>
 
   <dependencyManagement>

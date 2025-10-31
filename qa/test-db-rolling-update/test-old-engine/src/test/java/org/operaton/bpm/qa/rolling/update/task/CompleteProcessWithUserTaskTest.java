@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.qa.rolling.update.task;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,11 +32,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithUserTaskScenario")
-public class CompleteProcessWithUserTaskTest extends AbstractRollingUpdateTestCase {
+class CompleteProcessWithUserTaskTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.1")
-  public void testCompleteProcessWithUserTask() {
+  void testCompleteProcessWithUserTask() {
     //given an already started process instance
     ProcessInstance oldInstance = rule.processInstance();
     assertThat(oldInstance).isNotNull();

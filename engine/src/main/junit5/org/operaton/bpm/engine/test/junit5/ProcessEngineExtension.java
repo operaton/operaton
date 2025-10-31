@@ -175,9 +175,9 @@ public class ProcessEngineExtension implements TestWatcher,
   protected String deploymentId;
   protected boolean ensureCleanAfterTest;
   protected List<String> additionalDeployments = new ArrayList<>();
-  private boolean randomName;
-  private boolean closeEngine;
-  private boolean closeEngineEachTest;
+  protected boolean randomName;
+  protected boolean closeEngine;
+  protected boolean closeEngineEachTest;
 
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 

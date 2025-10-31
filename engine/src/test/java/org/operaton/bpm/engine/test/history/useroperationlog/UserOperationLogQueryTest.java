@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -82,10 +83,9 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   private Execution execution;
   private String processTaskId;
 
-  // normalize timestamps for databases which do not provide millisecond presision.
-  private final Date today = new Date((ClockUtil.getCurrentTime().getTime() / 1000) * 1000);
-  private final Date tomorrow = new Date(((ClockUtil.getCurrentTime().getTime() + 86400000) / 1000) * 1000);
-  private final Date yesterday = new Date(((ClockUtil.getCurrentTime().getTime() - 86400000) / 1000) * 1000);
+  private final Date today = new Date(Instant.parse("2025-01-01T12:00:00Z").toEpochMilli());
+  private final Date tomorrow = new Date(Instant.parse("2025-01-02T12:00:00Z").toEpochMilli());
+  private final Date yesterday = new Date(Instant.parse("2024-12-31T12:00:00Z").toEpochMilli());
 
   @AfterEach
   void tearDown() {
@@ -149,25 +149,25 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     // ascending order results by time
     List<UserOperationLogEntry> ascLog = query().orderByTimestamp().asc().list();
     for (int i = 0; i < 5; i++) {
-      assertThat(yesterday.getTime()).isLessThanOrEqualTo(ascLog.get(i).getTimestamp().getTime());
+      assertThat(ascLog.get(i).getTimestamp()).isAfterOrEqualTo(yesterday);
     }
     for (int i = 5; i < 13; i++) {
-      assertThat(today.getTime()).isLessThanOrEqualTo(ascLog.get(i).getTimestamp().getTime());
+      assertThat(ascLog.get(i).getTimestamp()).isAfterOrEqualTo(today);
     }
     for (int i = 13; i < 18; i++) {
-      assertThat(tomorrow.getTime()).isLessThanOrEqualTo(ascLog.get(i).getTimestamp().getTime());
+      assertThat(ascLog.get(i).getTimestamp()).isAfterOrEqualTo(tomorrow);
     }
 
     // descending order results by time
     List<UserOperationLogEntry> descLog = query().orderByTimestamp().desc().list();
     for (int i = 0; i < 4; i++) {
-      assertThat(tomorrow.getTime()).isLessThanOrEqualTo(descLog.get(i).getTimestamp().getTime());
+      assertThat(descLog.get(i).getTimestamp()).isAfterOrEqualTo(tomorrow);
     }
     for (int i = 4; i < 11; i++) {
-      assertThat(today.getTime()).isLessThanOrEqualTo(descLog.get(i).getTimestamp().getTime());
+      assertThat(descLog.get(i).getTimestamp()).isAfterOrEqualTo(today);
     }
     for (int i = 11; i < 18; i++) {
-      assertThat(yesterday.getTime()).isLessThanOrEqualTo(descLog.get(i).getTimestamp().getTime());
+      assertThat(descLog.get(i).getTimestamp()).isAfterOrEqualTo(yesterday);
     }
 
     // filter by time, created yesterday
@@ -1804,7 +1804,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     userTask.setDescription("desc");
     userTask.setOwner("icke");
     userTask.setAssignee("er");
-    userTask.setDueDate(new Date());
+    userTask.setDueDate(today);
     taskService.saveTask(userTask);
 
     // complete the userTask

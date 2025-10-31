@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -104,6 +105,7 @@ class HistoryCleanupTest {
   private static final String USER_ID = "demo";
 
   private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final Date targetDate = new Date(Instant.parse("2025-01-01T00:00:00Z").toEpochMilli());
 
   protected String defaultStartTime;
   protected String defaultEndTime;
@@ -182,7 +184,7 @@ class HistoryCleanupTest {
     //given
     prepareData(15);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     //when
     runHistoryCleanup(true);
 
@@ -228,7 +230,7 @@ class HistoryCleanupTest {
     //given
     prepareData(15);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
 
     //when
     historyService.cleanUpHistoryAsync(true).getId();
@@ -294,7 +296,7 @@ class HistoryCleanupTest {
     processEngineConfiguration.setHistoryCleanupMetricsEnabled(true);
     prepareData(15);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     //when
     runHistoryCleanup(true);
 
@@ -313,7 +315,7 @@ class HistoryCleanupTest {
 
   @Test
   void testHistoryCleanupMetricsExtend() {
-    Date currentDate = new Date();
+    Date currentDate = targetDate;
     // given
     processEngineConfiguration.setHistoryCleanupMetricsEnabled(true);
     prepareData(15);
@@ -361,7 +363,7 @@ class HistoryCleanupTest {
     // given
     prepareInstances(null, HISTORY_TIME_TO_LIVE, null);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     // when
     runHistoryCleanup(true);
 
@@ -377,7 +379,7 @@ class HistoryCleanupTest {
     // given
     prepareInstances(HISTORY_TIME_TO_LIVE, null, null);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     // when
     runHistoryCleanup(true);
 
@@ -394,7 +396,7 @@ class HistoryCleanupTest {
     // given
     prepareInstances(null, null, HISTORY_TIME_TO_LIVE);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
 
     // when
     runHistoryCleanup(true);
@@ -412,7 +414,7 @@ class HistoryCleanupTest {
     // given
     prepareInstances(HISTORY_TIME_TO_LIVE, null, HISTORY_TIME_TO_LIVE);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     // when
     runHistoryCleanup(true);
 
@@ -429,7 +431,7 @@ class HistoryCleanupTest {
     // given
     prepareInstances(null, HISTORY_TIME_TO_LIVE, HISTORY_TIME_TO_LIVE);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     // when
     runHistoryCleanup(true);
 
@@ -446,7 +448,7 @@ class HistoryCleanupTest {
     // given
     prepareInstances(HISTORY_TIME_TO_LIVE, HISTORY_TIME_TO_LIVE, null);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
 
     // when
     runHistoryCleanup(true);
@@ -464,7 +466,7 @@ class HistoryCleanupTest {
     // given
     prepareInstances(HISTORY_TIME_TO_LIVE, HISTORY_TIME_TO_LIVE, HISTORY_TIME_TO_LIVE);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     // when
     runHistoryCleanup(true);
 
@@ -479,7 +481,7 @@ class HistoryCleanupTest {
     // given
     prepareInstances(null, null, null);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     // when
     runHistoryCleanup(true);
 
@@ -504,7 +506,7 @@ class HistoryCleanupTest {
     repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitions.get(0).getId(), caseTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
-    ClockUtil.setCurrentTime(DateUtils.addDays(new Date(), DAYS_IN_THE_PAST));
+    ClockUtil.setCurrentTime(DateUtils.addDays(targetDate, DAYS_IN_THE_PAST));
 
     //create 3 process instances
     List<String> processInstanceIds = new ArrayList<>();
@@ -538,7 +540,7 @@ class HistoryCleanupTest {
     prepareData(15);
 
     //we're within batch window
-    Date now = new Date();
+    Date now = targetDate;
     ClockUtil.setCurrentTime(now);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));
@@ -558,7 +560,7 @@ class HistoryCleanupTest {
 
     prepareData(15);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     //when
     runHistoryCleanup(true);
 
@@ -586,7 +588,7 @@ class HistoryCleanupTest {
     //given
     prepareBPMNData(15, "twoTasksProcess");
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     //when
     runHistoryCleanup(true);
 
@@ -622,7 +624,7 @@ class HistoryCleanupTest {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(null);
     processEngineConfiguration.initHistoryCleanup();
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
 
     //when
     historyService.cleanUpHistoryAsync(false);
@@ -686,7 +688,7 @@ class HistoryCleanupTest {
     //given
     prepareData(5);
 
-    ClockUtil.setCurrentTime(new Date());
+    ClockUtil.setCurrentTime(targetDate);
     //when
     runHistoryCleanup(true);
 
@@ -704,7 +706,7 @@ class HistoryCleanupTest {
     //we have something to clean up
     prepareData(80);
     //we call history cleanup within batch window
-    Date now = new Date();
+    Date now = targetDate;
     ClockUtil.setCurrentTime(now);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));
@@ -734,7 +736,7 @@ class HistoryCleanupTest {
     prepareData(processInstanceCount);
 
     //we call history cleanup outside batch window
-    Date now = new Date();
+    Date now = targetDate;
     ClockUtil.setCurrentTime(now);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, 1))); //now + 1 hour
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));   //now + 5 hours
@@ -761,7 +763,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're within batch window
-    Date now = new Date();
+    Date now = targetDate;
     ClockUtil.setCurrentTime(now);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));
@@ -806,7 +808,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're within batch window
-    Date now = new Date();
+    Date now = targetDate;
     ClockUtil.setCurrentTime(now);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, 1)));
@@ -847,7 +849,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're within batch window
-    Date now = new Date();
+    Date now = targetDate;
     ClockUtil.setCurrentTime(now);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, 2)));
@@ -887,7 +889,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're within batch window
-    Date now = new Date();
+    Date now = targetDate;
     ClockUtil.setCurrentTime(now);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addMinutes(now, 30)));
@@ -926,7 +928,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're outside batch window
-    Date twoHoursAgo = new Date();
+    Date twoHoursAgo = targetDate;
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(twoHoursAgo));
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(twoHoursAgo, 1)));
     processEngineConfiguration.initHistoryCleanup();
@@ -961,7 +963,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're outside batch window, batch window passes midnight
-    Date date = addDays(new Date(), 1);
+    Date date = addDays(targetDate, 1);
     ClockUtil.setCurrentTime(DateUtils.setMinutes(DateUtils.setHours(date, 1), 10));  // 01:10 tomorrow
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00");
@@ -993,8 +995,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're outside batch window, batch window passes midnight
-    Date date = new Date();
-    ClockUtil.setCurrentTime(DateUtils.setMinutes(DateUtils.setHours(date, 22), 10));  //22:10
+    ClockUtil.setCurrentTime(DateUtils.setMinutes(DateUtils.setHours(targetDate, 22), 10));  //22:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00");
     processEngineConfiguration.initHistoryCleanup();
@@ -1025,8 +1026,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're within batch window, but batch window passes midnight
-    Date date = new Date();
-    ClockUtil.setCurrentTime(DateUtils.setMinutes(DateUtils.setHours(date, 23), 10));  //23:10
+    ClockUtil.setCurrentTime(DateUtils.setMinutes(DateUtils.setHours(targetDate, 23), 10));  //23:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00");
     processEngineConfiguration.initHistoryCleanup();
@@ -1060,7 +1060,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're within batch window, but batch window passes midnight
-    Date date = addDays(new Date(), 1);
+    Date date = addDays(targetDate, 1);
     ClockUtil.setCurrentTime(DateUtils.setMinutes(DateUtils.setHours(date, 0), 10));  // 00:10 tomorrow
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00");
@@ -1403,7 +1403,7 @@ class HistoryCleanupTest {
 
   private void prepareBPMNData(int instanceCount, String definitionKey) {
     Date oldCurrentTime = ClockUtil.getCurrentTime();
-    ClockUtil.setCurrentTime(DateUtils.addDays(new Date(), DAYS_IN_THE_PAST));
+    ClockUtil.setCurrentTime(DateUtils.addDays(targetDate, DAYS_IN_THE_PAST));
     final List<String> ids = prepareHistoricProcesses(definitionKey, getVariables(), instanceCount);
     deleteProcessInstances(ids);
     ClockUtil.setCurrentTime(oldCurrentTime);
@@ -1420,7 +1420,7 @@ class HistoryCleanupTest {
 
   private void prepareDMNData(int instanceCount) {
     Date oldCurrentTime = ClockUtil.getCurrentTime();
-    ClockUtil.setCurrentTime(DateUtils.addDays(new Date(), DAYS_IN_THE_PAST));
+    ClockUtil.setCurrentTime(DateUtils.addDays(targetDate, DAYS_IN_THE_PAST));
     for (int i = 0; i < instanceCount; i++) {
       //spread end_time between different "minutes"
       ClockUtil.setCurrentTime(DateUtils.setMinutes(ClockUtil.getCurrentTime(), random.nextInt(60)));
@@ -1431,7 +1431,7 @@ class HistoryCleanupTest {
 
   private void prepareCMMNData(int instanceCount) {
     Date oldCurrentTime = ClockUtil.getCurrentTime();
-    ClockUtil.setCurrentTime(DateUtils.addDays(new Date(), DAYS_IN_THE_PAST));
+    ClockUtil.setCurrentTime(DateUtils.addDays(targetDate, DAYS_IN_THE_PAST));
 
     for (int i = 0; i < instanceCount; i++) {
       CaseInstance caseInstance = caseService.createCaseInstanceByKey(ONE_TASK_CASE);

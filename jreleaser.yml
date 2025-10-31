@@ -195,7 +195,6 @@ files:
     - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
     - path: 'distro/sql-script/target/operaton-sql-scripts-{{OPERATON_DATABASE_VERSION}}.tar.gz'
     - path: 'distro/webjar/target/operaton-webapp-webjar-{{projectVersion}}.jar'
-    - path: 'distro/license-book/src/main/resources/LICENSE_BOOK.md'
     - path: 'target/sbom/operaton-modules.cyclonedx-json.sbom'
     - path: 'target/sbom/operaton-webapps.cyclonedx-json.sbom'
     - path: 'target/project-reports.zip'

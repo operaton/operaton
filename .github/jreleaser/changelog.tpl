@@ -27,8 +27,8 @@ This release is feature complete and compatible with [**Camunda 7.24.0**](https:
 
 Operaton is based on:
 
-- **Spring Boot 3.5.6** (upgrade from 3.5.5)
-- **Spring Framework 6.2.11** (upgrade from 6.2.10)
+- **Spring Boot 3.5.7**
+- **Spring Framework 6.2.12**
 
 ### Quarkus Extension
 

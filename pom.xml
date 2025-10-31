@@ -20,7 +20,7 @@
     <version.quarkus>3.28.3</version.quarkus>
     <version.java>17</version.java>
     <version.spring>6.2.11</version.spring>
-    <version.spring-boot>3.5.6</version.spring-boot>
+    <version.spring-boot>3.5.7</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>

@@ -1,15 +1,30 @@
-# About release 1.0.0-rc-1
+# About release 1.0.0
 
-## New and Noteworthy
+This is the first official release of Operaton. After forking the Camunda 7 platform in mid-2024, 
+we have been working hard to modernize the code base and prepare for the 1.0.0 stable release.
 
-The 1.0.0-rc-1 release is the first release candidate for the 1.0.0 stable release.
+Several beta releases have been published to gather feedback from the community and ensure a smooth 
+transition. Multiple products have already started to use Operaton in production, and even
+more are actively testing it. Major effort has been put into automated testing to ensure stability
+and reliability.
 
-With this release we focused on:
+From now on, Operaton is the successor for the open-source BPM platform formerly known as 
+_Camunda 7 Community Edition_. The engine is already battle-tested in production environments,
+and is safe to transition from existing Camunda 7 CE installations.
 
-- Completing Camunda 7.24 backport
-- Modernizing the code base
-- Java 25 Support
-- Upgrade to Wildfly 37
+We are excited to embark on this new journey and look forward to building a vibrant 
+community around Operaton. We welcome contributions, feedback, and collaboration from developers
+worldwide. Together, we can shape the future of business process management with Operaton!
+
+## Migration from Camunda 7 CE
+
+Migrating from Camunda 7 Community Edition to Operaton is straightforward. Operaton 1.0 is fully 
+compatible with Camunda 7.24, allowing for a seamless transition. To ease the migration process, 
+ideally upgrade to Camunda 7.24 first, and then switch to Operaton 1.0.
+
+Migration involves updating your dependencies to point to Operaton artifacts instead of Camunda ones.
+We are providing a migration based on OpenRewrite to help automate this process. You can find the migration recipe
+in our [Operaton Migration Repository](https://github.com/operaton/migrate-from-camunda-recipe).
 
 ## Versions
 
@@ -33,13 +48,13 @@ Operaton is based on:
 ### Quarkus Extension
 
 <!-- /pom.xml -->
-The Operaton Quarkus extension is based on **Quarkus 3.28.3** (upgrade from 3.28.0).
+The Operaton Quarkus extension is based on **Quarkus 3.28.3**.
 
 ### Distributions
 
-The Tomcat distribution is based on **Tomcat 11.0.12** (upgrade from 11.0.10).
+The Tomcat distribution is based on **Tomcat 11.0.12**.
 
-The Wildfly distribution is based on **Wildfly 37.0.1** (upgrade from Wildfly 36.0.1).
+The Wildfly distribution is based on **Wildfly 37.0.1**.
 
 ### Standards
 
@@ -71,7 +86,7 @@ Please check your JavaScript code and consider migrating them to a more recent v
 
 ### Database Integration Tests
 
-Operaton is now tested against the following databases:
+Operaton is tested against the following databases:
 
 <!--
   Driver version: database/pom.xml
@@ -91,7 +106,7 @@ Operaton is now tested against the following databases:
 
 ### Database Schema Upgrade Tests
 
-With Operaton 1.0.0-rc-1 we are running database schema upgrade tests nightly.
+With Operaton we are running database schema upgrade tests nightly.
 
 - Source DB Version: 7.23.0
 - Target DB Version: 7.24.0
@@ -108,11 +123,6 @@ Tests are enabled for the following databases:
 | Microsoft SQL Server | mcr.microsoft.com/mssql/server | 2022-latest      | 12.10.1.jre11   |
 | DB2                  | n/a                            | n/a              | n/a            |
 
-## Java 25 Support
-
-Operaton 1.0.0-rc-1 is the first release to support Java 25.
-
-A requirement for this is the upgrade to GraalVM 25.
 
 {{changelogContributors}}
 

@@ -30,9 +30,13 @@ public abstract class SpinFactory {
    * The singleton instance of the SpinFactory.
    */
   public static final SpinFactory INSTANCE;
+
   static {
-    INSTANCE = ServiceLoader.load(SpinFactory.class).findFirst()
-            .orElseThrow(() -> new IllegalStateException("No SpinFactory found"));
+    INSTANCE = ServiceLoader.load(SpinFactory.class)
+        .findFirst()
+        .orElseGet(() -> ServiceLoader.load(SpinFactory.class, SpinFactory.class.getClassLoader())
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("No SpinFactory found")));
   }
 
   public abstract <T extends Spin<?>> T createSpin(Object parameter);

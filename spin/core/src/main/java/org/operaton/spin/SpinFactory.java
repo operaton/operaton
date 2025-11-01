@@ -16,7 +16,7 @@
  */
 package org.operaton.spin;
 
-import org.operaton.spin.impl.SpinFactoryImpl;
+import java.util.ServiceLoader;
 import org.operaton.spin.spi.DataFormat;
 
 /**
@@ -30,9 +30,13 @@ public abstract class SpinFactory {
    * The singleton instance of the SpinFactory.
    */
   public static final SpinFactory INSTANCE;
+
   static {
-    // use the default implementation
-    INSTANCE = new SpinFactoryImpl();
+    INSTANCE = ServiceLoader.load(SpinFactory.class)
+        .findFirst()
+        .orElseGet(() -> ServiceLoader.load(SpinFactory.class, SpinFactory.class.getClassLoader())
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("No SpinFactory found")));
   }
 
   public abstract <T extends Spin<?>> T createSpin(Object parameter);

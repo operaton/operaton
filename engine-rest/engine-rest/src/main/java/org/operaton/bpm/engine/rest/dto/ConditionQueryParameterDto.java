@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.dto;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.operaton.bpm.engine.impl.QueryOperator;
 
 /**

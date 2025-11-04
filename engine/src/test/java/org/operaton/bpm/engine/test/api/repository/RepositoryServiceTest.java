@@ -161,7 +161,7 @@ class RepositoryServiceTest {
     String instanceAsString = Bpmn.convertToString(instance);
 
     //when instance is deployed via addString method
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment()
+    var deployment = repositoryService.createDeployment()
                                                                                .addString(resourceName, instanceAsString)
                                                                                .deploy();
 
@@ -410,7 +410,7 @@ class RepositoryServiceTest {
     Date inThreeDays = new Date(startTime.getTime() + (3 * 24 * 60 * 60 * 1000));
 
     // Deploy process, but activate after three days
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment()
+    var deployment = repositoryService.createDeployment()
             .addClasspathResource("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
             .addClasspathResource("org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml")
             .activateProcessDefinitionsOn(inThreeDays)
@@ -454,7 +454,7 @@ class RepositoryServiceTest {
     Date inThreeDays = new Date(startTime.getTime() + (3 * 24 * 60 * 60 * 1000));
 
     // Deploy process, but activate after three days
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment()
+    var deployment = repositoryService.createDeployment()
             .addClasspathResource("org/operaton/bpm/engine/test/api/oneAsyncTask.bpmn")
             .activateProcessDefinitionsOn(inThreeDays)
             .deploy();
@@ -502,7 +502,7 @@ class RepositoryServiceTest {
   @Test
   void testGetResourceAsStreamUnexistingResourceInExistingDeployment() {
     // Get hold of the deployment id
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
+    var deployment = repositoryService.createDeploymentQuery().singleResult();
     var deploymentId = deployment.getId();
 
     try {
@@ -838,15 +838,15 @@ class RepositoryServiceTest {
 
   @Test
   void testDeploymentPersistence() {
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
+    var deployment = repositoryService
       .createDeployment()
       .name("strings")
       .addString("org/operaton/bpm/engine/test/test/HelloWorld.string", "hello world")
       .addString("org/operaton/bpm/engine/test/test/TheAnswer.string", "42")
       .deploy();
+    assertThat(deployment).isNotNull();
 
-    List<org.operaton.bpm.engine.repository.Deployment> deployments
-      = repositoryService.createDeploymentQuery().list();
+    var deployments = repositoryService.createDeploymentQuery().list();
     assertThat(deployments).hasSize(1);
     deployment = deployments.get(0);
 

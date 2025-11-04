@@ -443,8 +443,6 @@ public class ProcessInstanceModificationMultiInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miParallelUserTasks");
 
     // when
-    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-
     runtimeService
       .createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("miTasks")
@@ -459,7 +457,7 @@ public class ProcessInstanceModificationMultiInstanceTest {
     assertVariable(leafExecution, "nrOfActiveInstances", 1);
 
     // and the tree should be correct
-    tree = runtimeService.getActivityInstance(processInstance.getId());
+    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(tree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("beforeTask")
@@ -516,8 +514,6 @@ public class ProcessInstanceModificationMultiInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
     // when
-    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-
     runtimeService
       .createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("subProcessTask")
@@ -532,7 +528,7 @@ public class ProcessInstanceModificationMultiInstanceTest {
     assertVariable(leafExecution, "nrOfActiveInstances", 1);
 
     // and the tree should be correct
-    tree = runtimeService.getActivityInstance(processInstance.getId());
+    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(tree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("beforeTask")
@@ -593,7 +589,6 @@ public class ProcessInstanceModificationMultiInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
     // when
-    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     runtimeService
       .createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("subProcessTask")
@@ -609,7 +604,7 @@ public class ProcessInstanceModificationMultiInstanceTest {
     assertVariable(leafExecution, "nrOfActiveInstances", 1);
 
     // and the trees should be correct
-    tree = runtimeService.getActivityInstance(processInstance.getId());
+    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(tree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("beforeTask")
@@ -696,7 +691,6 @@ public class ProcessInstanceModificationMultiInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miSequentialUserTasks");
 
     // when
-    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     runtimeService
       .createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("miTasks")
@@ -711,7 +705,7 @@ public class ProcessInstanceModificationMultiInstanceTest {
     assertVariable(leafExecution, "nrOfActiveInstances", 1);
 
     // and the trees should be correct
-    tree = runtimeService.getActivityInstance(processInstance.getId());
+    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(tree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("beforeTask")
@@ -775,7 +769,6 @@ public class ProcessInstanceModificationMultiInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miSequentialSubprocess");
 
     // when
-    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     runtimeService
       .createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("subProcessTask")
@@ -790,7 +783,7 @@ public class ProcessInstanceModificationMultiInstanceTest {
     assertVariable(leafExecution, "nrOfActiveInstances", 1);
 
     // and the trees should be correct
-    tree = runtimeService.getActivityInstance(processInstance.getId());
+    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(tree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("beforeTask")
@@ -848,7 +841,6 @@ public class ProcessInstanceModificationMultiInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miSequentialSubprocess");
 
     // when
-    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     runtimeService
       .createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("subProcessTask")
@@ -864,7 +856,7 @@ public class ProcessInstanceModificationMultiInstanceTest {
     assertVariable(leafExecution, "nrOfActiveInstances", 1);
 
     // and the trees should be correct
-    tree = runtimeService.getActivityInstance(processInstance.getId());
+    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(tree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("beforeTask")

@@ -826,7 +826,7 @@ class RepositoryServiceTest {
 
     // Start process instance on second process engine -> must use revised process definition
     processDefinitionId = repositoryService2.createProcessDefinitionQuery().singleResult().getId();
-    runtimeService2.startProcessInstanceByKey("oneTaskProcess");
+    runtimeService2.startProcessInstanceById(processDefinitionId);
     task = taskService2.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("revised task");
 

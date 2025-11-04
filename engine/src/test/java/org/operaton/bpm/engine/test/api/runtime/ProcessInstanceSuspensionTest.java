@@ -948,6 +948,7 @@ class ProcessInstanceSuspensionTest {
 
     // Test if process instance can be completed using the signal
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
+    assertThat(processInstance).isNotNull();
     runtimeService.signalEventReceived(signal);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
@@ -992,6 +993,7 @@ class ProcessInstanceSuspensionTest {
 
     // Test if process instance can be completed using the signal
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
+    assertThat(processInstance).isNotNull();
     runtimeService.signalEventReceived(signal);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
@@ -1036,6 +1038,7 @@ class ProcessInstanceSuspensionTest {
 
     // Test if process instance can be completed using the signal
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
+    assertThat(processInstance).isNotNull();
     runtimeService.signalEventReceived(signal);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 

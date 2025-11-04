@@ -118,6 +118,7 @@ class UserAuthenticationResourceTest {
 
     // first login session
     Response response = authResource.doLogin("webapps-test-engine", "tasklist", "jonny", "jonnyspassword");
+    assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
     String newSessionId = authResource.request.getSession().getId();
 
     authResource.doLogout("webapps-test-engine");

@@ -527,6 +527,8 @@ class VariableListenerTest extends CmmnTest {
         } else {
           fail("unexpected variable update");
         }
+
+        assertThat(update1Processed || update2Processed).isTrue();
       }
     }
   }

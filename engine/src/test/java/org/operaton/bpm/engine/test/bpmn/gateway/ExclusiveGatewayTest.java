@@ -190,8 +190,8 @@ class ExclusiveGatewayTest {
     assertThat(task.getName()).isEqualTo("Input is one");
     runtimeService.deleteProcessInstance(procId, null);
 
-    procId = runtimeService.startProcessInstanceByKey("exclusiveGwDefaultSequenceFlow",
-            CollectionUtil.singletonMap("input", 5)).getId();
+    runtimeService.startProcessInstanceByKey("exclusiveGwDefaultSequenceFlow",
+            CollectionUtil.singletonMap("input", 5));
     task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Default input");
   }

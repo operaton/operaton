@@ -526,6 +526,7 @@ class MessageNonInterruptingBoundaryEventTest {
         .createExecutionQuery()
         .activityId("tasks")
         .singleResult();
+    assertThat(task2Execution).isNull();
 
     assertThat(((ExecutionEntity) task1Execution).getParentId()).isEqualTo(processInstanceId);
 

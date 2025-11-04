@@ -2636,9 +2636,6 @@ class CaseExecutionQueryTest {
       .orderByCaseExecutionId()
       .desc();
     verifyQueryWithOrdering(query, 11, inverted(caseExecutionById()));
-
-    query = caseService.createCaseExecutionQuery();
-
   }
 
   @Test

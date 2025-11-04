@@ -208,6 +208,7 @@ class ProcessDefinitionStatisticsQueryTest {
 
     statistics =
         managementService.createProcessDefinitionStatisticsQuery().includeIncidents().list();
+    assertThat(statistics).hasSize(1);
 
     assertThat(definitionResult.getIncidentStatistics()).isEmpty();
   }

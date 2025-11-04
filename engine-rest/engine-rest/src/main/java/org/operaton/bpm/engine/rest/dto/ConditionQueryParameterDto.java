@@ -38,7 +38,7 @@ public class ConditionQueryParameterDto {
   public static final String NOT_LIKE_OPERATOR_NAME = "notLike";
 
   protected static final Map<String, QueryOperator> NAME_OPERATOR_MAP = new HashMap<>();
-  protected static final EnumMap<QueryOperator, String> OPERATOR_NAME_MAP = new EnumMap<>(QueryOperator.class);
+  protected static final Map<QueryOperator, String> OPERATOR_NAME_MAP = new EnumMap<>(QueryOperator.class);
 
   static {
     NAME_OPERATOR_MAP.put(EQUALS_OPERATOR_NAME, QueryOperator.EQUALS);

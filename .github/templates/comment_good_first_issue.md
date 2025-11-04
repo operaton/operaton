@@ -1,23 +1,3 @@
----
-name:  📋 Good First Issue
-about: A simple task suitable for new contributors
-title: ''
-type: task
-labels: ["good first issue"]
-assignees: ''
-projects: ["operaton/operaton"]
-
----
-
-**What needs to be done?**
-
-<!-- 
-Please provide a clear and concise description of the task.
-
-The task should be simple enough for a new contributor to understand and complete.
-Give examples, provide links and whatever helps to understand the task.
--->
-
 **Contribution**
 
 If you want to work on this task, just state it in a comment. You don't have to wait until the task is assigned to you.

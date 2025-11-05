@@ -540,7 +540,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>only-test</id>
+            <id>engine-test-junit5</id>
             <goals>
               <goal>jar</goal>
             </goals>
@@ -550,7 +550,7 @@
                 <include>org/operaton/bpm/engine/impl/test/*TestCase.class</include>
                 <include>org/operaton/bpm/engine/test/**</include>
               </includes>
-              <classifier>only-test</classifier>
+              <classifier>engine-test-junit5</classifier>
               <classesDirectory>${project.build.directory}/classes-junit5</classesDirectory>
             </configuration>
           </execution>

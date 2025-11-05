@@ -26,6 +26,19 @@ Migration involves updating your dependencies to point to Operaton artifacts ins
 We are providing a migration based on OpenRewrite to help automate this process. You can find the migration recipe
 in our [Operaton Migration Repository](https://github.com/operaton/migrate-from-camunda-recipe).
 
+## Numbers
+
+Since forking [Camunda 7 Platform](https://github.com/camunda/camunda-bpm-platform) in 2024, we have made significant progress in modernizing the codebase. Here are some key statistics:
+
+- **Commits**: Over 1,500 commits have been made to the Operaton codebase.
+- **Changes**: The commits changed more than 60,000 files, with over 550,000 LoC additions and 580,000 LoC deletions.
+- **Contributors**: More than 50 contributors have actively participated in the development of Operaton.
+- **Pull Requests**: Over 1,100 pull requests have been merged, reflecting the collaborative effort of the community.
+- **Issues Closed**: More than 370 issues have been addressed.
+- **Automated Tests**: The test suite includes over 25,000 automated tests, ensuring the stability and reliability of the platform. All tests have been migrated from JUnit 4 to JUnit 5.
+- **Code Coverage**: We have achieved over [80% code coverage](https://sonarcloud.io/summary/overall?id=operaton_operaton&branch=main), demonstrating our commitment to quality and robustness.
+- **Static Analysis**: The codebase has been analyzed with SonarQube, findings have been reduced by [over 85%](https://sonarcloud.io/project/activity?id=operaton_operaton&graph=issues) since the fork.
+
 ## Versions
 
 ### Java

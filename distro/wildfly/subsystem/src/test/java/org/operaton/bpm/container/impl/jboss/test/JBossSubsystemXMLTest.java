@@ -35,8 +35,9 @@ import org.jboss.msc.service.ServiceContainer;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.threads.EnhancedQueueExecutor;
-import org.junit.Test;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
 import org.operaton.bpm.container.impl.jboss.extension.Attribute;
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
@@ -157,6 +158,15 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
       throw new IllegalArgumentException("Unable to find a match for path address: " + pathAddress);
     }
 
+  }
+
+  @BeforeEach
+  void setUp () throws Exception {
+    super.initializeParser();
+  }
+
+  void tearDown () throws Exception {
+    super.cleanup();
   }
 
   @Test

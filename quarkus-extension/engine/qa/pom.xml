@@ -72,7 +72,7 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <classifier>junit5</classifier>
+      <classifier>only-test</classifier>
       <scope>test</scope>
       <version>${project.version}</version>
     </dependency>

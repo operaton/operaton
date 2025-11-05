@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.qa.rolling.update.timestamp;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.runtime.Incident;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.upgrade.Origin;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -30,11 +29,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 @ScenarioUnderTest("IncidentTimestampUpdateScenario")
 @Origin("7.11.0")
-public class IncidentTimestampUpdateTest extends AbstractTimestampUpdateTest {
+class IncidentTimestampUpdateTest extends AbstractTimestampUpdateTest {
 
   @ScenarioUnderTest("initIncidentTimestamp.1")
-  @Test
-  public void testIncidentTimestampConversion() {
+  @RollingUpdateTest
+  void testIncidentTimestampConversion() {
     // given
     String processInstanceId = rule.jobQuery().singleResult().getProcessInstanceId();
 
@@ -45,10 +44,6 @@ public class IncidentTimestampUpdateTest extends AbstractTimestampUpdateTest {
 
     // assume
     assertNotNull(incident);
-
-    long incidentCount = runtimeService.createIncidentQuery()
-      .processInstanceId(processInstanceId)
-      .count();
 
     // then
     assertThat(incident.getIncidentTimestamp(), is(TIMESTAMP));

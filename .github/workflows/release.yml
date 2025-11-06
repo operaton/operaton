@@ -19,7 +19,7 @@ on:
       next_version:
         description: 'The next development version to set (without -SNAPSHOT suffix)'
         required: true
-        default: '1.0.0'
+        default: '1.0.1'
       dry_run:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean

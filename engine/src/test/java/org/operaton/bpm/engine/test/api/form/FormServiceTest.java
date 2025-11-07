@@ -80,6 +80,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.commons.utils.IoUtil;
 
+import static java.lang.Boolean.TRUE;
 import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
 import static org.operaton.bpm.engine.variable.Variables.booleanValue;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
@@ -258,7 +259,7 @@ class FormServiceTest {
     expectedVariables.put("room", "5b");
     expectedVariables.put("SpeakerName", "Mike");
     expectedVariables.put("duration", 45L);
-    expectedVariables.put("free", Boolean.TRUE);
+    expectedVariables.put("free", TRUE);
 
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId);
     assertThat(variables).isEqualTo(expectedVariables);
@@ -315,7 +316,7 @@ class FormServiceTest {
     expectedVariables.put("room", "5b");
     expectedVariables.put("SpeakerName", "Mike");
     expectedVariables.put("duration", 45L);
-    expectedVariables.put("free", Boolean.TRUE);
+    expectedVariables.put("free", TRUE);
 
     variables = runtimeService.getVariables(processInstanceId);
     address = (Address) variables.remove("address");
@@ -340,7 +341,7 @@ class FormServiceTest {
     expectedVariables.put("room", "5b");
     expectedVariables.put("SpeakerName", "Mike");
     expectedVariables.put("duration", 45L);
-    expectedVariables.put("free", Boolean.TRUE);
+    expectedVariables.put("free", TRUE);
 
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId);
     assertThat(variables).isEqualTo(expectedVariables);
@@ -394,7 +395,7 @@ class FormServiceTest {
     expectedVariables.put("room", "5b");
     expectedVariables.put("SpeakerName", "Mike");
     expectedVariables.put("duration", 45L);
-    expectedVariables.put("free", Boolean.TRUE);
+    expectedVariables.put("free", TRUE);
 
     variables = runtimeService.getVariables(processInstanceId);
     address = (Address) variables.remove("address");
@@ -891,7 +892,7 @@ class FormServiceTest {
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
     assertThat(variables).containsEntry("initialBooleanVariable", true);
-    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
+    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(TRUE);
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     assertThat(variables).containsEntry("initialLongVariable", 1L);
@@ -963,7 +964,7 @@ class FormServiceTest {
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
     assertThat(variables).containsEntry("initialBooleanVariable", true);
-    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
+    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(TRUE);
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     assertThat(variables).containsEntry("initialLongVariable", 1L);

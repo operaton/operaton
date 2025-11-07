@@ -253,7 +253,7 @@ distributions:
       multiPlatform: true
       repository:
         active: RELEASE
-        commitMessage: 'Operaton Tomcat 11 {{tagName}}'
+        commitMessage: 'Operaton Tomcat {{tagName}}'
       commitAuthor:
         name: GitHub Actions
         email: github-actions[bot]@users.noreply.github.com
@@ -280,7 +280,7 @@ distributions:
       multiPlatform: true
       repository:
         active: RELEASE
-        commitMessage: 'Operaton Wildfly 36 {{tagName}}'
+        commitMessage: 'Operaton Wildfly {{tagName}}'
       commitAuthor:
         name: GitHub Actions
         email: github-actions[bot]@users.noreply.github.com

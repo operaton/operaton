@@ -145,9 +145,8 @@ jobs:
           JRELEASER_MAVENCENTRAL_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{github.event.inputs.dry_run}}
-          JRELEASER_PRERELEASE_ENABLED: false
         with:
-          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}}
+          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}} -PPRERELEASE_ENABLED=false
 
       - name: Publish Test Report
         if: always()

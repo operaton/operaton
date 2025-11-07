@@ -40,7 +40,7 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
     owner: operaton
     draft: false
     skipTag: false
-    previousTagName: v1.0.0-rc-2
+    previousTagName: v1.0.0
     releaseName: '{{tagName}}'
     prerelease: # TODO Evaluate JRELEASER_PRERELEASE_ENABLED
       enabled: true

@@ -147,7 +147,77 @@ Tests are enabled for the following databases:
 | DB2                  | n/a                            | n/a              | n/a            |
 
 
-{{changelogContributors}}
+## Contributors
+
+We'd like to thank the following people for their contributions:
+
+- [Adam Sanderson](https://github.com/asanderson-scottlogic)
+- [Ahmed Farhat](https://github.com/ahmedfarhat)
+- [Alena Geduldig](https://github.com/geduldia)
+- [Alexander Horbach](https://github.com/alexh141048)
+- [Alexander Skrock](https://github.com/AlexanderSkrock)
+- [AlexandraCiornei](https://github.com/AlexandraCiornei)
+- [Andreas Goß](https://github.com/agoss94)
+- [Andreas Klein](https://github.com/Kungi)
+- [Andreas Zill](https://github.com/a-m-zill)
+- [Antoine Campbell](https://github.com/antoinecampbell)
+- [Arne Deutsch](https://github.com/ArneDeutsch)
+- [Artem Denisov](https://github.com/FlamieCyrex)
+- [Biswajit Shaw](https://github.com/biswa1shaw)
+- [Brijesh Thummar](https://github.com/Brijeshthummar02)
+- [Christoph Borowski](https://github.com/CBorowski-dev)
+- [Christopher Möllerherm](https://github.com/cmoellerherm)
+- [Daniel Philip Propp](https://github.com/xProppi)
+- [Daniel Sevostyanov](https://github.com/SevDan)
+- [Datafluisteraar](https://github.com/sgort)
+- [Dirk Olmes](https://github.com/dirk-olmes)
+- [Evgeny Ivanov](https://github.com/HerrIves)
+- [Faisal Ansari](https://github.com/justfsl50)
+- [fml2](https://github.com/fml2)
+- [Gergely Juhasz](https://github.com/venetrius)
+- Hamza Iddaoui
+- [HamzaIddaoui](https://github.com/HamzaIddaoui)
+- Harssh-aitm
+- [Hermina Garg](https://github.com/herminagarg)
+- [Javad Malaquti](https://github.com/jmaster1985)
+- [Joonseo Lee](https://github.com/joonseolee)
+- [José Guilherme](https://github.com/zeguilherme99)
+- [Júlia Teles](https://github.com/juliateles99)
+- [Julian Haupt](https://github.com/hauptmedia)
+- [Karsten Thoms](https://github.com/kthoms)
+- [Khawaja Abdullah Ansar](https://github.com/khawaja-abdullah)
+- [Lars Baumeister](https://github.com/larsbaumeister)
+- [Lars Uffmann](https://github.com/cachescrubber)
+- [Leander Wagener](https://github.com/Mojito060)
+- [Lemrabott Toulba](https://github.com/tlb-lemrabott)
+- [Luca Britten](https://github.com/lucabritten)
+- [Max Starikov](https://github.com/maxitemis)
+- Matthew Isayan
+- Mikhail Golubev
+- [Moderne](https://github.com/openrewrite)
+- [N1sp](https://github.com/n1sp)
+- Nikesh
+- Noah
+- [Paul Hempel](https://github.com/lambdaschmied2)
+- [Paul L.](https://github.com/Waize)
+- Petros Savvidis
+- Prajwol Bhandari
+- [Rapteon](https://github.com/Rapteon)
+- [Rodrigo Neves](https://github.com/nevesrodrigo2)
+- [Sanajit Jana](https://github.com/sanajitjana)
+- [Saumya Pandey](https://github.com/saumyapandey1998)
+- [Sebastian Górski](https://github.com/sgorski00)
+- [Satyam018](https://github.com/Satyam018)
+- [sogladev](https://github.com/sogladev)
+- [Suraj Wadikar](https://github.com/suraj9562)
+- [Tim Zöller](https://github.com/javahippie)
+- [Tim te Beek](https://github.com/timtebeek)
+- [Tobias Unger](https://github.com/ungerts)
+- [Vladyslav Dzyhovskyi](https://github.com/DzyhovskyiVladyslav)
+- [Wolfgang Schmoller](https://github.com/WoSchmo)
+- [xmgdtc](https://github.com/xmgdtc)
+- [yanavasileva](https://github.com/yanavasileva)
+- [YUVI43](https://github.com/YUVI43)
 
 ## Changelog
 

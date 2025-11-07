@@ -1,8 +1,8 @@
-# About release 1.0.0-rc-1
+# About release 1.1.0
 
 ## New and Noteworthy
 
-The 1.0.0-rc-1 release is the first release candidate for the 1.0.0 stable release.
+The 1.1.0 release is the first feature release after Operaton's go-live.
 
 With this release we focused on:
 

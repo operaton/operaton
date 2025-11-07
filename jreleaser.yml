@@ -42,8 +42,8 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
     skipTag: false
     previousTagName: v1.0.0
     releaseName: '{{tagName}}'
-    prerelease: # TODO Evaluate JRELEASER_PRERELEASE_ENABLED
-      enabled: false
+    prerelease:
+      enabled: true
     issues:
       enabled: true
       comment: '🎉 This issue has been resolved in `{{tagName}}` ([Release Notes]({{releaseNotesUrl}}))'
@@ -252,7 +252,7 @@ distributions:
       multiPlatform: true
       repository:
         active: RELEASE
-        commitMessage: 'Operaton Tomcat 11 {{tagName}}'
+        commitMessage: 'Operaton Tomcat {{tagName}}'
       commitAuthor:
         name: GitHub Actions
         email: github-actions[bot]@users.noreply.github.com
@@ -279,7 +279,7 @@ distributions:
       multiPlatform: true
       repository:
         active: RELEASE
-        commitMessage: 'Operaton Wildfly 36 {{tagName}}'
+        commitMessage: 'Operaton Wildfly {{tagName}}'
       commitAuthor:
         name: GitHub Actions
         email: github-actions[bot]@users.noreply.github.com

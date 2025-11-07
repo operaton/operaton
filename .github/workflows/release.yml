@@ -154,6 +154,7 @@ jobs:
           arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}} -PPRERELEASE_ENABLED=false
 
       - name: Restore jreleaser.yml after release
+        if: always()
         run: |
           git restore jreleaser.yml
 

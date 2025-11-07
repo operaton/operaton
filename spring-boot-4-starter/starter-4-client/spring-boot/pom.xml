@@ -9,7 +9,7 @@
   </parent>
   <groupId>org.operaton.bpm.springboot4</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-external-task-client</artifactId>
-  <name>Operaton - Spring Boot Starter - Client - Spring Boot</name>
+  <name>Operaton - Spring Boot 4 Starter - Client - Spring Boot</name>
   <description>${project.name}</description>
   <dependencies>
     <dependency>

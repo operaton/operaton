@@ -10,7 +10,7 @@
   <groupId>org.operaton.bpm.springboot.project</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
   <packaging>pom</packaging>
-  <name>Operaton - Spring Boot Starter - Root POM</name>
+  <name>Operaton - Spring Boot 4 Starter - Root POM</name>
   <description>${project.name}</description>
   <properties>
     <surefire.forkCount>1</surefire.forkCount>

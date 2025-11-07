@@ -8,13 +8,22 @@
   </parent>
   <groupId>org.operaton.bpm.springboot4</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
-  <name>Operaton - Spring Boot Starter - Webapps</name>
+  <name>Operaton - Spring Boot 4 Starter - Webapps</name>
   <description>${project.name}</description>
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>operaton-bpm-spring-boot-starter-webapp-core</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jersey</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-resttestclient</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>

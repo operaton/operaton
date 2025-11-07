@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.actuator;
 
-import org.springframework.boot.actuate.health.AbstractHealthIndicator;
-import org.springframework.boot.actuate.health.Health.Builder;
+import org.springframework.boot.health.contributor.AbstractHealthIndicator;
+import org.springframework.boot.health.contributor.Health.Builder;
 import org.springframework.util.Assert;
 
 import org.operaton.bpm.engine.ProcessEngine;

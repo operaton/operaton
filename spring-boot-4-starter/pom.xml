@@ -34,13 +34,13 @@
       </activation>
       <modules>
         <module>starter-4</module>
-        <!--module>starter-4-rest</module-->
-        <!--module>starter-4-security</module-->
+        <module>starter-4-rest</module>
+        <module>starter-4-security</module>
         <module>starter-4-test-junit5</module>
         <module>starter-4-client/spring-boot</module>
-        <!--module>starter-4-webapp-core</module-->
-        <!--module>starter-4-webapp</module-->
-        <!--module>starter-4-qa</module-->
+        <module>starter-4-webapp-core</module>
+        <module>starter-4-webapp</module>
+        <module>starter-4-qa</module>
       </modules>
     </profile>
     <profile>

@@ -18,8 +18,9 @@ package org.operaton.bpm.spring.boot.starter;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
@@ -27,6 +28,7 @@ import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @SpringBootTest(classes = {TestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestRestTemplate
 class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   private final TestRestTemplate testRestTemplate;

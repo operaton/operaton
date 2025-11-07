@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.operaton.bpm.springboot4</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-security</artifactId>
-  <name>Operaton Platform - Spring Boot Starter - Spring Security</name>
+  <name>Operaton Platform - Spring Boot 4 Starter - Spring Security</name>
   <description>${project.name}</description>
   <dependencies>
     <dependency>

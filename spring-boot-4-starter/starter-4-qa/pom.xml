@@ -8,7 +8,7 @@
   </parent>
   <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
   <packaging>pom</packaging>
-  <name>Operaton - Spring Boot Starter - QA - Root POM</name>
+  <name>Operaton - Spring Boot 4 Starter - QA - Root POM</name>
   <description>${project.name}</description>
   <properties>
     <deploy.skip>true</deploy.skip>

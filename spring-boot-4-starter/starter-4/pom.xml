@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.operaton.bpm.springboot4</groupId>
   <artifactId>operaton-bpm-spring-boot-starter</artifactId>
-  <name>Operaton - Spring Boot Starter</name>
+  <name>Operaton - Spring Boot 4 Starter</name>
   <description>${project.name}</description>
   <dependencyManagement>
     <dependencies>
@@ -54,6 +54,10 @@
       <artifactId>spring-orm</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jersey</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-plugin-spin</artifactId>
       <optional>true</optional>
@@ -97,6 +101,10 @@
       <optional>true</optional>
     </dependency>
     <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-jackson2</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <scope>provided</scope>
@@ -135,6 +143,11 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-websocket</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-resttestclient</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

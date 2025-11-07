@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.operaton.bpm.springboot4</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-webapp-core</artifactId>
-  <name>Operaton - Spring Boot Starter - Webapps Core</name>
+  <name>Operaton - Spring Boot 4 Starter - Webapps Core</name>
   <description>${project.name}</description>
   <dependencies>
     <dependency>
@@ -44,7 +44,16 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-resttestclient</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

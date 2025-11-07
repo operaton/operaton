@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.operaton.bpm.springboot4</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-test-junit5</artifactId>
-  <name>Operaton - Spring Boot Starter - Test - JUnit 5</name>
+  <name>Operaton - Spring Boot 4 Starter - Test - JUnit 5</name>
   <description>${project.name}</description>
   <dependencies>
     <dependency>

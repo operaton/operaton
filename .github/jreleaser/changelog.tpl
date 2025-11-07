@@ -149,7 +149,7 @@ Tests are enabled for the following databases:
 
 ## Contributors
 
-We'd like to thank the following people for their contributions:
+We'd like to thank the following people for their contributions (alphabetical order):
 
 - [Adam Sanderson](https://github.com/asanderson-scottlogic)
 - [Ahmed Farhat](https://github.com/ahmedfarhat)
@@ -169,7 +169,6 @@ We'd like to thank the following people for their contributions:
 - [Christopher Möllerherm](https://github.com/cmoellerherm)
 - [Daniel Philip Propp](https://github.com/xProppi)
 - [Daniel Sevostyanov](https://github.com/SevDan)
-- [Datafluisteraar](https://github.com/sgort)
 - [Dirk Olmes](https://github.com/dirk-olmes)
 - [Evgeny Ivanov](https://github.com/HerrIves)
 - [Faisal Ansari](https://github.com/justfsl50)
@@ -194,7 +193,6 @@ We'd like to thank the following people for their contributions:
 - [Max Starikov](https://github.com/maxitemis)
 - Matthew Isayan
 - Mikhail Golubev
-- [Moderne](https://github.com/openrewrite)
 - [N1sp](https://github.com/n1sp)
 - Nikesh
 - Noah
@@ -209,6 +207,7 @@ We'd like to thank the following people for their contributions:
 - [Sebastian Górski](https://github.com/sgorski00)
 - [Satyam018](https://github.com/Satyam018)
 - [sogladev](https://github.com/sogladev)
+- [Steven Gort](https://github.com/sgort)
 - [Suraj Wadikar](https://github.com/suraj9562)
 - [Tim Zöller](https://github.com/javahippie)
 - [Tim te Beek](https://github.com/timtebeek)

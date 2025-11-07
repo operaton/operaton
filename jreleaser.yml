@@ -40,10 +40,10 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
     owner: operaton
     draft: false
     skipTag: false
-    previousTagName: v1.0.0-rc-1
+    previousTagName: v1.0.0
     releaseName: '{{tagName}}'
     prerelease: # TODO Evaluate JRELEASER_PRERELEASE_ENABLED
-      enabled: true
+      enabled: false
     issues:
       enabled: true
       comment: '🎉 This issue has been resolved in `{{tagName}}` ([Release Notes]({{releaseNotesUrl}}))'
@@ -175,8 +175,8 @@ deploy:
         url: https://central.sonatype.com/api/v1/publisher
         stagingRepositories:
           - target/staging-deploy
-        retryDelay: 20
-        maxRetries: 80
+        retryDelay: 30
+        maxRetries: 99
     pomchecker:
       # Could be enabled when all POMs have <description> tag, see https://github.com/operaton/operaton/issues/293
       strict: false

@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.annotation.CompleteTaskInterceptor;
@@ -35,12 +33,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
-public class CompleteTaskTest extends CdiProcessEngineTestCase {
+class CompleteTaskTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/annotation/CompleteTaskTest.bpmn20.xml")
-  public void testCompleteTask() {
+  void testCompleteTask() {
 
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 

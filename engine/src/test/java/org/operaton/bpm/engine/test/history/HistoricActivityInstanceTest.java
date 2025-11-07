@@ -270,6 +270,7 @@ class HistoricActivityInstanceTest {
     // change assignee of the task
     taskService.setAssignee(task.getId(), "gonzo");
     task = taskService.createTaskQuery().singleResult();
+    assertThat(task.getAssignee()).isEqualTo("gonzo");
 
     historicActivityInstance = historyService.createHistoricActivityInstanceQuery().activityId("theTask").singleResult();
     assertThat(historicActivityInstance.getAssignee()).isEqualTo("gonzo");

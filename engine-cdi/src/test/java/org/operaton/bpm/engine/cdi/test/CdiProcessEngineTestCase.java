@@ -20,11 +20,13 @@ import java.util.logging.Logger;
 import jakarta.enterprise.inject.spi.BeanManager;
 
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
@@ -45,13 +47,17 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.LogUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Daniel Meyer
- * When creating a new test class, extend it with this class and add a
- * @RunWith(Arquillian.class) annotation to the child class.
+ * When creating a new test class, extend it with this class.
+ * <p>
+ * Migrated to JUnit 5 by registering a shared {@link org.operaton.bpm.engine.test.junit5.ProcessEngineExtension}
+ * once per suite and widening the Arquillian deployment so CDI still sees every test bean.
+ * We resolve the bean manager lazily now, matching the container lifecycle that the extension enforces.
  */
+@ExtendWith(ArquillianExtension.class)
 public abstract class CdiProcessEngineTestCase {
 
   static {
@@ -60,18 +66,22 @@ public abstract class CdiProcessEngineTestCase {
 
   protected Logger logger = Logger.getLogger(getClass().getName());
 
+  @RegisterExtension
+  protected static final ProcessEngineExtension processEngineExtension =
+    ProcessEngineExtension.builder()
+      .configurationResource("activiti.cfg.xml")
+      .build();
+
   @Deployment
   public static JavaArchive createDeployment() {
 
     return ShrinkWrap.create(JavaArchive.class)
-      .addPackages(true, "org.operaton.bpm.engine.cdi")
+      .addPackages(true,
+        "org.operaton.bpm.engine.cdi",
+        "org.operaton.bpm.engine.cdi.test",
+        "org.operaton.bpm.engine.experimental")
       .addAsManifestResource("META-INF/beans.xml", "beans.xml");
   }
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
-  protected BeanManager beanManager;
 
   protected ProcessEngine processEngine;
   protected FormService formService;
@@ -89,16 +99,16 @@ public abstract class CdiProcessEngineTestCase {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Before
-  public void setUpCdiProcessEngineTestCase() {
+  @BeforeEach
+  void setUpCdiProcessEngineTestCase() {
 
-    if(BpmPlatform.getProcessEngineService().getDefaultProcessEngine() == null) {
-      RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(processEngineRule.getProcessEngine());
+    processEngine = processEngineExtension.getProcessEngine();
+
+    if (BpmPlatform.getProcessEngineService().getDefaultProcessEngine() == null) {
+      RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(processEngine);
     }
 
-    beanManager = ProgrammaticBeanLookup.lookup(BeanManager.class);
-    processEngine = processEngineRule.getProcessEngine();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngineRule.getProcessEngine().getProcessEngineConfiguration();
+    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
     formService = processEngine.getFormService();
     historyService = processEngine.getHistoryService();
     identityService = processEngine.getIdentityService();
@@ -113,10 +123,15 @@ public abstract class CdiProcessEngineTestCase {
     decisionService = processEngine.getDecisionService();
   }
 
-  @After
-  public void tearDownCdiProcessEngineTestCase() {
-    RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(processEngine);
-    beanManager = null;
+  @AfterEach
+  void afterEachCdiProcessEngineTestCase() {
+    tearDownCdiProcessEngineTestCase();
+  }
+
+  protected void tearDownCdiProcessEngineTestCase() {
+    if (processEngine != null) {
+      RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(processEngine);
+    }
     processEngine = null;
     processEngineConfiguration = null;
     formService = null;
@@ -131,7 +146,10 @@ public abstract class CdiProcessEngineTestCase {
     externalTaskService = null;
     caseService = null;
     decisionService = null;
-    processEngineRule = null;
+  }
+
+  protected BeanManager getBeanManager() {
+    return ProgrammaticBeanLookup.lookup(BeanManager.class);
   }
 
   protected void endConversationAndBeginNew(String processInstanceId) {

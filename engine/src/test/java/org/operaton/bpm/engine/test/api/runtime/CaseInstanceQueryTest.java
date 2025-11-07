@@ -1461,9 +1461,6 @@ class CaseInstanceQueryTest {
       .orderByCaseInstanceId()
       .desc();
     verifyQueryResults(query, 5);
-
-    query = caseService.createCaseInstanceQuery();
-
   }
 
   @Test

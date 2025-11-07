@@ -68,6 +68,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -1093,9 +1094,8 @@ class MessageCorrelationTest {
   @Test
   void testCorrelationByProcessInstanceIdUsingFluentCorrelateAll() {
     // correlate by name
-    ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("process");
-
-    ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("process");
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("process")).doesNotThrowAnyException();
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("process")).doesNotThrowAnyException();
 
     // correlation with only the name is ambiguous:
     runtimeService
@@ -1105,9 +1105,9 @@ class MessageCorrelationTest {
     assertThat(runtimeService.createExecutionQuery().activityId("task").count()).isZero();
 
     // correlate process instance id
-    processInstance1 = runtimeService.startProcessInstanceByKey("process");
+    var processInstance1 = runtimeService.startProcessInstanceByKey("process");
 
-    processInstance2 = runtimeService.startProcessInstanceByKey("process");
+    var processInstance2 = runtimeService.startProcessInstanceByKey("process");
 
     // use process instance id as well
     runtimeService

@@ -1246,6 +1246,7 @@ class MultiInstanceTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("multiInstanceSubProcess");
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).orderByTaskName().asc().list();
+    assertThat(tasks).hasSize(5);
 
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + 61000L)); // timer is set to one minute
     List<Job> timers = managementService.createJobQuery().list();

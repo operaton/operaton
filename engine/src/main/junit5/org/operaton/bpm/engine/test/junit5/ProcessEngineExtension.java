@@ -44,7 +44,6 @@ import org.junit.jupiter.api.extension.TestWatcher;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.*;
-import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -176,9 +175,9 @@ public class ProcessEngineExtension implements TestWatcher,
   protected String deploymentId;
   protected boolean ensureCleanAfterTest;
   protected List<String> additionalDeployments = new ArrayList<>();
-  private boolean randomName;
-  private boolean closeEngine;
-  private boolean closeEngineEachTest;
+  protected boolean randomName;
+  protected boolean closeEngine;
+  protected boolean closeEngineEachTest;
 
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 

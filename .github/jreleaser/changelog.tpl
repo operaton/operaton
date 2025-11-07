@@ -1,47 +1,15 @@
-# About release 1.0.0
+# About release 1.1.0
 
-This is the first official, stable release of Operaton. After forking the [Camunda 7 platform](https://github.com/camunda/camunda-bpm-platform) in 2024, 
-we have been working hard to modernize the code base and prepare for the 1.0.0 stable release.
+## New and Noteworthy
 
-Several beta releases have been published to gather feedback from the community and ensure a smooth 
-transition. Multiple products have already started to use Operaton in production, and even
-more are actively testing it. Major effort has been put into **automated testing to ensure stability
-and reliability**.
+The 1.1.0 release is the first feature release after Operaton's go-live.
 
-From now on, Operaton is the successor to the open-source BPM platform formerly known as 
-_Camunda 7 Community Edition_ (archived on Nov 4th 2025). 
-The engine is already battle-tested in production environments,
-and is safe to transition from existing Camunda 7 CE installations.
-It is important to note that Operaton focuses on the core BPM/CMMN/DMN engine and its related components.
+With this release we focused on:
 
-We are excited to embark on this new journey and look forward to building a vibrant 
-community around Operaton. We welcome contributions, feedback, and collaboration from developers
-worldwide. Together, we can shape the future of business process management with Operaton!
-
-## 🛠️ Migration from Camunda 7 CE
-
-Migrating from Camunda 7 Community Edition to Operaton is straightforward. Operaton 1.0 is fully 
-compatible with Camunda 7.24, allowing for a seamless transition. We recommend upgrading to 
-Camunda 7.24 first, and then switch to Operaton 1.0.
-
-Migration involves updating your dependencies to point to Operaton artifacts instead of Camunda ones.
-We provide a migration based on OpenRewrite to help automate this process. You can find the migration recipe
-in our [Operaton Migration Repository](https://github.com/operaton/migrate-from-camunda-recipe).
-
-## 📊 Facts & Numbers
-
-Since forking [Camunda 7 Platform](https://github.com/camunda/camunda-bpm-platform) in 2024, we have made significant progress in modernizing the codebase. Here are some key statistics:
-
-- **Battle-Tested**: Operaton is already in production use by multiple organizations, showcasing its reliability and performance in real-world scenarios.
-- **Commits**: Over **1,500 commits** have been made to the Operaton codebase since initiation of the fork until this release.
-- **Changes**: The commits changed more than 60,000 files, with over **550,000 LoC additions** and **580,000 LoC deletions**.
-- **Contributors**: More than **60 contributors** have actively participated in the development of Operaton.
-- **Pull Requests**: Over **1,100 pull requests** have been merged, reflecting the collaborative effort of the community.
-- **Issues Closed**: More than **370 issues** have been addressed.
-- **Automated Tests**: The test suite includes over 25,000 automated tests, ensuring the stability and reliability of the platform. 
-- **Test Modernization**: All tests have been migrated from JUnit 4 to **JUnit 5 and AssertJ**. Integration tests have been modernized to use [**Testcontainers**](https://testcontainers.com/).
-- **Code Quality**: We have integrated SonarQube to maintain high standards. Findings have been reduced by [**over 85%**](https://sonarcloud.io/project/activity?id=operaton_operaton&graph=issues) since the fork.
-- **Code Coverage**: We have achieved over [**80% code coverage**](https://sonarcloud.io/summary/overall?id=operaton_operaton&branch=main), demonstrating our commitment to quality and robustness.
+- Completing Camunda 7.24 backport
+- Modernizing the code base
+- Java 25 Support
+- Upgrade to Wildfly 37
 
 ## Versions
 
@@ -147,76 +115,7 @@ Tests are enabled for the following databases:
 | DB2                  | n/a                            | n/a              | n/a            |
 
 
-## Contributors
-
-We'd like to thank the following people for their contributions (alphabetical order):
-
-- [Adam Sanderson](https://github.com/asanderson-scottlogic)
-- [Ahmed Farhat](https://github.com/ahmedfarhat)
-- [Alena Geduldig](https://github.com/geduldia)
-- [Alexander Horbach](https://github.com/alexh141048)
-- [Alexander Skrock](https://github.com/AlexanderSkrock)
-- [AlexandraCiornei](https://github.com/AlexandraCiornei)
-- [Andreas Goß](https://github.com/agoss94)
-- [Andreas Klein](https://github.com/Kungi)
-- [Andreas Zill](https://github.com/a-m-zill)
-- [Antoine Campbell](https://github.com/antoinecampbell)
-- [Arne Deutsch](https://github.com/ArneDeutsch)
-- [Artem Denisov](https://github.com/FlamieCyrex)
-- [Biswajit Shaw](https://github.com/biswa1shaw)
-- [Brijesh Thummar](https://github.com/Brijeshthummar02)
-- [Christoph Borowski](https://github.com/CBorowski-dev)
-- [Christopher Möllerherm](https://github.com/cmoellerherm)
-- [Daniel Philip Propp](https://github.com/xProppi)
-- [Daniel Sevostyanov](https://github.com/SevDan)
-- [Dirk Olmes](https://github.com/dirk-olmes)
-- [Evgeny Ivanov](https://github.com/HerrIves)
-- [Faisal Ansari](https://github.com/justfsl50)
-- [fml2](https://github.com/fml2)
-- [Gergely Juhasz](https://github.com/venetrius)
-- Hamza Iddaoui
-- [HamzaIddaoui](https://github.com/HamzaIddaoui)
-- Harssh-aitm
-- [Hermina Garg](https://github.com/herminagarg)
-- [Javad Malaquti](https://github.com/jmaster1985)
-- [Joonseo Lee](https://github.com/joonseolee)
-- [José Guilherme](https://github.com/zeguilherme99)
-- [Júlia Teles](https://github.com/juliateles99)
-- [Julian Haupt](https://github.com/hauptmedia)
-- [Karsten Thoms](https://github.com/kthoms)
-- [Khawaja Abdullah Ansar](https://github.com/khawaja-abdullah)
-- [Lars Baumeister](https://github.com/larsbaumeister)
-- [Lars Uffmann](https://github.com/cachescrubber)
-- [Leander Wagener](https://github.com/Mojito060)
-- [Lemrabott Toulba](https://github.com/tlb-lemrabott)
-- [Luca Britten](https://github.com/lucabritten)
-- [Max Starikov](https://github.com/maxitemis)
-- Matthew Isayan
-- Mikhail Golubev
-- [N1sp](https://github.com/n1sp)
-- Nikesh
-- Noah
-- [Paul Hempel](https://github.com/lambdaschmied2)
-- [Paul L.](https://github.com/Waize)
-- Petros Savvidis
-- Prajwol Bhandari
-- [Rapteon](https://github.com/Rapteon)
-- [Rodrigo Neves](https://github.com/nevesrodrigo2)
-- [Sanajit Jana](https://github.com/sanajitjana)
-- [Saumya Pandey](https://github.com/saumyapandey1998)
-- [Sebastian Górski](https://github.com/sgorski00)
-- [Satyam018](https://github.com/Satyam018)
-- [sogladev](https://github.com/sogladev)
-- [Steven Gort](https://github.com/sgort)
-- [Suraj Wadikar](https://github.com/suraj9562)
-- [Tim Zöller](https://github.com/javahippie)
-- [Tim te Beek](https://github.com/timtebeek)
-- [Tobias Unger](https://github.com/ungerts)
-- [Vladyslav Dzyhovskyi](https://github.com/DzyhovskyiVladyslav)
-- [Wolfgang Schmoller](https://github.com/WoSchmo)
-- [xmgdtc](https://github.com/xmgdtc)
-- [yanavasileva](https://github.com/yanavasileva)
-- [YUVI43](https://github.com/YUVI43)
+{{changelogContributors}}
 
 ## Changelog
 

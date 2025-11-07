@@ -146,7 +146,6 @@ class BoundaryErrorEventTest {
 
     // Completing task 2, will cause the end error event to throw error with code 123
     taskService.complete(tasks.get(1).getId());
-    tasks = taskService.createTaskQuery().list();
     Task taskAfterError = taskService.createTaskQuery().singleResult();
     assertThat(taskAfterError.getName()).isEqualTo("task outside subprocess");
   }
@@ -178,6 +177,7 @@ class BoundaryErrorEventTest {
 
     // Completing task B will lead to task C
     procId = runtimeService.startProcessInstanceByKey(processDefinitionKey).getId();
+    assertThat(procId).isNotNull();
     tasks = taskService.createTaskQuery().orderByTaskName().asc().list();
     assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("task A");

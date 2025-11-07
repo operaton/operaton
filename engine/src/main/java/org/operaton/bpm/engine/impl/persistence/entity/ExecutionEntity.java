@@ -1591,12 +1591,10 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   public IncidentEntity getIncidentByCauseIncidentId(String causeIncidentId) {
-    for (IncidentEntity incident : getIncidents()) {
-      if (incident.getCauseIncidentId() != null && incident.getCauseIncidentId().equals(causeIncidentId)) {
-        return incident;
-      }
-    }
-    return null;
+    return getIncidents().stream()
+            .filter(incidentEntity -> Objects.equals(incidentEntity.getCauseIncidentId(), causeIncidentId))
+            .findAny()
+            .orElse(null);
   }
 
   // referenced task entities

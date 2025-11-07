@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.task;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
@@ -27,11 +25,10 @@ import org.operaton.bpm.engine.test.Deployment;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-@RunWith(Arquillian.class)
-public class CdiTaskServiceTest extends CdiProcessEngineTestCase {
+class CdiTaskServiceTest extends CdiProcessEngineTestCase {
 
   @Test
-  public void testClaimTask() {
+  void testClaimTask() {
     Task newTask = taskService.newTask();
     taskService.saveTask(newTask);
     String taskId = newTask.getId();
@@ -42,7 +39,7 @@ public class CdiTaskServiceTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testTaskAssigneeExpression() {
+  void testTaskAssigneeExpression() {
     // given
     runtimeService.startProcessInstanceByKey("taskTest");
     identityService.setAuthenticatedUserId("user");

@@ -21,9 +21,7 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
@@ -35,8 +33,7 @@ import org.operaton.bpm.engine.test.Deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(Arquillian.class)
-public class SignalEventTest extends CdiProcessEngineTestCase {
+class SignalEventTest extends CdiProcessEngineTestCase {
 
   @Named
   @Dependent
@@ -76,7 +73,7 @@ public class SignalEventTest extends CdiProcessEngineTestCase {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/cdi/test/bpmn/SignalEventTests.catchAlertSignalBoundaryWithReceiveTask.bpmn20.xml",
                           "org/operaton/bpm/engine/cdi/test/bpmn/SignalEventTests.throwAlertSignalWithDelegate.bpmn20.xml"})
-  public void testSignalCatchBoundaryWithVariables() {
+  void testSignalCatchBoundaryWithVariables() {
     HashMap<String, Object> variables1 = new HashMap<>();
     variables1.put("processName", "catchSignal");
     ProcessInstance piCatchSignal = runtimeService.startProcessInstanceByKey("catchSignal", variables1);

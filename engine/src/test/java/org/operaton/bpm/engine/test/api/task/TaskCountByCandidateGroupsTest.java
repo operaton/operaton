@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.task;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -138,8 +139,7 @@ class TaskCountByCandidateGroupsTest {
   }
 
   protected void checkResultCount(TaskCountByCandidateGroupResult result, String expectedResultName, int expectedResultCount) {
-    if((expectedResultName == null && result.getGroupName() == null) ||
-       (result.getGroupName() != null && result.getGroupName().equals(expectedResultName))) {
+    if (Objects.equals(result.getGroupName(), expectedResultName)) {
       assertThat(result.getTaskCount()).isEqualTo(expectedResultCount);
     }
   }

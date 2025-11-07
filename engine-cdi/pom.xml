@@ -15,7 +15,7 @@
 
   <properties>
     <arquillian.container.version>4.0.0.Final</arquillian.container.version>
-    <arquillian.junit.version>1.9.3.Final</arquillian.junit.version>
+    <arquillian.junit.version>1.10.0.Final</arquillian.junit.version>
   </properties>
 
   <dependencyManagement>
@@ -39,13 +39,6 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <classifier>junit5</classifier>
-      <scope>test</scope>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-      <classifier>junit4</classifier>
       <scope>test</scope>
       <version>${project.version}</version>
     </dependency>
@@ -108,13 +101,9 @@
       <artifactId>arquillian-core-spi</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jboss.arquillian.junit</groupId>
-      <artifactId>arquillian-junit-container</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.jboss.arquillian.junit5</groupId>
+      <artifactId>arquillian-junit5-container</artifactId>
+      <version>${arquillian.junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -140,6 +129,11 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

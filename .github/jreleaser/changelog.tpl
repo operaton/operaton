@@ -1,43 +1,47 @@
 # About release 1.0.0
 
-This is the first official release of Operaton. After forking the Camunda 7 platform in mid-2024, 
+This is the first official, stable release of Operaton. After forking the [Camunda 7 platform](https://github.com/camunda/camunda-bpm-platform) in 2024, 
 we have been working hard to modernize the code base and prepare for the 1.0.0 stable release.
 
 Several beta releases have been published to gather feedback from the community and ensure a smooth 
 transition. Multiple products have already started to use Operaton in production, and even
-more are actively testing it. Major effort has been put into automated testing to ensure stability
-and reliability.
+more are actively testing it. Major effort has been put into **automated testing to ensure stability
+and reliability**.
 
-From now on, Operaton is the successor for the open-source BPM platform formerly known as 
-_Camunda 7 Community Edition_. The engine is already battle-tested in production environments,
+From now on, Operaton is the successor to the open-source BPM platform formerly known as 
+_Camunda 7 Community Edition_ (archived on Nov 4th 2025). 
+The engine is already battle-tested in production environments,
 and is safe to transition from existing Camunda 7 CE installations.
+It is important to note that Operaton focuses on the core BPM/CMMN/DMN engine and its related components.
 
 We are excited to embark on this new journey and look forward to building a vibrant 
 community around Operaton. We welcome contributions, feedback, and collaboration from developers
 worldwide. Together, we can shape the future of business process management with Operaton!
 
-## Migration from Camunda 7 CE
+## 🛠️ Migration from Camunda 7 CE
 
 Migrating from Camunda 7 Community Edition to Operaton is straightforward. Operaton 1.0 is fully 
-compatible with Camunda 7.24, allowing for a seamless transition. To ease the migration process, 
-ideally upgrade to Camunda 7.24 first, and then switch to Operaton 1.0.
+compatible with Camunda 7.24, allowing for a seamless transition. We recommend upgrading to 
+Camunda 7.24 first, and then switch to Operaton 1.0.
 
 Migration involves updating your dependencies to point to Operaton artifacts instead of Camunda ones.
-We are providing a migration based on OpenRewrite to help automate this process. You can find the migration recipe
+We provide a migration based on OpenRewrite to help automate this process. You can find the migration recipe
 in our [Operaton Migration Repository](https://github.com/operaton/migrate-from-camunda-recipe).
 
-## Numbers
+## 📊 Facts & Numbers
 
 Since forking [Camunda 7 Platform](https://github.com/camunda/camunda-bpm-platform) in 2024, we have made significant progress in modernizing the codebase. Here are some key statistics:
 
-- **Commits**: Over 1,500 commits have been made to the Operaton codebase.
-- **Changes**: The commits changed more than 60,000 files, with over 550,000 LoC additions and 580,000 LoC deletions.
-- **Contributors**: More than 50 contributors have actively participated in the development of Operaton.
-- **Pull Requests**: Over 1,100 pull requests have been merged, reflecting the collaborative effort of the community.
-- **Issues Closed**: More than 370 issues have been addressed.
-- **Automated Tests**: The test suite includes over 25,000 automated tests, ensuring the stability and reliability of the platform. All tests have been migrated from JUnit 4 to JUnit 5.
-- **Code Coverage**: We have achieved over [80% code coverage](https://sonarcloud.io/summary/overall?id=operaton_operaton&branch=main), demonstrating our commitment to quality and robustness.
-- **Static Analysis**: The codebase has been analyzed with SonarQube, findings have been reduced by [over 85%](https://sonarcloud.io/project/activity?id=operaton_operaton&graph=issues) since the fork.
+- **Battle-Tested**: Operaton is already in production use by multiple organizations, showcasing its reliability and performance in real-world scenarios.
+- **Commits**: Over **1,500 commits** have been made to the Operaton codebase since initiation of the fork until this release.
+- **Changes**: The commits changed more than 60,000 files, with over **550,000 LoC additions** and **580,000 LoC deletions**.
+- **Contributors**: More than **60 contributors** have actively participated in the development of Operaton.
+- **Pull Requests**: Over **1,100 pull requests** have been merged, reflecting the collaborative effort of the community.
+- **Issues Closed**: More than **370 issues** have been addressed.
+- **Automated Tests**: The test suite includes over 25,000 automated tests, ensuring the stability and reliability of the platform. 
+- **Test Modernization**: All tests have been migrated from JUnit 4 to **JUnit 5 and AssertJ**. Integration tests have been modernized to use [**Testcontainers**](https://testcontainers.com/).
+- **Code Quality**: We have integrated SonarQube to maintain high standards. Findings have been reduced by [**over 85%**](https://sonarcloud.io/project/activity?id=operaton_operaton&graph=issues) since the fork.
+- **Code Coverage**: We have achieved over [**80% code coverage**](https://sonarcloud.io/summary/overall?id=operaton_operaton&branch=main), demonstrating our commitment to quality and robustness.
 
 ## Versions
 
@@ -49,7 +53,7 @@ Operaton is tested and supported on **Java 17**, **Java 21**, and **Java 25**.
 
 ### Camunda 7 Compatibility
 
-This release is feature complete and compatible with [**Camunda 7.24.0**](https://docs.camunda.org/enterprise/announcement/#camunda-platform-7-24).
+This release is feature complete and API-compatible with [**Camunda 7.24**](https://docs.camunda.org/enterprise/announcement/#camunda-platform-7-24).
 
 ### Spring
 
@@ -69,7 +73,7 @@ The Tomcat distribution is based on **Tomcat 11.0.12**.
 
 The Wildfly distribution is based on **Wildfly 37.0.1**.
 
-### Standards
+### Standards Compliance
 
 Operaton is compliant with the following standards:
 
@@ -78,7 +82,7 @@ Operaton is compliant with the following standards:
 - DMN 1.3
 - CMMN 1.1
 
-### Scripting
+### Scripting Languages
 
 Operaton supports the following scripting languages:
 
@@ -89,17 +93,23 @@ Operaton supports the following scripting languages:
 | Python     | Jython             | 2.7.4    |
 | Ruby       | GraalVM Ruby       | 9.1.17.0 |
 
-Note: The Nashorn JavaScript engine has been removed in Java 15 and is no longer supported.
+**Critical Migration Note on JavaScript**: The legacy Nashorn JavaScript engine has been removed 
+(as of Java 15) and is no longer supported. 
+Operaton now uses the high-performance **GraalVM JavaScript** engine. 
+If you are migrating from Camunda 7 and are using **ECMAScript 5 (or older)**, 
+your scripts might require updates to comply with modern JavaScript standards. 
+Please check your existing JavaScript code.
 
 **Camunda Migration Note**: If you are migrating from Camunda 7 and are using ECMAScript 5,
 this might not work with the GraalVM JavaScript engine. 
 Please check your JavaScript code and consider migrating them to a more recent version of JavaScript.
 
-## Testing
+## 🧪 Testing and Quality Assurance
 
 ### Database Integration Tests
 
-Operaton is tested against the following databases:
+Operaton is thoroughly tested against the following production-grade databases, 
+ensuring compatibility with modern driver and container versions:
 
 <!--
   Driver version: database/pom.xml

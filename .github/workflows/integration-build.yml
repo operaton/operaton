@@ -458,7 +458,7 @@ jobs:
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{ github.event_name == 'schedule' && false || github.event.inputs.dry_run }}
         with:
-          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.build.outputs.database_version}} -PPRERELEASE_ENABLED=true
+          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.build.outputs.database_version}}
 
       - name: Publish Test Report
         if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_tests == 'false'}}

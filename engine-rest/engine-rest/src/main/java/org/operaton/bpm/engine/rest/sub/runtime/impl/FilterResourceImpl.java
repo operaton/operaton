@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -68,6 +67,8 @@ import org.operaton.bpm.engine.rest.sub.runtime.FilterResource;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
@@ -78,10 +79,10 @@ import static org.operaton.bpm.engine.authorization.Resources.FILTER;
  */
 public class FilterResourceImpl extends AbstractAuthorizedRestResource implements FilterResource {
 
-  public static final Pattern EMPTY_JSON_BODY = Pattern.compile("\\s*\\{\\s*\\}\\s*");
-  public static final String PROPERTIES_VARIABLES_KEY = "variables";
-  public static final String PROPERTIES_VARIABLES_NAME_KEY = "name";
-  public static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
+  private static final Pattern EMPTY_JSON_BODY = Pattern.compile("\\s*\\{\\s*\\}\\s*");
+  private static final String PROPERTIES_VARIABLES_KEY = "variables";
+  private static final String PROPERTIES_VARIABLES_NAME_KEY = "name";
+  private static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
 
   protected FilterService filterService;
   protected Filter dbFilter;
@@ -249,7 +250,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
       return convertToDtoList(entities);
     }
     else {
-      return Collections.emptyList();
+      return emptyList();
     }
   }
 
@@ -394,7 +395,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   protected HalTask convertToHalTask(Task task) {
     HalTask halTask = HalTask.generate(task, getProcessEngine());
     Map<String, List<VariableInstance>> variableInstances = getVariableInstancesForTasks(halTask);
-    if (variableInstances != null) {
+    if (!variableInstances.isEmpty()) {
       embedVariableValuesInHalTask(halTask, variableInstances);
     }
     return halTask;
@@ -413,7 +414,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   protected HalTaskList convertToHalTaskList(List<Task> tasks, long count) {
     HalTaskList halTasks = HalTaskList.generate(tasks, count, getProcessEngine());
     Map<String, List<VariableInstance>> variableInstances = getVariableInstancesForTasks(halTasks);
-    if (variableInstances != null) {
+    if (!variableInstances.isEmpty()) {
       for (HalTask halTask : (List<HalTask>) halTasks.getEmbedded("task")) {
         embedVariableValuesInHalTask(halTask, variableInstances);
       }
@@ -476,7 +477,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
         return getSortedVariableInstances(variableNames, variableScopeIds);
       }
     }
-    return null;
+    return emptyMap();
   }
 
   @SuppressWarnings("unchecked")
@@ -492,7 +493,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
       }
     }
     else {
-      return null;
+      return emptyList();
     }
   }
 
@@ -505,7 +506,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
       return variableNames;
     }
     else {
-      return null;
+      return emptyList();
     }
   }
 

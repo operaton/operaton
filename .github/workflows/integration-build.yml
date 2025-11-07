@@ -461,7 +461,6 @@ jobs:
           JRELEASER_MAVENCENTRAL_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{ github.event_name == 'schedule' && false || github.event.inputs.dry_run }}
-          JRELEASER_PRERELEASE_ENABLED: true
         with:
           arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.build.outputs.database_version}}
 

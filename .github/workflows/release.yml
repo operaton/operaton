@@ -134,6 +134,11 @@ jobs:
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
 
+      - name: Modify jreleaser.yml for release
+        run: |
+          # set prerelease flag
+          perl -0777 -pe 's/(prerelease:\s*\n\s*enabled:\s*)(true|false)/$1false/' -i jreleaser.yml
+
       - name: Release with JReleaser
         uses: jreleaser/release-action@v2
         env:
@@ -147,6 +152,10 @@ jobs:
           JRELEASER_DRY_RUN: ${{github.event.inputs.dry_run}}
         with:
           arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}} -PPRERELEASE_ENABLED=false
+
+      - name: Restore jreleaser.yml after release
+        run: |
+          git restore jreleaser.yml
 
       - name: Publish Test Report
         if: always()

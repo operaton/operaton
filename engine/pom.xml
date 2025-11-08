@@ -535,22 +535,12 @@
               <goal>jar</goal>
             </goals>
             <configuration>
-              <classifier>junit5</classifier>
-              <classesDirectory>${project.build.directory}/classes-junit5</classesDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>engine-test-junit5</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
               <includes>
                 <include>org/operaton/bpm/container/impl/jmx/deployment/Mock*.class</include>
                 <include>org/operaton/bpm/engine/impl/test/*TestCase.class</include>
                 <include>org/operaton/bpm/engine/test/**</include>
               </includes>
-              <classifier>engine-test-junit5</classifier>
+              <classifier>junit5</classifier>
               <classesDirectory>${project.build.directory}/classes-junit5</classesDirectory>
             </configuration>
           </execution>

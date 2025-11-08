@@ -65,14 +65,7 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <classifier>junit4</classifier>
-      <scope>test</scope>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-      <classifier>engine-test-junit5</classifier>
+      <classifier>junit5</classifier>
       <scope>test</scope>
       <version>${project.version}</version>
     </dependency>
@@ -96,13 +89,8 @@
     </dependency>
     <!-- Test dependencies -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.arquillian.junit</groupId>
-      <artifactId>arquillian-junit-container</artifactId>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-junit5-internal</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

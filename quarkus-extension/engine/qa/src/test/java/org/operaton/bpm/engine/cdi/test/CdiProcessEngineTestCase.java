@@ -131,7 +131,8 @@ public abstract class CdiProcessEngineTestCase {
     // Look for @Deployment Annotation
     for (var annotation : method.getAnnotations()) {
       // It can be behind a Proxy
-      if (Proxy.isProxyClass(annotation.getClass()) && Deployment.class.isAssignableFrom(annotation.annotationType())) {
+      // Using annotation name comparison here due to isAssignableFrom not working here (probably due to multiple Classloaders involved)
+      if (Proxy.isProxyClass(annotation.getClass()) && Deployment.class.getName().equals(annotation.annotationType().getName())) {
         resources = (String[]) Proxy.getInvocationHandler(annotation)
           .invoke(annotation, Deployment.class.getDeclaredMethod("resources"), null);
         isDeploymentPresent = true;
@@ -143,7 +144,7 @@ public abstract class CdiProcessEngineTestCase {
       }
     }
     if(isDeploymentPresent) {
-      // if @Deployment Annotation but there no resources specified use test class and method name to create a corresponding resource
+      // if @Deployment Annotation is present but there are no resources specified use test class and method name to create a corresponding resource
       return resources.length > 0 ? resources : new String[] {TestHelper.getBpmnProcessDefinitionResource(testClass, method.getName())};
     }
     return null;
@@ -202,7 +203,7 @@ public abstract class CdiProcessEngineTestCase {
     return ProgrammaticBeanLookup.lookup(BeanManager.class);
   }
 
-  public String deploy(Class<?> testClass, String methodName, String[] resources) {
+  protected String deploy(Class<?> testClass, String methodName, String[] resources) {
     if (resources != null) {
       return TestHelper.annotationDeploymentSetUp(processEngine, resources, testClass, methodName);
     }

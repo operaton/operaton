@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
-import org.junit.Ignore;
-
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.operaton.bpm.engine.runtime.CaseExecution;
@@ -30,11 +30,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Roman Smirnov
  *
  */
-@Ignore
-public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
+@Disabled("FIXME: Error on 'manualStart': The case execution is already in state 'active'")
+class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryCombinedEntryAndExitCriteriaTest.testParentResumeInsideStage.cmmn"})
-  public void FAILING_testParentResumeInsideStage() {
+  @Test
+  void parentResumeInsideStage() {
     // given
     createCaseInstance();
 
@@ -93,7 +94,8 @@ public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryCombinedEntryAndExitCriteriaTest.testParentSuspendInsideStage.cmmn"})
-  public void FAILING_testParentSuspendInsideStage() {
+  @Test
+  void parentSuspendInsideStage() {
     // given
     createCaseInstance();
 
@@ -137,7 +139,8 @@ public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryCombinedEntryAndExitCriteriaTest.testParentResumeInsideStageDifferentPlanItemOrder.cmmn"})
-  public void FAILING_testParentResumeInsideStageDifferentPlanItemOrder() {
+  @Test
+  void parentResumeInsideStageDifferentPlanItemOrder() {
     // given
     createCaseInstance();
 
@@ -196,7 +199,8 @@ public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryCombinedEntryAndExitCriteriaTest.testParentSuspendInsideStageDifferentPlanItemOrder.cmmn"})
-  public void FAILING_testParentSuspendInsideStageDifferentPlanItemOrder() {
+  @Test
+  void parentSuspendInsideStageDifferentPlanItemOrder() {
     // given
     createCaseInstance();
 

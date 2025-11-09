@@ -334,6 +334,9 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   private void deleteHistoryCleanupJob() {
+    if (processEngine == null) {
+      return;
+    }
     List<Job> jobs;
     try {
       jobs = processEngine.getHistoryService().findHistoryCleanupJobs();

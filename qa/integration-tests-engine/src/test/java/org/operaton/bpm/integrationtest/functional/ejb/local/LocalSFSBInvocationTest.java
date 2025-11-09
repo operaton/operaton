@@ -33,6 +33,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -81,7 +82,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInvokeBean");
 
-    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(TRUE);
 
     runtimeService.setVariable(pi.getId(), "result", false);
 
@@ -89,7 +90,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(TRUE);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }
@@ -103,7 +104,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
 
     for(int i=0; i<instances; i++) {
       ids[i] = runtimeService.startProcessInstanceByKey("testInvokeBean").getId();
-      assertThat(runtimeService.getVariable(ids[i], "result")).isEqualTo(true);
+      assertThat(runtimeService.getVariable(ids[i], "result")).isEqualTo(TRUE);
       runtimeService.setVariable(ids[i], "result", false);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -111,7 +112,7 @@ public class LocalSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
     waitForJobExecutorToProcessAllJobs(60*1000);
 
     for(int i=0; i<instances; i++) {
-      assertThat(runtimeService.getVariable(ids[i], "result")).isEqualTo(true);
+      assertThat(runtimeService.getVariable(ids[i], "result")).isEqualTo(TRUE);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
 

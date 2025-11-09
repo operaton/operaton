@@ -924,7 +924,7 @@ class FormServiceTest {
     assertThat(variables)
             .hasSize(1)
             .containsEntry("initialBooleanVariable", true);
-    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
+    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(TRUE);
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     // request non-existing variable

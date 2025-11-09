@@ -34,7 +34,6 @@ import org.operaton.bpm.model.xml.type.ModelElementType;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-// TODO Move class to test sources
 public abstract class AbstractModelElementInstanceTest {
 
 
@@ -242,43 +241,42 @@ public abstract class AbstractModelElementInstanceTest {
     Collection<AttributeAssumption> attributesAssumptions = getAttributesAssumptions();
     if (attributesAssumptions == null) {
       assertThatType().hasNoAttributes();
+      return;
     }
-    else {
-      assertThat(attributesAssumptions).hasSameSizeAs(modelElementType.getAttributes());
-      for (AttributeAssumption assumption : attributesAssumptions) {
-        assertThatType().hasAttributes(assumption.attributeName);
-        AttributeAssert attributeAssert = assertThatAttribute(assumption.attributeName);
 
-        attributeAssert.hasOwningElementType(modelElementType);
+    assertThat(attributesAssumptions).hasSameSizeAs(modelElementType.getAttributes());
+    for (AttributeAssumption assumption : attributesAssumptions) {
+      assertThatType().hasAttributes(assumption.attributeName);
+      AttributeAssert attributeAssert = assertThatAttribute(assumption.attributeName);
 
-        if (assumption.namespace != null) {
-          attributeAssert.hasNamespaceUri(assumption.namespace);
-        }
-        else {
-          attributeAssert.hasNoNamespaceUri();
-        }
+      attributeAssert.hasOwningElementType(modelElementType);
 
-        if (assumption.isIdAttribute) {
-          attributeAssert.isIdAttribute();
-        }
-        else {
-          attributeAssert.isNotIdAttribute();
-        }
+      if (assumption.namespace != null) {
+        attributeAssert.hasNamespaceUri(assumption.namespace);
+      }
+      else {
+        attributeAssert.hasNoNamespaceUri();
+      }
 
-        if (assumption.isRequired) {
-          attributeAssert.isRequired();
-        }
-        else {
-          attributeAssert.isOptional();
-        }
+      if (assumption.isIdAttribute) {
+        attributeAssert.isIdAttribute();
+      }
+      else {
+        attributeAssert.isNotIdAttribute();
+      }
 
-        if (assumption.defaultValue == null) {
-          attributeAssert.hasNoDefaultValue();
-        }
-        else {
-          attributeAssert.hasDefaultValue(assumption.defaultValue);
-        }
+      if (assumption.isRequired) {
+        attributeAssert.isRequired();
+      }
+      else {
+        attributeAssert.isOptional();
+      }
 
+      if (assumption.defaultValue == null) {
+        attributeAssert.hasNoDefaultValue();
+      }
+      else {
+        attributeAssert.hasDefaultValue(assumption.defaultValue);
       }
     }
   }

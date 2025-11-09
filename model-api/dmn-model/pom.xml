@@ -22,6 +22,13 @@
       <artifactId>operaton-xml-model</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.operaton.bpm.model</groupId>
+      <artifactId>operaton-xml-model</artifactId>
+      <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.xmlunit</groupId>
       <artifactId>xmlunit-core</artifactId>
       <scope>test</scope>

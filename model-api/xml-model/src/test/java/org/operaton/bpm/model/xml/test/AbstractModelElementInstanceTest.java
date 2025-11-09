@@ -31,13 +31,13 @@ import org.operaton.bpm.model.xml.test.assertions.ChildElementAssert;
 import org.operaton.bpm.model.xml.test.assertions.ModelElementTypeAssert;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 public abstract class AbstractModelElementInstanceTest {
 
 
-  protected class TypeAssumption {
+  public class TypeAssumption {
 
     public final String namespaceUri;
     public final ModelElementType extendsType;
@@ -62,7 +62,7 @@ public abstract class AbstractModelElementInstanceTest {
     }
   }
 
-  protected class ChildElementAssumption {
+  public class ChildElementAssumption {
 
     public final String namespaceUri;
     public final ModelElementType childElementType;
@@ -97,7 +97,7 @@ public abstract class AbstractModelElementInstanceTest {
     }
   }
 
-  protected class AttributeAssumption {
+  public static class AttributeAssumption {
 
     public final String attributeName;
     public final String namespace;
@@ -199,16 +199,7 @@ public abstract class AbstractModelElementInstanceTest {
     }
 
     if (assumption.isAbstract) {
-      try {
-        modelInstance.newInstance(modelElementType);
-        fail("Element type " + modelElementType.getTypeName() + " is abstract.");
-      }
-      catch (DOMException | ModelTypeException e) {
-        // expected exception
-      }
-      catch (Exception e) {
-        fail("Unexpected exception " + e.getMessage());
-      }
+      assertThatThrownBy(() -> modelInstance.newInstance(modelElementType)).isInstanceOfAny(DOMException.class, ModelTypeException.class);
     }
     else {
       ModelElementInstance modelElementInstance = modelInstance.newInstance(modelElementType);

@@ -68,7 +68,7 @@ public class DomXmlDataFormatMapper implements DataFormatMapper {
 
   @Override
   public Object mapJavaToInternal(Object parameter) {
-    ensureNotNull("Parameter", parameter);
+    ensureNotNull("parameter", parameter);
 
     final Class<?> parameterClass = parameter.getClass();
     final DOMResult domResult = new DOMResult();
@@ -111,8 +111,8 @@ public class DomXmlDataFormatMapper implements DataFormatMapper {
 
   @Override
   public <T> T mapInternalToJava(Object parameter, Class<T> javaClass, DeserializationTypeValidator validator) {
-    ensureNotNull("Parameter", parameter);
-    ensureNotNull("Type", javaClass);
+    ensureNotNull("parameter", parameter);
+    ensureNotNull("javaClass", javaClass);
 
     Node xmlNode = (Node) parameter;
     try {
@@ -148,7 +148,7 @@ public class DomXmlDataFormatMapper implements DataFormatMapper {
   @SuppressWarnings("unchecked")
   @Override
   public <T> T mapInternalToJava(Object parameter, String classIdentifier, DeserializationTypeValidator validator) {
-    ensureNotNull("Parameter", parameter);
+    ensureNotNull("parameter", parameter);
     ensureNotNull("classIdentifier", classIdentifier);
 
     try {

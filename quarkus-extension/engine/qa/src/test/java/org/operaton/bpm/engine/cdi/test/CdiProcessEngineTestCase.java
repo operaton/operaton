@@ -55,7 +55,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.test.Deployment;
 
-public class CdiProcessEngineTestCase {
+public abstract class CdiProcessEngineTestCase {
 
   protected String deploymentId;
 
@@ -88,7 +88,7 @@ public class CdiProcessEngineTestCase {
                   .addPackages(true, InjectProcessVariable.class.getPackage()));
 
   @BeforeEach
-  public void before(TestInfo testInfo) throws Throwable {
+  void before(TestInfo testInfo) throws Throwable {
     Set<String> processEngineNames = BpmPlatform.getProcessEngineService()
         .getProcessEngineNames();
     if (processEngineNames.size() > 1) {
@@ -131,12 +131,13 @@ public class CdiProcessEngineTestCase {
     // Look for @Deployment Annotation
     for (var annotation : method.getAnnotations()) {
       // It can be behind a Proxy
-      if (Proxy.isProxyClass(annotation.getClass()) && annotation.annotationType().getName().equals(Deployment.class.getName())) {
-        resources = (String[])Proxy.getInvocationHandler(annotation).invoke(annotation, Deployment.class.getDeclaredMethod("resources"), null);
+      if (Proxy.isProxyClass(annotation.getClass()) && Deployment.class.isAssignableFrom(annotation.annotationType())) {
+        resources = (String[]) Proxy.getInvocationHandler(annotation)
+          .invoke(annotation, Deployment.class.getDeclaredMethod("resources"), null);
         isDeploymentPresent = true;
         break;
-      } else if(annotation instanceof Deployment) {
-        resources = ((Deployment) annotation).resources();
+      } else if (annotation instanceof Deployment deploymentAnnotation) {
+        resources = deploymentAnnotation.resources();
         isDeploymentPresent = true;
         break;
       }
@@ -149,7 +150,7 @@ public class CdiProcessEngineTestCase {
   }
 
   @AfterEach
-  public void after() {
+  void after() {
     Arc.container().requestContext().deactivate();
 
     beanInstanceHandles.forEach(bean -> {

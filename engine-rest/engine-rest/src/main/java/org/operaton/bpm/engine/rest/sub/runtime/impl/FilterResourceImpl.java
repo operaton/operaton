@@ -67,12 +67,12 @@ import org.operaton.bpm.engine.rest.sub.runtime.FilterResource;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.emptyMap;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.FILTER;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 
 /**
  * @author Sebastian Menski

@@ -82,7 +82,7 @@ public abstract class AbstractSendTaskBuilder<B extends AbstractSendTaskBuilder<
    * @param operatonClass  the class name to set
    * @return the builder object
    */
-  public B operatonClass(Class delegateClass) {
+  public B operatonClass(Class<?> delegateClass) {
     return operatonClass(delegateClass.getName());
   }
 

@@ -56,6 +56,7 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
     initializeValue(serializers, typedValue, dbType);
   }
 
+  @SuppressWarnings({"rawtypes", "unchecked"})
   public void initializeValue(VariableSerializers serializers, TypedValue typedValue, String dbType) {
     TypedValueSerializer serializer = determineSerializer(serializers, typedValue);
 
@@ -71,6 +72,7 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
     }
   }
 
+  @SuppressWarnings("rawtypes")
   protected TypedValueSerializer determineSerializer(VariableSerializers serializers, TypedValue value) {
     TypedValueSerializer serializer = serializers.findSerializerForValue(value);
 
@@ -84,7 +86,6 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
       if(!serializer.getType().isPrimitiveValueType()) {
         throw new ProcessEngineException("Object values cannot be used to query");
       }
-
     }
 
     return serializer;

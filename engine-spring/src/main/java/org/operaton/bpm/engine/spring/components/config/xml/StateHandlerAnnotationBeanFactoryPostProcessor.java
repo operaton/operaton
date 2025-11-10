@@ -75,7 +75,7 @@ public class StateHandlerAnnotationBeanFactoryPostProcessor implements BeanFacto
         }
     }
 
-    private boolean beanAlreadyConfigured(BeanDefinitionRegistry registry, String beanName, Class clz) {
+    private boolean beanAlreadyConfigured(BeanDefinitionRegistry registry, String beanName, Class<?> clz) {
         if (registry.isBeanNameInUse(beanName)) {
             BeanDefinition bDef = registry.getBeanDefinition(beanName);
             if (bDef.getBeanClassName().equals(clz.getName())) {

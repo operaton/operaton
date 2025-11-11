@@ -46,7 +46,7 @@ for DISTRO in "${DISTROS[@]}"; do
       -DskipAttach=true \
       -DskipNotDeployed=true
     if [ ! -f target/sbom/operaton-modules-"$DISTRO".json ]; then
-        echo "❌ SBOM file target/sbom/operaton-modules $DISTRO.json not found. Maven plugin may have failed."
+        echo "❌ SBOM file target/sbom/operaton-modules-$DISTRO.json not found. Maven plugin may have failed."
         exit 1
     fi
     mv target/sbom/operaton-modules-"$DISTRO".json target/sbom/operaton-modules-"$DISTRO".cyclonedx-json.sbom

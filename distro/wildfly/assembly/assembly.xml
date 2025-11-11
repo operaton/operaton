@@ -75,6 +75,10 @@
       <outputDirectory></outputDirectory>
     </file>
     <file>
+      <source>resources/sbom.cdx.json</source>
+      <outputDirectory></outputDirectory>
+    </file>
+    <file>
       <source>resources/wildfly/standalone.xml</source>
       <outputDirectory>server/wildfly-${version.wildfly}/standalone/configuration</outputDirectory>
     </file>

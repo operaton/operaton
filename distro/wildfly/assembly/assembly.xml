@@ -46,18 +46,18 @@
   </fileSets>
   <files>
     <file>
-      <source>src/README.txt</source>
+      <source>resources/README.txt</source>
       <filtered>true</filtered>
       <lineEnding>crlf</lineEnding>
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start.bat</source>
+      <source>resources/start.bat</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start.sh</source>
+      <source>resources/start.sh</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
       <fileMode>0755</fileMode>
@@ -75,19 +75,19 @@
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/wildfly/standalone.xml</source>
+      <source>resources/wildfly/standalone.xml</source>
       <outputDirectory>server/wildfly-${version.wildfly}/standalone/configuration</outputDirectory>
     </file>
     <file>
-      <source>src/wildfly/standalone-full.xml</source>
+      <source>resources/wildfly/standalone-full.xml</source>
       <outputDirectory>server/wildfly-${version.wildfly}/standalone/configuration</outputDirectory>
     </file>
     <file>
-      <source>src/wildfly/standalone.conf</source>
+      <source>resources/wildfly/standalone.conf</source>
       <outputDirectory>server/wildfly-${version.wildfly}/bin/</outputDirectory>
     </file>
     <file>
-      <source>src/wildfly/standalone.conf.bat</source>
+      <source>resources/wildfly/standalone.conf.bat</source>
       <outputDirectory>server/wildfly-${version.wildfly}/bin/</outputDirectory>
     </file>
   </files>

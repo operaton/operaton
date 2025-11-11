@@ -616,7 +616,6 @@
         <module>jakarta-ee/jobexecutor-ra</module>
         <module>jakarta-ee/jobexecutor-rar</module>
         <module>model-api</module>
-        <module>engine-dmn</module>
         <module>connect</module>
         <module>juel</module>
         <module>spin</module>
@@ -628,6 +627,7 @@
         <module>test-utils/archunit</module>
         <module>engine</module>
         <module>engine-cdi</module>
+        <module>engine-dmn</module>
         <module>engine-spring</module>
         <module>engine-rest</module>
         <module>webapps</module>
@@ -648,10 +648,15 @@
       <modules>
         <module>qa</module>
         <module>model-api</module>
-        <module>test-utils/archunit</module>
-        <module>test-utils/testcontainers</module>
-        <module>commons</module>
+        <module>connect</module>
         <module>juel</module>
+        <module>spin</module>
+        <module>commons</module>
+        <module>freemarker-template-engine</module>
+        <module>test-utils/testcontainers</module>
+        <module>test-utils/junit5-extension</module>
+        <module>test-utils/assert</module>
+        <module>test-utils/archunit</module>
         <module>engine</module>
         <module>engine-cdi</module>
         <module>engine-dmn</module>
@@ -660,7 +665,9 @@
         <module>webapps</module>
         <module>examples</module>
         <module>engine-plugins</module>
+        <module>distro/license-book</module>
         <module>distro/sql-script</module>
+        <module>clients/java</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>

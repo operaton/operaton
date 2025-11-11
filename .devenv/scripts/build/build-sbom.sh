@@ -17,24 +17,52 @@
 set -euo pipefail
 echo "Generating SBOM files for Operaton modules..."
 
+if command -v cyclonedx >/dev/null 2>&1; then
+  echo "CycloneDX CLI already available."
+else
+  if command -v brew >/dev/null 2>&1; then
+    echo "CycloneDX CLI not found — installing via Homebrew..."
+    brew install cyclonedx/cyclonedx/cyclonedx-cli
+  else
+    echo "Homebrew not found. Please install Homebrew or install CycloneDX CLI manually:" >&2
+    echo "  https://brew.sh/" >&2
+    echo "Or install the CycloneDX CLI from https://github.com/CycloneDX/cyclonedx-cli" >&2
+    exit 1
+  fi
+fi
+
+
+DISTROS=("run" "tomcat" "wildfly")
+echo "Generating CycloneDX SBOM for Maven modules..."
+for DISTRO in "${DISTROS[@]}"; do
+    echo "  - Generating SBOM for distro: $DISTRO"
+    ./mvnw org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom \
+      -Pdistro-serverless,distro-"$DISTRO" \
+      -Ddeploy.skip=false \
+      -DoutputDirectory=target/sbom \
+      -DoutputName=operaton-modules-"$DISTRO" \
+      -DoutputFormat=json \
+      -DprojectType=application \
+      -DskipAttach=true \
+      -DskipNotDeployed=true
+    if [ ! -f target/sbom/operaton-modules-"$DISTRO".json ]; then
+        echo "❌ SBOM file target/sbom/operaton-modules $DISTRO.json not found. Maven plugin may have failed."
+        exit 1
+    fi
+    mv target/sbom/operaton-modules-"$DISTRO".json target/sbom/operaton-modules-"$DISTRO".cyclonedx-json.sbom
+done
+
 echo "Generating CycloneDX SBOM for Node.js frontend module..."
 mkdir -p target/sbom
 docker run --rm -v "$(pwd)":/repo aquasec/trivy:latest fs --scanners vuln --format cyclonedx --output /repo/target/sbom/operaton-webapps.cyclonedx-json.sbom /repo/webapps/frontend
 
-echo "Generating CycloneDX SBOM for Maven modules..."
-./mvnw org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom \
-  -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless \
-  -Ddeploy.skip=false \
-  -DoutputDirectory=target/sbom \
-  -DoutputName=operaton-modules \
-  -DoutputFormat=json \
-  -DprojectType=application \
-  -DskipAttach=true \
-  -DskipNotDeployed=true
-if [ ! -f target/sbom/operaton-modules.json ]; then
-    echo "❌ SBOM file target/sbom/operaton-modules.json not found. Maven plugin may have failed."
-    exit 1
-fi
-mv target/sbom/operaton-modules.json target/sbom/operaton-modules.cyclonedx-json.sbom
+echo "Merging CycloneDX SBOMs for each distribution..."
+for DISTRO in "${DISTROS[@]}"; do
+  cyclonedx merge --input-files \
+    target/sbom/operaton-modules-"$DISTRO".cyclonedx-json.sbom \
+    target/sbom/operaton-webapps.cyclonedx-json.sbom \
+    --output-file distro/"$DISTRO"/assembly/resources/sbom.cdx.json \
+    --input-format json
+done
 
 echo "📦 SBOM files generated in target/sbom/"

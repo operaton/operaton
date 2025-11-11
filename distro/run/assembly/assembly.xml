@@ -135,6 +135,10 @@
       <lineEnding>crlf</lineEnding>
       <outputDirectory />
     </file>
+    <file>
+      <source>resources/sbom.cdx.json</source>
+      <outputDirectory></outputDirectory>
+    </file>
   </files>
 
   <fileSets>

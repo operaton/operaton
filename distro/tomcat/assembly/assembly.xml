@@ -121,6 +121,10 @@
       <outputDirectory></outputDirectory>
       <fileMode>0755</fileMode>
     </file>
+    <file>
+      <source>resources/sbom.cdx.json</source>
+      <outputDirectory></outputDirectory>
+    </file>
 
     <file>
       <source>resources/conf/server.xml</source>

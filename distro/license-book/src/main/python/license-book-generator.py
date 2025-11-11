@@ -199,10 +199,10 @@ def generate_license_book(distro_dir):
         print(f"[ERROR] SBOM file not found at {sbom_path}")
         return
 
-    mvn_dependencies = read_sbom(sbom_path, 'maven') if os.path.exists(sbom_path) else []
+    mvn_dependencies = read_sbom(sbom_path, 'maven')
     print(f"[INFO] Loaded {len(mvn_dependencies)} Maven dependencies for the license book.")
 
-    npm_dependencies = read_sbom(sbom_path, 'npm') if os.path.exists(sbom_path) else []
+    npm_dependencies = read_sbom(sbom_path, 'npm')
     print(f"[INFO] Loaded {len(npm_dependencies)} NPM dependencies for the license book.")
 
     # define variables
@@ -244,8 +244,6 @@ def get_renderer_with_partials():
 
 def main():
     parser = argparse.ArgumentParser(description='Generate license book from SBOMs')
-    parser.add_argument('--input-dir', dest='sbom_dir',
-                        help='directory that contains SBOM files')
     parser.add_argument('--distro', dest='distro',
                         help='Operaton distribution')
     args = parser.parse_args()
@@ -255,7 +253,7 @@ def main():
         return
 
     if args.distro == 'operaton':
-        distro_dir = os.path.join(os.path.join('distro', 'run'), 'assembly')
+        distro_dir = os.path.join('distro', 'run', 'assembly')
     else:
         distro_dir = 'distro/' + args.distro + '/assembly'
 

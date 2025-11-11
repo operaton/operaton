@@ -130,12 +130,6 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>license-book</artifactId>
-      <version>${project.version}</version>
-      <type>zip</type>
-    </dependency>
-    <dependency>
       <groupId>org.operaton.template-engines</groupId>
       <artifactId>operaton-template-engines-freemarker</artifactId>
     </dependency>

@@ -83,12 +83,6 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>license-book</artifactId>
-      <version>${project.version}</version>
-      <type>zip</type>
-    </dependency>
-    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>

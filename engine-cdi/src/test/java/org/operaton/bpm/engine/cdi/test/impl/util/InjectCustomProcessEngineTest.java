@@ -51,6 +51,7 @@ class InjectCustomProcessEngineTest extends CdiProcessEngineTestCase {
       InjectedProcessEngineBean testClass = ProgrammaticBeanLookup.lookup(InjectedProcessEngineBean.class);
       assertThat(testClass).isNotNull();
       assertThat(testClass.processEngine.getName()).isEqualTo("myCustomEngine");
+      assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()).contains("activiti");
     } finally {
       RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(customEngine);
       if (previousDefault != null) {

@@ -513,7 +513,7 @@
             </goals>
             <configuration>
               <excludes>
-                <exclude>org/operaton/bpm/comtainer/impl/jmx/deployment/Mock*.class</exclude>
+                <exclude>org/operaton/bpm/container/impl/jmx/deployment/Mock*.class</exclude>
                 <exclude>org/operaton/bpm/engine/impl/test/*TestCase.class</exclude>
                 <exclude>org/operaton/bpm/engine/test/**</exclude>
               </excludes>
@@ -535,6 +535,11 @@
               <goal>jar</goal>
             </goals>
             <configuration>
+              <includes>
+                <include>org/operaton/bpm/container/impl/jmx/deployment/Mock*.class</include>
+                <include>org/operaton/bpm/engine/impl/test/*TestCase.class</include>
+                <include>org/operaton/bpm/engine/test/**</include>
+              </includes>
               <classifier>junit5</classifier>
               <classesDirectory>${project.build.directory}/classes-junit5</classesDirectory>
             </configuration>
@@ -573,7 +578,8 @@
                 <compileSourceRoot>${project.basedir}/src/main/junit4</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/test/java</compileSourceRoot>
-                <compileSourceRoot>${project.basedir}/src/test/junit5</compileSourceRoot> </compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/test/junit5</compileSourceRoot>
+              </compileSourceRoots>
             </configuration>
           </execution>
           <execution>

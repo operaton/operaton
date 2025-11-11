@@ -186,7 +186,13 @@
             <configuration>
               <classifier>tests-quarkus</classifier>
               <forceCreation>true</forceCreation>
+              <includes>
+                <include>org/operaton/bpm/engine/cdi/test/**</include>
+                <include>org/operaton/bpm/engine/experimental/**</include>
+                <include>activiti.cfg.xml</include>
+              </includes>
               <excludes>
+                <exclude>org/operaton/bpm/engine/cdi/test/impl/beans/SpecializedTestBean.class</exclude>
                 <exclude>org/operaton/bpm/engine/cdi/test/CdiProcessEngineTestCase.class</exclude>
               </excludes>
             </configuration>

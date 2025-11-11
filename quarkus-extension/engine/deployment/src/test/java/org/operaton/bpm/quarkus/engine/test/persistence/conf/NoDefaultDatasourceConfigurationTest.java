@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.quarkus.engine.test.persistence.conf;
 
+import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.inject.Inject;
 
 import io.quarkus.test.QuarkusUnitTest;
@@ -35,8 +36,8 @@ class NoDefaultDatasourceConfigurationTest {
   static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
       .withConfigurationResource("org/operaton/bpm/quarkus/engine/test/persistence/conf/secondary-datasource-application.properties")
       .assertException(throwable -> assertThat(throwable)
-          .hasMessage("No datasource named '<default>' exists")
-          .isInstanceOf(IllegalArgumentException.class))
+          .hasMessageContaining("Default")
+          .isInstanceOf(UnsatisfiedResolutionException.class))
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
   @Inject

@@ -14,13 +14,6 @@
 
   <dependencySets>
    <dependencySet>
-      <outputDirectory>/</outputDirectory>
-      <includes>
-        <include>org.operaton.bpm:license-book:zip</include>
-      </includes>
-      <unpack>true</unpack>
-    </dependencySet>
-   <dependencySet>
       <outputDirectory>server/</outputDirectory>
       <includes>
         <include>org.apache.tomcat:tomcat:tar.gz</include>
@@ -123,6 +116,10 @@
     </file>
     <file>
       <source>resources/sbom.cdx.json</source>
+      <outputDirectory></outputDirectory>
+    </file>
+    <file>
+      <source>target/generated-resources/LICENSE_BOOK.md</source>
       <outputDirectory></outputDirectory>
     </file>
 

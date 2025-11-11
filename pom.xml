@@ -633,7 +633,6 @@
         <module>webapps</module>
         <module>examples</module>
         <module>engine-plugins</module>
-        <module>distro/license-book</module>
         <module>distro/jboss</module>
         <module>distro/tomcat</module>
         <module>distro/sql-script</module>
@@ -665,7 +664,6 @@
         <module>webapps</module>
         <module>examples</module>
         <module>engine-plugins</module>
-        <module>distro/license-book</module>
         <module>distro/sql-script</module>
         <module>clients/java</module>
         <module>database</module>
@@ -679,7 +677,6 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <module>distro/license-book</module>
         <module>distro/tomcat</module>
       </modules>
     </profile>
@@ -690,7 +687,6 @@
       </activation>
       <modules>
         <module>jakarta-ee/ejb-client</module>
-        <module>distro/license-book</module>
         <module>distro/wildfly</module>
       </modules>
     </profile>

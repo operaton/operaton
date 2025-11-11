@@ -21,6 +21,7 @@ import glob
 import datetime
 import xml.etree.ElementTree as ET
 import pystache
+import argparse
 
 # A mapping of license names to SPDX identifiers
 # The license names are taken from common variations found in Maven reports
@@ -116,26 +117,10 @@ LIBNAME_LICENSE_OVERRIDES = {
 LICENSES_XML_PATH = "target/generated-resources/licenses.xml"
 LICENSES_DIR = "target/generated-resources/licenses"
 LICENSEBOOK_DIR = "distro/license-book"
-SBOM_DIR = "target/sbom"
-SBOM_FILES = ['operaton-modules.cyclonedx-json.sbom', 'operaton-webapps.cyclonedx-json.sbom']
+SBOM_FILES = ['sbom.cdx.json']
 CMD_BUILD_SBOM = ".devenv/scripts/build/build-sbom.sh"
 
-def run_sbom_generation():
-    need_generation = False
-    for f in SBOM_FILES:
-        if not os.path.exists(os.path.join(SBOM_DIR, f)):
-            need_generation = True
-
-    if not need_generation:
-        print("[INFO] SBOMs already exist, skipping generation.")
-        print(f"[INFO]   Execute command {CMD_BUILD_SBOM} or delete {SBOM_DIR} to regenerate.")
-        return
-
-    print("[INFO] Generating SBOMs...")
-    with open('distro/license-book/target/license-book-generator.out', 'a') as out_file:
-        subprocess.run([".devenv/scripts/build/build-sbom.sh"], check=True, stdout=out_file, stderr=out_file)
-
-def read_sbom(sbom_path):
+def read_sbom(sbom_path, type):
     with open(sbom_path, 'r', encoding='utf-8') as f:
         sbom = json.load(f)
 
@@ -145,6 +130,9 @@ def read_sbom(sbom_path):
         purl = comp.get('purl', '')
         group = comp.get('group', '')
         name = comp.get('name', '')
+
+        if not comp.get('bom-ref', '').startswith('pkg:'+type):
+            continue
 
         if group.startswith('org.operaton'):
             continue
@@ -181,7 +169,7 @@ def read_sbom(sbom_path):
     result = sorted(dependencies, key=lambda k: k['licenses']+':'+k['group']+':'+k['name'])
     return result
 
-def generate_license_book():
+def generate_license_book(distro_dir):
     # read licenses from files
     licenses_dir = 'distro/license-book/src/main/resources/licenses'
     licenses = {}
@@ -205,10 +193,16 @@ def generate_license_book():
     with open(tpl_path, 'r', encoding='utf-8') as tpl_file:
         template = tpl_file.read()
 
-    mvn_dependencies = read_sbom(SBOM_DIR + '/operaton-modules.cyclonedx-json.sbom')
+    sbom_path = os.path.join(distro_dir, 'resources', 'sbom.cdx.json')
+
+    if not os.path.exists(sbom_path):
+        print(f"[ERROR] SBOM file not found at {sbom_path}")
+        return
+
+    mvn_dependencies = read_sbom(sbom_path, 'maven') if os.path.exists(sbom_path) else []
     print(f"[INFO] Loaded {len(mvn_dependencies)} Maven dependencies for the license book.")
 
-    npm_dependencies = read_sbom(SBOM_DIR + '/operaton-webapps.cyclonedx-json.sbom')
+    npm_dependencies = read_sbom(sbom_path, 'npm') if os.path.exists(sbom_path) else []
     print(f"[INFO] Loaded {len(npm_dependencies)} NPM dependencies for the license book.")
 
     # define variables
@@ -229,10 +223,11 @@ def generate_license_book():
     })
 
     # write output file
-    os.makedirs('distro/license-book/target/generated-resources', exist_ok=True)
-    out_path = 'distro/license-book/src/main/resources/LICENSE_BOOK.md'
+    os.makedirs(distro_dir + '/target/generated-resources', exist_ok=True)
+    out_path = distro_dir + '/target/generated-resources/LICENSE_BOOK.md'
     with open(out_path, 'w', encoding='utf-8') as out_file:
         out_file.write(output)
+        print(f"[INFO] License book generated at {out_path}")
 
 def get_renderer_with_partials():
     partials = {}
@@ -248,9 +243,24 @@ def get_renderer_with_partials():
     return renderer
 
 def main():
+    parser = argparse.ArgumentParser(description='Generate license book from SBOMs')
+    parser.add_argument('--input-dir', dest='sbom_dir',
+                        help='directory that contains SBOM files')
+    parser.add_argument('--distro', dest='distro',
+                        help='Operaton distribution')
+    args = parser.parse_args()
+
+    if args.distro is None:
+        print("[ERROR] --distro argument is required.")
+        return
+
+    if args.distro == 'operaton':
+        distro_dir = os.path.join(os.path.join('distro', 'run'), 'assembly')
+    else:
+        distro_dir = 'distro/' + args.distro + '/assembly'
+
     print("[INFO] Generating license book...")
-    run_sbom_generation()
-    generate_license_book()
+    generate_license_book(distro_dir)
     print("[INFO] Done.")
 
 if __name__ == "__main__":

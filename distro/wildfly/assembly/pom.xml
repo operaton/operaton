@@ -135,6 +135,22 @@
         <artifactId>exec-maven-plugin</artifactId>
         <executions>
           <execution>
+            <id>install-python-libs</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>pip</executable>
+              <workingDirectory>${maven.multiModuleProjectDirectory}</workingDirectory>
+              <arguments>
+                <argument>install</argument>
+                <argument>pystache</argument>
+              </arguments>
+              <skip>false</skip>
+            </configuration>
+          </execution>
+          <execution>
             <id>generate-license-book</id>
             <phase>generate-sources</phase>
             <goals>

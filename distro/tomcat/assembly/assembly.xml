@@ -82,7 +82,7 @@
 
   <files>
     <file>
-      <source>src/README.txt</source>
+      <source>resources/README.txt</source>
       <filtered>true</filtered>
       <lineEnding>crlf</lineEnding>
       <outputDirectory></outputDirectory>
@@ -100,54 +100,54 @@
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start.bat</source>
+      <source>resources/start.bat</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start.sh</source>
-      <filtered>true</filtered>
-      <outputDirectory></outputDirectory>
-      <fileMode>0755</fileMode>
-    </file>
-    <file>
-      <source>src/shutdown.bat</source>
-      <filtered>true</filtered>
-      <outputDirectory></outputDirectory>
-    </file>
-    <file>
-      <source>src/shutdown.sh</source>
+      <source>resources/start.sh</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
       <fileMode>0755</fileMode>
     </file>
+    <file>
+      <source>resources/shutdown.bat</source>
+      <filtered>true</filtered>
+      <outputDirectory></outputDirectory>
+    </file>
+    <file>
+      <source>resources/shutdown.sh</source>
+      <filtered>true</filtered>
+      <outputDirectory></outputDirectory>
+      <fileMode>0755</fileMode>
+    </file>
 
     <file>
-      <source>src/conf/server.xml</source>
+      <source>resources/conf/server.xml</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/conf/</outputDirectory>
     </file>
 
     <file>
-      <source>src/conf/bpm-platform.xml</source>
+      <source>resources/conf/bpm-platform.xml</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/conf/</outputDirectory>
     </file>
 
     <file>
-      <source>src/tomcat/setenv.bat</source>
+      <source>resources/tomcat/setenv.bat</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/bin/</outputDirectory>
     </file>
     <file>
-      <source>src/tomcat/setenv.sh</source>
+      <source>resources/tomcat/setenv.sh</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/bin/</outputDirectory>
     </file>
     <file>
-      <source>src/tomcat/security.txt.example</source>
+      <source>resources/tomcat/security.txt.example</source>
       <filtered>true</filtered>
       <lineEnding>crlf</lineEnding>
       <outputDirectory />
     </file>
     <file>
-      <source>src/tomcat/SECURITY-BEST-PRACTICES.md</source>
+      <source>resources/tomcat/SECURITY-BEST-PRACTICES.md</source>
       <filtered>true</filtered>
       <lineEnding>crlf</lineEnding>
       <outputDirectory />

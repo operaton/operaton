@@ -129,7 +129,7 @@ To run the tests in this repository, please see our [testing tips and tricks](TE
 
 The source files in this repository are made available under the [Apache License Version 2.0](./LICENSE).
 
-Operaton uses and includes third-party dependencies published under various licenses. By downloading and using Operaton artifacts, you agree to their terms and conditions. Refer to our [LICENSE_BOOK.md](./distro/license-book/src/main/resources/LICENSE_BOOK.md) for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.
+Operaton uses and includes third-party dependencies published under various licenses. By downloading and using Operaton artifacts, you agree to their terms and conditions. Refer to our `LICENSE_BOOK.md` in distribution archives for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.
 
 ### Security
 

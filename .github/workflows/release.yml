@@ -87,7 +87,6 @@ jobs:
           .devenv/scripts/build/rest-api-doc.sh
           .devenv/scripts/build/build-sbom.sh
           pip install pystache
-          distro/license-book/src/main/python/license-book-generator.py
       - name: Commit changes
         uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
         if: ${{github.event.inputs.dry_run == 'false' }}
@@ -105,7 +104,6 @@ jobs:
             **/target/surefire-reports/*.xml
             target/sbom/**
             target/*.zip
-            distro/license-book/src/main/resources/LICENSE_BOOK.md
           key: ${{ github.run_id }}-build-artifacts
 
   release:
@@ -131,7 +129,6 @@ jobs:
             **/target/surefire-reports/*.xml
             target/sbom/**
             target/*.zip
-            distro/license-book/src/main/resources/LICENSE_BOOK.md
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
 

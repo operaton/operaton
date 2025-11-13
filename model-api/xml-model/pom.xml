@@ -12,8 +12,7 @@
   <properties>
     <operaton.artifact>org.operaton.bpm.model.xml</operaton.artifact>
     <operaton.osgi.import.additional>
-      org.assertj.*;resolution:=optional,
-      org.junit.jupiter.api.*;resolution:=optional
+      org.assertj.*;resolution:=optional
     </operaton.osgi.import.additional>
   </properties>
   <dependencies>

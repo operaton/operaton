@@ -257,6 +257,7 @@
                       <replacefilter token="@version.mariadb@" value="${version.mariadb}" />
                       <replacefilter token="@version.mysql@" value="${version.mysql}"/>
                       <replacefilter token="@version.jython@" value="${version.jython}"/>
+                      <replacefilter token="@version.sqlserver@" value="${version.sqlserver}" />
                     </replace>
                   </target>
                 </configuration>

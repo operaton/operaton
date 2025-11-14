@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:14e223e5-4a00-4f37-9648-1b9f07e37fb2",
+  "serialNumber": "urn:uuid:8f8ecfb7-29e5-4979-8bb7-fbf098ad7674",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-11-11T01:19:12Z",
+    "timestamp": "2025-11-14T22:14:00Z",
     "tools": {
       "components": [
         {
@@ -3854,44 +3854,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers@1.21.3?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers@2.0.1?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers",
-      "version": "1.21.3",
+      "version": "2.0.1",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d7c7e2994e324e29f981fad6e18e8e61"
+          "content": "ba88720c17e4978c8654505513e90f5d"
         },
         {
           "alg": "SHA-1",
-          "content": "aa3e792d2cf4598019933c42f1cfa55bd608ce8b"
+          "content": "8082c346a3e7ad554b08589191e281d87dbe6353"
         },
         {
           "alg": "SHA-256",
-          "content": "ef934ddac6f42759d71c303a2844544a56cf381b33437149955d3d8c992bec5d"
+          "content": "69b42140a58292d863eba6b09c28905c2edaadee0c0d055ba167979dcbf71cc5"
         },
         {
           "alg": "SHA-512",
-          "content": "e9daba93b15c16336a74e7af12fa9f24df5c0f4eba3ec5ad376d9b5fe6295c7fbf8d7d638fbaa140f9b431acdc12afe136557782bbf861b1293d5a5bf26bafd5"
+          "content": "4c8f02951504c42397637d88fba3409b27780d5d6c7443468e6367a10906c405df108c0a0659dd9cc8d077555977e7678dc57392ab90a26cb8a9e0020a588e09"
         },
         {
           "alg": "SHA-384",
-          "content": "975d8898aae2b27622f852653ab26439a8bf779e32177d45f70a0a6a4f03d5bb931355c7cae0efa3fe7edff8d40c5ec8"
+          "content": "92b6ee03b60e3ccf9b8c5a15f6804281ba639d9e610292c7d4cbc7920735ac0b1328db725a9ff940cce5ebdc1e3e6194"
         },
         {
           "alg": "SHA3-384",
-          "content": "1823db392397590602fd15b9ba57e27f5c3870019763d3433aa4315d89b948fedc0e167199062f24f751a7b29dce41a3"
+          "content": "28a0a55c9d0825f47b808ab2c63114cdc3b30888918a6b718a14970e862306bedc7674e8ba41aad5ba977dedd636d155"
         },
         {
           "alg": "SHA3-256",
-          "content": "9b6857782c69f035fd00e83f0c5826053959957f816a403ec5a27d9db08cb6c2"
+          "content": "e464779f97a92b662a62e687fd210caa1eda92838e0491f9892b355275c8ceb8"
         },
         {
           "alg": "SHA3-512",
-          "content": "113bd5d45341d10e9e5e1dd28c7189de4a3bd61f3478a859ad55e8e2a9ce35dd6d742204369d3e216321954e751d25efcbbd4eefdbf010a2e8a7ee5e45f3b241"
+          "content": "43143b91d7f144cb073a4eb1d643eaf9ca49142ae41d140b81ef48ad15840ab52df5331bda7b30914b98a3937723559b89104b8ea30b199c1418ecc8b34efbe3"
         }
       ],
       "licenses": [
@@ -3902,7 +3902,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers@1.21.3?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers@2.0.1?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4363,44 +4363,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.github.docker-java/docker-java-api@3.4.2?type=jar",
+      "bom-ref": "pkg:maven/com.github.docker-java/docker-java-api@3.6.0?type=jar",
       "group": "com.github.docker-java",
       "name": "docker-java-api",
-      "version": "3.4.2",
+      "version": "3.6.0",
       "description": "Java API Client for Docker",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "c68fca0735d2481b0fafc3dae09ab21b"
+          "content": "5bda19310309b053554104eb89aca1b1"
         },
         {
           "alg": "SHA-1",
-          "content": "90aef34aa23575de51923c83771fbe378b2eb4e5"
+          "content": "caeb5bee6a9c07bff31f73ace576436168e2aa47"
         },
         {
           "alg": "SHA-256",
-          "content": "6789d68f95904cf274a6410fdfcc5530976bc94197c856909459bb8c64db557b"
+          "content": "25de6aab3326c07a6f56919bd76507032694de9a8cee9752769d799b6f8c41b7"
         },
         {
           "alg": "SHA-512",
-          "content": "00a6c37fb8c08761a2e96220ec5eff6754423a91554fbe3c596938575e9128fd6ac4f00a061892bd13b76111972f09cc5f9e76a7a538f1c8a4739eb00a2ffee6"
+          "content": "c44a3182b6f8c6cd45db4051555f2673c3e74a10cd67b15e3df274b8caa5e85f7cfdd80c4652503cbde6b06f5dc67c25ca90c3f855b8aa93feeed2fc1a1feabf"
         },
         {
           "alg": "SHA-384",
-          "content": "dfa4c52a25aa355ba0c0f6489daf685904785009646e1bdff8e27b925d8d86d12b64068d970189e68fe0644c722258b0"
+          "content": "a1cb5496f2522704b1db2b7a446cfb51d4d7b3f27d671c3eb8f1dd9444538e6b91d9fae856531a6d55c5f00e09e7d417"
         },
         {
           "alg": "SHA3-384",
-          "content": "5364ab9203f656ec74dbbad0101a63454d3a69cfcc8f3cb5281f9741e825916e9aef6d68f5cf89315d68009fcd9f46bd"
+          "content": "7cd6a29ba027ffc2c9b1e378c7ea0fa3fd5717ed629d3ad89a48f219d44aea871321aa7f2b3bdf30b5588b85ac530765"
         },
         {
           "alg": "SHA3-256",
-          "content": "76d86e1de7d31f50bc542180fa1f88fed025709205fd5100e17d4531eb579f8d"
+          "content": "fb59b0573c1890d214a168c534fd4ccecf7db074ea62ec25803e255f42d9e64b"
         },
         {
           "alg": "SHA3-512",
-          "content": "6db7606ad908d3356b814d0d656c4a8bd1dfd4295ff3d7bf8d5c6961d40167eaee40b359ec070f99e2de54a45b949e95e7a145638f539f8b7967bfaf2a7d12f7"
+          "content": "e8cbd799399564038418b5ca449eff02e477123f2d353aea48ead5883ca81d9cd263420aa5a61456443525c8a9865c07e3b005e01e300903df19e30852090f3d"
         }
       ],
       "licenses": [
@@ -4410,7 +4410,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.github.docker-java/docker-java-api@3.4.2?type=jar",
+      "purl": "pkg:maven/com.github.docker-java/docker-java-api@3.6.0?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/docker-java/docker-java",
@@ -4490,44 +4490,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.4.2?type=jar",
+      "bom-ref": "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.6.0?type=jar",
       "group": "com.github.docker-java",
       "name": "docker-java-transport-zerodep",
-      "version": "3.4.2",
+      "version": "3.6.0",
       "description": "Java API Client for Docker",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "1e5e8b565518b6544fe62aecbbcf580e"
+          "content": "53371723a3b18ea4000b637a2a88286a"
         },
         {
           "alg": "SHA-1",
-          "content": "784b535b8e294e699032abead0687b6773761e34"
+          "content": "549f4985f9c7714deff47d1041603e85e132d184"
         },
         {
           "alg": "SHA-256",
-          "content": "582b772e0c52fa9d24710617ef610655465edd9a2930b0db75fc8667d6a8d02b"
+          "content": "9c58297ae251b08335598edf4e50c51ab2167f6ce0de2bad8f83dbea8d378b8a"
         },
         {
           "alg": "SHA-512",
-          "content": "4742101ef0eb66d16153d312826e5ed068410c2da292dfcdcad5a0b30a8ead17f5ce2e653c8c8c0b9ec68c1d529f4862a31f3a8cda8e873c893e2c53d070c938"
+          "content": "46454c98765cf99bbf67af3e1d05c719e088ee16d89fb32488576e900c0efbc1d58342874324f74ae50e80a9aa78a58a0f2709197dc6efd8ea75fb01d2e62e95"
         },
         {
           "alg": "SHA-384",
-          "content": "b3f4466f70fb89791285895ead9a4b64e4595bd5ad17b973c6e07cda5e1eb3f1dc72bbb58d711ad7a7c2df770e0c96d7"
+          "content": "7024d2d7705fd4896b95389eaaba7aeab92457f8c0dacefd2ec7fe9c725e41bc159d7c8b81a44e46ec8dfce437f5b98f"
         },
         {
           "alg": "SHA3-384",
-          "content": "5d740214c330d2f6293850affa70d4ba07704fb907f60c6277eecc7b3c4b65963022823e82ec7b408fe949f1e9f21235"
+          "content": "5563ca5eea3a5390e336d639b688ec1f7e6e09f0d55f4fa8b1d4dad60e3da744c997f41c02d82bf958938d27bc9dfeb9"
         },
         {
           "alg": "SHA3-256",
-          "content": "a5db73f2ec615fad139b63b2521d5cb5cb5ec43bba209f0eec94adb5b43bbf83"
+          "content": "5a863330919164ec9f02ababc36614a94bb665af28c2a0072542c1761b3c3431"
         },
         {
           "alg": "SHA3-512",
-          "content": "ba27383a3d0b75f26c8c513c39a1313f265b9808a4aa5d45123530c67e41b51a4502997105d012aaa8eadf2e5edb91cb59821d8c81ed45157380cea639135b25"
+          "content": "33f458fa1208773a2e8652ad14bfd7ae5be188e01b5181d97e333a53f71b1ef9048fc949f7c3a6cdd3de160b8b8fca2a5ac2123a2ec872b4a3566812087a349a"
         }
       ],
       "licenses": [
@@ -4537,7 +4537,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.4.2?type=jar",
+      "purl": "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.6.0?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/docker-java/docker-java",
@@ -4547,44 +4547,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.github.docker-java/docker-java-transport@3.4.2?type=jar",
+      "bom-ref": "pkg:maven/com.github.docker-java/docker-java-transport@3.6.0?type=jar",
       "group": "com.github.docker-java",
       "name": "docker-java-transport",
-      "version": "3.4.2",
+      "version": "3.6.0",
       "description": "Java API Client for Docker",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d56715a3bfdd8cf854809d369742e467"
+          "content": "3988991ebbff2674fbf7287fc7c69459"
         },
         {
           "alg": "SHA-1",
-          "content": "e70abb944ff1fe7c25fbcdecd31c732772a07a6e"
+          "content": "d522c467aad17fd927e0db0130d2849a321a36aa"
         },
         {
           "alg": "SHA-256",
-          "content": "bc9981224fdc2d4726566fc723470601ceb14378265c865b4c203146a4e39765"
+          "content": "f2607fb4c2d6fff6aee897bd20db6bb0831c2a73b79dbf20eb0ddd3b6bd9123c"
         },
         {
           "alg": "SHA-512",
-          "content": "9fe1adcaea91a940472f32132de477cf27352c47159dd2785e084895aee06a59aa05f1ad529fba6b3e704859f0f53e79a17b9d3631c26345e333592207dac588"
+          "content": "fec87bd8869fcfecd52be3af2f9d3672bb55f7f30293ae3398485c713b4f5d5a670c3b973649b8697a2f070dfb8189d931ef14179837d1e608d4126c43a6e311"
         },
         {
           "alg": "SHA-384",
-          "content": "4c2eacdd103b40ac43d37b0ebc308b0bf1e76fed8f86c4ea785b3ddce47d6d10b04e7e4e5cd166d7b812233a5ba554b9"
+          "content": "035d832515aed07ea2ac35359ffbac180a9b6d6951b8328e0d22ddf23998068f86f9054b6efa709a794ee8cbc863aed4"
         },
         {
           "alg": "SHA3-384",
-          "content": "d6786cd104a62d4c50214e7110e29761066941656208d32c4866872c3058a0d841b745ae258b652a93bf7541db8268a6"
+          "content": "53b91b9a775b475b8ac276fb72be88a962e4826a03b42ae499f2128435610487b9b839be50843eb22490d76910633c9f"
         },
         {
           "alg": "SHA3-256",
-          "content": "a5f1cc8fc6c099feb3e425bbbcb1fc7ba1ef60463fab7d01174fcaf1e5ab2247"
+          "content": "8e25c086f2a096bce60291f20a8892b06c76ce252fe4cdd7772012fd3beedf55"
         },
         {
           "alg": "SHA3-512",
-          "content": "77cd7292be443ac85cd7ac0689c44f8c61988988d492c8abaa0a9ef2bf92379d6cd29ea4f52fb40fdb363bd26a558734ec784eab1404a16200833722dbcc0ece"
+          "content": "1b46f285fbf03733af849736c6b3b84ca873feebeb800cc77c2b1af14699d0023a1bb858dcd191af745d3c40b09173161a27c218ac681250ddd434e427a8bbd6"
         }
       ],
       "licenses": [
@@ -4594,7 +4594,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.github.docker-java/docker-java-transport@3.4.2?type=jar",
+      "purl": "pkg:maven/com.github.docker-java/docker-java-transport@3.6.0?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/docker-java/docker-java",
@@ -4604,44 +4604,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/mysql@1.21.3?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.1?type=jar",
       "group": "org.testcontainers",
-      "name": "mysql",
-      "version": "1.21.3",
+      "name": "testcontainers-mysql",
+      "version": "2.0.1",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ed725282f2c05957b6829e766b7bcf04"
+          "content": "2b821f673ea7320b961783678493667e"
         },
         {
           "alg": "SHA-1",
-          "content": "ce02396b4ff1c8fb4124eb438f7a8da98eae03c5"
+          "content": "2d2f1c9d44b26df0b2f320148cdfb11508e74a87"
         },
         {
           "alg": "SHA-256",
-          "content": "2cd42d4ab30a119d8115897abc4282b54c5650de41e25ed8250592f08ca17cdc"
+          "content": "83dd6046b8463ce3a94b927f78a47faf8a0fd821c23db1740aa716163d7ce9a7"
         },
         {
           "alg": "SHA-512",
-          "content": "d81424f0f62fdeb834ac1eb7e75e12dec614614cc29fbbfba04360c35e4e46bb4dff6ec87e44bb0fe97bf53ccf4561ae833773f1d8aa5de028e0caaffbfa8203"
+          "content": "26397dac79a1d84cec8e3f8ba2213e17083c7aa92c2081d4b3125602155f0da0747433e19088a07d03872ca788a9951058f998921f987bffda3f8ab9c0c2397f"
         },
         {
           "alg": "SHA-384",
-          "content": "7ca5eaa89c083f0e7c33e362cb15dfcec00abd82bee21b4ed983da20e06d4ae0ed690bddc001c7c9dbc6b034c72442eb"
+          "content": "4b03d7fc23dbd48816ceac3969e9cf8a5fe9c8fae1a1a63c54457d115446d3bd2f76851642f034bdf53d71ba63b19127"
         },
         {
           "alg": "SHA3-384",
-          "content": "7bb198ecd87202fe4ab7345f4d5e5814d560052cf5a630941ee949a11d7ebb3a237dd6a55506990d05e9fe063265d73c"
+          "content": "353bb0e539b7acfb1019cb99a2162503de5fe391185ef7eaabbf08bd57cc28557fd361f602874a7bf3aee40699678452"
         },
         {
           "alg": "SHA3-256",
-          "content": "f7bfb6425118c7ca535c69e948f0dae0e6befae056a0b61dda96c2b8c31869ed"
+          "content": "e4044ba668dd1bb18705a8257f7bc90a77b87790b1530ec6d682276fc75c5b7c"
         },
         {
           "alg": "SHA3-512",
-          "content": "cf55f6739cc8d20088bd525bc6fe02e42b071a068bdc89e90d37dc73bf5a5b4a210ca64003cc6d4b606c078ff9f9b5038857083a840f15e89ded77e37d990c6f"
+          "content": "d61d41b8d2cb2b5432db775d3697b96e152ae8ab667330729da7dde7ee18d41588e0c6353593d5ee3d00a04296456fb3bbeb8b0b14f0c0bf7e6a06637bab6ef3"
         }
       ],
       "licenses": [
@@ -4652,7 +4652,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/mysql@1.21.3?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.1?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4670,44 +4670,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/jdbc@1.21.3?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.1?type=jar",
       "group": "org.testcontainers",
-      "name": "jdbc",
-      "version": "1.21.3",
+      "name": "testcontainers-jdbc",
+      "version": "2.0.1",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d7236e530d2db9f67bdf81fed07b474c"
+          "content": "c8d730b2adde07266545d44b94b57b93"
         },
         {
           "alg": "SHA-1",
-          "content": "add1cf7b1c8f0ec3a3189793e90a7a967000cf95"
+          "content": "ab2d400856ea7aa2836e6454ad8910100aab3d59"
         },
         {
           "alg": "SHA-256",
-          "content": "8162137442982ef42a70a86fd50362d48d2a2366bf13787f98696735aecf7a57"
+          "content": "0a39471966ac28b9b7137d9e45e3197ef47c02be05b74c8e18239a3ec8e155b4"
         },
         {
           "alg": "SHA-512",
-          "content": "a0def27701ecdb98612e4b13a790e40de08d9bc05b2ed696e33c2fe67925923b5ecaa08b896ad3fe80d2bda3de617c75b1a3325b26dcb38464aef2bfe5000390"
+          "content": "e2df784429843a49962334fc1391e2326d68968224398ca1a88e7d384b00750281235491b8120420d62ecc3c9f4faaad646e86e8d17970f23d2628b4030312e0"
         },
         {
           "alg": "SHA-384",
-          "content": "8853d450537ac3509fae2aaf57a7272636537caf86b9f34200c7414954a76decc7fc5d2eb9896771f53851db4cfb3906"
+          "content": "d0d53a21c466e9208ed3815b0bead19be659b15ef35ea15332598fb60f98e2d341496f41429f78ce496ce1d3d39c7596"
         },
         {
           "alg": "SHA3-384",
-          "content": "25572a79f27ea9d46aa029f2b7df4a9a735446003efb7046cb5d60c7ebc54cc11448613531a56d6814e0394c46c5bd61"
+          "content": "8d3b7cde769af5df790862e89eb2fb3dea9f7034f9448a42f277e0647141f27098ffba1757cffca6e85a26f3d1fcf47e"
         },
         {
           "alg": "SHA3-256",
-          "content": "e5479ec39fc95b716cb92b48fd8533922076ce7f8d61cd8a1544a61aa8334162"
+          "content": "05bea13b80e159248fd2198e08d8cafe97b929943f812dbbfeba44d4ab6f179c"
         },
         {
           "alg": "SHA3-512",
-          "content": "6f8aad6e659f43eada0a2659deb9a1f438b3534e57e08aa7d183864b1c9023302042f1212471afd976119f118b3bc0f0fcbcf65eda78cb48d9da2466247703f3"
+          "content": "1c9b1d419f38278b09611eab1ab93412866ca46d8ac6f2ddcb86bb332d751336d7a88bb33f5c62cd5dc2773f0edff6b1d5d482e39b9e9f27f934373a516510a1"
         }
       ],
       "licenses": [
@@ -4718,7 +4718,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/jdbc@1.21.3?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.1?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4736,44 +4736,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/database-commons@1.21.3?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.1?type=jar",
       "group": "org.testcontainers",
-      "name": "database-commons",
-      "version": "1.21.3",
+      "name": "testcontainers-database-commons",
+      "version": "2.0.1",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "697b592202716f05fd3db6ab5000313c"
+          "content": "e3bb8d99dba4afc47da045d7aea30c36"
         },
         {
           "alg": "SHA-1",
-          "content": "5c5a96de87527f78e1c5d9b82e9f265c89075883"
+          "content": "9ca57dae832f2e55de5a92b0305a3d374cf91bc3"
         },
         {
           "alg": "SHA-256",
-          "content": "61ad1b495dafa49b71f8de36082bc5baceb92dd00c62b941f467de419ac7548d"
+          "content": "5943e0ac63c10b323ca14950666040f07fa698f2e506c2d98bfc9008e095081e"
         },
         {
           "alg": "SHA-512",
-          "content": "eb99088de5a0fd7e6d547af2b0d5a1f9640c03dd30221439ace0b3300733c8876280f938b3e0ec16a59114f28402e65a480aac6ffa981549c4a745df491a4c7a"
+          "content": "382fbf22f4688696205507f008d371a4e3f78d6f99dfdfab5b8afba3657a7be2e2279f526c16d18a193e0b138dda77ac8194494ef795da2c78edd74cd1dd41e0"
         },
         {
           "alg": "SHA-384",
-          "content": "c4a3470a1df8efbaad776b51c8cfff83f2161929c01380989de40705bd71b59eed5134265801bd901bd61f6664b956b5"
+          "content": "b7133f28fa7cc80c163c25df907d581ca31e6cc2f5aa9c466c323a6d7bb3fcad65b50a3867fb66e0d820e2ca9e04b3a0"
         },
         {
           "alg": "SHA3-384",
-          "content": "3ea93cd6d3dd4706eb57a9bb8f324ee663974ed8281a5a550c198d1fafa94cf0d8b19bbf8fc20ae88e34b88a154bbedb"
+          "content": "ac181a57d19c817db06280a4390d47fd47772310438ece72232e36d7984de9d02f61a7ced9074dc2aa08fe123393edb9"
         },
         {
           "alg": "SHA3-256",
-          "content": "7da509feebc74f8de4c0ed50d252c81541db5127e8940e38e0e4ba16727f142d"
+          "content": "2a65f9152f0447002ee81d9ec9720476f3a716fb94770cf97a3c4b5491bea546"
         },
         {
           "alg": "SHA3-512",
-          "content": "807393af8c3e8a16d1640b31a390458b5051ab4e4132375cf78bd65f3718fc9ddf49d66c2a944bfe0a6f7bf42e6ab7e9ae574b57f872282c2c86e2f5a3535ea9"
+          "content": "7370df13ed3978978840868c4388f3c7fb047b851a54413a3ffe6969695e82d61acbec6ef520bd9718b5c512708f0ee33c0b9a2d811272d31aa455f7f09307ea"
         }
       ],
       "licenses": [
@@ -4784,7 +4784,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/database-commons@1.21.3?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.1?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4802,44 +4802,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/mariadb@1.21.3?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.1?type=jar",
       "group": "org.testcontainers",
-      "name": "mariadb",
-      "version": "1.21.3",
+      "name": "testcontainers-mariadb",
+      "version": "2.0.1",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e81f9fcc16315f38e3fe094485dd3bd1"
+          "content": "2cf14c98984fc46229ae99af52057d5e"
         },
         {
           "alg": "SHA-1",
-          "content": "d0b7192c9cab384e25edec93c1ee3ba33635e0d9"
+          "content": "b76e3c14318a35570c722bdd978dc831da72516c"
         },
         {
           "alg": "SHA-256",
-          "content": "657f6ba1a783a93139acc8cc74a301eeea0fd075007a98cd414231ce7a52a287"
+          "content": "246b4a7127bc771ca604d5de87d18f31390819a8686332a57f1ca87fdb9ed4c4"
         },
         {
           "alg": "SHA-512",
-          "content": "f5604312ebd82d1c5d976437b8789b679d014b270fbf46c617d71b7d91a9f4914aab5c8feb2badf357d64dbbea7e6c3b217c379d9fa8c235a6ecf09c1b64ec76"
+          "content": "6c946a521b831583e10928fd2a2a35ad187ed918d83a8e7f77288c2e4c830c330313a0c72c3a3c6b70f7adaec249705a311e4d682370f957f6544da096200aea"
         },
         {
           "alg": "SHA-384",
-          "content": "7ffeb299c1d11d818a1da21fa83d3831211161ba6a37d1a9418a2a9e9b77b1b4309da3997e7f257f738fcb3f84a2c064"
+          "content": "a8d4e52f852ffaee99c6da989d4a198875be4c2b152754ad4e445054ab093efbf123a02eb8209cfcab08c5b0130fe739"
         },
         {
           "alg": "SHA3-384",
-          "content": "48bd7560cf1a256314c6dd4e47ecafcf401218a0e24dacab78233475a98322c334a78277a755a3efad0c0c203b3f0337"
+          "content": "3f74bca85f0520216386fab13231a44f71f9876aece4e3c0246d69387f6424dfe6e9ed9b52a2d8adc7cfc44482aaeef4"
         },
         {
           "alg": "SHA3-256",
-          "content": "124a8ff381d607038ed953225da471b437602f08322ed981e71b89b3a9c4799a"
+          "content": "c90bafb1eeff08c3f62ec8feaab2fbccc48908a4a5d1773a9f7078b96660ca27"
         },
         {
           "alg": "SHA3-512",
-          "content": "0d4d6ac57719ffbc337c0c60d92fa3f21c9a703f0b6117803abfab123db001ef575bd7aa46b1f3a16f761b0ba92df85b9bf71aae077475c5a39ccba5617c4f07"
+          "content": "41d748e41cf5c2633b001646c9c526536d29937a9062e9ca5a904a7db46058dc63430c60a2e93fd116bb08a4b1d6bbd8905350c7fbf68d6c39e4b2ce732a4296"
         }
       ],
       "licenses": [
@@ -4850,7 +4850,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/mariadb@1.21.3?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.1?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4868,44 +4868,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/postgresql@1.21.3?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.1?type=jar",
       "group": "org.testcontainers",
-      "name": "postgresql",
-      "version": "1.21.3",
+      "name": "testcontainers-postgresql",
+      "version": "2.0.1",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "080a2eee3872efcbd7e201a775554fde"
+          "content": "2d2e1132e1c10ded78995f301941e4e4"
         },
         {
           "alg": "SHA-1",
-          "content": "db5a90e4999db85e0c22fc8503075c0af7c3c644"
+          "content": "dbafb14dc34eb6b467199e5141b0e2b2431f8d45"
         },
         {
           "alg": "SHA-256",
-          "content": "cbcc9e5b40a5d1c4203e6fcda7a578c607d47f4197bf489d5e0d0e7e844f44fc"
+          "content": "c942627c3bedabc6268327af0a1ad7c1a5f1253eebc396120858d757280a83aa"
         },
         {
           "alg": "SHA-512",
-          "content": "28fa70d76c3c601bc148120b9b0bc0e32caee6bbaa1d88a116efa5a5335816a19484ebfde37c6d1361547fb74b8055757291ee05da5509b44b8165f1d1f63e3d"
+          "content": "e9dbcd5a8eb652014fb784c8722d22d5e246fb069c46aa67637f756376a93273ea1555965123629992d2686b3256ddaad69a4e93ca5a2c4174c82a0775df21a9"
         },
         {
           "alg": "SHA-384",
-          "content": "5582fa60e51218d4f7fb22fcbf27b6cc40e90f184650fc1b2dce69d6aa719fcb739cee2f26c7ac8b6702991861b6fa20"
+          "content": "e4d37f9f6420322d23334d96d6ea8bf434e6fafcd82953d6e4d0f81be00c3a045f692af2cc6abbec13e7a6e68dc5f0ee"
         },
         {
           "alg": "SHA3-384",
-          "content": "2435e17cee0bf8487b346ddbf4ef39e0729b8e99c2e06340fe6a697538d6ff2602a4a0c31e958801ed9aaea89e566173"
+          "content": "475ff1cfec57a141f56901ffccd8f16cd7cf9ba8c24e9c3079d5802a449b04898dafdf0d93b8edaf5ad7435e0af7b3d1"
         },
         {
           "alg": "SHA3-256",
-          "content": "9d020230431341ac14bc32ca4a1ec9bdcfb8123eba079b371be5c73099dbbb89"
+          "content": "3913bb229b3ae68e96f061c72d11837aa7285e572f173b098766fbbee799911d"
         },
         {
           "alg": "SHA3-512",
-          "content": "73223754b2bc262dad29b54b36d900471dad303642591b727b5da608711f79448856d8e43277ff09f5e75c39050cd49d3d89a0fc99b716577651efeab5058d4a"
+          "content": "839f4030a5cc52478c8864d488f8deaa0883462000b214191b471976ea033e9709dae7a777004fefc12ca9d817ddecc751525d869412df2afa7f7009a92cfc65"
         }
       ],
       "licenses": [
@@ -4916,7 +4916,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/postgresql@1.21.3?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.1?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4934,44 +4934,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/mssqlserver@1.21.3?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.1?type=jar",
       "group": "org.testcontainers",
-      "name": "mssqlserver",
-      "version": "1.21.3",
+      "name": "testcontainers-mssqlserver",
+      "version": "2.0.1",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "614f0081444cab417cd7e9a022d69218"
+          "content": "caab01009718c3e5d13a50603f9fb8cd"
         },
         {
           "alg": "SHA-1",
-          "content": "5e437e6a53e69be6d9889dcd98b4435b045dc678"
+          "content": "d7a1fbaf7b3030d4af2315f8103f7c96b0c88784"
         },
         {
           "alg": "SHA-256",
-          "content": "02ac6f6281fb774a81c95111daeaa3ae25604ef8273e050554558f9b99a56d19"
+          "content": "291b597d228211ae86043ccb0b7fef0026b3df7f616b5b2bcb46df9ff7b14a95"
         },
         {
           "alg": "SHA-512",
-          "content": "51c35ed303a43a198066116531283866b6674ccee54bc8c75544b8703e8afed0ca992d3a6d5a32349a56f95515e043caa59751ee4cb11c5ce8be9812225e3348"
+          "content": "cf403a6d7f89324c1d01f4a1f4a7fdc27ccdb22e52cb40a21fb7c4b37b563ef4d59875f43d3e056ef04e766452bee34c65a4c395d9a0182504a98d1d14334139"
         },
         {
           "alg": "SHA-384",
-          "content": "2ec285dd3c9057fbd4c8d095727fe0c52b53b280e46a90ac0e85499ac01e6fee77779b98194fbf4fb828f1e32ccf2af5"
+          "content": "8b325b2790d6a4c3fd449d3c038947e8447479bbfdc00da042a5278f21b4c1df2241366cdcf9e320720159c5a2a90c19"
         },
         {
           "alg": "SHA3-384",
-          "content": "75fab9529d77b2b1636ed59840316898e8024a299ab46b988aa31d4cf8f2c46bb564861f48ae600a19217d2f39baed2f"
+          "content": "17d9785644c787a83dbfa3ceab9f1507a8e2e4b7d376f1d092d64f0e90c15f0a404f27d12ca9578f09ba409cd72c38c0"
         },
         {
           "alg": "SHA3-256",
-          "content": "67e411a338806e09352e7ffd42d9c45b09fe0ba39f171d26ea729e6ad6f73fc6"
+          "content": "84dbc5ce6788d02c90c2504a4ef3dd73867bfcf2cd1939ea332f81c3970a7332"
         },
         {
           "alg": "SHA3-512",
-          "content": "03662aedd0b8bfeaa7ab9845ed49118807215f2bbb2fcfdabc054cb3fe8fca6ad27870a4c3a660a413bcd7dee351fa7d499c5ded30517b75c8787a26a2cad65d"
+          "content": "f3f194f067311734eccd6c56a8b8e0ca35b1506f0b3eb2e7b3d63872ac9d10a5fda8315aa594815508e2dd38820f1cac328d5bf1e49dd6ce34f632f90661e6ec"
         }
       ],
       "licenses": [
@@ -4982,7 +4982,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/mssqlserver@1.21.3?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.1?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -5000,44 +5000,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/oracle-xe@1.21.3?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.1?type=jar",
       "group": "org.testcontainers",
-      "name": "oracle-xe",
-      "version": "1.21.3",
+      "name": "testcontainers-oracle-xe",
+      "version": "2.0.1",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "91bcab53aa6d05918e612b386d71d76f"
+          "content": "9d35f33e10002dcb135d25b9d20a2517"
         },
         {
           "alg": "SHA-1",
-          "content": "4679bf2899c4d18920bec1925f6af910a68c0bc9"
+          "content": "0f4b00846cc844b120b3aa4e8a4b6444785f5d4d"
         },
         {
           "alg": "SHA-256",
-          "content": "3451771570d584cceccfc8cf69cfee6c3864d60b6366bc88b8e2805300b41b9d"
+          "content": "0648bfcb0f893111ed19c669134b57c90e7058a7ab62c03fe42c9737b89d9638"
         },
         {
           "alg": "SHA-512",
-          "content": "cf024981e5e1866dbdc472d819823fc72e2356f197f073b71534982e42f4eae5ffee2f5a0a60f56e036c031aed76bdbb614163a3d355405dd9d513d0a35c08b0"
+          "content": "9e166286b042411cd9d6ddde69e577ebdc2c2ef5929d0cf47c4ce72751bc286912c10ced6550191af30a3e14bbb8b45b296d72459ceeec18d3c2cf22d81fb040"
         },
         {
           "alg": "SHA-384",
-          "content": "e05727b854d5d7854aec272c9f9b71a7fa74bd03861772076c36881c63af3f126528d6414b40026ade19acd92df0f8b8"
+          "content": "4e97ed988437705aedd9c3444e43e9f1d7ddd7af9ba0f42815ce36a62b0ff09d611d7902984ae703c22ca8730d19f76d"
         },
         {
           "alg": "SHA3-384",
-          "content": "fb3e75efe2d1e93ee08299595b4aedd401a6ce631a9cce6900771ee3fd219c14b5cf31ca63adece68da57bfa15e083be"
+          "content": "0c520c329830eec76949cf0d3fe9dc09dfdb87a89629c35dcbe972b98ac5e43ae9be622d9e22e166e76a3f0c7be0be43"
         },
         {
           "alg": "SHA3-256",
-          "content": "8ac99d1c4f581423a2732b1ae247c15bf1e368602d7d06130f32d28a50d6bc69"
+          "content": "17ed86589fb949ba3693c6b3c041b871fcc368a8218a142736622eea24998d1d"
         },
         {
           "alg": "SHA3-512",
-          "content": "07cfd55ccb493aaecabde7f76eb7008e887dceda160ce8741dda203ad9bf0b1fca27892b08c64a8858bd997eaeac8be939a42ed450fca550bb6395fa0e7be1d8"
+          "content": "f8cf77b908d754d8eb92839d5eda6c9b2b6d1dd112dd12056f3b3f6abf0155641688744bf4e535ea74adea1469b116112ac30a9b0750194257fb6ff9a56c6b93"
         }
       ],
       "licenses": [
@@ -5048,7 +5048,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/oracle-xe@1.21.3?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.1?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -5066,44 +5066,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/db2@1.21.3?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.1?type=jar",
       "group": "org.testcontainers",
-      "name": "db2",
-      "version": "1.21.3",
+      "name": "testcontainers-db2",
+      "version": "2.0.1",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b445ed4cb3b56658d7eab22b116c54f1"
+          "content": "e93357e3f1a082ff03090dea9cb83152"
         },
         {
           "alg": "SHA-1",
-          "content": "77a6dfefe26ff06f27c56f98b7d82d2187056c7d"
+          "content": "757a0079ce0f6cceddee8a38c1938277b2eca577"
         },
         {
           "alg": "SHA-256",
-          "content": "e0b82d9dc718cb5228d546b4bc5794615f86a2fde7ec2cf87792f85370eb18f6"
+          "content": "06156ba82da045d1f1f7fd25bd86aa9338f52376b9a0e0446438337a16bf6356"
         },
         {
           "alg": "SHA-512",
-          "content": "9fc113dd9eea05f27bb7048ea7d62e9492f1c19cc50097e609e4f54c28704369137aed9f7d0aeb3afa224a0496ad9dc3cc0d53a8adb883b2b68b408117ff45df"
+          "content": "a45674629406436424279b359ec54dc5647ed43c10fa72640cea5dd08d795e5dbbdb0e8eb150eade83ca99171c17f2223a604dd32b2e4739ca7624b7be78583d"
         },
         {
           "alg": "SHA-384",
-          "content": "a011f29eae3cb27bd9bd2ab983d5387cdcb1dbdf01abf263cc020d9147b49d323297e61d740ba8b681f411cc903e7b03"
+          "content": "22cda089b9a24841ed338c72d86c65c63dc83c8d7eee27a9dd2f83af9036be630e2a82e1c0824e2244ef8d1af537638c"
         },
         {
           "alg": "SHA3-384",
-          "content": "d142d9b2505f4eca5989811f33aea909537f6b352c8380e9d39f2d4925356c58455ce5da2b078224bc7918234906ef38"
+          "content": "4df2e71e75f938374fa009e5e12b4248808f293fd8a3fb2f27dae415545c926f6dd0dbd15e42a88aff492af814a928ff"
         },
         {
           "alg": "SHA3-256",
-          "content": "629b60bb7f0511b67305f1c1d6adbe7002d1fe49a6d4ca4c8b564bfeb19d0f9a"
+          "content": "24c3a5e99d15f01e2696edaced6236e68d4bab1e9f28611bb5ad6efd16d3b901"
         },
         {
           "alg": "SHA3-512",
-          "content": "a058b3331c9c13a162b6ad94cc21ef5f1c90a2328a64bebd49097016f99743bfe387d2b7ffda0790c2c427725149a3946be438bb6c1cfeaf1a46ec70be91731d"
+          "content": "91d1ef7d49cb82bcff7d0e4685a9c904b89b369abc2d0e5eec7e6d979d5e079fca09dfd6f3b4b47cb3247597ccd4da0e1da216577e389501ded031d198c9d7a5"
         }
       ],
       "licenses": [
@@ -5114,7 +5114,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/db2@1.21.3?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.1?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -7722,45 +7722,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jakarta.rs",
       "name": "jackson-jakarta-rs-json-provider",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Functionality to handle JSON input/output for Jakarta-RS implementations (like Jersey and RESTeasy) using standard Jackson data binding.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "659f360d2efbd2cd5cf8b1460071a075"
+          "content": "2b7062b6587e7b3c8ded16f38dc3eff6"
         },
         {
           "alg": "SHA-1",
-          "content": "69aae0e5cbde3ff0d8de936236e4a65813f55a7b"
+          "content": "41b2719b93949427d30b573c3c997459e86bfa94"
         },
         {
           "alg": "SHA-256",
-          "content": "08bb58d39195737917637aea6df02ed09d3175f2fd0c1fe7ad34d1ab9775f438"
+          "content": "3bc6d1af62588c504160c1155347b1b3a15288e5e3f35156eb1bed4bd940dcdd"
         },
         {
           "alg": "SHA-512",
-          "content": "32358fc24a39ffc4b0061f4044f45a6bc07e61062cb1a2ba5286711061906657545ecae4e441c0f319e987b0a6217fd6f7df0973f30d0885a3fc197d2dc03b56"
+          "content": "1d4ab4c0e0fbe0a5c78bf3bf688a1fab6833124ab57ccb4e06365c9d5abc2b05a9004c7c63f165f0bdc889a35d15ba0a84638fc0266097ba3014410c26c4bfd8"
         },
         {
           "alg": "SHA-384",
-          "content": "7c553ad3bfaa80649f6a893b346c51c70f75dcd3f1e800d4b380d4088ee6a5b6915697e528c032f39984294d7fd682fb"
+          "content": "f5a42ad98e4e2d404564786c9c4d2014e5dd5cdd7d64da5c8883f56ea36241cc39e457fb2a40ee51efe80a18dc34252f"
         },
         {
           "alg": "SHA3-384",
-          "content": "2e4d12a1c7064e5bc9cb95eac71abc43c2b528dfba4c2c123469e18a891e800f95f85643f4a88605043e7bfcd53cac72"
+          "content": "700f9e864ed342ea21947ab6de58300c6a81cb20a2bcd216ba9600c95e3806c5bd816dc54697934d652ddee62f62927e"
         },
         {
           "alg": "SHA3-256",
-          "content": "8c10b2b64fd415cabaa96496552117da7fb1920e0ab0b5ad8d40ea63036664fb"
+          "content": "c6c1f1809bdc9213a23ec03178f1f2162c10e6745316b08b597b345280c584bd"
         },
         {
           "alg": "SHA3-512",
-          "content": "4e32ca8aae86654376c4610df2803bb46bc41d0cf89a069676f05a50a701d63589ea38f793c30ae1ad0d7f18f8771a10f457106442fac807f89db685393d68ba"
+          "content": "bcdd20e32803039605a9e02d521702637a47224a27297fbcf2b447f7a4d3d3d85d37edf0604a4bc470d8e39f1edc7904793928a8767cc52cc528533199c9be27"
         }
       ],
       "licenses": [
@@ -7770,7 +7770,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-jakarta-rs-providers/jackson-jakarta-rs-json-provider",
@@ -7792,45 +7792,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jakarta.rs",
       "name": "jackson-jakarta-rs-base",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Pile of code that is shared by all Jackson-based Jakarta-RS providers.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a2f983c0072ed34eb510df58c817157f"
+          "content": "b3f4d58e89ee7279c07191cb8b6746f1"
         },
         {
           "alg": "SHA-1",
-          "content": "795df8231c1397b3a6f2afc1c4c1ffe0969feae5"
+          "content": "af3b69315b94fc27943f064e1686232d70ab0435"
         },
         {
           "alg": "SHA-256",
-          "content": "60e645162189abd2b932b9c341acf41358338a65fb4511875fb91f3a175c1ce1"
+          "content": "9761eecd67b0c4a831f02d378f2a63d3f4ea8bdde5919c7b9b225a9326026650"
         },
         {
           "alg": "SHA-512",
-          "content": "aaeb3fe7102f8ff1ac8f63c6571b4e46621bd7341bf132eab0837eba4f4608dd66ff3212191e0aa254bbf2f5ffbc86dfa09c0bf12238535608c20dac1992fd35"
+          "content": "119a2ab99860d175bb8b0048f6b6fc082f3086d97d48f28960779784eb1d80a8ba96fcd979782441c0d87d128e4330db4c81fb8d26788f75e9aa20a97077d696"
         },
         {
           "alg": "SHA-384",
-          "content": "67d7443d32081fc98fee3789b8c6bb61bfeb83021b431a4ce47bec417be3809f5e581d7b3c0376fcf627eabff627c1de"
+          "content": "04045cdb5666ff01628952af92d939c6c7e755be633cb74a5a7b2003c605e89a13db89bd44ec7f806fa0f5aab7680f17"
         },
         {
           "alg": "SHA3-384",
-          "content": "edd2132c3e1c4689675e36e93b8613f3d59e3d1dd81c5d48a63f8f2d7f746b35d99cbcb50f03bbc28d691efec058f6b3"
+          "content": "6b3325df54facd68fb390f3d9be1c0a23366aca3a54fb054f20cce43be8b4375f6123a0ea9cee8242d53934762e7630a"
         },
         {
           "alg": "SHA3-256",
-          "content": "9aaf00afca87b5098776d0b894d405b1f608b883b6039168e059048ae387256c"
+          "content": "fce97e7dad5493c5273b823a8396bc23237c68aaea2a02161dc39da422da1bad"
         },
         {
           "alg": "SHA3-512",
-          "content": "715761250bce02f4917b09b2dbee1e2c2ecb74d54e492c83d62957a8c67c95ee93abd1ca675d5f775d516dd528ae0a5c9401b39096464fc3133bff4a438d5593"
+          "content": "d676acc3a3b1ffb17a3b53f7cdb8584d226835a819583d8dd46ab8c82ff85564815a4d312dbd625eebee87568e6df057a6d8a72841339be2390936397c22f8de"
         }
       ],
       "licenses": [
@@ -7840,7 +7840,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-jakarta-rs-providers/jackson-jakarta-rs-base",
@@ -7862,45 +7862,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.module",
       "name": "jackson-module-jakarta-xmlbind-annotations",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Support for using Jakarta XML Bind (aka JAXB 3.0) annotations as an alternative to \u0022native\u0022 Jackson annotations, for configuring data-binding.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e54f4ad2d6db571945386deeb44c14c7"
+          "content": "249a6e812de8ed3f68fd72af918ef2f9"
         },
         {
           "alg": "SHA-1",
-          "content": "ebb6e8e61dc8fabbceafedb6770d52a43440b8b4"
+          "content": "15e386d9151f5964dc28fd25c28660d1262b8898"
         },
         {
           "alg": "SHA-256",
-          "content": "27904cd0d790259286816a4caa613eaac54f21eb0b227a38df0a3230737d8cb3"
+          "content": "0d5710d2e38b1567edf4acc0d7b9aeb6610f57b901cec9b42548872d421619d1"
         },
         {
           "alg": "SHA-512",
-          "content": "ce850e4b1b1f4946e378b27ceee380216c4f46811ab69acf87c26a9785de0e4eacfd6a02548c16cdbf63179f3b9496064a0df6122001d22a3800633e50594ca4"
+          "content": "c3ea4278a6bb26ce0c4df2d23b51994a552e0334130116eed0f064ef24e04fcc4c0631ed6bc35166ca789403b4c6d43b10dfeb2567b5169889a5d3200e9110d5"
         },
         {
           "alg": "SHA-384",
-          "content": "2bad9f21f9221fb9a3bac9c0ab1d1d06eaf3d05525f5f24fed9a2ad145dc5cc7a792693fb69c9065a33e8d4edacb9858"
+          "content": "868acef5bfd60269b5fe393e02b86a68fa4aca543832bb2061dbccd3f45a93568720b21328b6b8c2c8c2256477e98058"
         },
         {
           "alg": "SHA3-384",
-          "content": "87c98a830633fbc4d51ee1cc8b17f3ef0c6b99c56108d82eb3a8dd4d2b8201450053777ce0f5f119a9dd8b277e1afea8"
+          "content": "264f58869ac7f1deae46c95bf4df6df8e464546f73fc3f8905ccf47d2f7fb0221281a0f00622d3e08600eb4d93b50edb"
         },
         {
           "alg": "SHA3-256",
-          "content": "9bb882253eab0351c7bc0da4136c74da9aeae459588ba2399d7ce2376d96af44"
+          "content": "15e38e07b9df958e8c03692f65d3bc5c413176e5073a628948b9a83d9ba1a13c"
         },
         {
           "alg": "SHA3-512",
-          "content": "f69283c989cb14fbe2b31a62983e27b2a0d56d1a0fa5e8500d58b0a797d2e3437660962b4a37fcd1d6f3787fd8fdfa8e2756360164acfccf651b379c6e0ef323"
+          "content": "b1d1786c5f244a0c4711b2ca9f008a4b908da5940bce3a0fd2fe3c8851e46b137484a89277fef6953e9cdc0c12ac5ae2c0c62a4ea6732d765553965ce496acd7"
         }
       ],
       "licenses": [
@@ -7910,7 +7910,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-modules-base",
@@ -7932,45 +7932,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.core",
       "name": "jackson-databind",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "General data-binding functionality for Jackson: works on core streaming API",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "7e33b9e657f74f0f95fe2c881e2f8f76"
+          "content": "49d7b7226df5ed4a036e48997a03d066"
         },
         {
           "alg": "SHA-1",
-          "content": "f0a5e62fbd21285e9a5498a60dccb097e1ef793b"
+          "content": "9586a7fe0e1775de0e54237fa6a2c8455c93ac06"
         },
         {
           "alg": "SHA-256",
-          "content": "a70e146a6bf2cba4f9cd367169787f50adcfbb57122bc2e9c8390cd0b397ac30"
+          "content": "34bbeb4526fff4f8565b12106bf85a6afcbae858966d489b54214ac46b2e26e8"
         },
         {
           "alg": "SHA-512",
-          "content": "a26054199811282897116632dc5175a05c1cdc30ab15cfc13325cb6074568de7b8fec08cb28f28835d31c522296b2460ce144972a2c952cfb8fc7467e1fa4a44"
+          "content": "16906e9c2f1962649eb21de148f362fedf2ce903c7ca0e6d68a01d43dbe8402b70cc537c104f36bc40a2bed6601162e7c21663735582e25bff7e27852be1405d"
         },
         {
           "alg": "SHA-384",
-          "content": "e2ed967535db39c3da8a9842da1a1276522a171aaddf6d0f1861e642037e2951cacb1266535d1b08a3d451b19ec297d6"
+          "content": "0591935cdfed1d65fa4a2820133ba129384f71921228ffe093f343d3ebf0b699762810d9208641726111015f0e35753b"
         },
         {
           "alg": "SHA3-384",
-          "content": "42d74c09c4bdc3d68429ae72b5a2c5131f1515e3360f7a73446611fcd3b6e4002fedf70bc8da119c4d0138168ea0f521"
+          "content": "855ccd449944e7884f8088c8c5b224e6e2f63bcd3123502618b4f5ded025e5978143af8c5d31215276932bc3bb089472"
         },
         {
           "alg": "SHA3-256",
-          "content": "e5eff40214ecb55b9883b337ff84e69fbe69d318a87f120eb3fc79b82d55f9f7"
+          "content": "53732171c9f2bdeaa40017a34683a00ac11e8a8c1bcefaed07eb91e629e20376"
         },
         {
           "alg": "SHA3-512",
-          "content": "eb39a4f74c29f43ce442df9d5ed3bdd56013cc9adb33839dc9f36b8d58a8f581d53b3949527fdbdf2bc6851374d01a4c325ce572f1933a6b001aef17e21071ec"
+          "content": "05017efae94bc3c83131aaaa7911f20e7c367502cd2cd05c6cedabc877b55724bcde2521ba1da15bf1c1c3ccb1a235124b39b2d4860142f2b89d4df197cf5c83"
         }
       ],
       "licenses": [
@@ -7980,7 +7980,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson",
@@ -8002,45 +8002,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.core",
       "name": "jackson-core",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Core Jackson processing abstractions (aka Streaming API), implementation for JSON",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "3536b524a7106dae1b4feb71e6f5ff74"
+          "content": "889b2c417b61c9f4f460b06957147234"
         },
         {
           "alg": "SHA-1",
-          "content": "3c97f7fad069f7cfae639d790bd93d6a0b2dff31"
+          "content": "5734323adfece72111769b0ae38a6cf803e3d178"
         },
         {
           "alg": "SHA-256",
-          "content": "bc0cf46075877201f8406ee7de2741ae7df6c066f5f0457bd80632a718c06e72"
+          "content": "ffab4d957daa2796cf24cb66d0b78a7090f1bcbe17c3a4578f09affaaf137089"
         },
         {
           "alg": "SHA-512",
-          "content": "6fde805019901b0e6f6af56c48b60a08ead48e962e167308a3d8ed861470594a80e5c6aec340e7ce8dd12a32d8c0cbb46bc39bc381f027f5977953950e60b083"
+          "content": "0463e1c2e1d8e8cfa4954dfce491583f0ec9ec1de6e6f342d1e5f0c63dcfb959673552a279ec4e6b6cc69e6ac2de6d42dd512149ceb76620b5d780db7325e6a7"
         },
         {
           "alg": "SHA-384",
-          "content": "5f294aa2b3561b2dc5f6bd9958758783294ae31396b8af9cca1495f87d4b8fa470e41b62f6078a407cb6d7f5e8efecee"
+          "content": "a279b2d57d019a05f65762ce670ce23e02466b11276d8c0687f3bb5ed40a8a1854bfe6dd2dc157d0f5695186f7d9a65a"
         },
         {
           "alg": "SHA3-384",
-          "content": "ef6efea299577b599d290fd0b48f44e239c0c051b0849b163b2f667641a6ff682bd68745ab3ecad1fb7939de0dd11e4e"
+          "content": "06b9f33e030a99fa95d171118ab668bee42e32b35b85e05750f8514128dbadc94026afde16dbadc0ff786027b09712a4"
         },
         {
           "alg": "SHA3-256",
-          "content": "3879cf4a3f6bfcea4181ec464142c7798f979d6cc0a561cd87dea8054f5abb50"
+          "content": "3e83a1a349d8ba3a4e76ee983f04b259a85263dda5090f55aae5535109c4b6c0"
         },
         {
           "alg": "SHA3-512",
-          "content": "fc84b0702c51b31e4a6eaa0e6eff8914166a51dad8adbb768887ea580106d953e86bfc2fe8c5b99d03e64ef06bf6d33a4ef33e8f045d743b00cb0e05452ec082"
+          "content": "87b3a61a71a625adfc6b9b402079c26b223e19535ca5af07e4130932d479f9c22e90696911050d8ab8a09a6209651fe2f25f54d7d9a1493b6dab6f8acb76203d"
         }
       ],
       "licenses": [
@@ -8050,7 +8050,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-core",
@@ -8072,45 +8072,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.datatype",
       "name": "jackson-datatype-jsr310",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Add-on module to support JSR-310 (Java 8 Date \u0026 Time API) data types.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "bb2e488ac4d1db81f4e47299e4dcb8bf"
+          "content": "1ebd4e254f641f0cadf0ffdc1f662fea"
         },
         {
           "alg": "SHA-1",
-          "content": "1af763a5ad4efa536235fafe6b3e690a1d8f071c"
+          "content": "7ad06a455afc4a38412d5dab127191bdc3d90faf"
         },
         {
           "alg": "SHA-256",
-          "content": "8c32155975a935b1f7bfd677647bd5c8cdee12b144b84e4492a447b5ea2e94d5"
+          "content": "692be83c7e2eebb53b995c11d813c603a7d716d60c9d2d4fb9486ecb105f9291"
         },
         {
           "alg": "SHA-512",
-          "content": "4662a9bf5ce6bfb604ed7713edccf473afe3461a912b9216e09c56476d651ac0f4254820f200a15afa1c4650513a08b08e491f4364af6286b7461f90ead62803"
+          "content": "4a81b860ed2bc8511dbf87cebd91f22c6e982219377d1365d5000bb2d228422be461e8d068c5857e125745144f04456a4f49bf3adf583b49bf256da9ac5a82ad"
         },
         {
           "alg": "SHA-384",
-          "content": "275c33c849a04dc6af2e82b43ca494520403a93924f1d6cf6991a385fc67466dcf10e2e38fa8142062c7a027a45c2352"
+          "content": "145b1b0ee03e0b668e0a6d5d79358ff6d63e5e0b4c3049a9901424b90aafc3c82dc94fbcc628a563d8e2ac1b3168d4a9"
         },
         {
           "alg": "SHA3-384",
-          "content": "36efe38252160b23c89c70362e522c2c5323452e08c2af4a39ec5526043bf2032dcf8a32a909a37a1b67fae261cac10b"
+          "content": "c190bd4b82564652509ca44c8a19b15816c021736f96a4206a632497d8d30f51cb02fa6847c7c7d3ee0dafe588bb7b22"
         },
         {
           "alg": "SHA3-256",
-          "content": "ea7e86468aa9314dc19dbf5506339ff4c3211e766d680d89ed69f86bf9182b91"
+          "content": "ce5ac6ce0557bb10f20411b7946e38d306683512121f4cd338de132ac77077b3"
         },
         {
           "alg": "SHA3-512",
-          "content": "a1b885119e1a4dd37e03a8e95d6fa7c97f168ad1aa73c3c6720ca063de7d17f9f3a4ec507e698e25a2b363feb379616f9501aa613257e5ea9bde575afb7f47e5"
+          "content": "903e56c1ffd949e36e8d07d59354dcc8b30f66720d9725b2762c8982e7683540c6db1b40e3ca78989a1292fa20729df9cd99c4da94dc67658123c8f86cda8b92"
         }
       ],
       "licenses": [
@@ -8120,7 +8120,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-modules-java8/jackson-datatype-jsr310",
@@ -8230,40 +8230,6 @@
       "version": "1.1.0-SNAPSHOT",
       "description": "Operaton - Engine",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "59c71c106278e4ff4882dd76ee7ee828"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "b278fdf9c47886d3167c0f714d88876b20c5f814"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "47796eb54fef191173f601b1c9914c252e04b0df608d5620eedcd665d222a807"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "b54c59e83365212974b66ecf63fe8354566849eda1aab116d68661ffc5174f3d761c1c70e2fd0a75395d0c68bade7c838ef8e79cdcb061df30d1d27f12fb984e"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "29c0b3f8edf74f3c2e984019f3c2b7c091e9ab55241a1439e96edc9c9bd9dce3ef6a25578a2a95a208b2c26801ffd51a"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "2fd1d1e7a9a5fec93cc1e4219ef00b67ec32e70b338a5c4d35669f671d0b46b0a46018da4159e44c96e62db7501ae777"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "7577fcc078f832d3fbbb340153c23b4ef00dc91936e9382fdb050d1b1ae310a7"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "d965ed77227c855ed10e9976fcd18b26da1f60108a409c4aea000cc538c4a07681402af382c580fdf9c32fcc4272652884923ebd5ad5cdc99dd2715963982aee"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -14064,40 +14030,6 @@
       "version": "1.1.0-SNAPSHOT",
       "description": "Operaton - Engine - REST",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "3f17112c3bec2f34bf562469f5da7cb2"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "c0a4aacf8affc3cc01bb4913d5c7647ca5351227"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "4a7d40f13eae3c2acb2adaa434b233c370149b137223d74ddfb8e4f436deec2f"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "d6ba1c428aeb3527449af9a30e7979253ce4d8576ae3065e76cedbe014a685914dbf775858425c1104d46247b1bc8cf6e0ca5a8b7fcb069d0460fc24b0e06195"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "c7df010e50dca1e3dc3651b8c519a798b81f676893e1205027dc5ef817b0d04bacddf75b5da6d194f3ebdbc6400a63e0"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "b2e99a4405a57e91c1d56bf7b91157cadf103dbf4911ed697838a9845a79fd201dad826680cf0c3b8b7bb1539f87c2d4"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "d2a5514289b062e298d712fd8c5e461f1d6d339d03dbcfc23cbf733868c97e5f"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "bcd89ceed72c52afb3e41f55e4f0433ce72d209103ee8e4e45ab2f1989a7b60658774139e2ae1294d1f1ba0365f74704a056157d7d19f777b8174829f1439253"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -14130,40 +14062,6 @@
       "version": "1.1.0-SNAPSHOT",
       "description": "Operaton - Engine - REST",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "19584bb367416328f948a7fcec7682f7"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "f933863713ed207db157b98d430c8cdb7469d97a"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "28b86709577b73dfa527889bbe3d607312e5b590d51d252fefdbd1bfedb188da"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "7f6aec6a5f72f37abf8f12786601ba0e2ad1e4e94206e1d360f751c803c6cceeffaaf45949d0dac67cb71c295a1e6ecaa09a15b0a96a25b6d737bd83ec9749b0"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "6d50edc5fe5a94bc52de4f1d6e1ecdbefe8fd33f212c7b32ea57cb51cd50d17577dd248a0c47b787deb8614b0ac1e08c"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "8113a784f9eb4e5ba2c68a237737689477447e253ae29351241db2f388f3e30d7e5758faca3ad193dc95f0396e0a5595"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "bdaec68dcd2d0e923ec4db5e339fb00ad4b21e4c73cae64a9495771457fe8cb5"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "57d57c12159b60c5a70d7e24041945eb09e9c468d843b042a2e467e55544edc7d541b22a294a395a74a5d7972e8f807aa6aee10fd1e035ee5568d26ae3773468"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -17810,40 +17708,6 @@
       "version": "1.1.0-SNAPSHOT",
       "description": "Operaton - Engine - REST - Assembly",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "1e3e957a069af709ab2b2c2317b051ba"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "0c65885ab2db9b8bcae67c0ec012e8df17edb1a9"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "79681cfe059fca29717e833e70d4343d030f076c3809be1ea2fbf949d84c5f96"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "7140ca739455e5926679ddf339657060e19bc69d06b146dfe88d86038e76a109b5b82d679b1202c6ca7114aeb8d168015c3b24d1fc53bd1cad95ea27f9c4cf75"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "bdcb2084cd52ea75c84c308c6e7958df32a82928a5e4ad5d68c1a2d112a266058fd1bf7577a14a457227d180eea13bb1"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "668cf31de4f6634f5be983af910f9ddbde6d1831bf3421f98dcfe7d716c9556da26636b0e56073b1f16dd0a5d166fbed"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "a748e724af98c09f89f2f90134498c6afad09ed8063eae88ed844db0119b3caf"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "978cfe9cda80db71f150727541833787b41138632bd965d0fb6130504174d511f39891ef617eb48532d25cb3518aa9b460284a39b8c9d7d24142f964cd1e6f25"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -17900,45 +17764,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jaxrs",
       "name": "jackson-jaxrs-json-provider",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Functionality to handle JSON input/output for JAX-RS implementations (like Jersey and RESTeasy) using standard Jackson data binding.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "001f975b485413e628548d7cddfe0345"
+          "content": "f9ed39b3e5b92d54e8d1c58ba6d0d7f4"
         },
         {
           "alg": "SHA-1",
-          "content": "979739fbfe2568582ce465e5e007463b3355e30f"
+          "content": "83b9ae70d2c10458c76e1871851d477f8ca689e6"
         },
         {
           "alg": "SHA-256",
-          "content": "5acd31eacbf4700970871bf68c8b2afaf86dafc6ebe7e2e856b857f1f893e0d8"
+          "content": "74ea814ca7cd6a83a1c474f7c90f4061d5034079deaee0e0e8f9477b219e8871"
         },
         {
           "alg": "SHA-512",
-          "content": "fb7cc64e18ba2ccaad0035974515b3137e07e9f398118a163bedd063ba61140c89014a811e252e1f0ad1314f9990ecf4f92c2d8e08a0a2cf093433351e4ca053"
+          "content": "6782952dee64751961959a61bdc34a89a1fcba66ccbcd0b3d7446bfd07f0ec57d5632dcb0604590cf04cd0e3611abe39ea32ae261a332cfb9666cf82ef250cd3"
         },
         {
           "alg": "SHA-384",
-          "content": "5d4e92700a21570b988cad03c7ea4d14102545346fb0c7030d489551ba82f7d4866dcb7c1de77833ab9a8269e2c3ec8e"
+          "content": "d32e04aba568165e1dd7e23f9e73cb56664a01e7b5f742e77b57c44343b6d0322e9a95baf9586d8857edd8a06be34170"
         },
         {
           "alg": "SHA3-384",
-          "content": "3876580705de8eb281a19bec69b42199a48744ad742c04acf2c1f84a1c2421414e0a1dd930cd8bb1ce5b7a878aeec394"
+          "content": "4c1c6f9dd6df5b30223239cf2397d6c6a73e82f43737ae9ef0a0d35df27cb5697310ea3fcc510a717ba347c1419c27b4"
         },
         {
           "alg": "SHA3-256",
-          "content": "c7c6209fd2bd053ce32617c67a78c0b13c264341ea7795adf2bad70f29ca7605"
+          "content": "84939f3c9c69abd00529e45b655b4de6a70362a5035a1aba61b62ab047bf2b6b"
         },
         {
           "alg": "SHA3-512",
-          "content": "a004aabf9beee7fe0e2574eb1f164701b2fba12511372cba1aacf8f37443649df585a788dae8739e1c4fcb415f6fef09be30d9c3b0e3bba1a949541b5959516b"
+          "content": "b9f8a11c17a7cdaace2be72d1d87ddf732dab5ad67a17155adc7a88561ff2c2b86978ed718fa3a38a0d0a1993ee34e78aa0441dfc0bb08f00d6183f58a61413f"
         }
       ],
       "licenses": [
@@ -17948,7 +17812,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-jaxrs-providers/jackson-jaxrs-json-provider",
@@ -17970,45 +17834,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jaxrs",
       "name": "jackson-jaxrs-base",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Pile of code that is shared by all Jackson-based JAX-RS providers.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f29727940267c794e760e4841c4d7d43"
+          "content": "0b51c8ee8c7437553e43d4172ccbef6c"
         },
         {
           "alg": "SHA-1",
-          "content": "87397886362a7132a42e8713d273b33dd975ae9f"
+          "content": "a78feea452f2c83ce5307d9835c66d55b6160f2f"
         },
         {
           "alg": "SHA-256",
-          "content": "d67651482d89a3ae179f4a671cf0ff811da3967bd39a6aa943d5cc9f97f1dd0c"
+          "content": "d34944bd5666bd4db02882185c43551dbde0801286fe7c2c5b43a5b5dcca1d1e"
         },
         {
           "alg": "SHA-512",
-          "content": "04bce81bd00cd1808cf51f9fe568f22399f18302b6c610c937705d058207140934397b2316c901c0a969d3d3901dd48907a22eed38961805953af0625b8fb209"
+          "content": "c75249c274a3760f0d909392e65b17718e5db3c7ad8cd124a8ac8ec2fceed80bfbd6cb0b535b831bfe285c008c70b695b7b9050fc0009c75b01f236393120a32"
         },
         {
           "alg": "SHA-384",
-          "content": "e8dc6c69628160540b7b757e0a35ea96727e96b2c6d552045f692768900f757b71bc25714010f5dba48e786e25488817"
+          "content": "f5ba8c374c0543914d14d6bebb397b7aa4d931d72ab6866e44e4edb9e58354b26c41cc4ca62f0ae0d3fafea84f693dfb"
         },
         {
           "alg": "SHA3-384",
-          "content": "49272d228c55ed85df0593ea7041912f48095d8405992755d17561e43e0a1235e59003e5202a1cc539d36e2988b93395"
+          "content": "e43048fd32978e405bce9c3f80808072457c5c67d8e6833385e81fda04039fb5bcde54b4fa6e1cbf38d47b1f48bdb070"
         },
         {
           "alg": "SHA3-256",
-          "content": "d1069f406470a38ef1eee5e3d91236d560083407ff1144ef360d43cf02e76333"
+          "content": "e15cadb2c2a98b19e8cf91c4619de5db6ef99bb5ca4632a12815eda8731d4aca"
         },
         {
           "alg": "SHA3-512",
-          "content": "22ce76e3606b50c09196bc73c65df48352cdc1f80e9d0ead0364c65b44c3cc07e62f5f9d9afd6fdfdc07e6986613e1747c1b00e07f73a5423fe3310df2aa108e"
+          "content": "de5930da81c0676583d964eb1c864936adc5234f7f74b9127ad0a4a300091e680ec53cb92ecdca1ae762e4d8494ef7be8f09576fbadb3b641e4f5a4af22d1bcf"
         }
       ],
       "licenses": [
@@ -18018,7 +17882,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-jaxrs-providers/jackson-jaxrs-base",
@@ -18040,45 +17904,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.module",
       "name": "jackson-module-jaxb-annotations",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Support for using JAXB annotations as an alternative to \u0022native\u0022 Jackson annotations, for configuring data-binding.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ce3d44fd581c2d7843d176afeda1880b"
+          "content": "a1399afede95b690d650a3a1f721f729"
         },
         {
           "alg": "SHA-1",
-          "content": "6330b9ea12f1779c74511ca4bf1c6822f3d0f6cc"
+          "content": "6002a78c8a8cdde2f2195daac5591ee424d1d4ac"
         },
         {
           "alg": "SHA-256",
-          "content": "dd4c6b4951daa696c40baebcf1909c1d4c7eb4e407971dab4b08df7fdb211ab7"
+          "content": "0b4c0cf84bb9e5251d29743fc0488d5414b0ac6e20fa4ac87d0754b8d4d78a05"
         },
         {
           "alg": "SHA-512",
-          "content": "bb74158ea949fb7c994ed22d91e2a6c01bef8bfdad58a79a419f98206e3e0a94d4d5ea0471a538beb08dd4450b1207c0f03f912752a942ddf9c5b655384b1001"
+          "content": "88dff9c1987c0ce5a0f0e3711f8e3a1328138c48b48fc3c12519cb03514dd995d55a9a08def390e89b153172597b5b62576bdcc089f7615a67b24211ffa925d5"
         },
         {
           "alg": "SHA-384",
-          "content": "45e1cd3ffb16a69cdb5f760facc3231d27db8becda1a1ace7ee93239ec8293003a1987e0c6905927f060f730ffc51d63"
+          "content": "387a2da4c0ea4579d7169baf5fefde4749a2d988c14ad2bbd5a3db7e40edbee773cb9bb03ce7f29afbf361096506e724"
         },
         {
           "alg": "SHA3-384",
-          "content": "bc0fa8e29be224c988d64723b48ea9793182cf45792e41cfa8fee1f14d98f2b35bd6085104b335dd7ca3df66b47a3803"
+          "content": "3bdef8dd84c995a917015511a8cc3352f9d71af91849595b57177f17a3d402440d6c32122cdb8dd2ad8e7d9d30a4081f"
         },
         {
           "alg": "SHA3-256",
-          "content": "1e4ee1c8a76eeb3f3bd31e3ff8b10f698c58f6e671cf859b880dc4c822fc8cff"
+          "content": "2aaabf8218fd37697164c775d66e70c3b982d646281b97b993b33c165f58a567"
         },
         {
           "alg": "SHA3-512",
-          "content": "1bcdf596bebfa84a03fd015bb75a00ab019b4c43b589d95e7e9fdd9ca86bef67455240f2ba3af6c6cc783af6e90709ed1a2029eeee97df696fdbe68d780eab1d"
+          "content": "909c56949dbef77825e2b1f33bb2a8f4d8e6c6a38e9a9b8c8c34d1221df861cb3d5b7d0dcd0145fdf98b775ddb62f334ae2a6260405c3eafbdc6d69f683cb724"
         }
       ],
       "licenses": [
@@ -18088,7 +17952,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-modules-base",
@@ -21470,45 +21334,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.datatype",
       "name": "jackson-datatype-joda",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Add-on module for Jackson (https://github.com/FasterXML/jackson) to support Joda (https://www.joda.org/joda-time/) data types.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "8eb61b6949d975f23ae52804d9e2ae7b"
+          "content": "7842e04830de9fcaf07f69638047c80a"
         },
         {
           "alg": "SHA-1",
-          "content": "97c5caa6b8c82a222c1d5f79388bde849ff062b3"
+          "content": "ca1926379835557c5488d55e40f6ef2b83c1c52f"
         },
         {
           "alg": "SHA-256",
-          "content": "06ad57391bb0965036f5496e61b58f15462df3bc387afeb08e7caf133c93867a"
+          "content": "78065cc2d37cd28fe3277b9b23e7e64567555d26b5632f38d25f09f3b14e5d87"
         },
         {
           "alg": "SHA-512",
-          "content": "36ff16698be1ca95bc76b1e728320ff8f5b34e144291c0eece7854ef326bf168842b481f5db62a420190e64545b37aad807d83f628426d2504714ab61761367e"
+          "content": "b0ef980222e8ed187201e40836825d590bbfc47afdb63f671cf9e2d25ab4a7f3bc0625ec08c84c3f5a562fa1beb65a87b4a15af054ccda5098fef0a0014e7376"
         },
         {
           "alg": "SHA-384",
-          "content": "68b7242995f05041fd8b6d0c144e66c47ead35a9bc8182076b393fa4db62a9c2ad979b674f832994afe6d8add5eb696b"
+          "content": "95212734a40224cf37ed4290aa54517ddaa3a666233b163faa3e491b155720c280e0fa484bfcad8111a0bc52f647e170"
         },
         {
           "alg": "SHA3-384",
-          "content": "8bcaf797291bbb6a9ae0990b90575fcd0f209d467288d2d6a79fcd644550d784892b307182552e3e511b7ea7af4e2b95"
+          "content": "25231c4382309768c21e23565cc0596aef40f05a5ef663105baa7242e59c4b4a76945d7dcbe9bf11aabab20ec1c6c9d8"
         },
         {
           "alg": "SHA3-256",
-          "content": "788af16a2d8cd7c8e1e10c6ffc34920c0d08fa8ab6d7ce534584ef9235e74e61"
+          "content": "fa797802eff9597b3c99dae03aa50e8ebca9c5034241e4c3689c2ec48b551250"
         },
         {
           "alg": "SHA3-512",
-          "content": "65f290e3f74f412773b58fff58119ce38b20e58f9c7cb14582d036d7c90e186228a375942b8d5fff9dce455c5637189d975379a3a70ebb321ca86d056b8ddefd"
+          "content": "e3fb9fce58676e9f5efeb6d75187171e4c69546eddccdbb1ba9036cd82c1f878300da71362a597bd2cdbe03f62f47fd311ef5cf47765e094a478eb85db657c8d"
         }
       ],
       "licenses": [
@@ -21518,7 +21382,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-datatype-joda",
@@ -22274,45 +22138,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.1?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.dataformat",
       "name": "jackson-dataformat-yaml",
-      "version": "2.20.0",
+      "version": "2.20.1",
       "description": "Support for reading and writing YAML-encoded data via Jackson abstractions.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "652025f2a21ade51cc34e75a75e1468b"
+          "content": "66dc3c5f31150557109b14182ed7ed8a"
         },
         {
           "alg": "SHA-1",
-          "content": "58502643d75dede7fbcfc6e60b58397045da976e"
+          "content": "e6da043059c9ec631a3429ded461d5d92f240c3f"
         },
         {
           "alg": "SHA-256",
-          "content": "cc3dec9fb8b56574797bfef62641325508f0e5bc968bd268568402818d55baae"
+          "content": "030f1d91f7df278e86e1ba3e129fb520871ac16ce53017c735f708823be970db"
         },
         {
           "alg": "SHA-512",
-          "content": "7db8a2b20c4e4c73962ae499e9b970bcba2e83ebf997d15c543fdb9eb5f96b5fccc84d3918c3019362fc5f0aec643e88a0ad2fb062b913a92dc5348fd85ba905"
+          "content": "7141257127b072ae9d4bdd08de027f3f6cdb14b7667190f88b058f60d42e1d0556c3a2c3be0beb27397dc386f65be137dd280f9e53632922047b091c10b01bbc"
         },
         {
           "alg": "SHA-384",
-          "content": "c63c318ca1f59fb8cce8de6f211f9d2ceb907b4902d1192f8710309a6b466fc421e6d26fea37d36c5f86ce77a78372a5"
+          "content": "38a69dced20a6b256db3b638759fcc34ccfa6431be6db754efc1c5eb8c159d3c69dcae3a540711f032cce2a655c866f9"
         },
         {
           "alg": "SHA3-384",
-          "content": "557413ca21c00f5b06a25cbfa8698d2e51f6569fbb951d697b9c0819318b9f17ccdb1c2eec08a14b17d5cf400e4de1bb"
+          "content": "e97172e20190cfeccc97aa74419f0f851f9f4062dee569fd2be579d96dae1cd0800f92d3a9223073b684005b9b01d263"
         },
         {
           "alg": "SHA3-256",
-          "content": "92f7e937aa68e8e03e38ba61a04ba737661f736765e09b914f9066b8fc646ca6"
+          "content": "18a4a4adf0f20ce8c3ddc07e5ecf530320d6aa4581db6fc869d67e24c4950d7c"
         },
         {
           "alg": "SHA3-512",
-          "content": "7920a718444f7e304b8da25015a53a4cf9fd824984330ad54fbfc0bc4eab382e2d8f0fb32ffd25871820908172b1a299cf73f1a23df6dc9280c2ecd78e5825b3"
+          "content": "0cbdf60922d17c7cf925f704ca487a452092da1d860b63925739dd030febd1efd77d176490dcfab9fe50ddaf0a3786131d5709606c4383cf29ea38b784021ee1"
         }
       ],
       "licenses": [
@@ -22322,7 +22186,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.0?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-dataformats-text",
@@ -22663,37 +22527,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/license-book@1.1.0-SNAPSHOT?type=pom",
-      "publisher": "Operaton",
-      "group": "org.operaton.bpm",
-      "name": "license-book",
-      "version": "1.1.0-SNAPSHOT",
-      "description": "Operaton - License Book",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.bpm/license-book@1.1.0-SNAPSHOT?type=pom",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/license-book",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/operaton-parent/license-book",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@1.1.0-SNAPSHOT?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
@@ -22812,282 +22645,6 @@
         },
         {
           "url": "https://github.com/operaton/operaton-external-task-client-java/operaton-external-task-client",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@4.0.29?type=jar",
-      "publisher": "Apache Software Foundation",
-      "group": "org.apache.groovy",
-      "name": "groovy-templates",
-      "version": "4.0.29",
-      "description": "Groovy: A powerful multi-faceted language for the JVM",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "294233a8a22dbdf93863071ea5226e27"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "ef03504e1c5cfb34e0af946f92a6426e4f75cd93"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "94640de5660c8f702b85b917f44fe924755befb312e113ac3de839a782f96806"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "131a232d10fab528019ef2fe22adf3bf0f4086e0cdfd584f2a9a39bcb1a871f047b3afa12b86ddcc7f06a2dc404ea505f6af0a633e3c7c7458763213232bf88d"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "8677a6c9eeb89208fcdef04b4d6cb58b19db029f9827b39d5dc2317af1ba607424bc291f074e7ce855ca5470474ae86b"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "d32d132abce0e9d10660ea4b8518f872b8a5a352945f37b60f07ab39904a32744abd733c0b283a4a58224abcad1be491"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "f7bd8a858deea42a7cef09c1e8a1fd85c17cf7cab86e36273dd042950e7f2f75"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "593e198aee9b9ca447a0485ae7d4fbbbf8253bfe9ccb5833b4829bf79b438689e1cff692c0669b51de1fca7949f3cac3401e3bfa41f38608c7ff1fac75713221"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-templates@4.0.29?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://groovy-lang.org",
-          "type": "website"
-        },
-        {
-          "url": "https://issues.apache.org/jira/browse/GROOVY",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/groovy.git",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-dateutil@4.0.29?type=jar",
-      "publisher": "Apache Software Foundation",
-      "group": "org.apache.groovy",
-      "name": "groovy-dateutil",
-      "version": "4.0.29",
-      "description": "Groovy: A powerful multi-faceted language for the JVM",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "acb77a77634fbd40ce78e8f2b6673590"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "e4a438420040ec19846e09d881c640933492857f"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "22733846903c69c22961f61b25f16dddab43cf4ac58e38f859fe28ec4e24a935"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "e4c064ea7d299cd39010e65212b3b018d9a82daba72ca9a2cb1a529306e4ac8956e15390073f84318283f69318b8c5d4ca8cd8824aa83be398eb603785b3c8b2"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "dba9fb020441cbf9d10e4f10874fa27f15d366c09ffc226f65078d0c332108f7a05a0f6060114b6be9e8f8a96628fb17"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "387ef33f35d827d288a2573d0c0d273995a1fea789138101152449f0424d77da0c1b218421968f7c57d8d2ee2bc10671"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "464947f0a504e0010049a22f08cbe9a3d6ac03f2be333d3955fede7c008826e9"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "7e28cecb363149f737734702e250b9c287663f22e169a4e574c1eda8c677df310537e90c384750ec67de7ce7d5129ea2dd5c6831d298ed68e2c3f2b86e6f9b54"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-dateutil@4.0.29?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://groovy-lang.org",
-          "type": "website"
-        },
-        {
-          "url": "https://issues.apache.org/jira/browse/GROOVY",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/groovy.git",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-datetime@4.0.29?type=jar",
-      "publisher": "Apache Software Foundation",
-      "group": "org.apache.groovy",
-      "name": "groovy-datetime",
-      "version": "4.0.29",
-      "description": "Groovy: A powerful multi-faceted language for the JVM",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "2b4ac750cdf75658417a578aebe35a98"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "15f104e73bc1d1d9699b02850100815fd62f2203"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "1f84c8127115a0c01a2053bb73d6fe0f540bfa30fd64d73dbd4221d0971b971c"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "01a996e8f53130f1b7275c4b97f5cf1d5933e50f16cdd192593a53ca1dec5955a9d545952bf162d9a60f1e310ed29ff3a2807240851574419a2a9d01d053ffaf"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "f926be1cfdb54099c7cef31217886959c939f226be175ac111edecc61a137f8878ace05465df5f970a4417c6d55dd682"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "67ee43140b282f54cdd6e571e3b885b13e97cac2ce9797b5d46cb75f60dbb525f50c319c7614fa1483d73585db47834e"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "c8c7ea6586c1458acd868b82d3ab5c672e0661062fc39bedda28f421e6d11730"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "4b996229cf73f5951776ae7f844203908d50b0ce8fcf02bbb58b6769764b88319c505cd71830eba10d5e666ad11e8cad178109a246012efe96b5722d7582881e"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-datetime@4.0.29?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://groovy-lang.org",
-          "type": "website"
-        },
-        {
-          "url": "https://issues.apache.org/jira/browse/GROOVY",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/groovy.git",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/license-book@1.1.0-SNAPSHOT?type=zip",
-      "publisher": "Operaton",
-      "group": "org.operaton.bpm",
-      "name": "license-book",
-      "version": "1.1.0-SNAPSHOT",
-      "description": "Operaton - License Book",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "060fced64be75906e7fce11bbe162a25"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "8b19dcb6fb798a0426f33ac83d996ee6178ff0a9"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "d8ff784c68c5234b9cbc694edd3ba6b4e1b686d118709ae8748f51824a135413"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "0c37d5b445614e086d674044411f39b3fe1c636eb71d59ea9372eb8e1934d4da77310c23fb956f00100099a12ce0f3031aab3de39012185cbf4204c60b4b50db"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "2ae3735acbe9a7d881420ade0c6da35427a1c32e923c5f1e6ece9daf61b496f5acdf98297e389080ec77801dcee3f225"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "7386bfb90110e2f0b435b323dcea22f8231ac86875cd866b488d22d8928e2b7dad27ff65fecbabe0bc8066776b9b824e"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "8b4154999445ab6608ae8e72b5723cb2e7b772d71945d9061253b8fe0108ff82"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "700487360b3e25f6ac7dd965f7ddb4d8c35e38b2ebf43fea6ab46e91b2eec238b80e6fb7ac2dc28b44318de6951ddd2bee1b040218c62d7ffd16c1ce58a9f595"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.bpm/license-book@1.1.0-SNAPSHOT?type=zip",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/license-book",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/operaton-parent/license-book",
           "type": "vcs"
         }
       ]
@@ -35078,6 +34635,216 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@4.0.29?type=jar",
+      "publisher": "Apache Software Foundation",
+      "group": "org.apache.groovy",
+      "name": "groovy-templates",
+      "version": "4.0.29",
+      "description": "Groovy: A powerful multi-faceted language for the JVM",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "294233a8a22dbdf93863071ea5226e27"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "ef03504e1c5cfb34e0af946f92a6426e4f75cd93"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "94640de5660c8f702b85b917f44fe924755befb312e113ac3de839a782f96806"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "131a232d10fab528019ef2fe22adf3bf0f4086e0cdfd584f2a9a39bcb1a871f047b3afa12b86ddcc7f06a2dc404ea505f6af0a633e3c7c7458763213232bf88d"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "8677a6c9eeb89208fcdef04b4d6cb58b19db029f9827b39d5dc2317af1ba607424bc291f074e7ce855ca5470474ae86b"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "d32d132abce0e9d10660ea4b8518f872b8a5a352945f37b60f07ab39904a32744abd733c0b283a4a58224abcad1be491"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "f7bd8a858deea42a7cef09c1e8a1fd85c17cf7cab86e36273dd042950e7f2f75"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "593e198aee9b9ca447a0485ae7d4fbbbf8253bfe9ccb5833b4829bf79b438689e1cff692c0669b51de1fca7949f3cac3401e3bfa41f38608c7ff1fac75713221"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.groovy/groovy-templates@4.0.29?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://groovy-lang.org",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.apache.org/jira/browse/GROOVY",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/apache/groovy.git",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-dateutil@4.0.29?type=jar",
+      "publisher": "Apache Software Foundation",
+      "group": "org.apache.groovy",
+      "name": "groovy-dateutil",
+      "version": "4.0.29",
+      "description": "Groovy: A powerful multi-faceted language for the JVM",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "acb77a77634fbd40ce78e8f2b6673590"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "e4a438420040ec19846e09d881c640933492857f"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "22733846903c69c22961f61b25f16dddab43cf4ac58e38f859fe28ec4e24a935"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "e4c064ea7d299cd39010e65212b3b018d9a82daba72ca9a2cb1a529306e4ac8956e15390073f84318283f69318b8c5d4ca8cd8824aa83be398eb603785b3c8b2"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "dba9fb020441cbf9d10e4f10874fa27f15d366c09ffc226f65078d0c332108f7a05a0f6060114b6be9e8f8a96628fb17"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "387ef33f35d827d288a2573d0c0d273995a1fea789138101152449f0424d77da0c1b218421968f7c57d8d2ee2bc10671"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "464947f0a504e0010049a22f08cbe9a3d6ac03f2be333d3955fede7c008826e9"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "7e28cecb363149f737734702e250b9c287663f22e169a4e574c1eda8c677df310537e90c384750ec67de7ce7d5129ea2dd5c6831d298ed68e2c3f2b86e6f9b54"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.groovy/groovy-dateutil@4.0.29?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://groovy-lang.org",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.apache.org/jira/browse/GROOVY",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/apache/groovy.git",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-datetime@4.0.29?type=jar",
+      "publisher": "Apache Software Foundation",
+      "group": "org.apache.groovy",
+      "name": "groovy-datetime",
+      "version": "4.0.29",
+      "description": "Groovy: A powerful multi-faceted language for the JVM",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "2b4ac750cdf75658417a578aebe35a98"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "15f104e73bc1d1d9699b02850100815fd62f2203"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "1f84c8127115a0c01a2053bb73d6fe0f540bfa30fd64d73dbd4221d0971b971c"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "01a996e8f53130f1b7275c4b97f5cf1d5933e50f16cdd192593a53ca1dec5955a9d545952bf162d9a60f1e310ed29ff3a2807240851574419a2a9d01d053ffaf"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "f926be1cfdb54099c7cef31217886959c939f226be175ac111edecc61a137f8878ace05465df5f970a4417c6d55dd682"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "67ee43140b282f54cdd6e571e3b885b13e97cac2ce9797b5d46cb75f60dbb525f50c319c7614fa1483d73585db47834e"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "c8c7ea6586c1458acd868b82d3ab5c672e0661062fc39bedda28f421e6d11730"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "4b996229cf73f5951776ae7f844203908d50b0ce8fcf02bbb58b6769764b88319c505cd71830eba10d5e666ad11e8cad178109a246012efe96b5722d7582881e"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.groovy/groovy-datetime@4.0.29?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://groovy-lang.org",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.apache.org/jira/browse/GROOVY",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/apache/groovy.git",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-wildfly@1.1.0-SNAPSHOT?type=war",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.webapp",
@@ -35147,40 +34914,6 @@
       "version": "1.1.0-SNAPSHOT",
       "description": "Assembles the Operaton and makes it ready for qa. The assembly is installed to maven later in the reactor, if the integration tests pass successfully",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "940f794b78626361d2f41153e9d9a529"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "381f82b297d061e69e6916883b39a42d33f2a164"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "42c1b5d27b87eb8fad20e5a3eefb26d9da4df167d5b004d9765838565331fe41"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "f78b08d9736c851ea1654f5081bb7efb2d83f2bfeb2df583167d6218fff3dec725f825f13460d2ad076e632a58f5d4814a5ef976a78519bbc1ea3a0c785e0dfe"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "33421c7d3b73c4a33ca8d0ce72e9a52e7051e8700652851b7cf885df7f866f974de137c739b07ffa42b019d1237fb855"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "6e0f5fb37d6a21301181889a1724aa512ea00bbb37d7afd974a077bf73a95c205accc0e710cb1aeea552cfd6d419f7a1"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "83d0f24dc2d7bd50f3ed74fa265615ae4e3eb1de217f19dbf315622bdc579d37"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "f9245f0a85c3f5a76361e474b03a9d8c66b72645e4da1af27c3a731bec263f1dde51b7a55427179d9cb9b8b848d6a9f40c8f7aae636bc1271199a151bfed7a6d"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -35216,35 +34949,35 @@
       "hashes": [
         {
           "alg": "MD5",
-          "content": "c6e4909a6f62665b524b01f7181a5c6c"
+          "content": "28c3c40cd7777a7f860fdbcf81c2ef7a"
         },
         {
           "alg": "SHA-1",
-          "content": "fd0bacd7c209b14669c08e2b2db67563041da302"
+          "content": "d409bf83e188b31f161344f0a6690e4ccca25fd8"
         },
         {
           "alg": "SHA-256",
-          "content": "08fa939db69dc8794e3c639f2b39257057efe61fe3f84475deb5e218f82d796a"
+          "content": "869ba50f3f579fd9b17fb381a88550233060da832d5b48cb7c351baa6b025b77"
         },
         {
           "alg": "SHA-512",
-          "content": "2a603b598cb6d3bb0480ddc9769c64c5a1bda5f4f8dc898d39289bef99ff689aea8dbde59cb0bd46a8ecd5293c8434d8dd7ed162260a275c5afbef3cfff4e974"
+          "content": "f5009602f02f1656e7a189c23fe7e307f1c210fa278ddae0a5a1e4f4beabebb5b5910083c38430967fdd7d3ad5308362eb45fa993ebdc2985df9741e42098ac2"
         },
         {
           "alg": "SHA-384",
-          "content": "4f2e1293018bdd113e902d88174346efaab7c6a81c8a682cf5ad6dd16ae06446e21b804377379318820040198a46f976"
+          "content": "9ac67cc7a6372a1903eabc0585078c410057ce35dbade6e096efe20447f695e3a8fe9ddc1e11a2e3d89675b180db6e2b"
         },
         {
           "alg": "SHA3-384",
-          "content": "4208b3e7ebe8e25c9c7823c20602261f1c9a6c30f90766ec453e3c05e79a7246e2a3af2bdd5682337f580e28bb7a5c8f"
+          "content": "361ccbe5bfbf0b19a60f043f87ed611d2b48ec3ff9640ed16e2fc68868553cef53b22d93bc016ca780a8dc35515324a3"
         },
         {
           "alg": "SHA3-256",
-          "content": "2886a43fd970a94a69bcd8bef2d2d7c079fd02ebaa60abf5ffbfb73a8e24f934"
+          "content": "5d29c93ef55bbd65d56d501f8572ada273593fe76ca6526f125d3c7306adaee7"
         },
         {
           "alg": "SHA3-512",
-          "content": "f7593ed061552bac6c4f0e447dfd67d81fdf77db71d23afe7ca5583a3ad667ac09a5a93fd18968412da02913b6ecd5350e04f2bd4fd35e33a441db8245d793ea"
+          "content": "1661787171b8e6e12b3a0996449807211fb24732efecace3d7efe19ea6c77ae8fe4423dc067d2e4dc42e0f5ce46002636ad225c7fc7cbb3c7aaa385dc7b5ae23"
         }
       ],
       "licenses": [
@@ -35279,40 +35012,6 @@
       "version": "1.1.0-SNAPSHOT",
       "description": "Operaton - Engine - REST - Assembly",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "2a778e3b65082016a48546b015a9e407"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "9d036f6202c5392af6a406c264572667a959fd48"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "79c2d2495c38a1ef8ec1446812c35125305d98adce7864816d6cfcff88186b02"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "d632e4c3bd54f4bf7eb74434ce1a4a02c7391fdbda4e545f29939503f401f701fa6448576380da741c83f098b8864efc677f5280202884519ad6978f4d3ed8d6"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "d87f77c494e283ac8fb14687cbc4ff1b253880f57bcd4242dc87a095c8c267fec237cbd55e098482fc89ee390794adbe"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "8671106e15122398a6f01907c44f0ceda9430184eccaa162b435d59a19530b1ac68257764c59da6687a481f0b7364cc7"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "eb3c78554843a9ad2af406b9f413d209deb171c8e57a46e2306edb0167aaa04b"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "8c918efbe5efe3f2459e84704abdb1c19492b1c1d798caa5dfd20e1cefbafed460472e0093821491cd60dc2ccdba3d9433a3bf4b9922a3b9a0ab1808117e7a46"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -35369,7 +35068,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "fc44b9a3-7183-4a23-b183-4f51db676282",
+      "bom-ref": "1863f443-52b9-4bb3-ad64-f001a0bd2fef",
       "name": "package-lock.json",
       "properties": [
         {
@@ -35388,13 +35087,6 @@
       "group": "@bpmn-io",
       "name": "align-to-origin",
       "version": "0.7.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/align-to-origin@0.7.0",
       "properties": [
         {
@@ -35413,13 +35105,6 @@
       "group": "@bpmn-io",
       "name": "cm-theme",
       "version": "0.1.0-alpha.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/cm-theme@0.1.0-alpha.2",
       "properties": [
         {
@@ -35438,13 +35123,6 @@
       "group": "@bpmn-io",
       "name": "diagram-js-ui",
       "version": "0.2.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
       "properties": [
         {
@@ -35463,13 +35141,6 @@
       "group": "@bpmn-io",
       "name": "dmn-migrate",
       "version": "0.5.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
       "properties": [
         {
@@ -35488,13 +35159,6 @@
       "group": "@bpmn-io",
       "name": "dmn-variable-resolver",
       "version": "0.7.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
       "properties": [
         {
@@ -35513,13 +35177,6 @@
       "group": "@bpmn-io",
       "name": "draggle",
       "version": "4.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/draggle@4.1.2",
       "properties": [
         {
@@ -35538,13 +35195,6 @@
       "group": "@bpmn-io",
       "name": "feel-editor",
       "version": "1.12.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/feel-editor@1.12.0",
       "properties": [
         {
@@ -35563,13 +35213,6 @@
       "group": "@bpmn-io",
       "name": "feel-lint",
       "version": "1.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/feel-lint@1.4.0",
       "properties": [
         {
@@ -35588,13 +35231,6 @@
       "group": "@bpmn-io",
       "name": "feel-lint",
       "version": "2.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/feel-lint@2.1.0",
       "properties": [
         {
@@ -35613,13 +35249,6 @@
       "group": "@bpmn-io",
       "name": "form-js-carbon-styles",
       "version": "1.17.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.17.0",
       "properties": [
         {
@@ -35638,13 +35267,6 @@
       "group": "@bpmn-io",
       "name": "form-js-editor",
       "version": "1.17.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.17.0",
       "properties": [
         {
@@ -35663,13 +35285,6 @@
       "group": "@bpmn-io",
       "name": "form-js-playground",
       "version": "1.17.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.17.0",
       "properties": [
         {
@@ -35688,13 +35303,6 @@
       "group": "@bpmn-io",
       "name": "form-js-viewer",
       "version": "1.17.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.17.0",
       "properties": [
         {
@@ -35713,13 +35321,6 @@
       "group": "@bpmn-io",
       "name": "form-js",
       "version": "1.8.7",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js@1.8.7",
       "properties": [
         {
@@ -35738,13 +35339,6 @@
       "group": "@bpmn-io",
       "name": "lang-feel",
       "version": "2.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/lang-feel@2.4.0",
       "properties": [
         {
@@ -35763,13 +35357,6 @@
       "group": "@bpmn-io",
       "name": "lezer-feel",
       "version": "1.9.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/lezer-feel@1.9.0",
       "properties": [
         {
@@ -35788,13 +35375,6 @@
       "group": "@bpmn-io",
       "name": "properties-panel",
       "version": "3.33.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/properties-panel@3.33.0",
       "properties": [
         {
@@ -35813,13 +35393,6 @@
       "group": "@camunda",
       "name": "feel-builtins",
       "version": "0.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40camunda/feel-builtins@0.2.0",
       "properties": [
         {
@@ -35838,13 +35411,6 @@
       "group": "@carbon",
       "name": "grid",
       "version": "11.42.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40carbon/grid@11.42.0",
       "properties": [
         {
@@ -35863,13 +35429,6 @@
       "group": "@carbon",
       "name": "layout",
       "version": "11.40.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40carbon/layout@11.40.0",
       "properties": [
         {
@@ -35888,13 +35447,6 @@
       "group": "@codemirror",
       "name": "autocomplete",
       "version": "6.18.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/autocomplete@6.18.6",
       "properties": [
         {
@@ -35913,13 +35465,6 @@
       "group": "@codemirror",
       "name": "commands",
       "version": "6.8.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/commands@6.8.1",
       "properties": [
         {
@@ -35938,13 +35483,6 @@
       "group": "@codemirror",
       "name": "lang-json",
       "version": "6.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/lang-json@6.0.2",
       "properties": [
         {
@@ -35963,13 +35501,6 @@
       "group": "@codemirror",
       "name": "language",
       "version": "6.11.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/language@6.11.3",
       "properties": [
         {
@@ -35988,13 +35519,6 @@
       "group": "@codemirror",
       "name": "lint",
       "version": "6.8.5",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/lint@6.8.5",
       "properties": [
         {
@@ -36013,13 +35537,6 @@
       "group": "@codemirror",
       "name": "search",
       "version": "6.5.11",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/search@6.5.11",
       "properties": [
         {
@@ -36038,13 +35555,6 @@
       "group": "@codemirror",
       "name": "state",
       "version": "6.5.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/state@6.5.2",
       "properties": [
         {
@@ -36063,13 +35573,6 @@
       "group": "@codemirror",
       "name": "view",
       "version": "6.38.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/view@6.38.1",
       "properties": [
         {
@@ -36088,13 +35591,6 @@
       "group": "@ibm",
       "name": "plex",
       "version": "6.4.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "OFL-1.1"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40ibm/plex@6.4.0",
       "properties": [
         {
@@ -36113,13 +35609,6 @@
       "group": "@ibm",
       "name": "telemetry-js",
       "version": "1.10.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40ibm/telemetry-js@1.10.1",
       "properties": [
         {
@@ -36138,13 +35627,6 @@
       "group": "@kurkle",
       "name": "color",
       "version": "0.3.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40kurkle/color@0.3.4",
       "properties": [
         {
@@ -36163,13 +35645,6 @@
       "group": "@lezer",
       "name": "common",
       "version": "1.2.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/common@1.2.3",
       "properties": [
         {
@@ -36188,13 +35663,6 @@
       "group": "@lezer",
       "name": "highlight",
       "version": "1.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/highlight@1.2.1",
       "properties": [
         {
@@ -36213,13 +35681,6 @@
       "group": "@lezer",
       "name": "json",
       "version": "1.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/json@1.0.3",
       "properties": [
         {
@@ -36238,13 +35699,6 @@
       "group": "@lezer",
       "name": "lr",
       "version": "1.4.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/lr@1.4.2",
       "properties": [
         {
@@ -36263,13 +35717,6 @@
       "group": "@lezer",
       "name": "markdown",
       "version": "1.4.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/markdown@1.4.3",
       "properties": [
         {
@@ -36288,13 +35735,6 @@
       "group": "@marijn",
       "name": "find-cluster-break",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40marijn/find-cluster-break@1.0.2",
       "properties": [
         {
@@ -36313,13 +35753,6 @@
       "group": "@noble",
       "name": "hashes",
       "version": "1.8.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40noble/hashes@1.8.0",
       "properties": [
         {
@@ -36338,13 +35771,6 @@
       "group": "@paralleldrive",
       "name": "cuid2",
       "version": "2.2.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40paralleldrive/cuid2@2.2.2",
       "properties": [
         {
@@ -36363,13 +35789,6 @@
       "group": "@types",
       "name": "trusted-types",
       "version": "2.0.7",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40types/trusted-types@2.0.7",
       "properties": [
         {
@@ -36387,13 +35806,6 @@
       "bom-ref": "pkg:npm/angular-animate@1.8.2",
       "name": "angular-animate",
       "version": "1.8.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-animate@1.8.2",
       "properties": [
         {
@@ -36411,13 +35823,6 @@
       "bom-ref": "pkg:npm/angular-cookies@1.8.2",
       "name": "angular-cookies",
       "version": "1.8.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-cookies@1.8.2",
       "properties": [
         {
@@ -36435,13 +35840,6 @@
       "bom-ref": "pkg:npm/angular-data-depend@1.0.0",
       "name": "angular-data-depend",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-data-depend@1.0.0",
       "properties": [
         {
@@ -36459,13 +35857,6 @@
       "bom-ref": "pkg:npm/angular-loader@1.8.3",
       "name": "angular-loader",
       "version": "1.8.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-loader@1.8.3",
       "properties": [
         {
@@ -36483,13 +35874,6 @@
       "bom-ref": "pkg:npm/angular-moment@1.3.0",
       "name": "angular-moment",
       "version": "1.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-moment@1.3.0",
       "properties": [
         {
@@ -36507,13 +35891,6 @@
       "bom-ref": "pkg:npm/angular-resource@1.8.2",
       "name": "angular-resource",
       "version": "1.8.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-resource@1.8.2",
       "properties": [
         {
@@ -36531,13 +35908,6 @@
       "bom-ref": "pkg:npm/angular-route@1.8.2",
       "name": "angular-route",
       "version": "1.8.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-route@1.8.2",
       "properties": [
         {
@@ -36555,13 +35925,6 @@
       "bom-ref": "pkg:npm/angular-sanitize@1.8.2",
       "name": "angular-sanitize",
       "version": "1.8.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-sanitize@1.8.2",
       "properties": [
         {
@@ -36579,13 +35942,6 @@
       "bom-ref": "pkg:npm/angular-touch@1.8.2",
       "name": "angular-touch",
       "version": "1.8.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-touch@1.8.2",
       "properties": [
         {
@@ -36603,13 +35959,6 @@
       "bom-ref": "pkg:npm/angular-translate@2.19.0",
       "name": "angular-translate",
       "version": "2.19.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-translate@2.19.0",
       "properties": [
         {
@@ -36627,13 +35976,6 @@
       "bom-ref": "pkg:npm/angular-ui-bootstrap@2.5.6",
       "name": "angular-ui-bootstrap",
       "version": "2.5.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-ui-bootstrap@2.5.6",
       "properties": [
         {
@@ -36651,13 +35993,6 @@
       "bom-ref": "pkg:npm/angular@1.8.2",
       "name": "angular",
       "version": "1.8.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular@1.8.2",
       "properties": [
         {
@@ -36675,13 +36010,6 @@
       "bom-ref": "pkg:npm/array-move@4.0.0",
       "name": "array-move",
       "version": "4.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/array-move@4.0.0",
       "properties": [
         {
@@ -36699,13 +36027,6 @@
       "bom-ref": "pkg:npm/asap@2.0.6",
       "name": "asap",
       "version": "2.0.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/asap@2.0.6",
       "properties": [
         {
@@ -36723,13 +36044,6 @@
       "bom-ref": "pkg:npm/asynckit@0.4.0",
       "name": "asynckit",
       "version": "0.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/asynckit@0.4.0",
       "properties": [
         {
@@ -36747,13 +36061,6 @@
       "bom-ref": "pkg:npm/atoa@1.0.0",
       "name": "atoa",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/atoa@1.0.0",
       "properties": [
         {
@@ -36771,13 +36078,6 @@
       "bom-ref": "pkg:npm/big.js@7.0.1",
       "name": "big.js",
       "version": "7.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/big.js@7.0.1",
       "properties": [
         {
@@ -36795,13 +36095,6 @@
       "bom-ref": "pkg:npm/bootstrap@3.4.1",
       "name": "bootstrap",
       "version": "3.4.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/bootstrap@3.4.1",
       "properties": [
         {
@@ -36819,13 +36112,6 @@
       "bom-ref": "pkg:npm/bpmn-font@0.12.1",
       "name": "bpmn-font",
       "version": "0.12.1",
-      "licenses": [
-        {
-          "license": {
-            "name": "SIL"
-          }
-        }
-      ],
       "purl": "pkg:npm/bpmn-font@0.12.1",
       "properties": [
         {
@@ -36843,13 +36129,6 @@
       "bom-ref": "pkg:npm/bpmn-js@16.5.0",
       "name": "bpmn-js",
       "version": "16.5.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/bpmn-js@16.5.0",
       "properties": [
         {
@@ -36867,13 +36146,6 @@
       "bom-ref": "pkg:npm/bpmn-moddle@8.1.0",
       "name": "bpmn-moddle",
       "version": "8.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/bpmn-moddle@8.1.0",
       "properties": [
         {
@@ -36891,13 +36163,6 @@
       "bom-ref": "pkg:npm/call-bind-apply-helpers@1.0.2",
       "name": "call-bind-apply-helpers",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/call-bind-apply-helpers@1.0.2",
       "properties": [
         {
@@ -36915,13 +36180,6 @@
       "bom-ref": "pkg:npm/call-bound@1.0.4",
       "name": "call-bound",
       "version": "1.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/call-bound@1.0.4",
       "properties": [
         {
@@ -36939,13 +36197,6 @@
       "bom-ref": "pkg:npm/camunda-dmn-js@3.2.0",
       "name": "camunda-dmn-js",
       "version": "3.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/camunda-dmn-js@3.2.0",
       "properties": [
         {
@@ -36963,13 +36214,6 @@
       "bom-ref": "pkg:npm/camunda-dmn-moddle@1.3.0",
       "name": "camunda-dmn-moddle",
       "version": "1.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/camunda-dmn-moddle@1.3.0",
       "properties": [
         {
@@ -36987,13 +36231,6 @@
       "bom-ref": "pkg:npm/chart.js@4.5.0",
       "name": "chart.js",
       "version": "4.5.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/chart.js@4.5.0",
       "properties": [
         {
@@ -37011,13 +36248,6 @@
       "bom-ref": "pkg:npm/classnames@2.5.1",
       "name": "classnames",
       "version": "2.5.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/classnames@2.5.1",
       "properties": [
         {
@@ -37035,13 +36265,6 @@
       "bom-ref": "pkg:npm/clipboard@2.0.11",
       "name": "clipboard",
       "version": "2.0.11",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/clipboard@2.0.11",
       "properties": [
         {
@@ -37059,13 +36282,6 @@
       "bom-ref": "pkg:npm/clsx@2.1.1",
       "name": "clsx",
       "version": "2.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/clsx@2.1.1",
       "properties": [
         {
@@ -37083,13 +36299,6 @@
       "bom-ref": "pkg:npm/cmmn-font@0.5.0",
       "name": "cmmn-font",
       "version": "0.5.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SIL"
-          }
-        }
-      ],
       "purl": "pkg:npm/cmmn-font@0.5.0",
       "properties": [
         {
@@ -37107,13 +36316,6 @@
       "bom-ref": "pkg:npm/cmmn-js@0.20.0",
       "name": "cmmn-js",
       "version": "0.20.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/cmmn-js@0.20.0",
       "properties": [
         {
@@ -37131,13 +36333,6 @@
       "bom-ref": "pkg:npm/cmmn-moddle@5.0.0",
       "name": "cmmn-moddle",
       "version": "5.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/cmmn-moddle@5.0.0",
       "properties": [
         {
@@ -37155,13 +36350,6 @@
       "bom-ref": "pkg:npm/codemirror@6.0.2",
       "name": "codemirror",
       "version": "6.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/codemirror@6.0.2",
       "properties": [
         {
@@ -37179,13 +36367,6 @@
       "bom-ref": "pkg:npm/combined-stream@1.0.8",
       "name": "combined-stream",
       "version": "1.0.8",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/combined-stream@1.0.8",
       "properties": [
         {
@@ -37203,13 +36384,6 @@
       "bom-ref": "pkg:npm/component-emitter@1.3.1",
       "name": "component-emitter",
       "version": "1.3.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/component-emitter@1.3.1",
       "properties": [
         {
@@ -37244,13 +36418,6 @@
       "bom-ref": "pkg:npm/component-event@0.2.1",
       "name": "component-event",
       "version": "0.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/component-event@0.2.1",
       "properties": [
         {
@@ -37285,13 +36452,6 @@
       "bom-ref": "pkg:npm/component-xor@0.0.4",
       "name": "component-xor",
       "version": "0.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/component-xor@0.0.4",
       "properties": [
         {
@@ -37309,13 +36469,6 @@
       "bom-ref": "pkg:npm/contra@1.9.4",
       "name": "contra",
       "version": "1.9.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/contra@1.9.4",
       "properties": [
         {
@@ -37333,13 +36486,6 @@
       "bom-ref": "pkg:npm/cookiejar@2.1.4",
       "name": "cookiejar",
       "version": "2.1.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/cookiejar@2.1.4",
       "properties": [
         {
@@ -37357,13 +36503,6 @@
       "bom-ref": "pkg:npm/core-js@3.35.1",
       "name": "core-js",
       "version": "3.35.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/core-js@3.35.1",
       "properties": [
         {
@@ -37381,13 +36520,6 @@
       "bom-ref": "pkg:npm/crelt@1.0.6",
       "name": "crelt",
       "version": "1.0.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/crelt@1.0.6",
       "properties": [
         {
@@ -37405,13 +36537,6 @@
       "bom-ref": "pkg:npm/css.escape@1.5.1",
       "name": "css.escape",
       "version": "1.5.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/css.escape@1.5.1",
       "properties": [
         {
@@ -37429,13 +36554,6 @@
       "bom-ref": "pkg:npm/debug@4.4.1",
       "name": "debug",
       "version": "4.4.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/debug@4.4.1",
       "properties": [
         {
@@ -37453,13 +36571,6 @@
       "bom-ref": "pkg:npm/delayed-stream@1.0.0",
       "name": "delayed-stream",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/delayed-stream@1.0.0",
       "properties": [
         {
@@ -37477,13 +36588,6 @@
       "bom-ref": "pkg:npm/delegate@3.2.0",
       "name": "delegate",
       "version": "3.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/delegate@3.2.0",
       "properties": [
         {
@@ -37501,13 +36605,6 @@
       "bom-ref": "pkg:npm/dezalgo@1.0.4",
       "name": "dezalgo",
       "version": "1.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/dezalgo@1.0.4",
       "properties": [
         {
@@ -37525,13 +36622,6 @@
       "bom-ref": "pkg:npm/diagram-js-direct-editing@1.8.0",
       "name": "diagram-js-direct-editing",
       "version": "1.8.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js-direct-editing@1.8.0",
       "properties": [
         {
@@ -37549,13 +36639,6 @@
       "bom-ref": "pkg:npm/diagram-js-direct-editing@2.1.2",
       "name": "diagram-js-direct-editing",
       "version": "2.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js-direct-editing@2.1.2",
       "properties": [
         {
@@ -37573,13 +36656,6 @@
       "bom-ref": "pkg:npm/diagram-js-direct-editing@3.2.0",
       "name": "diagram-js-direct-editing",
       "version": "3.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js-direct-editing@3.2.0",
       "properties": [
         {
@@ -37597,13 +36673,6 @@
       "bom-ref": "pkg:npm/diagram-js-grid@1.1.0",
       "name": "diagram-js-grid",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js-grid@1.1.0",
       "properties": [
         {
@@ -37621,13 +36690,6 @@
       "bom-ref": "pkg:npm/diagram-js-origin@1.4.0",
       "name": "diagram-js-origin",
       "version": "1.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js-origin@1.4.0",
       "properties": [
         {
@@ -37645,13 +36707,6 @@
       "bom-ref": "pkg:npm/diagram-js@12.8.1",
       "name": "diagram-js",
       "version": "12.8.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js@12.8.1",
       "properties": [
         {
@@ -37669,13 +36724,6 @@
       "bom-ref": "pkg:npm/diagram-js@13.4.0",
       "name": "diagram-js",
       "version": "13.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js@13.4.0",
       "properties": [
         {
@@ -37693,13 +36741,6 @@
       "bom-ref": "pkg:npm/diagram-js@15.3.0",
       "name": "diagram-js",
       "version": "15.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js@15.3.0",
       "properties": [
         {
@@ -37717,13 +36758,6 @@
       "bom-ref": "pkg:npm/diagram-js@4.0.3",
       "name": "diagram-js",
       "version": "4.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js@4.0.3",
       "properties": [
         {
@@ -37741,13 +36775,6 @@
       "bom-ref": "pkg:npm/didi@10.2.2",
       "name": "didi",
       "version": "10.2.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/didi@10.2.2",
       "properties": [
         {
@@ -37765,13 +36792,6 @@
       "bom-ref": "pkg:npm/didi@4.0.0",
       "name": "didi",
       "version": "4.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/didi@4.0.0",
       "properties": [
         {
@@ -37789,13 +36809,6 @@
       "bom-ref": "pkg:npm/didi@9.0.2",
       "name": "didi",
       "version": "9.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/didi@9.0.2",
       "properties": [
         {
@@ -37813,13 +36826,6 @@
       "bom-ref": "pkg:npm/dmn-font@0.6.2",
       "name": "dmn-font",
       "version": "0.6.2",
-      "licenses": [
-        {
-          "license": {
-            "name": "SIL"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-font@0.6.2",
       "properties": [
         {
@@ -37837,13 +36843,6 @@
       "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.4.0",
       "name": "dmn-js-boxed-expression",
       "version": "17.4.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-boxed-expression@17.4.0",
       "properties": [
         {
@@ -37861,13 +36860,6 @@
       "bom-ref": "pkg:npm/dmn-js-decision-table@17.1.0",
       "name": "dmn-js-decision-table",
       "version": "17.1.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-decision-table@17.1.0",
       "properties": [
         {
@@ -37885,13 +36877,6 @@
       "bom-ref": "pkg:npm/dmn-js-drd@17.2.0",
       "name": "dmn-js-drd",
       "version": "17.2.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-drd@17.2.0",
       "properties": [
         {
@@ -37909,13 +36894,6 @@
       "bom-ref": "pkg:npm/dmn-js-literal-expression@17.1.0",
       "name": "dmn-js-literal-expression",
       "version": "17.1.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-literal-expression@17.1.0",
       "properties": [
         {
@@ -37933,13 +36911,6 @@
       "bom-ref": "pkg:npm/dmn-js-properties-panel@3.2.1",
       "name": "dmn-js-properties-panel",
       "version": "3.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-properties-panel@3.2.1",
       "properties": [
         {
@@ -37957,13 +36928,6 @@
       "bom-ref": "pkg:npm/dmn-js-shared@17.1.0",
       "name": "dmn-js-shared",
       "version": "17.1.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-shared@17.1.0",
       "properties": [
         {
@@ -37981,13 +36945,6 @@
       "bom-ref": "pkg:npm/dmn-js-shared@17.4.0",
       "name": "dmn-js-shared",
       "version": "17.4.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-shared@17.4.0",
       "properties": [
         {
@@ -38005,13 +36962,6 @@
       "bom-ref": "pkg:npm/dmn-js@17.2.0",
       "name": "dmn-js",
       "version": "17.2.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js@17.2.0",
       "properties": [
         {
@@ -38029,13 +36979,6 @@
       "bom-ref": "pkg:npm/dmn-moddle@10.0.0",
       "name": "dmn-moddle",
       "version": "10.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-moddle@10.0.0",
       "properties": [
         {
@@ -38053,13 +36996,6 @@
       "bom-ref": "pkg:npm/dmn-moddle@11.0.0",
       "name": "dmn-moddle",
       "version": "11.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-moddle@11.0.0",
       "properties": [
         {
@@ -38077,13 +37013,6 @@
       "bom-ref": "pkg:npm/dom-iterator@1.0.2",
       "name": "dom-iterator",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/dom-iterator@1.0.2",
       "properties": [
         {
@@ -38118,13 +37047,6 @@
       "bom-ref": "pkg:npm/domify@1.4.2",
       "name": "domify",
       "version": "1.4.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/domify@1.4.2",
       "properties": [
         {
@@ -38142,13 +37064,6 @@
       "bom-ref": "pkg:npm/domify@2.0.0",
       "name": "domify",
       "version": "2.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/domify@2.0.0",
       "properties": [
         {
@@ -38166,11 +37081,6 @@
       "bom-ref": "pkg:npm/dompurify@3.2.4",
       "name": "dompurify",
       "version": "3.2.4",
-      "licenses": [
-        {
-          "expression": "MPL-2.0 OR Apache-2.0"
-        }
-      ],
       "purl": "pkg:npm/dompurify@3.2.4",
       "properties": [
         {
@@ -38188,11 +37098,6 @@
       "bom-ref": "pkg:npm/dompurify@3.2.6",
       "name": "dompurify",
       "version": "3.2.6",
-      "licenses": [
-        {
-          "expression": "MPL-2.0 OR Apache-2.0"
-        }
-      ],
       "purl": "pkg:npm/dompurify@3.2.6",
       "properties": [
         {
@@ -38210,13 +37115,6 @@
       "bom-ref": "pkg:npm/downloadjs@1.4.7",
       "name": "downloadjs",
       "version": "1.4.7",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/downloadjs@1.4.7",
       "properties": [
         {
@@ -38234,13 +37132,6 @@
       "bom-ref": "pkg:npm/dunder-proto@1.0.1",
       "name": "dunder-proto",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/dunder-proto@1.0.1",
       "properties": [
         {
@@ -38258,13 +37149,6 @@
       "bom-ref": "pkg:npm/es-define-property@1.0.1",
       "name": "es-define-property",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/es-define-property@1.0.1",
       "properties": [
         {
@@ -38282,13 +37166,6 @@
       "bom-ref": "pkg:npm/es-errors@1.3.0",
       "name": "es-errors",
       "version": "1.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/es-errors@1.3.0",
       "properties": [
         {
@@ -38306,13 +37183,6 @@
       "bom-ref": "pkg:npm/es-object-atoms@1.1.1",
       "name": "es-object-atoms",
       "version": "1.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/es-object-atoms@1.1.1",
       "properties": [
         {
@@ -38330,13 +37200,6 @@
       "bom-ref": "pkg:npm/es-set-tostringtag@2.1.0",
       "name": "es-set-tostringtag",
       "version": "2.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/es-set-tostringtag@2.1.0",
       "properties": [
         {
@@ -38354,13 +37217,6 @@
       "bom-ref": "pkg:npm/escape-html@1.0.3",
       "name": "escape-html",
       "version": "1.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/escape-html@1.0.3",
       "properties": [
         {
@@ -38378,13 +37234,6 @@
       "bom-ref": "pkg:npm/events@3.3.0",
       "name": "events",
       "version": "3.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/events@3.3.0",
       "properties": [
         {
@@ -38402,13 +37251,6 @@
       "bom-ref": "pkg:npm/fast-safe-stringify@2.1.1",
       "name": "fast-safe-stringify",
       "version": "2.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/fast-safe-stringify@2.1.1",
       "properties": [
         {
@@ -38426,13 +37268,6 @@
       "bom-ref": "pkg:npm/fast-xml-parser@4.3.4",
       "name": "fast-xml-parser",
       "version": "4.3.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/fast-xml-parser@4.3.4",
       "properties": [
         {
@@ -38450,13 +37285,6 @@
       "bom-ref": "pkg:npm/feelers@1.4.0",
       "name": "feelers",
       "version": "1.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/feelers@1.4.0",
       "properties": [
         {
@@ -38474,13 +37302,6 @@
       "bom-ref": "pkg:npm/feelin@3.2.0",
       "name": "feelin",
       "version": "3.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/feelin@3.2.0",
       "properties": [
         {
@@ -38498,13 +37319,6 @@
       "bom-ref": "pkg:npm/feelin@4.3.0",
       "name": "feelin",
       "version": "4.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/feelin@4.3.0",
       "properties": [
         {
@@ -38522,13 +37336,6 @@
       "bom-ref": "pkg:npm/file-drops@0.6.1",
       "name": "file-drops",
       "version": "0.6.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/file-drops@0.6.1",
       "properties": [
         {
@@ -38546,13 +37353,6 @@
       "bom-ref": "pkg:npm/flatpickr@4.6.13",
       "name": "flatpickr",
       "version": "4.6.13",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/flatpickr@4.6.13",
       "properties": [
         {
@@ -38570,13 +37370,6 @@
       "bom-ref": "pkg:npm/focus-trap@7.6.5",
       "name": "focus-trap",
       "version": "7.6.5",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/focus-trap@7.6.5",
       "properties": [
         {
@@ -38594,13 +37387,6 @@
       "bom-ref": "pkg:npm/form-data@4.0.4",
       "name": "form-data",
       "version": "4.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/form-data@4.0.4",
       "properties": [
         {
@@ -38618,13 +37404,6 @@
       "bom-ref": "pkg:npm/formidable@2.1.5",
       "name": "formidable",
       "version": "2.1.5",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/formidable@2.1.5",
       "properties": [
         {
@@ -38642,13 +37421,6 @@
       "bom-ref": "pkg:npm/function-bind@1.1.2",
       "name": "function-bind",
       "version": "1.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/function-bind@1.1.2",
       "properties": [
         {
@@ -38666,13 +37438,6 @@
       "bom-ref": "pkg:npm/get-intrinsic@1.3.0",
       "name": "get-intrinsic",
       "version": "1.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/get-intrinsic@1.3.0",
       "properties": [
         {
@@ -38690,13 +37455,6 @@
       "bom-ref": "pkg:npm/get-proto@1.0.1",
       "name": "get-proto",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/get-proto@1.0.1",
       "properties": [
         {
@@ -38714,13 +37472,6 @@
       "bom-ref": "pkg:npm/good-listener@1.2.2",
       "name": "good-listener",
       "version": "1.2.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/good-listener@1.2.2",
       "properties": [
         {
@@ -38738,13 +37489,6 @@
       "bom-ref": "pkg:npm/gopd@1.2.0",
       "name": "gopd",
       "version": "1.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/gopd@1.2.0",
       "properties": [
         {
@@ -38762,13 +37506,6 @@
       "bom-ref": "pkg:npm/hammerjs@2.0.8",
       "name": "hammerjs",
       "version": "2.0.8",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/hammerjs@2.0.8",
       "properties": [
         {
@@ -38786,13 +37523,6 @@
       "bom-ref": "pkg:npm/has-symbols@1.1.0",
       "name": "has-symbols",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/has-symbols@1.1.0",
       "properties": [
         {
@@ -38810,13 +37540,6 @@
       "bom-ref": "pkg:npm/has-tostringtag@1.0.2",
       "name": "has-tostringtag",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/has-tostringtag@1.0.2",
       "properties": [
         {
@@ -38834,13 +37557,6 @@
       "bom-ref": "pkg:npm/hasown@2.0.2",
       "name": "hasown",
       "version": "2.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/hasown@2.0.2",
       "properties": [
         {
@@ -38858,13 +37574,6 @@
       "bom-ref": "pkg:npm/hat@0.0.3",
       "name": "hat",
       "version": "0.0.3",
-      "licenses": [
-        {
-          "license": {
-            "name": "MIT-X11"
-          }
-        }
-      ],
       "purl": "pkg:npm/hat@0.0.3",
       "properties": [
         {
@@ -38882,13 +37591,6 @@
       "bom-ref": "pkg:npm/htm@3.1.1",
       "name": "htm",
       "version": "3.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
       "purl": "pkg:npm/htm@3.1.1",
       "properties": [
         {
@@ -38906,13 +37608,6 @@
       "bom-ref": "pkg:npm/ids@0.2.2",
       "name": "ids",
       "version": "0.2.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/ids@0.2.2",
       "properties": [
         {
@@ -38930,13 +37625,6 @@
       "bom-ref": "pkg:npm/ids@1.0.5",
       "name": "ids",
       "version": "1.0.5",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/ids@1.0.5",
       "properties": [
         {
@@ -38971,13 +37659,6 @@
       "bom-ref": "pkg:npm/inferno-shared@5.6.3",
       "name": "inferno-shared",
       "version": "5.6.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/inferno-shared@5.6.3",
       "properties": [
         {
@@ -38995,13 +37676,6 @@
       "bom-ref": "pkg:npm/inferno-vnode-flags@5.6.3",
       "name": "inferno-vnode-flags",
       "version": "5.6.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/inferno-vnode-flags@5.6.3",
       "properties": [
         {
@@ -39019,13 +37693,6 @@
       "bom-ref": "pkg:npm/inferno@5.6.3",
       "name": "inferno",
       "version": "5.6.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/inferno@5.6.3",
       "properties": [
         {
@@ -39043,13 +37710,6 @@
       "bom-ref": "pkg:npm/inherits-browser@0.1.0",
       "name": "inherits-browser",
       "version": "0.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/inherits-browser@0.1.0",
       "properties": [
         {
@@ -39067,13 +37727,6 @@
       "bom-ref": "pkg:npm/inherits@2.0.4",
       "name": "inherits",
       "version": "2.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/inherits@2.0.4",
       "properties": [
         {
@@ -39091,13 +37744,6 @@
       "bom-ref": "pkg:npm/jquery-ui@1.13.2",
       "name": "jquery-ui",
       "version": "1.13.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/jquery-ui@1.13.2",
       "properties": [
         {
@@ -39115,13 +37761,6 @@
       "bom-ref": "pkg:npm/jquery@3.7.1",
       "name": "jquery",
       "version": "3.7.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/jquery@3.7.1",
       "properties": [
         {
@@ -39139,13 +37778,6 @@
       "bom-ref": "pkg:npm/lezer-feel@1.8.1",
       "name": "lezer-feel",
       "version": "1.8.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/lezer-feel@1.8.1",
       "properties": [
         {
@@ -39163,13 +37795,6 @@
       "bom-ref": "pkg:npm/lodash@4.17.21",
       "name": "lodash",
       "version": "4.17.21",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/lodash@4.17.21",
       "properties": [
         {
@@ -39187,13 +37812,6 @@
       "bom-ref": "pkg:npm/luxon@3.7.1",
       "name": "luxon",
       "version": "3.7.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/luxon@3.7.1",
       "properties": [
         {
@@ -39211,13 +37829,6 @@
       "bom-ref": "pkg:npm/marked@16.2.1",
       "name": "marked",
       "version": "16.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/marked@16.2.1",
       "properties": [
         {
@@ -39235,13 +37846,6 @@
       "bom-ref": "pkg:npm/matches-selector@1.2.0",
       "name": "matches-selector",
       "version": "1.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/matches-selector@1.2.0",
       "properties": [
         {
@@ -39259,13 +37863,6 @@
       "bom-ref": "pkg:npm/math-intrinsics@1.1.0",
       "name": "math-intrinsics",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/math-intrinsics@1.1.0",
       "properties": [
         {
@@ -39283,13 +37880,6 @@
       "bom-ref": "pkg:npm/methods@1.1.2",
       "name": "methods",
       "version": "1.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/methods@1.1.2",
       "properties": [
         {
@@ -39307,13 +37897,6 @@
       "bom-ref": "pkg:npm/mime-db@1.52.0",
       "name": "mime-db",
       "version": "1.52.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/mime-db@1.52.0",
       "properties": [
         {
@@ -39331,13 +37914,6 @@
       "bom-ref": "pkg:npm/mime-types@2.1.35",
       "name": "mime-types",
       "version": "2.1.35",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/mime-types@2.1.35",
       "properties": [
         {
@@ -39355,13 +37931,6 @@
       "bom-ref": "pkg:npm/mime@2.6.0",
       "name": "mime",
       "version": "2.6.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/mime@2.6.0",
       "properties": [
         {
@@ -39379,13 +37948,6 @@
       "bom-ref": "pkg:npm/min-dash@3.8.1",
       "name": "min-dash",
       "version": "3.8.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dash@3.8.1",
       "properties": [
         {
@@ -39403,13 +37965,6 @@
       "bom-ref": "pkg:npm/min-dash@4.2.3",
       "name": "min-dash",
       "version": "4.2.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dash@4.2.3",
       "properties": [
         {
@@ -39427,13 +37982,6 @@
       "bom-ref": "pkg:npm/min-dom@3.2.1",
       "name": "min-dom",
       "version": "3.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dom@3.2.1",
       "properties": [
         {
@@ -39451,13 +37999,6 @@
       "bom-ref": "pkg:npm/min-dom@4.2.1",
       "name": "min-dom",
       "version": "4.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dom@4.2.1",
       "properties": [
         {
@@ -39475,13 +38016,6 @@
       "bom-ref": "pkg:npm/min-dom@5.1.1",
       "name": "min-dom",
       "version": "5.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dom@5.1.1",
       "properties": [
         {
@@ -39499,13 +38033,6 @@
       "bom-ref": "pkg:npm/mitt@3.0.1",
       "name": "mitt",
       "version": "3.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/mitt@3.0.1",
       "properties": [
         {
@@ -39523,13 +38050,6 @@
       "bom-ref": "pkg:npm/moddle-xml@10.1.0",
       "name": "moddle-xml",
       "version": "10.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle-xml@10.1.0",
       "properties": [
         {
@@ -39547,13 +38067,6 @@
       "bom-ref": "pkg:npm/moddle-xml@11.0.0",
       "name": "moddle-xml",
       "version": "11.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle-xml@11.0.0",
       "properties": [
         {
@@ -39571,13 +38084,6 @@
       "bom-ref": "pkg:npm/moddle-xml@7.5.0",
       "name": "moddle-xml",
       "version": "7.5.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle-xml@7.5.0",
       "properties": [
         {
@@ -39595,13 +38101,6 @@
       "bom-ref": "pkg:npm/moddle-xml@9.0.6",
       "name": "moddle-xml",
       "version": "9.0.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle-xml@9.0.6",
       "properties": [
         {
@@ -39619,13 +38118,6 @@
       "bom-ref": "pkg:npm/moddle@4.1.0",
       "name": "moddle",
       "version": "4.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle@4.1.0",
       "properties": [
         {
@@ -39643,13 +38135,6 @@
       "bom-ref": "pkg:npm/moddle@5.0.4",
       "name": "moddle",
       "version": "5.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle@5.0.4",
       "properties": [
         {
@@ -39667,13 +38152,6 @@
       "bom-ref": "pkg:npm/moddle@6.2.3",
       "name": "moddle",
       "version": "6.2.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle@6.2.3",
       "properties": [
         {
@@ -39691,13 +38169,6 @@
       "bom-ref": "pkg:npm/moddle@7.2.0",
       "name": "moddle",
       "version": "7.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle@7.2.0",
       "properties": [
         {
@@ -39715,13 +38186,6 @@
       "bom-ref": "pkg:npm/moment@2.30.1",
       "name": "moment",
       "version": "2.30.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moment@2.30.1",
       "properties": [
         {
@@ -39739,11 +38203,6 @@
       "bom-ref": "pkg:npm/mousetrap@1.6.5",
       "name": "mousetrap",
       "version": "1.6.5",
-      "licenses": [
-        {
-          "expression": "Apache-2.0 WITH LLVM-exception"
-        }
-      ],
       "purl": "pkg:npm/mousetrap@1.6.5",
       "properties": [
         {
@@ -39761,13 +38220,6 @@
       "bom-ref": "pkg:npm/ms@2.1.3",
       "name": "ms",
       "version": "2.1.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/ms@2.1.3",
       "properties": [
         {
@@ -39785,13 +38237,6 @@
       "bom-ref": "pkg:npm/object-inspect@1.13.4",
       "name": "object-inspect",
       "version": "1.13.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/object-inspect@1.13.4",
       "properties": [
         {
@@ -39809,13 +38254,6 @@
       "bom-ref": "pkg:npm/object-refs@0.3.0",
       "name": "object-refs",
       "version": "0.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/object-refs@0.3.0",
       "properties": [
         {
@@ -39833,13 +38271,6 @@
       "bom-ref": "pkg:npm/object-refs@0.4.0",
       "name": "object-refs",
       "version": "0.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/object-refs@0.4.0",
       "properties": [
         {
@@ -39857,13 +38288,6 @@
       "bom-ref": "pkg:npm/once@1.4.0",
       "name": "once",
       "version": "1.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/once@1.4.0",
       "properties": [
         {
@@ -39881,13 +38305,6 @@
       "bom-ref": "pkg:npm/opencollective-postinstall@2.0.3",
       "name": "opencollective-postinstall",
       "version": "2.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/opencollective-postinstall@2.0.3",
       "properties": [
         {
@@ -39905,13 +38322,6 @@
       "bom-ref": "pkg:npm/path-intersection@1.1.1",
       "name": "path-intersection",
       "version": "1.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/path-intersection@1.1.1",
       "properties": [
         {
@@ -39929,13 +38339,6 @@
       "bom-ref": "pkg:npm/path-intersection@2.2.1",
       "name": "path-intersection",
       "version": "2.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/path-intersection@2.2.1",
       "properties": [
         {
@@ -39953,13 +38356,6 @@
       "bom-ref": "pkg:npm/path-intersection@3.1.0",
       "name": "path-intersection",
       "version": "3.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/path-intersection@3.1.0",
       "properties": [
         {
@@ -39977,13 +38373,6 @@
       "bom-ref": "pkg:npm/preact@10.27.1",
       "name": "preact",
       "version": "10.27.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/preact@10.27.1",
       "properties": [
         {
@@ -40001,13 +38390,6 @@
       "bom-ref": "pkg:npm/q@1.5.1",
       "name": "q",
       "version": "1.5.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/q@1.5.1",
       "properties": [
         {
@@ -40025,13 +38407,6 @@
       "bom-ref": "pkg:npm/qs@6.13.0",
       "name": "qs",
       "version": "6.13.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "BSD-3-Clause"
-          }
-        }
-      ],
       "purl": "pkg:npm/qs@6.13.0",
       "properties": [
         {
@@ -40049,13 +38424,6 @@
       "bom-ref": "pkg:npm/requirejs-angular-define@1.1.0",
       "name": "requirejs-angular-define",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/requirejs-angular-define@1.1.0",
       "properties": [
         {
@@ -40090,13 +38458,6 @@
       "bom-ref": "pkg:npm/requirejs@2.3.7",
       "name": "requirejs",
       "version": "2.3.7",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/requirejs@2.3.7",
       "properties": [
         {
@@ -40114,13 +38475,6 @@
       "bom-ref": "pkg:npm/saxen@10.0.0",
       "name": "saxen",
       "version": "10.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/saxen@10.0.0",
       "properties": [
         {
@@ -40138,13 +38492,6 @@
       "bom-ref": "pkg:npm/saxen@8.1.2",
       "name": "saxen",
       "version": "8.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/saxen@8.1.2",
       "properties": [
         {
@@ -40162,13 +38509,6 @@
       "bom-ref": "pkg:npm/select@1.1.2",
       "name": "select",
       "version": "1.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/select@1.1.2",
       "properties": [
         {
@@ -40186,13 +38526,6 @@
       "bom-ref": "pkg:npm/selection-ranges@3.0.3",
       "name": "selection-ranges",
       "version": "3.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/selection-ranges@3.0.3",
       "properties": [
         {
@@ -40210,13 +38543,6 @@
       "bom-ref": "pkg:npm/selection-ranges@4.0.3",
       "name": "selection-ranges",
       "version": "4.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/selection-ranges@4.0.3",
       "properties": [
         {
@@ -40234,13 +38560,6 @@
       "bom-ref": "pkg:npm/selection-update@0.1.2",
       "name": "selection-update",
       "version": "0.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/selection-update@0.1.2",
       "properties": [
         {
@@ -40258,13 +38577,6 @@
       "bom-ref": "pkg:npm/semver@7.7.2",
       "name": "semver",
       "version": "7.7.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/semver@7.7.2",
       "properties": [
         {
@@ -40282,13 +38594,6 @@
       "bom-ref": "pkg:npm/side-channel-list@1.0.0",
       "name": "side-channel-list",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/side-channel-list@1.0.0",
       "properties": [
         {
@@ -40306,13 +38611,6 @@
       "bom-ref": "pkg:npm/side-channel-map@1.0.1",
       "name": "side-channel-map",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/side-channel-map@1.0.1",
       "properties": [
         {
@@ -40330,13 +38628,6 @@
       "bom-ref": "pkg:npm/side-channel-weakmap@1.0.2",
       "name": "side-channel-weakmap",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/side-channel-weakmap@1.0.2",
       "properties": [
         {
@@ -40354,13 +38645,6 @@
       "bom-ref": "pkg:npm/side-channel@1.1.0",
       "name": "side-channel",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/side-channel@1.1.0",
       "properties": [
         {
@@ -40378,13 +38662,6 @@
       "bom-ref": "pkg:npm/strnum@1.1.2",
       "name": "strnum",
       "version": "1.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/strnum@1.1.2",
       "properties": [
         {
@@ -40402,13 +38679,6 @@
       "bom-ref": "pkg:npm/style-mod@4.1.2",
       "name": "style-mod",
       "version": "4.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/style-mod@4.1.2",
       "properties": [
         {
@@ -40426,13 +38696,6 @@
       "bom-ref": "pkg:npm/superagent@8.1.2",
       "name": "superagent",
       "version": "8.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/superagent@8.1.2",
       "properties": [
         {
@@ -40450,13 +38713,6 @@
       "bom-ref": "pkg:npm/tabbable@6.2.0",
       "name": "tabbable",
       "version": "6.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/tabbable@6.2.0",
       "properties": [
         {
@@ -40474,13 +38730,6 @@
       "bom-ref": "pkg:npm/table-js@9.2.0",
       "name": "table-js",
       "version": "9.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/table-js@9.2.0",
       "properties": [
         {
@@ -40498,13 +38747,6 @@
       "bom-ref": "pkg:npm/ticky@1.0.1",
       "name": "ticky",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/ticky@1.0.1",
       "properties": [
         {
@@ -40522,13 +38764,6 @@
       "bom-ref": "pkg:npm/tiny-emitter@2.1.0",
       "name": "tiny-emitter",
       "version": "2.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/tiny-emitter@2.1.0",
       "properties": [
         {
@@ -40546,13 +38781,6 @@
       "bom-ref": "pkg:npm/tiny-svg@2.2.4",
       "name": "tiny-svg",
       "version": "2.2.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/tiny-svg@2.2.4",
       "properties": [
         {
@@ -40570,13 +38798,6 @@
       "bom-ref": "pkg:npm/tiny-svg@3.1.3",
       "name": "tiny-svg",
       "version": "3.1.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/tiny-svg@3.1.3",
       "properties": [
         {
@@ -40594,13 +38815,6 @@
       "bom-ref": "pkg:npm/w3c-keyname@2.2.8",
       "name": "w3c-keyname",
       "version": "2.2.8",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/w3c-keyname@2.2.8",
       "properties": [
         {
@@ -40618,13 +38832,6 @@
       "bom-ref": "pkg:npm/wrappy@1.0.2",
       "name": "wrappy",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/wrappy@1.0.2",
       "properties": [
         {
@@ -40642,13 +38849,6 @@
       "bom-ref": "pkg:npm/zeebe-dmn-moddle@1.0.0",
       "name": "zeebe-dmn-moddle",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/zeebe-dmn-moddle@1.0.0",
       "properties": [
         {
@@ -40663,7 +38863,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "153ed939-7f60-48b4-80e6-69ebb7777ae9",
+      "bom-ref": "95ecacb6-e293-4226-9104-3eddaa5fe779",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -40700,7 +38900,6 @@
         "pkg:maven/org.operaton.spin/operaton-spin-root@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.connect/operaton-connect-root@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm/license-book@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@1.1.0-SNAPSHOT?type=pom"
       ]
     },
@@ -41032,25 +39231,24 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers@1.21.3?type=jar",
-        "pkg:maven/org.testcontainers/mysql@1.21.3?type=jar",
-        "pkg:maven/org.testcontainers/mariadb@1.21.3?type=jar",
-        "pkg:maven/org.testcontainers/postgresql@1.21.3?type=jar",
-        "pkg:maven/org.testcontainers/mssqlserver@1.21.3?type=jar",
-        "pkg:maven/org.testcontainers/oracle-xe@1.21.3?type=jar",
-        "pkg:maven/org.testcontainers/db2@1.21.3?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers@2.0.1?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.1?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.1?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.1?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.1?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.1?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-db2@2.0.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers@1.21.3?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers@2.0.1?type=jar",
       "dependsOn": [
-        "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
         "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
         "pkg:maven/org.rnorth.duct-tape/duct-tape@1.0.8?type=jar",
-        "pkg:maven/com.github.docker-java/docker-java-api@3.4.2?type=jar",
-        "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.4.2?type=jar"
+        "pkg:maven/com.github.docker-java/docker-java-api@3.6.0?type=jar",
+        "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.6.0?type=jar"
       ]
     },
     {
@@ -41084,7 +39282,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.github.docker-java/docker-java-api@3.4.2?type=jar",
+      "ref": "pkg:maven/com.github.docker-java/docker-java-api@3.6.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
@@ -41095,62 +39293,62 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.4.2?type=jar",
+      "ref": "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.6.0?type=jar",
       "dependsOn": [
-        "pkg:maven/com.github.docker-java/docker-java-transport@3.4.2?type=jar",
+        "pkg:maven/com.github.docker-java/docker-java-transport@3.6.0?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.github.docker-java/docker-java-transport@3.4.2?type=jar",
+      "ref": "pkg:maven/com.github.docker-java/docker-java-transport@3.6.0?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.testcontainers/mysql@1.21.3?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/jdbc@1.21.3?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/jdbc@1.21.3?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/database-commons@1.21.3?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/database-commons@1.21.3?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers@1.21.3?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers@2.0.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/mariadb@1.21.3?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/jdbc@1.21.3?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/postgresql@1.21.3?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/jdbc@1.21.3?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/mssqlserver@1.21.3?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/jdbc@1.21.3?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/oracle-xe@1.21.3?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/jdbc@1.21.3?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/db2@1.21.3?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/jdbc@1.21.3?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.1?type=jar"
       ]
     },
     {
@@ -41406,9 +39604,9 @@
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.1?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.0.0?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
@@ -41421,36 +39619,36 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.1?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.20.0?type=jar"
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.20.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.20.1?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.20.1?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.0?type=jar"
       ]
@@ -41460,11 +39658,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.1?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar"
       ]
     },
     {
@@ -41488,9 +39686,9 @@
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.1?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@3.1.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar"
       ]
@@ -41501,9 +39699,9 @@
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.1?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@3.1.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar"
       ]
@@ -41633,7 +39831,7 @@
         "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@1.1.0-SNAPSHOT?classifier=classes\u0026type=jar",
         "pkg:maven/org.glassfish.jersey.core/jersey-client@3.1.11?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
@@ -42103,25 +40301,25 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.1?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.20.0?type=jar"
+        "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.20.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.20.1?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.20.1?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/javax.xml.bind/jaxb-api@2.2.12?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.0?type=jar"
       ]
@@ -42874,8 +41072,8 @@
         "pkg:maven/org.operaton.spin/operaton-spin-core@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/com.jayway.jsonpath/json-path@2.9.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar"
       ]
@@ -42936,7 +41134,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-spring@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.spin/operaton-spin-core@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.20.1?type=jar",
         "pkg:maven/org.operaton.connect/operaton-connect-core@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.springframework/spring-context@6.2.12?type=jar",
         "pkg:maven/org.springframework/spring-jdbc@6.2.12?type=jar",
@@ -42950,11 +41148,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.20.1?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/joda-time/joda-time@2.12.5?type=jar"
       ]
     },
@@ -42962,7 +41160,7 @@
       "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
@@ -43073,8 +41271,8 @@
       "ref": "pkg:maven/com.networknt/json-schema-validator@1.5.9?type=jar",
       "dependsOn": [
         "pkg:maven/com.ethlo.time/itu@1.14.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.1?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
@@ -43083,11 +41281,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.0?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.1?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/org.yaml/snakeyaml@2.4?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar"
       ]
     },
     {
@@ -43101,7 +41299,7 @@
     {
       "ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.7?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar"
       ]
     },
     {
@@ -43125,9 +41323,9 @@
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.1?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@1.1.0-SNAPSHOT?type=jar"
       ]
     },
@@ -43166,10 +41364,6 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/license-book@1.1.0-SNAPSHOT?type=pom",
-      "dependsOn": []
-    },
-    {
       "ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
@@ -43198,7 +41392,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.0?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
@@ -44235,7 +42429,7 @@
       "ref": "pkg:maven/org.infinispan.protostream/protostream@5.0.13.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar"
       ]
     },
     {
@@ -44625,7 +42819,6 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-spring@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@1.1.0-SNAPSHOT?classifier=classes\u0026type=jar",
-        "pkg:maven/org.operaton.bpm/license-book@1.1.0-SNAPSHOT?type=zip",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
         "pkg:maven/org.apache.groovy/groovy@4.0.29?type=jar",
         "pkg:maven/org.apache.groovy/groovy-jsr223@4.0.29?type=jar",
@@ -44681,10 +42874,6 @@
       "dependsOn": [
         "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar"
       ]
-    },
-    {
-      "ref": "pkg:maven/org.operaton.bpm/license-book@1.1.0-SNAPSHOT?type=zip",
-      "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.apache.groovy/groovy@4.0.29?type=jar",
@@ -44755,7 +42944,6 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-spring@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/net.minidev/json-smart@2.5.2?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@1.1.0-SNAPSHOT?classifier=classes\u0026type=jar",
-        "pkg:maven/org.operaton.bpm/license-book@1.1.0-SNAPSHOT?type=zip",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
         "pkg:maven/org.apache.groovy/groovy@4.0.29?type=jar",
         "pkg:maven/org.apache.groovy/groovy-jsr223@4.0.29?type=jar",
@@ -44780,13 +42968,7 @@
       "dependsOn": []
     },
     {
-      "ref": "153ed939-7f60-48b4-80e6-69ebb7777ae9",
-      "dependsOn": [
-        "fc44b9a3-7183-4a23-b183-4f51db676282"
-      ]
-    },
-    {
-      "ref": "fc44b9a3-7183-4a23-b183-4f51db676282",
+      "ref": "1863f443-52b9-4bb3-ad64-f001a0bd2fef",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -44831,6 +43013,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
+      ]
+    },
+    {
+      "ref": "95ecacb6-e293-4226-9104-3eddaa5fe779",
+      "dependsOn": [
+        "1863f443-52b9-4bb3-ad64-f001a0bd2fef"
       ]
     },
     {

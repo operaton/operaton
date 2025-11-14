@@ -33,6 +33,7 @@ import org.springframework.boot.security.oauth2.client.autoconfigure.Conditional
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -115,6 +116,7 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
   }
 
   @Bean
+  @Order(OPERATON_OAUTH2_ORDER)
   public SecurityFilterChain filterChain(HttpSecurity http,
                                          AuthorizeTokenFilter authorizeTokenFilter,
                                          @Nullable SsoLogoutSuccessHandler ssoLogoutSuccessHandler) throws Exception {
@@ -122,12 +124,15 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
     logger.info("Enabling Operaton Spring Security oauth2 integration");
 
     // @formatter:off
-    http.authorizeHttpRequests(c -> c
+    http
+        .securityMatcher(webappPath + "/**")
+        .authorizeHttpRequests(c -> c
             .requestMatchers(webappPath + "/app/**").authenticated()
             .requestMatchers(webappPath + "/api/**").authenticated()
             .anyRequest().permitAll()
         )
         .addFilterAfter(authorizeTokenFilter, OAuth2AuthorizationRequestRedirectFilter.class)
+        .formLogin(AbstractHttpConfigurer::disable)
         .anonymous(AbstractHttpConfigurer::disable)
         .oidcLogout(c -> c.backChannel(Customizer.withDefaults()))
         .oauth2Login(Customizer.withDefaults())

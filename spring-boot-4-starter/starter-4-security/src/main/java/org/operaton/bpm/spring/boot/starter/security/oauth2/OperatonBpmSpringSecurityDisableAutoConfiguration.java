@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,10 +33,14 @@ public class OperatonBpmSpringSecurityDisableAutoConfiguration {
   private static final Logger logger = LoggerFactory.getLogger(OperatonBpmSpringSecurityDisableAutoConfiguration.class);
 
   @Bean
+  @Order(100000)
   public SecurityFilterChain filterChainPermitAll(HttpSecurity http) throws Exception {
     logger.info("Disabling Operaton Spring Security oauth2 integration");
 
-    http.authorizeHttpRequests(customizer -> customizer.anyRequest().permitAll())
+    http
+        .securityMatcher("/**")
+        .authorizeHttpRequests(customizer -> customizer.anyRequest().permitAll())
+        .formLogin(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable)
         .csrf(AbstractHttpConfigurer::disable);
     return http.build();

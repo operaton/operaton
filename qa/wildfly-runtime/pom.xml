@@ -254,6 +254,7 @@
                       <include name="**/module.xml"/>
                       <replacefilter token="@project.version@" value="${project.version}"/>
                       <replacefilter token="@version.postgresql@" value="${version.postgresql}"/>
+                      <replacefilter token="@version.mariadb@" value="${version.mariadb}" />
                       <replacefilter token="@version.mysql@" value="${version.mysql}"/>
                       <replacefilter token="@version.jython@" value="${version.jython}"/>
                     </replace>

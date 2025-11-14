@@ -42,7 +42,6 @@ import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -299,23 +298,23 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
 
   protected void verifyHistoricBatchListJson(String historicBatchListJson) {
     List<Object> batches = from(historicBatchListJson).get();
-    assertEquals(1, batches.size(), "There should be one historic batch returned.");
+    assertThat(batches).as("There should be one historic batch returned.").hasSize(1);
 
     HistoricBatchDto historicBatch = from(historicBatchListJson).getObject("[0]", HistoricBatchDto.class);
     assertThat(historicBatch).as("The returned historic batch should not be null.").isNotNull();
-    assertEquals(MockProvider.EXAMPLE_BATCH_ID, historicBatch.getId());
-    assertEquals(MockProvider.EXAMPLE_BATCH_TYPE, historicBatch.getType());
-    assertEquals(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS, historicBatch.getTotalJobs());
-    assertEquals(MockProvider.EXAMPLE_BATCH_JOBS_PER_SEED, historicBatch.getBatchJobsPerSeed());
-    assertEquals(MockProvider.EXAMPLE_INVOCATIONS_PER_BATCH_JOB, historicBatch.getInvocationsPerBatchJob());
-    assertEquals(MockProvider.EXAMPLE_SEED_JOB_DEFINITION_ID, historicBatch.getSeedJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_MONITOR_JOB_DEFINITION_ID, historicBatch.getMonitorJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_BATCH_JOB_DEFINITION_ID, historicBatch.getBatchJobDefinitionId());
-    assertEquals(MockProvider.EXAMPLE_TENANT_ID, historicBatch.getTenantId());
-    assertEquals(MockProvider.EXAMPLE_USER_ID, historicBatch.getCreateUserId());
-    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_BATCH_START_TIME), historicBatch.getStartTime());
-    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_BATCH_END_TIME), historicBatch.getEndTime());
-    assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_BATCH_REMOVAL_TIME), historicBatch.getRemovalTime());
+    assertThat(historicBatch.getId()).isEqualTo(MockProvider.EXAMPLE_BATCH_ID);
+    assertThat(historicBatch.getType()).isEqualTo(MockProvider.EXAMPLE_BATCH_TYPE);
+    assertThat(historicBatch.getTotalJobs()).isEqualTo(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS);
+    assertThat(historicBatch.getBatchJobsPerSeed()).isEqualTo(MockProvider.EXAMPLE_BATCH_JOBS_PER_SEED);
+    assertThat(historicBatch.getInvocationsPerBatchJob()).isEqualTo(MockProvider.EXAMPLE_INVOCATIONS_PER_BATCH_JOB);
+    assertThat(historicBatch.getSeedJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_SEED_JOB_DEFINITION_ID);
+    assertThat(historicBatch.getMonitorJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_MONITOR_JOB_DEFINITION_ID);
+    assertThat(historicBatch.getBatchJobDefinitionId()).isEqualTo(MockProvider.EXAMPLE_BATCH_JOB_DEFINITION_ID);
+    assertThat(historicBatch.getTenantId()).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(historicBatch.getCreateUserId()).isEqualTo(MockProvider.EXAMPLE_USER_ID);
+    assertThat(historicBatch.getStartTime()).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_BATCH_START_TIME));
+    assertThat(historicBatch.getEndTime()).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_BATCH_END_TIME));
+    assertThat(historicBatch.getRemovalTime()).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_BATCH_REMOVAL_TIME));
   }
 
 }

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.assertions.helpers;
 
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
-import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformListener;
 import org.operaton.bpm.model.cmmn.instance.CaseTask;

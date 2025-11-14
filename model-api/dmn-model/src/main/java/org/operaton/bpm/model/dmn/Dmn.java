@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.dmn;
 
 import java.io.*;
+import java.util.ServiceLoader;
 
 import org.operaton.bpm.model.dmn.impl.DmnParser;
 import org.operaton.bpm.model.dmn.impl.instance.*;
@@ -30,14 +31,36 @@ import org.operaton.bpm.model.xml.impl.util.IoUtil;
 
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.*;
 
+/**
+ * <p>Provides access to the operaton DMN model api.</p>
+ */
 public class Dmn {
 
-  /** the singleton instance of {@link Dmn}. If you want to customize the behavior of Dmn,
-   * replace this instance with an instance of a custom subclass of {@link Dmn}. */
-  public static final Dmn INSTANCE = new Dmn();
+  /** The singleton instance of {@link Dmn} created by the first {@link DmnFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior of Dmn, add the fully qualified class name of the custom implementation to the file:
+   * {@code META-INF/services/org.operaton.bpm.model.dmn.DmnFactory}</p>. */
+  public static final Dmn INSTANCE;
 
-  /** the parser used by the Dmn implementation. */
-  private final DmnParser dmnParser = new DmnParser();
+  /** {@link DmnParser} created by the first {@link DmnParserFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior, provide a custom {@link DmnParserFactory} implementation and declare it in:
+   * {@code META-INF/services/org.operaton.bpm.model.dmn.DmnParserFactory}.</p>
+   */
+  private static final DmnParser DMN_PARSER;
+
+  static {
+    DmnFactory dmnFactory = ServiceLoader.load(DmnFactory.class).findFirst().orElse(
+      ServiceLoader.load(DmnFactory.class, Dmn.class.getClassLoader()).findFirst()
+        .orElseThrow(() -> new IllegalStateException("No DmnFactory found"))
+    );
+    DmnParserFactory dmnParserFactory = ServiceLoader.load(DmnParserFactory.class).findFirst().orElse(
+      ServiceLoader.load(DmnParserFactory.class, Dmn.class.getClassLoader()).findFirst()
+        .orElseThrow(() -> new IllegalStateException("No DmnParserFactory found"))
+    );
+
+    INSTANCE = dmnFactory.newInstance();
+    DMN_PARSER = dmnParserFactory.newInstance();
+  }
+
   private final ModelBuilder dmnModelBuilder;
 
   /** The {@link Model}
@@ -125,7 +148,7 @@ public class Dmn {
   /**
    * Register known types of the Dmn model
    */
-  protected Dmn() {
+  public Dmn() {
     dmnModelBuilder = ModelBuilder.createInstance("DMN Model")
             .alternativeNamespace(CAMUNDA_NS, OPERATON_NS)
             .alternativeNamespace(DMN15_NS, DMN13_NS)
@@ -152,7 +175,7 @@ public class Dmn {
   }
 
   protected DmnModelInstance doReadModelFromInputStream(InputStream is) {
-    return dmnParser.parseModelFromStream(is);
+    return DMN_PARSER.parseModelFromStream(is);
   }
 
   protected void doWriteModelToFile(File file, DmnModelInstance modelInstance) {
@@ -180,11 +203,11 @@ public class Dmn {
   }
 
   protected void doValidateModel(DmnModelInstance modelInstance) {
-    dmnParser.validateModel(modelInstance.getDocument());
+    DMN_PARSER.validateModel(modelInstance.getDocument());
   }
 
   protected DmnModelInstance doCreateEmptyModel() {
-    return dmnParser.getEmptyModel();
+    return DMN_PARSER.getEmptyModel();
   }
 
   protected void doRegisterTypes(ModelBuilder modelBuilder) {
@@ -291,7 +314,7 @@ public class Dmn {
   }
 
   /**
-   * @param dmnModel the cmmnModel to set
+   * @param dmnModel the dmnModel to set
    */
   public void setDmnModel(Model dmnModel) {
     this.dmnModel = dmnModel;

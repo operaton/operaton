@@ -22,7 +22,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -159,22 +158,22 @@ public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     ProcessDefinition definition = query.processDefinitionKey("process-0").singleResult();
-    Assertions.assertEquals("process0.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("process0.bpmn");
 
     definition = query.processDefinitionKey("process-1").singleResult();
-    Assertions.assertEquals("processes/process1.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("processes/process1.bpmn");
 
     definition = query.processDefinitionKey("process-2").singleResult();
-    Assertions.assertEquals("process2.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("process2.bpmn");
 
     definition = query.processDefinitionKey("process-3").singleResult();
-    Assertions.assertEquals("subDirectory/process3.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("subDirectory/process3.bpmn");
 
     definition = query.processDefinitionKey("process-4").singleResult();
-    Assertions.assertEquals("process4.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("process4.bpmn");
 
     definition = query.processDefinitionKey("process-5").singleResult();
-    Assertions.assertEquals("subDirectory/process5.bpmn", definition.getResourceName());
+    assertThat(definition.getResourceName()).isEqualTo("subDirectory/process5.bpmn");
   }
 
 }

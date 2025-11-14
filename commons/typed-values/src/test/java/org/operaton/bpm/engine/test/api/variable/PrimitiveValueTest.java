@@ -30,8 +30,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.operaton.bpm.engine.variable.Variables.*;
 import static org.operaton.bpm.engine.variable.type.ValueType.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Philipp Ossler *
@@ -69,16 +68,16 @@ public class PrimitiveValueTest {
     initPrimitiveValueTest(initValueType, initValue, initTypedValue, initNullValue);
     VariableMap variables = createVariables().putValue(variableName, initValue);
 
-    assertEquals(initValue, variables.get(variableName));
-    assertEquals(initValue, variables.getValueTyped(variableName).getValue());
+    assertThat(variables).containsEntry(variableName, initValue);
+    assertThat(variables.getValueTyped(variableName).getValue()).isEqualTo(initValue);
 
     // no type information present
     TypedValue typed = variables.getValueTyped(variableName);
     if (!(typed instanceof NullValueImpl)) {
-      assertNull(typed.getType());
-      assertEquals(variables.get(variableName), typed.getValue());
+      assertThat(typed.getType()).isNull();
+      assertThat(typed.getValue()).isEqualTo(variables.get(variableName));
     } else {
-      assertEquals(NULL, typed.getType());
+      assertThat(typed.getType()).isEqualTo(NULL);
     }
   }
 
@@ -89,14 +88,14 @@ public class PrimitiveValueTest {
     VariableMap variables = createVariables().putValue(variableName, typedValue);
 
     // get return value
-    assertEquals(value, variables.get(variableName));
+    assertThat(variables).containsEntry(variableName, value);
 
     // type is not lost
-    assertEquals(valueType, variables.getValueTyped(variableName).getType());
+    assertThat(variables.getValueTyped(variableName).getType()).isEqualTo(valueType);
 
     // get wrapper
     Object stringValue = variables.getValueTyped(variableName).getValue();
-    assertEquals(value, stringValue);
+    assertThat(stringValue).isEqualTo(value);
   }
 
   @MethodSource("data")
@@ -106,14 +105,14 @@ public class PrimitiveValueTest {
     VariableMap variables = createVariables().putValue(variableName, nullValue);
 
     // get return value
-    assertNull(variables.get(variableName));
+    assertThat(variables.get(variableName)).isNull();
 
     // type is not lost
-    assertEquals(valueType, variables.getValueTyped(variableName).getType());
+    assertThat(variables.getValueTyped(variableName).getType()).isEqualTo(valueType);
 
     // get wrapper
     Object stringValue = variables.getValueTyped(variableName).getValue();
-    assertNull(stringValue);
+    assertThat(stringValue).isNull();
   }
 
   public void initPrimitiveValueTest(ValueType valueType, Object value, TypedValue typedValue, TypedValue nullValue) {

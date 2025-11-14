@@ -29,8 +29,8 @@ import org.operaton.spin.DataFormats;
 import org.operaton.spin.json.SpinJsonException;
 
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -89,7 +89,7 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
     Object value = engineRulePositive.getRuntimeService().getVariable(instance.getId(), "simpleBean");
 
     // then
-    assertEquals(bean, value);
+    assertThat(value).isEqualTo(bean);
   }
 
   @Test

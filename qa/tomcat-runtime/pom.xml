@@ -4,14 +4,14 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-qa-tomcat-runtime</artifactId>
   <packaging>pom</packaging>
   <name>Operaton - QA Tomcat Test Runtime</name>
   <description>${project.name}</description>
   <properties>
-    <version.asm>9.8</version.asm>
+    <version.asm>9.9</version.asm>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -76,17 +76,17 @@
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>jdbc</artifactId>
+      <artifactId>testcontainers-jdbc</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>postgresql</artifactId>
+      <artifactId>testcontainers-postgresql</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>mariadb</artifactId>
+      <artifactId>testcontainers-mariadb</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -97,7 +97,7 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-test-utils-testcontainers</artifactId>
-      <version>1.0.0-rc-1-SNAPSHOT</version>
+      <version>1.1.0-SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -186,7 +186,7 @@
                     <artifactItem>
                       <groupId>io.smallrye</groupId>
                       <artifactId>jandex</artifactId>
-                      <version>3.4.0</version>
+                      <version>3.5.0</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
                     <artifactItem>
@@ -246,7 +246,7 @@
                     </artifactItem>
                     <artifactItem>
                       <groupId>org.testcontainers</groupId>
-                      <artifactId>jdbc</artifactId>
+                      <artifactId>testcontainers-jdbc</artifactId>
                       <version>${version.testcontainers}</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>

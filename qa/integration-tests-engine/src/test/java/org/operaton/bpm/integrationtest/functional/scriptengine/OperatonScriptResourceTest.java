@@ -26,8 +26,8 @@ import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Daniel Meyer
@@ -55,8 +55,8 @@ public class OperatonScriptResourceTest extends AbstractFoxPlatformIntegrationTe
       .singleResult();
 
     assertThat(variable).isNotNull();
-    assertEquals("executed", variable.getName());
-    assertEquals(true, variable.getValue());
+    assertThat(variable.getName()).isEqualTo("executed");
+    assertThat(variable.getValue()).isEqualTo(TRUE);
   }
 
 }

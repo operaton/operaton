@@ -56,8 +56,8 @@ class AsyncEndEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("asyncEndEvent");
     long count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).active().count();
 
-    assertThat(runtimeService.createExecutionQuery().activityId("endEvent").count()).isEqualTo(1);
-    assertThat(count).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().activityId("endEvent").count()).isOne();
+    assertThat(count).isOne();
 
     testRule.executeAvailableJobs();
     count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).count();
@@ -73,8 +73,8 @@ class AsyncEndEventTest {
     long count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).active().count();
 
     assertThat(runtimeService.getVariable(pi.getId(), "listener")).isNull();
-    assertThat(runtimeService.createExecutionQuery().activityId("endEvent").count()).isEqualTo(1);
-    assertThat(count).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().activityId("endEvent").count()).isOne();
+    assertThat(count).isOne();
 
     // as we are standing at the end event, we execute it.
     testRule.executeAvailableJobs();
@@ -97,7 +97,7 @@ class AsyncEndEventTest {
   @Test
   void testMultipleAsyncEndEvents() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("multipleAsyncEndEvent");
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     // should stop at both end events
     List<Job> jobs = managementService.createJobQuery().withRetriesLeft().list();

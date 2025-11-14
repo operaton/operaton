@@ -26,7 +26,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -134,7 +133,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> deployments = from(content).getList("");
-    Assertions.assertEquals(1, deployments.size(), "There should be one deployment returned.");
+    assertThat(deployments).as("There should be one deployment returned.").hasSize(1);
     assertThat(deployments.get(0)).as("There should be one deployment returned").isNotNull();
 
     String returnedId = from(content).getString("[0].id");
@@ -142,10 +141,10 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
     String returnedSource = from(content).getString("[0].source");
     String returnedDeploymentTime  = from(content).getString("[0].deploymentTime");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, returnedId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_NAME, returnedName);
-    Assertions.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_SOURCE, returnedSource);
-    Assertions.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_TIME, returnedDeploymentTime);
+    assertThat(returnedId).isEqualTo(MockProvider.EXAMPLE_DEPLOYMENT_ID);
+    assertThat(returnedName).isEqualTo(MockProvider.EXAMPLE_DEPLOYMENT_NAME);
+    assertThat(returnedSource).isEqualTo(MockProvider.EXAMPLE_DEPLOYMENT_SOURCE);
+    assertThat(returnedDeploymentTime).isEqualTo(MockProvider.EXAMPLE_DEPLOYMENT_TIME);
   }
 
   @Test

@@ -33,7 +33,6 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Sebastian Menski
@@ -63,7 +62,7 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
     ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("invoice-it");
 
-    assertEquals(1, processDefinitionQuery.count());
+    assertThat(processDefinitionQuery.count()).isOne();
     ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
 
     String deploymentId = repositoryService.createDeploymentQuery()
@@ -71,7 +70,7 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
       .singleResult()
       .getId();
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deploymentId);
-    assertEquals(3, deploymentResources.size());
+    assertThat(deploymentResources).hasSize(3);
   }
 
 }

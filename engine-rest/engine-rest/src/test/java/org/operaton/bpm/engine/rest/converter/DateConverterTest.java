@@ -26,8 +26,8 @@ import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -44,13 +44,13 @@ class DateConverterTest {
   @Test
   void shouldFailForDoubleQuotedValue() {
     //when
-    assertThrows(InvalidRequestException.class, () -> converter.convertQueryParameterToType("\"pizza\""));
+    assertThatExceptionOfType(InvalidRequestException.class).isThrownBy(() -> converter.convertQueryParameterToType("\"pizza\""));
   }
 
   @Test
   void shouldFailForSingleDoubleQuotedValue() {
     //when
-    assertThrows(InvalidRequestException.class, () -> converter.convertQueryParameterToType("2014-01-01T00:00:00+0200\""));
+    assertThatExceptionOfType(InvalidRequestException.class).isThrownBy(() -> converter.convertQueryParameterToType("2014-01-01T00:00:00+0200\""));
   }
 
   @Test
@@ -65,6 +65,6 @@ class DateConverterTest {
     Date date = converter.convertQueryParameterToType(value);
 
     //then
-    assertEquals(date, DateTimeUtil.parseDate(value));
+    assertThat(DateTimeUtil.parseDate(value)).isEqualTo(date);
   }
 }

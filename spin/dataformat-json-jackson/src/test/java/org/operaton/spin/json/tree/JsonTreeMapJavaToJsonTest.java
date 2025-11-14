@@ -32,7 +32,7 @@ import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.operaton.spin.json.JsonTestConstants.createExampleOrder;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 class JsonTreeMapJavaToJsonTest {
 
@@ -82,7 +82,7 @@ class JsonTreeMapJavaToJsonTest {
 
   @Test
   void shouldFailWithNull() {
-    assertThrows(IllegalArgumentException.class, () -> JSON(null));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> JSON(null));
   }
 
   @Test

@@ -105,7 +105,7 @@ public class MigrateEventSubProcessAndTriggerTest {
 
     // and it is possible to trigger the event subprocess
     eventTrigger.trigger(processInstance.getId());
-    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().count()).isOne();
 
     // and complete the process instance
     testHelper.completeTask("eventSubProcessTask");

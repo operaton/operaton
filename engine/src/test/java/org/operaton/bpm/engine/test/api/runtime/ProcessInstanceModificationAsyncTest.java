@@ -299,7 +299,7 @@ class ProcessInstanceModificationAsyncTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -512,7 +512,7 @@ class ProcessInstanceModificationAsyncTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -540,7 +540,7 @@ class ProcessInstanceModificationAsyncTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -577,7 +577,7 @@ class ProcessInstanceModificationAsyncTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -654,7 +654,7 @@ class ProcessInstanceModificationAsyncTest {
     // given a process instance with an async task in a subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelAll
     runtimeService.createProcessInstanceModification(processInstance.getId())

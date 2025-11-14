@@ -27,7 +27,6 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.assertj.core.util.Arrays;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -125,14 +124,14 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    Assertions.assertEquals(1, instances.size(), "There should be one group returned.");
+    assertThat(instances).as("There should be one group returned.").hasSize(1);
     assertThat(instances.get(0)).as("The returned group should not be null.").isNotNull();
 
     String returendName = from(content).getString("[0].name");
     String returendType = from(content).getString("[0].type");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_GROUP_NAME, returendName);
-    Assertions.assertEquals(MockProvider.EXAMPLE_GROUP_TYPE, returendType);
+    assertThat(returendName).isEqualTo(MockProvider.EXAMPLE_GROUP_NAME);
+    assertThat(returendType).isEqualTo(MockProvider.EXAMPLE_GROUP_TYPE);
 
   }
 

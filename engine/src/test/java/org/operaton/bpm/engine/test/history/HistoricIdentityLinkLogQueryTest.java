@@ -161,10 +161,10 @@ class HistoricIdentityLinkLogQueryTest {
     assertThat(query.assignerId(A_ASSIGNER_ID).count()).isEqualTo(2);
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isEqualTo(1);
+    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isOne();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isEqualTo(1);
+    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isOne();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
     assertThat(query.processDefinitionId(processInstance.getProcessDefinitionId()).count()).isEqualTo(2);
@@ -198,8 +198,8 @@ class HistoricIdentityLinkLogQueryTest {
     assertThat(query.assignerId(A_ASSIGNER_ID).count()).isEqualTo(2);
     assertThat(query.processDefinitionId(processInstance.getProcessDefinitionId()).count()).isEqualTo(2);
     assertThat(query.processDefinitionKey(PROCESS_DEFINITION_KEY).count()).isEqualTo(2);
-    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isEqualTo(1);
-    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isEqualTo(1);
+    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isOne();
+    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -314,15 +314,15 @@ class HistoricIdentityLinkLogQueryTest {
     // Query records with time between 00:01 and 12:00
     query = historyService.createHistoricIdentityLinkLogQuery();
     assertThat(query.dateBefore(newYearNoon(0)).count()).isEqualTo(6);
-    assertThat(query.dateAfter(newYearMorning(1)).count()).isEqualTo(1);
+    assertThat(query.dateAfter(newYearMorning(1)).count()).isOne();
     assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isZero();
-    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isEqualTo(1);
+    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isOne();
 
     // Query records with time after 12:45
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.dateAfter(newYearNoon(45)).count()).isEqualTo(1);
+    assertThat(query.dateAfter(newYearNoon(45)).count()).isOne();
     assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isZero();
-    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isEqualTo(1);
+    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isOne();
 
     ClockUtil.setCurrentTime(new Date());
   }
@@ -343,9 +343,9 @@ class HistoricIdentityLinkLogQueryTest {
     assertThat(historicIdentityLinks).hasSize(1);
     // Query test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.processDefinitionId(latestProcessDef.getId()).count()).isEqualTo(1);
-    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isEqualTo(1);
-    assertThat(query.groupId(GROUP_1).count()).isEqualTo(1);
+    assertThat(query.processDefinitionId(latestProcessDef.getId()).count()).isOne();
+    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isOne();
+    assertThat(query.groupId(GROUP_1).count()).isOne();
 
     // Add candidate user for process definition
     repositoryService.addCandidateStarterUser(latestProcessDef.getId(), USER_1);
@@ -354,7 +354,7 @@ class HistoricIdentityLinkLogQueryTest {
     assertThat(query.processDefinitionId(latestProcessDef.getId()).count()).isEqualTo(2);
     assertThat(query.processDefinitionKey(latestProcessDef.getKey()).count()).isEqualTo(2);
     assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isEqualTo(2);
-    assertThat(query.userId(USER_1).count()).isEqualTo(1);
+    assertThat(query.userId(USER_1).count()).isOne();
 
     // Delete candiate group with process definition
     repositoryService.deleteCandidateStarterGroup(latestProcessDef.getId(), GROUP_1);
@@ -363,7 +363,7 @@ class HistoricIdentityLinkLogQueryTest {
     assertThat(query.processDefinitionId(latestProcessDef.getId()).count()).isEqualTo(3);
     assertThat(query.processDefinitionKey(latestProcessDef.getKey()).count()).isEqualTo(3);
     assertThat(query.groupId(GROUP_1).count()).isEqualTo(2);
-    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isEqualTo(1);
+    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isOne();
 
     // Delete candidate user for process definition
     repositoryService.deleteCandidateStarterUser(latestProcessDef.getId(), USER_1);

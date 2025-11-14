@@ -27,8 +27,10 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
+import org.operaton.bpm.engine.variable.value.StringValue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * The test is copied from the engine to check how JSON serialization will behave with DMN result object.
@@ -55,7 +57,8 @@ class DmnBusinessRuleTaskResultMappingTest {
     ProcessInstance processInstance = startTestProcess("multiple entries");
 
     //deserialization is not working for this type of object -> deserializeValue parameter is false
-    assertNotNull(runtimeService.getVariableTyped(processInstance.getId(), "result", false));
+    ObjectValue result = runtimeService.getVariableTyped(processInstance.getId(), "result", false);
+    assertThat(result).isNotNull();
   }
 
   @Deployment(resources = {CUSTOM_MAPPING_BPMN, TEST_DECISION})
@@ -63,11 +66,11 @@ class DmnBusinessRuleTaskResultMappingTest {
   void customOutputMapping() {
     ProcessInstance processInstance = startTestProcess("multiple entries");
 
-    assertEquals("foo", runtimeService.getVariable(processInstance.getId(), "result1"));
-    assertEquals(Variables.stringValue("foo"), runtimeService.getVariableTyped(processInstance.getId(), "result1"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result1")).isEqualTo("foo");
+    assertThat(runtimeService.<StringValue>getVariableTyped(processInstance.getId(), "result1")).isEqualTo(Variables.stringValue("foo"));
 
-    assertEquals("bar", runtimeService.getVariable(processInstance.getId(), "result2"));
-    assertEquals(Variables.stringValue("bar"), runtimeService.getVariableTyped(processInstance.getId(), "result2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result2")).isEqualTo("bar");
+    assertThat(runtimeService.<StringValue>getVariableTyped(processInstance.getId(), "result2")).isEqualTo(Variables.stringValue("bar"));
   }
 
   @Deployment(resources = {SINGLE_ENTRY_BPMN, TEST_DECISION})
@@ -75,8 +78,8 @@ class DmnBusinessRuleTaskResultMappingTest {
   void singleEntryMapping() {
     ProcessInstance processInstance = startTestProcess("single entry");
 
-    assertEquals("foo", runtimeService.getVariable(processInstance.getId(), "result"));
-    assertEquals(Variables.stringValue("foo"), runtimeService.getVariableTyped(processInstance.getId(), "result"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result")).isEqualTo("foo");
+    assertThat(runtimeService.<StringValue>getVariableTyped(processInstance.getId(), "result")).isEqualTo(Variables.stringValue("foo"));
   }
 
   @Deployment(resources = {DEFAULT_MAPPING_BPMN, TEST_DECISION})
@@ -86,9 +89,9 @@ class DmnBusinessRuleTaskResultMappingTest {
     ProcessInstance processInstance = startTestProcess("single entry");
 
     // then the variable should not be available outside the business rule task
-    assertNull(runtimeService.getVariable(processInstance.getId(), "decisionResult"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "decisionResult")).isNull();
     // and should not create an entry in history since it is not persistent
-    assertNull(historyService.createHistoricVariableInstanceQuery().variableName("decisionResult").singleResult());
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("decisionResult").singleResult()).isNull();
   }
 
   protected ProcessInstance startTestProcess(String input) {

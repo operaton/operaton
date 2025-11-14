@@ -33,8 +33,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ProcessEngineExtension.class)
 class HistoricDecisionInstanceSerializationTest {
@@ -54,19 +53,19 @@ class HistoricDecisionInstanceSerializationTest {
     decisionService.evaluateDecisionTableByKey("testDecision", variables);
 
     HistoricDecisionInstance testDecision = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey("testDecision").includeInputs().includeOutputs().singleResult();
-    assertNotNull(testDecision);
+    assertThat(testDecision).isNotNull();
 
     List<HistoricDecisionInputInstance> inputs = testDecision.getInputs();
-    assertEquals(1, inputs.size());
+    assertThat(inputs).hasSize(1);
 
     HistoricDecisionInputInstance inputInstance = inputs.get(0);
-    assertEquals(list.getListProperty(), inputInstance.getValue());
+    assertThat(inputInstance.getValue()).isEqualTo(list.getListProperty());
 
     List<HistoricDecisionOutputInstance> outputs = testDecision.getOutputs();
-    assertEquals(1, outputs.size());
+    assertThat(outputs).hasSize(1);
 
     HistoricDecisionOutputInstance outputInstance = outputs.get(0);
-    assertEquals(list.getListProperty(), outputInstance.getValue());
+    assertThat(outputInstance.getValue()).isEqualTo(list.getListProperty());
 
   }
 

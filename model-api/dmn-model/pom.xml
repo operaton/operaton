@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-dmn-model</artifactId>
   <name>Operaton - DMN - Model API</name>
@@ -20,6 +20,13 @@
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-xml-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm.model</groupId>
+      <artifactId>operaton-xml-model</artifactId>
+      <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.xmlunit</groupId>
@@ -62,17 +69,12 @@
   <profiles>
     <profile>
       <id>check-api-compatibility</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <build>
         <plugins>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>clirr-maven-plugin</artifactId>
             <configuration>
-              <comparisonVersion>${operaton.version.old}</comparisonVersion>
-              <logResults>true</logResults>
               <excludes>
                 <exclude>org/operaton/bpm/model/dmn/impl/**</exclude>
                 <exclude>org/operaton/bpm/model/dmn/instance/Binding</exclude>
@@ -81,27 +83,9 @@
             </configuration>
             <executions>
               <execution>
-                <id>all</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>check-no-fork</goal>
-                </goals>
-                <configuration>
-                  <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
-                  <failOnWarning>false</failOnWarning>
-                  <failOnError>false</failOnError>
-                </configuration>
-              </execution>
-              <execution>
                 <id>restrictive</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>check-no-fork</goal>
-                </goals>
                 <configuration>
-                  <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
-                  <failOnWarning>true</failOnWarning>
-                  <ignoredDifferencesFile>.clirr-jenkins-ignore.xml</ignoredDifferencesFile>
+                  <ignoredDifferencesFile>../.clirr-ignore.xml</ignoredDifferencesFile>
                 </configuration>
               </execution>
             </executions>

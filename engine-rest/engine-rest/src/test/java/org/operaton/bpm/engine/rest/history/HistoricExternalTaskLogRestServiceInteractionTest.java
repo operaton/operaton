@@ -37,8 +37,8 @@ import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -144,7 +144,7 @@ public class HistoricExternalTaskLogRestServiceInteractionTest extends AbstractR
       .get(HISTORIC_EXTERNAL_TASK_LOG_RESOURCE_GET_ERROR_DETAILS_URL);
 
     String content = response.asString();
-    assertEquals(errorDetails, content);
+    assertThat(content).isEqualTo(errorDetails);
   }
 
   @Test

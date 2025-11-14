@@ -61,7 +61,7 @@ public class BpmPlatformExtension implements Extension {
 
   @Override
   public void initializeParsers(ExtensionParsingContext context) {
-    context.setSubsystemXmlMapping(ModelConstants.SUBSYSTEM_NAME, Namespace.CAMUNDA_BPM_PLATFORM_1_1.getUriString(), parser);
+    context.setSubsystemXmlMapping(ModelConstants.SUBSYSTEM_NAME, Namespace.OPERATON_BPM_PLATFORM_1_1.getUriString(), parser);
   }
 
   /**

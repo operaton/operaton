@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 class HistoryCleanupHelperTest {
   @Test
@@ -40,7 +40,7 @@ class HistoryCleanupHelperTest {
 
   @Test
   void testlistMinuteChunksInvalidArguments(){
-    assertThrows(IllegalArgumentException.class, () -> HistoryCleanupHelper.listMinuteChunks(0));
-    assertThrows(IllegalArgumentException.class, () -> HistoryCleanupHelper.listMinuteChunks(61));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> HistoryCleanupHelper.listMinuteChunks(0));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> HistoryCleanupHelper.listMinuteChunks(61));
   }
 }

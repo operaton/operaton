@@ -357,17 +357,17 @@ class ConcurrentJobExecutorTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
 
     // assert that there still exists a running and active process instance
-    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isOne();
 
     // when
     runtimeService.signal(processInstance.getId());
 
     // then
     // there should be one suspended job
-    assertThat(managementService.createJobQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().suspended().count()).isOne();
     assertThat(managementService.createJobQuery().active().count()).isZero();
 
-    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isOne();
 
   }
 
@@ -410,7 +410,7 @@ class ConcurrentJobExecutorTest {
     assertThat(executionThread.exception).isNull();
 
     // and ultimately only one job with an updated priority is left
-    assertThat(remainingJobCount).isEqualTo(1L);
+    assertThat(remainingJobCount).isOne();
   }
 
   @Test

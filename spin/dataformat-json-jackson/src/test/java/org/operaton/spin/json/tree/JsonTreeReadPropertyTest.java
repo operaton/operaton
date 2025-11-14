@@ -29,7 +29,7 @@ import org.operaton.spin.spi.SpinDataFormatException;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Stefan Hentschel
@@ -79,12 +79,12 @@ class JsonTreeReadPropertyTest {
 
   @Test
   void shouldFailToReadNonProperty() {
-    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.prop("nonExisting"));
-    assertThrows(SpinJsonPropertyException.class, () -> order.prop("nonExisting"));
-    assertThrows(SpinJsonPropertyException.class, () -> customers.prop("nonExisting"));
-    assertThrows(IllegalArgumentException.class, () -> jsonNode.prop(null));
-    assertThrows(SpinJsonPropertyException.class, () -> order.prop("null"));
-    assertThrows(SpinJsonPropertyException.class, () -> customers.prop("null"));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> jsonNode.prop("nonExisting"));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> order.prop("nonExisting"));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> customers.prop("nonExisting"));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> jsonNode.prop(null));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> order.prop("null"));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> customers.prop("null"));
   }
 
   @Test
@@ -109,8 +109,8 @@ class JsonTreeReadPropertyTest {
     SpinJsonNode orderNode = jsonNode.prop("order");
     SpinJsonNode roundedPriceNode = orderDetails.prop("roundedPrice");
 
-    assertThrows(SpinJsonPropertyException.class, () -> orderNode.prop("nonExisting"));
-    assertThrows(SpinJsonPropertyException.class, () -> roundedPriceNode.prop("nonExisting"));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> orderNode.prop("nonExisting"));
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> roundedPriceNode.prop("nonExisting"));
   }
 
   @Test
@@ -134,9 +134,9 @@ class JsonTreeReadPropertyTest {
   @Test
   void shouldFailToReadNonStringValue() {
     SpinJsonNode currenciesNode = orderDetails.prop("currencies");
-    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.stringValue());
-    assertThrows(SpinJsonDataFormatException.class, () -> dueUntil.stringValue());
-    assertThrows(SpinDataFormatException.class, currenciesNode::stringValue);
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> jsonNode.stringValue());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> dueUntil.stringValue());
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(currenciesNode::stringValue);
   }
 
   @Test
@@ -158,9 +158,9 @@ class JsonTreeReadPropertyTest {
 
   @Test
   void shouldFailToReadNonNumberValue() {
-    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.numberValue());
-    assertThrows(SpinJsonDataFormatException.class, () -> order.numberValue());
-    assertThrows(SpinDataFormatException.class, () -> customers.numberValue());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> jsonNode.numberValue());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> order.numberValue());
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> customers.numberValue());
   }
 
   @Test
@@ -182,9 +182,9 @@ class JsonTreeReadPropertyTest {
 
   @Test
   void shouldFailToReadNonBooleanValue() {
-    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.boolValue());
-    assertThrows(SpinJsonDataFormatException.class, () -> order.boolValue());
-    assertThrows(SpinDataFormatException.class, () -> customers.boolValue());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> jsonNode.boolValue());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> order.boolValue());
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> customers.boolValue());
   }
 
   @Test
@@ -215,9 +215,9 @@ class JsonTreeReadPropertyTest {
 
   @Test
   void shouldFailToReadNonValue() {
-    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.value());
-    assertThrows(SpinJsonDataFormatException.class, () -> customers.value());
-    assertThrows(SpinDataFormatException.class, () -> orderDetails.value());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> jsonNode.value());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> customers.value());
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> orderDetails.value());
   }
 
   @Test
@@ -245,9 +245,9 @@ class JsonTreeReadPropertyTest {
 
   @Test
   void shouldFailToReadNonArrayValue() {
-    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.elements());
-    assertThrows(SpinJsonDataFormatException.class, () -> order.elements());
-    assertThrows(SpinDataFormatException.class, () -> id.elements());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> jsonNode.elements());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> order.elements());
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> id.elements());
   }
 
   @Test
@@ -277,9 +277,9 @@ class JsonTreeReadPropertyTest {
 
   @Test
   void shouldFailToReadNonFieldNames() {
-    assertThrows(SpinJsonDataFormatException.class, () -> order.fieldNames());
-    assertThrows(SpinJsonDataFormatException.class, () -> dueUntil.fieldNames());
-    assertThrows(SpinDataFormatException.class, () -> active.fieldNames());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> order.fieldNames());
+    assertThatExceptionOfType(SpinJsonDataFormatException.class).isThrownBy(() -> dueUntil.fieldNames());
+    assertThatExceptionOfType(SpinDataFormatException.class).isThrownBy(() -> active.fieldNames());
   }
 
 

@@ -18,11 +18,10 @@ package org.operaton.bpm.qa.rolling.update.task;
 
 import java.util.Date;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,11 +33,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithUserTaskAndTimerScenario")
-public class CompleteProcessWithUserTaskAndTimerTest extends AbstractRollingUpdateTestCase {
+class CompleteProcessWithUserTaskAndTimerTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.1")
-  public void testCompleteProcessWithUserTaskAndTimer() {
+  void testCompleteProcessWithUserTaskAndTimer() {
     //given a process instance with user task and timer boundary event
     Job job = rule.jobQuery().singleResult();
     assertThat(job).isNotNull();

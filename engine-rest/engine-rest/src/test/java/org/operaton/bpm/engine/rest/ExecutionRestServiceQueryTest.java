@@ -26,7 +26,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -159,7 +158,7 @@ public class ExecutionRestServiceQueryTest extends
 
     String content = response.asString();
     List<Map<String, Object>> executions = from(content).getList("");
-    Assertions.assertEquals(1, executions.size(), "There should be one execution returned.");
+    assertThat(executions).as("There should be one execution returned.").hasSize(1);
     assertThat(executions.get(0)).as("There should be one execution returned").isNotNull();
 
     String returnedExecutionId = from(content).getString("[0].id");
@@ -167,10 +166,10 @@ public class ExecutionRestServiceQueryTest extends
     String returnedProcessInstanceId = from(content).getString("[0].processInstanceId");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, returnedExecutionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_EXECUTION_IS_ENDED, returnedIsEnded);
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, returnedProcessInstanceId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
+    assertThat(returnedExecutionId).isEqualTo(MockProvider.EXAMPLE_EXECUTION_ID);
+    assertThat(returnedIsEnded).isEqualTo(MockProvider.EXAMPLE_EXECUTION_IS_ENDED);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
   }
 
   @Test

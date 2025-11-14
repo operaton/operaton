@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.executionlistener;
 
+import java.util.Objects;
+
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
@@ -47,7 +49,7 @@ public class ThrowingHistoryEventProducer extends DefaultHistoryEventProducer {
   @Override
   public HistoryEvent createActivityInstanceEndEvt(DelegateExecution execution) {
     String currentActivityName = execution.getCurrentActivityName();
-    if (currentActivityName != null && currentActivityName.equals(activityName)) {
+    if (currentActivityName != null && Objects.equals(currentActivityName, activityName)) {
       if (failsWithException) {
         throw new RuntimeException(EXCEPTION_MESSAGE);
       }

@@ -27,7 +27,7 @@ name: org.operaton.AddLicenseHeader
 displayName: Add Operaton ASL2 header
 recipeList:
   - org.openrewrite.java.AddLicenseHeader:
-      licenseText: |        
+      licenseText: |
         Copyright ${CURRENT_YEAR} the Operaton contributors.
         
         Licensed under the Apache License, Version 2.0 (the "License");
@@ -64,16 +64,59 @@ recipeList:
   - org.openrewrite.java.migrate.lang.StringFormatted
   - org.openrewrite.java.migrate.UpgradeToJava17
   - org.openrewrite.java.migrate.DeprecatedLogRecordThreadID
+  # Logging
+  - org.openrewrite.java.logging.slf4j.ParameterizedLogging
+  - org.operaton.AddLicenseHeader
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: org.operaton.recipe.TestsCleanup
+displayName: Tests cleanup
+description: Automatically cleanup test code, use best practices for JUnit 5, AssertJ, and Mockito.
+recipeList:
+  - org.openrewrite.java.RemoveUnusedImports
   # Testing
   - org.openrewrite.java.testing.assertj.AssertJShortRulesRecipes$AbstractShortAssertIsZeroRecipe
   - org.openrewrite.java.testing.assertj.CollapseConsecutiveAssertThatStatements
   - org.openrewrite.java.testing.assertj.SimplifyChainedAssertJAssertions
   - org.openrewrite.java.testing.assertj.SimplifyAssertJAssertion
   - org.openrewrite.java.testing.cleanup.AssertionsArgumentOrder
-  - org.openrewrite.java.testing.cleanup.SimplifyTestThrows
-  - org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic
   - org.openrewrite.java.testing.mockito.SimplifyMockitoVerifyWhenGiven
   - org.openrewrite.java.testing.assertj.StaticImports
-  # Logging
-  - org.openrewrite.java.logging.slf4j.ParameterizedLogging
-  - org.operaton.AddLicenseHeader
+  # JUnit Jupiter best practices - org.openrewrite.java.testing.junit5.JUnit5BestPractices
+  #- org.openrewrite.java.testing.junit5.JUnit4to5Migration
+  #- org.openrewrite.java.testing.hamcrest.MigrateHamcrestToJUnit5
+  - org.openrewrite.java.testing.junit5.StaticImports
+  - org.openrewrite.java.testing.junit5.CleanupAssertions
+  - org.openrewrite.java.testing.junit5.CsvSourceToValueSource
+  - org.openrewrite.java.testing.cleanup.AssertLiteralBooleanToFailRecipes
+  - org.openrewrite.java.testing.cleanup.AssertLiteralBooleanRemovedRecipe
+  #- org.openrewrite.java.testing.cleanup.RemoveTestPrefix
+  - org.openrewrite.java.testing.cleanup.SimplifyTestThrows
+  - org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic
+  - org.openrewrite.java.testing.cleanup.TestMethodsShouldBeVoid
+  - org.openrewrite.java.testing.junit5.AddParameterizedTestAnnotation
+  - org.openrewrite.java.testing.junit5.RemoveDuplicateTestTemplates
+  - org.openrewrite.java.testing.junit5.RemoveTryCatchFailBlocks
+  - org.openrewrite.java.testing.junit5.LifecycleNonPrivate
+  - org.openrewrite.java.testing.junit5.AssertThrowsOnLastStatement
+  - org.openrewrite.java.testing.junit5.AssertTrueInstanceofToAssertInstanceOf
+  - org.openrewrite.java.testing.junit5.UseAssertSame
+  # Composite: org.openrewrite.java.testing.assertj.JUnitToAssertj
+  - org.openrewrite.java.testing.assertj.JUnitAssertArrayEqualsToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertEqualsToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertFalseToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertNotEqualsToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertNotNullToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertNullToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertSameToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitAssertTrueToAssertThat
+  - org.openrewrite.java.testing.assertj.JUnitFailToAssertJFail
+  - org.openrewrite.java.testing.assertj.JUnitAssertThrowsToAssertExceptionType
+  - org.openrewrite.java.testing.assertj.JUnitTryFailToAssertThatThrownBy
+  - org.openrewrite.java.testing.assertj.JUnitAssertInstanceOfToAssertThat
+  # More AssertJ
+  - org.openrewrite.java.testing.assertj.AssertJBestPracticesTest
+  - org.openrewrite.java.testing.assertj.AssertJShortRulesRecipes
+  - org.openrewrite.java.testing.assertj.AssertJLongRulesRecipes
+  # Very slow:
+  #- tech.picnic.errorprone.refasterrules.AssertJObjectRulesRecipes

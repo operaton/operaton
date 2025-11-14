@@ -19,7 +19,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -57,7 +56,7 @@ public class TestWarDeploymentDuplicateFiltering extends AbstractFoxPlatformInte
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    Assertions.assertEquals(1, count);
+    assertThat(count).isOne();
   }
 
 }

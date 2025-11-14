@@ -43,7 +43,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -94,7 +94,7 @@ class MultiTenancyBatchQueryTest {
     assertThat(batches).hasSize(1);
     assertThat(batches.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    assertThat(managementService.createBatchQuery().count()).isEqualTo(1);
+    assertThat(managementService.createBatchQuery().count()).isOne();
 
     identityService.clearAuthentication();
   }
@@ -143,7 +143,7 @@ class MultiTenancyBatchQueryTest {
     assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    assertThat(managementService.createBatchStatisticsQuery().count()).isEqualTo(1);
+    assertThat(managementService.createBatchStatisticsQuery().count()).isOne();
 
     identityService.clearAuthentication();
   }
@@ -218,13 +218,7 @@ class MultiTenancyBatchQueryTest {
 
     String[] tenantIds = null;
     var batchQuery = managementService.createBatchQuery();
-    try {
-      batchQuery.tenantIdIn(tenantIds);
-      fail("exception expected");
-    }
-    catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> batchQuery.tenantIdIn(tenantIds)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -232,13 +226,7 @@ class MultiTenancyBatchQueryTest {
 
     String[] tenantIds = new String[]{ null };
     var batchQuery = managementService.createBatchQuery();
-    try {
-      batchQuery.tenantIdIn(tenantIds);
-      fail("exception expected");
-    }
-    catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> batchQuery.tenantIdIn(tenantIds)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -301,13 +289,7 @@ class MultiTenancyBatchQueryTest {
 
     String[] tenantIds = null;
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
-    try {
-      batchStatisticsQuery.tenantIdIn(tenantIds);
-      fail("exception expected");
-    }
-    catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> batchStatisticsQuery.tenantIdIn(tenantIds)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -315,13 +297,7 @@ class MultiTenancyBatchQueryTest {
 
     String[] tenantIds = new String[]{ null };
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
-    try {
-      batchStatisticsQuery.tenantIdIn(tenantIds);
-      fail("exception expected");
-    }
-    catch (NullValueException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> batchStatisticsQuery.tenantIdIn(tenantIds)).isInstanceOf(NullValueException.class);
   }
 
   @Test

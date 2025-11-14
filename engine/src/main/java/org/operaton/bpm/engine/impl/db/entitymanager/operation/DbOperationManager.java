@@ -69,7 +69,7 @@ public class DbOperationManager {
   public SortedMap<Class<?>, SortedSet<DbBulkOperation>> bulkOperations = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
 
   /** bulk modifications (DELETE, UPDATE) for which order of execution is important */
-  public LinkedHashSet<DbBulkOperation> bulkOperationsInsertionOrder = new LinkedHashSet<>();
+  public Set<DbBulkOperation> bulkOperationsInsertionOrder = new LinkedHashSet<>();
 
   public boolean addOperation(DbEntityOperation newOperation) {
     if(newOperation.getOperationType() == INSERT) {

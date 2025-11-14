@@ -24,7 +24,7 @@ import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.xml.dom.XmlDomElementScriptTest;
 
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML_FILE_NAME;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Sebastian Menski
@@ -48,7 +48,7 @@ class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
     execute = false
   )
   public void cannotAppendNullChildElement() {
-    assertThrows(RuntimeException.class, this::failingWithException);
+    assertThatExceptionOfType(RuntimeException.class).isThrownBy(this::failingWithException);
   }
 
   /**
@@ -67,7 +67,7 @@ class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
     execute = false
   )
   public void cannotRemoveANullChildElement() {
-    assertThrows(RuntimeException.class, this::failingWithException);
+    assertThatExceptionOfType(RuntimeException.class).isThrownBy(this::failingWithException);
   }
 
 }

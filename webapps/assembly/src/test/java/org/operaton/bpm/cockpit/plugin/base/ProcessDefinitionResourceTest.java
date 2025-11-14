@@ -39,8 +39,8 @@ import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQUALS_OPERATOR_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.fail;
 
 class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
   ProcessDefinitionResource resource;
@@ -651,7 +651,8 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     ProcessDefinitionQueryDto dto = new ProcessDefinitionQueryDto();
 
     // when + then
-    assertDoesNotThrow(() -> resource.queryCalledProcessDefinitions(dto));
+    assertThatCode(() -> resource.queryCalledProcessDefinitions(dto))
+      .doesNotThrowAnyException();
   }
 
   private VariableQueryParameterDto createVariableParameter(String name, String operator, Object value) {

@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RuntimeService;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 @SpringBootTest(classes = {SpinApplication.class},
   webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -48,10 +48,10 @@ class SpinApplicationTestIT {
 
   @Test
   void shouldFailWithSpinException() {
-    Throwable exception = assertThrows(Exception.class, () ->
+    Throwable exception = assertThatExceptionOfType(Exception.class).isThrownBy(() ->
 
       // when
-      runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"));
+      runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess")).actual();
     assertThat(exception.getMessage()).contains("SPIN/JACKSON-JSON-01006 Cannot deserialize");
   }
 }

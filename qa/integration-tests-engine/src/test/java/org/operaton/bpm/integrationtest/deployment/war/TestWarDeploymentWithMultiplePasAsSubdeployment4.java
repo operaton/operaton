@@ -22,7 +22,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -32,6 +31,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestHelper;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -103,6 +104,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment4 extends AbstractFo
             .addAsResource(pa2ProcessesXml, "META-INF/processes.xml")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getTestingLibs())
 
             .addAsLibraries(pa2)
             .addAsLibraries(pa3)
@@ -131,7 +133,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment4 extends AbstractFo
         .processDefinitionKey(processKey)
         .count();
 
-    Assertions.assertEquals(0, count, "Process with key "+processKey+ " should not be deployed");
+    assertThat(count).as("Process with key " + processKey + " should not be deployed").isZero();
   }
 
   protected void assertProcessDeployed(String processKey, String expectedDeploymentName) {
@@ -146,7 +148,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment4 extends AbstractFo
         .createDeploymentQuery()
         .deploymentId(processDefinition.getDeploymentId());
 
-    Assertions.assertEquals(expectedDeploymentName, deploymentQuery.singleResult().getName());
+    assertThat(deploymentQuery.singleResult().getName()).isEqualTo(expectedDeploymentName);
 
   }
 

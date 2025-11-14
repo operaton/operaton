@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.instance.operaton;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Sebastian Menski
@@ -44,15 +44,13 @@ class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
-      new AttributeAssumption(OPERATON_NS, "name", false, true)
-    );
+    return List.of(new AttributeAssumption(OPERATON_NS, "name", false, true));
   }
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
   void testOutputParameterScriptChildAssignment() {
-    try {
+    assertThatCode(() -> {
       OperatonOutputParameter outputParamElement = modelInstance.newInstance(OperatonOutputParameter.class);
       outputParamElement.setOperatonName("aVariable");
 
@@ -61,38 +59,35 @@ class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
       scriptElement.setTextContent("${'a script'}");
 
       outputParamElement.addChildElement(scriptElement);
-    } catch (Exception e) {
-      fail("OperatonScript should be accepted as a child element of OperatonOutputParameter. Error: " + e.getMessage());
-    }
+    }).as("OperatonScript should be accepted as a child element of OperatonOutputParameter. Error: ")
+      .doesNotThrowAnyException();
   }
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
   void testOutputParameterListChildAssignment() {
-    try {
+    assertThatCode(() -> {
       OperatonOutputParameter outputParamElement = modelInstance.newInstance(OperatonOutputParameter.class);
       outputParamElement.setOperatonName("aVariable");
 
       OperatonList listElement = modelInstance.newInstance(OperatonList.class);
 
       outputParamElement.addChildElement(listElement);
-    } catch (Exception e) {
-      fail("OperatonList should be accepted as a child element of OperatonOutputParameter. Error: " + e.getMessage());
-    }
+    }).as("OperatonList should be accepted as a child element of OperatonOutputParameter. Error: ")
+      .doesNotThrowAnyException();
   }
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
   void testOutputParameterMapChildAssignment() {
-    try {
+    assertThatCode(() -> {
       OperatonOutputParameter outputParamElement = modelInstance.newInstance(OperatonOutputParameter.class);
       outputParamElement.setOperatonName("aVariable");
 
       OperatonMap listElement = modelInstance.newInstance(OperatonMap.class);
 
       outputParamElement.addChildElement(listElement);
-    } catch (Exception e) {
-      fail("OperatonMap should be accepted as a child element of OperatonOutputParameter. Error: " + e.getMessage());
-    }
+    }).as("OperatonMap should be accepted as a child element of OperatonOutputParameter. Error: ")
+      .doesNotThrowAnyException();
   }
 }

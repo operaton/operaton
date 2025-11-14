@@ -82,7 +82,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.property
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
 
 /**
@@ -265,6 +264,10 @@ class HistoricVariableInstanceTest {
     assertThat(historyService.createHistoricVariableInstanceQuery().orderByProcessInstanceId().asc().list()).hasSize(5);
     assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableName().asc().count()).isEqualTo(5);
     assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableName().asc().list()).hasSize(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByTenantId().asc().count()).isEqualTo(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByTenantId().asc().list()).hasSize(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableId().asc().count()).isEqualTo(5);
+    assertThat(historyService.createHistoricVariableInstanceQuery().orderByVariableId().asc().list()).hasSize(5);
 
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(2);
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(2);
@@ -272,18 +275,18 @@ class HistoricVariableInstanceTest {
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("myVar").list()).hasSize(2);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableNameLike("myVar1").count()).isEqualTo(2);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableNameLike("myVar1").list()).hasSize(2);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableNameLike("my\\_Var%").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableNameLike("my\\_Var%").count()).isOne();
     assertThat(historyService.createHistoricVariableInstanceQuery().variableNameLike("my\\_Var%").list()).hasSize(1);
     List<HistoricVariableInstance> variables = historyService.createHistoricVariableInstanceQuery().list();
     assertThat(variables).hasSize(5);
 
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar", "test123").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar", "test123").count()).isOne();
     assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar", "test123").list()).hasSize(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar1", "test456").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar1", "test456").count()).isOne();
     assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar1", "test456").list()).hasSize(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar", "test666").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar", "test666").count()).isOne();
     assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar", "test666").list()).hasSize(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar1", "test666").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar1", "test666").count()).isOne();
     assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myVar1", "test666").list()).hasSize(1);
 
     assertThat(historyService.createHistoricActivityInstanceQuery().count()).isEqualTo(8);
@@ -297,7 +300,7 @@ class HistoricVariableInstanceTest {
 
     // existing-id
     List<HistoricVariableInstance> variable = historyService.createHistoricVariableInstanceQuery().listPage(0, 1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableId(variable.get(0).getId()).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableId(variable.get(0).getId()).count()).isOne();
 
   }
 
@@ -310,9 +313,9 @@ class HistoricVariableInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSubProcess");
     testRule.assertProcessEnded(processInstance.getId());
 
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
 
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("aVariable", "aValue").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("aVariable", "aValue").count()).isOne();
   }
 
   @Deployment(resources = {
@@ -327,7 +330,7 @@ class HistoricVariableInstanceTest {
     testRule.assertProcessEnded(processInstance.getId());
 
     // check that process variable is set even if the process is canceled and not ended normally
-    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableValueEquals("testVar", "Hallo Christian").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableValueEquals("testVar", "Hallo Christian").count()).isOne();
   }
 
 
@@ -446,7 +449,7 @@ class HistoricVariableInstanceTest {
 
     // check existing variables for task ID
     assertThat(historyService.createHistoricVariableInstanceQuery().taskIdIn(tasks.get(0).getId()).list()).hasSize(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().taskIdIn(tasks.get(0).getId()).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().taskIdIn(tasks.get(0).getId()).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testParallel.bpmn20.xml"})
@@ -476,19 +479,9 @@ class HistoricVariableInstanceTest {
     var processInstanceId = processInstance.getProcessInstanceId();
 
     // check existing variables for task ID
-    try {
-      historicVariableInstanceQuery.processInstanceIdIn(processInstanceId, null);
-      fail("Search by process instance ID was finished");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.processInstanceIdIn(processInstanceId, null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicVariableInstanceQuery.processInstanceIdIn(null, processInstanceId);
-      fail("Search by process instance ID was finished");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.processInstanceIdIn(null, processInstanceId)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -523,19 +516,9 @@ class HistoricVariableInstanceTest {
     assertThat(query.count()).isZero();
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
 
-    try {
-      historicVariableInstanceQuery.executionIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.executionIdIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicVariableInstanceQuery.executionIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.executionIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -544,19 +527,9 @@ class HistoricVariableInstanceTest {
     assertThat(query.count()).isZero();
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
 
-    try {
-      historicVariableInstanceQuery.taskIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.taskIdIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      historicVariableInstanceQuery.taskIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicVariableInstanceQuery.taskIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -592,19 +565,9 @@ class HistoricVariableInstanceTest {
     query.taskIdIn("invalid");
     assertThat(query.count()).isZero();
 
-    try {
-      query.taskIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.taskIdIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      query.taskIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.taskIdIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -621,7 +584,7 @@ class HistoricVariableInstanceTest {
 
     // then
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list().get(0).getName()).isEqualTo("stringVar");
   }
 
@@ -640,7 +603,7 @@ class HistoricVariableInstanceTest {
 
     // then
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.list().get(0).getName()).isEqualTo("boolVar");
   }
 
@@ -676,21 +639,9 @@ class HistoricVariableInstanceTest {
     // then
     assertThat(query.count()).isZero();
 
-    try {
-      // when
-      query.variableTypeIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.variableTypeIn((String[]) null)).isInstanceOf(ProcessEngineException.class);
 
-    try {
-      // when
-      query.variableTypeIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      // then fails
-    }
+    assertThatThrownBy(() -> query.variableTypeIn((String) null)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1858,7 +1809,7 @@ class HistoricVariableInstanceTest {
     taskService.complete(task1.getId());
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isOne();
 
     HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
     assertThat(historicVariable).isNotNull();
@@ -1886,7 +1837,7 @@ class HistoricVariableInstanceTest {
     taskService.complete(task1.getId());
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isOne();
 
     HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
     assertThat(historicVariable).isNotNull();
@@ -1911,7 +1862,7 @@ class HistoricVariableInstanceTest {
         .caseActivityIdIn("PI_HumanTask_1");
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.singleResult().getName()).isEqualTo("bar");
     assertThat(query.singleResult().getValue()).isEqualTo("foo");
   }
@@ -1951,26 +1902,11 @@ class HistoricVariableInstanceTest {
     assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
-    try {
-      query.caseActivityIdIn((String[])null);
-      fail("A ProcessEngineException was expected.");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseActivityIdIn((String[]) null)).isInstanceOf(NullValueException.class);
 
-    try {
-      query.caseActivityIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseActivityIdIn((String) null)).isInstanceOf(NullValueException.class);
 
-    try {
-      query.caseActivityIdIn(values);
-      fail("A ProcessEngineException was expected.");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> query.caseActivityIdIn(values)).isInstanceOf(NullValueException.class);
   }
 
   @Test
@@ -2077,7 +2013,7 @@ class HistoricVariableInstanceTest {
     assertThat(variableFoo.getName()).isEqualTo("foo");
     assertThat(variableFoo.getValue()).isEqualTo("bar");
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     testRule.executeAvailableJobs();
 
@@ -2120,7 +2056,7 @@ class HistoricVariableInstanceTest {
     assertThat(variableFoo.getName()).isEqualTo("foo");
     assertThat(variableFoo.getValue()).isEqualTo("bar");
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     testRule.executeAvailableJobs();
 
@@ -2219,7 +2155,7 @@ class HistoricVariableInstanceTest {
       // then the history contains only one entry for the latest update (value = "bar")
       // - the entry for the initial value (value = "foo") is lost because of current limitations
       HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-      assertThat(query.count()).isEqualTo(1);
+      assertThat(query.count()).isOne();
 
       HistoricVariableInstance variable = query.singleResult();
       assertThat(variable.getValue()).isEqualTo("bar");
@@ -2247,7 +2183,7 @@ class HistoricVariableInstanceTest {
     assertThat(variableFoo.getName()).isEqualTo("foo");
     assertThat(variableFoo.getValue()).isEqualTo("bar");
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     testRule.executeAvailableJobs();
 

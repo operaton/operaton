@@ -42,7 +42,7 @@ class PluginsRootResourceIT extends AbstractWebIT {
   boolean assetAllowed;
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     createClient(getWebappCtxPath());
   }
 

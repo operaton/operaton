@@ -57,11 +57,11 @@ class CmmnDeployerTest extends CmmnTest {
     RepositoryService repositoryService = processEngine.getRepositoryService();
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
 
     // there should be one case definition
     CaseDefinitionQuery query = processEngine.getRepositoryService().createCaseDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     CaseDefinition caseDefinition = query.singleResult();
     assertThat(caseDefinition.getKey()).isEqualTo("Case_1");
@@ -143,11 +143,11 @@ class CmmnDeployerTest extends CmmnTest {
     RepositoryService repositoryService = processEngine.getRepositoryService();
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
 
     // there should be one case definition
     CaseDefinitionQuery query = processEngine.getRepositoryService().createCaseDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     CaseDefinition caseDefinition = query.singleResult();
     assertThat(caseDefinition.getKey()).isEqualTo("Case_1");

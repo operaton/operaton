@@ -83,7 +83,7 @@ class MessageNonInterruptingBoundaryEventTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     // send a message a second time
     runtimeService.messageEventReceived("messageName", execution.getId());
@@ -99,7 +99,7 @@ class MessageNonInterruptingBoundaryEventTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     // now complete the user task with the message boundary event
     userTask = taskService.createTaskQuery().taskDefinitionKey("task").singleResult();
@@ -150,7 +150,7 @@ class MessageNonInterruptingBoundaryEventTest {
     runtimeService.correlateMessage("firstMessage");
 
     // then (1)
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
@@ -279,7 +279,7 @@ class MessageNonInterruptingBoundaryEventTest {
             .activity("receiveTask")
         .done());
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
@@ -526,6 +526,7 @@ class MessageNonInterruptingBoundaryEventTest {
         .createExecutionQuery()
         .activityId("tasks")
         .singleResult();
+    assertThat(task2Execution).isNull();
 
     assertThat(((ExecutionEntity) task1Execution).getParentId()).isEqualTo(processInstanceId);
 
@@ -547,7 +548,7 @@ class MessageNonInterruptingBoundaryEventTest {
     runtimeService.correlateMessage("firstMessage");
 
     // then (1)
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     Task innerTask = taskService.createTaskQuery()
         .taskDefinitionKey("innerTask")
@@ -642,7 +643,7 @@ class MessageNonInterruptingBoundaryEventTest {
     runtimeService.correlateMessage("secondMessage");
 
     // then (1)
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")

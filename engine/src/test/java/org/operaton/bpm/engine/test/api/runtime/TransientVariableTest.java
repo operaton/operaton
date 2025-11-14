@@ -661,8 +661,7 @@ class TransientVariableTest {
         Variables.putValue("transient1", false).putValue("transient2", false));
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().variableName(VARIABLE_NAME).count())
-      .isEqualTo(1L);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName(VARIABLE_NAME).count()).isOne();
   }
 
   @Test

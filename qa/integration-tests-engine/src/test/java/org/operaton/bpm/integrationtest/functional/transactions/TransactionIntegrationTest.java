@@ -22,7 +22,6 @@ import jakarta.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -32,7 +31,7 @@ import org.operaton.bpm.integrationtest.functional.transactions.beans.FailingDel
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -70,20 +69,12 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
     try {
       utx.begin();
 
-      try {
-        runtimeService.startProcessInstanceByKey("testProcessFailure");
-        fail("Exception expected");
-      }catch (Exception ex) {
-        if(!(ex instanceof RuntimeException)) {
-          fail("Wrong exception of type " + ex + " RuntimeException expected!");
-        }
-        if(!ex.getMessage().contains("I'm a complete failure!")) {
-          fail("Different message expected");
-        }
-      }
+      assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcessFailure"))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("I'm a complete failure!");
 
       // assert that now our transaction is marked rollback-only:
-      Assertions.assertEquals(Status.STATUS_MARKED_ROLLBACK, utx.getStatus());
+      assertThat(utx.getStatus()).isEqualTo(Status.STATUS_MARKED_ROLLBACK);
 
     } finally {
       // make sure we always rollback
@@ -105,7 +96,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       String id = runtimeService.startProcessInstanceByKey("testApplicationFailure").getId();
 
       // assert that the transaction is in good shape:
-      Assertions.assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
+      assertThat(utx.getStatus()).isEqualTo(Status.STATUS_ACTIVE);
 
       // now rollback the transaction (simmulating an application failure after the process engine is done).
       utx.rollback();
@@ -136,7 +127,7 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       String id = runtimeService.startProcessInstanceByKey("testTxSuccess").getId();
 
       // assert that the transaction is in good shape:
-      Assertions.assertEquals(Status.STATUS_ACTIVE, utx.getStatus());
+      assertThat(utx.getStatus()).isEqualTo(Status.STATUS_ACTIVE);
 
       // the process instance is visible form our tx:
       ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()

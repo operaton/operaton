@@ -28,7 +28,9 @@ import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * Unit tests for the {@code ScalaFeelEngine} implementation.
@@ -66,7 +68,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("amount", 300.0).asVariableContext();
 
     Object amountResult = engine.evaluateSimpleExpression("amount", variableCtx);
-    assertEquals(300L, amountResult);  // Note: ScalaFeelEngine returns Long for numeric values
+    assertThat(amountResult).isEqualTo(300L);  // Note: ScalaFeelEngine returns Long for numeric values
   }
 
   @Test
@@ -74,7 +76,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
     boolean lessThan250Result = engine.evaluateSimpleUnaryTests("< 250", "cellInput", variableCtx);
-    assertFalse(lessThan250Result);
+    assertThat(lessThan250Result).isFalse();
   }
 
   @Test
@@ -82,7 +84,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
     boolean inRangeResult = engine.evaluateSimpleUnaryTests("[250..1000]", "cellInput", variableCtx);
-    assertTrue(inRangeResult);
+    assertThat(inRangeResult).isTrue();
   }
 
   @Test
@@ -90,7 +92,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
     boolean moreThan1000Result = engine.evaluateSimpleUnaryTests("> 1000", "cellInput", variableCtx);
-    assertFalse(moreThan1000Result);
+    assertThat(moreThan1000Result).isFalse();
   }
 
   @Test
@@ -98,7 +100,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("invoiceCategory", "Travel Expenses").asVariableContext();
 
     Object categoryResult = engine.evaluateSimpleExpression("invoiceCategory", variableCtx);
-    assertEquals("Travel Expenses", categoryResult);
+    assertThat(categoryResult).isEqualTo("Travel Expenses");
   }
 
   @Test
@@ -106,14 +108,14 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", "Travel Expenses").asVariableContext();
 
     boolean isMiscResult = engine.evaluateSimpleUnaryTests("\"Misc\"", "cellInput", variableCtx);
-    assertFalse(isMiscResult);
+    assertThat(isMiscResult).isFalse();
 
     boolean isTravelExpensesResult = engine.evaluateSimpleUnaryTests("\"Travel Expenses\"", "cellInput", variableCtx);
-    assertTrue(isTravelExpensesResult);
+    assertThat(isTravelExpensesResult).isTrue();
 
     boolean isSoftwareLicenseResult = engine.evaluateSimpleUnaryTests("\"Software License Costs\"", "cellInput",
       variableCtx);
-    assertFalse(isSoftwareLicenseResult);
+    assertThat(isSoftwareLicenseResult).isFalse();
   }
 
   @Test
@@ -121,7 +123,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("dummy", "dummy").asVariableContext();
 
     Object dayToDayExpResult = engine.evaluateSimpleExpression("\"day-to-day expense\"", variableCtx);
-    assertEquals("day-to-day expense", dayToDayExpResult);
+    assertThat(dayToDayExpResult).isEqualTo("day-to-day expense");
   }
 
   @Test
@@ -132,7 +134,7 @@ class ScalaFeelEngineTest {
 
     boolean multiCategoryResult = engine.evaluateSimpleUnaryTests("\"budget\", \"exceptional\"", "cellInput",
       variableCtx);
-    assertFalse(multiCategoryResult);
+    assertThat(multiCategoryResult).isFalse();
   }
 
   @Test
@@ -140,10 +142,10 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("dummy", "dummy").asVariableContext();
 
     Object accountingDept = engine.evaluateSimpleExpression("\"accounting\"", variableCtx);
-    assertEquals("accounting", accountingDept);
+    assertThat(accountingDept).isEqualTo("accounting");
 
     Object salesDept = engine.evaluateSimpleExpression("\"sales\"", variableCtx);
-    assertEquals("sales", salesDept);
+    assertThat(salesDept).isEqualTo("sales");
   }
 
   @Test
@@ -154,7 +156,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("x between minValue and maxValue", "x", variableCtx);
-    assertTrue(result);
+    assertThat(result).isTrue();
   }
 
   @Test
@@ -164,7 +166,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("\"Email: \" + user + \"@\" + domain", variableCtx);
-    assertEquals("Email: john.doe@example.com", result);
+    assertThat(result).isEqualTo("Email: john.doe@example.com");
   }
 
   @Test
@@ -172,20 +174,20 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("a", 5).putValue("b", 3).asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("a + b", variableCtx);
-    assertEquals(8L, result);
+    assertThat(result).isEqualTo(8L);
   }
 
   @Test
   void shouldEvaluateComparisonWithInputName() {
     boolean result = engine.evaluateSimpleUnaryTests("< 5", "number",
       Variables.putValue("number", 6).asVariableContext());
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
   void shouldEvaluateComparisonWithInputNameAndEmptyContext() {
     boolean result = engine.evaluateSimpleUnaryTests("8 < 5", null, Variables.emptyVariableContext());
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -197,7 +199,7 @@ class ScalaFeelEngineTest {
 
     Object result = engine.evaluateSimpleExpression("(price - (price * discount / 100)) * (1 + tax / 100)",
       variableCtx);
-    assertEquals(85.6, result);
+    assertThat(result).isEqualTo(85.6);
   }
 
   @Test
@@ -207,13 +209,13 @@ class ScalaFeelEngineTest {
     Object result = engine.evaluateSimpleExpression(
       "if score >= 90 then \"A\" else if score >= 80 then \"B\" else if score >= 70 then \"C\" else \"F\"",
       variableCtx);
-    assertEquals("C", result);
+    assertThat(result).isEqualTo("C");
   }
 
   @Test
   void shouldEvaluateLiteralArithmetic() {
     Object result = engine.evaluateSimpleExpression("1 + 1", null);
-    assertEquals(2L, result);
+    assertThat(result).isEqualTo(2L);
   }
 
   @Test
@@ -223,7 +225,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("\"budget\", \"exceptional\"", "cellInput", variableCtx);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -232,13 +234,13 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("[250..1000]", "cellInput", variableCtx);
-    assertTrue(result);
+    assertThat(result).isTrue();
 
     result = engine.evaluateSimpleUnaryTests("< 250", "cellInput", variableCtx);
-    assertFalse(result);
+    assertThat(result).isFalse();
 
     result = engine.evaluateSimpleUnaryTests("> 1000", "cellInput", variableCtx);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -247,13 +249,13 @@ class ScalaFeelEngineTest {
     VariableContext dummyVarCtx = Variables.putValue("dummy", "dummy").asVariableContext();
 
     Object accountingResult = engine.evaluateSimpleExpression("\"accounting\"", dummyVarCtx);
-    assertEquals("accounting", accountingResult);
+    assertThat(accountingResult).isEqualTo("accounting");
 
     Object salesResult = engine.evaluateSimpleExpression("\"sales\"", dummyVarCtx);
-    assertEquals("sales", salesResult);
+    assertThat(salesResult).isEqualTo("sales");
 
     Object dayToDayExpenseResult = engine.evaluateSimpleExpression("\"day-to-day expense\"", dummyVarCtx);
-    assertEquals("day-to-day expense", dayToDayExpenseResult);
+    assertThat(dayToDayExpenseResult).isEqualTo("day-to-day expense");
   }
 
   @Test
@@ -262,14 +264,14 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", "Travel Expenses").asVariableContext();
 
     boolean isMiscResult = engine.evaluateSimpleUnaryTests("\"Misc\"", "cellInput", variableCtx);
-    assertFalse(isMiscResult);
+    assertThat(isMiscResult).isFalse();
 
     boolean isTravelExpensesResult = engine.evaluateSimpleUnaryTests("\"Travel Expenses\"", "cellInput", variableCtx);
-    assertTrue(isTravelExpensesResult);
+    assertThat(isTravelExpensesResult).isTrue();
 
     boolean isSoftwareLicenseCostsResult = engine.evaluateSimpleUnaryTests("\"Software License Costs\"", "cellInput",
       variableCtx);
-    assertFalse(isSoftwareLicenseCostsResult);
+    assertThat(isSoftwareLicenseCostsResult).isFalse();
   }
 
   @Test
@@ -278,7 +280,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("count(items)", variableCtx);
-    assertEquals(3L, result);
+    assertThat(result).isEqualTo(3L);
   }
 
   @Test
@@ -287,7 +289,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("level1.level2.value", variableCtx);
-    assertEquals(42L, result);
+    assertThat(result).isEqualTo(42L);
   }
 
   @Test
@@ -295,8 +297,9 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.emptyVariableContext();
 
     Object result = engine.evaluateSimpleExpression("date(\"2023-01-15\")", variableCtx);
-    assertNotNull(result);
-    assertInstanceOf(LocalDate.class, result);
+    assertThat(result)
+            .isNotNull()
+            .isInstanceOf(LocalDate.class);
   }
 
   @Test
@@ -304,20 +307,20 @@ class ScalaFeelEngineTest {
     // Test for invalid expression syntax
     VariableContext emptyContext = Variables.emptyVariableContext();
 
-    Exception exception = assertThrows(RuntimeException.class, () ->
-      engine.evaluateSimpleExpression("1 + )", emptyContext));
+    Exception exception = assertThatExceptionOfType(RuntimeException.class).isThrownBy(() ->
+      engine.evaluateSimpleExpression("1 + )", emptyContext)).actual();
 
-    assertTrue(exception.getMessage().contains("failed to parse expression"));
+    assertThat(exception.getMessage()).contains("failed to parse expression");
   }
 
   @Test
   void throwsExceptionForInvalidUnaryTestExpression() {
     VariableContext variableCtx = Variables.putValue("cellInput", 300.0).asVariableContext();
 
-    Exception exception = assertThrows(RuntimeException.class, () ->
-      engine.evaluateSimpleUnaryTests("in [1..]", "cellInput", variableCtx));
+    Exception exception = assertThatExceptionOfType(RuntimeException.class).isThrownBy(() ->
+      engine.evaluateSimpleUnaryTests("in [1..]", "cellInput", variableCtx)).actual();
 
-    assertTrue(exception.getMessage().contains("failed to parse"));
+    assertThat(exception.getMessage()).contains("failed to parse");
   }
 
   @Test
@@ -328,7 +331,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("(a and not(b)) or (b and c)", variableCtx);
-    assertEquals(true, result);
+    assertThat(result).isEqualTo(true);
   }
 
   @Test
@@ -337,7 +340,7 @@ class ScalaFeelEngineTest {
     VariableContext emptyContext = Variables.emptyVariableContext();
 
     Object result = engine.evaluateSimpleExpression("10 + 32", emptyContext);
-    assertEquals(42L, result);
+    assertThat(result).isEqualTo(42L);
   }
 
   @Test
@@ -346,7 +349,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("nullValue", null).asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("nullValue = null", variableCtx);
-    assertEquals(true, result);
+    assertThat(result).isEqualTo(true);
   }
 
   @Test
@@ -362,7 +365,7 @@ class ScalaFeelEngineTest {
       "if amount > 1000 and category = \"Software License Costs\" and urgent then \"manager-approval\" "
         + "else if amount > 500 then \"team-lead-approval\" " + "else \"auto-approval\"", variableCtx);
 
-    assertEquals("manager-approval", result);
+    assertThat(result).isEqualTo("manager-approval");
   }
 
   @Test
@@ -371,13 +374,13 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("value", "FEEL ENGINE").asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("lower case(value)", variableCtx);
-    assertEquals("feel engine", result);
+    assertThat(result).isEqualTo("feel engine");
 
     result = engine.evaluateSimpleExpression("upper case(value)", variableCtx);
-    assertEquals("FEEL ENGINE", result);
+    assertThat(result).isEqualTo("FEEL ENGINE");
 
     result = engine.evaluateSimpleExpression("substring(value, 6, 6)", variableCtx);
-    assertEquals("ENGINE", result);
+    assertThat(result).isEqualTo("ENGINE");
   }
 
   @Test
@@ -386,10 +389,10 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", 75).asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("[50..100], >200", "cellInput", variableCtx);
-    assertTrue(result);
+    assertThat(result).isTrue();
 
     result = engine.evaluateSimpleUnaryTests("<50, >100", "cellInput", variableCtx);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -399,7 +402,7 @@ class ScalaFeelEngineTest {
 
     Object result = engine.evaluateSimpleExpression("if possiblyNull != null then possiblyNull else \"default\"",
       variableCtx);
-    assertEquals("default", result);
+    assertThat(result).isEqualTo("default");
   }
 
   @Test
@@ -407,32 +410,30 @@ class ScalaFeelEngineTest {
     // Tests the behavior when a null expression is passed
     VariableContext variableCtx = Variables.emptyVariableContext();
 
-    Exception exception = assertThrows(FeelException.class, () -> engine.evaluateSimpleExpression(null, variableCtx));
+    Exception exception = assertThatExceptionOfType(FeelException.class).isThrownBy(() -> engine.evaluateSimpleExpression(null, variableCtx)).actual();
 
-    assertTrue(exception.getMessage()
-      .contains("FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression"));
+    assertThat(exception.getMessage()).contains("FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression");
   }
 
   @Test
   void shouldEvaluateEmptyExpression() {
     VariableContext variableCtx = Variables.emptyVariableContext();
-    Exception exception = assertThrows(FeelException.class,
-      () -> engine.evaluateSimpleExpression("", variableCtx));
-    assertTrue(exception.getMessage().contains("failed to parse expression"));
+    Exception exception = assertThatExceptionOfType(FeelException.class).isThrownBy(() -> engine.evaluateSimpleExpression("", variableCtx)).actual();
+    assertThat(exception.getMessage()).contains("failed to parse expression");
   }
 
   @Test
   void shouldEvaluateNonExistingVariable() {
     VariableContext variableCtx = Variables.emptyVariableContext();
     Object result = engine.evaluateSimpleExpression("nonExistingVar", variableCtx);
-    assertNull(result);
+    assertThat(result).isNull();
   }
 
   @Test
   void shouldEvaluateTypeConversions() {
     VariableContext variableCtx = Variables.putValue("stringNumber", "42").asVariableContext();
     Object result = engine.evaluateSimpleExpression("number(stringNumber)", variableCtx);
-    assertEquals(42L, result);
+    assertThat(result).isEqualTo(42L);
   }
 
   @Test
@@ -444,15 +445,15 @@ class ScalaFeelEngineTest {
 
     // Tests access to nested properties
     Object city = engine.evaluateSimpleExpression("person.address.city", variableCtx);
-    assertEquals("Berlin", city);
+    assertThat(city).isEqualTo("Berlin");
 
     // Tests access to list elements
     Object firstSkill = engine.evaluateSimpleExpression("person.skills[1]", variableCtx);
-    assertEquals("Java", firstSkill);
+    assertThat(firstSkill).isEqualTo("Java");
 
     // Tests list contains operation
     Object containsJava = engine.evaluateSimpleExpression("list contains(person.skills, \"Java\")", variableCtx);
-    assertEquals(true, containsJava);
+    assertThat(containsJava).isEqualTo(true);
   }
 
   @Test
@@ -460,7 +461,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("cellInput", "notANumber").asVariableContext();
 
     // Tests non-numeric input for numeric unary tests
-    assertFalse(engine.evaluateSimpleUnaryTests("[1..100]", "cellInput", variableCtx));
+    assertThat(engine.evaluateSimpleUnaryTests("[1..100]", "cellInput", variableCtx)).isFalse();
   }
 
   @Test
@@ -468,12 +469,12 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.putValue("specialString", "äöü€$@").asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("specialString", variableCtx);
-    assertEquals("äöü€$@", result);
+    assertThat(result).isEqualTo("äöü€$@");
 
     // Unicode evaluation
     // Unicode escape sequences in strings must be tested in future versions of ScalaFeelEngine
     Object unicodeResult = engine.evaluateSimpleExpression("\"unicode: ❤\"", variableCtx);
-    assertEquals("unicode: ❤", unicodeResult);
+    assertThat(unicodeResult).isEqualTo("unicode: ❤");
   }
 
   @Test
@@ -482,7 +483,7 @@ class ScalaFeelEngineTest {
 
     Object result = engine.evaluateSimpleExpression(
       "if value > 0 then \"positive\" else if value < 0 then \"negative\" else \"zero\"", variableCtx);
-    assertEquals("zero", result);
+    assertThat(result).isEqualTo("zero");
   }
 
   @Test
@@ -490,7 +491,7 @@ class ScalaFeelEngineTest {
     VariableContext variableCtx = Variables.emptyVariableContext();
 
     Object result = engine.evaluateSimpleExpression("0.1 + 0.2", variableCtx);
-    assertEquals(0.3, (double) result, 0.0000001);
+    assertThat((double) result).isCloseTo(0.3, within(0.0000001));
   }
 
   @Test
@@ -501,7 +502,7 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     boolean result = engine.evaluateSimpleUnaryTests("[min..max]", "cellInput", variableCtx);
-    assertTrue(result);
+    assertThat(result).isTrue();
   }
 
   @Test
@@ -511,7 +512,7 @@ class ScalaFeelEngineTest {
 
     boolean result = engine.evaluateSimpleUnaryTests("<= date and time(\"2019-09-12T13:00:00@Europe/Berlin\")",
       "dateInput", emptyContext);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
   @Test
@@ -523,7 +524,7 @@ class ScalaFeelEngineTest {
 
     boolean result = engine.evaluateSimpleUnaryTests("<= date and time(\"2019-09-12T13:00:00@Europe/Berlin\")",
       "dateInput", emptyContext);
-    assertFalse(result);
+    assertThat(result).isFalse();
   }
 
 }

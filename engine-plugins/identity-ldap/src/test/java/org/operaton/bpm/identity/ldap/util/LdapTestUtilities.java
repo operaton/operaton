@@ -24,9 +24,7 @@ import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Contains some test utilities to test the Ldap plugin.
@@ -36,75 +34,75 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 public final class LdapTestUtilities {
 
   public static void checkPagingResults(Set<String> results, String result1, String result2) {
-    assertNotSame(result1, result2);
-    assertFalse(results.contains(result1));
+    assertThat(result1).isNotSameAs(result2);
+    assertThat(results).doesNotContain(result1);
     results.add(result1);
-    assertFalse(results.contains(result2));
+    assertThat(results).doesNotContain(result2);
     results.add(result2);
   }
 
   public static void testGroupPaging(IdentityService identityService) {
     Set<String> groupNames = new HashSet<>();
     List<Group> groups = identityService.createGroupQuery().listPage(0, 2);
-    assertEquals(2, groups.size());
+    assertThat(groups).hasSize(2);
     checkPagingResults(groupNames, groups.get(0).getId(), groups.get(1).getId());
 
     groups = identityService.createGroupQuery().listPage(2, 2);
-    assertEquals(2, groups.size());
+    assertThat(groups).hasSize(2);
     checkPagingResults(groupNames, groups.get(0).getId(), groups.get(1).getId());
 
     groups = identityService.createGroupQuery().listPage(4, 2);
-    assertEquals(2, groups.size());
-    assertFalse(groupNames.contains(groups.get(0).getId()));
+    assertThat(groups).hasSize(2);
+    assertThat(groupNames).doesNotContain(groups.get(0).getId());
     groupNames.add(groups.get(0).getId());
 
     groups = identityService.createGroupQuery().listPage(6, 2);
-    assertEquals(0, groups.size());
+    assertThat(groups).isEmpty();
   }
 
   public static void testUserPaging(IdentityService identityService, LdapTestContext ldapTestContext) {
     Set<String> userNames = new HashSet<>();
     List<User> users = identityService.createUserQuery().listPage(0, 2);
-    assertEquals(2, users.size());
+    assertThat(users).hasSize(2);
     checkPagingResults(userNames, users.get(0).getId(), users.get(1).getId());
 
     users = identityService.createUserQuery().listPage(2, 2);
-    assertEquals(2, users.size());
+    assertThat(users).hasSize(2);
     checkPagingResults(userNames, users.get(0).getId(), users.get(1).getId());
 
     users = identityService.createUserQuery().listPage(4, 2);
-    assertEquals(2, users.size());
+    assertThat(users).hasSize(2);
     checkPagingResults(userNames, users.get(0).getId(), users.get(1).getId());
 
     users = identityService.createUserQuery().listPage(6, 2);
-    assertEquals(2, users.size());
+    assertThat(users).hasSize(2);
     checkPagingResults(userNames, users.get(0).getId(), users.get(1).getId());
 
     // over the page.
     users = identityService.createUserQuery().listPage(ldapTestContext.numberOfGeneratedUsers() + 1, 2);
-    assertEquals(0, users.size());
+    assertThat(users).isEmpty();
   }
 
   public static void testUserPagingWithMemberOfGroup(IdentityService identityService) {
     Set<String> userNames = new HashSet<>();
     List<User> users = identityService.createUserQuery().memberOfGroup("all").listPage(0, 2);
-    assertEquals(2, users.size());
+    assertThat(users).hasSize(2);
     checkPagingResults(userNames, users.get(0).getId(), users.get(1).getId());
 
     users = identityService.createUserQuery().memberOfGroup("all").listPage(2, 2);
-    assertEquals(2, users.size());
+    assertThat(users).hasSize(2);
     checkPagingResults(userNames, users.get(0).getId(), users.get(1).getId());
 
     users = identityService.createUserQuery().memberOfGroup("all").listPage(4, 2);
-    assertEquals(2, users.size());
+    assertThat(users).hasSize(2);
     checkPagingResults(userNames, users.get(0).getId(), users.get(1).getId());
 
     users = identityService.createUserQuery().memberOfGroup("all").listPage(11, 2);
-    assertEquals(1, users.size());
-    assertFalse(userNames.contains(users.get(0).getId()));
+    assertThat(users).hasSize(1);
+    assertThat(userNames).doesNotContain(users.get(0).getId());
 
     users = identityService.createUserQuery().memberOfGroup("all").listPage(12, 2);
-    assertEquals(0, users.size());
+    assertThat(users).isEmpty();
   }
 
   private LdapTestUtilities() {

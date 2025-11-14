@@ -20,7 +20,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -287,7 +286,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
     .when().get(VARIABLE_INSTANCE_BINARY_DATA_URL);
 
     byte[] responseBytes = response.getBody().asByteArray();
-    Assertions.assertEquals(new String(byteContent), new String(responseBytes));
+    assertThat(new String(responseBytes)).isEqualTo(new String(byteContent));
     verify(historicDetailQueryMock, never()).disableBinaryFetching();
 
   }

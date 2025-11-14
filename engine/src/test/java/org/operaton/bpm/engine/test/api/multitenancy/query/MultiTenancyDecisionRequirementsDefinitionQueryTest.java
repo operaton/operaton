@@ -73,13 +73,13 @@ class MultiTenancyDecisionRequirementsDefinitionQueryTest {
         .createDecisionRequirementsDefinitionQuery()
         .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = repositoryService.
         createDecisionRequirementsDefinitionQuery()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -97,7 +97,7 @@ class MultiTenancyDecisionRequirementsDefinitionQueryTest {
         .createDecisionRequirementsDefinitionQuery()
         .withoutTenantId();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -137,14 +137,14 @@ class MultiTenancyDecisionRequirementsDefinitionQueryTest {
         .decisionRequirementsDefinitionKey(DECISION_REQUIREMENTS_DEFINITION_KEY)
         .withoutTenantId();
     // one definition without tenant id
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = repositoryService
         .createDecisionRequirementsDefinitionQuery()
         .decisionRequirementsDefinitionKey(DECISION_REQUIREMENTS_DEFINITION_KEY)
         .tenantIdIn(TENANT_ONE);
     // one definition for tenant one
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -176,7 +176,7 @@ class MultiTenancyDecisionRequirementsDefinitionQueryTest {
         .latestVersion()
         .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     var decisionRequirementsDefinition = query.singleResult();
     assertThat(decisionRequirementsDefinition.getTenantId()).isEqualTo(TENANT_ONE);
@@ -188,7 +188,7 @@ class MultiTenancyDecisionRequirementsDefinitionQueryTest {
         .latestVersion()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     decisionRequirementsDefinition = query.singleResult();
     assertThat(decisionRequirementsDefinition.getTenantId()).isEqualTo(TENANT_TWO);
@@ -226,7 +226,7 @@ class MultiTenancyDecisionRequirementsDefinitionQueryTest {
         .latestVersion()
         .withoutTenantId();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     var decisionRequirementsDefinition = query.singleResult();
     assertThat(decisionRequirementsDefinition.getTenantId()).isNull();
@@ -310,7 +310,7 @@ class MultiTenancyDecisionRequirementsDefinitionQueryTest {
     identityService.setAuthentication("user", null, null);
 
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -320,7 +320,7 @@ class MultiTenancyDecisionRequirementsDefinitionQueryTest {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).includeDecisionRequirementsDefinitionsWithoutTenantId().count()).isEqualTo(2L);
   }
@@ -332,9 +332,9 @@ class MultiTenancyDecisionRequirementsDefinitionQueryTest {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.count()).isEqualTo(3L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
+    assertThat(query.withoutTenantId().count()).isOne();
   }
 
   @Test

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -506,8 +505,7 @@ class MigrationVariablesTest {
 
     VariableInstance variableAfterExpansion = runtimeService.createVariableInstanceQuery().singleResult();
     assertThat(variableAfterExpansion).isNotNull();
-    Assertions.assertNotSame(processInstance.getId(), variableAfterExpansion.getExecutionId());
-
+    assertThat(processInstance.getId()).isNotSameAs(variableAfterExpansion.getExecutionId());
   }
 
   @Test

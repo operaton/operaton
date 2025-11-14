@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
@@ -30,6 +29,8 @@ import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.AbstractWebIntegrationTest;
 import org.operaton.bpm.engine.rest.hal.Hal;
@@ -39,10 +40,7 @@ import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
 import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 class RestIT extends AbstractWebIntegrationTest {
 
@@ -62,10 +60,10 @@ class RestIT extends AbstractWebIntegrationTest {
 
   private static final String SCHEMA_LOG_PATH = ENGINE_DEFAULT_PATH + "/schema/log";
 
-  private static final Logger log = Logger.getLogger(RestIT.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RestIT.class);
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getRestCtxPath());
   }
@@ -73,7 +71,7 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void testScenario() throws Exception {
     // get process definitions for default engine
-    log.info("Checking " + appBasePath + PROCESS_DEFINITION_PATH);
+    log.info("Checking {}{}", appBasePath, PROCESS_DEFINITION_PATH);
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + PROCESS_DEFINITION_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
@@ -88,12 +86,12 @@ class RestIT extends AbstractWebIntegrationTest {
     // order of results is not consistent between database types
     for (int i = 0; i < definitionsJson.length(); i++) {
       JSONObject definitionJson = definitionsJson.getJSONObject(i);
-      assertTrue(definitionJson.isNull("description"));
-      assertFalse(definitionJson.getBoolean("suspended"));
+      assertThat(definitionJson.isNull("description")).isTrue();
+      assertThat(definitionJson.getBoolean("suspended")).isFalse();
       if ("ReviewInvoice".equals(definitionJson.getString("key"))) {
-        assertEquals("http://bpmn.io/schema/bpmn", definitionJson.getString("category"));
-        assertEquals("Review Invoice", definitionJson.getString("name"));
-        assertEquals("reviewInvoice.bpmn", definitionJson.getString("resource"));
+        assertThat(definitionJson.getString("category")).isEqualTo("http://bpmn.io/schema/bpmn");
+        assertThat(definitionJson.getString("name")).isEqualTo("Review Invoice");
+        assertThat(definitionJson.getString("resource")).isEqualTo("reviewInvoice.bpmn");
       } else if ("invoice".equals(definitionJson.getString("key"))) {
         assertThat(definitionJson.getString("category")).isEqualTo("http://www.omg.org/spec/BPMN/20100524/MODEL");
         assertThat(definitionJson.getString("name")).isEqualTo("Invoice Receipt");
@@ -106,7 +104,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void assertJodaTimePresent() {
-    log.info("Checking " + appBasePath + TASK_PATH);
+    log.info("Checking {}{}", appBasePath, TASK_PATH);
 
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + TASK_PATH)
             .queryString("dueAfter", "2000-01-01T00:00:00.000+0200")
@@ -116,12 +114,12 @@ class RestIT extends AbstractWebIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(200);
 
     JSONArray definitionsJson = response.getBody().getArray();
-    assertEquals(4, definitionsJson.length());
+    assertThat(definitionsJson.length()).isEqualTo(4);
   }
 
   @Test
   void testDelayedJobDefinitionSuspension() {
-    log.info("Checking " + appBasePath + JOB_DEFINITION_PATH + "/suspended");
+    log.info("Checking {}{}/suspended", appBasePath, JOB_DEFINITION_PATH);
 
     // Create request body as a Map (or you can use a custom DTO if required)
     Map<String, Object> requestBody = new HashMap<>();
@@ -142,7 +140,7 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void testTaskQueryContentType() {
     String resourcePath = appBasePath + TASK_PATH;
-    log.info("Checking " + resourcePath);
+    log.info("Checking {}", resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
 
@@ -152,7 +150,7 @@ class RestIT extends AbstractWebIntegrationTest {
     String taskId = getFirstTask().getString("id");
 
     String resourcePath = appBasePath + TASK_PATH + "/" + taskId;
-    log.info(() -> "Checking {}" + resourcePath);
+    log.info("Checking {}", resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
 
@@ -175,23 +173,23 @@ class RestIT extends AbstractWebIntegrationTest {
             .body(filter)
             .asJson();
 
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     String filterId = response.getBody().getObject().getString("id");
 
     // Check the filter resource (list)
     String resourcePathList = appBasePath + FILTER_PATH + "/" + filterId + "/list";
-    log.info(() -> "Checking " + resourcePathList);
+    log.info("Checking {}", resourcePathList);
     assertMediaTypesOfResource(resourcePathList, true);
 
 
     // Check the filter resource (singleResult)
     String resourcePathSingleResult = appBasePath + FILTER_PATH + "/" + filterId + "/singleResult";
-    log.info(() -> "Checking " + resourcePathSingleResult);
+    log.info("Checking {}", resourcePathSingleResult);
     assertMediaTypesOfResource(resourcePathSingleResult, true);
 
     // delete test filter
     HttpResponse<String> deleteResponse = Unirest.delete(appBasePath + FILTER_PATH + "/" + filterId).asString();
-    assertEquals(204, deleteResponse.getStatus());
+    assertThat(deleteResponse.getStatus()).isEqualTo(204);
 
   }
 
@@ -203,7 +201,7 @@ class RestIT extends AbstractWebIntegrationTest {
             .asJson();
 
     // Then
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     JSONObject logElement = response.getBody().getArray().getJSONObject(0);
 
     String timestamp = logElement.getString("timestamp");
@@ -223,7 +221,7 @@ class RestIT extends AbstractWebIntegrationTest {
     JSONObject historicVariableUpdate = getFirstHistoricVariableUpdates();
 
     // variable update specific property
-    assertTrue(historicVariableUpdate.has("variableName"));
+    assertThat(historicVariableUpdate.has("variableName")).isTrue();
   }
 
   /**
@@ -285,7 +283,7 @@ class RestIT extends AbstractWebIntegrationTest {
   void testOptionsRequest() {
     // Given
     String resourcePath = appBasePath + FILTER_PATH;
-    log.info("Send OPTIONS request to " + resourcePath);
+    log.info("Send OPTIONS request to {}", resourcePath);
 
     // Send OPTIONS request
     HttpResponse<JsonNode> response = Unirest.options(resourcePath).asJson();
@@ -295,7 +293,7 @@ class RestIT extends AbstractWebIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(200);
 
     JSONObject entity = response.getBody().getObject();
-    assertTrue(entity.has("links"));
+    assertThat(entity.has("links")).isTrue();
   }
 
   @Test
@@ -363,7 +361,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   protected void assertMediaType(HttpResponse<String> response, String expected) {
     String actual = response.getHeaders().getFirst("Content-Type");
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     // use startsWith cause sometimes server also returns quality parameters
     assertThat(actual)
             .as("Expected: " + expected + " Actual: " + actual)

@@ -1,0 +1,49 @@
+name: Update SBOMs
+
+on:
+  workflow_dispatch:        # Allows manual trigger
+  push:
+    branches:
+      - main
+      - release/**
+      - ci-dev/**
+
+jobs:
+  update_sbom:
+    name: Update SBOMs
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name != 'push' || contains(join(github.event.commits.*.message, ' '), 'deps')
+    steps:
+      - name: Install Homebrew (Ubuntu/Linux)
+        if: runner.os == 'Linux'
+        env:
+          CI: true
+          NONINTERACTIVE: '1'
+        run: |
+          echo "Installing Homebrew..."
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          # Persist brew environment for subsequent steps
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bashrc
+          echo >> /home/runner/.bashrc
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+      - name: Check out the code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '17'
+
+
+      - name: Generate SBOMs
+        run: .devenv/scripts/build/build-sbom.sh
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
+        with:
+          message: "chore(deps) Update SBOMs"

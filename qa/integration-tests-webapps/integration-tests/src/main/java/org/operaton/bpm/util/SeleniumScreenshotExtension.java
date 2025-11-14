@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
@@ -31,6 +30,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Allows to take screenshots in case of a Selenium test error.
@@ -38,7 +39,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class SeleniumScreenshotExtension implements AfterTestExecutionCallback, TestExecutionExceptionHandler {
 
   private static final String OUTPUT_DIR_PROPERTY_NAME = "selenium.screenshot.directory";
-  private static final Logger log = Logger.getAnonymousLogger();
+  private static final Logger log = LoggerFactory.getLogger(SeleniumScreenshotExtension.class);
   protected WebDriver webDriver;
 
   public SeleniumScreenshotExtension(WebDriver driver) {
@@ -66,8 +67,7 @@ public class SeleniumScreenshotExtension implements AfterTestExecutionCallback, 
     String screenshotDirectory = System.getProperty(OUTPUT_DIR_PROPERTY_NAME);
 
     if (screenshotDirectory == null) {
-      log.info("No screenshot created, because no output directory is specified. "
-          + "Set the system property " + OUTPUT_DIR_PROPERTY_NAME + " to resolve this.");
+      log.info("No screenshot created, because no output directory is specified. " + "Set the system property {} to resolve this.", OUTPUT_DIR_PROPERTY_NAME);
       return;
     }
 
@@ -79,10 +79,10 @@ public class SeleniumScreenshotExtension implements AfterTestExecutionCallback, 
     try {
       FileUtils.copyFile(scrFile, outputFile);
     } catch (IOException ioe) {
-      log.severe("No screenshot created due to an error on copying: " + ioe.getMessage());
+      log.error("No screenshot created due to an error on copying: {}", ioe.getMessage());
       return;
     }
 
-    log.info("Screenshot created at: " + outputFile.getPath());
+    log.info("Screenshot created at: {}", outputFile.getPath());
   }
 }

@@ -23,7 +23,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -122,7 +121,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
 
     String content = response.asString();
     List<Map<String, Object>> reportResults = from(content).getList("");
-    Assertions.assertEquals(2, reportResults.size(), "There should be two report results returned.");
+    assertThat(reportResults).as("There should be two report results returned.").hasSize(2);
     assertThat(reportResults.get(0)).isNotNull();
 
     String returnedBatchType = from(content).getString("[0].batchType");
@@ -130,10 +129,10 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
     long returnedFinishedCount= from(content).getLong("[0].finishedBatchesCount");
     long returnedCleanableCount = from(content).getLong("[0].cleanableBatchesCount");
 
-    Assertions.assertEquals(EXAMPLE_TYPE, returnedBatchType);
-    Assertions.assertEquals(EXAMPLE_TTL, returnedTTL);
-    Assertions.assertEquals(EXAMPLE_FINISHED_COUNT, returnedFinishedCount);
-    Assertions.assertEquals(EXAMPLE_CLEANABLE_COUNT, returnedCleanableCount);
+    assertThat(returnedBatchType).isEqualTo(EXAMPLE_TYPE);
+    assertThat(returnedTTL).isEqualTo(EXAMPLE_TTL);
+    assertThat(returnedFinishedCount).isEqualTo(EXAMPLE_FINISHED_COUNT);
+    assertThat(returnedCleanableCount).isEqualTo(EXAMPLE_CLEANABLE_COUNT);
   }
 
   @Test

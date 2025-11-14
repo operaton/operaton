@@ -180,7 +180,7 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
 
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
-    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isOne();
   }
 
   @Deployment(resources = {
@@ -201,7 +201,7 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
 
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
@@ -240,7 +240,7 @@ class ProcessDefinitionSuspensionTest {
     // Verify one task is created
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     // Suspend process definition
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
@@ -336,7 +336,7 @@ class ProcessDefinitionSuspensionTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // The jobs should simply be executed
     Job job = managementService.createJobQuery().singleResult();
@@ -359,8 +359,8 @@ class ProcessDefinitionSuspensionTest {
 
     // Verify we can just start process instances
     runtimeService.startProcessInstanceById(processDefinitionId);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
 
     // execute job
@@ -376,15 +376,15 @@ class ProcessDefinitionSuspensionTest {
     } catch (SuspendedEntityInteractionException e) {
       testRule.assertTextPresentIgnoreCase("suspended", e.getMessage());
     }
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     // Activate again
     repositoryService.activateProcessDefinitionById(processDefinitionId);
     runtimeService.startProcessInstanceById(processDefinitionId);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
-    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
   }
 
@@ -408,7 +408,7 @@ class ProcessDefinitionSuspensionTest {
     assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isZero();
     assertThat(taskService.createTaskQuery().suspended().count()).isZero();
     assertThat(taskService.createTaskQuery().active().count()).isEqualTo(nrOfProcessInstances);
-    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
 
     // Suspend process definition in one week from now
@@ -439,7 +439,7 @@ class ProcessDefinitionSuspensionTest {
     assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(nrOfProcessInstances);
     assertThat(taskService.createTaskQuery().active().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     // Activate again
     repositoryService.activateProcessDefinitionById(processDefinition.getId(), true, null);
@@ -448,7 +448,7 @@ class ProcessDefinitionSuspensionTest {
     assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isZero();
     assertThat(taskService.createTaskQuery().suspended().count()).isZero();
     assertThat(taskService.createTaskQuery().active().count()).isEqualTo(nrOfProcessInstances);
-    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
   }
 
@@ -472,7 +472,7 @@ class ProcessDefinitionSuspensionTest {
     }
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     // Activate in a day from now
     long oneDayFromStart = startTime.getTime() + (24 * 60 * 60 * 1000);
@@ -486,8 +486,8 @@ class ProcessDefinitionSuspensionTest {
 
     // Starting a process instance should now succeed
     runtimeService.startProcessInstanceById(processDefinitionId);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
+    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
   }
 
@@ -524,9 +524,9 @@ class ProcessDefinitionSuspensionTest {
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(nrOfProcessDefinitions);
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(nrOfProcessDefinitions);
-    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isOne();
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isZero();
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     // Clean DB
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
@@ -559,7 +559,7 @@ class ProcessDefinitionSuspensionTest {
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(nrOfProcessDefinitions);
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(nrOfProcessDefinitions);
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
-    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isOne();
 
     // the job is associated with the deployment id of the latest version of the process definition
     Job job = managementService.createJobQuery().singleResult();
@@ -574,14 +574,14 @@ class ProcessDefinitionSuspensionTest {
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(nrOfProcessDefinitions);
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(nrOfProcessDefinitions);
-    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isOne();
 
     // Activate again in 5 hours from now
     repositoryService.activateProcessDefinitionByKey("oneTaskProcess", true, new Date(startTime.getTime() + (5 * hourInMs)));
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(nrOfProcessDefinitions);
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(nrOfProcessDefinitions);
-    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isOne();
 
     // the job is associated with the deployment id of the latest version of the process definition
     job = managementService.createJobQuery().singleResult();
@@ -594,7 +594,7 @@ class ProcessDefinitionSuspensionTest {
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(nrOfProcessDefinitions);
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(nrOfProcessDefinitions);
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
-    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isOne();
 
     // Clean DB
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
@@ -626,7 +626,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -637,7 +637,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -669,7 +669,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -680,7 +680,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -710,7 +710,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -721,7 +721,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -751,7 +751,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -762,7 +762,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -792,7 +792,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -803,7 +803,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -833,7 +833,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -844,7 +844,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -882,7 +882,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activeJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -902,7 +902,7 @@ class ProcessDefinitionSuspensionTest {
     // then
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -911,7 +911,7 @@ class ProcessDefinitionSuspensionTest {
 
     // the job is still active
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -950,7 +950,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activeJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -970,7 +970,7 @@ class ProcessDefinitionSuspensionTest {
     // then
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -979,7 +979,7 @@ class ProcessDefinitionSuspensionTest {
 
     // the job is still active
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -1018,7 +1018,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activeJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1038,7 +1038,7 @@ class ProcessDefinitionSuspensionTest {
     // then
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -1047,7 +1047,7 @@ class ProcessDefinitionSuspensionTest {
 
     // the job is still active
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -1086,7 +1086,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activeJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1106,7 +1106,7 @@ class ProcessDefinitionSuspensionTest {
     // then
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -1115,7 +1115,7 @@ class ProcessDefinitionSuspensionTest {
 
     // the job is still active
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -1382,10 +1382,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated
@@ -1396,7 +1396,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activeJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1407,7 +1407,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -1432,10 +1432,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated
@@ -1446,7 +1446,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activatedJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1457,7 +1457,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -1482,10 +1482,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated
@@ -1496,7 +1496,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activatedJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1507,7 +1507,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -1532,10 +1532,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated
@@ -1546,7 +1546,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activatedJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1557,7 +1557,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -1582,10 +1582,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated
@@ -1596,7 +1596,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activatedJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1607,7 +1607,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -1632,10 +1632,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated
@@ -1646,7 +1646,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1657,7 +1657,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -1686,10 +1686,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated in 2 hours
@@ -1704,7 +1704,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -1714,8 +1714,8 @@ class ProcessDefinitionSuspensionTest {
     // the job is still suspended
     JobQuery jobQuery = managementService.createJobQuery();
 
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
-    assertThat(jobQuery.active().count()).isEqualTo(1); // the timer job is active
+    assertThat(jobQuery.suspended().count()).isOne();
+    assertThat(jobQuery.active().count()).isOne(); // the timer job is active
 
     // when
     // execute job
@@ -1724,7 +1724,7 @@ class ProcessDefinitionSuspensionTest {
     // then
     // the job definition should be active
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activeJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1733,7 +1733,7 @@ class ProcessDefinitionSuspensionTest {
 
     // the job is still suspended
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -1762,10 +1762,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated in 2 hours
@@ -1781,7 +1781,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -1791,8 +1791,8 @@ class ProcessDefinitionSuspensionTest {
     // the job is still suspended
     JobQuery jobQuery = managementService.createJobQuery();
 
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
-    assertThat(jobQuery.active().count()).isEqualTo(1); // the timer job is active
+    assertThat(jobQuery.suspended().count()).isOne();
+    assertThat(jobQuery.active().count()).isOne(); // the timer job is active
 
     // when
     // execute job
@@ -1801,7 +1801,7 @@ class ProcessDefinitionSuspensionTest {
     // then
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activatedJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1810,7 +1810,7 @@ class ProcessDefinitionSuspensionTest {
 
     // the job is still suspended
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job job = jobQuery.suspended().singleResult();
 
@@ -1839,10 +1839,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated in 2 hours
@@ -1858,7 +1858,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -1868,8 +1868,8 @@ class ProcessDefinitionSuspensionTest {
     // the job is still suspended
     JobQuery jobQuery = managementService.createJobQuery();
 
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
-    assertThat(jobQuery.active().count()).isEqualTo(1); // the timer job is active
+    assertThat(jobQuery.suspended().count()).isOne();
+    assertThat(jobQuery.active().count()).isOne(); // the timer job is active
 
     // when
     // execute job
@@ -1878,7 +1878,7 @@ class ProcessDefinitionSuspensionTest {
     // then
     // the job definition should be activated
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activatedJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1887,7 +1887,7 @@ class ProcessDefinitionSuspensionTest {
 
     // the job is activated
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -1916,10 +1916,10 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId(), true, null);
 
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
 
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isOne();
 
     // when
     // the process definition will be activated in 2 hours
@@ -1935,7 +1935,7 @@ class ProcessDefinitionSuspensionTest {
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -1945,8 +1945,8 @@ class ProcessDefinitionSuspensionTest {
     // the job is still suspended
     JobQuery jobQuery = managementService.createJobQuery();
 
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
-    assertThat(jobQuery.active().count()).isEqualTo(1); // the timer job is active
+    assertThat(jobQuery.suspended().count()).isOne();
+    assertThat(jobQuery.active().count()).isOne(); // the timer job is active
 
     // when
     // execute job
@@ -1955,7 +1955,7 @@ class ProcessDefinitionSuspensionTest {
     // then
     // the job definition should be activated
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
 
     JobDefinition activatedJobDefinition = jobDefinitionQuery.active().singleResult();
 
@@ -1964,7 +1964,7 @@ class ProcessDefinitionSuspensionTest {
 
     // the job is activated too
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job job = jobQuery.active().singleResult();
 
@@ -2169,7 +2169,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isEqualTo(5);
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     // when
     // execute job
@@ -2239,7 +2239,7 @@ class ProcessDefinitionSuspensionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isEqualTo(5);
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     // when
     // execute job

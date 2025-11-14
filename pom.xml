@@ -15,14 +15,14 @@
     <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
     <version.mybatis>3.5.19</version.mybatis>
     <version.joda-time>2.12.5</version.joda-time>
-    <version.uuid-generator>5.1.0</version.uuid-generator>
+    <version.uuid-generator>5.1.1</version.uuid-generator>
     <version.feel-scala>1.19.3</version.feel-scala>
-    <version.quarkus>3.26.3</version.quarkus>
+    <version.quarkus>3.29.0</version.quarkus>
     <version.java>17</version.java>
-    <version.spring-boot>3.5.5</version.spring-boot>
+    <version.spring>6.2.12</version.spring>
+    <version.spring-boot>3.5.7</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.release>17</maven.compiler.release>
     <sonar.organization>operaton</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.coverage.jacoco.xmlReportPaths>**/target/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -31,7 +31,7 @@
     <!-- Set to true for each module with packaging default/jar that does not have 'main' sources -->
     <install.skip>false</install.skip>
   </properties>
-  <version>1.0.0-rc-1-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
   <inceptionYear>2024</inceptionYear>
   <build>
     <defaultGoal>verify</defaultGoal>
@@ -39,7 +39,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.6.1</version>
+        <version>3.6.2</version>
         <executions>
           <execution>
             <id>enforce-default</id>
@@ -71,6 +71,36 @@
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>parse-current-version</id>
+            <goals>
+              <goal>parse-version</goal>
+            </goals>
+            <phase>initialize</phase>
+            <configuration>
+              <propertyPrefix>operaton.version</propertyPrefix>
+              <versionString>${project.version}</versionString>
+            </configuration>
+          </execution>
+          <execution>
+            <id>build-date-property</id>
+            <goals>
+              <goal>timestamp-property</goal>
+            </goals>
+            <phase>initialize</phase>
+            <configuration>
+              <name>build.date</name>
+              <pattern>yyyy-MM-dd</pattern>
+              <timeZone>Europe/Zurich</timeZone>
+              <locale>en</locale>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
           <acceptPomPackaging>true</acceptPomPackaging>
@@ -80,7 +110,7 @@
       <plugin>
         <groupId>org.openrewrite.maven</groupId>
         <artifactId>rewrite-maven-plugin</artifactId>
-        <version>6.17.0</version>
+        <version>6.21.1</version>
         <configuration>
           <activeRecipes>
             <recipe>org.operaton.recipe.CodeCleanup</recipe>
@@ -88,6 +118,7 @@
           <failOnDryRunResults>true</failOnDryRunResults>
           <exclusions>
             <exclusion>**/node/**</exclusion>
+            <exclusion>**/example_jackson.json</exclusion>
             <!-- undesired changes, e.g. recipes that break compilation -->
             <!-- org.openrewrite.staticanalysis.FinalizePrivateFields -->
             <exclusion>**/FeelIntegrationTest.java</exclusion>
@@ -143,23 +174,28 @@
             <exclusion>**/MigrationPlanGenerationTest.java</exclusion>
             <!-- org.openrewrite.java.UseStaticImport -->
             <exclusion>**/CaseInstanceAssertTest.java</exclusion>
+            <!-- Invalid to convert lamdba to method reference -->
+            <exclusion>**/CallActivityContextSwitchTest.java</exclusion>
+            <!-- Parser errors -->
+            <exclusion>**/TestFixture.java</exclusion>
+            <exclusion>**/org/operaton/bpm/integrationtest/util/TestContainer.java</exclusion>
           </exclusions>
         </configuration>
         <dependencies>
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-static-analysis</artifactId>
-            <version>2.17.0</version>
+            <version>2.20.0</version>
           </dependency>
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-testing-frameworks</artifactId>
-            <version>3.16.0</version>
+            <version>3.18.0</version>
           </dependency>
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-logging-frameworks</artifactId>
-            <version>3.13.2</version>
+            <version>3.17.0</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -169,7 +205,7 @@
         <plugin>
           <groupId>com.github.eirslett</groupId>
           <artifactId>frontend-maven-plugin</artifactId>
-          <version>1.15.1</version>
+          <version>1.15.4</version>
         </plugin>
         <plugin>
           <groupId>com.mycila</groupId>
@@ -205,7 +241,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.2.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -220,12 +256,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.14.0</version>
+          <version>3.14.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.8.1</version>
+          <version>3.9.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -249,7 +285,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>3.5.3</version>
+          <version>3.5.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -272,7 +308,17 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.11.3</version>
+          <version>3.12.0</version>
+          <configuration>
+            <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
+            <failOnError>false</failOnError>
+            <additionalJOptions>
+              <additionalJOption>-Xdoclint:none</additionalJOption>
+              <additionalJOption>--ignore-source-errors</additionalJOption>
+            </additionalJOptions>
+            <doctitle>Operaton Javadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</doctitle>
+            <windowtitle>Operaton Javadocs ${operaton.version.majorVersion}.${operaton.version.minorVersion} API</windowtitle>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -292,7 +338,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.6.0</version>
+          <version>3.6.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -307,12 +353,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.5.3</version>
+          <version>3.5.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.5.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -322,7 +368,7 @@
         <plugin>
           <groupId>org.codehaus.cargo</groupId>
           <artifactId>cargo-maven3-plugin</artifactId>
-          <version>1.10.21</version>
+          <version>1.10.24</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -335,12 +381,12 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>3.5.1</version>
+          <version>3.6.2</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>license-maven-plugin</artifactId>
-          <version>2.6.0</version>
+          <version>2.7.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -350,7 +396,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.18.0</version>
+          <version>2.19.1</version>
           <configuration>
             <onlyProjectDependencies>true</onlyProjectDependencies>
             <onlyUpgradable>true</onlyUpgradable>
@@ -384,6 +430,13 @@
                   </ignoreVersion>
                 </rule>
                 <rule>
+                  <groupId>jakarta.persistence</groupId>
+                  <ignoreVersion>
+                    <type>regex</type>
+                    <version>.+-B\d+</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
                   <groupId>org.glassfish.extras</groupId>
                   <ignoreVersion>
                     <type>regex</type>
@@ -405,19 +458,114 @@
                     <version>[10.0,)</version>
                   </ignoreVersion>
                 </rule>
+                <!-- Well known major upgrades that are handled via issues -->
+                <rule>
+                  <groupId>org.junit.jupiter</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[6,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>org.junit.platform</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[6,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>org.junit.vintage</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[6,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>org.liquibase</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[5,)</version>
+                  </ignoreVersion>
+                </rule>
+                <!-- JakartaEE 11 -->
+                <rule>
+                  <groupId>jakarta.annotation</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[3,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.el</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.enterprise</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[4.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.enterprise.concurrent</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[3.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.faces</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[4.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.interceptor</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[2.2,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.persistence</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[3.2,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.servlet</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[6.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.validation</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[3.1,)</version>
+                  </ignoreVersion>
+                </rule>
+                <rule>
+                  <groupId>jakarta.ws.rs</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[4,)</version>
+                  </ignoreVersion>
+                </rule>
               </rules>
             </ruleSet>
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>jetty-maven-plugin</artifactId>
-          <version>8.1.16.v20140903</version>
-        </plugin>
-        <plugin>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-maven-plugin</artifactId>
-          <version>${version.jetty}</version>
+          <version>11.0.26</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.transformer</groupId>
@@ -427,7 +575,7 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.13</version>
+          <version>0.8.14</version>
         </plugin>
         <plugin>
           <groupId>org.jboss.shrinkwrap.resolver</groupId>
@@ -467,7 +615,6 @@
         <module>jakarta-ee/jobexecutor-ra</module>
         <module>jakarta-ee/jobexecutor-rar</module>
         <module>model-api</module>
-        <module>engine-dmn</module>
         <module>connect</module>
         <module>juel</module>
         <module>spin</module>
@@ -479,12 +626,12 @@
         <module>test-utils/archunit</module>
         <module>engine</module>
         <module>engine-cdi</module>
+        <module>engine-dmn</module>
         <module>engine-spring</module>
         <module>engine-rest</module>
         <module>webapps</module>
         <module>examples</module>
         <module>engine-plugins</module>
-        <module>distro/license-book</module>
         <module>distro/jboss</module>
         <module>distro/tomcat</module>
         <module>distro/sql-script</module>
@@ -499,10 +646,15 @@
       <modules>
         <module>qa</module>
         <module>model-api</module>
-        <module>test-utils/archunit</module>
-        <module>test-utils/testcontainers</module>
-        <module>commons</module>
+        <module>connect</module>
         <module>juel</module>
+        <module>spin</module>
+        <module>commons</module>
+        <module>freemarker-template-engine</module>
+        <module>test-utils/testcontainers</module>
+        <module>test-utils/junit5-extension</module>
+        <module>test-utils/assert</module>
+        <module>test-utils/archunit</module>
         <module>engine</module>
         <module>engine-cdi</module>
         <module>engine-dmn</module>
@@ -512,6 +664,7 @@
         <module>examples</module>
         <module>engine-plugins</module>
         <module>distro/sql-script</module>
+        <module>clients/java</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>
@@ -523,7 +676,6 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <module>distro/license-book</module>
         <module>distro/tomcat</module>
       </modules>
     </profile>
@@ -534,7 +686,6 @@
       </activation>
       <modules>
         <module>jakarta-ee/ejb-client</module>
-        <module>distro/license-book</module>
         <module>distro/wildfly</module>
       </modules>
     </profile>
@@ -637,15 +788,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <configuration>
-              <failOnError>false</failOnError>
-              <additionalJOptions>
-                <additionalJOption>-Xdoclint:none</additionalJOption>
-                <additionalJOption>--ignore-source-errors</additionalJOption>
-              </additionalJOptions>
-              <doctitle>Operaton Javadocs ${project.version}</doctitle>
-              <windowtitle>Operaton Javadocs ${project.version}</windowtitle>
-            </configuration>
             <executions>
               <execution>
                 <id>attach-javadocs</id>

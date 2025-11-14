@@ -615,7 +615,7 @@ public class BatchMigrationTest {
 
     // then the remaining process instance was migrated
     assertThat(helper.countSourceProcessInstances()).isZero();
-    assertThat(helper.countTargetProcessInstances()).isEqualTo(1);
+    assertThat(helper.countTargetProcessInstances()).isOne();
 
     // and one batch job failed and has 2 retries left
     List<Job> migrationJobs = helper.getExecutionJobs(batch);

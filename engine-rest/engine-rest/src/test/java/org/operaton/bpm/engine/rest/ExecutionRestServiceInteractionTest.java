@@ -29,7 +29,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -315,7 +314,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
       .body(EXAMPLE_VARIABLE_KEY + ".type", equalTo(String.class.getSimpleName()))
       .when().get(EXECUTION_LOCAL_VARIABLES_URL);
 
-    Assertions.assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
+    assertThat(response.jsonPath().getMap("")).as("Should return exactly one variable").hasSize(1);
   }
 
   @Test

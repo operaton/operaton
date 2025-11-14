@@ -58,7 +58,7 @@ public class CustomerList<T> implements List<Customer> {
   }
 
   @Override
-  public <Customer> Customer[] toArray(Customer[] a) {
+  public <CUSTOMER> CUSTOMER[] toArray(CUSTOMER[] a) {
     return innerList.toArray(a);
   }
 

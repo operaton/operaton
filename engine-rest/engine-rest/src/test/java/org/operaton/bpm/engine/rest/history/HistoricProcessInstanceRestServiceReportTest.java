@@ -24,7 +24,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -216,11 +215,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
     int returnedPeriod = from(content).getInt("[0].period");
     String returnedPeriodUnit = from(content).getString("[0].periodUnit");
 
-    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG, returnedAvg);
-    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX, returnedMax);
-    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN, returnedMin);
-    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD, returnedPeriod);
-    Assertions.assertEquals(MONTH.toString(), returnedPeriodUnit);
+    assertThat(returnedAvg).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG);
+    assertThat(returnedMax).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX);
+    assertThat(returnedMin).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN);
+    assertThat(returnedPeriod).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD);
+    assertThat(returnedPeriodUnit).isEqualTo(MONTH.toString());
   }
 
   @Test
@@ -237,7 +236,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
 
     String content = response.asString();
     List<Map<String, Object>> reports = from(content).getList("");
-    Assertions.assertEquals(1, reports.size(), "There should be one report returned.");
+    assertThat(reports).as("There should be one report returned.").hasSize(1);
     assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     long returnedAvg = from(content).getLong("[0].average");
@@ -246,11 +245,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
     int returnedPeriod = from(content).getInt("[0].period");
     String returnedPeriodUnit = from(content).getString("[0].periodUnit");
 
-    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG, returnedAvg);
-    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX, returnedMax);
-    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN, returnedMin);
-    Assertions.assertEquals(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD, returnedPeriod);
-    Assertions.assertEquals(QUARTER.toString(), returnedPeriodUnit);
+    assertThat(returnedAvg).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG);
+    assertThat(returnedMax).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX);
+    assertThat(returnedMin).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN);
+    assertThat(returnedPeriod).isEqualTo(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD);
+    assertThat(returnedPeriodUnit).isEqualTo(QUARTER.toString());
   }
 
   @Test

@@ -25,7 +25,7 @@ import org.operaton.spin.json.SpinJsonPropertyException;
 
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Thorben Lindhauer
@@ -57,14 +57,14 @@ public abstract class JsonTreeRemovePropertyScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailWhileRemovingPropertyByName(){
-    assertThrows(SpinJsonPropertyException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(this::failingWithException);
   }
 
   @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailWhileRemovingPropertyByList(){
-    assertThrows(SpinJsonPropertyException.class, this::failingWithException);
+    assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(this::failingWithException);
   }
 
 }

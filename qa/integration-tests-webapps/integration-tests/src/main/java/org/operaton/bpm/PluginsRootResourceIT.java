@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import static jakarta.ws.rs.core.Response.Status.FORBIDDEN;
 import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Parameterized
 @SuppressWarnings("java:S5960")
@@ -44,7 +43,7 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   public boolean assetAllowed;
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     createClient(getWebappCtxPath());
   }
 
@@ -73,7 +72,7 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
       assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
     } else {
       assertThat(response.getStatus()).isEqualTo(FORBIDDEN.getStatusCode());
-      assertTrue(response.getHeaders().getFirst("Content-Type").startsWith("application/json"));
+      assertThat(response.getHeaders().getFirst("Content-Type")).startsWith("application/json");
       String responseEntity = response.getBody();
       assertThat(responseEntity)
               .contains("\"type\":\"RestException\"")

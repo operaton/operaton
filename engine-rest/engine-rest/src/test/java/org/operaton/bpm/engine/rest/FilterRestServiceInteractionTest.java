@@ -82,7 +82,6 @@ import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
@@ -946,8 +945,8 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
     ArgumentCaptor<TaskQueryImpl> argument = ArgumentCaptor.forClass(TaskQueryImpl.class);
     verify(filterServiceMock).singleResult(eq(EXAMPLE_FILTER_ID), argument.capture());
-    assertEquals(MockProvider.EXAMPLE_TASK_DESCRIPTION, argument.getValue().getQueries().get(1).getDescription());
-    assertEquals(MockProvider.EXAMPLE_TASK_NAME, argument.getValue().getQueries().get(2).getName());
+    assertThat(argument.getValue().getQueries().get(1).getDescription()).isEqualTo(MockProvider.EXAMPLE_TASK_DESCRIPTION);
+    assertThat(argument.getValue().getQueries().get(2).getName()).isEqualTo(MockProvider.EXAMPLE_TASK_NAME);
   }
 
   @Test

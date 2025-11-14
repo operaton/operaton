@@ -20,7 +20,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -30,6 +29,8 @@ import org.operaton.bpm.engine.runtime.TransitionInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.PriorityBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -65,7 +66,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
     // then
-    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(PriorityBean.PRIORITY);
 
   }
 
@@ -78,7 +79,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
     // then
-    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(PriorityBean.PRIORITY);
   }
 
   @Test
@@ -98,7 +99,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
 
     // then
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(PriorityBean.PRIORITY);
   }
 
   @Test
@@ -111,7 +112,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
 
     // then
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(PriorityBean.PRIORITY);
   }
 
   @Test
@@ -125,7 +126,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
 
     // then
     Job asyncAfterJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    Assertions.assertEquals(PriorityBean.PRIORITY, asyncAfterJob.getPriority());
+    assertThat(asyncAfterJob.getPriority()).isEqualTo(PriorityBean.PRIORITY);
   }
 
   @Test
@@ -138,7 +139,7 @@ public class JobPrioritizationTest extends AbstractFoxPlatformIntegrationTest {
 
     // then
     Job asyncAfterJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    Assertions.assertEquals(PriorityBean.PRIORITY, asyncAfterJob.getPriority());
+    assertThat(asyncAfterJob.getPriority()).isEqualTo(PriorityBean.PRIORITY);
   }
 
 }

@@ -24,7 +24,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -147,7 +146,7 @@ public class CleanableHistoricDecisionInstanceReportServiceTest extends Abstract
 
     String content = response.asString();
     List<Map<String, Object>> reportResults = from(content).getList("");
-    Assertions.assertEquals(2, reportResults.size(), "There should be two report results returned.");
+    assertThat(reportResults).as("There should be two report results returned.").hasSize(2);
     assertThat(reportResults.get(0)).isNotNull();
 
     String returnedDefinitionId = from(content).getString("[0].decisionDefinitionId");
@@ -159,14 +158,14 @@ public class CleanableHistoricDecisionInstanceReportServiceTest extends Abstract
     long returnedCleanableCount = from(content).getLong("[0].cleanableDecisionInstanceCount");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    Assertions.assertEquals(EXAMPLE_DD_ID, returnedDefinitionId);
-    Assertions.assertEquals(EXAMPLE_DD_KEY, returnedDefinitionKey);
-    Assertions.assertEquals(EXAMPLE_DD_NAME, returnedDefinitionName);
-    Assertions.assertEquals(EXAMPLE_DD_VERSION, returnedDefinitionVersion);
-    Assertions.assertEquals(EXAMPLE_TTL, returnedTTL);
-    Assertions.assertEquals(EXAMPLE_FINISHED_DI_COUNT, returnedFinishedCount);
-    Assertions.assertEquals(EXAMPLE_CLEANABLE_DI_COUNT, returnedCleanableCount);
-    Assertions.assertEquals(EXAMPLE_TENANT_ID, returnedTenantId);
+    assertThat(returnedDefinitionId).isEqualTo(EXAMPLE_DD_ID);
+    assertThat(returnedDefinitionKey).isEqualTo(EXAMPLE_DD_KEY);
+    assertThat(returnedDefinitionName).isEqualTo(EXAMPLE_DD_NAME);
+    assertThat(returnedDefinitionVersion).isEqualTo(EXAMPLE_DD_VERSION);
+    assertThat(returnedTTL).isEqualTo(EXAMPLE_TTL);
+    assertThat(returnedFinishedCount).isEqualTo(EXAMPLE_FINISHED_DI_COUNT);
+    assertThat(returnedCleanableCount).isEqualTo(EXAMPLE_CLEANABLE_DI_COUNT);
+    assertThat(returnedTenantId).isEqualTo(EXAMPLE_TENANT_ID);
   }
 
   @Test

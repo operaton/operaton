@@ -30,7 +30,6 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(ArquillianExtension.class)
 public class GroovyAsyncScriptExecutionTest extends AbstractFoxPlatformIntegrationTest {
@@ -80,8 +79,9 @@ public class GroovyAsyncScriptExecutionTest extends AbstractFoxPlatformIntegrati
     waitForJobExecutorToProcessAllJobs(30000);
 
     Object foo = runtimeService.getVariable(processInstanceId, "foo");
-    assertThat(foo).isNotNull();
-    assertEquals("bar", foo);
+    assertThat(foo)
+            .isNotNull()
+            .isEqualTo("bar");
 
     repositoryService.deleteDeployment(deploymentId, true);
   }

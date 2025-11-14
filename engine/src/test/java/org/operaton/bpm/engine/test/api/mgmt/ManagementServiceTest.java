@@ -89,7 +89,8 @@ class ManagementServiceTest {
 
   protected boolean tearDownEnsureJobDueDateNotNull;
 
-  static final Date TEST_DUE_DATE = new Date(1675752840000L);
+  private static final Date TEST_DUE_DATE = new Date(1675752840000L);
+  private static final int SECOND = 1000;
 
   @AfterEach
   void tearDown() {
@@ -382,14 +383,7 @@ class ManagementServiceTest {
 
     List<String> allJobIds = getAllJobIds();
     allJobIds.add("aFake");
-    try {
-      //when
-      managementService.setJobRetries(allJobIds, 5);
-      fail("exception expected");
-      //then
-    } catch (ProcessEngineException e) {
-      //expected
-    }
+    assertThatThrownBy(() -> managementService.setJobRetries(allJobIds, 5)).isInstanceOf(ProcessEngineException.class);
 
     assertRetries(getAllJobIds(), JobEntity.DEFAULT_RETRIES);
   }
@@ -433,7 +427,7 @@ class ManagementServiceTest {
         .singleResult();
     assertThat(timerJob.getRetries()).isZero();
 
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createIncidentQuery().count()).isOne();
 
   }
 
@@ -680,12 +674,7 @@ class ManagementServiceTest {
     commandExecutor.execute(acquireJobsCmd);
 
     // Try to delete the job. This should fail.
-    try {
-      managementService.deleteJob(timerJobId);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // Exception is expected
-    }
+    assertThatThrownBy(() -> managementService.deleteJob(timerJobId)).isInstanceOf(ProcessEngineException.class);
 
     // Clean up
     managementService.executeJob(timerJob.getId());
@@ -715,7 +704,6 @@ class ManagementServiceTest {
         .singleResult();
 
     // normalize date for mysql dropping fractional seconds in time values
-    int SECOND = 1000;
     assertThat((newTimerJob.getDuedate().getTime() / SECOND) * SECOND).isEqualTo((cal.getTime().getTime() / SECOND) * SECOND);
   }
 

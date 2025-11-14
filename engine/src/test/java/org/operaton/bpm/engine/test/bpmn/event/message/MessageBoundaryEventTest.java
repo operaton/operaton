@@ -223,7 +223,7 @@ class MessageBoundaryEventTest {
     }
 
     // only process instance left
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().count()).isOne();
 
     Task userTask = taskService.createTaskQuery().singleResult();
     assertThat(userTask).isNotNull();
@@ -647,7 +647,7 @@ class MessageBoundaryEventTest {
     runtimeService.correlateMessage("task1Message");
 
     // then the event subscription for task2 still exists
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(runtimeService.createEventSubscriptionQuery().activityId("messageBoundary2").singleResult()).isNotNull();
 
   }

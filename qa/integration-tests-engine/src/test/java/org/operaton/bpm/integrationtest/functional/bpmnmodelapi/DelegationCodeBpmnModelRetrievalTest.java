@@ -20,7 +20,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -64,6 +63,6 @@ public class DelegationCodeBpmnModelRetrievalTest extends AbstractFoxPlatformInt
 
     assertThat(delegate.getBpmnModelElementInstance()).isNotNull();
     assertThat(delegate.getBpmnModelInstance()).isNotNull();
-    Assertions.assertEquals(TEST_PROCESS, delegate.getBpmnModelInstance().getDefinitions().getRootElements().iterator().next().getId());
+    assertThat(delegate.getBpmnModelInstance().getDefinitions().getRootElements().iterator().next().getId()).isEqualTo(TEST_PROCESS);
   }
 }

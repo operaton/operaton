@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent</relativePath>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <groupId>org.operaton.commons</groupId>
   <artifactId>operaton-commons-typed-values</artifactId>
@@ -64,8 +64,6 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>clirr-maven-plugin</artifactId>
         <configuration>
-          <comparisonVersion>${operaton.version.old}</comparisonVersion>
-          <logResults>true</logResults>
           <excludes>
             <exclude>org/operaton/bpm/engine/impl/**</exclude>
           </excludes>
@@ -101,8 +99,8 @@
             </goals>
             <configuration>
               <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
-              <failOnWarning>true</failOnWarning>
-              <ignoredDifferencesFile>.clirr-jenkins-ignore.xml</ignoredDifferencesFile>
+              <failOnWarning>${clirr.failOnWarning.restrictive}</failOnWarning>
+              <ignoredDifferencesFile>.clirr-ignore.xml</ignoredDifferencesFile>
             </configuration>
           </execution>
         </executions>

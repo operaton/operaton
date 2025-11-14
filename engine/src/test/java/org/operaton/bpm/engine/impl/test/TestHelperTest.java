@@ -22,8 +22,8 @@ import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.mockito.Mockito.*;
 
 class TestHelperTest {
@@ -94,37 +94,42 @@ class TestHelperTest {
   void shouldIgnoreExceptionDuringJobExecution() {
     ManagementService managementService = mock(ManagementService.class);
     doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
-    assertDoesNotThrow(() -> TestHelper.executeJobIgnoringException(managementService, "aJobId"));
+    assertThatCode(() -> TestHelper.executeJobIgnoringException(managementService, "aJobId"))
+        .doesNotThrowAnyException();
   }
 
   @Test
   void shouldExpectExceptionDuringJobExecutionWhenExceptionIsThrown() {
     ManagementService managementService = mock(ManagementService.class);
     doThrow(new ProcessEngineException("some exception message")).when(managementService).executeJob("aJobId");
-    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId"));
-    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", "some exception message"));
-    assertDoesNotThrow(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", "exception message"));
+    assertThatCode(() -> TestHelper.executeJobExpectingException(managementService, "aJobId"))
+        .doesNotThrowAnyException();
+    assertThatCode(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", "some exception message"))
+        .doesNotThrowAnyException();
+    assertThatCode(() -> TestHelper.executeJobExpectingException(managementService, "aJobId", "exception message"))
+        .doesNotThrowAnyException();
   }
 
   @Test
   void shouldExpectExceptionDuringJobExecutionWhenExceptionIsNotThrown() {
     ManagementService managementService = mock(ManagementService.class);
     doNothing().when(managementService).executeJob("aJobId");
-    assertThrows(AssertionError.class, () -> TestHelper.executeJobExpectingException(managementService, "aJobId"));
+    assertThatExceptionOfType(AssertionError.class).isThrownBy(() -> TestHelper.executeJobExpectingException(managementService, "aJobId"));
   }
 
   @Test
   void shouldNotExpectExceptionDuringJobExecutionWhenExceptionIsThrown() {
     ManagementService managementService = mock(ManagementService.class);
     doThrow(ProcessEngineException.class).when(managementService).executeJob("aJobId");
-    assertThrows(AssertionError.class, () -> TestHelper.executeJobNotExpectingException(managementService, "aJobId"));
+    assertThatExceptionOfType(AssertionError.class).isThrownBy(() -> TestHelper.executeJobNotExpectingException(managementService, "aJobId"));
   }
 
   @Test
   void shouldNotExpectExceptionDuringJobExecutionWhenExceptionIsNotThrown() {
     ManagementService managementService = mock(ManagementService.class);
     doNothing().when(managementService).executeJob("aJobId");
-    assertDoesNotThrow(() -> TestHelper.executeJobNotExpectingException(managementService, "aJobId"));
+    assertThatCode(() -> TestHelper.executeJobNotExpectingException(managementService, "aJobId"))
+        .doesNotThrowAnyException();
   }
 
 }

@@ -22,7 +22,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -117,14 +116,14 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<Map<String, Object>> reports = from(content).getList("");
-    Assertions.assertEquals(1, reports.size(), "There should be one report returned.");
+    assertThat(reports).as("There should be one report returned.").hasSize(1);
     assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     String returnedGroup = from(content).getString("[0].groupName");
     int returnedCount = from(content).getInt("[0].taskCount");
 
-    Assertions.assertEquals(EXAMPLE_GROUP_ID, returnedGroup);
-    Assertions.assertEquals(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP, returnedCount);
+    assertThat(returnedGroup).isEqualTo(EXAMPLE_GROUP_ID);
+    assertThat(returnedCount).isEqualTo(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP);
   }
 
 

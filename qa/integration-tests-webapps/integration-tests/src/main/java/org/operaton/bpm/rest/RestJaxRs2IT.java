@@ -38,7 +38,7 @@ import org.operaton.bpm.AbstractWebIntegrationTest;
 import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
 import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("java:S5960")
 class RestJaxRs2IT extends AbstractWebIntegrationTest {
@@ -47,7 +47,7 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
   private static final String FETCH_AND_LOCK_PATH = ENGINE_DEFAULT_PATH + "/external-task/fetchAndLock";
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getRestCtxPath());
   }
@@ -65,9 +65,9 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
             .body(payload)
             .asJson();
 
-    assertEquals(400, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(400);
     String responseMessage = response.getBody().getObject().get("message").toString();
-    assertEquals("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds", responseMessage);
+    assertThat(responseMessage).isEqualTo("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds");
   }
 
   @Test
@@ -102,7 +102,7 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
       }
 
       for (Future<String> future : futures) {
-        assertEquals("[]", future.get());
+        assertThat(future.get()).isEqualTo("[]");
       }
     } finally {
       if (!service.isShutdown()) {

@@ -29,15 +29,15 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class DateSerializationIT extends AbstractWebIntegrationTest {
 
   private static final String SCHEMA_LOG_PATH = "api/engine/engine/default/schema/log";
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     getTokens();
@@ -53,7 +53,7 @@ class DateSerializationIT extends AbstractWebIntegrationTest {
             .asJson();
 
     // then
-    assertEquals(200, response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(200);
     JSONArray logArray = response.getBody().getArray();
     JSONObject logElement = logArray.getJSONObject(0);
     String timestamp = logElement.getString("timestamp");

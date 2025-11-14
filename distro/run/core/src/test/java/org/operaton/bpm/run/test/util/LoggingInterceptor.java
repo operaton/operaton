@@ -44,12 +44,16 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
     }
   }
 
-  private void log(HttpMessage message) throws IOException {
+  private void log(HttpMessage message) {
     if(message instanceof HttpRequest request) {
       log.info("URI: {}", request.getURI());
       log.info("Method: {}", request.getMethod());
     } else if(message instanceof ClientHttpResponse response) {
-      log.info("Status code: {}", response.getStatusCode());
+        try {
+            log.info("Status code: {}", response.getStatusCode());
+        } catch (IOException ignored) {
+            // no-op
+        }
     } else {
       return;
     }

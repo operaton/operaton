@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 class BitMaskUtilTest {
 
@@ -67,9 +67,10 @@ class BitMaskUtilTest {
 
   @Test
   void testEnsureBitRange() {
-    assertThrows(ProcessEngineException.class, () -> BitMaskUtil.ensureBitRange(0));
-    assertThrows(ProcessEngineException.class, () -> BitMaskUtil.ensureBitRange(9));
-    assertDoesNotThrow(() -> BitMaskUtil.ensureBitRange(1));
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(() -> BitMaskUtil.ensureBitRange(0));
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(() -> BitMaskUtil.ensureBitRange(9));
+    assertThatCode(() -> BitMaskUtil.ensureBitRange(1))
+        .doesNotThrowAnyException();
   }
 
 }

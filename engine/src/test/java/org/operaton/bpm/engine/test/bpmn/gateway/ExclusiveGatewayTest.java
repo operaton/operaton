@@ -39,9 +39,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.commons.utils.CollectionUtil;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Joram Barrez
@@ -192,8 +190,8 @@ class ExclusiveGatewayTest {
     assertThat(task.getName()).isEqualTo("Input is one");
     runtimeService.deleteProcessInstance(procId, null);
 
-    procId = runtimeService.startProcessInstanceByKey("exclusiveGwDefaultSequenceFlow",
-            CollectionUtil.singletonMap("input", 5)).getId();
+    runtimeService.startProcessInstanceByKey("exclusiveGwDefaultSequenceFlow",
+            CollectionUtil.singletonMap("input", 5));
     task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Default input");
   }
@@ -336,12 +334,7 @@ class ExclusiveGatewayTest {
 
     // Test with input == 4
     variables.put("input", 4);
-    try {
-      runtimeService.startProcessInstanceByKey("exclusiveGateway", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // Exception is expected since no outgoing sequence flow matches
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("exclusiveGateway", variables)).isInstanceOf(ProcessEngineException.class);
 
   }
 }

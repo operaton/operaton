@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * @author Ronny Bräunlich
@@ -145,7 +145,7 @@ class FileValueSerializerTest {
   @Test
   void testThrowsExceptionWhenConvertingUnknownUntypedValueToTypedValue() {
     UntypedValueImpl untypedValue = (UntypedValueImpl) Variables.untypedValue(new Object());
-    assertThrows(UnsupportedOperationException.class, () -> serializer.convertToTypedValue(untypedValue));
+    assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(() -> serializer.convertToTypedValue(untypedValue));
   }
 
   @Test

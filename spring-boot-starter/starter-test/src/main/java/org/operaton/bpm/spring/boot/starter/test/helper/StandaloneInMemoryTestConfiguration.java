@@ -24,10 +24,13 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.mock.MockExpressionManager;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 import static java.util.Collections.emptyList;
 
+/**
+ * Default in memory configuration, pre-configured with mock, dbSchema and metrics.
+ */
 public class StandaloneInMemoryTestConfiguration extends StandaloneInMemProcessEngineConfiguration {
 
   public StandaloneInMemoryTestConfiguration(ProcessEnginePlugin... plugins) {
@@ -47,12 +50,7 @@ public class StandaloneInMemoryTestConfiguration extends StandaloneInMemProcessE
     getProcessEnginePlugins().addAll(plugins);
   }
 
-  public ProcessEngineExtension extension() {
-    var processEngine = buildProcessEngine();
-    var extension = new ProcessEngineExtension();
-    extension.setProcessEngineConfiguration(this);
-    extension.setProcessEngine(processEngine);
-
-    return extension;
+  public ProcessEngineRule rule() {
+    return new ProcessEngineRule(buildProcessEngine());
   }
 }

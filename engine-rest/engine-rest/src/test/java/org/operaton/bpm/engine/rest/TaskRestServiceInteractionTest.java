@@ -34,7 +34,7 @@ import jakarta.ws.rs.core.Response.Status;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -77,6 +77,7 @@ import org.operaton.bpm.engine.rest.hal.Hal;
 import org.operaton.bpm.engine.rest.helper.EqualsMap;
 import org.operaton.bpm.engine.rest.helper.EqualsVariableMap;
 import org.operaton.bpm.engine.rest.helper.ErrorMessageHelper;
+import org.operaton.bpm.engine.rest.helper.MockObjectValue;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.helper.VariableTypeHelper;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsObjectValue;
@@ -93,20 +94,23 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.type.SerializableValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
 
 import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -158,6 +162,9 @@ public class TaskRestServiceInteractionTest extends
 
   protected static final String HANDLE_BPMN_ERROR_URL = SINGLE_TASK_URL + "/bpmnError";
   protected static final String HANDLE_BPMN_ESCALATION_URL = SINGLE_TASK_URL + "/bpmnEscalation";
+
+  private static final String LOCAL_VARIABLE_KEY = "aLocalVariableId";
+  private static final List<String> LOCAL_VARIABLE_PAYLOAD = Arrays.asList("aLocalValue", "bLocalValue");
 
   private Task mockTask;
   private TaskService taskServiceMock;
@@ -216,6 +223,15 @@ public class TaskRestServiceInteractionTest extends
     when(taskServiceMock.createAttachment(any(), any(), any(), any(), any(), Mockito.<String>any())).thenReturn(mockTaskAttachment);
     when(taskServiceMock.createAttachment(any(), any(), any(), any(), any(), Mockito.<InputStream>any())).thenReturn(mockTaskAttachment);
     when(taskServiceMock.getTaskAttachmentContent(EXAMPLE_TASK_ID, EXAMPLE_TASK_ATTACHMENT_ID)).thenReturn(new ByteArrayInputStream(createMockByteData()));
+
+    ObjectValue localVariableValue = MockObjectValue.fromObjectValue(
+            Variables.objectValue(LOCAL_VARIABLE_PAYLOAD).serializationDataFormat("application/json").create())
+        .objectTypeName(ArrayList.class.getName())
+        .serializedValue("a serialized value");
+
+    when(taskServiceMock.getVariablesLocalTyped(EXAMPLE_TASK_ID, true)).thenReturn(
+        Variables.createVariables().putValueTyped(LOCAL_VARIABLE_KEY, localVariableValue));
+    when(taskServiceMock.getVariablesTyped(EXAMPLE_TASK_ID, true)).thenReturn(EXAMPLE_VARIABLES);
 
     formServiceMock = mock(FormService.class);
     when(processEngine.getFormService()).thenReturn(formServiceMock);
@@ -289,11 +305,14 @@ public class TaskRestServiceInteractionTest extends
       .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
       .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
       .body("taskState", equalTo(MockProvider.EXAMPLE_HISTORIC_TASK_STATE))
+      .body("variables", equalTo(null))
+      .body("attachment", equalTo(null))
+      .body("comment", equalTo(null))
       .when().get(SINGLE_TASK_URL);
   }
 
   @Test
-  void testGetSingleTaskWithQueryParam() {
+  void testGetSingleTaskWithCommentAttachment() {
     given().pathParam("id", EXAMPLE_TASK_ID)
       .queryParam("withCommentAttachmentInfo", true)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -320,9 +339,164 @@ public class TaskRestServiceInteractionTest extends
       .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
       .body("attachment", equalTo(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE))
       .body("comment", equalTo(MockProvider.EXAMPLE_TASK_COMMENT_STATE))
+      .body("variables", equalTo(null))
       .when().get(SINGLE_TASK_URL);
   }
 
+  @Test
+  void testGetSingleTaskWithTaskVariablesInReturn() {
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskVariablesInReturn", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("created", equalTo(MockProvider.EXAMPLE_TASK_CREATE_TIME))
+      .body("due", equalTo(MockProvider.EXAMPLE_TASK_DUE_DATE))
+      .body("delegationState", equalTo(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.toString()))
+      .body("description", equalTo(MockProvider.EXAMPLE_TASK_DESCRIPTION))
+      .body("executionId", equalTo(MockProvider.EXAMPLE_TASK_EXECUTION_ID))
+      .body("owner", equalTo(MockProvider.EXAMPLE_TASK_OWNER))
+      .body("parentTaskId", equalTo(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID))
+      .body("priority", equalTo(MockProvider.EXAMPLE_TASK_PRIORITY))
+      .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
+      .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
+      .body("taskDefinitionKey", equalTo(MockProvider.EXAMPLE_TASK_DEFINITION_KEY))
+      .body("suspended", equalTo(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE))
+      .body("caseExecutionId", equalTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID))
+      .body("caseInstanceId", equalTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID))
+      .body("caseDefinitionId", equalTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
+      .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
+      .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
+      .body("variables", notNullValue())
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY, notNullValue())
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY + ".type",
+        equalTo(VariableTypeHelper.toExpectedValueTypeName(EXAMPLE_VARIABLE_VALUE.getType())))
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY + ".value", equalTo(EXAMPLE_VARIABLE_VALUE.getValue()))
+      .body("attachment", equalTo(null))
+      .body("comment", equalTo(null))
+      .when().get(SINGLE_TASK_URL);
+  }
+
+  @Test
+  void testGetSingleTaskWithTaskLocalVariablesInReturn() {
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskLocalVariablesInReturn", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("created", equalTo(MockProvider.EXAMPLE_TASK_CREATE_TIME))
+      .body("due", equalTo(MockProvider.EXAMPLE_TASK_DUE_DATE))
+      .body("delegationState", equalTo(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.toString()))
+      .body("description", equalTo(MockProvider.EXAMPLE_TASK_DESCRIPTION))
+      .body("executionId", equalTo(MockProvider.EXAMPLE_TASK_EXECUTION_ID))
+      .body("owner", equalTo(MockProvider.EXAMPLE_TASK_OWNER))
+      .body("parentTaskId", equalTo(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID))
+      .body("priority", equalTo(MockProvider.EXAMPLE_TASK_PRIORITY))
+      .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
+      .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
+      .body("taskDefinitionKey", equalTo(MockProvider.EXAMPLE_TASK_DEFINITION_KEY))
+      .body("suspended", equalTo(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE))
+      .body("caseExecutionId", equalTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID))
+      .body("caseInstanceId", equalTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID))
+      .body("caseDefinitionId", equalTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
+      .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
+      .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
+      .body("variables", notNullValue())
+      .body("variables" + "." + LOCAL_VARIABLE_KEY, notNullValue())
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".type", equalTo("Object"))
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".value", equalTo(LOCAL_VARIABLE_PAYLOAD))
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".valueInfo."
+        + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, CoreMatchers.equalTo("application/json"))
+      .body(
+        "variables" + "." + LOCAL_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_OBJECT_TYPE_NAME,
+        CoreMatchers.equalTo(ArrayList.class.getName()))
+      .body("attachment", equalTo(null))
+      .body("comment", equalTo(null))
+      .when().get(SINGLE_TASK_URL);
+  }
+
+  @Test
+  void testGetSingleTaskWithTaskVariablesCommentsAndAttachments() {
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskVariablesInReturn", true)
+      .queryParam("withCommentAttachmentInfo", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("created", equalTo(MockProvider.EXAMPLE_TASK_CREATE_TIME))
+      .body("due", equalTo(MockProvider.EXAMPLE_TASK_DUE_DATE))
+      .body("delegationState", equalTo(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.toString()))
+      .body("description", equalTo(MockProvider.EXAMPLE_TASK_DESCRIPTION))
+      .body("executionId", equalTo(MockProvider.EXAMPLE_TASK_EXECUTION_ID))
+      .body("owner", equalTo(MockProvider.EXAMPLE_TASK_OWNER))
+      .body("parentTaskId", equalTo(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID))
+      .body("priority", equalTo(MockProvider.EXAMPLE_TASK_PRIORITY))
+      .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
+      .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
+      .body("taskDefinitionKey", equalTo(MockProvider.EXAMPLE_TASK_DEFINITION_KEY))
+      .body("suspended", equalTo(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE))
+      .body("caseExecutionId", equalTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID))
+      .body("caseInstanceId", equalTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID))
+      .body("caseDefinitionId", equalTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
+      .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
+      .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
+      .body("attachment", equalTo(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE))
+      .body("comment", equalTo(MockProvider.EXAMPLE_TASK_COMMENT_STATE))
+      .body("variables", notNullValue())
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY, notNullValue())
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY + ".type",
+        equalTo(VariableTypeHelper.toExpectedValueTypeName(EXAMPLE_VARIABLE_VALUE.getType())))
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY + ".value", equalTo(EXAMPLE_VARIABLE_VALUE.getValue()))
+      .when().get(SINGLE_TASK_URL);
+  }
+
+  @Test
+  void testGetSingleTaskWithTaskLocalVariablesCommentsAndAttachments() {
+    given().pathParam("id", EXAMPLE_TASK_ID)
+      .queryParam("withTaskLocalVariablesInReturn", true)
+      .queryParam("withCommentAttachmentInfo", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("id", equalTo(EXAMPLE_TASK_ID))
+      .body("name", equalTo(MockProvider.EXAMPLE_TASK_NAME))
+      .body("assignee", equalTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME))
+      .body("created", equalTo(MockProvider.EXAMPLE_TASK_CREATE_TIME))
+      .body("due", equalTo(MockProvider.EXAMPLE_TASK_DUE_DATE))
+      .body("delegationState", equalTo(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.toString()))
+      .body("description", equalTo(MockProvider.EXAMPLE_TASK_DESCRIPTION))
+      .body("executionId", equalTo(MockProvider.EXAMPLE_TASK_EXECUTION_ID))
+      .body("owner", equalTo(MockProvider.EXAMPLE_TASK_OWNER))
+      .body("parentTaskId", equalTo(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID))
+      .body("priority", equalTo(MockProvider.EXAMPLE_TASK_PRIORITY))
+      .body("processDefinitionId", equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
+      .body("processInstanceId", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
+      .body("taskDefinitionKey", equalTo(MockProvider.EXAMPLE_TASK_DEFINITION_KEY))
+      .body("suspended", equalTo(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE))
+      .body("caseExecutionId", equalTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID))
+      .body("caseInstanceId", equalTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID))
+      .body("caseDefinitionId", equalTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID))
+      .body("tenantId", equalTo(MockProvider.EXAMPLE_TENANT_ID))
+      .body("lastUpdated", equalTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED))
+      .body("attachment", equalTo(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE))
+      .body("comment", equalTo(MockProvider.EXAMPLE_TASK_COMMENT_STATE))
+      .body("variables", notNullValue())
+      .body("variables" + "." + LOCAL_VARIABLE_KEY, notNullValue())
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".type", equalTo("Object"))
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".value", equalTo(LOCAL_VARIABLE_PAYLOAD))
+      .body("variables" + "." + LOCAL_VARIABLE_KEY + ".valueInfo."
+        + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, CoreMatchers.equalTo("application/json"))
+      .body(
+        "variables" + "." + LOCAL_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_OBJECT_TYPE_NAME,
+        CoreMatchers.equalTo(ArrayList.class.getName()))
+      .body("variables" + "." + EXAMPLE_VARIABLE_KEY, nullValue())
+      .when().get(SINGLE_TASK_URL);
+  }
   @Test
   @SuppressWarnings("unchecked")
   void testGetSingleTaskHal() {
@@ -410,74 +584,79 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded users:
     List<Map<String,Object>> embeddedUsers = from(content).getList("_embedded.user");
-    Assertions.assertEquals(2, embeddedUsers.size(), "There should be two users returned.");
+    assertThat(embeddedUsers).as("There should be two users returned.").hasSize(2);
 
     Map<String, Object> embeddedUser = embeddedUsers.get(0);
-    assertThat(embeddedUser).as("The returned user should not be null.").isNotNull();
-    assertEquals(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME, embeddedUser.get("id"));
-    assertEquals(MockProvider.EXAMPLE_USER_FIRST_NAME, embeddedUser.get("firstName"));
-    assertEquals(MockProvider.EXAMPLE_USER_LAST_NAME, embeddedUser.get("lastName"));
-    assertEquals(MockProvider.EXAMPLE_USER_EMAIL, embeddedUser.get("email"));
+    assertThat(embeddedUser)
+            .isNotNull()
+            .containsEntry("id", MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME)
+            .containsEntry("firstName", MockProvider.EXAMPLE_USER_FIRST_NAME)
+            .containsEntry("lastName", MockProvider.EXAMPLE_USER_LAST_NAME)
+            .containsEntry("email", MockProvider.EXAMPLE_USER_EMAIL);
     assertThat(embeddedUser.get("_embedded")).isNull();
     Map<String, Object> links = (Map<String, Object>) embeddedUser.get("_links");
-    assertEquals(1, links.size());
+    assertThat(links).hasSize(1);
     assertHalLink(links, "self", UserRestService.PATH + "/" + MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME);
 
     embeddedUser = embeddedUsers.get(1);
-    assertThat(embeddedUser).as("The returned user should not be null.").isNotNull();
-    assertEquals(MockProvider.EXAMPLE_TASK_OWNER, embeddedUser.get("id"));
-    assertEquals(MockProvider.EXAMPLE_USER_FIRST_NAME, embeddedUser.get("firstName"));
-    assertEquals(MockProvider.EXAMPLE_USER_LAST_NAME, embeddedUser.get("lastName"));
-    assertEquals(MockProvider.EXAMPLE_USER_EMAIL, embeddedUser.get("email"));
+    assertThat(embeddedUser)
+            .isNotNull()
+            .containsEntry("id", MockProvider.EXAMPLE_TASK_OWNER)
+            .containsEntry("firstName", MockProvider.EXAMPLE_USER_FIRST_NAME)
+            .containsEntry("lastName", MockProvider.EXAMPLE_USER_LAST_NAME)
+            .containsEntry("email", MockProvider.EXAMPLE_USER_EMAIL);
     assertThat(embeddedUser.get("_embedded")).isNull();
     links = (Map<String, Object>) embeddedUser.get("_links");
-    assertEquals(1, links.size());
+    assertThat(links).hasSize(1);
     assertHalLink(links, "self", UserRestService.PATH + "/" + MockProvider.EXAMPLE_TASK_OWNER);
 
     // validate embedded groups:
     List<Map<String, Object>> embeddedGroups = from(content).getList("_embedded.group");
-    Assertions.assertEquals(2, embeddedGroups.size(), "There should be two groups returned.");
+    assertThat(embeddedGroups).as("There should be two groups returned.").hasSize(2);
 
     Map<String, Object> embeddedGroup = embeddedGroups.get(0);
-    assertThat(embeddedGroup).as("The returned group should not be null.").isNotNull();
-    assertEquals(MockProvider.EXAMPLE_GROUP_ID, embeddedGroup.get("id"));
-    assertEquals(MockProvider.EXAMPLE_GROUP_NAME, embeddedGroup.get("name"));
-    assertEquals(MockProvider.EXAMPLE_GROUP_TYPE, embeddedGroup.get("type"));
+    assertThat(embeddedGroup)
+            .isNotNull()
+            .containsEntry("id", MockProvider.EXAMPLE_GROUP_ID)
+            .containsEntry("name", MockProvider.EXAMPLE_GROUP_NAME)
+            .containsEntry("type", MockProvider.EXAMPLE_GROUP_TYPE);
     assertThat(embeddedGroup.get("_embedded")).isNull();
     links = (Map<String, Object>) embeddedGroup.get("_links");
-    assertEquals(1, links.size());
+    assertThat(links).hasSize(1);
     assertHalLink(links, "self", GroupRestService.PATH + "/" + MockProvider.EXAMPLE_GROUP_ID);
 
     embeddedGroup = embeddedGroups.get(1);
-    assertThat(embeddedGroup).as("The returned group should not be null.").isNotNull();
-    assertEquals(MockProvider.EXAMPLE_GROUP_ID2, embeddedGroup.get("id"));
-    assertEquals(MockProvider.EXAMPLE_GROUP_NAME, embeddedGroup.get("name"));
-    assertEquals(MockProvider.EXAMPLE_GROUP_TYPE, embeddedGroup.get("type"));
+    assertThat(embeddedGroup)
+            .isNotNull()
+            .containsEntry("id", MockProvider.EXAMPLE_GROUP_ID2)
+            .containsEntry("name", MockProvider.EXAMPLE_GROUP_NAME)
+            .containsEntry("type", MockProvider.EXAMPLE_GROUP_TYPE);
     assertThat(embeddedGroup.get("_embedded")).isNull();
     links = (Map<String, Object>) embeddedGroup.get("_links");
-    assertEquals(1, links.size());
+    assertThat(links).hasSize(1);
     assertHalLink(links, "self", GroupRestService.PATH + "/" + MockProvider.EXAMPLE_GROUP_ID2);
 
     // validate embedded processDefinitions:
     List<Map<String,Object>> embeddedDefinitions = from(content).getList("_embedded.processDefinition");
-    Assertions.assertEquals(1, embeddedDefinitions.size(), "There should be one processDefinition returned.");
+    assertThat(embeddedDefinitions).as("There should be one processDefinition returned.").hasSize(1);
     Map<String, Object> embeddedProcessDefinition = embeddedDefinitions.get(0);
-    assertThat(embeddedProcessDefinition).as("The returned processDefinition should not be null.").isNotNull();
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, embeddedProcessDefinition.get("id"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, embeddedProcessDefinition.get("key"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY, embeddedProcessDefinition.get("category"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME, embeddedProcessDefinition.get("name"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION, embeddedProcessDefinition.get("description"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION, embeddedProcessDefinition.get("version"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_VERSION_TAG, embeddedProcessDefinition.get("versionTag"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME, embeddedProcessDefinition.get("resource"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, embeddedProcessDefinition.get("deploymentId"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME, embeddedProcessDefinition.get("diagram"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED, embeddedProcessDefinition.get("suspended"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH, embeddedProcessDefinition.get("contextPath"));
+    assertThat(embeddedProcessDefinition)
+            .isNotNull()
+            .containsEntry("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
+            .containsEntry("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
+            .containsEntry("category", MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY)
+            .containsEntry("name", MockProvider.EXAMPLE_PROCESS_DEFINITION_NAME)
+            .containsEntry("description", MockProvider.EXAMPLE_PROCESS_DEFINITION_DESCRIPTION)
+            .containsEntry("version", MockProvider.EXAMPLE_PROCESS_DEFINITION_VERSION)
+            .containsEntry("versionTag", MockProvider.EXAMPLE_VERSION_TAG)
+            .containsEntry("resource", MockProvider.EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME)
+            .containsEntry("deploymentId", MockProvider.EXAMPLE_DEPLOYMENT_ID)
+            .containsEntry("diagram", MockProvider.EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME)
+            .containsEntry("suspended", MockProvider.EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED)
+            .containsEntry("contextPath", MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH);
 
     links = (Map<String, Object>) embeddedProcessDefinition.get("_links");
-    Assertions.assertEquals(3, links.size());
+    assertThat(links).hasSize(3);
     assertHalLink(links, "self", "/process-definition/" +  MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
     assertHalLink(links, "deployment", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID);
     assertHalLink(links, "resource", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID + "/resources/"
@@ -486,20 +665,21 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded caseDefinitions:
     List<Map<String,Object>> embeddedCaseDefinitions = from(content).getList("_embedded.caseDefinition");
-    Assertions.assertEquals(1, embeddedCaseDefinitions.size(), "There should be one caseDefinition returned.");
+    assertThat(embeddedCaseDefinitions).as("There should be one caseDefinition returned.").hasSize(1);
     Map<String, Object> embeddedCaseDefinition = embeddedCaseDefinitions.get(0);
-    assertThat(embeddedCaseDefinition).as("The returned caseDefinition should not be null.").isNotNull();
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_ID, embeddedCaseDefinition.get("id"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_KEY, embeddedCaseDefinition.get("key"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_CATEGORY, embeddedCaseDefinition.get("category"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_NAME, embeddedCaseDefinition.get("name"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_VERSION, embeddedCaseDefinition.get("version"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_RESOURCE_NAME, embeddedCaseDefinition.get("resource"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_DEPLOYMENT_ID, embeddedCaseDefinition.get("deploymentId"));
-    Assertions.assertEquals(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH, embeddedCaseDefinition.get("contextPath"));
+    assertThat(embeddedCaseDefinition)
+            .isNotNull()
+            .containsEntry("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
+            .containsEntry("key", MockProvider.EXAMPLE_CASE_DEFINITION_KEY)
+            .containsEntry("category", MockProvider.EXAMPLE_CASE_DEFINITION_CATEGORY)
+            .containsEntry("name", MockProvider.EXAMPLE_CASE_DEFINITION_NAME)
+            .containsEntry("version", MockProvider.EXAMPLE_CASE_DEFINITION_VERSION)
+            .containsEntry("resource", MockProvider.EXAMPLE_CASE_DEFINITION_RESOURCE_NAME)
+            .containsEntry("deploymentId", MockProvider.EXAMPLE_DEPLOYMENT_ID)
+            .containsEntry("contextPath", MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH);
 
     links = (Map<String, Object>) embeddedCaseDefinition.get("_links");
-    Assertions.assertEquals(3, links.size());
+    assertThat(links).hasSize(3);
     assertHalLink(links, "self", "/case-definition/" +  MockProvider.EXAMPLE_CASE_DEFINITION_ID);
     assertHalLink(links, "deployment", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID);
     assertHalLink(links, "resource", "/deployment/" +  MockProvider.EXAMPLE_DEPLOYMENT_ID + "/resources/"
@@ -507,7 +687,7 @@ public class TaskRestServiceInteractionTest extends
 
     // validate embedded identity links
     List<Map<String, Object>> embeddedIdentityLinks = from(content).getList("_embedded.identityLink");
-    assertEquals(4, embeddedIdentityLinks.size(), "There should be three identityLink returned");
+    assertThat(embeddedIdentityLinks).as("There should be three identityLink returned").hasSize(4);
     assertEmbeddedIdentityLink(mockAssigneeIdentityLink, embeddedIdentityLinks.get(0));
     assertEmbeddedIdentityLink(mockOwnerIdentityLink, embeddedIdentityLinks.get(1));
     assertEmbeddedIdentityLink(mockCandidateGroupIdentityLink, embeddedIdentityLinks.get(2));
@@ -521,16 +701,17 @@ public class TaskRestServiceInteractionTest extends
     assertThat(linkObject).isNotNull();
 
     String actualLink = (String) linkObject.get("href");
-    Assertions.assertEquals(expectedLink, actualLink);
+    assertThat(actualLink).isEqualTo(expectedLink);
   }
 
   @SuppressWarnings("unchecked")
   protected void assertEmbeddedIdentityLink(IdentityLink expected, Map<String, Object> actual) {
     assertThat(actual).as("Embedded indentity link should not be null").isNotNull();
-    assertEquals(expected.getType(), actual.get("type"));
-    assertEquals(expected.getUserId(), actual.get("userId"));
-    assertEquals(expected.getGroupId(), actual.get("groupId"));
-    assertEquals(expected.getTaskId(), actual.get("taskId"));
+    assertThat(actual)
+            .containsEntry("type", expected.getType())
+            .containsEntry("userId", expected.getUserId())
+            .containsEntry("groupId", expected.getGroupId())
+            .containsEntry("taskId", expected.getTaskId());
     assertThat(actual.get("_embedded")).isNull();
 
     Map<String, Object> links = (Map<String, Object>) actual.get("_links");
@@ -2732,7 +2913,7 @@ public class TaskRestServiceInteractionTest extends
     .when().get(SINGLE_TASK_SINGLE_ATTACHMENT_DATA_URL);
 
     byte[] responseContent = IoUtil.readInputStream(response.asInputStream(), "attachmentContent");
-    assertEquals("someContent", new String(responseContent));
+    assertThat(new String(responseContent)).isEqualTo("someContent");
   }
 
   @Test
@@ -4045,7 +4226,7 @@ public class TaskRestServiceInteractionTest extends
   @SuppressWarnings({ "rawtypes", "unchecked" })
   private void verifyTaskComments(List<Comment> mockTaskComments, Response response) {
     List list = response.as(List.class);
-    assertEquals(1, list.size());
+    assertThat(list).hasSize(1);
 
     LinkedHashMap<String, String> resourceHashMap = (LinkedHashMap<String, String>) list.get(0);
 
@@ -4057,11 +4238,11 @@ public class TaskRestServiceInteractionTest extends
 
     Comment mockComment = mockTaskComments.get(0);
 
-    assertEquals(mockComment.getId(), returnedId);
-    assertEquals(mockComment.getTaskId(), returnedTaskId);
-    assertEquals(mockComment.getUserId(), returnedUserId);
-    assertEquals(mockComment.getTime(), returnedTime);
-    assertEquals(mockComment.getFullMessage(), returnedFullMessage);
+    assertThat(returnedId).isEqualTo(mockComment.getId());
+    assertThat(returnedTaskId).isEqualTo(mockComment.getTaskId());
+    assertThat(returnedUserId).isEqualTo(mockComment.getUserId());
+    assertThat(returnedTime).isEqualTo(mockComment.getTime());
+    assertThat(returnedFullMessage).isEqualTo(mockComment.getFullMessage());
   }
 
   private void verifyCreatedTaskComment(Comment mockTaskComment, Response response) {
@@ -4079,28 +4260,28 @@ public class TaskRestServiceInteractionTest extends
     Date returnedTime = DateTimeUtil.parseDate(path.get("time"));
     String returnedFullMessage = path.get("message");
 
-    assertEquals(mockTaskComment.getId(), returnedId);
-    assertEquals(mockTaskComment.getTaskId(), returnedTaskId);
-    assertEquals(mockTaskComment.getProcessInstanceId(), returnedProcessInstanceId);
-    assertEquals(mockTaskComment.getUserId(), returnedUserId);
-    assertEquals(mockTaskComment.getTime(), returnedTime);
-    assertEquals(mockTaskComment.getFullMessage(), returnedFullMessage);
+    assertThat(returnedId).isEqualTo(mockTaskComment.getId());
+    assertThat(returnedTaskId).isEqualTo(mockTaskComment.getTaskId());
+    assertThat(returnedProcessInstanceId).isEqualTo(mockTaskComment.getProcessInstanceId());
+    assertThat(returnedUserId).isEqualTo(mockTaskComment.getUserId());
+    assertThat(returnedTime).isEqualTo(mockTaskComment.getTime());
+    assertThat(returnedFullMessage).isEqualTo(mockTaskComment.getFullMessage());
   }
 
   private void verifyTaskCommentLink(Comment mockTaskComment, String responseContent) {
     List<Map<String, String>> returnedLinks = from(responseContent).getList("links");
-    assertEquals(1, returnedLinks.size());
+    assertThat(returnedLinks).hasSize(1);
 
     Map<String, String> returnedLink = returnedLinks.get(0);
-    assertEquals(HttpMethod.GET, returnedLink.get("method"));
+    assertThat(returnedLink).containsEntry("method", HttpMethod.GET);
     assertThat(returnedLink.get("href")).endsWith(SINGLE_TASK_COMMENTS_URL.replace("{id}", mockTaskComment.getTaskId()) + "/" + mockTaskComment.getId());
-    assertEquals("self", returnedLink.get("rel"));
+    assertThat(returnedLink).containsEntry("rel", "self");
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
   private void verifyTaskAttachments(List<Attachment> mockTaskAttachments, Response response) {
     List list = response.as(List.class);
-    assertEquals(1, list.size());
+    assertThat(list).hasSize(1);
 
     LinkedHashMap<String, String> resourceHashMap = (LinkedHashMap<String, String>) list.get(0);
 
@@ -4113,12 +4294,12 @@ public class TaskRestServiceInteractionTest extends
 
     Attachment mockAttachment = mockTaskAttachments.get(0);
 
-    assertEquals(mockAttachment.getId(), returnedId);
-    assertEquals(mockAttachment.getTaskId(), returnedTaskId);
-    assertEquals(mockAttachment.getName(), returnedName);
-    assertEquals(mockAttachment.getType(), returnedType);
-    assertEquals(mockAttachment.getDescription(), returnedDescription);
-    assertEquals(mockAttachment.getUrl(), returnedUrl);
+    assertThat(returnedId).isEqualTo(mockAttachment.getId());
+    assertThat(returnedTaskId).isEqualTo(mockAttachment.getTaskId());
+    assertThat(returnedName).isEqualTo(mockAttachment.getName());
+    assertThat(returnedType).isEqualTo(mockAttachment.getType());
+    assertThat(returnedDescription).isEqualTo(mockAttachment.getDescription());
+    assertThat(returnedUrl).isEqualTo(mockAttachment.getUrl());
   }
 
   private void verifyCreatedTaskAttachment(Attachment mockTaskAttachment, Response response, boolean urlExist) {
@@ -4138,24 +4319,24 @@ public class TaskRestServiceInteractionTest extends
 
     Attachment mockAttachment = mockTaskAttachments.get(0);
 
-    assertEquals(mockAttachment.getId(), returnedId);
-    assertEquals(mockAttachment.getTaskId(), returnedTaskId);
-    assertEquals(mockAttachment.getName(), returnedName);
-    assertEquals(mockAttachment.getType(), returnedType);
-    assertEquals(mockAttachment.getDescription(), returnedDescription);
+    assertThat(returnedId).isEqualTo(mockAttachment.getId());
+    assertThat(returnedTaskId).isEqualTo(mockAttachment.getTaskId());
+    assertThat(returnedName).isEqualTo(mockAttachment.getName());
+    assertThat(returnedType).isEqualTo(mockAttachment.getType());
+    assertThat(returnedDescription).isEqualTo(mockAttachment.getDescription());
     if (urlExist) {
-      assertEquals(mockAttachment.getUrl(), returnedUrl);
+      assertThat(returnedUrl).isEqualTo(mockAttachment.getUrl());
     }
   }
 
   private void verifyTaskAttachmentLink(Attachment mockTaskAttachment, String responseContent) {
     List<Map<String, String>> returnedLinks = from(responseContent).getList("links");
-    assertEquals(1, returnedLinks.size());
+    assertThat(returnedLinks).hasSize(1);
 
     Map<String, String> returnedLink = returnedLinks.get(0);
-    assertEquals(HttpMethod.GET, returnedLink.get("method"));
+    assertThat(returnedLink).containsEntry("method", HttpMethod.GET);
     assertThat(returnedLink.get("href")).endsWith(SINGLE_TASK_ATTACHMENTS_URL.replace("{id}", mockTaskAttachment.getTaskId()) + "/" + mockTaskAttachment.getId());
-    assertEquals("self", returnedLink.get("rel"));
+    assertThat(returnedLink).containsEntry("rel", "self");
   }
 
 }

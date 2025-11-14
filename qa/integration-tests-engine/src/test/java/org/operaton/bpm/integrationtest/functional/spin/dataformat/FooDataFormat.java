@@ -18,7 +18,6 @@ package org.operaton.bpm.integrationtest.functional.spin.dataformat;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Writer;
 import java.util.regex.Pattern;
 
 import org.operaton.spin.DeserializationTypeValidator;

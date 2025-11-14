@@ -572,13 +572,7 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
         .userTask()
         .endEvent()
       .done();
-    try {
-      deployProcess(processBuilder);
-
-      fail("this process should not be deployable");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> deployProcess(processBuilder)).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

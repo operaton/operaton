@@ -149,7 +149,7 @@ class BpmnDeploymentTest {
         .enableDuplicateFiltering(false)
         .addClasspathResource(bpmnResourceName)
         .name("twice"));
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
   }
 
   @Test
@@ -331,7 +331,7 @@ class BpmnDeploymentTest {
         .name("thrice"));
 
     // there should still be one version of process 1
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("process1").count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("process1").count()).isOne();
 
     // there should be three versions of process 2
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("process2").count()).isEqualTo(3);

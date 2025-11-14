@@ -22,7 +22,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -83,6 +82,6 @@ public class JobPrioritizationDuringDeploymentTest extends AbstractFoxPlatformIn
     Job job = managementService.createJobQuery().activityId("timerStart").singleResult();
 
     assertThat(job).isNotNull();
-    Assertions.assertEquals(PriorityBean.PRIORITY, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(PriorityBean.PRIORITY);
   }
 }

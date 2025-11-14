@@ -18,7 +18,6 @@ package org.operaton.bpm.integrationtest.deployment.war;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -46,7 +45,7 @@ public class TestWarDeploymentWithoutProcessDefinitions extends AbstractFoxPlatf
     assertThat(ProgrammaticBeanLookup.lookup(ProcessEngine.class)).isNotNull();
 
     // no deployment has been constructed
-    Assertions.assertEquals(0, repositoryService.createDeploymentQuery().deploymentName("pa").count());
+    assertThat(repositoryService.createDeploymentQuery().deploymentName("pa").count()).isZero();
   }
 
 }

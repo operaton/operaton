@@ -47,7 +47,6 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -410,7 +409,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> logs = from(content).getList("");
-    assertEquals(1, logs.size(), "There should be one historic externalTask log returned.");
+    assertThat(logs).as("There should be one historic externalTask log returned.").hasSize(1);
     assertNotNull("The returned historic externalTask log should not be null.", logs.get(0));
 
     String returnedId = from(content).getString("[0].id");
@@ -432,24 +431,24 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
     boolean returnedSuccessLog = from(content).getBoolean("[0].successLog");
     boolean returnedDeletionLog = from(content).getBoolean("[0].deletionLog");
 
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ID, returnedId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_TIMESTAMP, returnedTimestamp);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_EXTERNAL_TASK_ID, returnedExternalTaskId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_TOPIC_NAME, returnedExternalTaskTopicName);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_WORKER_ID, returnedExternalTaskWorkerId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_RETRIES, returnedRetries);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PRIORITY, returnedPriority);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ERROR_MSG, returnedErrorMessage);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ACTIVITY_ID, returnedActivityId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ACTIVITY_INSTANCE_ID, returnedActivityInstanceId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_EXECUTION_ID, returnedExecutionId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_INST_ID, returnedProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_DEF_ID, returnedProcessDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_DEF_KEY, returnedProcessDefinitionKey);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_CREATION_LOG, returnedCreationLog);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_FAILURE_LOG, returnedFailureLog);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_SUCCESS_LOG, returnedSuccessLog);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_DELETION_LOG, returnedDeletionLog);
+    assertThat(returnedId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ID);
+    assertThat(returnedTimestamp).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_TIMESTAMP);
+    assertThat(returnedExternalTaskId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_EXTERNAL_TASK_ID);
+    assertThat(returnedExternalTaskTopicName).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_TOPIC_NAME);
+    assertThat(returnedExternalTaskWorkerId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_WORKER_ID);
+    assertThat(returnedRetries).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_RETRIES);
+    assertThat(returnedPriority).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PRIORITY);
+    assertThat(returnedErrorMessage).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ERROR_MSG);
+    assertThat(returnedActivityId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ACTIVITY_ID);
+    assertThat(returnedActivityInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ACTIVITY_INSTANCE_ID);
+    assertThat(returnedExecutionId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_EXECUTION_ID);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_INST_ID);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_DEF_ID);
+    assertThat(returnedProcessDefinitionKey).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_DEF_KEY);
+    assertThat(returnedCreationLog).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_CREATION_LOG);
+    assertThat(returnedFailureLog).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_FAILURE_LOG);
+    assertThat(returnedSuccessLog).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_SUCCESS_LOG);
+    assertThat(returnedDeletionLog).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_DELETION_LOG);
   }
 
   @Test
@@ -475,7 +474,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> logs = from(content).getList("");
-    assertEquals(1, logs.size(), "There should be one historic externalTask log returned.");
+    assertThat(logs).as("There should be one historic externalTask log returned.").hasSize(1);
     assertNotNull("The returned historic externalTask log should not be null.", logs.get(0));
 
     String returnedId = from(content).getString("[0].id");
@@ -499,26 +498,26 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
     boolean returnedSuccessLog = from(content).getBoolean("[0].successLog");
     boolean returnedDeletionLog = from(content).getBoolean("[0].deletionLog");
 
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ID, returnedId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_TIMESTAMP, returnedTimestamp);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_REMOVAL_TIME, returnedRemovalTime);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_EXTERNAL_TASK_ID, returnedExternalTaskId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_TOPIC_NAME, returnedExternalTaskTopicName);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_WORKER_ID, returnedExternalTaskWorkerId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_RETRIES, returnedRetries);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PRIORITY, returnedPriority);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ERROR_MSG, returnedErrorMessage);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ACTIVITY_ID, returnedActivityId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ACTIVITY_INSTANCE_ID, returnedActivityInstanceId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_EXECUTION_ID, returnedExecutionId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_INST_ID, returnedProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_DEF_ID, returnedProcessDefinitionId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_DEF_KEY, returnedProcessDefinitionKey);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ROOT_PROC_INST_ID, returnedRootProcessInstanceId);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_CREATION_LOG, returnedCreationLog);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_FAILURE_LOG, returnedFailureLog);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_SUCCESS_LOG, returnedSuccessLog);
-    assertEquals(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_DELETION_LOG, returnedDeletionLog);
+    assertThat(returnedId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ID);
+    assertThat(returnedTimestamp).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_TIMESTAMP);
+    assertThat(returnedRemovalTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_REMOVAL_TIME);
+    assertThat(returnedExternalTaskId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_EXTERNAL_TASK_ID);
+    assertThat(returnedExternalTaskTopicName).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_TOPIC_NAME);
+    assertThat(returnedExternalTaskWorkerId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_WORKER_ID);
+    assertThat(returnedRetries).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_RETRIES);
+    assertThat(returnedPriority).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PRIORITY);
+    assertThat(returnedErrorMessage).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ERROR_MSG);
+    assertThat(returnedActivityId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ACTIVITY_ID);
+    assertThat(returnedActivityInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ACTIVITY_INSTANCE_ID);
+    assertThat(returnedExecutionId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_EXECUTION_ID);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_INST_ID);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_DEF_ID);
+    assertThat(returnedProcessDefinitionKey).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_DEF_KEY);
+    assertThat(returnedRootProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ROOT_PROC_INST_ID);
+    assertThat(returnedCreationLog).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_CREATION_LOG);
+    assertThat(returnedFailureLog).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_FAILURE_LOG);
+    assertThat(returnedSuccessLog).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_SUCCESS_LOG);
+    assertThat(returnedDeletionLog).isEqualTo(MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_DELETION_LOG);
   }
 
   @Test

@@ -474,7 +474,7 @@ class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest {
 
     disableAuthorization();
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
     enableAuthorization();
 
     assertThatThrownBy(() -> historyService.deleteHistoricVariableInstance(variableInstanceId))
@@ -494,7 +494,7 @@ class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest {
 
     disableAuthorization();
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
     enableAuthorization();
 
     assertThatCode(() -> historyService.deleteHistoricVariableInstance(variableInstanceId))
@@ -519,7 +519,7 @@ class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest {
     disableAuthorization();
     repositoryService.deleteDeployment(deploymentId);
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
     enableAuthorization();
 
     // when
@@ -539,7 +539,7 @@ class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest {
 
     disableAuthorization();
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
     enableAuthorization();
 
     // when
@@ -559,7 +559,7 @@ class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest {
     disableAuthorization();
     taskService.setVariables(taskId, getVariables());
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
     enableAuthorization();
 
     // when
@@ -643,8 +643,8 @@ class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest {
 
   protected void verifyVariablesCreated() {
     disableAuthorization();
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1L);
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
     enableAuthorization();
   }
 

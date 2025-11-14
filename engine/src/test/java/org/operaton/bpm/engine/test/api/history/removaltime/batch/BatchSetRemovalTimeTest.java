@@ -2614,7 +2614,7 @@ class BatchSetRemovalTimeTest {
 
     // then
     assertThat(report.getFinishedProcessInstanceCount()).isZero();
-    assertThat(report.getCleanableProcessInstanceCount()).isEqualTo(1);
+    assertThat(report.getCleanableProcessInstanceCount()).isOne();
     assertThat(report.getHistoryTimeToLive()).isNull();
   }
 
@@ -2634,8 +2634,8 @@ class BatchSetRemovalTimeTest {
     CleanableHistoricProcessInstanceReportResult report = historyService.createCleanableHistoricProcessInstanceReport().singleResult();
 
     // then
-    assertThat(report.getFinishedProcessInstanceCount()).isEqualTo(1);
-    assertThat(report.getCleanableProcessInstanceCount()).isEqualTo(1);
+    assertThat(report.getFinishedProcessInstanceCount()).isOne();
+    assertThat(report.getCleanableProcessInstanceCount()).isOne();
     assertThat(report.getHistoryTimeToLive()).isNull();
   }
 
@@ -2668,8 +2668,8 @@ class BatchSetRemovalTimeTest {
       .singleResult();
 
     // then
-    assertThat(report.getFinishedDecisionInstanceCount()).isEqualTo(1);
-    assertThat(report.getCleanableDecisionInstanceCount()).isEqualTo(1);
+    assertThat(report.getFinishedDecisionInstanceCount()).isOne();
+    assertThat(report.getCleanableDecisionInstanceCount()).isOne();
     assertThat(report.getHistoryTimeToLive()).isNull();
   }
 
@@ -2693,7 +2693,7 @@ class BatchSetRemovalTimeTest {
 
     // then
     assertThat(report.getFinishedBatchesCount()).isZero();
-    assertThat(report.getCleanableBatchesCount()).isEqualTo(1);
+    assertThat(report.getCleanableBatchesCount()).isOne();
     assertThat(report.getHistoryTimeToLive()).isNull();
   }
 
@@ -2718,8 +2718,8 @@ class BatchSetRemovalTimeTest {
     CleanableHistoricBatchReportResult report = historyService.createCleanableHistoricBatchReport().singleResult();
 
     // then
-    assertThat(report.getFinishedBatchesCount()).isEqualTo(1);
-    assertThat(report.getCleanableBatchesCount()).isEqualTo(1);
+    assertThat(report.getFinishedBatchesCount()).isOne();
+    assertThat(report.getCleanableBatchesCount()).isOne();
     assertThat(report.getHistoryTimeToLive()).isNull();
   }
 

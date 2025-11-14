@@ -39,7 +39,7 @@ import org.operaton.spin.DataFormats;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
 import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformIntegrationTest {
@@ -49,6 +49,7 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "pa3.war")
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(ProcessApplication3.class)
         .addClass(XmlSerializable.class)
         .addClass(XmlSerializableJsonDeserializer.class)
@@ -94,7 +95,7 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
       return null;
     }, "pa4");
 
-    assertEquals(1, historyService.createHistoricActivityInstanceQuery().activityId("exclusiveGateway").finished().count());
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("exclusiveGateway").finished().count()).isOne();
 
   }
 

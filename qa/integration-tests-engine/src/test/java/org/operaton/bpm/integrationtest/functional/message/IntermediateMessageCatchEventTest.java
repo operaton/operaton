@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(ArquillianExtension.class)
 public class IntermediateMessageCatchEventTest extends AbstractFoxPlatformIntegrationTest {
@@ -42,7 +41,7 @@ public class IntermediateMessageCatchEventTest extends AbstractFoxPlatformIntegr
     runtimeService.startProcessInstanceByKey("testProcess");
 
     long eventSubscriptionCount = runtimeService.createEventSubscriptionQuery().count();
-    assertEquals(1, eventSubscriptionCount);
+    assertThat(eventSubscriptionCount).isOne();
 
     Execution execution = runtimeService.createExecutionQuery().messageEventSubscriptionName("Test Message").singleResult();
 
@@ -51,9 +50,9 @@ public class IntermediateMessageCatchEventTest extends AbstractFoxPlatformIntegr
     runtimeService.createMessageCorrelation("Test Message").correlate();
 
     eventSubscriptionCount = runtimeService.createEventSubscriptionQuery().count();
-    assertEquals(0, eventSubscriptionCount);
+    assertThat(eventSubscriptionCount).isZero();
 
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
 }

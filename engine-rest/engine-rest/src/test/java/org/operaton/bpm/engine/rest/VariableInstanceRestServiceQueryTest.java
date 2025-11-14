@@ -25,7 +25,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -375,7 +374,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
     String content = response.asString();
     List<Map<String, Object>> variables = from(content).getList("");
-    Assertions.assertEquals(1, variables.size(), "There should be one process definition returned.");
+    assertThat(variables).as("There should be one process definition returned.").hasSize(1);
     assertThat(variables.get(0)).as("There should be one process definition returned").isNotNull();
 
     verify(mockedQuery).disableBinaryFetching();

@@ -21,7 +21,6 @@ import java.util.Map;
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -84,7 +83,7 @@ public class HistoricCaseActivityStatisticsRestServiceQueryTest extends Abstract
 
     String content = response.asString();
     List<Map<String, Object>> result = from(content).getList("");
-    Assertions.assertEquals(2, result.size());
+    assertThat(result).hasSize(2);
 
     assertThat(result.get(0)).isNotNull();
     assertThat(result.get(1)).isNotNull();
@@ -97,13 +96,13 @@ public class HistoricCaseActivityStatisticsRestServiceQueryTest extends Abstract
     long enabled = from(content).getLong("[0].enabled");
     long terminated = from(content).getLong("[0].terminated");
 
-    Assertions.assertEquals(MockProvider.EXAMPLE_ACTIVITY_ID, id);
-    Assertions.assertEquals(MockProvider.EXAMPLE_AVAILABLE_LONG, available);
-    Assertions.assertEquals(MockProvider.EXAMPLE_ACTIVE_LONG, active);
-    Assertions.assertEquals(MockProvider.EXAMPLE_COMPLETED_LONG, completed);
-    Assertions.assertEquals(MockProvider.EXAMPLE_DISABLED_LONG, disabled);
-    Assertions.assertEquals(MockProvider.EXAMPLE_ENABLED_LONG, enabled);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TERMINATED_LONG, terminated);
+    assertThat(id).isEqualTo(MockProvider.EXAMPLE_ACTIVITY_ID);
+    assertThat(available).isEqualTo(MockProvider.EXAMPLE_AVAILABLE_LONG);
+    assertThat(active).isEqualTo(MockProvider.EXAMPLE_ACTIVE_LONG);
+    assertThat(completed).isEqualTo(MockProvider.EXAMPLE_COMPLETED_LONG);
+    assertThat(disabled).isEqualTo(MockProvider.EXAMPLE_DISABLED_LONG);
+    assertThat(enabled).isEqualTo(MockProvider.EXAMPLE_ENABLED_LONG);
+    assertThat(terminated).isEqualTo(MockProvider.EXAMPLE_TERMINATED_LONG);
 
     id = from(content).getString("[1].id");
     available = from(content).getLong("[1].available");
@@ -113,13 +112,13 @@ public class HistoricCaseActivityStatisticsRestServiceQueryTest extends Abstract
     enabled = from(content).getLong("[1].enabled");
     terminated = from(content).getLong("[1].terminated");
 
-    Assertions.assertEquals(MockProvider.ANOTHER_EXAMPLE_ACTIVITY_ID, id);
-    Assertions.assertEquals(MockProvider.ANOTHER_EXAMPLE_AVAILABLE_LONG, available);
-    Assertions.assertEquals(MockProvider.ANOTHER_EXAMPLE_ACTIVE_LONG, active);
-    Assertions.assertEquals(MockProvider.ANOTHER_EXAMPLE_COMPLETED_LONG, completed);
-    Assertions.assertEquals(MockProvider.ANOTHER_EXAMPLE_DISABLED_LONG, disabled);
-    Assertions.assertEquals(MockProvider.ANOTHER_EXAMPLE_ENABLED_LONG, enabled);
-    Assertions.assertEquals(MockProvider.ANOTHER_EXAMPLE_TERMINATED_LONG, terminated);
+    assertThat(id).isEqualTo(MockProvider.ANOTHER_EXAMPLE_ACTIVITY_ID);
+    assertThat(available).isEqualTo(MockProvider.ANOTHER_EXAMPLE_AVAILABLE_LONG);
+    assertThat(active).isEqualTo(MockProvider.ANOTHER_EXAMPLE_ACTIVE_LONG);
+    assertThat(completed).isEqualTo(MockProvider.ANOTHER_EXAMPLE_COMPLETED_LONG);
+    assertThat(disabled).isEqualTo(MockProvider.ANOTHER_EXAMPLE_DISABLED_LONG);
+    assertThat(enabled).isEqualTo(MockProvider.ANOTHER_EXAMPLE_ENABLED_LONG);
+    assertThat(terminated).isEqualTo(MockProvider.ANOTHER_EXAMPLE_TERMINATED_LONG);
 
   }
 

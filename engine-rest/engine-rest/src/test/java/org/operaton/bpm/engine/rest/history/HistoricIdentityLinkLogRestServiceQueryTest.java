@@ -26,7 +26,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -144,7 +143,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = null;
 
     // assignerId
     inOrder = Mockito.inOrder(mockedQuery);
@@ -270,18 +269,18 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
     Date returnedRemovalTime = DateTimeUtil.parseDate(from(content).getString("[0].removalTime"));
     String returnedRootProcessInstanceId = from(content).getString("[0].rootProcessInstanceId");
 
-    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TIME), loggedDate);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_ASSIGNER_ID, returnedAssignerId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_USER_ID, returnedUserId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_GROUP_ID, returnedGroupId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TASK_ID, returnedTaskId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_PROC_DEFINITION_ID, returnedProcessDefinitionId);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_PROC_DEFINITION_KEY, returnedProcessDefinitionKey);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TYPE, returnedType);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_OPERATION_TYPE, returnedOperationType);
-    Assertions.assertEquals(MockProvider.EXAMPLE_TENANT_ID, returnedTenantId);
-    Assertions.assertEquals(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_REMOVAL_TIME), returnedRemovalTime);
-    Assertions.assertEquals(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_ROOT_PROC_INST_ID, returnedRootProcessInstanceId);
+    assertThat(loggedDate).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TIME));
+    assertThat(returnedAssignerId).isEqualTo(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_ASSIGNER_ID);
+    assertThat(returnedUserId).isEqualTo(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_USER_ID);
+    assertThat(returnedGroupId).isEqualTo(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_GROUP_ID);
+    assertThat(returnedTaskId).isEqualTo(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TASK_ID);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_PROC_DEFINITION_ID);
+    assertThat(returnedProcessDefinitionKey).isEqualTo(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_PROC_DEFINITION_KEY);
+    assertThat(returnedType).isEqualTo(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_TYPE);
+    assertThat(returnedOperationType).isEqualTo(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_OPERATION_TYPE);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(returnedRemovalTime).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_REMOVAL_TIME));
+    assertThat(returnedRootProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HIST_IDENTITY_LINK_ROOT_PROC_INST_ID);
   }
 
   @Test

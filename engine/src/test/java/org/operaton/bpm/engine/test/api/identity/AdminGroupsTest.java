@@ -36,8 +36,8 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @ExtendWith(ProcessEngineExtension.class)
 @ExtendWith(ProcessEngineTestExtension.class)
@@ -95,8 +95,8 @@ class AdminGroupsTest {
     authorizationService.saveAuthorization(userAuth);
     processEngineConfiguration.setAuthorizationEnabled(true);
 
-    // when
-    assertAll(() -> identityService.unlockUser("jonny1"));
-    // then no exception
+    // when/then no exception
+    assertThatCode(() -> identityService.unlockUser("jonny1"))
+            .doesNotThrowAnyException();
   }
 }

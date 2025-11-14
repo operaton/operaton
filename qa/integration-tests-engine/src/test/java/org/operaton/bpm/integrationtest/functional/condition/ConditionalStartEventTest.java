@@ -32,7 +32,6 @@ import org.operaton.bpm.integrationtest.functional.condition.bean.ConditionalBea
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(ArquillianExtension.class)
 public class ConditionalStartEventTest extends AbstractFoxPlatformIntegrationTest {
@@ -48,20 +47,20 @@ public class ConditionalStartEventTest extends AbstractFoxPlatformIntegrationTes
   void testStartInstanceWithBeanCondition() {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertEquals(1, eventSubscriptions.size());
-    assertEquals(EventType.CONDITONAL.name(), eventSubscriptions.get(0).getEventType());
+    assertThat(eventSubscriptions).hasSize(1);
+    assertThat(eventSubscriptions.get(0).getEventType()).isEqualTo(EventType.CONDITONAL.name());
 
     List<ProcessInstance> instances = runtimeService
         .createConditionEvaluation()
         .setVariable("foo", 1)
         .evaluateStartConditions();
 
-    assertEquals(1, instances.size());
+    assertThat(instances).hasSize(1);
 
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("conditionalEventProcess").singleResult()).isNotNull();
 
     VariableInstance vars = runtimeService.createVariableInstanceQuery().singleResult();
-    assertEquals(vars.getProcessInstanceId(), instances.get(0).getId());
-    assertEquals(1, vars.getValue());
+    assertThat(instances.get(0).getId()).isEqualTo(vars.getProcessInstanceId());
+    assertThat(vars.getValue()).isEqualTo(1);
   }
 }

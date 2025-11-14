@@ -19,8 +19,9 @@ package org.operaton.bpm.engine.spring.test.components.scope;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.logging.Logger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
  */
 public class StatefulObject implements Serializable, InitializingBean {
 
-    private final transient Logger logger = Logger.getLogger(getClass().getName());
+    private final transient Logger logger = LoggerFactory.getLogger(getClass());
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -60,8 +61,8 @@ public class StatefulObject implements Serializable, InitializingBean {
 
         this.customerId = customerId;
 
-        logger.info("setting this " + StatefulObject.class.getName() + " instances 'customerId' to "
-                + this.customerId + ". The current executionId is " + this.executionId);
+        logger.info("setting this {} instances 'customerId' to {}. The current executionId is {}", 
+                StatefulObject.class.getName(), this.customerId, this.executionId);
 
     }
 
@@ -115,6 +116,6 @@ public class StatefulObject implements Serializable, InitializingBean {
   @Override
   public void afterPropertiesSet() {
         Assert.notNull(this.processInstance, "the processInstance should be equal to the currently active processInstance!");
-        logger.info("the 'processInstance' property is non-null: PI ID# " + this.processInstance.getId());
+        logger.info("the 'processInstance' property is non-null: PI ID# {}", this.processInstance.getId());
     }
 }

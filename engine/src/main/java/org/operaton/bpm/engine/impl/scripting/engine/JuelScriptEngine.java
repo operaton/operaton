@@ -131,11 +131,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
 
     // Built-in function are added to ScriptCtx
     scriptCtx.setAttribute("out:print", getPrintMethod(), ScriptContext.ENGINE_SCOPE);
-
-    SecurityManager securityManager = System.getSecurityManager();
-    if (securityManager == null) {
-      scriptCtx.setAttribute("lang:import", getImportMethod(), ScriptContext.ENGINE_SCOPE);
-    }
+    scriptCtx.setAttribute("lang:import", getImportMethod(), ScriptContext.ENGINE_SCOPE);
 
     ELContext elContext = new ELContext() {
 

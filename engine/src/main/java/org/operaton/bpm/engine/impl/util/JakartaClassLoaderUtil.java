@@ -16,17 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import jakarta.servlet.ServletContextEvent;
 
 public class JakartaClassLoaderUtil extends ClassLoaderUtil {
 
   public static ClassLoader getServletContextClassloader(final ServletContextEvent sce) {
-    if(System.getSecurityManager() != null) {
-      return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> sce.getServletContext().getClassLoader());
-    } else {
-      return sce.getServletContext().getClassLoader();
-    }
+    return sce.getServletContext().getClassLoader();
   }
 }

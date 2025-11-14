@@ -71,6 +71,7 @@
             <configuration>
               <excludes>
                 <exclude>org/operaton/bpm/model/xml/impl/**</exclude>
+                <exclude>org/operaton/bpm/model/xml/test/AbstractModelElementInstanceTest</exclude>
               </excludes>
             </configuration>
             <executions>
